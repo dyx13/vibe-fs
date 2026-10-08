@@ -1,6 +1,6 @@
 # K1-A / K1-F：工作区别名与结算后再次准入
 
-当前状态：本卡Fetch/四叶再入和R18/R19保持有限完成，不重做Fetch或忙碌resume。R20已有受控正式红绿，gen374后完整006为1/1、63pass/0fail/1skip/0TODO、26026.472792ms/exit0；skip为integrationtier未启用的实际Host invalid termination控制，不授完整Host。完整harness292case为292pass/0fail、13921.939792ms/exit0，skip/TODO无字段保unknown；input/tools相同，原requests>1及1000≤elapsed<2000不放宽。[R20有限原件](archive/2026-10-08/k1a-release/r20-narrow-2026-10-08/README.md)另归档，旧[8d0 FAILED矩阵](K1A与全项目release验收-2026-10-08.md#r208d0完整验证历史失败deadline修复处理中)不覆盖。下一步新candidate clean full release、六physical016和精确CI，当前pending；8d0六physical仍not-run。最终docs-only SHA不借旧输入，opening append换Root未正式证明、skip/TODO、GAP-160及历史吞吐unknown均保留。下方仅历史。
+当前状态：本卡Fetch/四叶再入、R18/R19及R20保持有限完成，不重做Fetch或忙碌resume。干净source candidate `65a70d0fd4c4`的原预算全项目验收已执行，结论FAILED，实际clean Fable为gen375。本机unit824/824、4971pass/0fail/127skip/388TODO仅pending；独立integration43/44原300s截断，四计数unknown；harness292pass/0fail、skip/TODO unknown，真实E2E35pass/0fail/0skip/0TODO及实际package通过。六physical合跑6entered/5父终局后原300s截断，仅未完成第6父另有限5pass/0fail/0skip/0TODO，不拼全量绿。精确CI37783171051仍539/824、2active/283queued原300s截断，四计数unknown；最后活动文件不定位根因。详见[65a矩阵](K1A与全项目release验收-2026-10-08.md#r2165a冻结输入的完整执行与剩余截断)。旧8d0失败不覆盖，最终docs-only提交CI按实际SHA单独核查并由交付链接给出，不借65a；opening append换Root未正式证明、skip/TODO、GAP-160及稳定吞吐/具体环境原因unknown继续保留。下方仅历史。
 
 ## 2026-10-08 review 接手状态
 
