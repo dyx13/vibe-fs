@@ -16,8 +16,8 @@ module CasebookFetchSurface =
             Wanxiangshu.OpenCode.FetchTool.spec
                 (Wanxiangshu.OpenCode.ToolHostCodec.factory toolModule)
                 workspaceRoot
-                (storeOf store)
                 (unbox<CasebookSettlementOwner> owner)
+                (storeOf store)
 
         box
             {| name = spec.Name

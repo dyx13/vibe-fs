@@ -54,7 +54,7 @@ test('WHAT[knowledge-reuse-015] one physical target capture supplies the actual 
     const { identity, baseline, shelfmark } = await createCase(local)
     const { port, prompts, createCalls } = scriptedBookkeeperPort()
     installBookkeeperRuntime(port, [identity])
-    const subject = join(local.dir, 'subject.txt')
+    const subject = join(fs.realpathSync(local.dir), 'subject.txt')
     writeFileSync(subject, 'version-C')
     let reads = 0
     fs.readFileSync = (path, ...args) => {

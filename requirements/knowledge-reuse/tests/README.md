@@ -7,6 +7,8 @@ WHAT 是权威；本文不增加规则。先构建当前产物，再用 verifica
 - 003 驱动真实实质访问记录器，证明提交/失败和路径归属；尚未覆盖每个实际文件工具的收集链。旧 grep/glob observation 编码和 shell 字符串识别不再冒充实质访问证明。
 - 006 保留真实 js-bookkeeper staging、重复 setter/异常回滚、无绑定拒绝、受控 Host 拒绝。新增真实 fetch→Bookkeeper→EventStore 回归：文件 B→C 时成功程序不调用 setter，Q/A 与 completion 基线保持原值，maintenance 基线仍保存 C 的完整 payload 和 hash；重开存储后不重复维护 C，下次变化精确维护 C→D。原实现通过，阻止零 setter 成功推进基线的隔离变异在 C 的 hash 断言失败。prompt/schema 只能说明传入了什么，不证明仓库访问权限拒绝；该项仍保留 TODO。旧 needsRefresh helper 的 replay 结果不作为现行维护证明。
 - 009 证明无 marker 时实际 fetch 拒绝、显式 lifecycle 不归档；所有插件描述/索引/事件零影响待证。
+- 009/011 的 K1-A 正式回归通过真实 FetchSurface、同实际 Store、不同 required owner 和原 Bookkeeper SendPrompt barrier，覆盖相同路径、字面目录/.、相对路径、实际符号链接的合流；真实 linked worktree 共 common-dir 但物理根不同，必须独立 Access/Refresh。绑定时捕获物理根，marker/diff/key共用；不存在root中立，EIO原样拒绝。异Store不能借别名绕过拒绝。独立进程cold完整核Case、双基线及maintenance payload，未授跨副本或完整Host验收。
+- 011 的 K1-F 四叶保成功、普通observer异常、fatal callback返回/抛错后，同一原始key和同实际Store下一次实际追加合法Access、新eventId/零Cuts，保Q&A与双基线，允许accessOrder推进。原finally已有保护；Unknown后再入、双waiter throwing仍未验收，不能将单waiter证明相加销项。missingroot绑定None后不重新绑定后来创建的根；目录替换、移动、大小写及跨进程flight保留。
 - 010 保留显式 lifecycle 清理、重复 finalization 和同步委托组合；其中测试手工 notePrompt/noteAnswer 后归档，不能证明真实 resume 分段、Fission 汇合或生产 terminal 自动归档。
 - 012 证明公开索引字段与寻址；epoch 是局部缓存证据，不证明完整 provider 低信任包装。
 - 013 原成功写入/重开已由007承接；这些不是 crash cut。自建 fatal descriptor 与源码词形不能证明结算、报告和进程退出，改为 TODO。

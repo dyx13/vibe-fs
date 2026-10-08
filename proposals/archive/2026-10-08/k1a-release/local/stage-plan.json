@@ -1,0 +1,121 @@
+[
+  {
+    "label": "format:check",
+    "cmd": "npm",
+    "argv": [
+      "run",
+      "format:check"
+    ],
+    "timeoutMs": 600000,
+    "stageEnvironment": {
+      "NODE_TEST_CONCURRENCY": "2",
+      "UNIT_VERDICT_SILENCE_MS": "30000",
+      "WXS_RELEASE": "0",
+      "WXS_TIER_INTEGRATION": "unset",
+      "WXS_TIER_RELEASE": "unset",
+      "TESTS_MJS_FILES": "unset"
+    }
+  },
+  {
+    "label": "check",
+    "cmd": "npm",
+    "argv": [
+      "run",
+      "check"
+    ],
+    "timeoutMs": 600000,
+    "stageEnvironment": {
+      "NODE_TEST_CONCURRENCY": "2",
+      "UNIT_VERDICT_SILENCE_MS": "30000",
+      "WXS_RELEASE": "0",
+      "WXS_TIER_INTEGRATION": "unset",
+      "WXS_TIER_RELEASE": "unset",
+      "TESTS_MJS_FILES": "unset"
+    }
+  },
+  {
+    "label": "build",
+    "cmd": "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "argv": [
+      "/Users/yuanxi/Workwork/vibe-fs/scripts/build.mjs",
+      "--clean"
+    ],
+    "timeoutMs": 600000,
+    "stageEnvironment": {
+      "NODE_TEST_CONCURRENCY": "2",
+      "UNIT_VERDICT_SILENCE_MS": "30000",
+      "WXS_RELEASE": "0",
+      "WXS_TIER_INTEGRATION": "unset",
+      "WXS_TIER_RELEASE": "unset",
+      "TESTS_MJS_FILES": "unset"
+    }
+  },
+  {
+    "label": "unit",
+    "cmd": "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "argv": [
+      "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/run.mjs"
+    ],
+    "timeoutMs": 600000,
+    "stageEnvironment": {
+      "NODE_TEST_CONCURRENCY": "2",
+      "UNIT_VERDICT_SILENCE_MS": "30000",
+      "WXS_E2E_QUIET": "1",
+      "WXS_RELEASE": "0",
+      "WXS_TIER_INTEGRATION": "unset",
+      "WXS_TIER_RELEASE": "unset",
+      "TESTS_MJS_FILES": "unset"
+    }
+  },
+  {
+    "label": "integration",
+    "cmd": "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "argv": [
+      "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/run.mjs"
+    ],
+    "timeoutMs": 1200000,
+    "stageEnvironment": {
+      "NODE_TEST_CONCURRENCY": "2",
+      "UNIT_VERDICT_SILENCE_MS": "30000",
+      "WXS_E2E_QUIET": "1",
+      "WXS_RELEASE": "1",
+      "WXS_TIER_INTEGRATION": "unset",
+      "WXS_TIER_RELEASE": "unset",
+      "TESTS_MJS_FILES": "unset"
+    }
+  },
+  {
+    "label": "e2e",
+    "cmd": "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "argv": [
+      "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs"
+    ],
+    "timeoutMs": 1500000,
+    "stageEnvironment": {
+      "NODE_TEST_CONCURRENCY": "2",
+      "UNIT_VERDICT_SILENCE_MS": "30000",
+      "WXS_E2E_QUIET": "1",
+      "WXS_RELEASE": "0",
+      "WXS_TIER_INTEGRATION": "unset",
+      "WXS_TIER_RELEASE": "1",
+      "TESTS_MJS_FILES": "unset"
+    }
+  },
+  {
+    "label": "package",
+    "cmd": "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "argv": [
+      "/Users/yuanxi/Workwork/vibe-fs/scripts/verify-package.mjs"
+    ],
+    "timeoutMs": 600000,
+    "stageEnvironment": {
+      "NODE_TEST_CONCURRENCY": "2",
+      "UNIT_VERDICT_SILENCE_MS": "30000",
+      "WXS_E2E_QUIET": "1",
+      "WXS_RELEASE": "0",
+      "WXS_TIER_INTEGRATION": "unset",
+      "WXS_TIER_RELEASE": "unset",
+      "TESTS_MJS_FILES": "unset"
+    }
+  }
+]

@@ -1,5 +1,15 @@
 # K1-A / K1-F：工作区别名与结算后再次准入
 
+## 2026-10-08 review 接手状态
+
+本轮已认领 K1-A 和本卡 K1-F 的成功、普通异常、fatal 返回/抛错四叶再入证明。基线 `c05ee5a22`，起始工作区干净；`0e949fb7b` 忙碌 resume 隔离已在 HEAD 中，不重复施工。
+
+正式旧实现 gen316：011 完成 1/1 文件，11 pass / 4 fail / 0 skip / 1 TODO。三种路径别名及别名异 Store 绑定明确失败；相同路径、真实 linked worktree 负控和原结算控制通过。009 完成 1/1，3 pass / 1 fail / 0 skip / 1 TODO，唯一失败为受控 realpath EIO 未拒绝绑定。原件见[本轮验收记录](K1A与全项目release验收-2026-10-08.md)。review 的 `/tmp` 脚本仅作来源，未替代正式测试。
+
+首版修复 gen317 的009/011为19 pass / 0 fail / 0 skip / 2 TODO，2/2排空、资源检查accepted=true；仍退出1，仅pending policy，不能宣称整个包验收。随后把同key再入改为前后完全相同原始路径，并明确先绑定物理根/schema再acquire Store，避免路径解析错误新增引用。最终相关套件及完整release尚待执行，下面原施工步骤保留作验收清单。
+
+K1-A/K1-F四叶局部闭环：gen319完整knowledge-reuse/EFP+JS002/verification017/Host026为33/33、221 pass / 0 fail / 0 skip / 19 TODO，exit1仅pending，outer349 accepted=true/18.785ms。前轮gen318的唯一015失败是临时目录别名导致夹具未拦截物理路径，修正hook目标后完整复验，未弱化只读一次及双次diff断言。显式两阶段绑定的生成JS已核先spec绑定再acquire，仅作发射调序辅助证据；没有新增registry或重绑Store。Unknown再入、双waiter throwing、GAP-160整体继续保留。完整release另按本轮记录执行。
+
 从`b85533202`接续。这里只完成源码审计/施工计划，尚未执行反例或修改实现，不能把预计红/绿填成证据。K1-U/V/W已有限完成，不重复；完整只读审计另存archive。
 
 ## K1-A优先：同物理工作区不能因字符串别名分flight

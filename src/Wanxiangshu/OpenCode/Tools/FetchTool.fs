@@ -1,6 +1,8 @@
 namespace Wanxiangshu.OpenCode
 
 open System
+open Fable.Core
+open Fable.Core.JsInterop
 open Wanxiangshu.Foundation
 open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Persistence.EventStore
@@ -34,6 +36,15 @@ module FetchTool =
         let ShelfmarkRequired = "tool/fetch/shelfmark-required"
 
     let private fetchGate = obj ()
+
+    [<Import("realpathSync", "node:fs")>]
+    let private realpathSync (path: string) : string = jsNative
+
+    let private bindWorkspaceRoot workspaceRoot =
+        try
+            Some(realpathSync workspaceRoot)
+        with error when string error?code = "ENOENT" ->
+            None
 
     let private fetchInFlight =
         System.Collections.Generic.Dictionary<string * string, IEventStore * System.Threading.Tasks.Task<string>>()
@@ -144,26 +155,33 @@ module FetchTool =
     let spec
         (factory: HostToolFactory)
         (workspaceRoot: string)
-        (store: IEventStore)
         (owner: CasebookSettlementOwner)
-        : ToolSpec =
+        : IEventStore -> ToolSpec =
         if isNull (box owner) then
             nullArg "owner"
 
-        { Name = "fetch"
-          Description = prose (ProviderLanguageBinding.readGlobalPreference ()) Path.Description
-          Arguments = [ "shelfmark", ToolHostCodec.stringSchema factory ]
-          Admission = admission
-          Execute =
-            fun args ctx ->
-                task {
-                    let language = lang ctx
-                    let shelfmark = args.Text "shelfmark"
+        let physicalRoot = bindWorkspaceRoot workspaceRoot
+        let arguments = [ "shelfmark", ToolHostCodec.stringSchema factory ]
 
-                    if not (CasebookFeature.isEnabled workspaceRoot) then
-                        return unavailable language
-                    elif String.IsNullOrWhiteSpace shelfmark then
-                        return ToolHostCodec.tomlObjectWithInstructions [ prose language Path.ShelfmarkRequired ] []
-                    else
-                        return! getOrCreateFlightWork owner language workspaceRoot store shelfmark
-                } }
+        fun store ->
+            { Name = "fetch"
+              Description = prose (ProviderLanguageBinding.readGlobalPreference ()) Path.Description
+              Arguments = arguments
+              Admission = admission
+              Execute =
+                fun args ctx ->
+                    task {
+                        let language = lang ctx
+                        let shelfmark = args.Text "shelfmark"
+
+                        match physicalRoot with
+                        | Some root when CasebookFeature.isEnabled root ->
+                            if String.IsNullOrWhiteSpace shelfmark then
+                                return
+                                    ToolHostCodec.tomlObjectWithInstructions
+                                        [ prose language Path.ShelfmarkRequired ]
+                                        []
+                            else
+                                return! getOrCreateFlightWork owner language root store shelfmark
+                        | _ -> return unavailable language
+                    } }

@@ -1,0 +1,91 @@
+{
+  "root": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo",
+  "node": "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+  "npm": "/private/tmp/vibe-fs-t388-selected-npm/package/bin/npm-cli.js",
+  "sdk": "/opt/homebrew/Cellar/dotnet/10.0.302/libexec",
+  "packages": [
+    {
+      "id": "fable",
+      "version": "5.13.0",
+      "archivePath": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/fable.5.13.0.nupkg",
+      "sha512": "XbPbm+0ZLocSdlXAu3812SoXpZQocxpY6fL2tqSvk4Ln7D1Iv8kAfM4f3PfDrJ8J4U7KL3p0saFAZ94TciCgbQ==",
+      "sha256": "e409e7f2c0f4ecb86d4645b47e99b83fdd1c8d57ee8f279bf0b5b87df67f1012",
+      "bytes": 13902748,
+      "source": "/Users/yuanxi/.nuget/packages/fable/5.13.0/fable.5.13.0.nupkg"
+    },
+    {
+      "id": "fantomas",
+      "version": "6.3.0",
+      "archivePath": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/fantomas.6.3.0.nupkg",
+      "sha512": "pwg1buPBNciNdZ+SqsddJy+ecG8f0VHdTa2w1rgIsWljatxAh1oOhYqPurnlAGpHWzus1nEufSAN7aF/ZFLQxg==",
+      "sha256": "3d68b2ce48832fc2c113f7f00a54b477a3eb1340f9a4a618662303666ca4f58d",
+      "bytes": 5811389,
+      "source": "/Users/yuanxi/.nuget/packages/fantomas/6.3.0/fantomas.6.3.0.nupkg"
+    },
+    {
+      "id": "fsharp.core",
+      "version": "10.1.203",
+      "archivePath": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/fsharp.core.10.1.203.nupkg",
+      "sha512": "97FbaR75afYTJW/eu1dyLUdns4FPW7WJ1XJ71N6ETTWcRmNQr6WAcBdd6RsRRuax6tvy6hF1JdFiBvWV6/zifQ==",
+      "sha256": "b8ecba5c6b8713aad28c8f3c2b98a633aeeffa877ae389ea429b99650202fcd5",
+      "bytes": 3058847,
+      "source": "/Users/yuanxi/.nuget/packages/fsharp.core/10.1.203/fsharp.core.10.1.203.nupkg"
+    },
+    {
+      "id": "fable.core",
+      "version": "5.0.0",
+      "archivePath": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/fable.core.5.0.0.nupkg",
+      "sha512": "65IxKwus/l/ceVMKsB3z41Szb4+1Zj63muviXFEK/u0ixYQjQ/emnFQdwVba6TL4oXhX/8NuHdoEVO+6dBX1gA==",
+      "sha256": "81ee135f55c3423bfc2edafb62a7742cb36e1250d9792d08c2d9ef1f7091de8d",
+      "bytes": 358093,
+      "source": "/Users/yuanxi/.nuget/packages/fable.core/5.0.0/fable.core.5.0.0.nupkg"
+    },
+    {
+      "id": "fstoolkit.errorhandling",
+      "version": "5.2.0",
+      "archivePath": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/fstoolkit.errorhandling.5.2.0.nupkg",
+      "sha512": "PJ26PxiwVm4WIWs8hQCXgamI8beCdrxRK/UkO8wexwrtPLewUOXEhPmGjFJsL7PGztpvPRwbSIPCoZmTVxHNUw==",
+      "sha256": "e0fcad07e0d269574766c7139adac58c7562da476a0f136d26a5c58b1c43491f",
+      "bytes": 2932072,
+      "source": "/Users/yuanxi/.nuget/packages/fstoolkit.errorhandling/5.2.0/fstoolkit.errorhandling.5.2.0.nupkg"
+    },
+    {
+      "id": "thoth.json",
+      "version": "10.5.1",
+      "archivePath": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/thoth.json.10.5.1.nupkg",
+      "sha512": "w4HNNEe8FhlH/+6F6AKTWReqmrg9Eba/eyTnz0nRE1VWRccBwyZYUad90uxua8MgvJS+wVLE4xtgMlL11S0rQQ==",
+      "sha256": "43061c8c3305f3ae14d4eca9c0c7635f922bc94df73f259bab6d2bd7f606ca43",
+      "bytes": 134307,
+      "source": "/Users/yuanxi/.nuget/packages/thoth.json/10.5.1/thoth.json.10.5.1.nupkg"
+    }
+  ],
+  "sdkArchive": {
+    "path": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/sdk.tar",
+    "sha256": "bb2a21b70337ec025bba77bb3a64160043268804dba244d4ce5cff4fd183d5d0",
+    "bytes": 691481600
+  },
+  "provenance": "Caller-selected existing SDK and cached NuGet archive bytes captured for this task; identities do not authenticate publishers; no tests or build executed",
+  "versions": {
+    "node": "v22.23.3",
+    "npm": "11.12.1",
+    "dotnet": "10.0.302",
+    "fable": "5.13.0",
+    "fantomas": "6.3.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "entryDigests": {
+    "node": {
+      "path": "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+      "sha256": "68f4d07ca49e0500cc135c7e0a445093e228e42e126ac22306d045f0a8c2636b"
+    },
+    "npmCli": {
+      "path": "/private/tmp/vibe-fs-t388-selected-npm/package/bin/npm-cli.js",
+      "sha256": "8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7"
+    },
+    "dotnet": {
+      "path": "/opt/homebrew/Cellar/dotnet/10.0.302/libexec/dotnet",
+      "sha256": "30d19993d8cfe1b1604d162100d416a7dc4a060dbd88dcdb538ce75aa2353c89"
+    }
+  }
+}

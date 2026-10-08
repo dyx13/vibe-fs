@@ -33,8 +33,4 @@ module FetchTool =
     val admission: ToolAdmission
 
     val spec:
-        factory: HostToolFactory ->
-        workspaceRoot: string ->
-        store: IEventStore ->
-        owner: CasebookSettlementOwner ->
-            ToolSpec
+        factory: HostToolFactory -> workspaceRoot: string -> owner: CasebookSettlementOwner -> (IEventStore -> ToolSpec)

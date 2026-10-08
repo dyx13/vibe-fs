@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { existsSync, mkdtempSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { runVerificationToolProbe } from '../../../scripts/lib/verification-tool-probe.mjs'
 import { sandbox, createCase, deferred, casebook, eventStore, index, parse } from './support/casebook.mjs'
@@ -22,7 +23,11 @@ test('WHAT[knowledge-reuse-011] overlapping fetches join one actual in-flight ma
     writeFileSync(join(local.dir, 'subject.txt'), 'version-C')
     const { port, createCalls } = scriptedBookkeeperPort()
     const send = port.SendPrompt
-    port.SendPrompt = async (...args) => { reached.resolve(); await release.promise; return send(...args) }
+    port.SendPrompt = async (...args) => {
+      reached.resolve()
+      await release.promise
+      return send(...args)
+    }
     installBookkeeperRuntime(port, [identity])
     first = local.fetch(shelfmark)
     await reached.promise
@@ -45,7 +50,8 @@ const bindOwnedFetch = (directory, store, owner) => fetchSurface.contract(
 const executeFetch = (tool, shelfmark) => tool.execute({ shelfmark }, { sessionID: 'reader', agent: 'engineer' })
 const observedTypes = observations => observations.flatMap(value => value.originalRequested.map(event => event.type))
 
-test('WHAT[knowledge-reuse-011] same workspace and actual store share one Bookkeeper across two tool bindings with different required owners', async () => {
+for (const spelling of ['identical', 'dot', 'relative', 'symlink']) {
+test(`WHAT[knowledge-reuse-011] physical workspace ${spelling} bindings and different required owners share one actual flight`, async t => {
   const local = sandbox()
   const reached = deferred()
   const release = deferred()
@@ -55,6 +61,7 @@ test('WHAT[knowledge-reuse-011] same workspace and actual store share one Bookke
   let shared
   let left
   let right
+  let link
   try {
     const { identity, baseline, shelfmark } = await createCase(local, 'same-workspace-two-owners')
     writeFileSync(join(local.dir, 'subject.txt'), 'version-C')
@@ -63,7 +70,17 @@ test('WHAT[knowledge-reuse-011] same workspace and actual store share one Bookke
     const rightOwner = settlements.createOwner(value => rightIncidents.push(value))
     assert.notStrictEqual(leftOwner, rightOwner)
     const leftTool = bindOwnedFetch(local.dir, shared, leftOwner)
-    const rightTool = bindOwnedFetch(local.dir, shared, rightOwner)
+    let alias = local.dir
+    if (spelling === 'dot') alias = `${local.dir}/.`
+    if (spelling === 'relative') alias = relative(process.cwd(), local.dir)
+    if (spelling === 'symlink') {
+      link = `${local.dir}-alias`
+      symlinkSync(local.dir, link, 'dir')
+      alias = link
+    }
+    assert.equal(realpathSync(alias), realpathSync(local.dir))
+    if (spelling !== 'identical') assert.notEqual(alias, local.dir)
+    const rightTool = bindOwnedFetch(alias, shared, rightOwner)
     const { port, createCalls, programCalls } = scriptedBookkeeperPort()
     const send = port.SendPrompt
     port.SendPrompt = async (...args) => {
@@ -104,17 +121,33 @@ test('WHAT[knowledge-reuse-011] same workspace and actual store share one Bookke
       assert.deepEqual(eventStore.read(local.store, event.id), event)
     }
     const current = await casebook.fetchCaseByIdentity(local.store, identity)
+    assert.equal(current.q, CANONICAL_Q)
     assert.equal(current.a, CANONICAL_A)
     assert.equal(current.completionFileState, baseline)
     assert.notEqual(current.maintenanceFileState, baseline)
+    const target = JSON.parse(current.maintenanceFileState)['subject.txt']
+    assert.equal(Buffer.from(await eventStore.readPayload(local.store, target.payloadRef)).toString(), 'version-C')
+    const beforeBytes = readFileSync(join(local.dir, 'wanxiang', 'events', 'review-writer.ndjson'))
+    eventStore.dispose(shared)
+    shared = undefined
+    eventStore.dispose(local.store)
+    const cold = JSON.parse(await runVerificationToolProbe(process.execPath, [
+      fileURLToPath(new URL('./support/fetch-cold-child.mjs', import.meta.url)), local.dir, identity,
+    ], { cwd: local.dir, env: { ...process.env }, signal: t.signal }))
+    assert.notEqual(cold.pid, process.pid)
+    assert.deepEqual(cold.current, { ...current, accessOrder: current.accessOrder.toString(), lastAccessOrder: current.lastAccessOrder.toString() })
+    assert.equal(cold.payloads['subject.txt'], Buffer.from('version-C').toString('base64'))
+    assert.deepEqual(readFileSync(join(local.dir, 'wanxiang', 'events', 'review-writer.ndjson')), beforeBytes)
   } finally {
     release.resolve()
     await Promise.allSettled([left, right])
     bookkeeper.resetRuntime()
     if (shared) eventStore.dispose(shared)
+    if (link) rmSync(link)
     local.close()
   }
 })
+}
 
 test('WHAT[knowledge-reuse-011] different workspaces with the same shelfmark keep the paused Refresh and actual malformed Access cut with their own owners', async () => {
   const leftLocal = sandbox()
@@ -216,6 +249,135 @@ test('WHAT[knowledge-reuse-011] different workspaces with the same shelfmark kee
 
 const storeMismatchMessage = 'Casebook fetch flight store binding mismatch'
 
+test('WHAT[knowledge-reuse-011] real linked worktrees sharing a common directory and Store retain separate physical flights', async () => {
+  const local = sandbox()
+  const worktree = `${local.dir}-linked`
+  const reached = deferred()
+  const release = deferred()
+  const observations = []
+  let shared
+  let left
+  let right
+  const git = args => execFileSync('git', ['-C', local.dir, ...args], { encoding: 'utf8' }).trim()
+  try {
+    const { identity, baseline, shelfmark } = await createCase(local, 'linked-worktree-flight')
+    git(['init', '--quiet'])
+    git(['add', 'subject.txt'])
+    git(['-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '--quiet', '-m', 'fixture'])
+    git(['worktree', 'add', '--quiet', '--detach', worktree, 'HEAD'])
+    mkdirSync(join(worktree, '.wanxiang', 'casebook'), { recursive: true })
+    const common = root => realpathSync(resolve(root, execFileSync('git', ['-C', root, 'rev-parse', '--git-common-dir'], { encoding: 'utf8' }).trim()))
+    assert.equal(common(local.dir), common(worktree))
+    assert.notEqual(realpathSync(local.dir), realpathSync(worktree))
+    assert.equal(readFileSync(join(worktree, 'subject.txt'), 'utf8'), 'version-B')
+    writeFileSync(join(local.dir, 'subject.txt'), 'version-C')
+    shared = eventStore.createAppendPayloadStore(local.store, false, value => observations.push(value))
+    const owner = settlements.createOwner(() => assert.fail('valid linked workspace received a fatal incident'))
+    const leftTool = bindOwnedFetch(local.dir, shared, owner)
+    const rightTool = bindOwnedFetch(worktree, shared, owner)
+    const { port, createCalls, programCalls } = scriptedBookkeeperPort()
+    const send = port.SendPrompt
+    port.SendPrompt = async (...args) => { reached.resolve(); await release.promise; return send(...args) }
+    installBookkeeperRuntime(port, [identity])
+    left = executeFetch(leftTool, shelfmark)
+    await Promise.race([reached.promise, left.then(() => assert.fail('left Refresh missed its actual barrier'))])
+    right = executeFetch(rightTool, shelfmark)
+    const outcomes = Promise.allSettled([left, right])
+    release.resolve()
+    const [maintained, unchanged] = await outcomes
+    assert.equal(maintained.status, 'fulfilled', maintained.reason)
+    assert.equal(unchanged.status, 'fulfilled', unchanged.reason)
+    assert.equal(parse(maintained.value).answer, CANONICAL_A)
+    assert.equal(parse(unchanged.value).answer, 'Answer B')
+    assert.equal(createCalls.length, 1)
+    assert.equal(programCalls.length, 1)
+    assert.equal(observations.length, 3)
+    for (const observation of observations) {
+      assert.equal(observation.append.error, null)
+      assert.deepEqual(observation.append.cuts, [])
+    }
+    assert.equal(observedTypes(observations).filter(type => type === 'EngineerCaseRefreshed').length, 1)
+    assert.equal(observedTypes(observations).filter(type => type === 'EngineerCaseAccessed').length, 2)
+    const current = await casebook.fetchCaseByIdentity(local.store, identity)
+    assert.equal(current.q, CANONICAL_Q)
+    assert.equal(current.a, CANONICAL_A)
+    assert.equal(current.completionFileState, baseline)
+    assert.notEqual(current.maintenanceFileState, baseline)
+  } finally {
+    release.resolve()
+    await Promise.allSettled([left, right])
+    bookkeeper.resetRuntime()
+    if (shared) eventStore.dispose(shared)
+    if (existsSync(worktree)) git(['worktree', 'remove', '--force', worktree])
+    local.close()
+  }
+})
+
+for (const fate of ['success', 'ordinary-exception', 'fatal-return', 'fatal-throw']) {
+test(`WHAT[knowledge-reuse-011] same key and actual Store execute again after ${fate} settlement`, async t => {
+  const local = sandbox()
+  const observations = []
+  const incidents = []
+  const sentinel = new Error('original flight callback exception')
+  let shared
+  try {
+    const { identity, baseline, shelfmark } = await createCase(local, `reenter-${fate}`)
+    const before = await casebook.fetchCaseByIdentity(local.store, identity)
+    const observe = value => {
+      observations.push(value)
+      if (fate === 'ordinary-exception' && observations.length === 1) throw sentinel
+    }
+    shared = fate.startsWith('fatal')
+      ? eventStore.createAppendPayloadStoreAt(local.store, 1, observe)
+      : eventStore.createAppendPayloadStore(local.store, false, observe)
+    const firstOwner = settlements.createOwner(incident => {
+      incidents.push(incident)
+      if (fate === 'fatal-throw') throw sentinel
+    })
+    const first = await Promise.allSettled([executeFetch(bindOwnedFetch(local.dir, shared, firstOwner), shelfmark)])
+    if (fate.startsWith('fatal')) {
+      assert.equal(first[0].status, 'rejected')
+      assert.equal(incidents.length, 1)
+      assert.strictEqual(first[0].reason, fate === 'fatal-throw' ? sentinel : incidents[0])
+      assert.deepEqual(await casebook.fetchCaseByIdentity(local.store, identity), before)
+      assert.equal(observations[0].append.cuts.length, 1)
+    } else {
+      assert.equal(first[0].status, 'fulfilled', first[0].reason)
+      assert.equal(parse(first[0].value).answer, before.a)
+      assert.deepEqual(incidents, [])
+    }
+    const secondOwner = settlements.createOwner(() => assert.fail('subsequent legal Access received an incident'))
+    const second = await executeFetch(bindOwnedFetch(local.dir, shared, secondOwner), shelfmark)
+    assert.equal(parse(second).answer, before.a)
+    assert.equal(observations.length, 2, 'a settled key must execute a new actual Access')
+    assert.deepEqual(observedTypes(observations), ['EngineerCaseAccessed', 'EngineerCaseAccessed'])
+    const [firstEvent, secondEvent] = observations.map(value => value.originalRequested[0])
+    assert.notEqual(firstEvent.id, secondEvent.id)
+    assert.equal(observations[1].append.error, null)
+    assert.deepEqual(observations[1].append.cuts, [])
+    assert.deepEqual(eventStore.read(local.store, secondEvent.id), secondEvent)
+    const current = await casebook.fetchCaseByIdentity(local.store, identity)
+    assert.equal(current.q, before.q)
+    assert.equal(current.a, before.a)
+    assert.equal(current.completionFileState, baseline)
+    assert.equal(current.maintenanceFileState, baseline)
+    assert.ok(current.accessOrder > before.accessOrder)
+    const bytes = readFileSync(join(local.dir, 'wanxiang', 'events', 'review-writer.ndjson'))
+    eventStore.dispose(shared)
+    shared = undefined
+    eventStore.dispose(local.store)
+    const cold = JSON.parse(await runVerificationToolProbe(process.execPath, [
+      fileURLToPath(new URL('./support/fetch-cold-child.mjs', import.meta.url)), local.dir, identity,
+    ], { cwd: local.dir, env: { ...process.env }, signal: t.signal }))
+    assert.deepEqual(cold.current, { ...current, accessOrder: current.accessOrder.toString(), lastAccessOrder: current.lastAccessOrder.toString() })
+    assert.deepEqual(readFileSync(join(local.dir, 'wanxiang', 'events', 'review-writer.ndjson')), bytes)
+  } finally {
+    if (shared) eventStore.dispose(shared)
+    local.close()
+  }
+})
+}
+
 test('WHAT[knowledge-reuse-011] an active workspace flight rejects a different actual store capability without a second Bookkeeper or append', async () => {
   const local = sandbox()
   const reached = deferred()
@@ -238,7 +400,7 @@ test('WHAT[knowledge-reuse-011] an active workspace flight rejects a different a
     firstStore = eventStore.createAppendPayloadStore(local.store, false, value => firstObservations.push(value))
     secondStore = eventStore.createAppendPayloadStore(secondBase, false, value => secondObservations.push(value))
     const firstTool = bindOwnedFetch(local.dir, firstStore, settlements.createOwner(value => firstIncidents.push(value)))
-    const secondTool = bindOwnedFetch(local.dir, secondStore, settlements.createOwner(value => secondIncidents.push(value)))
+    const secondTool = bindOwnedFetch(`${local.dir}/.`, secondStore, settlements.createOwner(value => secondIncidents.push(value)))
     const { port, createCalls, programCalls } = scriptedBookkeeperPort()
     const send = port.SendPrompt
     port.SendPrompt = async (...args) => {
