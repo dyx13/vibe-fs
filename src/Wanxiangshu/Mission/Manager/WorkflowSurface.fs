@@ -1,6 +1,7 @@
 namespace Wanxiangshu.Mission.Manager
 
 open System.Threading.Tasks
+open Wanxiangshu.Composition.Durable
 open Wanxiangshu.Composition.Turn
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
@@ -17,13 +18,28 @@ module ManagerWorkflowSurface =
         (directory: string)
         (stopRetiredAttempt: string -> Task<unit>)
         : Task =
+        let sessionId = SessionId.create session
+
+        let retirement =
+            AgentProjection.tryFind sessionId (AgentJournal.snapshot journal.Journal).AgentProjections
+            |> Option.bind (fun projection -> projection.Relay)
+            |> Option.bind (fun relay ->
+                Wanxiangshu.Mission.Relay.Fold.view relay (Wanxiangshu.Mission.Relay.RoadId.create session))
+            |> Option.bind (fun road -> road.LatestRetirement)
+            |> Option.defaultWith (fun () -> invalidOp "Manager retirement unavailable")
+
         ManagerWorkflow.continueAfterRetiredAttempt
             (DispatchSurface.sessionPort port)
             (DispatchSurface.rootWorkspaceReader (box directory))
             (Some journal.Journal)
             (Some directory)
-            (SessionId.value >> stopRetiredAttempt)
-            (SessionId.create session)
+            (fun sessionId _ continueLoop ->
+                task {
+                    do! stopRetiredAttempt (SessionId.value sessionId)
+                    do! continueLoop ()
+                })
+            sessionId
+            retirement
 
     let maybeDeliverLoop (port: obj) (journal: JournalHandle) (session: string) (directory: string) : Task =
         ManagerWorkflow.maybeDeliverLoop
@@ -31,6 +47,7 @@ module ManagerWorkflowSurface =
             (DispatchSurface.rootWorkspaceReader (box directory))
             (Some journal.Journal)
             (Some directory)
+            (fun _ _ continueLoop -> continueLoop ())
             (Some session)
 
     let observeIdle

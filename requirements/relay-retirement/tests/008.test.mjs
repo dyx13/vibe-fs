@@ -10,10 +10,16 @@ import * as dispatch from '../../../dist/Interaction/Dispatch/DispatchSurface.js
 import * as projection from '../../../dist/Mission/Relay/ProjectionSurface.js'
 import * as journal from '../../../dist/Persistence/Journal/Surface.js'
 import { withManagerLoop } from '../../relay-incumbency/tests/support/manager-loop.mjs'
+import { withChangeInterrupt } from './support/change-interrupt.mjs'
 
 test('WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt', async () => {
   await withReview(async ({execute, hooks, directory, runtime, session}) => {
     assert.match(await execute(scores('PERFECT')), /recorded = true/)
+    runtime.pushHostMessage(session, {
+      info: { id: 'retirement-run', role: 'assistant', sessionID: session, parentID: 'user-root', time: { created: 3 } },
+      parts: [{ type: 'tool', tool: 'suicide', callID: 'suicide-call',
+        state: { status: 'completed', input: {}, output: 'finished = true' } }],
+    })
     const result = await hooks.tool.suicide.execute({}, {sessionID: session, callID: 'suicide-call', messageID: 'retirement-run', agent: 'manager'})
     assert.match(result, /finished = true/)
     assert.deepEqual(runtime.abortedIds, [])
@@ -69,8 +75,8 @@ test('WHAT[relay-retirement-008] actual Continue starts one same-session success
 
 test('WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools', async () => {
   const { withExecutablePlugin, acceptAuthorityRoot } = await import('../../verification-system/tests/support/plugin-fixture.mjs')
-  await withExecutablePlugin(async (hooks, _directory, _children, runtime) => {
-    const sessionID = 'ses-accepted-human-successor'
+  const withLateCutPhase = async latePhase => withExecutablePlugin(async (hooks, _directory, _children, runtime) => {
+    const sessionID = `ses-accepted-human-successor-${latePhase}`
     const rootID = `root-${sessionID}`
     const root = {
       id: rootID,
@@ -132,6 +138,27 @@ test('WHAT[relay-retirement-008] physical prompt after Accepted suicide invalida
       { sessionID, messageID: humanNext.id, agent: 'manager' },
       { message: humanNext, parts: humanNext.parts },
     )
+    const freshOwner = structuredClone(dispatch.projectionObservation(runtime.journal, sessionID).activeLogicalRun)
+    assert.deepEqual(runtime.abortedIds, [])
+    const retiredHistory = [
+      structuredClone(user),
+      { info: { id: review.id, role: 'assistant', sessionID, parentID: rootID }, parts: structuredClone(review.parts) },
+      { info: { id: retiredRun.id, role: 'assistant', sessionID, parentID: rootID }, parts: structuredClone(retiredRun.parts) },
+    ]
+    const assertLateRetiredRequest = async () => {
+      const beforePrompts = runtime.prompts.length
+      const beforeRoad = structuredClone(journal.JournalSurface_snapshot(runtime.journal).sessionProjections[sessionID].relay)
+      const output = { messages: structuredClone(retiredHistory) }
+      await hooks['experimental.chat.messages.transform']({ sessionID }, output)
+      assert.deepEqual(output.messages, [], `${latePhase}: the retired physical request must stay suppressed`)
+      assert.deepEqual(runtime.abortedIds, [], `${latePhase}: the old cut must not abort the new HumanRoot`)
+      assert.equal(runtime.prompts.length, beforePrompts, `${latePhase}: the old cut must not open or send a successor`)
+      assert.deepEqual(dispatch.projectionObservation(runtime.journal, sessionID).activeLogicalRun, freshOwner,
+        `${latePhase}: the old cut must preserve the exact new HumanRoot working identity`)
+      assert.deepEqual(journal.JournalSurface_snapshot(runtime.journal).sessionProjections[sessionID].relay, beforeRoad,
+        `${latePhase}: the old cut must leave the current Road unchanged`)
+    }
+    if (latePhase === 'admission') await assertLateRetiredRequest()
     const humanRequest = {
       messages: [
         user,
@@ -145,6 +172,7 @@ test('WHAT[relay-retirement-008] physical prompt after Accepted suicide invalida
       parts: [],
     })
     await hooks['experimental.chat.messages.transform']({ sessionID }, humanRequest)
+    if (latePhase === 'successor-transform') await assertLateRetiredRequest()
 
     // Step 4: After human input, fork must NOT be denied
     const forkSuccessor = await hooks.tool.fork.execute(
@@ -153,6 +181,7 @@ test('WHAT[relay-retirement-008] physical prompt after Accepted suicide invalida
     )
     assert.doesNotMatch(forkSuccessor, /(当前不可用|is not available right now)/, 'fork must be unblocked after human input advances the continuous session')
   })
+  for (const latePhase of ['admission', 'successor-transform']) await withLateCutPhase(latePhase)
 })
 
 test('WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends', async () => {
@@ -214,5 +243,81 @@ test('WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and st
     context.assertSubscriptionLive()
   })
 })
+
+test('WHAT[relay-retirement-008] actual Change continuation stops the retired Host attempt before send and a late transform cannot abort its successor', async () => {
+  await withChangeInterrupt(async context => {
+    assert.equal(await context.continueChange(), 'interrupt',
+      'the real Change await path must enter physical interruption before its successor SendPrompt')
+    assert.equal(context.prompts.length, 0, 'an in-flight physical interruption must hold the successor send')
+    context.releaseAbort()
+    await context.successorAccepted
+    assert.deepEqual(context.order, ['interrupt-started', 'interrupt-completed', 'successor-send'])
+    await context.stopLateTransform()
+    assert.deepEqual(context.order, ['interrupt-started', 'interrupt-completed', 'successor-send'],
+      'the late old transform must reuse the settled exact-cut stop instead of cancelling the successor')
+    assert.equal(context.prompts.length, 1)
+    assert.equal(context.road().iterationOrdinal, 2)
+    assert.equal(context.road().retiredIncumbencyCount, 1)
+    assert.equal(context.openingCount(), 2, 'the initial incumbency and its successor each have one durable opening')
+    assert.deepEqual(dispatch.projectionObservation(context.runtime.journal, context.session).activeLogicalRun, context.profile)
+    assert.equal(dispatch.projectionObservation(context.runtime.journal, context.session).pendingClaims.length, 0)
+  })
+})
+
+test('WHAT[relay-retirement-008] an in-flight old transform and actual Change share one physical stop and one successor opening', async () => {
+  await withChangeInterrupt(async context => {
+    const stopped = context.startStaleTransform()
+    await context.abortStarted
+    await context.activateChange()
+    context.releaseAbort()
+    await Promise.all([stopped, context.successorAccepted])
+    assert.deepEqual(context.order, ['interrupt-started', 'interrupt-completed', 'successor-send'])
+    assert.equal(context.prompts.length, 1)
+    assert.equal(context.openingCount(), 2, 'a captured pre-interruption context must not append the successor twice')
+    assert.equal(context.road().iterationOrdinal, 2)
+    assert.deepEqual(dispatch.projectionObservation(context.runtime.journal, context.session).activeLogicalRun, context.profile)
+  })
+})
+
+test('WHAT[relay-retirement-008] a rejected physical interruption prevents actual Change from sending a successor', async () => {
+  await withChangeInterrupt(async context => {
+    assert.equal(await context.continueChange(), 'interrupt')
+    context.releaseAbort()
+    const result = await context.joinResult()
+    assert.match(result, /Integration did not succeed\./,
+      'the actual Change workflow must settle its failed publication result')
+    assert.deepEqual(context.order, ['interrupt-started'])
+    assert.equal(context.prompts.length, 0)
+    assert.equal(context.openingCount(), 1, 'a rejected physical stop must not open a successor')
+    assert.deepEqual(dispatch.projectionObservation(context.runtime.journal, context.session).activeLogicalRun, context.profile)
+    await assert.rejects(context.stopLateTransform(), /controlled exact-cut interruption rejected/)
+    assert.deepEqual(context.order, ['interrupt-started'], 'the failed exact-cut stop must not be retried by a late transform')
+    assert.equal(context.prompts.length, 0)
+  }, { interruptError: new Error('controlled exact-cut interruption rejected') })
+})
+
+for (const arrival of ['change-first', 'transform-first']) {
+  test(`WHAT[relay-retirement-008] linked-worktree and root plugin instances share the ${arrival} exact-cut stop`, async () => {
+    await withChangeInterrupt(async context => {
+      let stopped
+      if (arrival === 'transform-first') {
+        stopped = context.startStaleTransform()
+        await context.abortStarted
+        await context.activateChange()
+      } else {
+        assert.equal(await context.continueChange(), 'interrupt')
+      }
+      assert.equal(context.prompts.length, 0, 'the physical stop holds both actual plugin instances')
+      context.releaseAbort()
+      await context.successorAccepted
+      if (stopped) await stopped
+      else await context.stopLateTransform()
+      assert.deepEqual(context.order, ['interrupt-started', 'interrupt-completed', 'successor-send'])
+      assert.equal(context.prompts.length, 1)
+      assert.equal(context.openingCount(), 2)
+      assert.deepEqual(dispatch.projectionObservation(context.runtime.journal, context.session).activeLogicalRun, context.profile)
+    }, { splitInstance: true })
+  })
+}
 
 test.todo('WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete')

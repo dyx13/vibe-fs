@@ -26,11 +26,12 @@
  */
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { readFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync, rmSync, unlinkSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { compileScenario } from './e2e/support/scenario-schema.js'
 import { resolveEntry } from './e2e/support/runtime-key.js'
 import { ScenarioRuntime } from './e2e/support/scenario-runtime.js'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { join } from 'node:path'
 import './e2e/support/env-pin.mjs'
 import { runCanary } from './e2e/support/scenario-driver.mjs'
@@ -49,9 +50,12 @@ import {
   retireCompanionForDeletion,
   INVESTIGATION_OUTLOOK_MARKERS,
   matchInvestigationOutlookMarker,
+  assertDelegationProtocolSurface,
+  assertMcpFixtureBoundary,
 } from './e2e/support/long-stroke-oracles.mjs'
 import { factPayloads, countFactCase } from './e2e/support/journal-observer.js'
 import { withHumanRootLoopFixture } from './support/humanroot-loop-fixture.mjs'
+import { delegationProtocolFixture, appendProtocolReplicaProjection } from './support/long-stroke-protocol-fixture.mjs'
 import { WAIT_FACT_WINDOW_MS } from './e2e/support/time-budget.js'
 import {
   getOpencodeSpawnCount,
@@ -681,8 +685,297 @@ test('WHAT[verification-system-014] the original Engineer barrier and Join oracl
   })
 })
 
+test('WHAT[verification-system-014] Long Stroke observes actual durable Strength envelopes before and after cold replay', async () => {
+  const { createHash } = await import('node:crypto')
+  const Strength = await import('../../../dist/Strength/Surface.js')
+  const { createLocalEventStore } = await import('./support/local-event-store.mjs')
+  const { journalEventLines } = await import('./e2e/support/journal-observer.js')
+  const hash = text => createHash('sha256').update(text).digest('hex')
+  await withHumanRootLoopFixture(async ({ workDir, target, open }) => {
+    const commonDir = join(workDir, '.git')
+    let local = createLocalEventStore({ commonDir, writerId: 'strength-oracle-before' })
+    const expected = []
+    try {
+      const durability = Strength.durabilityCreate(local.store)
+      for (const [index, rounds] of [2, 1].entries()) {
+        const decision = `oracle-decision-${index}`
+        const owner = `oracle-owner-${index}`
+        const providerRun = `oracle-target-${index}`
+        const replica = `oracle-replica-${index}`
+        const anchor = hash(`oracle-anchor-${index}`)
+        const built = Strength.frameTryBuild(hash, [{ requestOrdinal: 1, assistantText: [`survey-${index}`],
+          exchanges: [{ toolName: 'js-predictor', canonicalArguments: '{}', canonicalResult: `material-${index}` }] }])
+        assert.equal(built.ok, true)
+        const bundle = built.value
+        for (const event of [Strength.eventRequested({
+          decisionId: decision, ownerSessionId: owner,
+          ownerLogicalRun: { logicalRunId: `oracle-logical-${index}`, authorityRootUserMessageId: `oracle-root-${index}` },
+          sourcePhysicalUserMessageId: `oracle-root-${index}`, sourceProviderRun: `oracle-source-${index}`,
+          sourceToolCallIds: [`oracle-call-${index}`], requestedRounds: rounds, contractRevision: Strength.protocolRevision,
+        }), Strength.eventBound(decision, providerRun, replica, anchor)]) {
+          const appended = await Strength.durabilityAppend(durability, event)
+          assert.equal(appended.ok, true, appended.error)
+        }
+        assert.deepEqual(await Strength.durabilityPublishPrepared(durability, {
+          ownerSessionId: owner, decisionId: decision, targetProviderRun: providerRun,
+          replicaSessionId: replica, anchorDigest: anchor, bundle,
+        }), { kind: 'Published' })
+        const prepared = Strength.projectionCandidate(decision, Strength.storeCurrent(local.store)).prepared
+        for (const event of [Strength.eventPromoted(owner, decision, providerRun, bundle.digest, prepared.materialPayloads),
+          Strength.eventTraced(decision, 3n, 6n)]) {
+          const appended = await Strength.durabilityAppend(durability, event)
+          assert.equal(appended.ok, true, appended.error)
+        }
+        expected.push({ decision, rounds, providerRun, replica, anchor, bundle })
+      }
+      open(target, 1)
+      assert.equal(factPayloads(workDir, 'IncumbencyOpened').length, 1, 'nested JournalEnvelope cases stay visible')
+      assert.equal(countFactCase(workDir, 'DelegationBound'), 2, 'actual store committed exactly two Bound envelopes')
+      const bounds = factPayloads(workDir, 'DelegationBound')
+      assert.equal(bounds.length, 2, 'Long Stroke must read the actual top-level Strength payloads')
+      const sorted = values => values.slice().sort((left, right) => left.decision_id.localeCompare(right.decision_id))
+      assert.deepEqual(sorted(bounds), expected.map(item => ({ decision_id: item.decision, target_provider_run: item.providerRun,
+        replica_session_id: item.replica, anchor_digest: item.anchor })))
+      const lines = journalEventLines(workDir)
+      assert.deepEqual(sorted(factPayloads(lines, 'DelegationBound')), sorted(bounds))
+      assert.deepEqual(sorted(factPayloads(lines.map(line => JSON.parse(line)), 'DelegationBound')), sorted(bounds))
+      local.close()
+      local = createLocalEventStore({ commonDir, writerId: 'strength-oracle-after' })
+      const cold = Strength.durabilityCreate(local.store)
+      const loaded = await Strength.durabilityLoadProjection(cold)
+      assert.equal(loaded.ok, true, loaded.error)
+      for (const item of expected) {
+        const view = Strength.projectionCandidate(item.decision, loaded.value)
+        assert.equal(view.binding.replicaSessionId, item.replica)
+        assert.equal(view.binding.targetProviderRun, item.providerRun)
+        assert.equal(Strength.projectionRequestedRounds(item.decision, loaded.value), item.rounds)
+        assert.deepEqual(Strength.projectionTraceRange(item.decision, loaded.value), { startInclusive: 3n, endExclusive: 6n })
+        const material = await Strength.durabilityLoadBundleForDecision(cold, loaded.value, item.decision)
+        assert.equal(material.ok, true, material.error)
+        assert.deepEqual(material.value, item.bundle, 'actual Prepared payload bytes and digest survive cold replay')
+      }
+      assert.deepEqual(sorted(factPayloads(workDir, 'DelegationBound')), sorted(bounds), 'cold reopen does not lose or duplicate Bound evidence')
+    } finally {
+      local.close()
+    }
+  })
+})
+
+test('WHAT[verification-system-014] delegation target keeps the physically observed provider with the bare OpenAI model', async () => {
+  const Strength = await import('../../../dist/Strength/Surface.js')
+  const { createLocalEventStore } = await import('./support/local-event-store.mjs')
+  const { StrictMockProvider } = await import('./e2e/support/strict-mock-provider.js')
+  const { makeConfig } = await import('./e2e/support/isolated-env.js')
+  const language = await import('../../../dist/Participant/Provider/LanguageSurface.js')
+  const compiled = compileScenario(readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8'),
+    { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  await withHumanRootLoopFixture(async ({ workDir }) => {
+    const local = createLocalEventStore({ commonDir: join(workDir, '.git'), writerId: 'model-wire-identity' })
+    const provider = new StrictMockProvider({ quiet: true })
+    provider.attachScenario(new ScenarioRuntime(compiled.scenario))
+    try {
+      const url = await provider.start()
+      const config = makeConfig(`${url}/v1`)
+      const replicaIds = ['ses_model_replica_one', 'ses_model_replica_two']
+      const durability = Strength.durabilityCreate(local.store)
+      for (const [index, rounds] of [1, 2].entries()) {
+        const decision = `model-wire-${index}`
+        for (const event of [Strength.eventRequested({
+          decisionId: decision, ownerSessionId: `model-owner-${index}`,
+          ownerLogicalRun: { logicalRunId: `model-logical-${index}`, authorityRootUserMessageId: `model-root-${index}` },
+          sourcePhysicalUserMessageId: `model-root-${index}`, sourceProviderRun: `model-source-${index}`,
+          sourceToolCallIds: [`model-call-${index}`], requestedRounds: rounds, contractRevision: Strength.protocolRevision,
+        }), Strength.eventBound(decision, `model-target-${index}`, replicaIds[index], `model-anchor-${index}`)]) {
+          const appended = await Strength.durabilityAppend(durability, event)
+          assert.equal(appended.ok, true, appended.error)
+        }
+      }
+      const body = { model: 'test-model-b', providerID: 'body-spoof-must-not-win',
+        messages: [{ role: 'user', content: language.replicaConstraintFor('en') }],
+        tools: [{ type: 'function', function: { name: 'js-predictor', parameters: { type: 'object' } } }] }
+      const send = async (sessionId, headers) => {
+        const response = await fetch(`${url}/v1/chat/completions`, { method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-session-affinity': sessionId, ...headers }, body: JSON.stringify(body) })
+        assert.equal(response.status, 200)
+        await response.text()
+      }
+      const goodHeaders = config.provider.test.models['test-model-b'].headers
+      await send(replicaIds[0], goodHeaders)
+      await send(replicaIds[1], goodHeaders)
+      await send(replicaIds[1], goodHeaders)
+      const scenario = { host: { workDir }, provider }
+      const ctx = {}
+      await CUSTOMS.bindDelegationReplicas(scenario, ctx)
+      assert.deepEqual(ctx.delegationReplicas.slice().sort(), replicaIds.slice().sort())
+      assert.equal(provider.requests.every(request => request.model === 'test-model-b'), true, 'OpenAI body remains bare')
+      assert.equal(provider.requests.every(request => request.providerID === 'test'), true, 'identity comes from HTTP headers, never the body')
+      assert.equal(Object.keys(provider.requests[0]).includes('providerID'), false, 'transport evidence stays out of body projection')
+      for (const foreign of ['opencode', 'backup']) {
+        await send(replicaIds[0], config.provider[foreign].models['test-model'].headers)
+        await assert.rejects(() => CUSTOMS.bindDelegationReplicas(scenario, {}), /configured Predictor target/)
+        provider.requests.pop()
+      }
+      await send(replicaIds[0], {})
+      await assert.rejects(() => CUSTOMS.bindDelegationReplicas(scenario, {}), /provider identity/i,
+        'missing transport identity cannot silently inherit test provider or body spoof')
+      provider.requests.pop()
+      await CUSTOMS.bindDelegationReplicas(scenario, {})
+    } finally {
+      await provider.stop()
+      local.close()
+    }
+  })
+})
+
+const strengthRoutingWindowPath = (scenarioDir) =>
+  join(scenarioDir, 'home', '.config', 'opencode', 'wanxiangshu-strength-routing-window')
+
+test('WHAT[verification-system-014] both preflow Strength decisions share a real routing window without reviving a failed provider', async () => {
+  const { createIsolatedEnv } = await import('./e2e/support/isolated-env.js')
+  const compiled = compileScenario(readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8'),
+    { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  const scenarioDir = mkdtempSync(join(tmpdir(), 'wxs-strength-routing-window-'))
+  try {
+    const isolated = createIsolatedEnv({ scenarioDir, llmUrl: 'http://127.0.0.1:1/v1',
+      routingSource: compiled.scenario.routingSource })
+    const routingPath = join(isolated.HOME, '.config', 'opencode', 'wanxiangshu.mjs')
+    const routing = await import(pathToFileURL(routingPath).href)
+    const route = (role, previous, purpose) => routing.default(role, [], previous, purpose)
+    assert.equal(route('manager', null, 'main').model, 'test/test-model')
+    const windowPath = strengthRoutingWindowPath(scenarioDir)
+    writeFileSync(windowPath, 'shared-model\n', { flag: 'wx' })
+    for (const role of ['manager', 'engineer']) {
+      assert.equal(route(role, null, 'readonly-delegate').model, 'test/test-model-b')
+      assert.equal(routing.hasTheoreticalCapacity(role, 'readonly-delegate'), true)
+    }
+    assert.equal(route('manager', null, 'main').model, 'test/test-model-b',
+      'the Owner must actually share the configured Predictor model during both Strength legs')
+    assert.equal(route('manager', { model: 'opencode/test-model', reasoning: 'none' }, 'main').model,
+      'test/test-model-b', 'the window must select its explicit fixture model rather than inherit an unrelated previous target')
+    unlinkSync(windowPath)
+    assert.equal(route('manager', null, 'main').model, 'test/test-model',
+      'the main spine must recover its original candidate order after the preflow')
+    routing.markProviderFailed('test')
+    assert.equal(route('manager', null, 'main').model, 'opencode/test-model')
+    assert.equal(route('manager', { model: 'test/test-model-b', reasoning: 'none' }, 'main').model,
+      'opencode/test-model', 'a stale previous model must not revive its failed provider')
+    writeFileSync(windowPath, 'shared-model\n', { flag: 'wx' })
+    for (const purpose of ['main', 'readonly-delegate']) {
+      assert.throws(() => route('manager', null, purpose), /shared-model window.*failed provider/i,
+        'an already failed provider cannot be reopened by fixture phase configuration')
+      assert.equal(routing.hasTheoreticalCapacity('manager', purpose), true,
+        'the fixture phase does not change theoretical-capacity policy')
+    }
+    unlinkSync(windowPath)
+    assert.equal(route('manager', null, 'main').model, 'opencode/test-model')
+    const { entries, flow, faults, setup, boundaries, must } = compiled.scenario
+    for (const turnId of ['strength-canary-owner', 'strength-recovery-owner']) {
+      const ownerEntries = entries.filter((entry) => entry.turnId === turnId)
+      assert.equal(ownerEntries.length, 3)
+      assert.equal(ownerEntries.every((entry) => entry.internal === true), true,
+        `${turnId} must be declared as preflow-driven, not flow-dispatched`)
+      assert.equal(ownerEntries.every((entry) => entry.lane === undefined), true,
+        'preflow-driven internal entries cannot claim a flow lane')
+      assert.equal(must.includes(turnId), true, 'preflow ownership does not make either decision optional')
+    }
+    assert.equal(must.includes('strength-readonly-replica'), true)
+    assert.equal(flow.some((step) => step.createSession?.as === 'strength-recovery-owner'
+      || step.session === 'strength-recovery-owner' || step.wait?.startsWith('strength-recovery-owner.')), false,
+    'the main flow must not dispatch the recovery decision a second time')
+    assert.deepEqual(faults.filter((fault) => fault.entryId === 'strength-recovery-owner.1'), [{
+      entryId: 'strength-recovery-owner.1', lane: undefined, attempts: [1],
+      kind: 'provider-error', status: 500, retryable: true,
+    }])
+    assert.deepEqual(faults.filter((fault) => fault.kind === 'provider-error' && fault.status === 400)
+      .map((fault) => fault.entryId), ['manager-loop.2', 'continue.0'])
+    assert.deepEqual(boundaries.filter((boundary) => boundary.entryId.startsWith('strength-'))
+      .map((boundary) => [boundary.entryId, boundary.kind, boundary.optional]), [
+      ['strength-canary-owner.1', 'prefix-probe', true],
+      ['strength-recovery-owner.1', 'prefix-probe', true],
+      ['strength-readonly-replica.0', 'prefix-probe', true],
+    ])
+    assert.deepEqual([setup.maxJournalEvents, setup.maxSseEvents], [699, 3351])
+  } finally {
+    rmSync(scenarioDir, { recursive: true, force: true })
+  }
+})
+
+test('WHAT[verification-system-014] Strength capacity follows each exact decision instead of crossing two sequential owners', async () => {
+  const { withStrengthWireOracleFixture } = await import('./support/strength-wire-oracle-fixture.mjs')
+  await withStrengthWireOracleFixture(async ({ scenario, legs, requests }) => {
+    await CUSTOMS.assertDelegateCapacityOneParentWaits(scenario)
+    const original = requests.slice()
+    const ownTarget = requests.indexOf(legs[0].targetRequest)
+    requests.splice(ownTarget, 1)
+    requests.splice(requests.indexOf(legs[0].replicaRequests[1]), 0, legs[0].targetRequest)
+    await assert.rejects(() => CUSTOMS.assertDelegateCapacityOneParentWaits(scenario), /owner request arrived inside the companion window/)
+    requests.splice(0, requests.length, ...original)
+    Object.defineProperty(legs[1].targetRequest, 'providerID', { value: 'opencode', configurable: true })
+    await assert.rejects(() => CUSTOMS.assertDelegateCapacityOneParentWaits(scenario), /must share one provider token/)
+    Object.defineProperty(legs[1].targetRequest, 'providerID', { value: 'test', configurable: true })
+    legs[1].targetRequest.model = 'test-model'
+    await assert.rejects(() => CUSTOMS.assertDelegateCapacityOneParentWaits(scenario), /must use the same configured model/)
+    legs[1].targetRequest.model = 'test-model-b'
+    const target = legs[0].snapshot[2]
+    target.info.parentID = 'another-root'
+    await assert.rejects(() => CUSTOMS.assertDelegateCapacityOneParentWaits(scenario), /retain the original physical input/)
+  })
+})
+
+test('WHAT[verification-system-014] Strength delivery counts stay exactly three and four within the original physical roots', async () => {
+  const { withStrengthWireOracleFixture } = await import('./support/strength-wire-oracle-fixture.mjs')
+  await withStrengthWireOracleFixture(async ({ scenario, legs, requests }) => {
+    assert.deepEqual(legs.map(leg => leg.ownerRequests.length), [3, 4])
+    assert.deepEqual(legs.map(leg => requests.filter(request => request.sessionID === leg.ownerSessionId).length), [4, 5])
+    legs[0].ownerRequests.at(-1).messages[0] = { role: 'user', content: legs[0].originalText + '\0\uFEFF# tip: actual guidance plane' }
+    await CUSTOMS.assertDelegationMaterialOnWire(scenario)
+    requests.push(legs[0].targetRequest)
+    await assert.rejects(() => CUSTOMS.assertDelegationMaterialOnWire(scenario), /early-end evidence belongs to the normal owner|bounded at 3 and 4/)
+    requests.pop()
+    legs[1].targetRequest.messages.splice(1, 2)
+    await assert.rejects(() => CUSTOMS.assertDelegationMaterialOnWire(scenario), /target must carry the complete exact source/)
+  })
+})
+
+test('WHAT[verification-system-014] same-model legality pins each original Root and ignores later Manager tasks', async () => {
+  await withHumanRootLoopFixture(async ({ workDir }) => {
+    const scenario = await delegationProtocolFixture(workDir, { resultText: 'LARGE_READ_PROBE_MARKER actual controlled result' })
+    for (const request of scenario.provider.requests) request.providerID = 'test'
+    const requested = factPayloads(workDir, 'DelegationRequested')
+    const bounds = factPayloads(workDir, 'DelegationBound')
+    for (const source of requested) {
+      const bound = bounds.find(bound => bound.decision_id === source.decision_id)
+      for (let index = 0; index < source.requested_rounds; index += 1) {
+        scenario.provider.requests.push({ sessionID: bound.replica_session_id, providerID: 'test', model: 'test-model-b',
+          messages: [{ role: 'user', content: 'Readonly investigation' }], tools: [] })
+      }
+      const own = scenario.provider.requests.filter(request => request.sessionID === source.owner_session_id)
+      const nextUser = `A new Manager Root for ${source.owner_session_id}`
+      const snapshot = await scenario.client.messages(source.owner_session_id)
+      snapshot.data.push({ info: { id: `successor-${source.owner_session_id}`, role: 'user' }, parts: [{ type: 'text', text: nextUser }] })
+      scenario.provider.requests.push({ ...own.at(-1), providerID: 'opencode', model: 'test-model',
+        messages: [...own.at(-1).messages, { role: 'user', content: nextUser }] })
+    }
+    await CUSTOMS.assertDelegationSameModelIsLegal(scenario)
+    const original = scenario.provider.requests.find(request => request.sessionID === requested[0].owner_session_id)
+    original.model = 'test-model'
+    await assert.rejects(() => CUSTOMS.assertDelegationSameModelIsLegal(scenario), /original Root owner .* must use the same configured model/)
+    original.model = 'test-model-b'
+    original.providerID = 'opencode'
+    await assert.rejects(() => CUSTOMS.assertDelegationSameModelIsLegal(scenario), /must share one provider token/)
+    original.providerID = 'test'
+    const replica = scenario.provider.requests.filter(request => request.sessionID === bounds[0].replica_session_id).at(-1)
+    replica.model = 'test-model'
+    await assert.rejects(() => CUSTOMS.assertDelegationSameModelIsLegal(scenario), /must still run exactly on the configured Predictor target/)
+  })
+})
+
 const STRENGTH_HOST_CANARY_PROMPT =
   'STRENGTH_HOST_CANARY: inspect README.md through the real nested Replica path.'
+const STRENGTH_HOST_RECOVERY_PROMPT =
+  'STRENGTH_RECOVERY: resume the readonly delegation after a provider failure.'
 
 const runPreFlowPrompt = async (scenario, lane, prompt, agent) => {
   const created = await scenario.client.createSession(agent ? { agent } : {})
@@ -705,22 +998,30 @@ const runPreFlowPrompt = async (scenario, lane, prompt, agent) => {
 const preFlowCanaries = async (scenario) => {
   await CUSTOMS.bindManagerLoopSequence(scenario)
   await CUSTOMS.bindStrengthReplicaResponses(scenario)
-  await runPreFlowPrompt(scenario, 'strength-canary-owner', STRENGTH_HOST_CANARY_PROMPT, 'manager')
+  const windowPath = strengthRoutingWindowPath(scenario.scenarioDir)
+  writeFileSync(windowPath, 'shared-model\n', { flag: 'wx' })
+  try {
+    await runPreFlowPrompt(scenario, 'strength-canary-owner', STRENGTH_HOST_CANARY_PROMPT, 'manager')
 
-  assert.equal(
-    scenario.provider.matchCount('strength-readonly-replica.0'),
-    2,
-    `Strength dry-run must physically start its Replica without blocking the owner. Host stderr tail:\n${scenario.host.stderrLog.slice(-4000)}`,
-  )
+    assert.equal(
+      scenario.provider.matchCount('strength-readonly-replica.0'),
+      2,
+      `Strength dry-run must physically start its Replica without blocking the owner. Host stderr tail:\n${scenario.host.stderrLog.slice(-4000)}`,
+    )
 
-  const replicaRequests = scenario.provider.requests.filter((request) =>
-    (request.tools ?? []).some((tool) => (tool?.function?.name ?? tool?.name) === 'js-predictor'))
-  assert.equal(replicaRequests.length, 2, 'the estimate-2 canary must admit exactly two replica requests')
-  assert.deepEqual(publicToolResults([replicaRequests[0]], 'js-predictor'), [],
-    'the unique bootstrap request must precede its own read result')
-  const completedProbe = publicToolResults([replicaRequests[1]], 'js-predictor')
-  assert.equal(completedProbe.length, 1, 'the second request must carry exactly one completed probe exchange')
-  assert.match(completedProbe[0], /LARGE_READ_PROBE_MARKER/)
+    const replicaRequests = scenario.provider.requests.filter((request) =>
+      (request.tools ?? []).some((tool) => (tool?.function?.name ?? tool?.name) === 'js-predictor'))
+    assert.equal(replicaRequests.length, 2, 'the estimate-2 canary must admit exactly two replica requests')
+    assert.deepEqual(publicToolResults([replicaRequests[0]], 'js-predictor'), [],
+      'the unique bootstrap request must precede its own read result')
+    const completedProbe = publicToolResults([replicaRequests[1]], 'js-predictor')
+    assert.equal(completedProbe.length, 1, 'the second request must carry exactly one completed probe exchange')
+    assert.match(completedProbe[0], /LARGE_READ_PROBE_MARKER/)
+
+    await runPreFlowPrompt(scenario, 'strength-recovery-owner', STRENGTH_HOST_RECOVERY_PROMPT, 'manager')
+  } finally {
+    unlinkSync(windowPath)
+  }
 
   const humanrootCreated = await scenario.client.createSession({ agent: 'manager' })
   const humanrootSessionId = getSessionId(humanrootCreated)
@@ -817,6 +1118,270 @@ test('WHAT[verification-system-014] declared participating tool arguments satisf
     { id: 'strength-recovery-owner.0', rounds: 1 },
     { id: 'strength-recovery-owner.1', rounds: 0 },
   ])
+})
+
+for (const [label, args] of [
+  ['positive without note', { estimated_readonly_rounds: 1 }],
+  ['positive with blank note', { estimated_readonly_rounds: 1, self_note: ' \t\n' }],
+  ['positive with non-string note', { estimated_readonly_rounds: 1, self_note: { advisory: true } }],
+  ['zero with string note', { estimated_readonly_rounds: 0, self_note: '  exact zero note\n' }],
+  ['zero with blank note', { estimated_readonly_rounds: 0, self_note: '' }],
+  ['zero with non-string note', { estimated_readonly_rounds: 0, self_note: 123 }],
+]) {
+  test(`WHAT[verification-system-014] protocol oracle accepts the real advisory contract: ${label}`, async () => {
+    await withHumanRootLoopFixture(async ({ workDir }) => {
+      const scenario = await delegationProtocolFixture(workDir, {
+        extraCalls: [{ tool: 'read', args: { path: 'advisory.txt', ...args } }],
+      })
+      await assertDelegationProtocolSurface(scenario)
+    })
+  })
+}
+
+test('WHAT[verification-system-014] protocol oracle preserves NoEstimate and Unreviewed same-name business fields', async () => {
+  await withHumanRootLoopFixture(async ({ workDir }) => {
+    const args = { path: 'business.txt', estimated_readonly_rounds: 'business label',
+      self_note: { business: true }, delegate_readonly_rounds: true }
+    const scenario = await delegationProtocolFixture(workDir, {
+      businessFields: true,
+      extraCalls: ['join', 'custom_tool'].map((tool) => ({ tool, args: structuredClone(args) })),
+    })
+    await assertDelegationProtocolSurface(scenario)
+  })
+})
+
+test('WHAT[verification-system-014] protocol oracle still rejects invalid participating schema and arguments', async () => {
+  const Strength = await import('../../../dist/Strength/Surface.js')
+  for (const [label, change] of [
+    ['missing required estimate', (definition) => { definition.parameters.required = ['path'] }],
+    ['legacy schema', (definition) => { definition.parameters.properties.delegate_readonly_rounds = { type: 'integer' } }],
+    ['required advisory note', (definition) => { definition.parameters.required.push('self_note') }],
+    ['constrained advisory note', (definition) => { definition.parameters.properties.self_note.minLength = 1 }],
+  ]) {
+    await withHumanRootLoopFixture(async ({ workDir }) => {
+      const scenario = await delegationProtocolFixture(workDir)
+      change(scenario.tools.find((tool) => tool.function.name === 'read').function)
+      await assert.rejects(assertDelegationProtocolSurface(scenario), /DELEGATE/, label)
+    })
+  }
+  for (const [label, args, error] of [
+    ['missing estimate', {}, 'MissingEstimate'],
+    ['legacy arguments', { estimated_readonly_rounds: 0, delegate_readonly_rounds: 0 }, 'MixedProtocolFields'],
+    ['string estimate', { estimated_readonly_rounds: '0' }, 'WrongNumberType'],
+    ['fractional estimate', { estimated_readonly_rounds: 0.5 }, 'InvalidRange'],
+    ['overflow estimate', { estimated_readonly_rounds: 2147483648 }, 'InvalidRange'],
+  ]) {
+    await withHumanRootLoopFixture(async ({ workDir }) => {
+      assert.deepEqual(Strength.parseParticipatingArguments(args), { ok: false, error }, label)
+      const scenario = await delegationProtocolFixture(workDir)
+      for (const request of scenario.provider.requests) {
+        for (const message of request.messages) {
+          for (const call of message.tool_calls ?? []) {
+            if (call.function.name === 'read') call.function.arguments = JSON.stringify(args)
+          }
+        }
+      }
+      await assert.rejects(assertDelegationProtocolSurface(scenario), /DELEGATE/, label)
+    })
+  }
+})
+
+test('WHAT[verification-system-014] protocol retention compares the completed original SSE batch, session and exact values', async () => {
+  for (const mutation of ['note', 'estimate', 'business', 'completion', 'split-batch', 'foreign-source']) {
+    await withHumanRootLoopFixture(async ({ workDir }) => {
+      const scenario = await delegationProtocolFixture(workDir, {
+        extraCalls: [{ tool: 'read', args: { path: 'same-batch.txt', estimated_readonly_rounds: 0 } }],
+      })
+      const source = scenario.provider.toolCallBatches[0]
+      const original = source.calls[0]
+      if (mutation === 'foreign-source') source.sessionId = 'unrelated-session'
+      for (const request of scenario.provider.requests) {
+        if (request.sessionID !== 'owner-normal') continue
+        for (const message of request.messages) {
+          const call = message.tool_calls?.find((candidate) => candidate.id === original.id)
+          if (call && ['note', 'estimate', 'business'].includes(mutation)) {
+            const args = JSON.parse(call.function.arguments)
+            if (mutation === 'note') args.self_note = 'changed but still non-empty'
+            if (mutation === 'estimate') args.estimated_readonly_rounds = 3
+            if (mutation === 'business') args.path = 'another-path.txt'
+            call.function.arguments = JSON.stringify(args)
+          }
+          if (call && mutation === 'split-batch') {
+            const remaining = message.tool_calls.filter((candidate) => candidate.id !== original.id)
+            message.tool_calls = [call]
+            request.messages.splice(request.messages.indexOf(message) + 1, 0, { role: 'assistant', tool_calls: remaining })
+          }
+        }
+        if (mutation === 'completion') request.messages = request.messages.filter((message) => message.tool_call_id !== original.id)
+      }
+      await assert.rejects(assertDelegationProtocolSurface(scenario), /DELEGATE/, mutation)
+    })
+  }
+})
+
+test('WHAT[verification-system-014] protocol observation accepts the absence of a permission-denied MCP tool', async () => {
+  const { makeConfig } = await import('./e2e/support/isolated-env.js')
+  const Managed = await import('../../../dist/OpenCode/Host/ManagedAgentConfigSurface.js')
+  const compiled = compileScenario(readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8'),
+    { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  assert.equal(compiled.scenario.setup.mcpFixture, 'semble', 'the compiler retains the declared fixture')
+  const config = makeConfig('http://127.0.0.1:1/v1', [], { mcpServers: {
+    wanxiang_fixture: { type: 'local', command: [process.execPath,
+      fileURLToPath(new URL('./support/semble-mcp-fixture.js', import.meta.url))], enabled: true },
+  } })
+  Managed.installDefaultResources()
+  assert.equal(Managed.configure(config).ok, true)
+  assert.equal(config.mcp.wanxiang_fixture.enabled, true, 'connection configuration is independent of tool permission')
+  assert.equal(config.permission['*'], 'allow')
+  assert.equal(config.agent.manager.permission['*'], 'deny', 'the real owned projection overrides the global default')
+  assert.equal(config.agent.manager.permission.wanxiang_fixture_search, undefined)
+  assert.equal(config.agent.manager.permission['wanxiang_fixture_*'], undefined)
+  assert.equal(config.agent.manager.permission['js-manager'], 'allow')
+  await withHumanRootLoopFixture(async ({ workDir }) => {
+    const scenario = await delegationProtocolFixture(workDir)
+    for (const request of scenario.provider.requests) {
+      request.tools = request.tools.filter((tool) => !/semantic search hits/i.test(tool.function.description))
+    }
+    await assertDelegationProtocolSurface(scenario)
+  })
+})
+
+test('WHAT[verification-system-014] actual Host hooks leave Unreviewed MCP business fields outside the estimate protocol', async () => {
+  const { withExecutablePlugin, openIncumbency } = await import('./support/plugin-fixture.mjs')
+  const previous = globalThis.__wanxiangshu_test_predictor_state
+  globalThis.__wanxiangshu_test_predictor_state = 'configured'
+  try {
+    await withExecutablePlugin(async (hooks, _directory, _createdIds, runtime) => {
+      const sessionID = 'ses-mcp-business-fields'
+      await openIncumbency(runtime, sessionID)
+      const tool = 'wanxiang_fixture_search'
+      const definition = { description: 'Return deterministic semantic search hits.', parameters: {
+        type: 'object', properties: {
+          query: { type: 'string' }, estimated_readonly_rounds: { type: 'string' },
+          self_note: { type: 'object' }, delegate_readonly_rounds: { type: 'boolean' },
+        }, required: ['query', 'estimated_readonly_rounds', 'self_note'],
+      } }
+      const originalDefinition = structuredClone(definition)
+      await hooks['tool.definition']({ toolID: tool }, definition)
+      assert.deepEqual(definition, originalDefinition)
+      const args = { query: 'local candidate', estimated_readonly_rounds: 'business label',
+        self_note: { business: true }, delegate_readonly_rounds: true }
+      const original = structuredClone(args)
+      const keys = Reflect.ownKeys(args)
+      const output = { args }
+      const input = { tool, sessionID, callID: 'mcp-business-call' }
+      await hooks['tool.execute.before'](input, output)
+      assert.equal(output.args, args)
+      assert.deepEqual(args, original)
+      assert.deepEqual(Reflect.ownKeys(args), keys)
+      await hooks['tool.execute.after']({ ...input, args }, { output: 'controlled business result' })
+      assert.deepEqual(args, original)
+      assert.deepEqual(Reflect.ownKeys(args), keys)
+    })
+  } finally {
+    if (previous === undefined) delete globalThis.__wanxiangshu_test_predictor_state
+    else globalThis.__wanxiangshu_test_predictor_state = previous
+  }
+})
+
+test('WHAT[verification-system-014] MCP observation requires connection and rejects fixture tools on Owner or Replica wire', async () => {
+  for (const mutation of ['none', 'missing', 'disabled', 'failed', 'wrong-server', 'http', 'owner', 'replica']) {
+    await withHumanRootLoopFixture(async ({ workDir }) => {
+      const scenario = await delegationProtocolFixture(workDir)
+      const bounds = factPayloads(workDir, 'DelegationBound')
+      assert.equal(bounds.length, 2)
+      for (const bound of bounds) {
+        scenario.provider.requests.push({ sessionID: bound.replica_session_id, model: 'test-model-b',
+          messages: [{ role: 'user', content: 'Controlled readonly task' }],
+          tools: [{ type: 'function', function: { name: 'js-predictor', parameters: { type: 'object' } } }],
+        })
+      }
+      const connected = { wanxiang_fixture: { status: 'connected' } }
+      const data = mutation === 'missing' ? {} : mutation === 'wrong-server'
+        ? { foreign_server: { status: 'connected' } }
+        : mutation === 'disabled' || mutation === 'failed'
+          ? { wanxiang_fixture: { status: mutation } } : connected
+      scenario.client.request = async (method, route) => {
+        assert.equal(method, 'GET')
+        assert.equal(route, '/mcp')
+        return { ok: mutation !== 'http', status: mutation === 'http' ? 500 : 200, data }
+      }
+      if (mutation === 'owner' || mutation === 'replica') {
+        const source = factPayloads(workDir, 'DelegationRequested').find((item) => item.decision_id === bounds[0].decision_id)
+        const session = mutation === 'owner' ? source.owner_session_id : bounds[0].replica_session_id
+        const request = scenario.provider.requests.find((item) => item.sessionID === session)
+        request.tools = [...request.tools, { type: 'function', function: {
+          name: 'wanxiang_fixture_search', description: 'Return deterministic semantic search hits.',
+          parameters: { type: 'object', properties: { query: { type: 'string' } } },
+        } }]
+      }
+      if (mutation === 'none') await assertMcpFixtureBoundary(scenario)
+      else await assert.rejects(assertMcpFixtureBoundary(scenario), /MCP boundary:/, mutation)
+    })
+  }
+})
+
+test('WHAT[verification-system-014] protocol retention accepts a real Replica exchange projected under the owner tool name', async () => {
+  await withHumanRootLoopFixture(async ({ workDir }) => {
+    const scenario = await delegationProtocolFixture(workDir)
+    const projected = await appendProtocolReplicaProjection(scenario)
+    assert.equal(JSON.parse(projected.function.arguments).estimated_readonly_rounds, 0)
+    await assertDelegationProtocolSurface(scenario)
+  })
+})
+
+test('WHAT[verification-system-014] completed SSE source evidence excludes a response cancelled at its real completion barrier', async () => {
+  const { createState } = await import('./e2e/support/strict-mock-state.js')
+  const { respond } = await import('./e2e/support/strict-mock-responses.js')
+  for (const cancel of [false, true]) {
+    const state = createState()
+    const request = { messages: [{ role: 'user', content: 'Original task' }] }
+    state.requests.push(request)
+    let release
+    let reached
+    const held = new Promise((resolve) => { release = resolve })
+    const toolWritten = new Promise((resolve) => { reached = resolve })
+    const writes = []
+    const sink = {
+      destroyed: false, writableEnded: false,
+      writeHead() {},
+      write(chunk) {
+        if (this.destroyed) return false
+        writes.push(chunk)
+        if (chunk.includes('"tool_calls"')) reached()
+        return true
+      },
+      end() { this.writableEnded = true },
+    }
+    const pending = respond(state, sink, { respond: { type: 'tool-call', tool: 'read',
+      args: { path: 'evidence.txt', estimated_readonly_rounds: 0 }, waitUntil: held } }, request,
+    { sessionId: 'source-owner' })
+    try {
+      await toolWritten
+      assert.deepEqual(state.toolCallBatches, [], 'written tool deltas alone do not prove a completed source response')
+      if (cancel) sink.destroyed = true
+    } finally {
+      release()
+      await pending
+    }
+    assert.equal(writes.includes('data: [DONE]\n\n'), !cancel)
+    assert.equal(state.toolCallBatches.length, cancel ? 0 : 1,
+      'a destroyed response must not be recorded as a completed source batch')
+  }
+})
+
+test('WHAT[verification-system-014] the actual mock output records immutable completed SSE tool-call batches', async () => {
+  await withHumanRootLoopFixture(async ({ workDir }) => {
+    const scenario = await delegationProtocolFixture(workDir, {
+      extraCalls: [{ tool: 'read', args: { path: 'same-batch.txt', estimated_readonly_rounds: 0 } }],
+    })
+    assert.deepEqual(scenario.sourceState.toolCallBatches, scenario.provider.toolCallBatches,
+      'the ledger must agree with the independently decoded actual SSE bytes, including multi-call IDs')
+    const original = structuredClone(scenario.sourceState.toolCallBatches)
+    scenario.provider.requests.at(-1).messages.at(-2).tool_calls[0].function.arguments = '{}'
+    assert.deepEqual(scenario.sourceState.toolCallBatches, original, 'later histories cannot rewrite source evidence')
+  })
 })
 
 releaseTest('WHAT[verification-system-014] Long Stroke 真实物理验收环境', async () => {

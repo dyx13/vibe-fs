@@ -2,7 +2,26 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import * as dispatch from '../../../dist/Interaction/Dispatch/DispatchSurface.js'
 import * as recovery from '../../../dist/OpenCode/Host/SessionRecoveryHostSurface.js'
+import { ordinaryEffects } from '../../../dist/OpenCode/Host/PluginTransformSurface.js'
 import {withSuccessor, textMessage, messageId} from './support/cut.mjs'
+
+test('WHAT[relay-context-projection-002] the actual ordinary transform stops before every downstream context owner after a retired cut', async () => {
+  for (const tentative of [false, true]) {
+    assert.deepEqual(await ordinaryEffects(tentative, true), [
+      'retired-attempt',
+    ], 'an exact retired request must stop before admission, replay, context owners, plan freeze and delegation')
+  }
+})
+
+test('WHAT[relay-context-projection-002] the actual ordinary transform continues all context owners for a current iteration', async () => {
+  assert.deepEqual(await ordinaryEffects(false, false), [
+    'begin', 'session-time', 'deferred', 'relay',
+    'replay', 'restore-arguments', 'capture', 'commit-trace',
+    'refresh-companion', 'companion', 'prefix', 'freeze-plan',
+    'continuation', 'pair', 'grounding', 'delegation',
+    'chronicle', 'deferred', 'sanitize',
+  ])
+})
 
 test('WHAT[relay-context-projection-002] real cut rejects an old request but accepts the owner-issued successor identity', async () => {
   await withSuccessor(async ({session, history, gate, apply}) => {
@@ -75,10 +94,18 @@ test('WHAT[relay-context-projection-002] the registered transform accepts an adm
     assert.deepEqual(recovery.journalExecutionStatus(runtime.journal, otherSession, falseRetry.info.id), {
       phase: 'Accepted', disposition: null,
     })
+    const activeBefore = structuredClone(dispatch.projectionObservation(runtime.journal, session))
+    const sendsBefore = runtime.prompts.length
     const unadmitted = {messages: [...structuredClone(history), structuredClone(gate), falseRetry]}
     await hooks['experimental.chat.messages.transform']({sessionID: session}, unadmitted)
     assert.deepEqual(unadmitted.messages, [], 'copied metadata and an acceptance in another session cannot admit this exact key')
-    assert.deepEqual(runtime.abortedIds, [...beforeAborts, session])
+    assert.deepEqual(runtime.abortedIds, beforeAborts, 'a stale request must not repeat the completed cut interrupt against its active successor')
+    assert.equal(runtime.prompts.length, sendsBefore, 'rejecting the unadmitted key must not send another continuation')
+    assert.deepEqual(dispatch.projectionObservation(runtime.journal, session), activeBefore,
+      'the active successor working identity and completion claims must remain unchanged')
+    assert.deepEqual(recovery.journalExecutionStatus(runtime.journal, session, physical), {
+      phase: 'ProviderStarted', disposition: null,
+    })
   })
 })
 

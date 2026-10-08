@@ -254,30 +254,6 @@ type OrchestratorHost(deps: OrchestratorHostDeps, orchestratorId: SessionId) =
         road.LatestRetirement
         |> Result.requireSome "Manager loop continuation requires a committed retirement"
 
-    let activateNextIfAbsent
-        (relay: OrchestratorRelayPort)
-        (record: ManagerJobProjection)
-        (road: RoadView)
-        (retirement: RetirementSummary)
-        : Task<Result<IncumbencyId, string>> =
-        match road.ActiveIncumbency with
-        | Some active -> Task.FromResult(Ok active)
-        | None ->
-            taskResult {
-                let! snapshot = tryCaptureSnapshot record.WorktreePath |> Task.FromResult
-
-                let opening =
-                    IncumbencyOpening.next
-                        HostDigest.sha256Hex
-                        (roadIdOf record)
-                        retirement.Id
-                        road.AuthorityRevision
-                        snapshot
-
-                let! _ = relay.AppendRelay record opening.Transaction
-                return opening.IncumbencyId
-            }
-
     let continueLoop (jobId: ManagerJobId) : Task<Result<IncumbencyId, string>> =
         taskResult {
             let! relay, record =
@@ -286,17 +262,27 @@ type OrchestratorHost(deps: OrchestratorHostDeps, orchestratorId: SessionId) =
             let! road = requireOpenRoad relay record
             let! retirement = requireCommittedRetirement road
 
-            let! incumbent =
+            do!
                 match retirement.Outcome, road.Certificate with
-                | RetirementOutcome.Continue, _ -> activateNextIfAbsent relay record road retirement
+                | RetirementOutcome.Continue, _ -> Task.FromResult(Ok())
                 | RetirementOutcome.Accepted certificateId, Some certificate when
                     certificate.Id = certificateId && not certificate.Valid
                     ->
-                    activateNextIfAbsent relay record road retirement
+                    Task.FromResult(Ok())
                 | RetirementOutcome.Accepted _, _ ->
                     Task.FromResult(Error "Manager loop continuation requires an invalidated Accepted certificate")
 
-            return incumbent
+            do! deps.ContinueManagerLoop record.ManagerSessionId (WorktreePath.value record.WorktreePath)
+            let! current = requireOpenRoad relay record
+            let expected = IncumbencyOpening.nextId HostDigest.sha256Hex retirement.Id
+
+            if
+                current.ActiveIncumbency = Some expected
+                || List.contains expected current.RetiredIncumbencies
+            then
+                return expected
+            else
+                return! Task.FromResult(Error "Manager continuation did not commit the requested successor")
         }
 
     let finalizeRegisteredWorktree (agentId: string) =

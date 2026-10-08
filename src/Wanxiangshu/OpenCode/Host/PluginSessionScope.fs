@@ -165,6 +165,7 @@ type PluginSessionScope
     /// session identity.
     member this.ClearSession(sessionId: string) : Task =
         task {
+            SharedState.dropProviderAttemptStops (SessionId.create sessionId)
             do! this.SettleSessionExecutions sessionId
 
             match this.Companions.TryGetValue sessionId with

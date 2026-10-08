@@ -5,7 +5,7 @@ open Wanxiangshu.Context.Prefix
 open Wanxiangshu.Mission.Relay.OpenCode
 
 module PluginTransformSurface =
-    let ordinaryEffects tentative : Task<string array> =
+    let ordinaryEffects tentative retired : Task<string array> =
         task {
             let effects = ResizeArray<string>()
             let record name = effects.Add name
@@ -15,7 +15,13 @@ module PluginTransformSurface =
                 Task.FromResult()
 
             let caps: PluginTransforms.NormalTransformCapabilities =
-                { BeginPhysicalProviderAttempt = fun _ _ -> complete "begin"
+                { TryStopRetiredAttempt =
+                    fun _ _ ->
+                        if retired then
+                            record "retired-attempt"
+
+                        Task.FromResult retired
+                  BeginPhysicalProviderAttempt = fun _ _ -> complete "begin"
                   BindSessionStartedAt =
                     fun _ ->
                         record "session-time"
@@ -28,6 +34,7 @@ module PluginTransformSurface =
                   ApplyRelayProjection =
                     fun _ _ ->
                         record "relay"
+
                         Task.FromResult RelayProjectionDisposition.CurrentIteration
                   CaptureXTraceMessages =
                     fun _ _ ->

@@ -5,10 +5,14 @@ open System.Threading.Tasks
 open Wanxiangshu.Context.Prefix
 open Wanxiangshu.Context.Trace
 open Wanxiangshu.Mission.Relay.OpenCode
+open Wanxiangshu.Mission.Manager
 open Wanxiangshu.Strength
 open Wanxiangshu.Strength.Replica
 
 module PluginTransforms =
+
+    val atRetiredAttemptBoundary:
+        boot: PluginBoot.Boot -> host: PluginHostWiring.Host -> ManagerWorkflow.RetiredAttemptBoundary
 
     type TraceTransformCapture =
         { RawMessages: obj list
@@ -16,6 +20,7 @@ module PluginTransforms =
 
     type NormalTransformCapabilities =
         {
+            TryStopRetiredAttempt: string option -> obj -> Task<bool>
             BeginPhysicalProviderAttempt: string option -> obj -> Task<unit>
             BindSessionStartedAt: string option -> Task<DateTimeOffset option>
             ApplyStrengthReplay: string option -> obj -> Task<StrengthReplayPlan list>
@@ -61,6 +66,6 @@ module PluginTransforms =
 
     /// Provider-facing transform composition: order only.
     /// Relay cut → Strength replay/trace → Companion/XWire → pair/grounding
-    /// → delegation capture and start; retired raw history is removed
+    /// → delegation capture and start; retired requests stop
     /// before any downstream context owner.
     val create: boot: PluginBoot.Boot -> host: PluginHostWiring.Host -> (obj -> obj -> Task<unit>)

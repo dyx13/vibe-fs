@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict'
+import { randomUUID } from 'node:crypto'
 import { withExecutablePlugin, acceptAuthorityRoot } from '../../../verification-system/tests/support/plugin-fixture.mjs'
 import * as journal from '../../../../dist/Persistence/Journal/ObligationJournalSurface.js'
 
 export const dimensions = ['language_algorithms', 'simplicity', 'structure', 'granularity', 'tests_evidence', 'logic_reliability_boundaries', 'caller_ergonomics', 'completeness']
 export const scores = grade => Object.fromEntries(dimensions.map(field => [field, grade]))
 export const withReview = async body => withExecutablePlugin(async (hooks, directory, created, runtime) => {
-  const session = 'review-manager'
+  const session = `review-manager-${randomUUID()}`
   await acceptAuthorityRoot(runtime, session, 'manager', 'user-root')
   await hooks['chat.message']({sessionID: session, agent: 'manager'}, {
     message: {id: 'user-root', role: 'user', agent: 'manager', model: {providerID: 'provider', modelID: 'manager-model'}},

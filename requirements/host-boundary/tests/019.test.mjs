@@ -3,8 +3,8 @@ import test from 'node:test'
 import { ordinaryEffects } from '../../../dist/OpenCode/Host/PluginTransformSurface.js'
 
 test('WHAT[host-boundary-019] a tentative prefix suppresses historical auxiliaries within the actual transform', async () => {
-  const current = await ordinaryEffects(false)
-  const tentative = await ordinaryEffects(true)
+  const current = await ordinaryEffects(false, false)
+  const tentative = await ordinaryEffects(true, false)
   const historical = ['pair', 'grounding', 'delegation']
   assert.deepEqual(current.filter((effect) => historical.includes(effect)), historical)
   assert.deepEqual(tentative, current.filter((effect) => !historical.includes(effect)))
@@ -14,7 +14,7 @@ test('WHAT[host-boundary-019] a tentative prefix suppresses historical auxiliari
 })
 
 test('WHAT[host-boundary-019] ordinary transform runs companion and prefix compression without suppression', async () => {
-  const current = await ordinaryEffects(false)
+  const current = await ordinaryEffects(false, false)
   assert.ok(current.includes('companion'), 'ordinary material must execute companion to trigger blogger')
   assert.ok(current.includes('prefix'), 'ordinary material must execute XWire to apply prefix compression')
   const companionIndex = current.indexOf('companion')

@@ -35,6 +35,8 @@ type IncumbencyOpening =
       Transaction: RelayTransaction }
 
 module IncumbencyOpening =
+    val nextId: sha256: (string -> string) -> retirementId: RetirementId -> IncumbencyId
+
     val initial:
         sha256: (string -> string) ->
         roadId: RoadId ->

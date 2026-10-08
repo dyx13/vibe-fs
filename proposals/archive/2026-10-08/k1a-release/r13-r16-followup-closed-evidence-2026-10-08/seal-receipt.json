@@ -1,0 +1,16 @@
+{
+  "archive": "/private/tmp/vibe-fs-oct8-alias-release/r16-closed-followup-2026-10-08-1113/sealed-followup/closed-r13-r16-followup.tar.gz",
+  "archiveSha256": "c063b580a28a76f96ab75e8fd947ddc20151ba9bdc92c6727fd384f745621490",
+  "archiveBytes": 4865945,
+  "files": 205,
+  "payloadBytes": 17322496,
+  "selectionSha256": "2db5ba23d725532a1fa4b936e9affb19671e96b7740f48f811a6b9041b61759c",
+  "repositoryEdited": false,
+  "scope": "Closed R13 gen351 and R16 gen352–360 red/green plus actual MCP failure; complete existing wnhzKF regular-file backup preserving unknown monitor-to-owner identity and no deletion. TMP only; final frozen-input release and new-SHA CI pending.",
+  "pendingNotIncluded": [
+    "MCP root cause/fix and its later logs",
+    "Any live logs or whole-process/environment dumps",
+    "Final frozen-input full release and exact new-SHA CI",
+    "Unproved wnhzKF cleanup: original remains untouched"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "archive": "finite-r19-host-title.tar.gz",
+  "archiveSha256": "5e3cc0eb151cda8d5a2b485ace8ca4146a112af773fe5f71daae242c3bcba2a0",
+  "allMembersMatch": true,
+  "verifiedFiles": 20,
+  "verifiedBytes": 2014080,
+  "files": [
+    {
+      "path": "SHA256SUMS",
+      "sha256": "4731ff7311cbd5cf10284d9219571798f4f4d2812f6cbf30f7da0a6980489788",
+      "bytes": 1974,
+      "matchesStaging": true
+    },
+    {
+      "path": "causal/r18-retirement-owner-e2e.json",
+      "sha256": "12bee7fca98645f4d327cdc0b451bfca0674ba97c388d5dd8ede70ed3c0d78c8",
+      "bytes": 550470,
+      "matchesStaging": true
+    },
+    {
+      "path": "causal/r18-retirement-owner-e2e.log",
+      "sha256": "9d3319ad9d7398b07918ca532fa8bb8332b18b942ffa7dad56c1c508f9397f84",
+      "bytes": 18941,
+      "matchesStaging": true
+    },
+    {
+      "path": "causal/r19-host-title-same-user-causal-audit.json",
+      "sha256": "04a4942096cd7bc962f59484d43359aa4f63a765f45fa6a062adaf0161daa892",
+      "bytes": 3011,
+      "matchesStaging": true
+    },
+    {
+      "path": "causal/r19-host-title-same-user-causal-audit.md",
+      "sha256": "e741f530c80efb98df72dc7ddc9b53d3ec1aea0ec1e25d8a37ca6430c3550607",
+      "bytes": 4746,
+      "matchesStaging": true
+    },
+    {
+      "path": "diagnostics/r19-host-title-same-user-red.log",
+      "sha256": "7d8a12610cdeb50dafc6481c229d9a88059a339632c6792651f7e3ea60a30c13",
+      "bytes": 3039,
+      "matchesStaging": true
+    },
+    {
+      "path": "finite-matrix.json",
+      "sha256": "558cbe2afbba71f36e5cf61ee06deec72270757f7b0661cefbc5a375cf8b0c31",
+      "bytes": 18752,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/r19-final-format-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/r19-final-static-check.log",
+      "sha256": "23f729344663b49ae0862ff3f1fa39bc793a422314f574d36db407f17ddafcfd",
+      "bytes": 169733,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/r19-host-title-build.log",
+      "sha256": "6c1dbf1daac1e19f2903bfee38187b19d0a7617164cdee45bfdeab58ed532db8",
+      "bytes": 992,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/r19-host-title-e2e.log",
+      "sha256": "8240e77b9cf6b8713bbb22e023595c2cc6189ee29caffd7c76187cbd073ca444",
+      "bytes": 17623,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/r19-host-title-red-build.log",
+      "sha256": "24b5dec59d952ecec3eea3a7fc5c5e7bbe08be49bf4570861b403ab5aaf2f8b8",
+      "bytes": 193,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/r19-host-title-same-user-formal-red.log",
+      "sha256": "3a785cd5ebdd2288df8a8b8c9ed6da4e336504431c5752bfd15915b58a70d4fd",
+      "bytes": 982,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/r19-related-requirements.log",
+      "sha256": "125f6915525e5eae4e84e09f84ff7d4b8fe56df9200e416f3706552b5cf4b87f",
+      "bytes": 571609,
+      "matchesStaging": true
+    },
+    {
+      "path": "receipts/r18-release-budget-environment.json",
+      "sha256": "82037d50a5c91abf9e0e9e94b80e5f8b0ba0b8b7aa7d736a7d9f217247695772",
+      "bytes": 189,
+      "matchesStaging": true
+    },
+    {
+      "path": "receipts/r19-host-title-e2e.json",
+      "sha256": "a5709a5d3da7d5b50d4f8e52edd8c741fc94402473c241c17596a469597f9ec2",
+      "bytes": 591852,
+      "matchesStaging": true
+    },
+    {
+      "path": "source/requirements/host-boundary/WHAT.md",
+      "sha256": "d204ac1ac9d28c7551107ec2f0626b7fb661b2a5520cc7819aee63e0982681df",
+      "bytes": 24221,
+      "matchesStaging": true
+    },
+    {
+      "path": "source/requirements/host-boundary/tests/033.test.mjs",
+      "sha256": "dc5ae00ffaa2dddf1cf11ebd375dd488413821f5fe8a7b725ccc6e4044566171",
+      "bytes": 16746,
+      "matchesStaging": true
+    },
+    {
+      "path": "source/src/Wanxiangshu/OpenCode/Host/ChatParamsHook.fs",
+      "sha256": "e3640f7325f2c3bc4d0dc063637eaa5a08e383b0a6f1db1cba05203f7aae7ed4",
+      "bytes": 11094,
+      "matchesStaging": true
+    },
+    {
+      "path": "source-inventory.json",
+      "sha256": "974cd81ebc57fae7d57172b2810cbfbf257f64863d04750b29584af015213379",
+      "bytes": 7913,
+      "matchesStaging": true
+    }
+  ]
+}

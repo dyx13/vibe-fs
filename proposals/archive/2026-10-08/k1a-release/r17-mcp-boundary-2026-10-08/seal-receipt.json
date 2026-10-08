@@ -1,0 +1,17 @@
+{
+  "archive": "/private/tmp/vibe-fs-oct8-alias-release/r17-mcp-boundary/sealed-r17/closed-r17-mcp-boundary.tar.gz",
+  "archiveSha256": "652130bf03637c89bd2839e6e4f6baf72c281fe97bfca17debb5cc927162304f",
+  "archiveBytes": 435551,
+  "dataFiles": 30,
+  "dataBytes": 2504286,
+  "payloadFilesIncludingMetadata": 32,
+  "payloadBytesIncludingMetadata": 2520876,
+  "readbackVerifiedFiles": 31,
+  "allExpectedHashesMatch": true,
+  "repositoryEdited": false,
+  "actualMcpStatus": "unknown",
+  "newAssessmentInvestigation": "claimed; cause/regression/fix unclosed",
+  "actualE2e": "failed; exit1; 34pass1fail0skip0TODO; inputstable",
+  "resourceCleanup": "unknown; no resource cleanup performed",
+  "copyList": "/private/tmp/vibe-fs-oct8-alias-release/r17-mcp-boundary/sealed-r17/repository-copy-list.json"
+}

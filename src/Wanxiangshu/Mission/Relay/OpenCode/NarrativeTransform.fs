@@ -20,10 +20,46 @@ type RelayProjectionDisposition =
     | RetiredAttemptStopped
 
 module RelayNarrativeTransform =
-    let private relayRoad (journal: AgentJournal) (sessionId: SessionId) =
+    let private relayContext (journal: AgentJournal) (sessionId: SessionId) =
         AgentProjection.tryFind sessionId (AgentJournal.snapshot journal).AgentProjections
-        |> Option.bind (fun session -> session.Relay)
-        |> Option.bind (fun relay -> Fold.view relay (RoadId.create (SessionId.value sessionId)))
+        |> Option.bind (fun session ->
+            session.Relay
+            |> Option.bind (fun relay -> Fold.view relay (RoadId.create (SessionId.value sessionId)))
+            |> Option.map (fun road -> road, session.PromptAuthority))
+
+    let private freshRoot (road: RoadView) (projection: PromptAuthority.PromptAuthorityProjection option) =
+        projection
+        |> Option.bind (fun authority -> authority.ActiveLogicalRun)
+        |> Option.map (fun profile -> AuthorityRootUserMessageId.value profile.AuthorityRootUserMessageId)
+        |> Option.filter (fun root ->
+            road.AuthorityMessageIds
+            |> List.exists (fun oldRoot -> PhysicalUserMessageId.value oldRoot = root)
+            |> not)
+
+    let retirementOwnsAuthority
+        (journal: AgentJournal option)
+        (sessionId: SessionId)
+        (retirement: RetirementSummary)
+        : bool =
+        journal
+        |> Option.bind (fun durable -> relayContext durable sessionId)
+        |> Option.exists (fun (road, projection) ->
+            road.LatestRetirement
+            |> Option.exists (fun current ->
+                current.Id = retirement.Id
+                && current.ProjectionCut = retirement.ProjectionCut
+                && (freshRoot road projection |> Option.isNone)))
+
+    let private resolve journal sessionId =
+        journal
+        |> Option.bind (fun durable ->
+            sessionId
+            |> Option.filter (fun value -> not (String.IsNullOrWhiteSpace value))
+            |> Option.bind (fun value ->
+                let sid = SessionId.create value
+
+                relayContext durable sid
+                |> Option.map (fun (road, projection) -> durable, sid, road, projection)))
 
     let private messageId message =
         ProviderWireDecode.hostMessageId message
@@ -87,6 +123,7 @@ module RelayNarrativeTransform =
         journal
         sessionId
         (road: RoadView)
+        projection
         (retirement: RetirementSummary)
         acceptedRequest
         messages
@@ -106,31 +143,30 @@ module RelayNarrativeTransform =
             | Some toolIndex, Some(userIndex, _) -> userIndex > toolIndex
             | _ -> false
 
-        let projection =
-            AgentProjection.tryFind sessionId (AgentJournal.snapshot journal).AgentProjections
-            |> Option.bind (fun session -> session.PromptAuthority)
-
-        let freshRoot =
-            projection
-            |> Option.bind (fun authority -> authority.ActiveLogicalRun)
-            |> Option.map (fun profile -> AuthorityRootUserMessageId.value profile.AuthorityRootUserMessageId)
-            |> Option.filter (fun root ->
-                road.AuthorityMessageIds
-                |> List.exists (fun oldRoot -> PhysicalUserMessageId.value oldRoot = root)
-                |> not)
-
         let physical = currentUser |> Option.map snd
 
         let gatePhysical =
             managerLoopGatePhysical journal sessionId retirement
             |> Option.map Wanxiangshu.Foundation.Identity.PhysicalUserMessageId.value
 
-        requestBelongsToSuccessor physical afterCut freshRoot acceptedRequest gatePhysical
+        requestBelongsToSuccessor physical afterCut (freshRoot road projection) acceptedRequest gatePhysical
 
-    let private staleRetirement journal sessionId (road: RoadView) acceptedRequest messages =
+    let private staleRetirement journal sessionId (road: RoadView) projection acceptedRequest messages =
         road.LatestRetirement
         |> Option.filter (fun retirement ->
-            not (isSuccessorRequest journal sessionId road retirement acceptedRequest messages))
+            not (isSuccessorRequest journal sessionId road projection retirement acceptedRequest messages))
+
+    let isRetiredRequest
+        (journal: AgentJournal option)
+        (acceptedRequest: bool)
+        (sessionId: string option)
+        (outObj: obj)
+        : bool =
+        resolve journal sessionId
+        |> Option.bind (fun (durable, sid, road, projection) ->
+            ProviderWireDecode.messagesFromTransformOutput outObj
+            |> staleRetirement durable sid road projection acceptedRequest)
+        |> Option.isSome
 
     // The provider view keeps the full physical history after a retirement:
     // the next iteration sees every prior message, the retirement tool call
@@ -142,15 +178,23 @@ module RelayNarrativeTransform =
         HostMessageProjection.replaceMessagesInPlace outObj messages
         dispositionAfterProjection road
 
-    let private project journal (interruptAttempt: SessionId -> Task<unit>) sessionId road acceptedRequest outObj =
+    let private project
+        journal
+        (interruptAttempt: SessionId -> RetirementSummary -> Task<unit>)
+        sessionId
+        road
+        projection
+        acceptedRequest
+        outObj
+        =
         task {
             let messages = ProviderWireDecode.messagesFromTransformOutput outObj
 
             // An active LogicalRun or a claimed loop gate does not identify this
             // physical request: both can coexist with the retired attempt.
-            match staleRetirement journal sessionId road acceptedRequest messages with
-            | Some _ ->
-                do! interruptAttempt sessionId
+            match staleRetirement journal sessionId road projection acceptedRequest messages with
+            | Some retirement ->
+                do! interruptAttempt sessionId retirement
                 HostMessageProjection.replaceMessagesInPlace outObj []
                 return RelayProjectionDisposition.RetiredAttemptStopped
             | None -> return projectActive road outObj
@@ -159,22 +203,13 @@ module RelayNarrativeTransform =
     let apply
         (journal: AgentJournal option)
         (acceptedRequest: bool)
-        (interruptAttempt: SessionId -> Task<unit>)
+        (interruptAttempt: SessionId -> RetirementSummary -> Task<unit>)
         (sessionId: string option)
         (outObj: obj)
         : Task<RelayProjectionDisposition> =
         task {
-            let resolved =
-                journal
-                |> Option.bind (fun durable ->
-                    sessionId
-                    |> Option.filter (fun value -> not (String.IsNullOrWhiteSpace value))
-                    |> Option.bind (fun value ->
-                        let sid = SessionId.create value
-                        relayRoad durable sid |> Option.map (fun road -> durable, sid, road)))
-
-            match resolved with
-            | Some(durable, currentSessionId, road) ->
-                return! project durable interruptAttempt currentSessionId road acceptedRequest outObj
+            match resolve journal sessionId with
+            | Some(durable, currentSessionId, road, projection) ->
+                return! project durable interruptAttempt currentSessionId road projection acceptedRequest outObj
             | None -> return RelayProjectionDisposition.Unchanged
         }

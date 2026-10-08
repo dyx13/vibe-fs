@@ -302,3 +302,32 @@ test('WHAT[speculative-investigation-011] STRENGTH_011_owner_cancel_releases_the
 })
 
 }
+
+test('WHAT[speculative-investigation-011] registered transform diagnostics retain the first process fuse reason after later failure and cleanup', async () => {
+  const assert = (await import('node:assert/strict')).default
+  const { spawnSync } = await import('node:child_process')
+  const { fileURLToPath } = await import('node:url')
+  const fixture = fileURLToPath(new URL('./support/fuse-diagnostic.fixture.mjs', import.meta.url))
+  const child = spawnSync(process.execPath, [fixture], {
+    encoding: 'utf8',
+    env: { ...process.env, WANXIANGSHU_DIAG: '1' },
+  })
+  assert.ifError(child.error)
+  assert.equal(child.signal, null, child.stderr)
+  assert.equal(child.status, 0, child.stderr)
+  assert.deepEqual(JSON.parse(child.stdout), {
+    afterFirst: 'projection-conflict original cause',
+    afterLaterFailureAndCleanup: 'projection-conflict original cause',
+    afterPluginDispose: 'projection-conflict original cause',
+  })
+  const diagnostics = child.stderr.split('\n').flatMap((line) => {
+    try { return [JSON.parse(line)] } catch { return [] }
+  }).filter((record) => record.operation === 'strength-delegation-skip'
+    && record.result?.startsWith('skipped-recovery-fuse'))
+  assert.equal(diagnostics.length, 2, child.stderr)
+  for (const record of diagnostics) {
+    assert.equal(record.session_id, 'ses-fuse-diagnostic')
+    assert.equal(record.result, 'skipped-recovery-fuse: projection-conflict original cause')
+  }
+  assert.doesNotMatch(child.stderr, /later-noise/)
+})

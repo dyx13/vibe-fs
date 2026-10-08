@@ -1,0 +1,131 @@
+{
+  "verifiedFiles": 31,
+  "allExpectedHashesMatch": true,
+  "entries": [
+    {
+      "file": "logs/r17-mcp-red-build.log",
+      "sha256": "32c5854838da6b316e3fbccd0f7120821bdc87feb3a1679b2d3e912d17a48036"
+    },
+    {
+      "file": "logs/r17-mcp-green-build.log",
+      "sha256": "e1b488682a5cc1099b8d911fa5ef389f56bb7916314c759b4bca436481ffc335"
+    },
+    {
+      "file": "logs/r17-real-e2e-build.log",
+      "sha256": "718c3a451d93b8ec7121e6cb22f2b632e0c69fb67c06f94b78c7e2b19fdd8bed"
+    },
+    {
+      "file": "logs/r17-mcp-red.log",
+      "sha256": "986ed5f4ca5f4982766f936b97de47b2abc2195a14f09faf51007633e9aba721"
+    },
+    {
+      "file": "logs/r17-mcp-green.log",
+      "sha256": "8914342d7e29d90cee42fc072f23b494c3879703471d80c2a6262c5747e251c5"
+    },
+    {
+      "file": "logs/r17-mcp-boundary-e2e.log",
+      "sha256": "6cfc8e8bb66f0206c8e69701e7f5b81a9ce8f74f48f659ac3d9dd7be6440c443"
+    },
+    {
+      "file": "logs/r17-mcp-boundary-e2e.json",
+      "sha256": "85c543172b880661815b4d297e68bfa6276de7370bc02df4b82c775fa8032e61"
+    },
+    {
+      "file": "logs/r17-mcp-boundary-e2e-console.json",
+      "sha256": "98aaf98e2f186ebc38fbfa92dbd148844c00175443ea8b74e05649d5afbc7e35"
+    },
+    {
+      "file": "patches/tests-red.patch",
+      "sha256": "d1bfb700246040fc2d09a11eab277704430a412a3bd1d0ba0af2cfb9188f2c9c"
+    },
+    {
+      "file": "patches/boundary-green.patch",
+      "sha256": "eaed5245c8a0904164b39da3f31268fd4d808b46a2aa3059ac4ee5c0af762262"
+    },
+    {
+      "file": "source/before/014.test.mjs",
+      "sha256": "dc59f3d216f26d704df459e553932b3b39cdb759c1f043eddc9c94fe01bb9344"
+    },
+    {
+      "file": "source/before/long-stroke.toml",
+      "sha256": "7f0521a663dec0de5241e5034c16ac451f0f9a80e0f73d168749085be393def7"
+    },
+    {
+      "file": "source/before/long-stroke-oracles.mjs",
+      "sha256": "98a30658c328d9e93b34434f913b6530232a583408398db6e2bd6e7f9964d1b1"
+    },
+    {
+      "file": "source/before/long-stroke-protocol-fixture.mjs",
+      "sha256": "1bd201de9b5083e750e7594fc4beb717e1e869d23ae5f86c7d2744109ebfde24"
+    },
+    {
+      "file": "source/green/014.test.mjs",
+      "sha256": "093189d9963ec15a715dbbac9430be65e13215640ff707bb207b16a187c04a2d"
+    },
+    {
+      "file": "source/green/long-stroke.toml",
+      "sha256": "d369a51638e0489c126e9d7d05e93a9f02fed9a1036ffb45f8062fd1382b5f63"
+    },
+    {
+      "file": "source/green/long-stroke-oracles.mjs",
+      "sha256": "974b2c117e6f17c78f51eb653d5d90e6a96269e4a1c6fa743d23b09f1c8ec988"
+    },
+    {
+      "file": "source/green/long-stroke-protocol-fixture.mjs",
+      "sha256": "455904050255374c82d8ec45f01953e94d1cb9b67673384f999aab77c618ee1a"
+    },
+    {
+      "file": "CAUSE-AND-SCOPE-before-execution.md",
+      "sha256": "c2db03518bb933234b958420f94548e93e12adb4200eccfdb08b9e77826ff170"
+    },
+    {
+      "file": "README.md",
+      "sha256": "4103db903f19a1aad2678d095020ad66a717ba2d4dbff7462c6e653fe6db652c"
+    },
+    {
+      "file": "R17-FINITE-AUDIT.md",
+      "sha256": "ecfaaeb8e0a79e79a539c45e4c368c4793662775afa10b2bf7cf4f645250beed"
+    },
+    {
+      "file": "actual-session-permissions.json",
+      "sha256": "b62319e6afb8b114de0b12f24730abc2027abdc9623410f0c4058c08a95a5f77"
+    },
+    {
+      "file": "e2e-receipt-summary.json",
+      "sha256": "a7c962353b5eff495c53acd13a385ae4bca8a59935a322d069a23c4f903482d1"
+    },
+    {
+      "file": "closed-matrix.json",
+      "sha256": "76bb8632c51b5de2cdeb9c3229d74c12ad610f0927eae4914bbbd23ec7a935ae"
+    },
+    {
+      "file": "plan-readme-r17.patch",
+      "sha256": "f68748459795a73dc7138c46c270ee5c63b5318c0824cec4495d0166dd13a03b"
+    },
+    {
+      "file": "R16-COPY-LIST.json",
+      "sha256": "d53cface35b1663ecc3ede4ad76b8ceeac29ca17ab2b5650ce74cf46bacb6e13"
+    },
+    {
+      "file": "actual-ESpu2v/opencode.db",
+      "sha256": "a4832abb8b00a5ea1d0db6d00b4c32c0c943adb62b9870ee312d82f59896d06c"
+    },
+    {
+      "file": "actual-ESpu2v/opencode.db-wal",
+      "sha256": "33c588a01c5559f2ee3554b6360f15324b57e55509985b87d58faaff4c9f6473"
+    },
+    {
+      "file": "actual-ESpu2v/opencode.db-shm",
+      "sha256": "590a637cd1600da7fe378abd40205557420f3181b08b2b7126df283fdec56e0f"
+    },
+    {
+      "file": "actual-ESpu2v/opencode.log",
+      "sha256": "e8355925412f36d1016777e4083b65471661af6b15b385ffb0d206be354bec83"
+    },
+    {
+      "file": "archive-inventory.json",
+      "sha256": "b610f3458d5694320699f41c2cbfbfbfe692420dfbbc65668fa161994f503408"
+    }
+  ],
+  "repositoryEdited": false
+}

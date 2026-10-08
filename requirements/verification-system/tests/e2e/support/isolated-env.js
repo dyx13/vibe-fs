@@ -30,7 +30,7 @@ import { provisionPluginDependency } from './plugin-dependency.js';
 /**
  * Generate the OpenCode config for a mock provider.
  */
-function makeConfig(llmUrl, pluginPaths = [], opts = {}) {
+export function makeConfig(llmUrl, pluginPaths = [], opts = {}) {
   const modelDef = {
     id: 'test-model',
     name: 'Test Model',
@@ -81,7 +81,10 @@ function makeConfig(llmUrl, pluginPaths = [], opts = {}) {
         id: 'test',
         env: [],
         npm: '@ai-sdk/openai-compatible',
-        models: { 'test-model': { ...modelDef }, 'test-model-b': { ...modelBDef } },
+        models: {
+          'test-model': { ...modelDef, headers: { 'x-wxs-e2e-provider-id': 'test' } },
+          'test-model-b': { ...modelBDef, headers: { 'x-wxs-e2e-provider-id': 'test' } },
+        },
         options: { apiKey: opts.apiKey || 'test-key', baseURL: `${llmUrl}` },
       },
       opencode: {
@@ -89,7 +92,7 @@ function makeConfig(llmUrl, pluginPaths = [], opts = {}) {
         id: 'opencode',
         env: [],
         npm: '@ai-sdk/openai-compatible',
-        models: { 'test-model': { ...modelDef } },
+        models: { 'test-model': { ...modelDef, headers: { 'x-wxs-e2e-provider-id': 'opencode' } } },
         options: { apiKey: opts.apiKey || 'test-key', baseURL: `${llmUrl}` },
       },
       backup: {
@@ -97,7 +100,7 @@ function makeConfig(llmUrl, pluginPaths = [], opts = {}) {
         id: 'backup',
         env: [],
         npm: '@ai-sdk/openai-compatible',
-        models: { 'test-model': { ...modelDef } },
+        models: { 'test-model': { ...modelDef, headers: { 'x-wxs-e2e-provider-id': 'backup' } } },
         options: { apiKey: opts.apiKey || 'test-key', baseURL: `${llmUrl}` },
       },
     },

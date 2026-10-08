@@ -9,6 +9,96 @@ import { withExecutablePlugin } from '../../verification-system/tests/support/pl
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 
+test('WHAT[host-boundary-033] Host title observes an admitted user without consuming or rewriting its managed execution', async () => {
+  const journal = await import('../../../dist/Persistence/Journal/Surface.js')
+  await withExecutablePlugin(async (hooks, _directory, _created, runtime) => {
+    const sessionID = 'ses-title-shared-admitted-user'
+    const message = {
+      id: 'msg-title-shared-admitted-user', sessionID, role: 'user', agent: 'engineer',
+      model: { providerID: 'host', modelID: 'placeholder' },
+    }
+    const previousRoutingSeen = globalThis.__wanxiangshu_test_routing_seen
+    globalThis.__wanxiangshu_test_routing_seen = []
+    try {
+      await hooks['chat.message']({ sessionID, messageID: message.id, agent: 'engineer' }, {
+        message, parts: [{ type: 'text', text: 'Name this controlled conversation.' }],
+      })
+      assert.deepEqual(recovery.journalExecutionStatus(runtime.journal, sessionID, message.id), {
+        phase: 'Accepted', disposition: null,
+      })
+      const input = {
+        sessionID, message, agent: 'title',
+        model: {
+          providerID: 'host-title', id: 'small-title-model', capabilities: { temperature: true },
+          options: { temperature: 0.5 }, variants: { none: { temperature: 0.5 } },
+        },
+      }
+      const output = { temperature: 0.5, options: { temperature: 0.5, existing: 'sentinel' } }
+      const before = {
+        input: structuredClone(input), output: structuredClone(output),
+        messageModel: message.model, providerModel: input.model,
+        capacity: routing.sharedCapacitySnapshot(),
+        journal: journal.JournalSurface_snapshot(runtime.journal),
+        routes: structuredClone(globalThis.__wanxiangshu_test_routing_seen),
+      }
+      assert.equal(before.routes.length, 1, 'the real chat.message must acquire its managed execution')
+      await hooks['chat.params'](input, output)
+      await hooks['chat.params'](input, output)
+      assert.deepEqual(structuredClone(input), before.input, 'Host title keeps its own small model and the original admitted User')
+      assert.equal(input.message, message)
+      assert.equal(message.model, before.messageModel)
+      assert.equal(input.model, before.providerModel)
+      assert.deepEqual(output, before.output, 'Host title keeps its approved parameters')
+      assert.deepEqual(routing.sharedCapacitySnapshot(), before.capacity)
+      assert.deepEqual(journal.JournalSurface_snapshot(runtime.journal), before.journal)
+      assert.deepEqual(globalThis.__wanxiangshu_test_routing_seen, before.routes)
+      assert.deepEqual(runtime.abortedIds, [])
+      assert.deepEqual(runtime.prompts, [])
+    } finally {
+      if (previousRoutingSeen === undefined) delete globalThis.__wanxiangshu_test_routing_seen
+      else globalThis.__wanxiangshu_test_routing_seen = previousRoutingSeen
+    }
+  })
+})
+
+test('WHAT[host-boundary-033] title exemption does not admit managed model, participant or unknown-agent drift', async () => {
+  const journal = await import('../../../dist/Persistence/Journal/Surface.js')
+  await withExecutablePlugin(async (hooks, _directory, _created, runtime) => {
+    const sessionID = 'ses-title-drift-controls'
+    const message = {
+      id: 'msg-title-drift-controls', sessionID, role: 'user', agent: 'engineer', model: {},
+    }
+    await hooks['chat.message']({ sessionID, messageID: message.id, agent: 'engineer' }, {
+      message, parts: [{ type: 'text', text: 'Keep this managed execution exact.' }],
+    })
+    for (const [agent, id, error] of [
+      ['engineer', 'drifted-model', /provider model\/reasoning drift/],
+      ['devops', message.model.modelID, /provider agent drift/],
+      ['unexpected-host-agent', message.model.modelID, /provider agent drift/],
+      ['Title', message.model.modelID, /provider agent drift/],
+      ['title-other', message.model.modelID, /provider agent drift/],
+    ]) {
+      const input = { sessionID, message, agent, model: {
+        providerID: message.model.providerID, id, capabilities: { temperature: true },
+      } }
+      const output = { temperature: 0.123, options: { existing: 'sentinel' } }
+      const before = {
+        input: structuredClone(input), output: structuredClone(output),
+        messageModel: message.model, providerModel: input.model,
+        capacity: routing.sharedCapacitySnapshot(), journal: journal.JournalSurface_snapshot(runtime.journal),
+      }
+      assert.throws(() => hooks['chat.params'](input, output), error)
+      assert.deepEqual(structuredClone(input), before.input)
+      assert.equal(input.message, message)
+      assert.equal(message.model, before.messageModel)
+      assert.equal(input.model, before.providerModel)
+      assert.deepEqual(output, before.output)
+      assert.deepEqual(routing.sharedCapacitySnapshot(), before.capacity)
+      assert.deepEqual(journal.JournalSurface_snapshot(runtime.journal), before.journal)
+    }
+  })
+})
+
 for (const origin of ['HumanMessage', 'BusyAgentNudge']) {
 test(`WHAT[host-boundary-033] ${origin} preserves the old lease until the visible input enters its next provider step`, async () => {
   await withExecutablePlugin(async (hooks, _directory, _created, runtime) => {

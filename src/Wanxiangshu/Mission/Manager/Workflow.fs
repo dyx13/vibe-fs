@@ -19,6 +19,8 @@ open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Persistence.Journal
 
 module ManagerWorkflow =
+    type RetiredAttemptBoundary = SessionId -> RetirementSummary -> (unit -> Task<unit>) -> Task<unit>
+
     [<Literal>]
     let private assessPath = "runtime/manager-assess"
 
@@ -414,40 +416,84 @@ module ManagerWorkflow =
             do! deliverLoopPrompt sessionPort rootWorkspace workspaceDirectory durable sessionId retirement
         }
 
+    let private afterRetiredAttempt
+        sessionPort
+        rootWorkspace
+        (journal: AgentJournal option)
+        (workspaceDirectory: string option)
+        (atRetiredAttemptBoundary: RetiredAttemptBoundary)
+        automatic
+        (sessionId: SessionId)
+        (captured: RetirementSummary)
+        : Task<unit> =
+        task {
+            do!
+                atRetiredAttemptBoundary sessionId captured (fun () ->
+                    task {
+                        let context =
+                            if automatic then
+                                decideAutomaticLoopContext journal (Some(SessionId.value sessionId))
+                            else
+                                decideLoopContext journal (Some(SessionId.value sessionId))
+
+                        match context with
+                        | Some((_, _, _, _, current, _) as latest) when
+                            current.Id = captured.Id && current.ProjectionCut = captured.ProjectionCut
+                            ->
+                            do! deliverLoopContext sessionPort rootWorkspace workspaceDirectory latest
+                        | _ -> ()
+                    })
+        }
+
     let maybeDeliverLoop
         sessionPort
         rootWorkspace
         (journal: AgentJournal option)
         (workspaceDirectory: string option)
+        (atRetiredAttemptBoundary: RetiredAttemptBoundary)
         (sessionIdTextOpt: string option)
         : Task<unit> =
-        task {
-            match decideLoopContext journal sessionIdTextOpt with
-            | Some context -> do! deliverLoopContext sessionPort rootWorkspace workspaceDirectory context
-            | None -> return ()
-        }
+        let context =
+            sessionIdTextOpt
+            |> Option.filter (System.String.IsNullOrWhiteSpace >> not)
+            |> Option.map SessionId.create
+            |> Option.bind (fun sessionId ->
+                journal
+                |> Option.bind (fun durable -> currentView durable sessionId)
+                |> Option.bind (fun road -> road.LatestRetirement)
+                |> Option.map (fun retirement -> sessionId, retirement))
+
+        match context with
+        | Some(sessionId, retirement) ->
+            afterRetiredAttempt
+                sessionPort
+                rootWorkspace
+                journal
+                workspaceDirectory
+                atRetiredAttemptBoundary
+                false
+                sessionId
+                retirement
+        | None -> Task.FromResult()
 
     let continueAfterRetiredAttempt
         sessionPort
         rootWorkspace
         (journal: AgentJournal option)
         (workspaceDirectory: string option)
-        (stopRetiredAttempt: SessionId -> Task<unit>)
+        (atRetiredAttemptBoundary: RetiredAttemptBoundary)
         (sessionId: SessionId)
+        (retirement: RetirementSummary)
         : Task<unit> =
-        task {
-            let loopContext =
-                decideAutomaticLoopContext journal (Some(SessionId.value sessionId))
-
-            do! stopRetiredAttempt sessionId
-
-            match
-                loopContext
-                |> Option.orElseWith (fun () -> decideAutomaticLoopContext journal (Some(SessionId.value sessionId)))
-            with
-            | Some context -> do! deliverLoopContext sessionPort rootWorkspace workspaceDirectory context
-            | None -> return ()
-        }
+        afterRetiredAttempt
+            sessionPort
+            rootWorkspace
+            journal
+            workspaceDirectory
+            atRetiredAttemptBoundary
+            true
+            sessionId
+            retirement
 
     let observeIdle
         (quiescence: ISessionQuiescenceGate)

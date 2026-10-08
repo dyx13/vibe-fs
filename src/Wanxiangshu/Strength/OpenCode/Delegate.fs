@@ -1724,16 +1724,17 @@ module StrengthDelegate =
         (predictorConfigured: bool)
         (output: obj)
         : Task<unit> =
-        match boundResult with
-        | Ok bound when strengthScope.StrengthFuseReason.IsNone ->
+        match boundResult, strengthScope.StrengthFuseReason with
+        | Ok bound, None ->
             executeApplyOnBound bound strengthScope tryAttemptPlan syncDelegateRuntime predictorConfigured output
-        | Ok(_, sessionId) ->
+        | Ok(_, sessionId), Some reason ->
             Diagnostic.emit
                 "strength-delegation-skip"
-                [ "session_id", SessionId.value sessionId; "result", "skipped-recovery-fuse" ]
+                [ "session_id", SessionId.value sessionId
+                  "result", "skipped-recovery-fuse: " + reason ]
 
             Task.FromResult()
-        | Error err ->
+        | Error err, _ ->
             Diagnostic.emit "strength-delegation-skip" [ "session_id", ""; "result", "skipped-recovery-bind:" + err ]
             Task.FromResult()
 

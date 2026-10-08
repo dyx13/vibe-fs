@@ -11,6 +11,7 @@ import * as ModelRoutingSurface from '../../../dist/OpenCode/Host/ModelRoutingSu
 import * as JournalSurface from '../../../dist/Persistence/Journal/Surface.js'
 import * as LanguageSurface from '../../../dist/Participant/Provider/LanguageSurface.js'
 import * as CompanionRuntimeSurface from '../../../dist/Context/Companion/RuntimeSurface.js'
+import { ordinaryEffects } from '../../../dist/OpenCode/Host/PluginTransformSurface.js'
 import { acceptAuthorityRoot, claimBloggerRequest, withExecutablePlugin } from '../../verification-system/tests/support/plugin-fixture.mjs'
 import { integrationTest } from '../../verification-system/tests/support/tier-gate.mjs'
 
@@ -35,8 +36,6 @@ integrationTest('WHAT[cognitive-environment-015] a late actual provider callback
     return true
   }, 'a malformed actual HTTP request after both Blogger responses must still reject the canary')
 })
-
-const transformsSource = readFileSync(join(root, 'src/Wanxiangshu/OpenCode/Plugin/PluginTransforms.fs'), 'utf8')
 
 const bloggerSource = readFileSync(join(root, 'src/Wanxiangshu/OpenCode/Host/BloggerChronicleText.fs'), 'utf8')
 
@@ -95,20 +94,16 @@ test('WHAT[cognitive-environment-015] BLOGGER_CHRONICLE_TEXT_is_enabled_for_step
   assert.doesNotMatch(bloggerSource, /providerID[^\n]*step-3\.5-flash|Contains\([^\n]*step-3\.5-flash/)
 })
 
-test('WHAT[cognitive-environment-015] BLOGGER_CHRONICLE_TEXT_is_the_last_semantic_injection_before_sanitize', () => {
-  const score = transformsSource.slice(
-    transformsSource.indexOf('let normalTransform'),
-    transformsSource.indexOf('let private ordinaryProviderTransform'),
-  )
-  const pairIndex = score.indexOf('caps.InjectPairGuideline')
-  const groundingIndex = score.indexOf('caps.ProjectRequirementGrounding')
-  const bloggerIndex = score.indexOf('caps.InjectBloggerChronicle')
-  const sanitizeIndex = score.indexOf('caps.SanitizeMessages')
-
-  assert.ok(pairIndex >= 0, 'Pair guideline transform must be present')
-  assert.ok(bloggerIndex > pairIndex, 'Blogger chronicle text must be injected after pair guideline')
-  assert.ok(bloggerIndex > groundingIndex, 'Blogger chronicle text must be injected after requirement grounding')
-  assert.ok(sanitizeIndex > bloggerIndex, 'Message sanitize must occur after chronicle text')
+test('WHAT[cognitive-environment-015] BLOGGER_CHRONICLE_TEXT_is_the_last_semantic_injection_before_sanitize', async () => {
+  const effects = await ordinaryEffects(false, false)
+  const bloggerIndex = effects.indexOf('chronicle')
+  for (const name of ['pair', 'grounding', 'delegation']) {
+    const index = effects.indexOf(name)
+    assert.ok(index >= 0, `${name} transform must execute`)
+    assert.ok(bloggerIndex > index, `Blogger chronicle text must be injected after ${name}`)
+  }
+  assert.deepEqual(effects.slice(bloggerIndex), ['chronicle', 'deferred', 'sanitize'],
+    'only inspection settlement and sanitize may follow the final semantic injection')
 })
 
 // ---------------------------------------------------------------------------

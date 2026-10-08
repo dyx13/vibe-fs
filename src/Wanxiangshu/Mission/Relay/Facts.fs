@@ -39,6 +39,10 @@ type IncumbencyOpening =
       Transaction: RelayTransaction }
 
 module IncumbencyOpening =
+    let nextId (sha256: string -> string) (retirementId: RetirementId) =
+        sha256 ("manager-loop-v1\n" + RetirementId.value retirementId)
+        |> fun digest -> IncumbencyId.create ("incumbency:" + digest)
+
     let private buildTransaction events =
         match RelayTransaction.create events with
         | Ok transaction -> transaction
@@ -79,9 +83,7 @@ module IncumbencyOpening =
         (authorityRevision: AuthorityRevision)
         (snapshotId: WorkspaceSnapshotId)
         =
-        let incumbencyId =
-            sha256 ("manager-loop-v1\n" + RetirementId.value retirementId)
-            |> fun digest -> IncumbencyId.create ("incumbency:" + digest)
+        let incumbencyId = nextId sha256 retirementId
 
         let transaction =
             buildTransaction [ RelayEvent.IncumbencyOpened(incumbencyId, snapshotId) ]

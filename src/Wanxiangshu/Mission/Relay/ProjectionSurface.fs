@@ -23,7 +23,7 @@ module ProjectionSurface =
             let interrupted = ResizeArray<string>()
             let output = createObj [ "messages" ==> messages ]
 
-            let interrupt current =
+            let interrupt current _ =
                 interrupted.Add(SessionId.value current)
                 Task.FromResult()
 

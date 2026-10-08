@@ -44,6 +44,7 @@ const headerValue = (headers, names) => {
 const requestContextOf = (headers) => ({
   sessionId: headerValue(headers, ['x-session-affinity', 'x-session-id', 'x-opencode-session']),
   parentSessionId: headerValue(headers, ['x-parent-session-id']),
+  providerId: headerValue(headers, ['x-wxs-e2e-provider-id']),
 });
 
 const requestRecordOf = (body, context) => {
@@ -51,6 +52,7 @@ const requestRecordOf = (body, context) => {
   Object.defineProperties(record, {
     sessionID: { value: context.sessionId, enumerable: false },
     parentSessionID: { value: context.parentSessionId, enumerable: false },
+    providerID: { value: context.providerId, enumerable: false },
   });
   return record;
 };
@@ -181,6 +183,7 @@ export class StrictMockProvider {
   }
 
   get requests() { return this._state.requests; }
+  get toolCallBatches() { return this._state.toolCallBatches; }
   get url() { return this._url; }
   get port() { return this._port; }
   get unexpectedRequests() { return this._state.unexpected; }
@@ -384,7 +387,7 @@ export class StrictMockProvider {
     const responseEntry = neverEnds
       ? { ...entry, respond: { ...entry.respond, neverEnd: true } }
       : entry;
-    return respond(this._state, res, responseEntry, parsed);
+    return respond(this._state, res, responseEntry, parsed, context);
   }
 
   _dispatchChat(res, parsed, context) {

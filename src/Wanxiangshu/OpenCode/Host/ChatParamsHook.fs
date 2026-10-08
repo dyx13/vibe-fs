@@ -180,11 +180,8 @@ module ChatParamsHook =
                 }
             """
 
-    /// Which execution this observation belongs to, if any. Managed-ness is
-    /// durable evidence: an exact `Accepted` execution for the very physical
-    /// message this request carries. A request the plugin never admitted (Host
-    /// compaction, title generation, an auxiliary child) has no such execution
-    /// and is left entirely to the Host.
+    /// The exact user message carried by this observation. Host title requests
+    /// reuse the original User but do not execute its managed work.
     let private tryExecutionKey (input: obj) =
         match trySessionId input, tryPhysicalUserMessageId input with
         | Some sessionId, Some physical ->
@@ -193,8 +190,7 @@ module ChatParamsHook =
                   PhysicalUserMessageId = physical }
         | _ -> None
 
-    /// Managed-ness is durable evidence: only a message this plugin durably
-    /// accepted is a managed provider run. Such a run must hold the exact
+    /// A managed provider request needs durable Accepted evidence and the exact
     /// committed lease for its own physical message, or the observation fails
     /// closed. A message nobody accepted is entirely the Host's — never rejected
     /// for a binding this hook does not own.
@@ -233,7 +229,10 @@ module ChatParamsHook =
         | _ -> ()
 
     let private handleInput (journal: AgentJournal option) (input: obj) (output: obj) =
-        applyManagedPolicy journal input output
+        if emitJsExpr input "$0 != null && $0.agent === 'title'" then
+            ()
+        else
+            applyManagedPolicy journal input output
 
     let createWith (journal: AgentJournal option) : obj =
         box (fun (input: obj) (output: obj) -> handleInput journal input output)

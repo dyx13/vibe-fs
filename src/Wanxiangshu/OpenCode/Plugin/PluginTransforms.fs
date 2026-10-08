@@ -94,6 +94,91 @@ open PluginHostInterop
 
 module PluginTransforms =
 
+    let private successorAdmitted journal sessionId (retirement: RetirementSummary) =
+        journal
+        |> Option.bind (fun durable ->
+            PromptAuthorityProjectionQueries.activeProfile sessionId (AgentJournal.snapshot durable).AgentProjections
+            |> Option.bind (fun profile ->
+                (PromptDispatcher.forPrompts (PromptJournalAdapter.create durable))
+                    .GateNudgeAcceptedPhysical
+                    profile
+                    PromptAuthority.ContinuationKind.ManagerGuard
+                    (ManagerLoopGate.gateKind retirement.Id)
+                    (ProviderRunIdentity.create retirement.ProjectionCut.ProviderRunId)))
+        |> Option.isSome
+
+    let private snapshotPhysicalMessage (host: PluginHostWiring.Host) sessionId providerRun =
+        task {
+            match host.SnapshotOpt with
+            | None -> return invalidOp "MANAGER-LOOP-004: retired attempt snapshot unavailable"
+            | Some snapshot ->
+                let! messages = snapshot.GetMessages sessionId
+
+                return
+                    messages
+                    |> Result.defaultWith (fun error ->
+                        invalidOp ("MANAGER-LOOP-004: retired attempt snapshot failed: " + error))
+                    |> List.tryFind (fun message -> message.Id = ProviderRunIdentity.value providerRun)
+                    |> Option.bind (fun message -> message.ParentId)
+                    |> Option.filter (String.IsNullOrWhiteSpace >> not)
+                    |> Option.map PhysicalUserMessageId.create
+                    |> Option.defaultWith (fun () ->
+                        invalidOp "MANAGER-LOOP-004: retired provider run has no exact physical parent")
+        }
+
+    let private retiredPhysicalMessage host sessionId providerRun =
+        task {
+            match ModelRouting.tryProviderStepIdentity providerRun with
+            | Some(owner, physical) when owner = sessionId -> return physical
+            | Some _ -> return invalidOp "MANAGER-LOOP-004: retired provider run belongs to another session"
+            | None -> return! snapshotPhysicalMessage host sessionId providerRun
+        }
+
+    let private interruptRetiredPhysical (sessionPort: ISessionHostPort) needsInterruption sessionId physical =
+        task {
+            if needsInterruption () then
+                ModelRouting.suppressProviderStep sessionId physical
+                ModelRouting.releasePhysicalExecution sessionId physical |> ignore
+                let! interruption = sessionPort.InterruptAttempt sessionId
+
+                return
+                    interruption
+                    |> Result.defaultWith (fun error ->
+                        invalidOp ("MANAGER-LOOP-004: retired attempt interrupt failed: " + error))
+        }
+
+    let atRetiredAttemptBoundary
+        (boot: PluginBoot.Boot)
+        (host: PluginHostWiring.Host)
+        : ManagerWorkflow.RetiredAttemptBoundary =
+        fun sessionId (captured: RetirementSummary) (afterStop: unit -> Task<unit>) ->
+            let current () =
+                RelayNarrativeTransform.retirementOwnsAuthority boot.Journal sessionId captured
+
+            let needsInterruption () =
+                current () && not (successorAdmitted boot.Journal sessionId captured)
+
+            SharedState.runAfterProviderAttemptStopped
+                sessionId
+                (ProviderRunIdentity.create captured.ProjectionCut.ProviderRunId)
+                (ToolCallId.create captured.ProjectionCut.ToolCallId)
+                (fun () ->
+                    task {
+                        if needsInterruption () then
+                            let! physical =
+                                retiredPhysicalMessage
+                                    host
+                                    sessionId
+                                    (ProviderRunIdentity.create captured.ProjectionCut.ProviderRunId)
+
+                            do! interruptRetiredPhysical host.SessionPort needsInterruption sessionId physical
+                    })
+                (fun () ->
+                    task {
+                        if current () then
+                            do! afterStop ()
+                    })
+
     type private SessionTermination = SessionId -> string -> Task<Result<unit, string>>
 
     [<RequireQualifiedAccess>]
@@ -130,7 +215,8 @@ module PluginTransforms =
           Current: XTraceProjectionState option }
 
     type NormalTransformCapabilities =
-        { BeginPhysicalProviderAttempt: string option -> obj -> Task<unit>
+        { TryStopRetiredAttempt: string option -> obj -> Task<bool>
+          BeginPhysicalProviderAttempt: string option -> obj -> Task<unit>
           BindSessionStartedAt: string option -> Task<DateTimeOffset option>
           ApplyStrengthReplay: string option -> obj -> Task<StrengthReplayPlan list>
           RestoreProtocolArguments: obj -> Task<unit>
@@ -558,7 +644,55 @@ module PluginTransforms =
                 (Some boot.Timer)
                 outObj
 
-        { BeginPhysicalProviderAttempt =
+        let acceptedSuccessorRequest sidOpt outObj =
+            let physicalUserMessageId =
+                outObj
+                |> ProviderWireDecode.messagesFromTransformOutput
+                |> ProviderWireCapture.lastUserMessageId
+
+            match journal, sidOpt, physicalUserMessageId with
+            | Some durable, Some sessionId, Some physical when not (String.IsNullOrWhiteSpace sessionId) ->
+                let key: ChatExecutionKey =
+                    { SessionId = SessionId.create sessionId
+                      PhysicalUserMessageId = physical }
+
+                (AgentJournal.snapshot durable).AgentProjections.ChatExecutions
+                |> ChatExecutionProjection.byKey key
+                |> Option.isSome
+            | _ -> false
+
+        let applyRelayProjection sidOpt outObj =
+            RelayNarrativeTransform.apply
+                journal
+                (acceptedSuccessorRequest sidOpt outObj)
+                (fun sid retirement ->
+                    ManagerWorkflow.continueAfterRetiredAttempt
+                        sessionPort
+                        host.RootWorkspace
+                        journal
+                        workspaceDirectory
+                        (atRetiredAttemptBoundary boot host)
+                        sid
+                        retirement)
+                sidOpt
+                outObj
+
+        { TryStopRetiredAttempt =
+            fun sidOpt outObj ->
+                task {
+                    if
+                        RelayNarrativeTransform.isRetiredRequest
+                            journal
+                            (acceptedSuccessorRequest sidOpt outObj)
+                            sidOpt
+                            outObj
+                    then
+                        let! disposition = applyRelayProjection sidOpt outObj
+                        return disposition = RelayProjectionDisposition.RetiredAttemptStopped
+                    else
+                        return false
+                }
+          BeginPhysicalProviderAttempt =
             fun sessionId output ->
                 task {
                     do! wired.EnsureVisibleInputAdmission output
@@ -593,61 +727,7 @@ module PluginTransforms =
           ApplyRelayProjection =
             fun sidOpt outObj ->
                 task {
-                    let physicalUserMessageId =
-                        outObj
-                        |> ProviderWireDecode.messagesFromTransformOutput
-                        |> ProviderWireCapture.lastUserMessageId
-
-                    // External human messages and internal recovery/guard continuations
-                    // admitted into ChatExecutions belong to this active iteration.
-                    let acceptedSuccessorRequest =
-                        match journal, sidOpt, physicalUserMessageId with
-                        | Some durable, Some sessionId, Some physical when not (String.IsNullOrWhiteSpace sessionId) ->
-                            let key: ChatExecutionKey =
-                                { SessionId = SessionId.create sessionId
-                                  PhysicalUserMessageId = physical }
-
-                            (AgentJournal.snapshot durable).AgentProjections.ChatExecutions
-                            |> ChatExecutionProjection.byKey key
-                            |> Option.isSome
-                        | _ -> false
-
-                    let! disposition =
-                        RelayNarrativeTransform.apply
-                            journal
-                            acceptedSuccessorRequest
-                            (fun sid ->
-                                ManagerWorkflow.continueAfterRetiredAttempt
-                                    sessionPort
-                                    host.RootWorkspace
-                                    journal
-                                    workspaceDirectory
-                                    (fun exactSessionId ->
-                                        task {
-                                            match physicalUserMessageId with
-                                            | None ->
-                                                return
-                                                    invalidOp
-                                                        "MANAGER-LOOP-004: retired attempt has no exact physical user message"
-                                            | Some physical ->
-                                                ModelRouting.suppressProviderStep exactSessionId physical
-
-                                                ModelRouting.releasePhysicalExecution exactSessionId physical
-                                                |> ignore
-
-                                                let! interruption = sessionPort.InterruptAttempt exactSessionId
-
-                                                return
-                                                    interruption
-                                                    |> Result.defaultWith (fun error ->
-                                                        invalidOp (
-                                                            "MANAGER-LOOP-004: retired attempt interrupt failed: "
-                                                            + error
-                                                        ))
-                                        })
-                                    sid)
-                            sidOpt
-                            outObj
+                    let! disposition = applyRelayProjection sidOpt outObj
 
                     if disposition <> RelayProjectionDisposition.RetiredAttemptStopped then
                         do! ManagerWorkflow.ensureManagerRoadOpened journal workspaceDirectory sidOpt None
@@ -840,7 +920,21 @@ module PluginTransforms =
                 }
           ReplicaSanitize = HostMessageProjection.sanitizeOutputMessages }
 
-    let normalTransform
+    let private applyCurrentHorizonAuxiliaries
+        (caps: NormalTransformCapabilities)
+        projectionSessionIdOpt
+        sessionStartedAt
+        outObj
+        prefixHorizon
+        =
+        task {
+            if prefixHorizon = PrefixPresentationHorizon.Current then
+                do! caps.InjectPairGuideline projectionSessionIdOpt sessionStartedAt outObj
+                do! caps.ProjectRequirementGrounding projectionSessionIdOpt outObj
+                do! caps.ApplyReadonlyDelegation projectionSessionIdOpt outObj
+        }
+
+    let private transformCurrent
         (caps: NormalTransformCapabilities)
         (projectionSessionIdOpt: string option)
         (inObj: obj)
@@ -857,70 +951,74 @@ module PluginTransforms =
             // 2. SessionStartedAtLedger.tryBindOrAbort
             let! sessionStartedAt = caps.BindSessionStartedAt projectionSessionIdOpt
 
-            // 3. Relay projection cut + manager-loop opening. This MUST run
-            // before every trace/compaction owner so retired raw history cannot
-            // be reintroduced later in the composition.
+            // 3. Reject the retired request before downstream context owners run.
             do! caps.SettleAndReplaceDeferredInspections projectionSessionIdOpt outObj
             let! relayProjection = caps.ApplyRelayProjection projectionSessionIdOpt outObj
 
             if relayProjection = RelayProjectionDisposition.RetiredAttemptStopped then
                 return ()
+            else
+                // 4. StrengthReplay.applyBeforeXTrace
+                let! strengthReplayPlans = caps.ApplyStrengthReplay projectionSessionIdOpt outObj
 
-            // 4. StrengthReplay.applyBeforeXTrace
-            let! strengthReplayPlans = caps.ApplyStrengthReplay projectionSessionIdOpt outObj
+                // 4.4 host-boundary-032 / restore the protocol
+                // fields the Host persisted away into the provider-facing request
+                // BEFORE delegation capture (4.5) reads the same history; without
+                // this the capture never sees the budget the model signed.
+                do! caps.RestoreProtocolArguments outObj
 
-            // 4.4 host-boundary-032 / restore the protocol
-            // fields the Host persisted away into the provider-facing request
-            // BEFORE delegation capture (4.5) reads the same history; without
-            // this the capture never sees the budget the model signed.
-            do! caps.RestoreProtocolArguments outObj
+                // 5. XTraceCapture.captureObservedMessagesWithReceipt
+                let! traceCapture = caps.CaptureXTraceMessages projectionSessionIdOpt outObj
 
-            // 5. XTraceCapture.captureObservedMessagesWithReceipt
-            let! traceCapture = caps.CaptureXTraceMessages projectionSessionIdOpt outObj
+                // 6. StrengthReplay.commitTracedAfterCapture
+                do! caps.CommitStrengthTrace projectionSessionIdOpt traceCapture.Current strengthReplayPlans
 
-            // 6. StrengthReplay.commitTracedAfterCapture
-            do! caps.CommitStrengthTrace projectionSessionIdOpt traceCapture.Current strengthReplayPlans
+                // 7. CompanionHost.RefreshXTrace
+                caps.RefreshCompanionXTrace projectionSessionIdOpt traceCapture.Current
 
-            // 7. CompanionHost.RefreshXTrace
-            caps.RefreshCompanionXTrace projectionSessionIdOpt traceCapture.Current
+                // 8. applyCompanionForOrdinaryMaterial
+                do! caps.ApplyCompanion projectionSessionIdOpt inObj outObj
 
-            // 8. applyCompanionForOrdinaryMaterial
-            do! caps.ApplyCompanion projectionSessionIdOpt inObj outObj
+                // 9. XWire.applyTransform. A selected prefix probe creates a
+                // tentative cold horizon for this physical request; downstream
+                // historical auxiliaries must not replay the old horizon into it.
+                let! prefixHorizon = caps.ApplyXWire outObj
 
-            // 9. XWire.applyTransform. A selected prefix probe creates a
-            // tentative cold horizon for this physical request; downstream
-            // historical auxiliaries must not replay the old horizon into it.
-            let! prefixHorizon = caps.ApplyXWire outObj
+                // 10. ProviderLifecycle.freezeProviderAttemptPlanForTransform
+                // Freeze the exact plan, then confirm the Host's real assistant
+                // identity and durable ProviderStarted before returning its body.
+                do! caps.FreezeProviderAttemptPlan projectionSessionIdOpt outObj
 
-            // 10. ProviderLifecycle.freezeProviderAttemptPlanForTransform
-            // Freeze the exact plan, then confirm the Host's real assistant
-            // identity and durable ProviderStarted before returning its body.
-            do! caps.FreezeProviderAttemptPlan projectionSessionIdOpt outObj
+                // 11. EnforcerContinuation.applyContinuation
+                do! caps.ApplyEnforcerContinuation projectionSessionIdOpt outObj
 
-            // 11. EnforcerContinuation.applyContinuation
-            do! caps.ApplyEnforcerContinuation projectionSessionIdOpt outObj
+                do! applyCurrentHorizonAuxiliaries caps projectionSessionIdOpt sessionStartedAt outObj prefixHorizon
 
-            if prefixHorizon = PrefixPresentationHorizon.Current then
-                // 12. PairProgrammingThoughtTransform.maybeInjectGuideline
-                do! caps.InjectPairGuideline projectionSessionIdOpt sessionStartedAt outObj
+                // 15. BloggerChronicleText.maybeInject
+                caps.InjectBloggerChronicle projectionSessionIdOpt physicalUserMessageId outObj
 
-                // 13. RequirementGroundingTransform.projectOrTerminate
-                do! caps.ProjectRequirementGrounding projectionSessionIdOpt outObj
+                // 15.1 Re-apply replaced inspection results after any intermediate insertions
+                do! caps.SettleAndReplaceDeferredInspections projectionSessionIdOpt outObj
 
-                // Capture and start on the final outgoing request so the
-                // preparation owns the same mirror and provider attempt plan.
-                do! caps.ApplyReadonlyDelegation projectionSessionIdOpt outObj
+                // 16. HostMessageProjection.sanitizeMessages
+                caps.SanitizeMessages outObj
 
-            // 15. BloggerChronicleText.maybeInject
-            caps.InjectBloggerChronicle projectionSessionIdOpt physicalUserMessageId outObj
+                ()
+        }
 
-            // 15.1 Re-apply replaced inspection results after any intermediate insertions
-            do! caps.SettleAndReplaceDeferredInspections projectionSessionIdOpt outObj
+    let normalTransform
+        (caps: NormalTransformCapabilities)
+        (projectionSessionIdOpt: string option)
+        (inObj: obj)
+        (outObj: obj)
+        : Task<unit> =
+        task {
+            let! stopped = caps.TryStopRetiredAttempt projectionSessionIdOpt outObj
 
-            // 16. HostMessageProjection.sanitizeMessages
-            caps.SanitizeMessages outObj
-
-            ()
+            if stopped then
+                return ()
+            else
+                return! transformCurrent caps projectionSessionIdOpt inObj outObj
         }
 
     let createWithCaps

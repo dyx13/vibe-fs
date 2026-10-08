@@ -219,6 +219,7 @@ module PluginHooks =
                                                 host.RootWorkspace
                                                 journal
                                                 (Some managerWorkspace)
+                                                (PluginTransforms.atRetiredAttemptBoundary boot host)
                                                 (Some(SessionId.value managerSessionId))
 
                                         return Ok()

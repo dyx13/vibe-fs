@@ -6,9 +6,12 @@ open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Host
 open Wanxiangshu.OpenCode
 open Wanxiangshu.Persistence.Journal
+open Wanxiangshu.Mission.Relay
 
 /// Manager current-action guidance and retired-idle continuation ownership.
 module ManagerWorkflow =
+
+    type RetiredAttemptBoundary = SessionId -> RetirementSummary -> (unit -> Task<unit>) -> Task<unit>
 
     val observeIdle:
         quiescence: ISessionQuiescenceGate ->
@@ -42,6 +45,7 @@ module ManagerWorkflow =
         rootWorkspace: IRootWorkspaceReader ->
         journal: AgentJournal option ->
         workspaceDirectory: string option ->
+        atRetiredAttemptBoundary: RetiredAttemptBoundary ->
         sessionIdTextOpt: string option ->
             Task<unit>
 
@@ -50,6 +54,7 @@ module ManagerWorkflow =
         rootWorkspace: IRootWorkspaceReader ->
         journal: AgentJournal option ->
         workspaceDirectory: string option ->
-        stopRetiredAttempt: (SessionId -> Task<unit>) ->
+        atRetiredAttemptBoundary: RetiredAttemptBoundary ->
         sessionId: SessionId ->
+        retirement: RetirementSummary ->
             Task<unit>

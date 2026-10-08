@@ -21,8 +21,9 @@ const awaitResponseClose = (res) =>
     res.once('close', resolve);
   });
 
-async function respondStream(res, chunks, exp) {
+async function respondStream(res, chunks, exp, completedToolCalls) {
   res.writeHead(200, { ...SSE_HEADERS, 'X-Accel-Buffering': 'no' });
+  const calls = new Map();
 
   if (exp.respond.missingUsage) {
     for (const chunk of chunks) delete chunk.usage;
@@ -40,6 +41,13 @@ async function respondStream(res, chunks, exp) {
       return;
     }
     res.write(`data: ${JSON.stringify(chunks[index])}\n\n`);
+    for (const delta of chunks[index]?.choices?.[0]?.delta?.tool_calls ?? []) {
+      const call = calls.get(delta.index) ?? { id: '', name: '', arguments: '' };
+      if (delta.id) call.id = delta.id;
+      if (delta.function?.name) call.name += delta.function.name;
+      if (delta.function?.arguments) call.arguments += delta.function.arguments;
+      calls.set(delta.index, call);
+    }
     // Causal stream hold for Long Stroke control-sentinel canaries. The first
     // reasoning delta is physically visible; the only success-path release is
     // the provider HTTP response closing because OpenCode cancelled that attempt.
@@ -66,8 +74,10 @@ async function respondStream(res, chunks, exp) {
   if (exp.respond.delayDone > 0) {
     await new Promise((resolve) => setTimeout(resolve, exp.respond.delayDone));
   }
+  if (res.destroyed || res.writableEnded) return;
   res.write('data: [DONE]\n\n');
   res.end();
+  if (calls.size > 0) completedToolCalls([...calls.values()]);
 }
 
 function toolArgs(exp, parsed, strict, state) {
@@ -216,7 +226,8 @@ function reasoningOnlyChunks(id, exp, promptTokens) {
   ];
 }
 
-export async function respond(state, res, exp, parsed) {
+export async function respond(state, res, exp, parsed, context = {}) {
+  const source = { sessionId: context.sessionId ?? null, requestIndex: state.requests.length - 1 };
   const id = exp.respond.type === 'title'
     ? `title_${++state.responseCounter}`
     : `call_${++state.responseCounter}`;
@@ -252,7 +263,7 @@ export async function respond(state, res, exp, parsed) {
     res.destroy();
     return;
   }
-  return respondStream(res, chunks, exp);
+  return respondStream(res, chunks, exp, (calls) => state.toolCallBatches.push({ ...source, calls }));
 }
 
 function respondDisconnect(res, id) {

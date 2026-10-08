@@ -11,6 +11,7 @@ export function createState() {
     sessionBindings: new Map(), // diagnostic / canary routing only
     unexpected: [],
     requests: [],
+    toolCallBatches: [],
     responseCounter: 0,
     idCounter: 0,
     strict: true,
@@ -24,6 +25,7 @@ export function resetState(state) {
   state.sessionBindings.clear();
   state.unexpected.length = 0;
   state.requests.length = 0;
+  state.toolCallBatches.length = 0;
   state.responseCounter = 0;
   state.stopped = false;
   state.fatal = null;

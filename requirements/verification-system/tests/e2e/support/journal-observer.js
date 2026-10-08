@@ -579,24 +579,14 @@ const journalEventTexts = journalEventLines;
 export function factPayloads(workDirOrLines, caseName) {
   const lines = typeof workDirOrLines === 'string' ? journalEventLines(workDirOrLines) : workDirOrLines;
   const found = [];
-  const walk = (value) => {
-    if (Array.isArray(value)) {
-      if (typeof value[0] === 'string' && value[0] === caseName) found.push(value[1]);
-      for (const item of value) walk(item);
-    } else if (value && typeof value === 'object') {
-      for (const child of Object.values(value)) walk(child);
-    }
-  };
   for (const line of lines) {
-    const envelope =
-      typeof line === 'string'
-        ? journalEnvelopeFromEventText(line)
-        : line && typeof line === 'object'
-          ? line.payload && typeof line.payload === 'object'
-            ? line.payload
-            : line
-          : null;
-    if (envelope) walk(envelope.Fact);
+    let event;
+    try { event = typeof line === 'string' ? JSON.parse(line) : line; }
+    catch { continue; }
+    const envelope = journalEnvelopeFromEventText(event);
+    for (const fact of extractFactCasesAndIdentities(envelope, event).cases) {
+      if (fact.name === caseName) found.push(fact.payload);
+    }
   }
   return found;
 }
