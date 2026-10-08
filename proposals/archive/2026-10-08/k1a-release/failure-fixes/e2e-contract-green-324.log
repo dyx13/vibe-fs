@@ -1,0 +1,21 @@
+runner: scoped 使用 TESTS_MJS_FILES=1 files
+runner: build is current (1815 sources, 891 artifacts)
+runner: discovery OVERRIDDEN by TESTS_MJS_FILES (1 file(s))
+runner: 1 test file(s), 30000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48745,"parentPid":48718,"type":"runner:file-start","elapsedMs":28.139417000000037}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48746,"parentPid":48745,"monotonicMs":15.551541,"cpuUserMicros":20678,"cpuSystemMicros":3538}
+[verification-test-start] {"pid":48746,"parentPid":48745,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","name":"WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard","fullName":"WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard"}
+[verification-test-start] {"pid":48746,"parentPid":48745,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","name":"WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description","fullName":"WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description"}
+[verification-test-start] {"pid":48746,"parentPid":48745,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","name":"WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases","fullName":"WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases"}
+[verification-test-start] {"pid":48746,"parentPid":48745,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","name":"WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions","fullName":"WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions"}
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48746,"parentPid":48745,"monotonicMs":146.631375,"cpuUserMicros":196079,"cpuSystemMicros":20839,"exitCode":0}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","type":"runner:file-drained","elapsedMs":189.20720800000004}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","enabled":true,"pid":48746,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48746,"parentPid":48745,"monotonicMs":15.551541,"cpuUserMicros":20678,"cpuSystemMicros":3538},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48746,"parentPid":48745,"monotonicMs":146.631375,"cpuUserMicros":196079,"cpuSystemMicros":20839,"exitCode":0},"interval":{"clockPid":48746,"wallMs":131.079834,"cpuUserMicros":175401,"cpuSystemMicros":17301}}
+
+[test-summary] 1 file(s), 4 passed, 0 failed, 1 skipped (0.16s wall, 0.03s test time)
+  skip: /Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:WHAT[verification-system-014] Long Stroke 真实物理验收环境 — release tier not enabled
+runner: post-exit group verification/reclamation: pid=48745; elapsedMs=16.189; accepted=true
+runner: 5 test(s), 0.0s of test time; max 19ms, p90 19ms, median 3ms
+
+runner: 4 passed, 0 failed; 1/1 planned file(s) completed
+runner: partial evidence; 1 skipped, 0 TODO; excluded cases are not passes

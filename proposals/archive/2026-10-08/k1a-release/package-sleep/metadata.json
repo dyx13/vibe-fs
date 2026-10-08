@@ -1,0 +1,89 @@
+{
+  "capturedAt": "2026-10-08T05:58:07.684716+00:00",
+  "files": [
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/independent-package.json",
+      "realpath": "/private/tmp/vibe-fs-oct8-alias-release/independent-package.json",
+      "device": 16777231,
+      "inode": 157415340,
+      "mode": "0o100644",
+      "uid": 501,
+      "size": 877,
+      "mtimeNs": 1791431390847134633,
+      "sha256": "dd79d2f43b5443981acc9d0d9d0bbf449a0d450cf3a4da4ee0db029ae5d4c5e0"
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/independent-package.log",
+      "realpath": "/private/tmp/vibe-fs-oct8-alias-release/independent-package.log",
+      "device": 16777231,
+      "inode": 157404121,
+      "mode": "0o100644",
+      "uid": 501,
+      "size": 0,
+      "mtimeNs": 1791430413247581980,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/independent-package-console.log",
+      "realpath": "/private/tmp/vibe-fs-oct8-alias-release/independent-package-console.log",
+      "device": 16777231,
+      "inode": 157404103,
+      "mode": "0o100644",
+      "uid": 501,
+      "size": 878,
+      "mtimeNs": 1791431390847213843,
+      "sha256": "451005176c9dd24d3cb6ea2dcb0df2064f3a4cb9fc42fd1c11b3a2a6ce172dbc"
+    },
+    {
+      "path": "/Users/yuanxi/.npm/_logs/2026-10-08T03_33_45_401Z-debug-0.log",
+      "realpath": "/Users/yuanxi/.npm/_logs/2026-10-08T03_33_45_401Z-debug-0.log",
+      "device": 16777231,
+      "inode": 157407005,
+      "mode": "0o100644",
+      "uid": 501,
+      "size": 13425,
+      "mtimeNs": 1791430426380684415,
+      "sha256": "06ef1647d47949ff095f24422e60143e4b59f5d7beedf0f2a595082aecf1b25b"
+    },
+    {
+      "path": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/package/wanxiangshu-0.9.0.tgz",
+      "realpath": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/package/wanxiangshu-0.9.0.tgz",
+      "device": 16777231,
+      "inode": 157404148,
+      "mode": "0o100644",
+      "uid": 501,
+      "size": 2532520,
+      "mtimeNs": 1791430422315468719,
+      "sha256": "9538a6c7f81326a0fd1ab14c0cda6e6d3143fcdda3179b6c529c2b2fb601fb2b",
+      "preservedCopy": "/private/tmp/vibe-fs-oct8-package-sleep-audit/wanxiangshu-0.9.0.original-9538a6c7.tgz",
+      "readonlyInventory": {
+        "members": 2073,
+        "uncompressedFileBytes": 12486826,
+        "name": "wanxiangshu",
+        "version": "0.9.0"
+      }
+    }
+  ],
+  "scratch": {
+    "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wx-consumer-scratch-2KMDNA",
+    "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wx-consumer-scratch-2KMDNA",
+    "device": 16777231,
+    "inode": 157404276,
+    "mode": "0o40700",
+    "uid": 501,
+    "mtimeNs": 1791430425127989149,
+    "top": [
+      "package",
+      "runtime-root"
+    ],
+    "runtimeTop": [
+      ".empty-global-npmrc",
+      ".empty-npmrc",
+      "node_modules",
+      "package-lock.json",
+      "package.json"
+    ],
+    "consumerExists": false,
+    "homeExists": false
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "capturedAt": "2026-10-08T05:58:21.766039+00:00",
+  "terms": [
+    "wx-consumer-scratch-2KMDNA",
+    "/Users/yuanxi/Workwork/vibe-fs/scripts/verify-package.mjs",
+    "caffeinate -i"
+  ],
+  "rows": [
+    "46710 49251 46710 Thu Oct  8 13:52:15 2026     caffeinate -i"
+  ],
+  "scope": "Command-line matches only; not a complete historical descendant inventory."
+}

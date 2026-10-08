@@ -1,0 +1,15 @@
+{
+  "capturedAt": "2026-10-08T03:17:53.927Z",
+  "freshness": {
+    "generation": 320,
+    "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+    "generatedInputDigest": "c1652c3ff083038517ff410526d03566bd0b7ba89d3c5c561dded0907e5a0b05",
+    "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+  },
+  "digest": "50bf7902083464c11195caae8e61f08f9fe82c1797cb1ee82bcd3f2c86227bb4",
+  "generation": 320,
+  "compiler": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+  "generated": "c1652c3ff083038517ff410526d03566bd0b7ba89d3c5c561dded0907e5a0b05",
+  "artifacts": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2",
+  "toolIdentity": "dotnet 10.0.302 / fable \u001b[37m5.13.0\n\u001b[39m\u001b[22m"
+}

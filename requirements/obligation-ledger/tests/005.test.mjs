@@ -176,23 +176,36 @@ integrationTest('WHAT[obligation-ledger-005] distinct sessions and calls never c
     assert.equal(countCheckpointFacts(directory), 6, 'identities containing the old separator remain independent')
   })
 })
-const { renameSync, writeFileSync } = await import("node:fs");
+const { mkdirSync, renameSync } = await import("node:fs");
 
-// Refuse physical appends in the fixture workspace, restoring its events
-// directory even when the tested operation fails.
-const withBlockedEvents = async (directory, action) => {
+// Keep the events directory valid so appendFileSync reaches the writer path.
+const withBlockedPhysicalAppend = async (directory, action) => {
   const eventsDir = join(directory, '.git', 'wanxiang', 'events')
+  const writerFiles = readdirSync(eventsDir).filter((file) => file.endsWith('.ndjson'))
+  assert.ok(writerFiles.length > 0, 'the accepted authority root has activated the fixture writer')
   const { mkdtempSync: mkStash, rmSync: rmStash } = await import("node:fs")
   const osModule = await import('node:os')
   const stash = mkStash(join(osModule.tmpdir(), 'wxs-005-stash-'))
-  renameSync(eventsDir, join(stash, 'events'))
-  writeFileSync(eventsDir, 'blocked: not a directory')
+  const blocked = []
   try {
+    for (const file of writerFiles) {
+      const path = join(eventsDir, file)
+      const bytes = readFileSync(path)
+      renameSync(path, join(stash, file))
+      blocked.push({ file, bytes })
+      mkdirSync(path)
+    }
     return await action()
   } finally {
-    rmStash(eventsDir, { force: true })
-    renameSync(join(stash, 'events'), eventsDir)
+    for (const { file } of blocked) {
+      const path = join(eventsDir, file)
+      rmStash(path, { recursive: true, force: true })
+      renameSync(join(stash, file), path)
+    }
     rmStash(stash, { recursive: true, force: true })
+    for (const { file, bytes } of blocked) {
+      assert.deepEqual(readFileSync(join(eventsDir, file)), bytes, 'the fault preserves the original writer bytes')
+    }
   }
 }
 
@@ -203,7 +216,7 @@ integrationTest('WHAT[obligation-ledger-005] concurrent duplicate terminals shar
     await acceptAuthorityRoot(runtime, sessionID, 'engineer')
     await todoCall(hooks, sessionID, callID)
 
-    await withBlockedEvents(directory, async () => {
+    await withBlockedPhysicalAppend(directory, async () => {
       // Two completed events for the same exact call race on the same
       // blocked append. Both callers must observe the append outcome —
       // an early fulfilled duplicate would claim a checkpoint that was
@@ -216,7 +229,7 @@ integrationTest('WHAT[obligation-ledger-005] concurrent duplicate terminals shar
       // The blocked append fails; both callers must see that failure.
       assert.deepEqual(statuses, ['rejected', 'rejected'], 'both duplicate terminals observe the append failure')
       for (const outcome of outcomes) {
-        assert.match(String(outcome.reason), /append outcome unknown/i, 'the rejection carries the unknown append outcome')
+        assert.match(String(outcome.reason), /append outcome unknown.*PhysicalAppend.*EISDIR/i, 'the rejection carries the unknown physical append outcome')
       }
       assert.equal(String(outcomes[1].reason), String(outcomes[0].reason), 'both callers observe the same failed event identity and outcome')
     })
@@ -257,7 +270,7 @@ integrationTest('WHAT[obligation-ledger-005] a WriteUnknown append outcome is ne
     await acceptAuthorityRoot(runtime, sessionID, 'engineer')
     await todoCall(hooks, sessionID, callID)
 
-    await withBlockedEvents(directory, async () => {
+    await withBlockedPhysicalAppend(directory, async () => {
       // The blocked append reports an unknown outcome: the event may already
       // be durable, so repeating it is unsafe. The first caller observes the
       // failure...
@@ -266,7 +279,7 @@ integrationTest('WHAT[obligation-ledger-005] a WriteUnknown append outcome is ne
         () => hooks.event(terminalEvent(sessionID, callID, 'completed')),
         (failure) => {
           firstFailure = String(failure)
-          assert.match(firstFailure, /append outcome unknown/i)
+          assert.match(firstFailure, /append outcome unknown.*PhysicalAppend.*EISDIR/i)
           return true
         },
         'the first terminal observes the WriteUnknown failure',
@@ -299,10 +312,10 @@ integrationTest('WHAT[obligation-ledger-005] a WriterUnavailable outcome release
     // The first blocked append poisons the writer with WriteUnknown; after
     // the blockage is removed the writer stays poisoned, so a later call's
     // append is explicitly NotAttempted (WriterUnavailable).
-    await withBlockedEvents(directory, async () => {
+    await withBlockedPhysicalAppend(directory, async () => {
       await assert.rejects(
         () => hooks.event(terminalEvent(sessionID, firstCall, 'completed')),
-        /append outcome unknown/i,
+        /append outcome unknown.*PhysicalAppend.*EISDIR/i,
         'the blocked append reports an unknown outcome',
       )
     })

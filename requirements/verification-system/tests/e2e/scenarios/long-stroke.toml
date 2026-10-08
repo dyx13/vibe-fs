@@ -681,7 +681,7 @@ tools = ["write"]
 [[turn]]
 id = "blogger"
 internal = true
-user = "# Write the dense work-log continuation now"
+user = "# Call the chronicle tool exactly once now"
 
   [[turn.step]]
   respond = { type = "tool-call", tool = "chronicle", args = { charge = "Preserve the meaningful transition from this Blogger cycle.", occurrence = "Long stroke.", settlement = "This occurrence is now the durable state established by the cycle.", consequence = "Later context may rely on this transition after raw history is compressed.", tip = "primitive-obsession" } }

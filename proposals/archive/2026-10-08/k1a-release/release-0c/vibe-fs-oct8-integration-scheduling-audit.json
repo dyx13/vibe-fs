@@ -1,0 +1,359 @@
+{
+  "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration.log",
+  "sourceSha256": "98b8b03d43ed29c632db1f5c377c9f6d398d60ef42939704726729a4b690d412",
+  "scope": "Only integration:suites file lifecycle from original parent monotonic clock; distributions excluded. Admission occupancy is not CPU time or passing tests.",
+  "backstopMs": 300000,
+  "concurrency": 2,
+  "plannedFiles": 44,
+  "admittedFiles": 43,
+  "drainedFiles": 41,
+  "completedAdmittedTimeMs": 298997.14100000006,
+  "activeMinimumAdmittedTimeMs": 300879.602916,
+  "active": [
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/022.test.mjs",
+      "startMs": 48456.563666999995,
+      "minimumAdmittedTimeMsAtBackstop": 251543.43633300002,
+      "startLine": 369
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/structured-workflow/tests/012.test.mjs",
+      "startMs": 250663.83341700002,
+      "minimumAdmittedTimeMsAtBackstop": 49336.166582999984,
+      "startLine": 697
+    }
+  ],
+  "completed": [
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/action-affordance/tests/001.test.mjs",
+      "startMs": 42.32474999999988,
+      "drainedMs": 928.659209,
+      "durationMs": 886.3344590000002,
+      "startLine": 2,
+      "drainedLine": 16
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/action-affordance/tests/009.test.mjs",
+      "startMs": 43.835042000000044,
+      "drainedMs": 897.2802499999999,
+      "durationMs": 853.4452079999999,
+      "startLine": 3,
+      "drainedLine": 10
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/action-affordance/tests/014.test.mjs",
+      "startMs": 898.324917,
+      "drainedMs": 1882.0655000000002,
+      "durationMs": 983.7405830000001,
+      "startLine": 12,
+      "drainedLine": 25
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/action-affordance/tests/015.test.mjs",
+      "startMs": 929.6640839999999,
+      "drainedMs": 1896.040125,
+      "durationMs": 966.3760410000001,
+      "startLine": 18,
+      "drainedLine": 29
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/002.test.mjs",
+      "startMs": 1883.06425,
+      "drainedMs": 2143.254875,
+      "durationMs": 260.1906250000002,
+      "startLine": 27,
+      "drainedLine": 39
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/005.test.mjs",
+      "startMs": 1896.989959,
+      "drainedMs": 2210.766334,
+      "durationMs": 313.7763749999999,
+      "startLine": 31,
+      "drainedLine": 45
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/006.test.mjs",
+      "startMs": 2143.971459,
+      "drainedMs": 4724.988249999999,
+      "durationMs": 2581.0167909999996,
+      "startLine": 41,
+      "drainedLine": 90
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/010.test.mjs",
+      "startMs": 2211.810417,
+      "drainedMs": 4693.546042,
+      "durationMs": 2481.735625,
+      "startLine": 47,
+      "drainedLine": 85
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/011.test.mjs",
+      "startMs": 4695.048084,
+      "drainedMs": 6027.502874999999,
+      "durationMs": 1332.4547909999992,
+      "startLine": 87,
+      "drainedLine": 118
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/change-integration/tests/002.test.mjs",
+      "startMs": 4725.776916999999,
+      "drainedMs": 6401.488917,
+      "durationMs": 1675.7120000000004,
+      "startLine": 92,
+      "drainedLine": 141
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/change-integration/tests/005.test.mjs",
+      "startMs": 6028.229209,
+      "drainedMs": 7526.229959,
+      "durationMs": 1498.0007500000002,
+      "startLine": 120,
+      "drainedLine": 173
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/change-integration/tests/008.test.mjs",
+      "startMs": 6402.107625,
+      "drainedMs": 7185.142083999999,
+      "durationMs": 783.0344589999995,
+      "startLine": 143,
+      "drainedLine": 167
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/cognitive-environment/tests/015.test.mjs",
+      "startMs": 7185.817208999999,
+      "drainedMs": 19245.794209,
+      "durationMs": 12059.977,
+      "startLine": 169,
+      "drainedLine": 210
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/context-compression/tests/027.test.mjs",
+      "startMs": 7526.976124999999,
+      "drainedMs": 25639.535709,
+      "durationMs": 18112.559584000002,
+      "startLine": 175,
+      "drainedLine": 252
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs",
+      "startMs": 19246.966667,
+      "drainedMs": 19685.240292000002,
+      "durationMs": 438.27362500000163,
+      "startLine": 212,
+      "drainedLine": 241
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/degeneration-guard/tests/004.test.mjs",
+      "startMs": 19685.9375,
+      "drainedMs": 27189.540417,
+      "durationMs": 7503.602917,
+      "startLine": 243,
+      "drainedLine": 265
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/delegation/tests/027.test.mjs",
+      "startMs": 25640.518334,
+      "drainedMs": 39486.413125,
+      "durationMs": 13845.894790999999,
+      "startLine": 254,
+      "drainedLine": 283
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/dispatch-protocol/tests/010.test.mjs",
+      "startMs": 27190.35175,
+      "drainedMs": 60721.975042,
+      "durationMs": 33531.623292,
+      "startLine": 267,
+      "drainedLine": 377
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-convergence/tests/008.test.mjs",
+      "startMs": 39487.3655,
+      "drainedMs": 41446.58925,
+      "durationMs": 1959.2237499999974,
+      "startLine": 285,
+      "drainedLine": 293
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-convergence/tests/009.test.mjs",
+      "startMs": 41447.000709,
+      "drainedMs": 42943.076834,
+      "durationMs": 1496.0761249999996,
+      "startLine": 295,
+      "drainedLine": 301
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-convergence/tests/010.test.mjs",
+      "startMs": 42943.875834,
+      "drainedMs": 46838.483834,
+      "durationMs": 3894.608,
+      "startLine": 303,
+      "drainedLine": 313
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/003.test.mjs",
+      "startMs": 46839.268791999995,
+      "drainedMs": 46989.917499999996,
+      "durationMs": 150.64870800000062,
+      "startLine": 315,
+      "drainedLine": 348
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/009.test.mjs",
+      "startMs": 46990.638999999996,
+      "drainedMs": 48455.820167,
+      "durationMs": 1465.1811670000025,
+      "startLine": 350,
+      "drainedLine": 367
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/023.test.mjs",
+      "startMs": 60722.999166999994,
+      "drainedMs": 124363.4305,
+      "durationMs": 63640.43133300001,
+      "startLine": 379,
+      "drainedLine": 392
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/effect-accounting/tests/001.test.mjs",
+      "startMs": 124364.623125,
+      "drainedMs": 147136.77008400002,
+      "durationMs": 22772.14695900002,
+      "startLine": 394,
+      "drainedLine": 400
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/effect-accounting/tests/008.test.mjs",
+      "startMs": 147137.51175,
+      "drainedMs": 148604.276709,
+      "durationMs": 1466.7649589999928,
+      "startLine": 402,
+      "drainedLine": 416
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/guidance-delivery/tests/008.test.mjs",
+      "startMs": 148604.9825,
+      "drainedMs": 149147.045959,
+      "durationMs": 542.0634589999972,
+      "startLine": 418,
+      "drainedLine": 426
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/026.test.mjs",
+      "startMs": 149147.709417,
+      "drainedMs": 156005.28395900002,
+      "durationMs": 6857.574542000017,
+      "startLine": 428,
+      "drainedLine": 435
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/032.test.mjs",
+      "startMs": 156006.30670900003,
+      "drainedMs": 180692.307,
+      "durationMs": 24686.000290999975,
+      "startLine": 437,
+      "drainedLine": 503
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/033.test.mjs",
+      "startMs": 180693.692584,
+      "drainedMs": 202766.082667,
+      "durationMs": 22072.390083000006,
+      "startLine": 505,
+      "drainedLine": 516
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-provider-failure-ownership/tests/002.test.mjs",
+      "startMs": 202767.047334,
+      "drainedMs": 206025.89470900001,
+      "durationMs": 3258.847375000012,
+      "startLine": 518,
+      "drainedLine": 523
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/managed-chat-execution/tests/009.test.mjs",
+      "startMs": 206026.957334,
+      "drainedMs": 207637.01487500002,
+      "durationMs": 1610.0575410000165,
+      "startLine": 525,
+      "drainedLine": 530
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/001.test.mjs",
+      "startMs": 207637.780292,
+      "drainedMs": 208631.864834,
+      "durationMs": 994.0845419999969,
+      "startLine": 532,
+      "drainedLine": 537
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/002.test.mjs",
+      "startMs": 208632.530292,
+      "drainedMs": 216055.370459,
+      "durationMs": 7422.840166999988,
+      "startLine": 539,
+      "drainedLine": 546
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/004.test.mjs",
+      "startMs": 216056.508959,
+      "drainedMs": 216989.215709,
+      "durationMs": 932.7067500000121,
+      "startLine": 548,
+      "drainedLine": 553
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs",
+      "startMs": 216989.956917,
+      "drainedMs": 219626.151959,
+      "durationMs": 2636.1950420000067,
+      "startLine": 555,
+      "drainedLine": 608
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/participant-horizon/tests/010.test.mjs",
+      "startMs": 219627.121625,
+      "drainedMs": 220442.29370900002,
+      "durationMs": 815.1720840000198,
+      "startLine": 610,
+      "drainedLine": 615
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/repository-programming/tests/020.test.mjs",
+      "startMs": 220443.517334,
+      "drainedMs": 223211.038875,
+      "durationMs": 2767.5215409999946,
+      "startLine": 617,
+      "drainedLine": 640
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/006.test.mjs",
+      "startMs": 223211.96804200002,
+      "drainedMs": 230423.180125,
+      "durationMs": 7211.212082999991,
+      "startLine": 642,
+      "drainedLine": 660
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/speculative-investigation/tests/008.test.mjs",
+      "startMs": 230424.234834,
+      "drainedMs": 231627.958709,
+      "durationMs": 1203.723874999996,
+      "startLine": 662,
+      "drainedLine": 676
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/speculative-investigation/tests/013.test.mjs",
+      "startMs": 231628.643542,
+      "drainedMs": 250662.56525,
+      "durationMs": 19033.92170800001,
+      "startLine": 678,
+      "drainedLine": 695
+    }
+  ],
+  "knownAdmittedTimeLowerBoundMs": 599876.743916,
+  "twoLaneCapacityMs": 600000,
+  "capacityMinusKnownAdmittedTimeMs": 123.25608399999328
+}

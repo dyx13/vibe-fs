@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
-import { mkdtempSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { PassThrough } from 'node:stream'
@@ -424,4 +424,119 @@ test('WHAT[verification-system-021] missing or unloadable planned files fail the
   } finally {
     rmSync(directory, { recursive: true, force: true })
   }
+})
+
+async function runUnitDiscoveryFixture(overrideFiles) {
+  const directory = realpathSync(mkdtempSync(join(tmpdir(), 'unit-discovery-order-')))
+  const admitted = [
+    'requirements/alpha/tests/001.test.mjs',
+    'requirements/alpha/tests/002.test.mjs',
+    'requirements/verification-system-extra/tests/001.test.mjs',
+    'requirements/verification-system/tests/003.test.mjs',
+    'requirements/verification-system/tests/009.test.mjs',
+    'requirements/verification-system/tests/support/777.test.mjs',
+    'requirements/zeta/tests/001.test.mjs',
+  ]
+  const excluded = [
+    'requirements/alpha/tests/e2e/001.test.mjs',
+    'requirements/alpha/tests/integration/001.test.mjs',
+    'requirements/verification-system/tests/e2e/001.test.mjs',
+    'requirements/verification-system/tests/integration/001.test.mjs',
+    'requirements/verification-system/tests/support/ignored.fixture.mjs',
+  ]
+  try {
+    for (const file of [...admitted, ...excluded]) {
+      mkdirSync(join(directory, file, '..'), { recursive: true })
+      writeFileSync(join(directory, file), excluded.includes(file)
+        ? 'throw new Error("excluded proof was incorrectly discovered")\n'
+        : "import test from 'node:test'\ntest('isolated admission proof', () => {})\n")
+    }
+    const env = { ...childEnv, NODE_TEST_CONCURRENCY: '2' }
+    delete env.TESTS_MJS_FILES
+    if (overrideFiles !== undefined) env.TESTS_MJS_FILES = overrideFiles.join(',')
+    const child = spawn(process.execPath, [fileURLToPath(new URL('./run.mjs', import.meta.url))], {
+      cwd: directory, stdio: ['ignore', 'pipe', 'pipe'], env,
+    })
+    let stdout = ''
+    let stderr = ''
+    child.stdout.on('data', chunk => { stdout += chunk })
+    child.stderr.on('data', chunk => { stderr += chunk })
+    const exit = await new Promise((resolveExit, reject) => {
+      child.once('error', reject)
+      child.once('close', (code, signal) => resolveExit({ code, signal }))
+    })
+    assert.match(stderr, /runner: build is current/, stdout + stderr)
+    assert.doesNotMatch(stderr, /staleness check SKIPPED/)
+    const reclaimed = /post-exit group verification\/reclamation: pid=(\d+);.*accepted=true/.exec(stderr)
+    assert.ok(reclaimed, stdout + stderr)
+    assert.throws(() => process.kill(Number(reclaimed[1]), 0), error => error.code === 'ESRCH')
+    const lifecycle = stderr.split('\n')
+      .filter(line => line.startsWith('runner: file lifecycle '))
+      .map(line => JSON.parse(line.slice('runner: file lifecycle '.length)))
+    return {
+      directory, exit, stdout, stderr,
+      starts: lifecycle.filter(event => event.type === 'runner:file-start').map(event => event.entryFile),
+      drains: lifecycle.filter(event => event.type === 'runner:file-drained').map(event => event.entryFile),
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true })
+  }
+}
+
+test('WHAT[verification-system-021] default unit discovery admits verifier infrastructure first while preserving the complete proof set and remaining order', async () => {
+  const result = await runUnitDiscoveryFixture()
+  const expected = [
+    'requirements/verification-system/tests/003.test.mjs',
+    'requirements/verification-system/tests/009.test.mjs',
+    'requirements/verification-system/tests/support/777.test.mjs',
+    'requirements/alpha/tests/001.test.mjs',
+    'requirements/alpha/tests/002.test.mjs',
+    'requirements/verification-system-extra/tests/001.test.mjs',
+    'requirements/zeta/tests/001.test.mjs',
+  ].map(file => join(result.directory, file))
+  assert.deepEqual(result.exit, { code: 0, signal: null }, result.stdout + result.stderr)
+  assert.deepEqual(result.starts, expected)
+  assert.deepEqual([...result.drains].sort(), [...expected].sort())
+  assert.match(result.stderr, /7 passed, 0 failed; 7\/7 planned file\(s\) completed/)
+  assert.doesNotMatch(result.stderr, /discovery OVERRIDDEN/)
+})
+
+test('WHAT[verification-system-021] explicit unit file selection retains its supplied order instead of infrastructure priority', async () => {
+  const files = [
+    'requirements/zeta/tests/001.test.mjs',
+    'requirements/verification-system/tests/009.test.mjs',
+    'requirements/alpha/tests/002.test.mjs',
+  ]
+  const result = await runUnitDiscoveryFixture(files)
+  assert.deepEqual(result.exit, { code: 0, signal: null }, result.stdout + result.stderr)
+  assert.deepEqual(result.starts, files.map(file => join(result.directory, file)))
+  assert.match(result.stderr, /discovery OVERRIDDEN by TESTS_MJS_FILES \(3 file\(s\)\)/)
+  assert.match(result.stderr, /3 passed, 0 failed; 3\/3 planned file\(s\) completed/)
+})
+
+test('WHAT[verification-system-021] explicit duplicate unit files retain the original lifecycle rejection rather than being deduplicated', async () => {
+  const files = [
+    'requirements/zeta/tests/001.test.mjs',
+    'requirements/verification-system/tests/009.test.mjs',
+    'requirements/zeta/tests/001.test.mjs',
+  ]
+  const result = await runUnitDiscoveryFixture(files)
+  assert.deepEqual(result.exit, { code: 1, signal: null }, result.stdout + result.stderr)
+  assert.deepEqual(result.starts, files.slice(0, 2).map(file => join(result.directory, file)))
+  assert.match(result.stderr, /discovery OVERRIDDEN by TESTS_MJS_FILES \(3 file\(s\)\)/)
+  assert.ok(result.stderr.includes('File lifecycle event runner:file-start received while ' + join(result.directory, files[0]) + ' is '), result.stderr)
+  assert.match(result.stderr, /invalid file lifecycle/)
+})
+
+test('WHAT[verification-system-021] explicit missing unit files remain planned and fail instead of being filtered from admission', async () => {
+  const files = [
+    'requirements/zeta/tests/001.test.mjs',
+    'requirements/missing/tests/001.test.mjs',
+    'requirements/verification-system/tests/009.test.mjs',
+  ]
+  const result = await runUnitDiscoveryFixture(files)
+  assert.deepEqual(result.exit, { code: 1, signal: null }, result.stdout + result.stderr)
+  assert.deepEqual(result.starts, files.map(file => join(result.directory, file)))
+  assert.match(result.stderr, /discovery OVERRIDDEN by TESTS_MJS_FILES \(3 file\(s\)\)/)
+  assert.match(result.stdout + result.stderr, /MODULE_NOT_FOUND|Cannot find module/)
 })

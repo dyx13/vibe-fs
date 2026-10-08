@@ -29,6 +29,7 @@ import test from 'node:test'
 import { readFileSync } from 'node:fs'
 import { compileScenario } from './e2e/support/scenario-schema.js'
 import { resolveEntry } from './e2e/support/runtime-key.js'
+import { ScenarioRuntime } from './e2e/support/scenario-runtime.js'
 import { fileURLToPath } from 'node:url'
 import { join } from 'node:path'
 import './e2e/support/env-pin.mjs'
@@ -196,6 +197,46 @@ test('WHAT[verification-system-014] the compiled Long Stroke scenario preserves 
   assert.ok(!result.scenario.must.some((id) => id.startsWith('manager-join-guard.')))
   assert.deepEqual({ journal: result.scenario.setup.maxJournalEvents, sse: result.scenario.setup.maxSseEvents },
     { journal: 699, sse: 3351 }, 'the measured scenario ceilings stay fixed during migration')
+})
+
+test('WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions', async () => {
+  const companion = await import('../../../dist/Context/Companion/ProjectionSurface.js')
+  const source = readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8')
+  const result = compileScenario(source, { name: 'long-stroke.toml' })
+  assert.equal(result.ok, true, result.ok ? '' : result.problems.join('\n'))
+  const prompts = [companion.normalInstruction, companion.squashInstruction,
+    companion.newWork([{ role: 'user', kind: 'text', text: 'Meaningful work.', truncated: false }])]
+  for (const prompt of prompts) {
+    const runtime = new ScenarioRuntime(result.scenario)
+    for (const sessionId of ['ses_blogger_first', 'ses_blogger_second']) {
+      runtime.bindAlias('blogger', sessionId)
+      const context = { sessionId }
+      const body = {
+        model: 'test-model-b',
+        messages: [{ role: 'system', content: 'Blogger' }, { role: 'user', content: prompt }],
+        tools: [{ type: 'function', function: { name: 'chronicle', parameters: { type: 'object' } } }],
+      }
+      const selection = runtime.select(body, context)
+      assert.equal(selection.entry?.id, 'blogger.0',
+        `current production instruction must reach the declared Blogger turn: ${prompt.split('\n')[0]}`)
+      assert.equal(selection.entry.lane, undefined, 'internal turns are not pinned to one session')
+      assert.equal(selection.entry.respond.type, 'tool-call')
+      assert.equal(selection.entry.respond.tool, 'chronicle')
+      runtime.consume(body, selection, context)
+      assert.equal(runtime.answered.has('blogger.0'), true)
+    }
+  }
+  for (const prompt of ['# Write the dense work-log continuation now', '# Undeclared Blogger instruction']) {
+    const runtime = new ScenarioRuntime(result.scenario)
+    const selection = runtime.select({
+      model: 'test-model-b',
+      messages: [{ role: 'user', content: prompt }],
+      tools: [{ type: 'function', function: { name: 'chronicle' } }],
+    }, { sessionId: 'ses_blogger_negative' })
+    assert.ok(selection.unmatched, 'stale or undeclared text must remain a strict mismatch')
+    assert.equal(selection.entry, undefined)
+    assert.equal(runtime.answered.size, 0)
+  }
 })
 
 const STRENGTH_HOST_CANARY_PROMPT =

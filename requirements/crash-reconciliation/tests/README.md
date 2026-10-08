@@ -26,7 +26,7 @@ WHAT 是合同。这里说明当前证据，不为恢复增加隐含规则。用
 
 004、017、019 及 020 的整链部分保留 TODO。原 JoinSurface 自行复制校验规则，未调用实际 join；旧施工已删除并同步编译和清单。原 DevOps crash helper 虽启动进程，却未运行命令，把“在途”“未重放”“唯一权威”直接写成固定答案；已删除。类型/源码名称、空数组、常量返回和独立调用的拼接，不再冒充整个恢复证明。
 
-020/021 的 LoadRecoverySurface 保留 canonical fact 转换、实际 owner 与投影观察；新增 settleChildRuns 只把真实 JournalHandle 转交 ChildWorkRecovery，不模拟 append。020 的 integration 回归通过真实 Dispatcher 建立合法 parent 与 Engineer/DevOps 子 run，重开 journal 后结算，按 event_id 核对新增的两条 ChildRunVoided，不产生 completion；再次重开仍归零且重复结算不追加事实。另一用例先激活新 writer，再阻断 events 目录，要求实际 void 写入的 WriteUnknown 与随后 poisoned writer 的 WriterUnavailable 都传播为失败，Current 和磁盘保持旧事实；目录在 finally 恢复，换新 writer 后才可成功结算。该故障在旧吞错实现上取得了“缺少预期拒绝”的红测。
+020/021 的 LoadRecoverySurface 保留 canonical fact 转换、实际 owner 与投影观察；新增 settleChildRuns 只把真实 JournalHandle 转交 ChildWorkRecovery，不模拟 append。020 的 integration 回归通过真实 Dispatcher 建立合法 parent 与 Engineer/DevOps 子 run，重开 journal 后结算，按 event_id 核对新增的两条 ChildRunVoided，不产生 completion；再次重开仍归零且重复结算不追加事实。两个故障用例分别把当前writer路径换为目录，触发PhysicalAppend/EISDIR/WriteUnknown，以及把events目录换为文件，触发BeforePhysicalAppend/EEXIST/NotAttempted；随后poisoned writer都拒绝继续结算。finally恢复原目标与writer字节，Current与旧事实不变，换新writer后才成功结算。旧“阻断events目录却期待unknown”的夹具前提已校正，保留历史失败；本轮没有改变生产故障分类。
 
 这些回归调用真实 journal 结算入口，没有驱动 PluginRecoveryWiring、插件 activation 或 OS crash。crash-reconciliation-018/020 的 Load Phase 表述与 durable-events-020、host-boundary-021 的延迟激活边界仍需协调；本轮不改变激活时点和等待语义，不声称已经阻止普通执行越过未完成结算。JoinDrain 的受控 append port 仍只把实际事实交 production Fold，没有写磁盘。主动取消产生可收取 completion，ChildRunVoided 不产生 completion，二者不是同一场景。Blogger 仍在同一已打开请求的投影上追加 abandon，再证明下一请求可物化，不用空投影自证。
 

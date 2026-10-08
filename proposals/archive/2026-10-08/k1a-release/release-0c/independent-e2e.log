@@ -1,0 +1,91 @@
+TAP version 13
+# Subtest: WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+ok 1 - WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+  ---
+  duration_ms: 1.535958
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+ok 2 - WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+  ---
+  duration_ms: 0.686708
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+ok 3 - WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+  ---
+  duration_ms: 9.672875
+  type: 'test'
+  ...
+[setupScenario] ready
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[MOCK-FATAL] first script mismatch: reason=no-declared-turn session=ses_ee66ebb80ffe7zxI4xydnoqrIu parent=ses_ee66ebd29ffeT3n5INCl1ruo11 model="test-model-b" tools=["chronicle"] msgs=2 lastUser="# Call the chronicle tool exactly once now. Record the meaningful state transition\n# established by this work in all five required fields:\n# charge, occurrence, settlement, consequence, and tip.\n#\n# Do not write a transcript summary. Do not repeat one sentence across the four\n# content fields. Write one complete sentence in each field so the four sentences\n# read smoothly when joined into one para" candidates=["protocol-repair.0@undefined/chat/step-0","manager-t1-commitment.0@undefined/chat/step-0","continue.0@undefined/chat/step-0","blogger.0@undefined/chat/step-0"]
+[MSG-ROLES] system user
+[MSG-TOOL-RESULTS] []
+── fatal script mismatch: no-declared-turn (lane=blogger kind=chat step=0) ──
+session=ses_ee66ebb80ffe7zxI4xydnoqrIu lastUser="# Call the chronicle tool exactly once now. Record the meaningful state transition\n# established by this work in all five required fields:\n# charge, occurrence, settlement, consequence, and tip.\n#\n# Do not write a transcript summary. Do not repeat one sentence across the four\n# content fields. Write one complete sentence in each field so the four sentences\n# read smoothly when joined into one para"
+candidates=["protocol-repair.0@undefined/chat/step-0","manager-t1-commitment.0@undefined/chat/step-0","continue.0@undefined/chat/step-0","blogger.0@undefined/chat/step-0"]
+── event tail ──
+#61 03:31:54.811 plugin.added
+#62 03:31:54.811 plugin.added
+#63 03:31:54.811 plugin.added
+#64 03:31:54.811 plugin.added
+#65 03:31:54.811 plugin.added
+#66 03:31:54.811 plugin.added
+#67 03:31:54.811 plugin.added
+#68 03:31:54.811 plugin.added
+#69 03:31:54.814 catalog.updated
+#70 03:31:54.814 plugin.added
+#71 03:31:54.814 plugin.added
+#72 03:31:54.814 plugin.added
+#73 03:31:54.814 plugin.added
+#74 03:31:54.814 plugin.added
+#75 03:31:54.814 plugin.added
+#76 03:31:54.814 plugin.added
+#77 03:31:54.814 plugin.added
+#78 03:31:54.814 reference.updated
+#79 03:31:54.874 integration.updated
+#80 03:31:54.874 catalog.updated
+── Host stderr tail ──
+{"operation":"strength-delegation-skip","session_id":"ses_ee66ebd29ffeT3n5INCl1ruo11","result":"no-completed-source-batch"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee66ebb80ffe7zxI4xydnoqrIu","result":"owner provider run is not uniquely bound"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee66ebb80ffe7zxI4xydnoqrIu","result":"apply-surface-failed:owner provider run is not uniquely bound"}
+
+── Journal fact tail ──
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:0:AuthorityRootAccepted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:1:ProviderStarted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:2:Accepted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:3:CompanionBloggerLinked
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:4:AuthorityRootAccepted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:5:PluginPromptSubmitted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:6:BloggerRequestMaterialized
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:7:BloggerRequestMaterialized
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:8:XTracePartAppended
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:9:Accepted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:10:TransactionCommitted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:11:PluginPromptClaimed
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:12:RuntimeStarted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:13:PairProgrammingGuidelineAnchored
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:14:ProviderStarted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:15:PluginPromptPhysicalAccepted
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:16:SessionStartedAtBound
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:17:XTracePartAppended
+cdbca3e7688bca8cdfc15f785264dbc444f1dc67ef5b02d42e0337b41bf2fc06:18:SessionStartedAtBound
+  pending blocking humanroot-manager-title.0 humanroot-manager-title.0@humanroot-manager/title/step-0
+  pending blocking humanroot-loop.0 humanroot-loop.0@humanroot-manager/chat/step-0
+  pending blocking humanroot-loop.1 humanroot-loop.1@humanroot-manager/chat/step-1
+  pending blocking title.0 title.0@title/title/step-0
+  pending blocking orch.0 orch.0@orchestrator/chat/step-0
+  pending blocking orch.1 orch.1@orchestrator/chat/step-1
+  pending blocking orch.2 orch.2@orchestrator/chat/step-2
+  pending blocking manager-loop.0 manager-loop.0@manager/chat/step-0
+  pending blocking manager-loop.1 manager-loop.1@manager/chat/step-1
+  pending blocking manager-loop.2 manager-loop.2@manager/chat/step-2
+  pending blocking manager-interrupt.0 manager-interrupt.0@manager/chat/step-0
+  pending blocking engineer.0 engineer.0@engineer/chat/step-0
+  pending blocking engineer.1 engineer.1@engineer/chat/step-1
+  pending blocking engineer.2 engineer.2@engineer/chat/step-2
+  pending blocking strength-recovery-owner.0 strength-recovery-owner.0@strength-recovery-owner/chat/step-0
+  pending blocking strength-recovery-owner.1 strength-recovery-owner.1@strength-recovery-owner/chat/step-1
+  pending blocking strength-recovery-owner.2 strength-recovery-owner.2@strength-recovery-owner/chat/step-2

@@ -1,0 +1,1697 @@
+{
+  "inputCommit": "0c6c170d3c0273187f024cbb2ca6fb5e30c26ec2",
+  "sourceStageDirectory": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T03-16-15-834Z",
+  "logSha256": "fd280f8eb8b96c759e1b32be8901c532493a5545d598c547604eba199497af80",
+  "pipeline": {
+    "format": {
+      "status": "pass",
+      "wallSeconds": 5.3,
+      "exitCode": 0
+    },
+    "check": {
+      "status": "pass",
+      "wallSeconds": 4.4,
+      "exitCode": 0
+    },
+    "build": {
+      "status": "pass",
+      "wallSeconds": 49,
+      "exitCode": 0,
+      "clean": true
+    },
+    "unit": {
+      "status": "failed-backstop",
+      "wallSeconds": 300.6,
+      "exitCode": 1,
+      "budgetMs": 300000,
+      "plannedFiles": 824,
+      "drainedFiles": 823,
+      "activeFiles": 1,
+      "queuedFiles": 0,
+      "passed": "unknown",
+      "failed": "unknown",
+      "skipped": "unknown",
+      "todo": "unknown",
+      "authoritativeSummary": false
+    },
+    "integration": "not-run in unified pipeline",
+    "e2e": "not-run in unified pipeline",
+    "package": "not-run in unified pipeline",
+    "wallSeconds": 361.2,
+    "outerRealSeconds": 361.34,
+    "outerUserSeconds": 500.27,
+    "outerSystemSeconds": 91.76
+  },
+  "outerRunner": {
+    "pid": 3641,
+    "parentPid": 3604,
+    "observedStarts": 824,
+    "observedDrains": 823,
+    "nestedStartsExcluded": 8
+  },
+  "active": [
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "start": {
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+        "pid": 3641,
+        "parentPid": 3604,
+        "type": "runner:file-start",
+        "elapsedMs": 207940.723542,
+        "line": 9096
+      },
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+        "enabled": true,
+        "pid": 29403,
+        "status": "missing",
+        "reason": "Exit observation not received",
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+          "pid": 29403,
+          "parentPid": 3641,
+          "monotonicMs": 17.847292,
+          "cpuUserMicros": 23521,
+          "cpuSystemMicros": 4140
+        },
+        "exit": null,
+        "interval": null,
+        "line": 10354
+      }
+    }
+  ],
+  "lastActual016BodyStarts": [
+    {
+      "pid": 29403,
+      "parentPid": 3641,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "name": "WHAT[verification-system-016] project graph rejects changed restored archive bytes without publishing a restore receipt",
+      "fullName": "WHAT[verification-system-016] corrupt graph cases preserve one shared actual Git candidate and own independent restore resources > WHAT[verification-system-016] project graph rejects changed restored archive bytes without publishing a restore receipt",
+      "line": 10271
+    },
+    {
+      "pid": 29403,
+      "parentPid": 3641,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "name": "WHAT[verification-system-016] project graph rejects missing runtime file without publishing a restore receipt",
+      "fullName": "WHAT[verification-system-016] corrupt graph cases preserve one shared actual Git candidate and own independent restore resources > WHAT[verification-system-016] project graph rejects missing runtime file without publishing a restore receipt",
+      "line": 10282
+    },
+    {
+      "pid": 29403,
+      "parentPid": 3641,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "name": "WHAT[verification-system-016] project graph rejects foreign package folder without publishing a restore receipt",
+      "fullName": "WHAT[verification-system-016] corrupt graph cases preserve one shared actual Git candidate and own independent restore resources > WHAT[verification-system-016] project graph rejects foreign package folder without publishing a restore receipt",
+      "line": 10293
+    },
+    {
+      "pid": 29403,
+      "parentPid": 3641,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "name": "WHAT[verification-system-016] project restore rejects an added feed archive changed by the first consumer before starting locked restore",
+      "fullName": "WHAT[verification-system-016] project restore rejects an added feed archive changed by the first consumer before starting locked restore",
+      "line": 10304
+    },
+    {
+      "pid": 29403,
+      "parentPid": 3641,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "name": "WHAT[verification-system-016] project restore rejects selected feed bytes changed by the first consumer before starting locked restore",
+      "fullName": "WHAT[verification-system-016] project restore rejects selected feed bytes changed by the first consumer before starting locked restore",
+      "line": 10315
+    },
+    {
+      "pid": 29403,
+      "parentPid": 3641,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "name": "WHAT[verification-system-016] project restore rejects the selected NuGet config changed by the first consumer before starting locked restore",
+      "fullName": "WHAT[verification-system-016] project restore rejects the selected NuGet config changed by the first consumer before starting locked restore",
+      "line": 10326
+    },
+    {
+      "pid": 29403,
+      "parentPid": 3641,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "name": "WHAT[verification-system-016] project restore rejects a Git journal file changed by the first consumer before starting locked restore",
+      "fullName": "WHAT[verification-system-016] project restore rejects a Git journal file changed by the first consumer before starting locked restore",
+      "line": 10337
+    },
+    {
+      "pid": 29403,
+      "parentPid": 3641,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs",
+      "name": "WHAT[verification-system-016] fresh-cache locked project restore rejects graph change",
+      "fullName": "WHAT[verification-system-016] fresh-cache locked project restore rejects graph change",
+      "line": 10348
+    }
+  ],
+  "lastTools": [
+    {
+      "phase": "group-drained",
+      "pid": 32961,
+      "parentPid": 29403,
+      "at": 1791429735023,
+      "toolPid": 32962,
+      "line": 10335
+    },
+    {
+      "phase": "monitor-closed",
+      "pid": 29403,
+      "parentPid": 3641,
+      "at": 1791429735024,
+      "monitorPid": 32961,
+      "exitCode": 0,
+      "signal": null,
+      "line": 10336
+    },
+    {
+      "phase": "monitor-spawned",
+      "pid": 29403,
+      "parentPid": 3641,
+      "at": 1791429735235,
+      "monitorPid": 33198,
+      "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-nuget-project-test-gaMBcC/sdk/dotnet-sdk/dotnet",
+      "line": 10338
+    },
+    {
+      "phase": "tool-spawned",
+      "pid": 33198,
+      "parentPid": 29403,
+      "at": 1791429735263,
+      "toolPid": 33199,
+      "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-nuget-project-test-gaMBcC/sdk/dotnet-sdk/dotnet",
+      "line": 10339
+    },
+    {
+      "phase": "tool-exited",
+      "pid": 33198,
+      "parentPid": 29403,
+      "at": 1791429735829,
+      "toolPid": 33199,
+      "exitCode": 0,
+      "signal": null,
+      "line": 10340
+    },
+    {
+      "phase": "group-drained",
+      "pid": 33198,
+      "parentPid": 29403,
+      "at": 1791429735850,
+      "toolPid": 33199,
+      "line": 10341
+    },
+    {
+      "phase": "monitor-closed",
+      "pid": 29403,
+      "parentPid": 3641,
+      "at": 1791429735852,
+      "monitorPid": 33198,
+      "exitCode": 0,
+      "signal": null,
+      "line": 10342
+    },
+    {
+      "phase": "monitor-spawned",
+      "pid": 29403,
+      "parentPid": 3641,
+      "at": 1791429735854,
+      "monitorPid": 33201,
+      "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-nuget-project-test-gaMBcC/sdk/dotnet-sdk/dotnet",
+      "line": 10343
+    },
+    {
+      "phase": "tool-spawned",
+      "pid": 33201,
+      "parentPid": 29403,
+      "at": 1791429735885,
+      "toolPid": 33202,
+      "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-nuget-project-test-gaMBcC/sdk/dotnet-sdk/dotnet",
+      "line": 10344
+    },
+    {
+      "phase": "tool-exited",
+      "pid": 33201,
+      "parentPid": 29403,
+      "at": 1791429735913,
+      "toolPid": 33202,
+      "exitCode": 0,
+      "signal": null,
+      "line": 10345
+    },
+    {
+      "phase": "group-drained",
+      "pid": 33201,
+      "parentPid": 29403,
+      "at": 1791429735932,
+      "toolPid": 33202,
+      "line": 10346
+    },
+    {
+      "phase": "monitor-closed",
+      "pid": 29403,
+      "parentPid": 3641,
+      "at": 1791429735933,
+      "monitorPid": 33201,
+      "exitCode": 0,
+      "signal": null,
+      "line": 10347
+    },
+    {
+      "phase": "monitor-spawned",
+      "pid": 29403,
+      "parentPid": 3641,
+      "at": 1791429736139,
+      "monitorPid": 33438,
+      "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-nuget-project-test-8NLYnF/sdk/dotnet-sdk/dotnet",
+      "line": 10349
+    },
+    {
+      "phase": "tool-spawned",
+      "pid": 33438,
+      "parentPid": 29403,
+      "at": 1791429736167,
+      "toolPid": 33439,
+      "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-nuget-project-test-8NLYnF/sdk/dotnet-sdk/dotnet",
+      "line": 10350
+    }
+  ],
+  "toolPhaseCounts": {
+    "monitor-spawned": 116,
+    "tool-spawned": 116,
+    "tool-exited": 115,
+    "group-drained": 115,
+    "monitor-closed": 115
+  },
+  "stillOpenMonitors": [
+    {
+      "phase": "monitor-spawned",
+      "pid": 29403,
+      "parentPid": 3641,
+      "at": 1791429736139,
+      "monitorPid": 33438,
+      "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-nuget-project-test-8NLYnF/sdk/dotnet-sdk/dotnet",
+      "line": 10349
+    }
+  ],
+  "stillOpenTools": [
+    {
+      "phase": "tool-spawned",
+      "pid": 33438,
+      "parentPid": 29403,
+      "at": 1791429736167,
+      "toolPid": 33439,
+      "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-nuget-project-test-8NLYnF/sdk/dotnet-sdk/dotnet",
+      "line": 10350
+    }
+  ],
+  "ordinaryFailureOutput": [],
+  "nestedExpectedFailureOutput": [
+    {
+      "line": 9471,
+      "text": "✖ /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-W5Fkqs/missing.fixture.mjs (36.971ms)",
+      "nestedFixture": true
+    },
+    {
+      "line": 9507,
+      "text": "✖ /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-W5Fkqs/broken.fixture.mjs (34.378ms)",
+      "nestedFixture": true
+    }
+  ],
+  "summaryLines": [
+    "[test-summary] 1 file(s), 1 passed, 0 failed (0.10s wall, 0.01s test time)",
+    "[test-summary] 1 file(s), 1 passed, 0 failed (0.11s wall, 0.01s test time)",
+    "[test-summary] 2 file(s), 2 passed, 0 failed, 1 failed containers (0.04s wall, 0.00s test time)",
+    "[test-summary] 2 file(s), 2 passed, 0 failed, 1 failed containers (0.04s wall, 0.00s test time)"
+  ],
+  "summaryScope": "All listed summaries are nested one/two-file probes. No outer 824-file runner:summary arrived.",
+  "workerCostStatusCounts": {
+    "complete": 821,
+    "invalid": 2,
+    "missing": 1
+  },
+  "invalidWorkerCosts": [
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/019.test.mjs",
+      "enabled": true,
+      "pid": 4246,
+      "status": "invalid",
+      "reason": "Worker cost record names another file or process",
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/019.test.mjs",
+        "pid": 4246,
+        "parentPid": 3641,
+        "monotonicMs": 17.148542,
+        "cpuUserMicros": 22860,
+        "cpuSystemMicros": 4668
+      },
+      "exit": null,
+      "interval": null,
+      "line": 616
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs",
+      "enabled": true,
+      "pid": 31257,
+      "status": "invalid",
+      "reason": "Worker cost record names another file or process",
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs",
+        "pid": 31257,
+        "parentPid": 3641,
+        "monotonicMs": 17.469375,
+        "cpuUserMicros": 23140,
+        "cpuSystemMicros": 4231
+      },
+      "exit": null,
+      "interval": null,
+      "line": 9525
+    }
+  ],
+  "topCompletedNativeWorkerCosts": [
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/006.test.mjs",
+      "enabled": true,
+      "pid": 26729,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/006.test.mjs",
+        "pid": 26729,
+        "parentPid": 3641,
+        "monotonicMs": 32.665292,
+        "cpuUserMicros": 34203,
+        "cpuSystemMicros": 8648
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/006.test.mjs",
+        "pid": 26729,
+        "parentPid": 3641,
+        "monotonicMs": 26253.863167,
+        "cpuUserMicros": 523312,
+        "cpuSystemMicros": 181450,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 26729,
+        "wallMs": 26221.197874999998,
+        "cpuUserMicros": 489109,
+        "cpuSystemMicros": 172802
+      },
+      "line": 9305
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/007.test.mjs",
+      "enabled": true,
+      "pid": 24625,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/007.test.mjs",
+        "pid": 24625,
+        "parentPid": 3641,
+        "monotonicMs": 21.512208,
+        "cpuUserMicros": 26076,
+        "cpuSystemMicros": 5354
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/007.test.mjs",
+        "pid": 24625,
+        "parentPid": 3641,
+        "monotonicMs": 20881.5645,
+        "cpuUserMicros": 9264467,
+        "cpuSystemMicros": 1713270,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 24625,
+        "wallMs": 20860.052292,
+        "cpuUserMicros": 9238391,
+        "cpuSystemMicros": 1707916
+      },
+      "line": 8096
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/context-compression/tests/024.test.mjs",
+      "enabled": true,
+      "pid": 5274,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/context-compression/tests/024.test.mjs",
+        "pid": 5274,
+        "parentPid": 3641,
+        "monotonicMs": 18.882875,
+        "cpuUserMicros": 25008,
+        "cpuSystemMicros": 5289
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/context-compression/tests/024.test.mjs",
+        "pid": 5274,
+        "parentPid": 3641,
+        "monotonicMs": 15809.040583,
+        "cpuUserMicros": 9153848,
+        "cpuSystemMicros": 1867196,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 5274,
+        "wallMs": 15790.157708,
+        "cpuUserMicros": 9128840,
+        "cpuSystemMicros": 1861907
+      },
+      "line": 2325
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/032.test.mjs",
+      "enabled": true,
+      "pid": 11149,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/032.test.mjs",
+        "pid": 11149,
+        "parentPid": 3641,
+        "monotonicMs": 19.231209,
+        "cpuUserMicros": 24855,
+        "cpuSystemMicros": 5592
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/032.test.mjs",
+        "pid": 11149,
+        "parentPid": 3641,
+        "monotonicMs": 13227.126459,
+        "cpuUserMicros": 7700094,
+        "cpuSystemMicros": 1640938,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 11149,
+        "wallMs": 13207.89525,
+        "cpuUserMicros": 7675239,
+        "cpuSystemMicros": 1635346
+      },
+      "line": 4286
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/delegation/tests/025.test.mjs",
+      "enabled": true,
+      "pid": 5587,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/delegation/tests/025.test.mjs",
+        "pid": 5587,
+        "parentPid": 3641,
+        "monotonicMs": 18.745917,
+        "cpuUserMicros": 24362,
+        "cpuSystemMicros": 4403
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/delegation/tests/025.test.mjs",
+        "pid": 5587,
+        "parentPid": 3641,
+        "monotonicMs": 13124.897792,
+        "cpuUserMicros": 1133242,
+        "cpuSystemMicros": 203672,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 5587,
+        "wallMs": 13106.151875,
+        "cpuUserMicros": 1108880,
+        "cpuSystemMicros": 199269
+      },
+      "line": 2549
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/024.test.mjs",
+      "enabled": true,
+      "pid": 10426,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/024.test.mjs",
+        "pid": 10426,
+        "parentPid": 3641,
+        "monotonicMs": 17.930292,
+        "cpuUserMicros": 23236,
+        "cpuSystemMicros": 4758
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/024.test.mjs",
+        "pid": 10426,
+        "parentPid": 3641,
+        "monotonicMs": 9032.485792,
+        "cpuUserMicros": 300342,
+        "cpuSystemMicros": 77685,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 10426,
+        "wallMs": 9014.5555,
+        "cpuUserMicros": 277106,
+        "cpuSystemMicros": 72927
+      },
+      "line": 3472
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/006.test.mjs",
+      "enabled": true,
+      "pid": 9382,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/006.test.mjs",
+        "pid": 9382,
+        "parentPid": 3641,
+        "monotonicMs": 19.63025,
+        "cpuUserMicros": 24110,
+        "cpuSystemMicros": 5093
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/006.test.mjs",
+        "pid": 9382,
+        "parentPid": 3641,
+        "monotonicMs": 8858.695,
+        "cpuUserMicros": 354349,
+        "cpuSystemMicros": 77757,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 9382,
+        "wallMs": 8839.06475,
+        "cpuUserMicros": 330239,
+        "cpuSystemMicros": 72664
+      },
+      "line": 3085
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/provider-projection/tests/011.test.mjs",
+      "enabled": true,
+      "pid": 17310,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/provider-projection/tests/011.test.mjs",
+        "pid": 17310,
+        "parentPid": 3641,
+        "monotonicMs": 17.890875,
+        "cpuUserMicros": 23484,
+        "cpuSystemMicros": 4599
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/provider-projection/tests/011.test.mjs",
+        "pid": 17310,
+        "parentPid": 3641,
+        "monotonicMs": 7981.552291,
+        "cpuUserMicros": 2876603,
+        "cpuSystemMicros": 503723,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 17310,
+        "wallMs": 7963.661416,
+        "cpuUserMicros": 2853119,
+        "cpuSystemMicros": 499124
+      },
+      "line": 6863
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/017.test.mjs",
+      "enabled": true,
+      "pid": 3946,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/017.test.mjs",
+        "pid": 3946,
+        "parentPid": 3641,
+        "monotonicMs": 20.818042,
+        "cpuUserMicros": 24611,
+        "cpuSystemMicros": 4993
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/017.test.mjs",
+        "pid": 3946,
+        "parentPid": 3641,
+        "monotonicMs": 6149.88675,
+        "cpuUserMicros": 3959988,
+        "cpuSystemMicros": 775626,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 3946,
+        "wallMs": 6129.068708,
+        "cpuUserMicros": 3935377,
+        "cpuSystemMicros": 770633
+      },
+      "line": 488
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/012.test.mjs",
+      "enabled": true,
+      "pid": 16239,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/012.test.mjs",
+        "pid": 16239,
+        "parentPid": 3641,
+        "monotonicMs": 17.666042,
+        "cpuUserMicros": 23253,
+        "cpuSystemMicros": 4588
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/012.test.mjs",
+        "pid": 16239,
+        "parentPid": 3641,
+        "monotonicMs": 6080.249375,
+        "cpuUserMicros": 3927401,
+        "cpuSystemMicros": 706960,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 16239,
+        "wallMs": 6062.5833330000005,
+        "cpuUserMicros": 3904148,
+        "cpuSystemMicros": 702372
+      },
+      "line": 6115
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/021.test.mjs",
+      "enabled": true,
+      "pid": 4248,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/021.test.mjs",
+        "pid": 4248,
+        "parentPid": 3641,
+        "monotonicMs": 17.177125,
+        "cpuUserMicros": 22782,
+        "cpuSystemMicros": 4571
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/021.test.mjs",
+        "pid": 4248,
+        "parentPid": 3641,
+        "monotonicMs": 6069.169792,
+        "cpuUserMicros": 3802453,
+        "cpuSystemMicros": 745788,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 4248,
+        "wallMs": 6051.9926669999995,
+        "cpuUserMicros": 3779671,
+        "cpuSystemMicros": 741217
+      },
+      "line": 912
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/013.test.mjs",
+      "enabled": true,
+      "pid": 14518,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/013.test.mjs",
+        "pid": 14518,
+        "parentPid": 3641,
+        "monotonicMs": 17.5105,
+        "cpuUserMicros": 22872,
+        "cpuSystemMicros": 4651
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/013.test.mjs",
+        "pid": 14518,
+        "parentPid": 3641,
+        "monotonicMs": 5534.785666,
+        "cpuUserMicros": 596999,
+        "cpuSystemMicros": 168193,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 14518,
+        "wallMs": 5517.275165999999,
+        "cpuUserMicros": 574127,
+        "cpuSystemMicros": 163542
+      },
+      "line": 5028
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/012.test.mjs",
+      "enabled": true,
+      "pid": 25307,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/012.test.mjs",
+        "pid": 25307,
+        "parentPid": 3641,
+        "monotonicMs": 16.591166,
+        "cpuUserMicros": 22670,
+        "cpuSystemMicros": 4489
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/012.test.mjs",
+        "pid": 25307,
+        "parentPid": 3641,
+        "monotonicMs": 3998.14875,
+        "cpuUserMicros": 369532,
+        "cpuSystemMicros": 53623,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 25307,
+        "wallMs": 3981.5575839999997,
+        "cpuUserMicros": 346862,
+        "cpuSystemMicros": 49134
+      },
+      "line": 7624
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+      "enabled": true,
+      "pid": 11099,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+        "pid": 11099,
+        "parentPid": 3641,
+        "monotonicMs": 19.735,
+        "cpuUserMicros": 24966,
+        "cpuSystemMicros": 5141
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+        "pid": 11099,
+        "parentPid": 3641,
+        "monotonicMs": 3971.967917,
+        "cpuUserMicros": 35068,
+        "cpuSystemMicros": 8146,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 11099,
+        "wallMs": 3952.232917,
+        "cpuUserMicros": 10102,
+        "cpuSystemMicros": 3005
+      },
+      "line": 4095
+    },
+    {
+      "version": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/003.test.mjs",
+      "enabled": true,
+      "pid": 16092,
+      "status": "complete",
+      "reason": null,
+      "preImport": {
+        "version": 1,
+        "phase": "pre-import",
+        "sequence": 0,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/003.test.mjs",
+        "pid": 16092,
+        "parentPid": 3641,
+        "monotonicMs": 18.1325,
+        "cpuUserMicros": 23342,
+        "cpuSystemMicros": 4817
+      },
+      "exit": {
+        "version": 1,
+        "phase": "exit",
+        "sequence": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/003.test.mjs",
+        "pid": 16092,
+        "parentPid": 3641,
+        "monotonicMs": 3838.542083,
+        "cpuUserMicros": 1656649,
+        "cpuSystemMicros": 226504,
+        "exitCode": 0
+      },
+      "interval": {
+        "clockPid": 16092,
+        "wallMs": 3820.4095829999997,
+        "cpuUserMicros": 1633307,
+        "cpuSystemMicros": 221687
+      },
+      "line": 5946
+    }
+  ],
+  "topDrainedFileLifecycles": [
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/006.test.mjs",
+      "startMs": 197650.80612499997,
+      "endMs": 223923.12425,
+      "wallMs": 26272.31812500002,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/006.test.mjs",
+        "enabled": true,
+        "pid": 26729,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/006.test.mjs",
+          "pid": 26729,
+          "parentPid": 3641,
+          "monotonicMs": 32.665292,
+          "cpuUserMicros": 34203,
+          "cpuSystemMicros": 8648
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/006.test.mjs",
+          "pid": 26729,
+          "parentPid": 3641,
+          "monotonicMs": 26253.863167,
+          "cpuUserMicros": 523312,
+          "cpuSystemMicros": 181450,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 26729,
+          "wallMs": 26221.197874999998,
+          "cpuUserMicros": 489109,
+          "cpuSystemMicros": 172802
+        },
+        "line": 9305
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/007.test.mjs",
+      "startMs": 165339.307625,
+      "endMs": 186267.18820899999,
+      "wallMs": 20927.880584,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/007.test.mjs",
+        "enabled": true,
+        "pid": 24625,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/007.test.mjs",
+          "pid": 24625,
+          "parentPid": 3641,
+          "monotonicMs": 21.512208,
+          "cpuUserMicros": 26076,
+          "cpuSystemMicros": 5354
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/007.test.mjs",
+          "pid": 24625,
+          "parentPid": 3641,
+          "monotonicMs": 20881.5645,
+          "cpuUserMicros": 9264467,
+          "cpuSystemMicros": 1713270,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 24625,
+          "wallMs": 20860.052292,
+          "cpuUserMicros": 9238391,
+          "cpuSystemMicros": 1707916
+        },
+        "line": 8096
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/context-compression/tests/024.test.mjs",
+      "startMs": 27001.3625,
+      "endMs": 42833.576625,
+      "wallMs": 15832.214125000002,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/context-compression/tests/024.test.mjs",
+        "enabled": true,
+        "pid": 5274,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/context-compression/tests/024.test.mjs",
+          "pid": 5274,
+          "parentPid": 3641,
+          "monotonicMs": 18.882875,
+          "cpuUserMicros": 25008,
+          "cpuSystemMicros": 5289
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/context-compression/tests/024.test.mjs",
+          "pid": 5274,
+          "parentPid": 3641,
+          "monotonicMs": 15809.040583,
+          "cpuUserMicros": 9153848,
+          "cpuSystemMicros": 1867196,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 5274,
+          "wallMs": 15790.157708,
+          "cpuUserMicros": 9128840,
+          "cpuSystemMicros": 1861907
+        },
+        "line": 2325
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/032.test.mjs",
+      "startMs": 92065.991959,
+      "endMs": 105320.608292,
+      "wallMs": 13254.616332999998,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/032.test.mjs",
+        "enabled": true,
+        "pid": 11149,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/032.test.mjs",
+          "pid": 11149,
+          "parentPid": 3641,
+          "monotonicMs": 19.231209,
+          "cpuUserMicros": 24855,
+          "cpuSystemMicros": 5592
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/032.test.mjs",
+          "pid": 11149,
+          "parentPid": 3641,
+          "monotonicMs": 13227.126459,
+          "cpuUserMicros": 7700094,
+          "cpuSystemMicros": 1640938,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 11149,
+          "wallMs": 13207.89525,
+          "cpuUserMicros": 7675239,
+          "cpuSystemMicros": 1635346
+        },
+        "line": 4286
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/delegation/tests/025.test.mjs",
+      "startMs": 41031.334125,
+      "endMs": 54174.380834,
+      "wallMs": 13143.046709000002,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/delegation/tests/025.test.mjs",
+        "enabled": true,
+        "pid": 5587,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/delegation/tests/025.test.mjs",
+          "pid": 5587,
+          "parentPid": 3641,
+          "monotonicMs": 18.745917,
+          "cpuUserMicros": 24362,
+          "cpuSystemMicros": 4403
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/delegation/tests/025.test.mjs",
+          "pid": 5587,
+          "parentPid": 3641,
+          "monotonicMs": 13124.897792,
+          "cpuUserMicros": 1133242,
+          "cpuSystemMicros": 203672,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 5587,
+          "wallMs": 13106.151875,
+          "cpuUserMicros": 1108880,
+          "cpuSystemMicros": 199269
+        },
+        "line": 2549
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/024.test.mjs",
+      "startMs": 73116.687709,
+      "endMs": 82165.140167,
+      "wallMs": 9048.452458,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/024.test.mjs",
+        "enabled": true,
+        "pid": 10426,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/024.test.mjs",
+          "pid": 10426,
+          "parentPid": 3641,
+          "monotonicMs": 17.930292,
+          "cpuUserMicros": 23236,
+          "cpuSystemMicros": 4758
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/024.test.mjs",
+          "pid": 10426,
+          "parentPid": 3641,
+          "monotonicMs": 9032.485792,
+          "cpuUserMicros": 300342,
+          "cpuSystemMicros": 77685,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 10426,
+          "wallMs": 9014.5555,
+          "cpuUserMicros": 277106,
+          "cpuSystemMicros": 72927
+        },
+        "line": 3472
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/006.test.mjs",
+      "startMs": 63656.868500000004,
+      "endMs": 72529.171959,
+      "wallMs": 8872.303458999995,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/006.test.mjs",
+        "enabled": true,
+        "pid": 9382,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/006.test.mjs",
+          "pid": 9382,
+          "parentPid": 3641,
+          "monotonicMs": 19.63025,
+          "cpuUserMicros": 24110,
+          "cpuSystemMicros": 5093
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/006.test.mjs",
+          "pid": 9382,
+          "parentPid": 3641,
+          "monotonicMs": 8858.695,
+          "cpuUserMicros": 354349,
+          "cpuSystemMicros": 77757,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 9382,
+          "wallMs": 8839.06475,
+          "cpuUserMicros": 330239,
+          "cpuSystemMicros": 72664
+        },
+        "line": 3085
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/provider-projection/tests/011.test.mjs",
+      "startMs": 145428.92008399998,
+      "endMs": 153450.58445899998,
+      "wallMs": 8021.664374999993,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/provider-projection/tests/011.test.mjs",
+        "enabled": true,
+        "pid": 17310,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/provider-projection/tests/011.test.mjs",
+          "pid": 17310,
+          "parentPid": 3641,
+          "monotonicMs": 17.890875,
+          "cpuUserMicros": 23484,
+          "cpuSystemMicros": 4599
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/provider-projection/tests/011.test.mjs",
+          "pid": 17310,
+          "parentPid": 3641,
+          "monotonicMs": 7981.552291,
+          "cpuUserMicros": 2876603,
+          "cpuSystemMicros": 503723,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 17310,
+          "wallMs": 7963.661416,
+          "cpuUserMicros": 2853119,
+          "cpuSystemMicros": 499124
+        },
+        "line": 6863
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/017.test.mjs",
+      "startMs": 4508.781709,
+      "endMs": 10676.942667,
+      "wallMs": 6168.1609579999995,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/017.test.mjs",
+        "enabled": true,
+        "pid": 3946,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/017.test.mjs",
+          "pid": 3946,
+          "parentPid": 3641,
+          "monotonicMs": 20.818042,
+          "cpuUserMicros": 24611,
+          "cpuSystemMicros": 4993
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/behavior-diagnosis/tests/017.test.mjs",
+          "pid": 3946,
+          "parentPid": 3641,
+          "monotonicMs": 6149.88675,
+          "cpuUserMicros": 3959988,
+          "cpuSystemMicros": 775626,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 3946,
+          "wallMs": 6129.068708,
+          "cpuUserMicros": 3935377,
+          "cpuSystemMicros": 770633
+        },
+        "line": 488
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/012.test.mjs",
+      "startMs": 134399.17558399998,
+      "endMs": 140505.70479199997,
+      "wallMs": 6106.529207999993,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/012.test.mjs",
+        "enabled": true,
+        "pid": 16239,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/012.test.mjs",
+          "pid": 16239,
+          "parentPid": 3641,
+          "monotonicMs": 17.666042,
+          "cpuUserMicros": 23253,
+          "cpuSystemMicros": 4588
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/012.test.mjs",
+          "pid": 16239,
+          "parentPid": 3641,
+          "monotonicMs": 6080.249375,
+          "cpuUserMicros": 3927401,
+          "cpuSystemMicros": 706960,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 16239,
+          "wallMs": 6062.5833330000005,
+          "cpuUserMicros": 3904148,
+          "cpuSystemMicros": 702372
+        },
+        "line": 6115
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/021.test.mjs",
+      "startMs": 12067.441542,
+      "endMs": 18155.534417,
+      "wallMs": 6088.0928749999985,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/021.test.mjs",
+        "enabled": true,
+        "pid": 4248,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/021.test.mjs",
+          "pid": 4248,
+          "parentPid": 3641,
+          "monotonicMs": 17.177125,
+          "cpuUserMicros": 22782,
+          "cpuSystemMicros": 4571
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/capability-enforcement/tests/021.test.mjs",
+          "pid": 4248,
+          "parentPid": 3641,
+          "monotonicMs": 6069.169792,
+          "cpuUserMicros": 3802453,
+          "cpuSystemMicros": 745788,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 4248,
+          "wallMs": 6051.9926669999995,
+          "cpuUserMicros": 3779671,
+          "cpuSystemMicros": 741217
+        },
+        "line": 912
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/013.test.mjs",
+      "startMs": 114915.503042,
+      "endMs": 120467.16325,
+      "wallMs": 5551.660208000001,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/013.test.mjs",
+        "enabled": true,
+        "pid": 14518,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/013.test.mjs",
+          "pid": 14518,
+          "parentPid": 3641,
+          "monotonicMs": 17.5105,
+          "cpuUserMicros": 22872,
+          "cpuSystemMicros": 4651
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/013.test.mjs",
+          "pid": 14518,
+          "parentPid": 3641,
+          "monotonicMs": 5534.785666,
+          "cpuUserMicros": 596999,
+          "cpuSystemMicros": 168193,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 14518,
+          "wallMs": 5517.275165999999,
+          "cpuUserMicros": 574127,
+          "cpuSystemMicros": 163542
+        },
+        "line": 5028
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/012.test.mjs",
+      "startMs": 171595.73258399998,
+      "endMs": 175610.807917,
+      "wallMs": 4015.0753330000152,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/012.test.mjs",
+        "enabled": true,
+        "pid": 25307,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/012.test.mjs",
+          "pid": 25307,
+          "parentPid": 3641,
+          "monotonicMs": 16.591166,
+          "cpuUserMicros": 22670,
+          "cpuSystemMicros": 4489
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/requirement-grounding/tests/012.test.mjs",
+          "pid": 25307,
+          "parentPid": 3641,
+          "monotonicMs": 3998.14875,
+          "cpuUserMicros": 369532,
+          "cpuSystemMicros": 53623,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 25307,
+          "wallMs": 3981.5575839999997,
+          "cpuUserMicros": 346862,
+          "cpuSystemMicros": 49134
+        },
+        "line": 7624
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+      "startMs": 90328.41012500001,
+      "endMs": 94314.49316700001,
+      "wallMs": 3986.0830419999984,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+        "enabled": true,
+        "pid": 11099,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+          "pid": 11099,
+          "parentPid": 3641,
+          "monotonicMs": 19.735,
+          "cpuUserMicros": 24966,
+          "cpuSystemMicros": 5141
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+          "pid": 11099,
+          "parentPid": 3641,
+          "monotonicMs": 3971.967917,
+          "cpuUserMicros": 35068,
+          "cpuSystemMicros": 8146,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 11099,
+          "wallMs": 3952.232917,
+          "cpuUserMicros": 10102,
+          "cpuSystemMicros": 3005
+        },
+        "line": 4095
+      }
+    },
+    {
+      "file": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/003.test.mjs",
+      "startMs": 132479.366667,
+      "endMs": 136338.55741699997,
+      "wallMs": 3859.1907499999797,
+      "cost": {
+        "version": 1,
+        "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/003.test.mjs",
+        "enabled": true,
+        "pid": 16092,
+        "status": "complete",
+        "reason": null,
+        "preImport": {
+          "version": 1,
+          "phase": "pre-import",
+          "sequence": 0,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/003.test.mjs",
+          "pid": 16092,
+          "parentPid": 3641,
+          "monotonicMs": 18.1325,
+          "cpuUserMicros": 23342,
+          "cpuSystemMicros": 4817
+        },
+        "exit": {
+          "version": 1,
+          "phase": "exit",
+          "sequence": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/prefix-stability/tests/003.test.mjs",
+          "pid": 16092,
+          "parentPid": 3641,
+          "monotonicMs": 3838.542083,
+          "cpuUserMicros": 1656649,
+          "cpuSystemMicros": 226504,
+          "exitCode": 0
+        },
+        "interval": {
+          "clockPid": 16092,
+          "wallMs": 3820.4095829999997,
+          "cpuUserMicros": 1633307,
+          "cpuSystemMicros": 221687
+        },
+        "line": 5946
+      }
+    }
+  ],
+  "cleanup": {
+    "outerReceipt": [
+      "runner: post-exit group verification/reclamation: pid=3641; elapsedMs=18.370; accepted=true"
+    ],
+    "knownPidChecks": [
+      {
+        "pid": 3641,
+        "status": "ESRCH"
+      },
+      {
+        "pid": 29403,
+        "status": "ESRCH"
+      },
+      {
+        "pid": 33438,
+        "status": "ESRCH"
+      },
+      {
+        "pid": 33439,
+        "status": "ESRCH"
+      }
+    ],
+    "toolPhaseLimitation": "Killed final tool/monitor have no normal exit/group-drain/close receipts. Post-run kill(pid,0) ESRCH checks only the exact observed PIDs and do not authenticate arbitrary descendants or file cleanup."
+  },
+  "conclusions": [
+    "This run failed the existing whole-suite 300000ms physical backstop; it was not a 30000ms verdict-silence failure and not pending-only.",
+    "All 824 file starts were observed. 823 drained; only verification-system/016 remained active. There were no queued files.",
+    "No outer ordinary failing-test line was observed. This is not authoritative failed=0: the unfinished run has no global summary.",
+    "016 started at parent elapsed 207940.723542ms, leaving nominal 92059.276458ms before the original backstop. Its native exit sample is absent, so final native wall/CPU cost is unknown.",
+    "At cutoff actual016 was executing the fresh-cache locked graph-change protocol test. The last reported verdict instead names the preceding changed Git journal test; neither is evidence of a hung leaf.",
+    "nuget-project-tests.mjs uses a selected actual Node executable implementing controlled msbuild/restore JSON and files. This active test is an Adapter protocol fixture, not the separately gated real repository SDK/Fable integration.",
+    "The root input frozen at0c passed format/check/clean build. This cutoff does not prove the alias change caused or fixed throughput.",
+    "The observed native wall/CPU and file lifecycle intervals describe this local run only. Wall-minus-CPU is not proof of I/O; scheduling, child processes, and platform costs are not separately accounted.",
+    "Potential next work must first preserve the formal full-run failure and identify reproducible fixture or runner overhead without weakening assertions, changing tier/concurrency/budgets, or claiming batched runs as full acceptance."
+  ],
+  "inputDigest16": "50bf7902083464c1",
+  "totalObservedCompleteNativeWorkerCost": {
+    "workers": 821,
+    "wallMs": 408273.593744,
+    "cpuUserMicros": 270313692,
+    "cpuSystemMicros": 45111122
+  },
+  "nativeAggregateLimitation": "Complete workers only, excluding the two invalid diagnostics and unfinished016; overlapping native intervals are not suite wall or authoritative test time, and CPU excludes all child processes.",
+  "host023ObservedNativeExit": {
+    "version": 1,
+    "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+    "enabled": true,
+    "pid": 11099,
+    "status": "complete",
+    "reason": null,
+    "preImport": {
+      "version": 1,
+      "phase": "pre-import",
+      "sequence": 0,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+      "pid": 11099,
+      "parentPid": 3641,
+      "monotonicMs": 19.735,
+      "cpuUserMicros": 24966,
+      "cpuSystemMicros": 5141
+    },
+    "exit": {
+      "version": 1,
+      "phase": "exit",
+      "sequence": 1,
+      "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-boundary/tests/023.test.mjs",
+      "pid": 11099,
+      "parentPid": 3641,
+      "monotonicMs": 3971.967917,
+      "cpuUserMicros": 35068,
+      "cpuSystemMicros": 8146,
+      "exitCode": 0
+    },
+    "interval": {
+      "clockPid": 11099,
+      "wallMs": 3952.232917,
+      "cpuUserMicros": 10102,
+      "cpuSystemMicros": 3005
+    }
+  }
+}

@@ -69,6 +69,16 @@ if (skipStaleness) {
 // be forbidden; this is the runner's own harness surface, and the override is announced on stderr so
 // it cannot be used to quietly narrow a CI run.
 const override = process.env.TESTS_MJS_FILES
+function infrastructureFirst(files) {
+  const infrastructure = []
+  const remaining = []
+  for (const file of files) {
+    if (file.replace(/\\/g, '/').startsWith(REQUIREMENTS_ROOT + '/verification-system/tests/')) infrastructure.push(file)
+    else remaining.push(file)
+  }
+  return [...infrastructure, ...remaining]
+}
+
 // Package-owned proof: every oracle lives under requirements/<package>/tests/.
 // Long-stroke (tests/e2e/) and integration suites (tests/integration/) own
 // their silence criterion and are excluded here — they run via their own
@@ -78,10 +88,10 @@ const files = override
       .split(',')
       .map((file) => file.trim())
       .filter(Boolean)
-  : walk(REQUIREMENTS_ROOT, ['.test.mjs']).filter((file) => {
+  : infrastructureFirst(walk(REQUIREMENTS_ROOT, ['.test.mjs']).filter((file) => {
       const rel = file.replace(/\\/g, '/')
       return !rel.includes('/tests/e2e/') && !rel.includes('/tests/integration/')
-    })
+    }))
 
 if (override) console.error(`runner: discovery OVERRIDDEN by TESTS_MJS_FILES (${files.length} file(s))`)
 

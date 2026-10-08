@@ -1,0 +1,225 @@
+runner: scoped 使用 TESTS_MJS_FILES=3 files
+runner: build is current (1815 sources, 891 artifacts)
+runner: discovery OVERRIDDEN by TESTS_MJS_FILES (3 file(s))
+runner: 3 test file(s), 30000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","pid":47571,"parentPid":47546,"type":"runner:file-start","elapsedMs":28.580625000000055}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","pid":47571,"parentPid":47546,"type":"runner:file-start","elapsedMs":29.560333000000014}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","pid":47572,"parentPid":47571,"monotonicMs":14.3675,"cpuUserMicros":19754,"cpuSystemMicros":3410}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","pid":47573,"parentPid":47571,"monotonicMs":13.12875,"cpuUserMicros":18848,"cpuSystemMicros":2780}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] current role vocabulary includes DevOps and Engineer but excludes legacy Coder","fullName":"WHAT[crash-reconciliation-020] current role vocabulary includes DevOps and Engineer but excludes legacy Coder"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] in-process physical terminals preserve an active child logical run and handle","fullName":"WHAT[crash-reconciliation-020] in-process physical terminals preserve an active child logical run and handle"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] production load decision voids active child runs without creating a completion","fullName":"WHAT[crash-reconciliation-020] production load decision voids active child runs without creating a completion"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] human roots and child runs without a durable handle are not selected for load settlement","fullName":"WHAT[crash-reconciliation-020] human roots and child runs without a durable handle are not selected for load settlement"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] stale Blogger selection respects exact live flight and abandonment clears the same folded open request","fullName":"WHAT[crash-reconciliation-020] stale Blogger selection respects exact live flight and abandonment clears the same folded open request"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] actual child settlement persists voids across journal reopen without a completion","fullName":"WHAT[crash-reconciliation-020] actual child settlement persists voids across journal reopen without a completion"}
+[verification-test-start] {"pid":47573,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","name":"WHAT[obligation-ledger-005] no checkpoint before the exact completed terminal evidence","fullName":"WHAT[obligation-ledger-005] no checkpoint before the exact completed terminal evidence"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] actual child settlement propagates unknown and unattempted append failures","fullName":"WHAT[crash-reconciliation-020] actual child settlement propagates unknown and unattempted append failures"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] a BeforePhysicalAppend directory fault is explicitly unattempted and poisons further settlement","fullName":"WHAT[crash-reconciliation-020] a BeforePhysicalAppend directory fault is explicitly unattempted and poisons further settlement"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] actual plugin activation durably settles orphan child and Blogger work before ordinary execution, preserves exact live flights, and refuses append failure (GAP-149)","fullName":"WHAT[crash-reconciliation-020] actual plugin activation durably settles orphan child and Blogger work before ordinary execution, preserves exact live flights, and refuses append failure (GAP-149)"}
+[verification-test-start] {"pid":47572,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","name":"WHAT[crash-reconciliation-020] a real interrupted run and PTY input are not replayed after restart while unique DevOps authority and durable model Persona binding are retained (GAP-149; GAP-129; GAP-132)","fullName":"WHAT[crash-reconciliation-020] a real interrupted run and PTY input are not replayed after restart while unique DevOps authority and durable model Persona binding are retained (GAP-149; GAP-129; GAP-132)"}
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","pid":47572,"parentPid":47571,"monotonicMs":550.9205,"cpuUserMicros":561776,"cpuSystemMicros":61556,"exitCode":0}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","type":"runner:file-drained","elapsedMs":593.7410830000001}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","enabled":true,"pid":47572,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","pid":47572,"parentPid":47571,"monotonicMs":14.3675,"cpuUserMicros":19754,"cpuSystemMicros":3410},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs","pid":47572,"parentPid":47571,"monotonicMs":550.9205,"cpuUserMicros":561776,"cpuSystemMicros":61556,"exitCode":0},"interval":{"clockPid":47572,"wallMs":536.553,"cpuUserMicros":542022,"cpuSystemMicros":58146}}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","pid":47571,"parentPid":47546,"type":"runner:file-start","elapsedMs":594.7772910000001}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","pid":47595,"parentPid":47571,"monotonicMs":16.506167,"cpuUserMicros":22030,"cpuSystemMicros":4566}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] compact and verbose reports preserve outcomes and visible exclusions","fullName":"WHAT[verification-system-021] compact and verbose reports preserve outcomes and visible exclusions"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] an actual failure retains its detailed cause when later work prevents the file from draining","fullName":"WHAT[verification-system-021] an actual failure retains its detailed cause when later work prevents the file from draining"}
+[verification-test-start] {"pid":47573,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","name":"WHAT[obligation-ledger-005] the exact completed terminal commits exactly one durable checkpoint","fullName":"WHAT[obligation-ledger-005] the exact completed terminal commits exactly one durable checkpoint"}
+[verification-test-start] {"pid":47573,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","name":"WHAT[obligation-ledger-005] an error terminal closes the candidate without a checkpoint and without blocking another call","fullName":"WHAT[obligation-ledger-005] an error terminal closes the candidate without a checkpoint and without blocking another call"}
+[verification-test-start] {"pid":47573,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","name":"WHAT[obligation-ledger-005] distinct sessions and calls never confuse checkpoint identities","fullName":"WHAT[obligation-ledger-005] distinct sessions and calls never confuse checkpoint identities"}
+[verification-test-start] {"pid":47573,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","name":"WHAT[obligation-ledger-005] concurrent duplicate terminals share one append outcome instead of an early success","fullName":"WHAT[obligation-ledger-005] concurrent duplicate terminals share one append outcome instead of an early success"}
+[verification-test-start] {"pid":47573,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","name":"WHAT[obligation-ledger-005] concurrent duplicates of a successful terminal share the one append and commit exactly one fact","fullName":"WHAT[obligation-ledger-005] concurrent duplicates of a successful terminal share the one append and commit exactly one fact"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] immediate failure details print each verdict once without collapsing distinct verdicts that share an Error","fullName":"WHAT[verification-system-021] immediate failure details print each verdict once without collapsing distinct verdicts that share an Error"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] cancelled and TODO failures are not ordinary assertion verdicts","fullName":"WHAT[verification-system-021] cancelled and TODO failures are not ordinary assertion verdicts"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] conflicting final results cannot erase a previous failure","fullName":"WHAT[verification-system-021] conflicting final results cannot erase a previous failure"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] equal names in different files or distinct subtests do not collapse","fullName":"WHAT[verification-system-021] equal names in different files or distinct subtests do not collapse"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] a failing suite preserves its container failure without double counting leaves","fullName":"WHAT[verification-system-021] a failing suite preserves its container failure without double counting leaves"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] shared registration sources retain each entry ownership and repeated container verdicts count once","fullName":"WHAT[verification-system-021] shared registration sources retain each entry ownership and repeated container verdicts count once"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] the real concurrent runner keeps shared helper tests under their own entry files","fullName":"WHAT[verification-system-021] the real concurrent runner keeps shared helper tests under their own entry files"}
+[verification-test-start] {"pid":47573,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","name":"WHAT[obligation-ledger-005] a WriteUnknown append outcome is never retried for the same call","fullName":"WHAT[obligation-ledger-005] a WriteUnknown append outcome is never retried for the same call"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] a leaf completion cannot stand for completion of its file","fullName":"WHAT[verification-system-021] a leaf completion cannot stand for completion of its file"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] stream error and clean end have distinct completion evidence","fullName":"WHAT[verification-system-021] stream error and clean end have distinct completion evidence"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] a real inner runner completes all leaves before file completion and summary","fullName":"WHAT[verification-system-021] a real inner runner completes all leaves before file completion and summary"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] summary and clean exit cannot disguise missing file completion","fullName":"WHAT[verification-system-021] summary and clean exit cannot disguise missing file completion"}
+runner: 1 test file(s), 10000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-start","elapsedMs":24.306749999999965}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-drained","elapsedMs":24.364125000000058}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","enabled":true,"pid":null,"preImport":null,"exit":null,"interval":null,"status":"missing","reason":"Worker cost snapshot not received"}
+runner: post-exit group verification/reclamation: pid=47806; elapsedMs=18.368; accepted=true
+
+runner: 1 passed, 0 failed; 0/1 planned file(s) completed
+runner: incomplete run; no completion for /Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] aggregate drain cannot replace a planned file stream drain","fullName":"WHAT[verification-system-021] aggregate drain cannot replace a planned file stream drain"}
+runner: 1 test file(s), 1000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-start","elapsedMs":23.809957999999824}
+[verification-test-start] {"pid":47573,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","name":"WHAT[obligation-ledger-005] a WriterUnavailable outcome releases the call so a retry reaches a fresh writer admission","fullName":"WHAT[obligation-ledger-005] a WriterUnavailable outcome releases the call so a retry reaches a fresh writer admission"}
+runner: post-exit group verification/reclamation: pid=47820; elapsedMs=18.033; accepted=true
+
+runner: 1 passed, 0 failed; 1/1 planned file(s) completed
+runner: incomplete run; not every planned file stream drained
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] a clean child exit without authoritative summary is inconclusive","fullName":"WHAT[verification-system-021] a clean child exit without authoritative summary is inconclusive"}
+runner: 1 test file(s), 10000ms verdict-silence window
+TAP version 13
+# Subtest: leaf one
+ok 1 - leaf one
+  ---
+  duration_ms: 0.304833
+  type: 'test'
+  ...
+# Subtest: leaf two
+ok 2 - leaf two
+  ---
+  duration_ms: 0.049083
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3.651167
+runner: post-exit group verification/reclamation: pid=47847; elapsedMs=16.440; accepted=true
+runner: inner runner failed to provide authoritative summary
+
+runner: verdict counts unavailable; no authoritative summary; 0/1 planned file(s) completed
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] a tier exclusion identifies the missing execution tier","fullName":"WHAT[verification-system-021] a tier exclusion identifies the missing execution tier"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] a known TODO cannot authorize complete acceptance","fullName":"WHAT[verification-system-021] a known TODO cannot authorize complete acceptance"}
+runner: 1 test file(s), 10000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-start","elapsedMs":24.645040999999992}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-drained","elapsedMs":24.833624999999984}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","enabled":true,"pid":null,"preImport":null,"exit":null,"interval":null,"status":"missing","reason":"Worker cost snapshot not received"}
+runner: post-exit group verification/reclamation: pid=47875; elapsedMs=17.323; accepted=true
+
+runner: 1 passed, 0 failed; 1/1 planned file(s) completed
+runner: partial evidence; 0 skipped, 1 TODO; excluded cases are not passes
+runner: pending proof prevents complete acceptance
+runner: 1 test file(s), 10000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-start","elapsedMs":25.518082999999933}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-drained","elapsedMs":25.67516599999999}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","enabled":true,"pid":null,"preImport":null,"exit":null,"interval":null,"status":"missing","reason":"Worker cost snapshot not received"}
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","pid":47573,"parentPid":47571,"monotonicMs":2186.5965,"cpuUserMicros":1805581,"cpuSystemMicros":254717,"exitCode":0}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","type":"runner:file-drained","elapsedMs":2232.603541}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","enabled":true,"pid":47573,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","pid":47573,"parentPid":47571,"monotonicMs":13.12875,"cpuUserMicros":18848,"cpuSystemMicros":2780},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/obligation-ledger/tests/005.test.mjs","pid":47573,"parentPid":47571,"monotonicMs":2186.5965,"cpuUserMicros":1805581,"cpuSystemMicros":254717,"exitCode":0},"interval":{"clockPid":47573,"wallMs":2173.4677500000003,"cpuUserMicros":1786733,"cpuSystemMicros":251937}}
+runner: post-exit group verification/reclamation: pid=47889; elapsedMs=16.782; accepted=true
+
+runner: 1 passed, 0 failed; 1/1 planned file(s) completed
+runner: partial evidence; 0 skipped, 1 TODO; excluded cases are not passes
+runner: pending proof prevents complete acceptance
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] missing or unloadable planned files fail the real supervisor despite completed file wrappers","fullName":"WHAT[verification-system-021] missing or unloadable planned files fail the real supervisor despite completed file wrappers"}
+runner: 2 test file(s), 10000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47903,"parentPid":47595,"type":"runner:file-start","elapsedMs":29.42858299999989}
+runner: file lifecycle {"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs","pid":47903,"parentPid":47595,"type":"runner:file-start","elapsedMs":30.576082999999926}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs","pid":47905,"parentPid":47903,"monotonicMs":14.902208,"cpuUserMicros":20425,"cpuSystemMicros":3075}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47904,"parentPid":47903,"monotonicMs":15.8415,"cpuUserMicros":21452,"cpuSystemMicros":3646}
+node:internal/test_runner/harness:99
+      throw err;
+      ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs' imported from /Users/yuanxi/Workwork/vibe-fs/
+    at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:989:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+    at onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:680:36)
+    at TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    at ModuleLoader.import (node:internal/modules/esm/loader:679:21)
+    at node:internal/modules/run_main:179:35 {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs'
+}
+
+Node.js v22.23.3
+[verification-test-start] {"pid":47904,"parentPid":47903,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","name":"leaf one","fullName":"leaf one"}
+
+✖ failing tests:
+
+test at /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs:1:1
+✖ /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs (29.387ms)
+  'test failed'
+
+runner: file lifecycle {"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs","type":"runner:file-drained","elapsedMs":60.17316600000004}
+runner: worker cost {"version":1,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs","enabled":true,"pid":47905,"status":"missing","reason":"Exit observation not received","preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/missing.fixture.mjs","pid":47905,"parentPid":47903,"monotonicMs":14.902208,"cpuUserMicros":20425,"cpuSystemMicros":3075},"exit":null,"interval":null}
+[verification-test-start] {"pid":47904,"parentPid":47903,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","name":"leaf two","fullName":"leaf two"}
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47904,"parentPid":47903,"monotonicMs":22.043833,"cpuUserMicros":27738,"cpuSystemMicros":4034,"exitCode":0}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-drained","elapsedMs":62.89599999999996}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","enabled":true,"pid":47904,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47904,"parentPid":47903,"monotonicMs":15.8415,"cpuUserMicros":21452,"cpuSystemMicros":3646},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47904,"parentPid":47903,"monotonicMs":22.043833,"cpuUserMicros":27738,"cpuSystemMicros":4034,"exitCode":0},"interval":{"clockPid":47904,"wallMs":6.202332999999999,"cpuUserMicros":6286,"cpuSystemMicros":388}}
+
+[test-summary] 2 file(s), 2 passed, 0 failed, 1 failed containers (0.04s wall, 0.00s test time)
+runner: post-exit group verification/reclamation: pid=47903; elapsedMs=15.859; accepted=true
+runner: 2 test(s), 0.0s of test time; max 1ms, p90 1ms, median 0ms
+
+runner: 2 passed, 0 failed; 2/2 planned file(s) completed
+runner: cancelled tests or failed containers prevent complete acceptance
+runner: 2 test file(s), 10000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47919,"parentPid":47595,"type":"runner:file-start","elapsedMs":31.198374999999942}
+runner: file lifecycle {"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/broken.fixture.mjs","pid":47919,"parentPid":47595,"type":"runner:file-start","elapsedMs":32.31166699999994}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47920,"parentPid":47919,"monotonicMs":14.56375,"cpuUserMicros":20036,"cpuSystemMicros":3608}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/broken.fixture.mjs","pid":47921,"parentPid":47919,"monotonicMs":13.941875,"cpuUserMicros":19274,"cpuSystemMicros":2935}
+node:internal/test_runner/harness:99
+      throw err;
+      ^
+
+Error: fixture failed before registering any test
+    at file:///private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/broken.fixture.mjs:1:7
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.23.3
+[verification-test-start] {"pid":47920,"parentPid":47919,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","name":"leaf one","fullName":"leaf one"}
+
+✖ failing tests:
+
+test at /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/broken.fixture.mjs:1:1
+✖ /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/broken.fixture.mjs (27.731ms)
+  'test failed'
+
+runner: file lifecycle {"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/broken.fixture.mjs","type":"runner:file-drained","elapsedMs":60.234958000000006}
+runner: worker cost {"version":1,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/broken.fixture.mjs","enabled":true,"pid":47921,"status":"missing","reason":"Exit observation not received","preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/failed-test-file-NTap1G/broken.fixture.mjs","pid":47921,"parentPid":47919,"monotonicMs":13.941875,"cpuUserMicros":19274,"cpuSystemMicros":2935},"exit":null,"interval":null}
+[verification-test-start] {"pid":47920,"parentPid":47919,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","name":"leaf two","fullName":"leaf two"}
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47920,"parentPid":47919,"monotonicMs":20.959375,"cpuUserMicros":26472,"cpuSystemMicros":4030,"exitCode":0}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","type":"runner:file-drained","elapsedMs":63.2467079999999}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","enabled":true,"pid":47920,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47920,"parentPid":47919,"monotonicMs":14.56375,"cpuUserMicros":20036,"cpuSystemMicros":3608},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/fixtures/two-leaf.fixture.mjs","pid":47920,"parentPid":47919,"monotonicMs":20.959375,"cpuUserMicros":26472,"cpuSystemMicros":4030,"exitCode":0},"interval":{"clockPid":47920,"wallMs":6.395625000000001,"cpuUserMicros":6436,"cpuSystemMicros":422}}
+
+[test-summary] 2 file(s), 2 passed, 0 failed, 1 failed containers (0.04s wall, 0.00s test time)
+runner: post-exit group verification/reclamation: pid=47919; elapsedMs=15.784; accepted=true
+runner: 2 test(s), 0.0s of test time; max 1ms, p90 1ms, median 1ms
+
+runner: 2 passed, 0 failed; 2/2 planned file(s) completed
+runner: cancelled tests or failed containers prevent complete acceptance
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] default unit discovery admits verifier infrastructure first while preserving the complete proof set and remaining order","fullName":"WHAT[verification-system-021] default unit discovery admits verifier infrastructure first while preserving the complete proof set and remaining order"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] explicit unit file selection retains its supplied order instead of infrastructure priority","fullName":"WHAT[verification-system-021] explicit unit file selection retains its supplied order instead of infrastructure priority"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] explicit duplicate unit files retain the original lifecycle rejection rather than being deduplicated","fullName":"WHAT[verification-system-021] explicit duplicate unit files retain the original lifecycle rejection rather than being deduplicated"}
+[verification-test-start] {"pid":47595,"parentPid":47571,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","name":"WHAT[verification-system-021] explicit missing unit files remain planned and fail instead of being filtered from admission","fullName":"WHAT[verification-system-021] explicit missing unit files remain planned and fail instead of being filtered from admission"}
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","pid":47595,"parentPid":47571,"monotonicMs":4152.402584,"cpuUserMicros":83000,"cpuSystemMicros":34174,"exitCode":0}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","type":"runner:file-drained","elapsedMs":4760.434458}
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","enabled":true,"pid":47595,"status":"invalid","reason":"Worker cost record names another file or process","preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/021.test.mjs","pid":47595,"parentPid":47571,"monotonicMs":16.506167,"cpuUserMicros":22030,"cpuSystemMicros":4566},"exit":null,"interval":null}
+
+[test-summary] 3 file(s), 38 passed, 0 failed, 2 todo (4.74s wall, 6.63s test time)
+  todo: /Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs:WHAT[crash-reconciliation-020] actual plugin activation durably settles orphan child and Blogger work before ordinary execution, preserves exact live flights, and refuses append failure (GAP-149) — reason not supplied
+  todo: /Users/yuanxi/Workwork/vibe-fs/requirements/crash-reconciliation/tests/020.test.mjs:WHAT[crash-reconciliation-020] a real interrupted run and PTY input are not replayed after restart while unique DevOps authority and durable model Persona binding are retained (GAP-149; GAP-129; GAP-132) — reason not supplied
+runner: post-exit group verification/reclamation: pid=47571; elapsedMs=15.913; accepted=true
+runner: 40 test(s), 6.6s of test time; max 1155ms, p90 557ms, median 68ms
+runner:    1155ms  WHAT[verification-system-021] an actual failure retains its detailed cause when later work prevents the file from draining
+runner:     690ms  WHAT[verification-system-021] default unit discovery admits verifier infrastructure first while preserving the complete proof set and remaining order
+runner:     659ms  WHAT[obligation-ledger-005] no checkpoint before the exact completed terminal evidence
+runner:     559ms  WHAT[verification-system-021] explicit unit file selection retains its supplied order instead of infrastructure priority
+runner:     557ms  WHAT[verification-system-021] explicit duplicate unit files retain the original lifecycle rejection rather than being deduplicated
+
+runner: 38 passed, 0 failed; 3/3 planned file(s) completed
+runner: partial evidence; 0 skipped, 2 TODO; excluded cases are not passes
+runner: pending proof prevents complete acceptance
+Error: runner: supervised suite failed (exit 1)
+    at fail (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:258:25)
+    at superviseOwnedNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:541:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async superviseNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:235:14)
+    at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/run.mjs:104:1 {
+  exitCode: 1,
+  [cause]: undefined
+}

@@ -1,0 +1,9 @@
+2026-10-08 11:33:46 +0800 Assertions          	PID 337(powerd) Released InternalPreventSleep "PM configd - Wait for Device enumeration" 00:00:45  id:0x0xd0000a531 [System: DeclUser SRPrevSleep IntPrevDisp kCPU kDisp]          
+2026-10-08 11:33:46 +0800 Assertions          	PID 337(powerd) TimedOut InternalPreventSleep "com.apple.powermanagement.acwakelinger" 00:00:45  id:0x0xd0000a533 [System: DeclUser SRPrevSleep IntPrevDisp kCPU kDisp]          
+2026-10-08 11:33:46 +0800 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using AC (Charge:80%) 963 secs  
+2026-10-08 11:49:49 +0800 Assertions          	PID 337(powerd) Created InternalPreventSleep "PM configd - Wait for Device enumeration" 00:00:00  id:0x0xd0000a540 [System: PrevIdle DeclUser SRPrevSleep IntPrevDisp kCPU kDisp]          
+2026-10-08 11:49:49 +0800 DarkWake            	DarkWake from Deep Idle [CDNPB] : due to NUB.SPMI0.SW3.IRQ nub-spmi0.0x02 rtc/Maintenance Using AC (Charge:80%) 45 secs   
+2026-10-08 11:49:49 +0800 WakeTime            	WakeTime: 0.214 sec                                                        	          
+2026-10-08 11:49:49 +0800 Kernel Client Acks  	Delays to Sleep notifications: [Karabiner-Core-S is slow(3115 ms)] [Port-USB-C driver is slow(msg: SetState to 0)(56 ms)] 
+2026-10-08 11:49:49 +0800 Assertions          	PID 337(powerd) Created InternalPreventSleep "com.apple.powermanagement.acwakelinger" 00:00:00  id:0x0xd0000a542 [System: PrevIdle DeclUser PushSrvc SRPrevSleep IntPrevDisp kCPU kDisp]          
+2026-10-08 11:49:49 +0800 Assertions          	PID 93403(PowerUIAgent) Released MaintenanceWake "com.apple.obc" 00:00:00  id:0x0xd0000a53e [System: PrevIdle DeclUser PushSrvc SRPrevSleep IntPrevDisp kCPU kDisp]          

@@ -1,0 +1,11 @@
+Input: 0c6c170d3c0273187f024cbb2ca6fb5e30c26ec2; verify inputDigest16=50bf7902083464c1
+Unified pipeline: format5.3s/check4.4s/clean-build49.0s pass; unit300.6s exit1 at original300000ms physical backstop; total361.2s, shell real361.34s/user500.27s/sys91.76s.
+Unit: 823/824 planned files drained; active verification-system/016; queued0. No outer authoritative summary: pass/fail/skip/TODO all unknown. Unified integration/E2E/package not-run.
+016 admitted at parent207940.723542ms; nominal backstop headroom92059.276458ms. Actual worker29403 pre-import observed, exit/CPU interval absent. Last runtime actual body: fresh-cache locked project restore rejects graph change. Last reported verdict: project restore rejects a Git journal file changed by first consumer. Neither proves hung-test causality.
+Outer ordinary failure lines observed: none; not authoritative fail=0. Nested missing.fixture/broken.fixture deliberate failures belong to021 probes and are excluded.
+Complete native cost821; invalid diagnostics2(capability-enforcement019, verification-system021); missing1(016). Sum complete native intervals408273.593744ms; CPU user270313692/system45111122 microseconds. These overlap, exclude child CPU and are not authoritative suite test time; wall-minus-CPU is not proof of I/O.
+016 tools:116 monitor/tool spawns;115 tool exits/group-drains/monitor-closes. Last observed monitor33438/tool33439 lacked normal terminal receipts. Outer group3641 reclamation accepted=true elapsed18.370ms; exact known PID3641/29403/33438/33439 post-run probes all ESRCH. No arbitrary descendant or file cleanup claim.
+Host023 this run native worker11099 exit0; interval3952.232917ms. This single input observation does not erase historical Host023 failures.
+Actual cutoff work is selected Node Adapter msbuild/restore protocol fixture, not gated real repository SDK/Fable integration. Cause established: existing full-suite budget exhausted before late-admitted016 drained. Unique avoidable overhead/product defect remains unproven; do not change budgets, tiers, concurrency, assertions, or combine scoped runs into full acceptance.
+Raw stage logs: /Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T03-16-15-834Z
+Audit JSON: /private/tmp/vibe-fs-oct8-alias-release/unit-0c6c170d3-readonly-audit.json

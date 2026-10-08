@@ -1,0 +1,91 @@
+{
+  "kind": "read-only E2E source and receipt audit; no tests or builds run by this auditor",
+  "inputCommit": "0c6c170d3c0273187f024cbb2ca6fb5e30c26ec2",
+  "log": "/private/tmp/vibe-fs-oct8-alias-release/independent-e2e.log",
+  "receipt": "/private/tmp/vibe-fs-oct8-alias-release/independent-e2e.json",
+  "startedAt": "2026-10-08T03:31:50.598Z",
+  "durationMs": 4692.261375,
+  "timeoutMs": 1500000,
+  "exitCode": 1,
+  "timedOut": false,
+  "signal": null,
+  "inputsEqual": true,
+  "beforeAndAfterDigest": "2583e334543582347c4922f4666c826da10f34d753b001ff48d17b9e12dcdd06",
+  "environment": {
+    "NODE_TEST_CONCURRENCY": "2",
+    "UNIT_VERDICT_SILENCE_MS": "30000",
+    "WXS_RELEASE": "0",
+    "WXS_TIER_RELEASE": "1",
+    "WXS_E2E_QUIET": "1"
+  },
+  "authoritativeCounts": { "pass": "unknown", "fail": "unknown", "skip": "unknown", "TODO": "unknown" },
+  "observed": {
+    "preliminaryTapOk": 3,
+    "fatalScriptMismatch": 1,
+    "httpChatRequestsLoggedBeforeFatal": 2,
+    "lastProviderModel": "test-model-b",
+    "lastProviderTools": ["chronicle"],
+    "lastProviderRoles": ["system", "user"],
+    "turnKind": "chat",
+    "turnStep": 0,
+    "runtimeLane": "blogger",
+    "sessionId": "ses_ee66ebb80ffe7zxI4xydnoqrIu",
+    "parentSessionId": "ses_ee66ebd29ffeT3n5INCl1ruo11",
+    "candidateIds": ["protocol-repair.0", "manager-t1-commitment.0", "continue.0", "blogger.0"]
+  },
+  "failure": {
+    "classification": "actual formal scenario fixture mismatch, not an intentional nested negative probe",
+    "reason": "no-declared-turn",
+    "actualPrefix": "# Call the chronicle tool exactly once now",
+    "declaredPrefix": "# Write the dense work-log continuation now",
+    "cause": "The production instruction resource changed while the sole Long Stroke Blogger declaration and source-hygiene assertion still name the retired prefix. The strict longest-prefix matcher correctly rejects the request.",
+    "undefinedLaneIsNotCause": "Internal turns must not declare lane. blogger.0 already appears in atKey candidates. runtime-key admits undefined lane for all sessions; no text prefix matches.",
+    "production": [
+      "src/Wanxiangshu/Context/Companion/HostBlogger.fs:130-147 loads Normal provider prose and renders commented instructions before managed assignment",
+      "src/Wanxiangshu/Context/Companion/Prompt.fs:15,20 uses lifecycle/companion/normal and LlmFacing.renderInstructions",
+      "resources/provider/lifecycle/companion/normal/en.md:1 supplies actual current instruction",
+      "src/Wanxiangshu/Context/Companion/ProjectionSurface.fs:36-47 exposes same resource via registered production JS surface"
+    ],
+    "matching": [
+      "requirements/verification-system/tests/e2e/scenarios/long-stroke.toml:681-687 contains stale Blogger turn",
+      "requirements/verification-system/tests/e2e/support/scenario-schema.js:394-418 compiles turn.user to entry.turn",
+      "requirements/verification-system/tests/e2e/support/scenario-schema.js:859-878 forbids lane on internal turn",
+      "requirements/verification-system/tests/e2e/support/runtime-key.js:306-310 requires true prefix",
+      "requirements/verification-system/tests/e2e/support/runtime-key.js:365-381 selects by lane/kind/step/tools then prefix and returns unmatched",
+      "requirements/verification-system/tests/e2e/support/strict-mock-provider.js:422-424 directly interpolates absent lane in diagnostic label",
+      "requirements/verification-system/tests/integration/harness/source-cases.mjs:192-199 also asserts retired Companion prefix"
+    ],
+    "semanticContracts": [
+      "requirements/behavior-diagnosis/WHAT.md:[006] five required chronicle fields",
+      "requirements/behavior-diagnosis/WHAT.md:[009] exactly one chronicle per provider run",
+      "requirements/context-compression/WHAT.md:[012] data-only durable delta, projection-only instruction header",
+      "requirements/verification-system/WHAT.md:[005] stop on failure, [008]/[010] effective frozen assertions, [014] sole real Long Stroke lifetime"
+    ]
+  },
+  "minimalRepair": {
+    "redPatch": "/private/tmp/vibe-fs-oct8-alias-release/e2e-blogger-regression-red.patch",
+    "greenPatch": "/private/tmp/vibe-fs-oct8-alias-release/e2e-blogger-scenario-green.patch",
+    "patchSyntaxChecks": "git apply --check returned 0 for both; neither applied by auditor",
+    "regression": "014 numbered formal test consumes registered production normalInstruction, squashInstruction and newWork via original ScenarioRuntime select/consume in two sessions; stale and unknown instructions remain unmatched",
+    "greenChanges": "Migrate only Blogger turn user prefix and existing source-hygiene prefix assertion; no strict matcher, lane, epoch, ceilings, must list or negative controls removed",
+    "otherRetiredStrings": "context-compression tests 011/014/018 retain old literal only in copied unused isCombinedNormalDelta helper definitions; no live turn declarations, no need to expand this repair"
+  },
+  "plan": {
+    "exactIncidentAlreadyNamed": false,
+    "searchScope": "proposals Markdown and related requirements; no exact no-declared-turn, lane@undefined, first script mismatch, blogger.0@undefined or script mismatch incident entry found",
+    "existingBroadOpenWork": [
+      "proposals/TODO施工总计划-2026-10-03.md:157 N08/N09 real Host, Long Stroke and release remain open",
+      "proposals/TODO施工总计划-2026-10-03.md:232 N08-B separate independent physical proofs from stopped unified release",
+      "proposals/TODO施工总计划-2026-10-03.md:459 W7 includes distribution, full integration, Long Stroke and release"
+    ],
+    "scope": "This finite stale-fixture incident belongs under existing release/W7 evidence. Repair does not close N08/N09 or the complete Host acceptance gap."
+  },
+  "cleanup": {
+    "wrapperCleanupFailure": null,
+    "wrapperMechanism": "run-independent.mjs uses spawnOwnedVerificationTool and awaited its completion",
+    "fatalPath": "scenario-parallel.js:281-294 onFatal stops watchdog and process.exit(1); normal scenario teardown and final TAP summary are bypassed",
+    "preciseConclusion": "Owned verification tool monitor reported no cleanup failure; direct Host stop and owned temporary directory removal are not independently evidenced in this log",
+    "fullHostCleanupAcceptance": "unknown"
+  },
+  "remaining": "Fix and formally prove this finite mismatch, then rebuild/freeze changed input and resume required acceptance under original budgets. The first fatal gives no proof about later Long Stroke branches."
+}

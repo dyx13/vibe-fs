@@ -118,6 +118,8 @@ ProcessHost 的 health 与项目 `/path` 各自在原阶段 deadline 内观察�
 | 020 | fast-check 固定 seed 与 run budget、失败收缩路径可重放的设施反例；不证明全仓生成器均正确配置，也不代替 oracle 独立性审阅 |
 | 021 | 相同结果在不同报告模式下保持一致，跳过/TODO/取消及原因可见，同名不同用例不混淆，矛盾终局不能覆盖失败，真实文件完成和结果流排空。全仓报告链对证据范围的传播仍需核查 |
 
+021还经真实unit入口、原freshness和并发2验证默认完整发现集合、整包verification-system稳定前置、组内与其余顺序，含同名前缀负控、support文件和原e2e/integration排除；显式TESTS_MJS_FILES保留混排、重复的原lifecycle拒绝及缺失文件失败。调序不改变集合、tier或预算，不把设施优先准入等同于依赖完成，也不授予全仓300秒吞吐闭合。014通过实际CompanionProjectionSurface生成normal/squash/newWork指导，交原ScenarioRuntime严格匹配与消费，保双session和旧/未知文本拒绝；该契约局部证明不能代替真实Long Stroke。2026-10-08全项目执行与失败处理见[本轮记录](../../../proposals/K1A与全项目release验收-2026-10-08.md)。
+
 016的2026-10-04准备增量使用真实Git tree/blob/index证明指定源码身份：工作区/index后改不污染原tree，特殊路径/二进制/执行位保留，SHA1/SHA256均可重构；attributes与replace refs不改原blob，继承Git环境不重定向读取或写回，缺对象/不支持的entry/promisor仓/无法忠实物化的tree都拒绝并回收自有root。该API尚未接实际verify；源码receipt不证明运行期不可改、依赖封闭或全阶段同源，两个TODO仍保留。
 
 原依赖归档准备回归校验明确SHA-256归档、gzip/tar完整性和独立物化目录；真实Node import与完整字节/mode/隐藏文件/内部.bin链接证明所选依赖可独立读取。外部、悬空、循环、重复、特殊entry、链接祖先及受限语法外的路径拒绝，失败不发布root。该API只绑定所选归档与lock字节，不单独证明安装来源符合lock。

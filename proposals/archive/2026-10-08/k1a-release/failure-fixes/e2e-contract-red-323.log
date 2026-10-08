@@ -1,0 +1,44 @@
+runner: scoped 使用 TESTS_MJS_FILES=1 files
+runner: build is current (1815 sources, 891 artifacts)
+runner: discovery OVERRIDDEN by TESTS_MJS_FILES (1 file(s))
+runner: 1 test file(s), 30000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48568,"parentPid":48541,"type":"runner:file-start","elapsedMs":30.34862499999997}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48569,"parentPid":48568,"monotonicMs":15.090917,"cpuUserMicros":20388,"cpuSystemMicros":3509}
+[verification-test-start] {"pid":48569,"parentPid":48568,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","name":"WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard","fullName":"WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard"}
+[verification-test-start] {"pid":48569,"parentPid":48568,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","name":"WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description","fullName":"WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description"}
+[verification-test-start] {"pid":48569,"parentPid":48568,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","name":"WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases","fullName":"WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases"}
+[verification-test-start] {"pid":48569,"parentPid":48568,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","name":"WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions","fullName":"WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions"}
+
+✖ failing tests:
+
+test at /Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:202:1
+✖ WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions (18.488ms)
+  AssertionError [ERR_ASSERTION]: current production instruction must reach the declared Blogger turn: # Call the chronicle tool exactly once now. Record the meaningful state transition
+  + actual - expected
+  
+  + undefined
+  - 'blogger.0'
+  
+      at TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:220:14)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48569,"parentPid":48568,"monotonicMs":155.907625,"cpuUserMicros":201798,"cpuSystemMicros":24599,"exitCode":1}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","type":"runner:file-drained","elapsedMs":200.51216699999998}
+
+[test-summary] 1 file(s), 3 passed, 1 failed, 1 skipped (0.17s wall, 0.03s test time)
+  skip: /Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:WHAT[verification-system-014] Long Stroke 真实物理验收环境 — release tier not enabled
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","enabled":true,"pid":48569,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48569,"parentPid":48568,"monotonicMs":15.090917,"cpuUserMicros":20388,"cpuSystemMicros":3509},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs","pid":48569,"parentPid":48568,"monotonicMs":155.907625,"cpuUserMicros":201798,"cpuSystemMicros":24599,"exitCode":1},"interval":{"clockPid":48569,"wallMs":140.816708,"cpuUserMicros":181410,"cpuSystemMicros":21090}}
+runner: post-exit group verification/reclamation: pid=48568; elapsedMs=16.259; accepted=true
+runner: 5 test(s), 0.0s of test time; max 18ms, p90 18ms, median 3ms
+
+runner: 3 passed, 1 failed; 1/1 planned file(s) completed
+Error: runner: supervised suite failed (exit 1)
+    at fail (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:258:25)
+    at superviseOwnedNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:486:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async superviseNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:235:14)
+    at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/run.mjs:104:1 {
+  exitCode: 1,
+  [cause]: undefined
+}

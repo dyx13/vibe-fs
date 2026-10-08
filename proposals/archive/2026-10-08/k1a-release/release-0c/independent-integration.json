@@ -1,0 +1,26 @@
+{
+  "label": "integration",
+  "command": [
+    "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/run.mjs"
+  ],
+  "inputCommit": "0c6c170d3c0273187f024cbb2ca6fb5e30c26ec2",
+  "currentCommit": "0c6c170d3c0273187f024cbb2ca6fb5e30c26ec2",
+  "startedAt": "2026-10-08T03:22:41.647Z",
+  "durationMs": 314294.831041,
+  "timeoutMs": 1200000,
+  "digest": "50bf7902083464c11195caae8e61f08f9fe82c1797cb1ee82bcd3f2c86227bb4",
+  "afterDigest": "2583e334543582347c4922f4666c826da10f34d753b001ff48d17b9e12dcdd06",
+  "inputsEqual": false,
+  "env": {
+    "NODE_TEST_CONCURRENCY": "2",
+    "UNIT_VERDICT_SILENCE_MS": "30000",
+    "WXS_RELEASE": "1",
+    "WXS_E2E_QUIET": "1"
+  },
+  "timedOut": false,
+  "exitCode": 1,
+  "signal": null,
+  "cleanupFailure": null,
+  "log": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration.log"
+}

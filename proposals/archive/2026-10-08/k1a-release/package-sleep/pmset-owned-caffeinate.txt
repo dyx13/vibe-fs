@@ -1,0 +1,4 @@
+   PreventSystemSleep             0
+   PreventUserIdleSystemSleep     1
+   pid 46710(caffeinate): [0x00031f770001803f] 00:05:53 PreventUserIdleSystemSleep named: "caffeinate command-line tool"  
+	Details: caffeinate asserting forever
