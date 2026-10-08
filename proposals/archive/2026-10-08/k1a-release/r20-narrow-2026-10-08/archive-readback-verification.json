@@ -1,0 +1,80 @@
+{
+  "archive": "finite-r20-narrow.tar.gz",
+  "archiveSha256": "37810dfb45e7913c6fb87ed3fb3f1351afbd0dcce32ebb0d7524956ff522de69",
+  "allMembersMatch": true,
+  "verifiedFiles": 12,
+  "files": [
+    {
+      "path": "SHA256SUMS",
+      "sha256": "6d72aecfa2699b0a8f8114dbf85721e0685ef006bc27f45c530cfe1a52809e95",
+      "bytes": 1014,
+      "matchesStaging": true
+    },
+    {
+      "path": "finite-matrix.json",
+      "sha256": "a733880dae17b00e1ee89b24b5b3d70b4dbdcd4549e7eaecbefd307dd8dd7e67",
+      "bytes": 2757,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/harness.log",
+      "sha256": "6398d24eb4cd5a0fa7f43f2adee0e8747676a3f08bb475f96ccd6c446dfa5553",
+      "bytes": 626,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/r20-build.log",
+      "sha256": "1e2fdfb2b7d8ad7259a36515d5b2f616629d4e7e2b40eb098923cdf2cceec23e",
+      "bytes": 193,
+      "matchesStaging": true
+    },
+    {
+      "path": "logs/unit006.log",
+      "sha256": "e332d035d30536967788a154effadb53c0caa8eaa1b3ebdf493d8fa0eeec8b53",
+      "bytes": 29813,
+      "matchesStaging": true
+    },
+    {
+      "path": "receipts/harness-manifest-after.json",
+      "sha256": "c2b640f8c5bd0fbc16c12bebc6fa40ac08b5f339e7bf315836307e6402d31fa3",
+      "bytes": 1158203,
+      "matchesStaging": true
+    },
+    {
+      "path": "receipts/harness-manifest-before.json",
+      "sha256": "c2b640f8c5bd0fbc16c12bebc6fa40ac08b5f339e7bf315836307e6402d31fa3",
+      "bytes": 1158203,
+      "matchesStaging": true
+    },
+    {
+      "path": "receipts/harness.json",
+      "sha256": "e1006b6aeee0316f725fa9f1d87c32c0f581423d6d6bebb5b5329ef7f3f7526e",
+      "bytes": 63749,
+      "matchesStaging": true
+    },
+    {
+      "path": "receipts/unit006-manifest-after.json",
+      "sha256": "c2b640f8c5bd0fbc16c12bebc6fa40ac08b5f339e7bf315836307e6402d31fa3",
+      "bytes": 1158203,
+      "matchesStaging": true
+    },
+    {
+      "path": "receipts/unit006-manifest-before.json",
+      "sha256": "c2b640f8c5bd0fbc16c12bebc6fa40ac08b5f339e7bf315836307e6402d31fa3",
+      "bytes": 1158203,
+      "matchesStaging": true
+    },
+    {
+      "path": "receipts/unit006.json",
+      "sha256": "6eb68aab2cadae6cffbe143a9859abe0349393fd39740b1465f0871c6ab2de6f",
+      "bytes": 63772,
+      "matchesStaging": true
+    },
+    {
+      "path": "source-inventory.json",
+      "sha256": "92d221dabe99359089c7d10786b8eb84d12e9d36c1a0320de7710c05d0c6f816",
+      "bytes": 3899,
+      "matchesStaging": true
+    }
+  ]
+}

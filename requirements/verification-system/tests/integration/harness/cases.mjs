@@ -231,7 +231,7 @@ async function runProcessHostUnreadyDoesNotRenew() {
   const requests = [];
   let started;
   const { server, url } = await startHttpServer((_request, response) => {
-    requests.push(Date.now() - started);
+    requests.push(performance.now() - started);
     response.setHeader('content-type', 'application/json');
     response.end('{"healthy":false}');
   });
@@ -239,14 +239,14 @@ async function runProcessHostUnreadyDoesNotRenew() {
   host._baseUrl = url;
   let guardTimer;
   try {
-    started = Date.now();
+    started = performance.now();
     await assert.rejects(Promise.race([
       host._waitForGlobalHealth(1000),
       new Promise((_, reject) => {
         guardTimer = setTimeout(() => reject(new Error('repeated unready response renewed the deadline')), 2000);
       }),
     ]), /global.*\/global\/health.*deadline.*healthy=false/s);
-    const elapsed = Date.now() - started;
+    const elapsed = performance.now() - started;
     assert.ok(requests.length > 1, `the repeated observation must actually occur: received at ${requests.join(',')}ms`);
     assert.ok(elapsed >= 1000 && elapsed < 2000, `unready observations must preserve the original 1000ms deadline: elapsed=${elapsed}ms`);
   } finally {

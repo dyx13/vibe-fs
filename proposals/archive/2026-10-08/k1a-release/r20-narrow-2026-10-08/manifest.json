@@ -1,0 +1,149 @@
+{
+  "createdAt": "2026-10-08T13:13:28.977024+00:00",
+  "archive": "finite-r20-narrow.tar.gz",
+  "archiveSha256": "37810dfb45e7913c6fb87ed3fb3f1351afbd0dcce32ebb0d7524956ff522de69",
+  "archiveBytes": 1035493,
+  "originalFiles": 9,
+  "originalBytes": 4790965,
+  "payloadFilesIncludingMetadata": 12,
+  "payloadBytesIncludingMetadata": 4798635,
+  "sourceInventory": [
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-narrow/unit006.json",
+      "path": "receipts/unit006.json",
+      "bytes": 63772,
+      "sha256": "6eb68aab2cadae6cffbe143a9859abe0349393fd39740b1465f0871c6ab2de6f",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158853650,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 63772,
+        "mtimeNs": 1791465016277401434
+      },
+      "stableWhileCopied": true
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-narrow/harness.json",
+      "path": "receipts/harness.json",
+      "bytes": 63749,
+      "sha256": "e1006b6aeee0316f725fa9f1d87c32c0f581423d6d6bebb5b5329ef7f3f7526e",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158854312,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 63749,
+        "mtimeNs": 1791465074250746795
+      },
+      "stableWhileCopied": true
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-narrow/unit006-manifest-before.json",
+      "path": "receipts/unit006-manifest-before.json",
+      "bytes": 1158203,
+      "sha256": "c2b640f8c5bd0fbc16c12bebc6fa40ac08b5f339e7bf315836307e6402d31fa3",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158853257,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791464989200779739
+      },
+      "stableWhileCopied": true
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-narrow/unit006-manifest-after.json",
+      "path": "receipts/unit006-manifest-after.json",
+      "bytes": 1158203,
+      "sha256": "c2b640f8c5bd0fbc16c12bebc6fa40ac08b5f339e7bf315836307e6402d31fa3",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158853648,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791465015996823603
+      },
+      "stableWhileCopied": true
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-narrow/harness-manifest-before.json",
+      "path": "receipts/harness-manifest-before.json",
+      "bytes": 1158203,
+      "sha256": "c2b640f8c5bd0fbc16c12bebc6fa40ac08b5f339e7bf315836307e6402d31fa3",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158853822,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791465059278264547
+      },
+      "stableWhileCopied": true
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-narrow/harness-manifest-after.json",
+      "path": "receipts/harness-manifest-after.json",
+      "bytes": 1158203,
+      "sha256": "c2b640f8c5bd0fbc16c12bebc6fa40ac08b5f339e7bf315836307e6402d31fa3",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158854300,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791465073915144626
+      },
+      "stableWhileCopied": true
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-narrow/unit006.log",
+      "path": "logs/unit006.log",
+      "bytes": 29813,
+      "sha256": "e332d035d30536967788a154effadb53c0caa8eaa1b3ebdf493d8fa0eeec8b53",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158853258,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 29813,
+        "mtimeNs": 1791465015210502615
+      },
+      "stableWhileCopied": true
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-narrow/harness.log",
+      "path": "logs/harness.log",
+      "bytes": 626,
+      "sha256": "6398d24eb4cd5a0fa7f43f2adee0e8747676a3f08bb475f96ccd6c446dfa5553",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158853823,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 626,
+        "mtimeNs": 1791465073180732466
+      },
+      "stableWhileCopied": true
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-r20-build.log",
+      "path": "logs/r20-build.log",
+      "bytes": 193,
+      "sha256": "1e2fdfb2b7d8ad7259a36515d5b2f616629d4e7e2b40eb098923cdf2cceec23e",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158853103,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 193,
+        "mtimeNs": 1791464927741044657
+      },
+      "stableWhileCopied": true
+    }
+  ],
+  "scope": "R20 finite related closure only; new candidate clean full/six physical/exact CI pending",
+  "old8d0ArchiveUnchanged": true
+}

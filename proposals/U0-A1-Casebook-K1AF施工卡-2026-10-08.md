@@ -1,6 +1,6 @@
 # K1-A / K1-F：工作区别名与结算后再次准入
 
-当前状态：本卡Fetch路径身份与四叶再入保持有限完成；后继R18/R19亦已有限验收，勿重做Fetch或忙碌resume。R18 gen370相关82/82为390pass/0fail/12skip/45TODO、exit1仅pending-proof，实际34pass/1fail的required title失败由R19接续：正式033红gen371为1pass/1fail/0cancel/0skip/0TODO、974.828125ms；gen372构建成功，相关133/133为779pass/0fail/16skip/55TODO、35.40s wall/58.37s test，exit1仅pending-proof。实际gen372 E2E35pass/0fail/0cancel/0skip/0TODO、TAP19622.512708ms、outer21153.345333ms、exit0、输入相同，两项title保持required并完成expectSatisfied。修复只豁免literal顶层title，普通managed和unknown-agent负控不变；[R18](archive/2026-10-08/k1a-release/r18-retirement-boundaries-2026-10-08/README.md)与[R19](archive/2026-10-08/k1a-release/r19-host-title-2026-10-08/README.md)分别保原件。opening append期间Root换任未正式证明，skip/TODO、整个GAP-160、最终全项目及新SHA CI仍待验收；下一步冻结提交后完整验证。下方旧阶段状态仅保历史，见[验收记录R19](K1A与全项目release验收-2026-10-08.md#r19host-title复用已接纳user有限验收完成)。
+当前状态：本卡Fetch/四叶再入和R18/R19保持有限完成，不重做Fetch或忙碌resume。R20已有受控正式红绿，gen374后完整006为1/1、63pass/0fail/1skip/0TODO、26026.472792ms/exit0；skip为integrationtier未启用的实际Host invalid termination控制，不授完整Host。完整harness292case为292pass/0fail、13921.939792ms/exit0，skip/TODO无字段保unknown；input/tools相同，原requests>1及1000≤elapsed<2000不放宽。[R20有限原件](archive/2026-10-08/k1a-release/r20-narrow-2026-10-08/README.md)另归档，旧[8d0 FAILED矩阵](K1A与全项目release验收-2026-10-08.md#r208d0完整验证历史失败deadline修复处理中)不覆盖。下一步新candidate clean full release、六physical016和精确CI，当前pending；8d0六physical仍not-run。最终docs-only SHA不借旧输入，opening append换Root未正式证明、skip/TODO、GAP-160及历史吞吐unknown均保留。下方仅历史。
 
 ## 2026-10-08 review 接手状态
 

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
+import { getEventListeners } from 'node:events'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -19,6 +20,7 @@ import { formatDiagnostics } from './e2e/support/diagnostics-format.js'
 import { StrictMockProvider } from './e2e/support/strict-mock-provider.js'
 import { StrictMockSignals } from './e2e/support/strict-mock-signals.js'
 import { createScenarioTurn } from './e2e/support/scenario-turn.js'
+import { ProcessHost } from './e2e/support/process-host.js'
 import { DIAGNOSTIC_RACE_MS, WATCHDOG_TIMEOUT_MS } from './e2e/support/time-budget.js'
 import { attachEventCeilings, eventCeilingSetupProblems, isCountedSseEvent, normalizeEventCeilings } from './e2e/support/event-ceiling.js'
 
@@ -133,6 +135,56 @@ async function assertSingleTermination(h, timeoutMs) {
   await h.advance(timeoutMs)
   assert.equal(h.terminateCount, 1, 'window changes must not restart a terminated watchdog')
 }
+
+test('WHAT[verification-system-006] ProcessHost waits for its actual deadline when a timer callback arrives early', async t => {
+  let now = 0
+  let wallNow = 10000
+  const scheduled = new Set()
+  t.mock.method(Date, 'now', () => wallNow)
+  t.mock.method(performance, 'now', () => now)
+  t.mock.method(globalThis, 'setTimeout', (callback, milliseconds) => {
+    const timer = { callback, milliseconds }
+    scheduled.add(timer)
+    return timer
+  })
+  t.mock.method(globalThis, 'clearTimeout', timer => scheduled.delete(timer))
+  let requestSignal
+  t.mock.method(globalThis, 'fetch', (_url, { signal }) => {
+    requestSignal = signal
+    return new Promise((_resolve, reject) => {
+      signal.addEventListener('abort', () => reject(signal.reason), { once: true })
+    })
+  })
+  const terminal = new AbortController()
+  const host = new ProcessHost()
+  host._baseUrl = 'http://127.0.0.1:1'
+  host._owner = { terminal: terminal.signal }
+  const outcome = host._waitForGlobalHealth(1000).then(() => null, error => error)
+  const fire = () => {
+    assert.equal(scheduled.size, 1, 'the unfinished request must retain one deadline timer')
+    const timer = [...scheduled][0]
+    scheduled.delete(timer)
+    timer.callback()
+  }
+  try {
+    assert.ok(requestSignal, 'the actual readiness request must have entered fetch')
+    now = 999
+    wallNow = 50000
+    fire()
+    assert.equal(requestSignal.aborted, false, 'an early timer callback cannot consume the last millisecond')
+    now = 1000
+    wallNow = -50000
+    fire()
+    assert.equal(requestSignal.aborted, true, 'the original monotonic deadline must expire despite wall-clock rollback')
+    const failure = await outcome
+    assert.match(failure?.message, /phase=global.*elapsed=1000ms.*stage deadline expired/s)
+    assert.equal(scheduled.size, 0, 'the completed readiness wait must release its deadline timer')
+    assert.equal(getEventListeners(terminal.signal, 'abort').length, 0, 'the completed readiness wait must release its owner observer')
+  } finally {
+    terminal.abort({ exitCode: 17, signal: null, failure: null })
+    await outcome
+  }
+})
 
 test('WHAT[verification-system-006] the initial silence window covers execution before its first progress', async () => {
   const h = createWatchdogHarness({ timeoutMs: WATCHDOG_TIMEOUT_MS })

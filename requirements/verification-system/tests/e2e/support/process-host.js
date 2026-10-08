@@ -149,7 +149,7 @@ export class ProcessHost {
   }
 
   async _waitForReadiness(phase, pathname, timeoutMs, isReady) {
-    const started = Date.now();
+    const started = performance.now();
     const deadline = started + timeoutMs;
     const url = `${this._baseUrl}${pathname}`;
     const terminal = this._owner?.terminal;
@@ -158,7 +158,16 @@ export class ProcessHost {
     let lastObservation = 'waiting for response headers; no request completed';
     const onExit = (code, signal, failure) => controller.abort(failure ?? new Error(`Host exited: code=${code} signal=${signal}`));
     const observeExit = () => onExit(terminal.reason.exitCode, terminal.reason.signal, terminal.reason.failure);
-    const timer = setTimeout(() => controller.abort(new Error(`stage deadline expired; ${lastObservation}`)), timeoutMs);
+    let timer;
+    const checkDeadline = () => {
+      const remainingMs = deadline - performance.now();
+      if (remainingMs > 0) {
+        timer = setTimeout(checkDeadline, Math.ceil(remainingMs));
+        return;
+      }
+      controller.abort(new Error(`stage deadline expired; ${lastObservation}`));
+    };
+    timer = setTimeout(checkDeadline, Math.ceil(timeoutMs));
     terminal?.addEventListener('abort', observeExit, { once: true });
     try {
       if (terminal?.aborted) observeExit();
@@ -182,13 +191,13 @@ export class ProcessHost {
           if (error?.cause?.code !== 'ECONNREFUSED') throw error;
           lastObservation = 'connection refused';
         }
-        await delay(Math.max(0, Math.min(READY_POLL_INTERVAL_MS, deadline - Date.now())), undefined, { signal: controller.signal });
+        await delay(Math.max(0, Math.min(READY_POLL_INTERVAL_MS, deadline - performance.now())), undefined, { signal: controller.signal });
       }
     } catch (error) {
       const cause = controller.signal.aborted ? controller.signal.reason : error;
       throw new Error(
         `${phase === 'global' ? 'Global health-check' : 'Health-check'} failed: ` +
-        `phase=${phase} url=${url} elapsed=${Date.now() - started}ms attempts=${attempts}; ${cause.message}` +
+        `phase=${phase} url=${url} elapsed=${performance.now() - started}ms attempts=${attempts}; ${cause.message}` +
         `${cause.cause?.code ? ` (${cause.cause.code}: ${cause.cause.message})` : ''}\n` +
         `stdout tail:\n${this._stdoutBuffer.slice(-20).join('\n')}\n` +
         `stderr tail:\n${this._stderrBuffer.slice(-20).join('\n')}`,

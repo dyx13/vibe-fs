@@ -1,0 +1,1165 @@
+{
+  "createdAt": "2026-10-08T13:06:44.155812+00:00",
+  "archive": "closed-8d0-release.tar.gz",
+  "archiveSha256": "022d3e98fa744f76e88c3f8b4ad6f8a49ddaf61a7d94f2888284df113e2f10b3",
+  "archiveBytes": 5531936,
+  "originalFiles": 76,
+  "originalBytes": 33809712,
+  "payloadFilesIncludingMetadata": 79,
+  "payloadBytesIncludingMetadata": 34060469,
+  "sourceInventory": [
+    {
+      "path": "local/budget-environment.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/budget-environment.json",
+      "bytes": 286,
+      "sha256": "001b50243e692b5c203f1a5046a7efba78bb7f5403381d7cf0791e4d54a4c794",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158637058,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 286,
+        "mtimeNs": 1791463527582883730
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/collect-stage-readonly-audit.py",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/collect-stage-readonly-audit.py",
+      "bytes": 12375,
+      "sha256": "39d01aad141de84fb414f470060ac4f575413f1ca45c22974448c28260f4708f",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158748087,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 12375,
+        "mtimeNs": 1791463754527673493
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/frozen-build-manifest.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/frozen-build-manifest.json",
+      "bytes": 1157286,
+      "sha256": "65cc71a1bdcca2d119cb5460f4535eb32e6ebfe60c7bc22f60be7d5d4010d878",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158637056,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1157286,
+        "mtimeNs": 1791463527547435692
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/frozen-input.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/frozen-input.json",
+      "bytes": 1218366,
+      "sha256": "ce0a56ddb0e16c8c7a6e0af696c546f357aa4431aaa23276c40f41f4211963a9",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158637057,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1218366,
+        "mtimeNs": 1791463527553817184
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-e2e-manifest-after.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-e2e-manifest-after.json",
+      "bytes": 1158203,
+      "sha256": "b7a764618bac9cdcf5851a1f7e60369dbdff67c98c750e160b6d31ee4b5e5d9a",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158836320,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791464270043230236
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-e2e-manifest-before.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-e2e-manifest-before.json",
+      "bytes": 1158203,
+      "sha256": "b7a764618bac9cdcf5851a1f7e60369dbdff67c98c750e160b6d31ee4b5e5d9a",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832664,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791464249241823252
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-e2e.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-e2e.json",
+      "bytes": 4126,
+      "sha256": "f9c23f9994cc41682b85dcb16c886591a84920890b01b4950ebbc9cc36642d29",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158836330,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 4126,
+        "mtimeNs": 1791464270837903539
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-e2e.log",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-e2e.log",
+      "bytes": 17374,
+      "sha256": "13948a614a1d0b46008bf1664efcc5a4439341d68feac74845db472e681684bc",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832665,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 17374,
+        "mtimeNs": 1791464269287613297
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-integration-manifest-after.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-integration-manifest-after.json",
+      "bytes": 1158203,
+      "sha256": "b7a764618bac9cdcf5851a1f7e60369dbdff67c98c750e160b6d31ee4b5e5d9a",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832604,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791464221392923348
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-integration-manifest-before.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-integration-manifest-before.json",
+      "bytes": 1158203,
+      "sha256": "b7a764618bac9cdcf5851a1f7e60369dbdff67c98c750e160b6d31ee4b5e5d9a",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158786895,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791463906596373742
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-integration.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-integration.json",
+      "bytes": 4175,
+      "sha256": "50f61134d5386171bfc48bf20d97fdca8ddd6a752235fefd85f68b079876e515",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832614,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 4175,
+        "mtimeNs": 1791464222090648513
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-integration.log",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-integration.log",
+      "bytes": 271324,
+      "sha256": "445648e347321e9c912c5bd3a2045c1d2f2440cd96ff797953a4aff007bba7cd",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158786896,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 271324,
+        "mtimeNs": 1791464220644925073
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-package-manifest-after.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-package-manifest-after.json",
+      "bytes": 1158203,
+      "sha256": "b7a764618bac9cdcf5851a1f7e60369dbdff67c98c750e160b6d31ee4b5e5d9a",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158850586,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791464299657971400
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-package-manifest-before.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-package-manifest-before.json",
+      "bytes": 1158203,
+      "sha256": "b7a764618bac9cdcf5851a1f7e60369dbdff67c98c750e160b6d31ee4b5e5d9a",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158836418,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791464294237560658
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-package.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-package.json",
+      "bytes": 4109,
+      "sha256": "c7e0228718cd7df69d07161514ac22e1b5b1017456c1731c53c47118965f9ab2",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158850596,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 4109,
+        "mtimeNs": 1791464300228289270
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/independent-package.log",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/independent-package.log",
+      "bytes": 305,
+      "sha256": "572c944fe2b5d1e6a9a4db4c519c2beb1d450a8af6c18ea44ec82abcbc81d314",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158836419,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 305,
+        "mtimeNs": 1791464299272137766
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/integration-final-reconciliation-readonly.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/integration-final-reconciliation-readonly.json",
+      "bytes": 10034,
+      "sha256": "2e02f781bcc729bf587e369565cf00522a7ca640ae3b1ba95df877e4cacb9d6d",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158850682,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 10034,
+        "mtimeNs": 1791464370870827910
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/integration-final-reconciliation-readonly.md",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/integration-final-reconciliation-readonly.md",
+      "bytes": 1262,
+      "sha256": "f8e9bf118007ef0d489d6a7ba401f7fdf7d25ad7cfe5fa3da3d1eec8edfabe95",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158850683,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1262,
+        "mtimeNs": 1791464370870921327
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/integration-planned-files.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/integration-planned-files.json",
+      "bytes": 3842,
+      "sha256": "3509a093978986220526e737818503c6dc37070da0ad89bfab4a99b8f43e8f36",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158759826,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 3842,
+        "mtimeNs": 1791463765420526925
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/integration-readonly-audit.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/integration-readonly-audit.json",
+      "bytes": 87150,
+      "sha256": "b882afebd7c42dd16b459ce391c0ee068878333cc36f6f87f162f5b5a196be3f",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832650,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 87150,
+        "mtimeNs": 1791464244989458116
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/integration-readonly-audit.txt",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/integration-readonly-audit.txt",
+      "bytes": 2114,
+      "sha256": "00e27c69c20de889aaf37485f1d76bcfab7abce3bff1cee792cabc745afb8397",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832651,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 2114,
+        "mtimeNs": 1791464244989626657
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/release-console.log",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/release-console.log",
+      "bytes": 1512708,
+      "sha256": "50669f006dfa0a067b377f3f85e5adb065b117fddfed1502a61c38653199ce00",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158637070,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1512708,
+        "mtimeNs": 1791463861099282273
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unified-build-manifest-after.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unified-build-manifest-after.json",
+      "bytes": 1158203,
+      "sha256": "b7a764618bac9cdcf5851a1f7e60369dbdff67c98c750e160b6d31ee4b5e5d9a",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158786715,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1158203,
+        "mtimeNs": 1791463861489459969
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unified-build-manifest-before.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unified-build-manifest-before.json",
+      "bytes": 1157286,
+      "sha256": "65cc71a1bdcca2d119cb5460f4535eb32e6ebfe60c7bc22f60be7d5d4010d878",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158637069,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1157286,
+        "mtimeNs": 1791463528261307862
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unified-release.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unified-release.json",
+      "bytes": 3403,
+      "sha256": "cd508afc28e835bd378efdb2cdb8e69eb4cf45c91aab81bdff213ebf47162ad8",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158786726,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 3403,
+        "mtimeNs": 1791463861841710100
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unit-active-snapshot-readonly.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unit-active-snapshot-readonly.json",
+      "bytes": 1277,
+      "sha256": "87faf605f9d387a7e85381c493b24f8df2a50f0a4c5172ad9a8589f379d39bb7",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158771116,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1277,
+        "mtimeNs": 1791463805817250123
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unit-identity-reconciliation-readonly.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unit-identity-reconciliation-readonly.json",
+      "bytes": 6851,
+      "sha256": "23443c6b9e88ca1f7ff2cee1c8dbc7fce11666d5be5faa5ded676c43521cacd8",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158803376,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 6851,
+        "mtimeNs": 1791463993625818323
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unit-identity-reconciliation-readonly.md",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unit-identity-reconciliation-readonly.md",
+      "bytes": 1425,
+      "sha256": "2a6cfe752990d182d851b9b1399e622ee80edd51de219b419016ee41bca2c4b9",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158803377,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1425,
+        "mtimeNs": 1791463993625958865
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unit-planned-files.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unit-planned-files.json",
+      "bytes": 72003,
+      "sha256": "a9bb9e4588a14622876a635e05b5a10eb15620d6029919c8f4eec2b19422088d",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158759545,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 72003,
+        "mtimeNs": 1791463764791506607
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unit-readonly-audit.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unit-readonly-audit.json",
+      "bytes": 1702512,
+      "sha256": "82ee5f036135065f70dbe91a1de1de8c93c2e7c1f69529ab4b5dd8e6e97365d2",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158793121,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1702512,
+        "mtimeNs": 1791463926351595017
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unit-readonly-audit.txt",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/unit-readonly-audit.txt",
+      "bytes": 1861,
+      "sha256": "1b85a0fa323826c4c38eca42dcdbfc9705fb71c413e14c7f8d7a85bc5d66ddb1",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158793135,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1861,
+        "mtimeNs": 1791463926351872850
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "followup-r20/readiness-early-timer-formal-red.log",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/readiness-early-timer-formal-red.log",
+      "bytes": 1130,
+      "sha256": "2475099afde091b2d53fb3825aabf4f69702ab4f244633a03ad5a87393edc3cf",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852363,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1130,
+        "mtimeNs": 1791464496557382139
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "followup-r20/readiness-monotonic-timer-formal-red.log",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/readiness-monotonic-timer-formal-red.log",
+      "bytes": 1130,
+      "sha256": "f0b0b1bc83831a5a60e9fa6bbb42622d08d8a4c27c80c5a8aede68db4b258d76",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852503,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1130,
+        "mtimeNs": 1791464567226365128
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "followup-r20/readiness-monotonic-timer-formal-green.log",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/readiness-monotonic-timer-formal-green.log",
+      "bytes": 404,
+      "sha256": "8b3fcacb87129561e5966742f558914daee16bddd7e55709fe19f649acd75e4d",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852517,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 404,
+        "mtimeNs": 1791464579760765655
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "followup-r20/readiness-monotonic-causal-receipt.json",
+      "source": "/private/tmp/vibe-fs-oct8-release-8d0c8ab2e604/readiness-monotonic-causal-receipt.json",
+      "bytes": 4119,
+      "sha256": "f26284b01f372c894b0e3d0239b6fa457af2b106bf1748108cc0f07209af6ec4",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852570,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 4119,
+        "mtimeNs": 1791464616245420924
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unified-stage-logs/format-check.log",
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T12-45-28-406Z/format-check.log",
+      "bytes": 132,
+      "sha256": "875071680199e00036850fe93b146c5c7e7f94f72bf39f7ee07123a35a7145ed",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158637075,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 132,
+        "mtimeNs": 1791463532809880086
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unified-stage-logs/check.log",
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T12-45-28-406Z/check.log",
+      "bytes": 169851,
+      "sha256": "cc16eb17a23dac65b7dd28e3e3b8b7be64dc94c0f87fffb264d45dd8b24ee0fa",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158637092,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 169851,
+        "mtimeNs": 1791463536907739261
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unified-stage-logs/build.log",
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T12-45-28-406Z/build.log",
+      "bytes": 989,
+      "sha256": "8514f63f4a749a53e8849dbcb4315f29f7f0f27255da598ae62e86cee53dbd62",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158637104,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 989,
+        "mtimeNs": 1791463579120299727
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "local/unified-stage-logs/unit.log",
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T12-45-28-406Z/unit.log",
+      "bytes": 3950874,
+      "sha256": "18346c623414cea4007c11b14b970cfc6bde5c9b6612c0cfe1081e442c653fba",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158639244,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 3950874,
+        "mtimeNs": 1791463860784075437
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/archive-integrity.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/archive-integrity.json",
+      "bytes": 1772,
+      "sha256": "aff8e99973d8e3dff5e655e503028104c90a30611944df214b367a18d2e77f22",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832256,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1772,
+        "mtimeNs": 1791464203276463388
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/artifacts.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/artifacts.json",
+      "bytes": 699,
+      "sha256": "747577a9bdb72dcc4c5503f379d7c826f2b31edf8e49f4042256849141c972c3",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158825775,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 699,
+        "mtimeNs": 1791464151056915200
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/ci-pinned.yml",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/ci-pinned.yml",
+      "bytes": 1157,
+      "sha256": "9109eaf8afbabd9647feadf4143944c3a7559b799dc74b4cad8f25b00b58b14a",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158759445,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1157,
+        "mtimeNs": 1791463764590117291
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/0_check.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/0_check.txt",
+      "bytes": 1657077,
+      "sha256": "1243b029c548a8a03041345535bc53f5019f596d4ad133759bb72962accc3b08",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832232,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1657077,
+        "mtimeNs": 1791464203266156016
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/16_Post Run actions_checkout@v4.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/16_Post Run actions_checkout@v4.txt",
+      "bytes": 1709,
+      "sha256": "908077c728b318cb04d2a20548f13f6bb4cc99c9d1f08d2876afe27826ec5725",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832243,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1709,
+        "mtimeNs": 1791464203267891057
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/17_Complete job.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/17_Complete job.txt",
+      "bytes": 424,
+      "sha256": "8e92be8808a377ca760a8b70767ca6a761eb37277a2a853ec4229f63a1d66760",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832244,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 424,
+        "mtimeNs": 1791464203267961599
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/1_Set up job.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/1_Set up job.txt",
+      "bytes": 2324,
+      "sha256": "0ecbfbf87488f9e175a5a65039c3135b233804b550d29169ed66a8e8c1a7bde2",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832235,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 2324,
+        "mtimeNs": 1791464203266439766
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/2_Run actions_checkout@v4.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/2_Run actions_checkout@v4.txt",
+      "bytes": 5723,
+      "sha256": "82ac1cc27ede61926ba6d2169606ce762ebb3a1ecae8145712ee3406875c2ba9",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832236,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 5723,
+        "mtimeNs": 1791464203266551682
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/3_Run actions_setup-node@v4.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/3_Run actions_setup-node@v4.txt",
+      "bytes": 1144,
+      "sha256": "ebdf1640d48551aff875ae000203fdedc4abd0ada26b638a74d5fb7c04efcc10",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832237,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1144,
+        "mtimeNs": 1791464203266637516
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/4_Run actions_setup-dotnet@v4.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/4_Run actions_setup-dotnet@v4.txt",
+      "bytes": 1053,
+      "sha256": "517a7b62246e640fdf1c74ee11535f279967acdd750d6e4892109f434fb26545",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832238,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1053,
+        "mtimeNs": 1791464203266715599
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/5_Run npm ci.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/5_Run npm ci.txt",
+      "bytes": 1531,
+      "sha256": "22115269f78d15bfa20455bd77cefb9ddba89b7374cba8c9375fc94eda4daeef",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832239,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1531,
+        "mtimeNs": 1791464203266788099
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/6_Run dotnet tool restore.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/6_Run dotnet tool restore.txt",
+      "bytes": 906,
+      "sha256": "6b94d165a151d89162436f10dfdb93435adc2817de112dc9aba7faf13d2daa65",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832240,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 906,
+        "mtimeNs": 1791464203266865016
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/7_Run verification.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/7_Run verification.txt",
+      "bytes": 1640233,
+      "sha256": "df763e6d9e002ab8eb65e95974e4405b6bf10b5a2d67a925461fc58bd7cf16a0",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832241,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1640233,
+        "mtimeNs": 1791464203267697515
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/8_Upload verify logs on failure.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/8_Upload verify logs on failure.txt",
+      "bytes": 2057,
+      "sha256": "72ce1d797eba2a20cae8d0f057d09ff8870ea4420d2a3f4c0ef42d8fca008cb0",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832242,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 2057,
+        "mtimeNs": 1791464203267812349
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs/check/system.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs/check/system.txt",
+      "bytes": 564,
+      "sha256": "d128f53ee2bcbefcbb96a5904bd7971d6649d3255b6c18f6a08c983e4a5c4196",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832234,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 564,
+        "mtimeNs": 1791464203266346224
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/job-logs.zip",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/job-logs.zip",
+      "bytes": 355653,
+      "sha256": "d3f02f52a6bcd21e1b1e3ad8f2d4215e37df9bf571795994835b7ff881263465",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158825793,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 355653,
+        "mtimeNs": 1791464154950955527
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/jobs-initial.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/jobs-initial.json",
+      "bytes": 2470,
+      "sha256": "cab579ee20bb5b4a7e5278b694ccff3c9ad22efda031fa6547fd91325c8183e3",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158761245,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 2470,
+        "mtimeNs": 1791463772210866313
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/jobs.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/jobs.json",
+      "bytes": 2838,
+      "sha256": "3ff26d2338a487d72d534f2a875b5bdad7b6d0dae031ecf4ecb19488f0b2e2d3",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158825799,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 2838,
+        "mtimeNs": 1791464152418164873
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/receipt.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/receipt.json",
+      "bytes": 13111,
+      "sha256": "e49670f44fce265aea43abcb7b5d09a03efbd55ee8e7981171ef4d064509da08",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852411,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 13111,
+        "mtimeNs": 1791464515846471080
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/receipt.txt",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/receipt.txt",
+      "bytes": 5149,
+      "sha256": "995b59b6140a50dfe2a0f8e3e9f3336d26c6683bdb6965d65c07bda863967865",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852506,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 5149,
+        "mtimeNs": 1791464568025079085
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/remote-source-commit.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/remote-source-commit.json",
+      "bytes": 1104,
+      "sha256": "8ec189dfbf4a0636f46defd95bd3937b96f2c3cc67111a423b387de56e695d84",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158761246,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1104,
+        "mtimeNs": 1791463771087960185
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/run-initial.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/run-initial.json",
+      "bytes": 11307,
+      "sha256": "77ca40de816342c903916521f76f2cc3f1ea6f1516f1453cf636f1fd17b11ea9",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158760774,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 11307,
+        "mtimeNs": 1791463770113500471
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/run.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/run.json",
+      "bytes": 11310,
+      "sha256": "d37ab0a1b3c75e56be7a0368f86c8d1e64fde6b756b9b4e381186e799f679735",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158826131,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 11310,
+        "mtimeNs": 1791464153295391942
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/unit-cost-analysis.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/unit-cost-analysis.json",
+      "bytes": 1620902,
+      "sha256": "8005626fdc9184c48b84c5cf5026956d3e6d95c0d77745a18213c92497af3e43",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852410,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 1620902,
+        "mtimeNs": 1791464515840933123
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs/2026-10-08T12-49-11-872Z/build.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs/2026-10-08T12-49-11-872Z/build.log",
+      "bytes": 990,
+      "sha256": "edaaf3c72cf6e7b3c09ba7199f5f7a73aa9757e69187bd6b88ba5f8d9baffee9",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832249,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 990,
+        "mtimeNs": 1791464203271569806
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs/2026-10-08T12-49-11-872Z/check.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs/2026-10-08T12-49-11-872Z/check.log",
+      "bytes": 169851,
+      "sha256": "80e0d7758f52408a132c45800464a02a1b50e83c42ff9b85db69dcce99d72cab",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832247,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 169851,
+        "mtimeNs": 1791464203271380639
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs/2026-10-08T12-49-11-872Z/format-check.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs/2026-10-08T12-49-11-872Z/format-check.log",
+      "bytes": 132,
+      "sha256": "803ab39012879c19d01477e0f36107bf62f4ad2a7d2733d42a33b8c407057b0d",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832248,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 132,
+        "mtimeNs": 1791464203271489223
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs/2026-10-08T12-49-11-872Z/unit.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs/2026-10-08T12-49-11-872Z/unit.log",
+      "bytes": 3937937,
+      "sha256": "f8c9a77c24e393e299efa7243fbc4ffe9e79b605c7b88d76b59b8e03a19597db",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832250,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 3937937,
+        "mtimeNs": 1791464203273310431
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs/latest/build.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs/latest/build.log",
+      "bytes": 990,
+      "sha256": "edaaf3c72cf6e7b3c09ba7199f5f7a73aa9757e69187bd6b88ba5f8d9baffee9",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832252,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 990,
+        "mtimeNs": 1791464203273891014
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs/latest/check.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs/latest/check.log",
+      "bytes": 169851,
+      "sha256": "80e0d7758f52408a132c45800464a02a1b50e83c42ff9b85db69dcce99d72cab",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832253,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 169851,
+        "mtimeNs": 1791464203274048472
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs/latest/format-check.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs/latest/format-check.log",
+      "bytes": 132,
+      "sha256": "803ab39012879c19d01477e0f36107bf62f4ad2a7d2733d42a33b8c407057b0d",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832254,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 132,
+        "mtimeNs": 1791464203274152347
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs/latest/unit.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs/latest/unit.log",
+      "bytes": 3937937,
+      "sha256": "f8c9a77c24e393e299efa7243fbc4ffe9e79b605c7b88d76b59b8e03a19597db",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158832255,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 3937937,
+        "mtimeNs": 1791464203275962638
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-logs.zip",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-logs.zip",
+      "bytes": 733142,
+      "sha256": "aa7b88e6b257e87e1cddbd16d1abcacb72fed76866478c7537e67ba462beab91",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158831391,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 733142,
+        "mtimeNs": 1791464189041190967
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/verify-pinned.mjs",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/verify-pinned.mjs",
+      "bytes": 12660,
+      "sha256": "c19ac0a598ed05d29ac29f1ea7ed7e2feddca69bf45694edd311264f44004b23",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158851490,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 12660,
+        "mtimeNs": 1791464392142176670
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/source-inventory.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/source-inventory.json",
+      "bytes": 10277,
+      "sha256": "28951a8e5aca8a02ff0b4f1a5474e687d85a37f78b7da653589c596f1113582c",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852543,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 10277,
+        "mtimeNs": 1791464595821983966
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/seal.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/seal.json",
+      "bytes": 668,
+      "sha256": "7cc34b947593a78fcd0d785d14b0f79257d8b361e8d19eafdaa67a44a999b9a8",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852544,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 668,
+        "mtimeNs": 1791464595822316977
+      },
+      "sourceStableWhileCopied": true
+    },
+    {
+      "path": "ci/SHA256SUMS",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d0c8ab2e604-37779568695/SHA256SUMS",
+      "bytes": 3424,
+      "sha256": "b0e5d57d80cb6a2b54deb87dbce5c1e7cec3ebacc52946763f1411a134dc2a52",
+      "sourceIdentity": {
+        "dev": 16777231,
+        "ino": 158852545,
+        "uid": 501,
+        "mode": 33188,
+        "bytes": 3424,
+        "mtimeNs": 1791464595828846005
+      },
+      "sourceStableWhileCopied": true
+    }
+  ],
+  "inputCommit": "8d0c8ab2e6049a14944bdd2c2dcc5464c29d2aa4",
+  "inputTree": "a0fd75c9676ff12f8a6c5d75d007c9bd1dd7d8ea",
+  "inputDigest": "fab558de8ae6ebabe44dea481dc81ee3600f472fc483bf1c003341cd2904e1c7",
+  "candidateOverall": "FAILED: unified pending; integration cutoff, distribution pending, harness actual assertion failure",
+  "localE2EAndPackage": "passed only this exact8d0 input; cannot overwrite failed pipeline",
+  "exactCI": {
+    "runId": 37779568695,
+    "jobId": 113318949624,
+    "conclusion": "failure, pending-proof only"
+  },
+  "followupR20": "finite direct native-JS red/green on dirty source; broader suites/new clean full pending",
+  "sixPhysical016": "not-run",
+  "resourceScope": "only exact logged owned processes; filesystem/mount unknown; no resource action by copier"
+}
