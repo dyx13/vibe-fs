@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: WHAT[verification-system-016] complete selected Git blobs do not depend on a bounded child stdout buffer
+ok 1 - WHAT[verification-system-016] complete selected Git blobs do not depend on a bounded child stdout buffer
+  ---
+  duration_ms: 186.358542
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] a failed Git batch preserves its cause and reclaims only its owned source output
+ok 2 - WHAT[verification-system-016] a failed Git batch preserves its cause and reclaims only its owned source output
+  ---
+  duration_ms: 110.683917
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] a failed Git batch and failed close preserve both causes and reclaims only its owned source output
+ok 3 - WHAT[verification-system-016] a failed Git batch and failed close preserve both causes and reclaims only its owned source output
+  ---
+  duration_ms: 111.990375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] a selected Git tree preserves complete raw source bytes and its own corpus inventory despite later workspace and index edits
+ok 4 - WHAT[verification-system-016] a selected Git tree preserves complete raw source bytes and its own corpus inventory despite later workspace and index edits
+  ---
+  duration_ms: 226.178958
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] sha1 source candidate identity is independent of location and binds executable mode
+ok 5 - WHAT[verification-system-016] sha1 source candidate identity is independent of location and binds executable mode
+  ---
+  duration_ms: 453.658833
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] sha256 source candidate identity is independent of location and binds executable mode
+ok 6 - WHAT[verification-system-016] sha256 source candidate identity is independent of location and binds executable mode
+  ---
+  duration_ms: 421.461542
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] source preparation ignores replacement refs and inherited Git repository redirection
+ok 7 - WHAT[verification-system-016] source preparation ignores replacement refs and inherited Git repository redirection
+  ---
+  duration_ms: 225.635083
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] a tree topology that cannot be faithfully materialized fails and reclaims its partial source root
+ok 8 - WHAT[verification-system-016] a tree topology that cannot be faithfully materialized fails and reclaims its partial source root
+  ---
+  duration_ms: 119.089875
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] source preparation rejects unsupported Git entry 120000 without publishing a candidate
+ok 9 - WHAT[verification-system-016] source preparation rejects unsupported Git entry 120000 without publishing a candidate
+  ---
+  duration_ms: 115.578125
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] source preparation rejects unsupported Git entry 160000 without publishing a candidate
+ok 10 - WHAT[verification-system-016] source preparation rejects unsupported Git entry 160000 without publishing a candidate
+  ---
+  duration_ms: 128.298208
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] missing selected blobs fail source preparation without falling back to working files
+ok 11 - WHAT[verification-system-016] missing selected blobs fail source preparation without falling back to working files
+  ---
+  duration_ms: 130.514291
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] source preparation rejects repositories that may implicitly fetch promised objects
+ok 12 - WHAT[verification-system-016] source preparation rejects repositories that may implicitly fetch promised objects
+  ---
+  duration_ms: 77.97225
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2377.410541

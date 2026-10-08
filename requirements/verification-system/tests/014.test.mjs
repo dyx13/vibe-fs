@@ -41,6 +41,7 @@ import { SOLE_ENTRY } from './e2e/support/watchdog-feed-scan.mjs'
 import { releaseTest } from './support/tier-gate.mjs'
 import {
   CUSTOMS,
+  publicToolResults,
   HUMANROOT_MANAGER_LOOP_CANARY_PROMPT,
   assertHumanRootManagerLoop,
   retireCompanionForDeletion,
@@ -239,6 +240,127 @@ test('WHAT[verification-system-014] Long Stroke strictly consumes current produc
   }
 })
 
+test('WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities', async () => {
+  const language = await import('../../../dist/Participant/Provider/LanguageSurface.js')
+  const strength = await import('../../../dist/Strength/Surface.js')
+  const source = readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8')
+  const compiled = compileScenario(source, { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  const tools = strength.exactReadonlyHostToolMap.filter((item) => item.allowed).map((item) => ({
+    type: 'function', function: { name: item.tool, parameters: { type: 'object' } },
+  }))
+  assert.deepEqual(tools.map((tool) => tool.function.name), ['js-predictor'])
+  const prompt = language.replicaConstraintFor('en')
+  const body = (user, names = tools) => ({
+    model: 'test-model-b', messages: [{ role: 'user', content: user }], tools: names,
+  })
+  for (const sessionId of ['ses_readonly_normal', 'ses_readonly_recovery']) {
+    const runtime = new ScenarioRuntime(compiled.scenario)
+    const selection = runtime.select(body(prompt), { sessionId })
+    assert.equal(selection.entry?.id, 'strength-readonly-replica.0',
+      'production readonly instruction and exact js-predictor capability must select one declared turn')
+    assert.equal(selection.entry.lane, undefined)
+    assert.equal(selection.entry.respond.tool, 'js-predictor')
+    assert.equal(selection.entry.respond.args.program,
+      "class Js extends JsProgram { async run() { const file = await this.file('large_probe.txt'); return file.text('^', '$'); } }")
+    assert.equal(selection.entry.respond.args.estimated_readonly_rounds, 0)
+  }
+  for (const [user, names] of [
+    ['STRENGTH_HOST_CANARY: inspect README.md through the real nested Replica path.', tools],
+    ['STRENGTH_RECOVERY: resume the readonly delegation after a provider failure.', tools],
+    ['Continue.', tools],
+    ['Undeclared readonly instruction', tools],
+    [prompt, [{ function: { name: 'read' } }]],
+    [prompt, [...tools, { function: { name: 'read' } }]],
+  ]) {
+    const runtime = new ScenarioRuntime(compiled.scenario)
+    const selection = runtime.select(body(user, names), { sessionId: 'ses_readonly_negative' })
+    assert.ok(selection.unmatched, 'old prompts and native-read capability must remain strict mismatches')
+    assert.equal(selection.entry, undefined)
+  }
+  const request = (text, step, names) => ({
+    messages: [{ role: 'user', content: '# ' + text.trim().replace(/\n/g, '\n# ') },
+      ...Array.from({ length: step }, () => ({ role: 'assistant', content: 'completed reply' }))],
+    tools: names.map((name) => ({ function: { name } })),
+  })
+  const bindings = new Map([['manager', 'ses_manager']])
+  const context = { sessionId: 'ses_manager' }
+  for (const [path, step, names, expected] of [
+    ['runtime/provider-retry', 0, [], 'continue.0'],
+    ['runtime/background-join', 1, ['fork', 'resume', 'join', 'horizon', 'assume', 'suicide'], 'manager-join-guard.0'],
+    ['runtime/manager-work', 0, ['join', 'assume', 'suicide'], 'manager-current-action.0'],
+  ]) {
+    const text = language.readText('en', path)
+    assert.equal(resolveEntry(request(text, step, names), compiled.scenario.entries, bindings, context).matched?.id,
+      expected, 'current production resource must keep its existing strict declaration: ' + path)
+  }
+  const assess = language.substitute(language.readText('en', 'runtime/manager-assess'), { ordinal: '2' })
+  assert.equal(resolveEntry(request(assess, 0, ['fork', 'resume', 'join', 'horizon', 'review', 'suicide']),
+    compiled.scenario.entries, bindings, context).matched?.id, 'manager-reopened-loop.0')
+  assert.deepEqual(compiled.scenario.faults.filter((fault) => fault.kind === 'provider-error' && fault.status === 400)
+    .map((fault) => fault.entryId), ['manager-loop.2', 'continue.0'])
+})
+
+test('WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries', async () => {
+  const language = await import('../../../dist/Participant/Provider/LanguageSurface.js')
+  const source = readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8')
+  const prompt = language.replicaConstraintFor('en')
+  const createRuntime = () => {
+    const compiled = compileScenario(source, { name: 'long-stroke.toml' })
+    assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+    return new ScenarioRuntime(compiled.scenario)
+  }
+  const body = (history = []) => ({
+    model: 'test-model-b',
+    messages: [...history, { role: 'user', content: prompt }],
+    tools: [{ type: 'function', function: { name: 'js-predictor' } }],
+  })
+  const call = (name = 'js-predictor') => ({
+    role: 'assistant',
+    tool_calls: [{ id: 'probe-call', type: 'function', function: { name, arguments: '{}' } }],
+  })
+  const result = (content = 'LARGE_READ_PROBE_MARKER actual file bytes', id = 'probe-call') => ({
+    role: 'tool', tool_call_id: id, content,
+  })
+  const consume = (runtime, request, context) => {
+    const selection = runtime.select(request, context)
+    assert.equal(selection.entry?.id, 'strength-readonly-replica.0')
+    runtime.consume(request, selection, context)
+    return selection.entry.respond
+  }
+  const runtime = createRuntime()
+  assert.equal(runtime.select(body(), { sessionId: 'ses_readonly_first' }).entry?.id,
+    'strength-readonly-replica.0', 'the old scenario must fail at the production instruction boundary')
+  await CUSTOMS.bindStrengthReplicaResponses({ provider: { _scenario: runtime } })
+  for (const sessionId of ['ses_readonly_first', 'ses_readonly_second']) {
+    const context = { sessionId }
+    const initial = body()
+    for (let delivery = 0; delivery < 2; delivery += 1) {
+      assert.equal(consume(runtime, initial, context).tool, 'js-predictor',
+        'identical deliveries without a completed probe must always request the real read')
+    }
+    const complete = body([...initial.messages, call(), result()])
+    for (let delivery = 0; delivery < 2; delivery += 1) {
+      assert.deepEqual(consume(runtime, complete, context), {
+        type: 'text', text: 'Read-only survey complete; returning the gathered evidence.',
+      }, 'a completed probe selects the same plain-text early end on every delivery')
+    }
+  }
+  for (const history of [
+    [call()],
+    [result()],
+    [call('js-manager'), result()],
+    [call(), result('LARGE_READ_PROBE_MARKER orphan', 'unrelated-call')],
+    [call(), result('ordinary result without probe evidence')],
+    [{ role: 'user', content: 'LARGE_READ_PROBE_MARKER is merely mentioned' }],
+  ]) {
+    const negative = createRuntime()
+    await CUSTOMS.bindStrengthReplicaResponses({ provider: { _scenario: negative } })
+    assert.equal(consume(negative, body(history), { sessionId: 'ses_readonly_negative' }).tool, 'js-predictor',
+      'unfinished, other-tool, orphan, and prose-only evidence must never end the replica')
+  }
+})
+
 const STRENGTH_HOST_CANARY_PROMPT =
   'STRENGTH_HOST_CANARY: inspect README.md through the real nested Replica path.'
 
@@ -262,13 +384,23 @@ const runPreFlowPrompt = async (scenario, lane, prompt, agent) => {
 
 const preFlowCanaries = async (scenario) => {
   await CUSTOMS.bindManagerLoopSequence(scenario)
+  await CUSTOMS.bindStrengthReplicaResponses(scenario)
   await runPreFlowPrompt(scenario, 'strength-canary-owner', STRENGTH_HOST_CANARY_PROMPT, 'manager')
 
   assert.equal(
-    scenario.provider.matchCount('strength-canary-replica.0'),
-    1,
+    scenario.provider.matchCount('strength-readonly-replica.0'),
+    2,
     `Strength dry-run must physically start its Replica without blocking the owner. Host stderr tail:\n${scenario.host.stderrLog.slice(-4000)}`,
   )
+
+  const replicaRequests = scenario.provider.requests.filter((request) =>
+    (request.tools ?? []).some((tool) => (tool?.function?.name ?? tool?.name) === 'js-predictor'))
+  assert.equal(replicaRequests.length, 2, 'the estimate-2 canary must admit exactly two replica requests')
+  assert.deepEqual(publicToolResults([replicaRequests[0]], 'js-predictor'), [],
+    'the unique bootstrap request must precede its own read result')
+  const completedProbe = publicToolResults([replicaRequests[1]], 'js-predictor')
+  assert.equal(completedProbe.length, 1, 'the second request must carry exactly one completed probe exchange')
+  assert.match(completedProbe[0], /LARGE_READ_PROBE_MARKER/)
 
   const humanrootCreated = await scenario.client.createSession({ agent: 'manager' })
   const humanrootSessionId = getSessionId(humanrootCreated)

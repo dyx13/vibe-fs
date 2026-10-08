@@ -1,0 +1,25 @@
+﻿2026-10-08T06:10:55.8087867Z ##[group]Run actions/upload-artifact@v4
+2026-10-08T06:10:55.8088171Z with:
+2026-10-08T06:10:55.8088378Z   name: verify-logs
+2026-10-08T06:10:55.8088613Z   path: .fable-build/verify-logs/
+2026-10-08T06:10:55.8088880Z   if-no-files-found: warn
+2026-10-08T06:10:55.8089124Z   compression-level: 6
+2026-10-08T06:10:55.8089349Z   overwrite: false
+2026-10-08T06:10:55.8089568Z   include-hidden-files: false
+2026-10-08T06:10:55.8089806Z env:
+2026-10-08T06:10:55.8090018Z   DOTNET_ROOT: /usr/share/dotnet
+2026-10-08T06:10:55.8090272Z ##[endgroup]
+2026-10-08T06:10:55.9728221Z (node:21749) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-08T06:10:55.9729041Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-08T06:10:55.9800077Z With the provided path, there will be 8 files uploaded
+2026-10-08T06:10:55.9805491Z Artifact name is valid!
+2026-10-08T06:10:55.9806105Z Root directory input is valid!
+2026-10-08T06:10:56.3317265Z Beginning upload of artifact content to blob storage
+2026-10-08T06:10:56.4285037Z (node:21749) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-08T06:10:56.9481567Z Uploaded bytes 544312
+2026-10-08T06:10:57.0114133Z Finished uploading artifact content to blob storage!
+2026-10-08T06:10:57.0115384Z SHA256 digest of uploaded artifact zip is 1cf0d0b4af99de9d0b399a878d17a690f9ed7c35fdc3874a49fc0255fe9e7b88
+2026-10-08T06:10:57.0117080Z Finalizing artifact upload
+2026-10-08T06:10:57.2693181Z Artifact verify-logs.zip successfully finalized. Artifact ID 11532240508
+2026-10-08T06:10:57.2694616Z Artifact verify-logs has been successfully uploaded! Final size is 544312 bytes. Artifact ID is 11532240508
+2026-10-08T06:10:57.2700679Z Artifact download URL: https://github.com/dyx13/vibe-fs/actions/runs/37735575373/artifacts/11532240508

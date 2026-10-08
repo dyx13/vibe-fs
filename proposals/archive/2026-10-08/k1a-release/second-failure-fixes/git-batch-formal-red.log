@@ -1,0 +1,37 @@
+TAP version 13
+# Subtest: WHAT[verification-system-016] complete selected Git blobs do not depend on a bounded child stdout buffer
+not ok 1 - WHAT[verification-system-016] complete selected Git blobs do not depend on a bounded child stdout buffer
+  ---
+  duration_ms: 118.338416
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs:557:1'
+  failureType: 'testCodeFailure'
+  error: 'spawnSync git ENOBUFS'
+  code: 'ENOBUFS'
+  stack: |-
+    Object.spawnSync (node:internal/child_process:1120:20)
+    spawnSync (node:child_process:902:24)
+    execFileSync (node:child_process:945:15)
+    file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs:569:7
+    Object.apply (node:internal/test_runner/mock/mock:765:20)
+    git (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:13:10)
+    Module.prepareGitSourceCandidate (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:64:17)
+    prepareSource (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs:74:113)
+    async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs:573:17)
+    async Test.run (node:internal/test_runner/test:1054:7)
+  ...
+# Subtest: WHAT[verification-system-016] a failed Git batch preserves its cause and reclaims only its owned source output
+ok 2 - WHAT[verification-system-016] a failed Git batch preserves its cause and reclaims only its owned source output
+  ---
+  duration_ms: 98.900166
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 287.924583

@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-10-08T06:07:56.820Z",
+  "commit": "222c3b29a6e7f599e648542a761b4ec562962917",
+  "digest": "ace2adec0299705b92949d98526c360edf7e651d637206ec1ef71d94542521a5",
+  "frozenDigest": "ace2adec0299705b92949d98526c360edf7e651d637206ec1ef71d94542521a5",
+  "equal": true,
+  "generation": 325,
+  "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+  "generatedInputDigest": "7e10d03b5cf03dbce01c0621dcf46d53704d364b229dfc63c77646ce05002c45",
+  "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+}

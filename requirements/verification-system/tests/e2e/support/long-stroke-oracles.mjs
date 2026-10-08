@@ -1058,6 +1058,25 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
 const DELEGATE_PREDICTOR_MODEL = 'test/test-model-b';
 const LARGE_READ_PROBE_MARKER = 'LARGE_READ_PROBE_MARKER';
 
+export function bindStrengthReplicaResponses(scenario) {
+  const runtime = scenario.provider?._scenario;
+  const entry = runtime?.scenario?.entries.find((item) => item.id === 'strength-readonly-replica.0');
+  assert.ok(entry, 'long-stroke: canonical readonly replica declaration is required');
+  const readResponse = entry.respond;
+  assert.equal(readResponse.tool, 'js-predictor');
+  const consume = runtime.consume;
+  runtime.consume = (body, selection, context) => {
+    if (selection?.entry?.id === entry.id) {
+      const complete = publicToolResults([body], 'js-predictor')
+        .some((result) => result.includes(LARGE_READ_PROBE_MARKER));
+      selection.entry.respond = complete
+        ? { type: 'text', text: 'Read-only survey complete; returning the gathered evidence.' }
+        : readResponse;
+    }
+    consume.call(runtime, body, selection, context);
+  };
+}
+
 const payloadReplicaSessionId = (payload) =>
   payload?.replicaSessionId ?? payload?.replica_session_id ?? payload?.ReplicaSessionId ?? null;
 
@@ -1183,16 +1202,9 @@ export async function bindDelegationReplicas(scenario, ctx) {
         DELEGATE_PREDICTOR_MODEL,
         `DELEGATE 9.2: replica ${id} must run exactly on the configured Predictor target (saw ${requestModel(request)})`,
       );
- // Assert replica provider request carries only allowed readonly tools
-      if (Array.isArray(request?.tools) && request.tools.length > 0) {
-        const toolNames = request.tools.map((t) => t?.function?.name ?? t?.name).filter(Boolean);
-        const disallowed = ['write', 'edit', 'run', 'fork', 'join', 'mv', 'rm', 'bash', 'js-engineer', 'js-devops', 'js-manager'];
-        for (const disallowedTool of disallowed) {
-          assert.ok(!toolNames.includes(disallowedTool), `replica ${id} must never carry ${disallowedTool}`);
-        }
-        const allowedSet = new Set(['read', 'glob', 'grep', 'js-predictor']);
-        assert.ok(toolNames.every((t) => allowedSet.has(t)), `replica ${id} tools must be subset of {read, glob, grep, js-predictor}, got: ${toolNames.join(', ')}`);
-      }
+      const toolNames = (request?.tools ?? []).map((tool) => tool?.function?.name ?? tool?.name).filter(Boolean);
+      assert.deepEqual(toolNames, ['js-predictor'],
+        'DELEGATE 14.5: replica ' + id + ' must carry exactly the production readonly JS tool');
     }
   }
 
@@ -1249,6 +1261,13 @@ export async function assertDelegationMaterialOnWire(scenario) {
  // call, injected continuation, successor); the recovery owner four (investigation estimate
  // call, faulted delivery, retried delivery, successor). An unbounded
  // redelivery loop after injection fails this equality.
+  const earlyEndOwners = [...ownerSessions].filter((ownerId) => requests.some((request) =>
+    (request?.sessionID ?? request?.sessionId) === ownerId
+      && JSON.stringify(request?.messages ?? []).includes('Read-only survey complete; returning the gathered evidence.')));
+  assert.equal(earlyEndOwners.length, 1,
+    'DELEGATE 14.5: exactly the estimate-2 owner must receive the replica plain-text early end');
+  assert.equal(chatRequestsOfSession(requests, earlyEndOwners[0]).length, 3,
+    'DELEGATE 14.5: early-end evidence belongs to the normal owner, not the fault-recovery owner');
   const ownerChatCounts = [...ownerSessions]
     .map((ownerId) => chatRequestsOfSession(requests, ownerId).length)
     .sort((left, right) => left - right);
@@ -1844,6 +1863,7 @@ export async function assertDelegationPurposeOnWire(scenario) {
 export const CUSTOMS = {
   holdChildC1UntilLabor,
   bindManagerLoopSequence,
+  bindStrengthReplicaResponses,
   oracleLongStroke,
   bindDelegationReplicas,
   assertDelegationMaterialOnWire,

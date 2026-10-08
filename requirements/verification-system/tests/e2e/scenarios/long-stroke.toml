@@ -174,12 +174,11 @@ must = [
   "engineer-resolve.0",
   # orch.2 = join harvest text after Published (orch-unhappy Stroke 6). EXEC-016
   "orch.2",
-  # DELEGATE 14.5: the four delegation turns must be physically reached. The
-  # canary owner/replica pair runs in the preflow; the recovery pair in-flow.
+  # Both owner decisions must run. Production uses one canonical readonly
+  # instruction for their replicas; durable/wire oracles retain both cases.
   "strength-canary-owner",
-  "strength-canary-replica",
   "strength-recovery-owner",
-  "strength-recovery-replica",
+  "strength-readonly-replica",
 ]
 
 flow = [
@@ -1171,7 +1170,7 @@ optional = true
 #
 # 腿1 正常完成 + 腿2 提前结束 + 腿3 自然截断：preflow 的 strength-canary-owner
 # 由 014.test.mjs preFlowCanaries 创建驱动，其同伴 bootstrap 交付数由该文件
-# matchCount('strength-canary-replica.0') === 1 钉住。budget=2：同伴第 1 轮读
+# 两个真实 provider 请求与首轮无 probe / 次轮一份完整 probe 交换钉住。budget=2：同伴第 1 轮读
 # large_probe.txt（工具既有截断由宿主掌握；帧只保存实际返回字节，marker 在头部，
 # 截断也存活），第 2 轮以纯文本提前结束；材料经 Prepared → Promoted 回传 owner
 # 的后续请求。
@@ -1182,9 +1181,11 @@ optional = true
 #
 # internal=true 的回合（两个 owner 的提示词由测试代码组装、同伴的镜像提示由生产
 # 组装）不参加 dead-edge 检查，也不进 expectSatisfied——其交付由 waitFact 事实
-# 屏障、preflow matchCount 与自定义 oracle 从持久事实与公开 wire 证明。owner 与
-# 同伴条目共享同一 user 前缀（同伴镜像的最后一条 user 消息就是 owner 提示词），
-# 靠 tools 门禁区分：owner 要求 js-manager，同伴禁止之。
+# 屏障、preflow 与自定义 oracle 从持久事实与公开 wire 证明。生产为两个同伴追加
+# 同一 readonly-investigation user 指令，工具面均为 js-predictor；因此只声明一个
+# 严格匹配，不能按 owner 旧提示词或两个相同 matcher 区分。完成的 js-predictor
+# probe 交换才令响应变为纯文本提前结束；未完成、孤立 marker 与其他工具均不算。
+# 两种预算、两个 owner、恢复故障、真实材料与交付数仍由原物理 oracle 分别证明。
 #
 # owner 角色是 manager（014 preFlow 与 flow 的 createSession 均以 manager 建会话）：
 # 委托 capture 要求 root owner work，而顶层 manager API 会话是本世界唯一的
@@ -1238,24 +1239,19 @@ tools = ["js-manager"]
   [[turn.step]]
   respond = { type = "text", text = "Companion survey received; the publish can proceed." }
 
-# The companion for that decision. Its outbound body is the frozen owner
-# mirror, whose last user message is the owner prompt — so the bootstrap
-# delivery is step 0, exactly the delivery 014.test.mjs pins.
+# Both decisions use the production readonly resource and exact JS tool.
+# The transform appends a fresh closing user turn after completed batches,
+# so each request has semantic step 0. The response binder reads only this
+# request's completed probe exchange, never delivery counts or owner prose.
 [[turn]]
-id = "strength-canary-replica"
+id = "strength-readonly-replica"
 internal = true
-user = "STRENGTH_HOST_CANARY: inspect README.md through the real nested Replica path."
-tools = ["read"]
-forbiddenTools = ["js-manager"]
+user = "Continue the current task's read-only investigation using only the available, permitted tools. Stop when the evidence is sufficient or the next step requires a change, a command, user clarification, a conclusion, or a consequential judgment. Do not invent work to keep calling tools. A self_note in the conversation is an earlier outlook for investigation, not a verified conclusion or permission to do more."
+tools = ["js-predictor"]
+forbiddenTools = ["read", "glob", "grep", "js-manager", "js-engineer", "js-devops", "write", "edit", "run", "fork", "join", "mv", "rm", "bash"]
 
   [[turn.step]]
-  respond = { type = "tool-call", tool = "read", args = { filePath = "large_probe.txt", estimated_readonly_rounds = 0 } }
-
-  # Second admitted round: the companion ends itself in prose (early end,
-  # WHAT[speculative-investigation-003]/[005]); the round was already counted
-  # at admission and the completed first batch is the material.
-  [[turn.step]]
-  respond = { type = "text", text = "Read-only survey complete; returning the gathered evidence." }
+  respond = { type = "tool-call", tool = "js-predictor", args = { program = "class Js extends JsProgram { async run() { const file = await this.file('large_probe.txt'); return file.text('^', '$'); } }", estimated_readonly_rounds = 0 } }
 
 [[turn]]
 id = "strength-recovery-owner-title"
@@ -1288,18 +1284,10 @@ tools = ["js-manager"]
   [[turn.step]]
   respond = { type = "text", text = "Recovered delegation consumed; continuing the road." }
 
-# The recovery decision's companion: estimated_readonly_rounds 1, so its bootstrap is the only
-# admitted round and the N+1 outbound request is refused at the transform gate
-# before any physical send — exactly one delivery of this entry.
-[[turn]]
-id = "strength-recovery-replica"
-internal = true
-user = "STRENGTH_RECOVERY: resume the readonly delegation after a provider failure."
-tools = ["read"]
-forbiddenTools = ["js-manager"]
-
-  [[turn.step]]
-  respond = { type = "tool-call", tool = "read", args = { filePath = "large_probe.txt", estimated_readonly_rounds = 0 } }
+# The recovery replica reaches the same readonly declaration. Its estimate-1
+# budget admits only the real read; N+1 is refused before any physical send.
+# The normal replica reaches the completed-probe early-end response. Exact
+# [1, 2] replica and [3, 4] owner request counts keep these cases distinct.
 
 # Candidate frames render into the owner's request before the target assistant
 # output (WHAT[speculative-investigation-008]) — a mid-conversation insertion
@@ -1321,8 +1309,8 @@ optional = true
 # round and completed batches append, so the seal should hold; optional so a
 # future ID-relocation change is admitted rather than fatal.
 [[epoch]]
-turn = "strength-canary-replica"
-step = 1
+turn = "strength-readonly-replica"
+step = 0
 reason = "prefix-probe"
 optional = true
 

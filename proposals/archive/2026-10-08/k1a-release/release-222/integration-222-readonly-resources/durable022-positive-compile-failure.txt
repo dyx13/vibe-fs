@@ -1,0 +1,58 @@
+✖ failing tests:
+
+test entry /Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/022.test.mjs
+test at /Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/tier-gate.mjs:26:12
+✖ WHAT[durable-events-022] each actual bounded locality compiles as one flat project and a reversed dependency is rejected (52312.576ms)
+  AssertionError [ERR_ASSERTION]: journal-outcome-contract locality must compile as one flat project
+  [37mFable 5.13.0: F# to JavaScript compiler
+  [39m[22m[37mMinimum @fable-org/fable-library-js version (when installed from npm): 2.5.1
+  [39m[22m[37m
+  Thanks to the contributor! @chkn
+  [39m[22m[37mStand with Ukraine! https://standwithukraine.com.ua/
+  
+  [39m[22m[37mParsing ../../../../var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj...
+  [39m[22m
+  Unhandled exception. System.AggregateException: One or more errors occurred. (In /Users/yuanxi/Workwork/vibe-fs:
+  dotnet msbuild "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj" /restore /t:ResolveAssemblyReferencesDesignTime,ResolveProjectReferencesDesignTime,ResolvePackageDependenciesDesignTime,FindReferenceAssembliesForReferences,_GenerateCompileDependencyCache,_ComputeNonExistentFileProperty,BeforeBuild,BeforeCompile,CoreCompile /p:Configuration=Debug /p:TargetFramework=net10.0 /p:DesignTimeBuild=True /p:SkipCompilerExecution=True /p:ProvideCommandLineArgs=True /p:RestoreUseStaticGraphEvaluation=False /p:RestoreLockedMode=false /p:RestorePackagesWithLockFile=false  /p:NuGetLockFilePath=Fable.lock /p:NonExistentFile="__NonExistentSubDir__/__NonExistentFile__" --getItem:FscCommandLineArgs --getItem:ProjectReference --getProperty:OutputType -warnAsMessage:NU1608 /p:FABLE_COMPILER=True /p:FABLE_COMPILER_5=True /p:FABLE_COMPILER_JAVASCRIPT=True
+  failed with
+  /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Directory.Build.props(7,3): warning MSB4011: "/Users/yuanxi/Workwork/vibe-fs/Directory.Build.props" cannot be imported again. It was already imported at "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Directory.Build.props (2,3)". This is most likely a build authoring error. This subsequent import will be ignored. [/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj]
+  /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Directory.Build.props(7,3): warning MSB4011: "/Users/yuanxi/Workwork/vibe-fs/Directory.Build.props" cannot be imported again. It was already imported at "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Directory.Build.props (2,3)". This is most likely a build authoring error. This subsequent import will be ignored. [/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj]
+  )
+   ---> System.Exception: In /Users/yuanxi/Workwork/vibe-fs:
+  dotnet msbuild "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj" /restore /t:ResolveAssemblyReferencesDesignTime,ResolveProjectReferencesDesignTime,ResolvePackageDependenciesDesignTime,FindReferenceAssembliesForReferences,_GenerateCompileDependencyCache,_ComputeNonExistentFileProperty,BeforeBuild,BeforeCompile,CoreCompile /p:Configuration=Debug /p:TargetFramework=net10.0 /p:DesignTimeBuild=True /p:SkipCompilerExecution=True /p:ProvideCommandLineArgs=True /p:RestoreUseStaticGraphEvaluation=False /p:RestoreLockedMode=false /p:RestorePackagesWithLockFile=false  /p:NuGetLockFilePath=Fable.lock /p:NonExistentFile="__NonExistentSubDir__/__NonExistentFile__" --getItem:FscCommandLineArgs --getItem:ProjectReference --getProperty:OutputType -warnAsMessage:NU1608 /p:FABLE_COMPILER=True /p:FABLE_COMPILER_5=True /p:FABLE_COMPILER_JAVASCRIPT=True
+  failed with
+  /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Directory.Build.props(7,3): warning MSB4011: "/Users/yuanxi/Workwork/vibe-fs/Directory.Build.props" cannot be imported again. It was already imported at "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Directory.Build.props (2,3)". This is most likely a build authoring error. This subsequent import will be ignored. [/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj]
+  /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Directory.Build.props(7,3): warning MSB4011: "/Users/yuanxi/Workwork/vibe-fs/Directory.Build.props" cannot be imported again. It was already imported at "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Directory.Build.props (2,3)". This is most likely a build authoring error. This subsequent import will be ignored. [/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-POg7AE/project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243/Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj]
+  
+     at Microsoft.FSharp.Core.PrintfModule.PrintFormatToStringThenFail@1447.Invoke(String message)
+     at Microsoft.FSharp.Core.PrintfModule.gprintf[a,TState,TResidue,TResult,TPrinter](FSharpFunc`2 envf, PrintfFormat`4 format) in /home/dev/Projects/fsharp/src/FSharp.Core/printf.fs:line 1397
+     at Fable.Compiler.MSBuildCrackerResolverModule.dotnet_msbuild_with_defines@38.MoveNext() in /home/runner/work/Fable/Fable/src/Fable.Compiler/MSBuildCrackerResolver.fs:line 70
+     --- End of inner exception stack trace ---
+     at Microsoft.FSharp.Control.AsyncResult`1.Commit() in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 453
+     at Microsoft.FSharp.Control.AsyncPrimitives.RunImmediate[a](CancellationToken cancellationToken, FSharpAsync`1 computation) in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 1158
+     at Microsoft.FSharp.Control.AsyncPrimitives.RunSynchronously[T](CancellationToken cancellationToken, FSharpAsync`1 computation, FSharpOption`1 timeout) in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 1164
+     at Microsoft.FSharp.Control.FSharpAsync.RunSynchronously[T](FSharpAsync`1 computation, FSharpOption`1 timeout, FSharpOption`1 cancellationToken) in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 1514
+     at Fable.Compiler.ProjectCracker.crackMainProject(ProjectCrackerResolver resolver, CrackerOptions opts) in /home/runner/work/Fable/Fable/src/Fable.Compiler/ProjectCracker.fs:line 561
+     at Fable.Compiler.ProjectCracker.getCrackedProjectsFromMainFsproj(ProjectCrackerResolver resolver, CrackerOptions opts) in /home/runner/work/Fable/Fable/src/Fable.Compiler/ProjectCracker.fs:line 599
+     at Fable.Compiler.ProjectCracker.getCrackedProjects(ProjectCrackerResolver resolver, CrackerOptions opts) in /home/runner/work/Fable/Fable/src/Fable.Compiler/ProjectCracker.fs:line 619
+     at Fable.Compiler.ProjectCracker.retry@630.Invoke(Unit unitVar0) in /home/runner/work/Fable/Fable/src/Fable.Compiler/ProjectCracker.fs:line 631
+     at Fable.Compiler.ProjectCracker.getFullProjectOpts(ProjectCrackerResolver resolver, CrackerOptions opts) in /home/runner/work/Fable/Fable/src/Fable.Compiler/ProjectCracker.fs:line 946
+     at Fable.Compiler.Util.Performance.measure[a](FSharpFunc`2 f) in /home/runner/work/Fable/Fable/src/Fable.Compiler/Util.fs:line 854
+     at Fable.Cli.Main.ProjectCracked.Init(CliArgs cliArgs, FSharpOption`1 evaluateOnly) in /home/runner/work/Fable/Fable/src/Fable.Cli/Main.fs:line 429
+     at Fable.Cli.Main.compilationCycle@1341.Invoke(Unit unitVar) in /home/runner/work/Fable/Fable/src/Fable.Cli/Main.fs:line 1351
+     at Microsoft.FSharp.Control.AsyncPrimitives.CallThenInvoke[T,TResult](AsyncActivation`1 ctxt, TResult result1, FSharpFunc`2 part2) in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 509
+     at Microsoft.FSharp.Control.Trampoline.Execute(FSharpFunc`2 firstAction) in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 112
+  --- End of stack trace from previous location ---
+     at Microsoft.FSharp.Control.AsyncResult`1.Commit() in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 453
+     at Microsoft.FSharp.Control.AsyncPrimitives.QueueAsyncAndWaitForResultSynchronously[a](CancellationToken token, FSharpAsync`1 computation, FSharpOption`1 timeout) in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 1138
+     at Microsoft.FSharp.Control.AsyncPrimitives.RunSynchronously[T](CancellationToken cancellationToken, FSharpAsync`1 computation, FSharpOption`1 timeout) in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 1165
+     at Microsoft.FSharp.Control.FSharpAsync.RunSynchronously[T](FSharpAsync`1 computation, FSharpOption`1 timeout, FSharpOption`1 cancellationToken) in /home/dev/Projects/fsharp/src/FSharp.Core/async.fs:line 1514
+     at Fable.Cli.Entry.Runner.Run@305-4.Invoke(Unit _arg5) in /home/runner/work/Fable/Fable/src/Fable.Cli/Entry.fs:line 404
+     at Fable.Cli.Entry.main@545-2.Invoke(Tuple`2 _arg2) in /home/runner/work/Fable/Fable/src/Fable.Cli/Entry.fs:line 551
+     at Fable.Cli.Entry.main(String[] argv) in /home/runner/work/Fable/Fable/src/Fable.Cli/Entry.fs:line 543
+  
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/022.test.mjs:346:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:103:5)

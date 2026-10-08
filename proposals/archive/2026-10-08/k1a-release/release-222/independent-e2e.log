@@ -1,0 +1,109 @@
+TAP version 13
+# Subtest: WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+ok 1 - WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+  ---
+  duration_ms: 0.693917
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+ok 2 - WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+  ---
+  duration_ms: 0.608625
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+ok 3 - WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+  ---
+  duration_ms: 9.4645
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+ok 4 - WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+  ---
+  duration_ms: 17.671625
+  type: 'test'
+  ...
+[setupScenario] ready
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[MOCK-FATAL] first script mismatch: reason=no-declared-turn session=ses_ee5d9eb17ffezhQicDJ6OnTdu3 parent=ses_ee5d9f22cffekChmdsgRs1N7qn model="test-model-b" tools=["js-predictor"] msgs=6 lastUser="Continue the current task's read-only investigation using only the available, permitted tools. Stop when the evidence is sufficient or the next step requires a change, a command, user clarification, a conclusion, or a consequential judgment. Do not invent work to keep calling tools. A self_note in the conversation is an earlier outlook for investigation, not a verified conclusion or permission to " candidates=["protocol-repair.0@undefined/chat/step-0","manager-t1-commitment.0@undefined/chat/step-0","continue.0@undefined/chat/step-0","manager-interrupt.0@manager/chat/step-0","blogger.0@undefined/chat/step-0"]
+[MSG-ROLES] system system user assistant tool user
+[MSG-TOOL-RESULTS] ["# ok\n\n[data]\ninspected = true\n\u0000﻿# # Wait-cost calibration: this session has existed for about 0 minutes 1 second of wall-clock time.\n# # Hold that duration beside useful work already accomplished only to price another interval of waiting or resource commitment.\n# # Question: if you spent the next in"]
+── fatal script mismatch: no-declared-turn (lane=manager kind=chat step=0) ──
+session=ses_ee5d9eb17ffezhQicDJ6OnTdu3 lastUser="Continue the current task's read-only investigation using only the available, permitted tools. Stop when the evidence is sufficient or the next step requires a change, a command, user clarification, a conclusion, or a consequential judgment. Do not invent work to keep calling tools. A self_note in the conversation is an earlier outlook for investigation, not a verified conclusion or permission to "
+candidates=["protocol-repair.0@undefined/chat/step-0","manager-t1-commitment.0@undefined/chat/step-0","continue.0@undefined/chat/step-0","manager-interrupt.0@manager/chat/step-0","blogger.0@undefined/chat/step-0"]
+── event tail ──
+#123 06:14:25.754 sync
+#124 06:14:25.754 session.diff session=ses_ee5d9f06
+#125 06:14:25.782 session.created session=ses_ee5d9eb1
+#126 06:14:25.782 sync
+#127 06:14:25.810 session.updated session=ses_ee5d9eb1
+#128 06:14:25.810 sync
+#129 06:14:25.810 message.updated session=ses_ee5d9eb1
+#130 06:14:25.810 sync
+#131 06:14:25.810 message.part.updated session=ses_ee5d9eb1
+#132 06:14:25.810 sync
+#133 06:14:25.810 session.updated session=ses_ee5d9eb1
+#134 06:14:25.810 sync
+#135 06:14:25.810 session.updated session=ses_ee5d9eb1
+#136 06:14:25.810 sync
+#137 06:14:25.812 session.status session=ses_ee5d9eb1
+#138 06:14:25.812 message.updated session=ses_ee5d9eb1
+#139 06:14:25.812 sync
+#140 06:14:25.813 session.updated session=ses_ee5d9eb1
+#141 06:14:25.813 sync
+#142 06:14:25.813 session.diff session=ses_ee5d9eb1
+── Host stderr tail ──
+{"operation":"strength-delegation-skip","session_id":"ses_ee5d9f22cffekChmdsgRs1N7qn","result":"no-completed-source-batch"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee5d9f064ffelmiyZdEUVx540I","result":"owner provider run is not uniquely bound"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee5d9f064ffelmiyZdEUVx540I","result":"apply-surface-failed:owner provider run is not uniquely bound"}
+
+── Journal fact tail ──
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:0:SessionStartedAtBound
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:1:PluginPromptPhysicalAccepted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:2:BloggerRequestMaterialized
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:3:CompanionBloggerLinked
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:4:AuthorityRootAccepted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:5:PluginPromptPhysicalAccepted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:6:PluginPromptClaimed
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:7:BloggerRequestMaterialized
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:8:UnknownFact
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:9:XTracePartAppended
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:10:Accepted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:11:XTracePartAppended
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:12:UnknownFact
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:13:XTracePartAppended
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:14:Accepted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:15:PluginPromptClaimed
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:16:AuthorityRootAccepted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:17:PairProgrammingGuidelineAnchored
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:18:BlogObservationCommitted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:19:SessionStartedAtBound
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:20:RuntimeStarted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:21:PluginPromptSubmitted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:22:PairProgrammingGuidelineAnchored
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:23:TransactionCommitted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:24:BloggerRequestMaterialized
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:25:AuthorityRootAccepted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:26:ProviderStarted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:27:ProviderStarted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:28:ProviderStarted
+41bbb665c81671cf1704b48bed3a8cb4bbecde8cbc8816f2bb7fa08eac660a1c:29:Accepted
+  pending blocking humanroot-manager-title.0 humanroot-manager-title.0@humanroot-manager/title/step-0
+  pending blocking humanroot-loop.0 humanroot-loop.0@humanroot-manager/chat/step-0
+  pending blocking humanroot-loop.1 humanroot-loop.1@humanroot-manager/chat/step-1
+  pending blocking title.0 title.0@title/title/step-0
+  pending blocking orch.0 orch.0@orchestrator/chat/step-0
+  pending blocking orch.1 orch.1@orchestrator/chat/step-1
+  pending blocking orch.2 orch.2@orchestrator/chat/step-2
+  pending blocking manager-loop.0 manager-loop.0@manager/chat/step-0
+  pending blocking manager-loop.1 manager-loop.1@manager/chat/step-1
+  pending blocking manager-loop.2 manager-loop.2@manager/chat/step-2
+  pending blocking manager-interrupt.0 manager-interrupt.0@manager/chat/step-0
+  pending blocking engineer.0 engineer.0@engineer/chat/step-0
+  pending blocking engineer.1 engineer.1@engineer/chat/step-1
+  pending blocking engineer.2 engineer.2@engineer/chat/step-2
+  pending blocking strength-recovery-owner.0 strength-recovery-owner.0@strength-recovery-owner/chat/step-0
+  pending blocking strength-recovery-owner.1 strength-recovery-owner.1@strength-recovery-owner/chat/step-1
+  pending blocking strength-recovery-owner.2 strength-recovery-owner.2@strength-recovery-owner/chat/step-2

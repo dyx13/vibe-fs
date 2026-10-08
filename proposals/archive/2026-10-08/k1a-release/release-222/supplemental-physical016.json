@@ -1,0 +1,43 @@
+{
+  "completeIntegrationStage": false,
+  "scope": [
+    "exact repository Git inputs install through a selected npm 11.12.1 bundle and real JavaScript consumers",
+    "a complete selected SDK archive resolves the captured repository global.json and reclaims its owned roots",
+    "selected complete SDK restores original repository local tools from explicitly identified NuGet archives",
+    "selected complete Git source and SDK restore the original foundation identity project through a fresh-cache locked NuGet graph",
+    "four selected input owners compile the original foundation identity project with Fable into isolated outputs",
+    "mac readonly views protect actual original-project Fable inputs and restore all prepared owners"
+  ],
+  "command": [
+    "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-timeout=180000",
+    "--test-name-pattern=^WHAT\\[verification-system-016\\] (exact repository Git inputs install through a selected npm 11\\.12\\.1 bundle and real JavaScript consumers|a complete selected SDK archive resolves the captured repository global\\.json and reclaims its owned roots|selected complete SDK restores original repository local tools from explicitly identified NuGet archives|selected complete Git source and SDK restore the original foundation identity project through a fresh-cache locked NuGet graph|four selected input owners compile the original foundation identity project with Fable into isolated outputs|mac readonly views protect actual original-project Fable inputs and restore all prepared owners)$",
+    "requirements/verification-system/tests/016.test.mjs"
+  ],
+  "startedAt": "2026-10-08T06:26:19.633Z",
+  "durationMs": 36110.397290999994,
+  "inputCommit": "222c3b29a6e7f599e648542a761b4ec562962917",
+  "currentCommit": "222c3b29a6e7f599e648542a761b4ec562962917",
+  "digest": "ace2adec0299705b92949d98526c360edf7e651d637206ec1ef71d94542521a5",
+  "afterDigest": "ace2adec0299705b92949d98526c360edf7e651d637206ec1ef71d94542521a5",
+  "inputsEqual": true,
+  "build": {
+    "generation": 325,
+    "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+    "generatedInputDigest": "7e10d03b5cf03dbce01c0621dcf46d53704d364b229dfc63c77646ce05002c45",
+    "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+  },
+  "originalBackstopMs": 300000,
+  "perTestTimeoutMs": 180000,
+  "declaredFileConcurrency": "2",
+  "timedOut": false,
+  "exitCode": 1,
+  "signal": null,
+  "failure": null,
+  "monitorPid": 26088,
+  "monitorObservation": "ESRCH",
+  "ownedHomeRemoved": true,
+  "cleanupError": null
+}

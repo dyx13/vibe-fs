@@ -1,0 +1,267 @@
+TAP version 13
+# Subtest: WHAT[verification-system-016] exact repository Git inputs install through a selected npm 11.12.1 bundle and real JavaScript consumers
+    # Subtest: WHAT[verification-system-016] selected committed source tree and complete Node/npm archive have explicit identities before installation
+    not ok 1 - WHAT[verification-system-016] selected committed source tree and complete Node/npm archive have explicit identities before installation
+      ---
+      duration_ms: 742.568958
+      type: 'test'
+      location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/repository-npm-install-tests.mjs:95:15'
+      failureType: 'testCodeFailure'
+      error: 'spawnSync git ENOBUFS'
+      code: 'ENOBUFS'
+      stack: |-
+        Object.spawnSync (node:internal/child_process:1120:20)
+        spawnSync (node:child_process:902:24)
+        execFileSync (node:child_process:945:15)
+        git (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:13:10)
+        prepareGitSourceCandidate (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:64:17)
+        TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/repository-npm-install-tests.mjs:104:18)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        TestContext.test (node:internal/test_runner/test:373:20)
+      ...
+    1..1
+not ok 1 - WHAT[verification-system-016] exact repository Git inputs install through a selected npm 11.12.1 bundle and real JavaScript consumers
+  ---
+  duration_ms: 743.785958
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/tier-gate.mjs:26:12'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: WHAT[verification-system-016] a complete selected SDK archive resolves the captured repository global.json and reclaims its owned roots
+    # Subtest: WHAT[verification-system-016] the complete explicitly selected SDK is captured with all files and internal links
+    ok 1 - WHAT[verification-system-016] the complete explicitly selected SDK is captured with all files and internal links
+      ---
+      duration_ms: 4089.406709
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440787486,"monitorPid":26181,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-zOxi2c/candidates/verification-archive-A9le03/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26181,"parentPid":26090,"at":1791440787533,"toolPid":26182,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-zOxi2c/candidates/verification-archive-A9le03/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26181,"parentPid":26090,"at":1791440790398,"toolPid":26182,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26181,"parentPid":26090,"at":1791440790416,"toolPid":26182}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440790419,"monitorPid":26181,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440790921,"monitorPid":26197,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-zOxi2c/candidates/verification-archive-A9le03/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26197,"parentPid":26090,"at":1791440790947,"toolPid":26198,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-zOxi2c/candidates/verification-archive-A9le03/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26197,"parentPid":26090,"at":1791440790949,"toolPid":26198,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26197,"parentPid":26090,"at":1791440790965,"toolPid":26198}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440790967,"monitorPid":26197,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440791432,"monitorPid":26200,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-zOxi2c/candidates/verification-archive-A9le03/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26200,"parentPid":26090,"at":1791440791457,"toolPid":26201,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-zOxi2c/candidates/verification-archive-A9le03/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26200,"parentPid":26090,"at":1791440791459,"toolPid":26201,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26200,"parentPid":26090,"at":1791440791474,"toolPid":26201}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440791476,"monitorPid":26200,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440791926,"monitorPid":26203,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-zOxi2c/candidates/verification-archive-A9le03/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26203,"parentPid":26090,"at":1791440791953,"toolPid":26204,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-zOxi2c/candidates/verification-archive-A9le03/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26203,"parentPid":26090,"at":1791440792054,"toolPid":26204,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26203,"parentPid":26090,"at":1791440792071,"toolPid":26204}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440792073,"monitorPid":26203,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] captured global.json selects the actual in-bundle SDK and runtime paths without ambient inputs
+    ok 2 - WHAT[verification-system-016] captured global.json selects the actual in-bundle SDK and runtime paths without ambient inputs
+      ---
+      duration_ms: 8436.544458
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-016] the prepared SDK revalidates without its archive and releases every private root
+    ok 3 - WHAT[verification-system-016] the prepared SDK revalidates without its archive and releases every private root
+      ---
+      duration_ms: 817.387333
+      type: 'test'
+      ...
+    1..3
+ok 2 - WHAT[verification-system-016] a complete selected SDK archive resolves the captured repository global.json and reclaims its owned roots
+  ---
+  duration_ms: 13613.565208
+  type: 'test'
+  ...
+# {"archiveSha256":"bb2a21b70337ec025bba77bb3a64160043268804dba244d4ce5cff4fd183d5d0","entries":5588,"fileBytes":688059912,"internalLinks":331}
+# {"sdk":{"version":"10.0.302","basePath":"dotnet-sdk/sdk/10.0.302"},"runtimes":[{"name":"Microsoft.AspNetCore.App","version":"10.0.10","path":"dotnet-sdk/shared/Microsoft.AspNetCore.App/10.0.10"},{"name":"Microsoft.NETCore.App","version":"10.0.10","path":"dotnet-sdk/shared/Microsoft.NETCore.App/10.0.10"}],"sdkDigest":"e05f113650fea2e9a5555367038c52dabf9dc1f58d104eb36dc3be65f940f248","archiveSha256":"bb2a21b70337ec025bba77bb3a64160043268804dba244d4ce5cff4fd183d5d0","entries":5588,"internalLinks":331,"nugetRun":false,"fableRun":false,"readOnlyMounted":false}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440799374,"monitorPid":26218,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26218,"parentPid":26090,"at":1791440799407,"toolPid":26219,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26218,"parentPid":26090,"at":1791440800358,"toolPid":26219,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26218,"parentPid":26090,"at":1791440800375,"toolPid":26219}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440800377,"monitorPid":26218,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440800868,"monitorPid":26223,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26223,"parentPid":26090,"at":1791440800894,"toolPid":26224,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26223,"parentPid":26090,"at":1791440800896,"toolPid":26224,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26223,"parentPid":26090,"at":1791440800911,"toolPid":26224}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440800913,"monitorPid":26223,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440801364,"monitorPid":26226,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26226,"parentPid":26090,"at":1791440801390,"toolPid":26227,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26226,"parentPid":26090,"at":1791440801392,"toolPid":26227,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26226,"parentPid":26090,"at":1791440801408,"toolPid":26227}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440801413,"monitorPid":26226,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440801863,"monitorPid":26229,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26229,"parentPid":26090,"at":1791440801887,"toolPid":26230,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26229,"parentPid":26090,"at":1791440801978,"toolPid":26230,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26229,"parentPid":26090,"at":1791440801994,"toolPid":26230}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440801996,"monitorPid":26229,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] selected complete SDK restores original repository local tools from explicitly identified NuGet archives
+    # Subtest: WHAT[verification-system-016] the repository tool manifest and complete SDK use explicit selected archive identities
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440804215,"monitorPid":26237,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+    ok 1 - WHAT[verification-system-016] the repository tool manifest and complete SDK use explicit selected archive identities
+      ---
+      duration_ms: 9079.232667
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-016] the selected SDK rejects a public root redirected to an existing foreign directory
+    ok 2 - WHAT[verification-system-016] the selected SDK rejects a public root redirected to an existing foreign directory
+      ---
+      duration_ms: 503.092041
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26237,"parentPid":26090,"at":1791440804239,"toolPid":26238,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26237,"parentPid":26090,"at":1791440804699,"toolPid":26238,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26237,"parentPid":26090,"at":1791440804717,"toolPid":26238}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440804719,"monitorPid":26237,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440809708,"monitorPid":26255,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+    # Subtest: WHAT[verification-system-016] actual private NuGet tool restore binds the complete package inventory and owned resolver paths
+    ok 3 - WHAT[verification-system-016] actual private NuGet tool restore binds the complete package inventory and owned resolver paths
+      ---
+      duration_ms: 2733.564834
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-016] actually restored tools reject root namespace substitution and preserve foreign data
+    ok 4 - WHAT[verification-system-016] actually restored tools reject root namespace substitution and preserve foreign data
+      ---
+      duration_ms: 1202.288958
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-016] actually restored tools reject parent-with-missing-root namespace substitution and preserve foreign data
+    ok 5 - WHAT[verification-system-016] actually restored tools reject parent-with-missing-root namespace substitution and preserve foreign data
+      ---
+      duration_ms: 1043.812083
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26255,"parentPid":26090,"at":1791440809734,"toolPid":26256,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26255,"parentPid":26090,"at":1791440809806,"toolPid":26256,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26255,"parentPid":26090,"at":1791440809822,"toolPid":26256}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440809824,"monitorPid":26255,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":26090,"parentPid":26089,"at":1791440809825,"monitorPid":26258,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":26258,"parentPid":26090,"at":1791440809852,"toolPid":26259,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-ONLiXV/candidates/verification-archive-4XgKhI/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":26258,"parentPid":26090,"at":1791440809965,"toolPid":26259,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":26258,"parentPid":26090,"at":1791440809982,"toolPid":26259}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":26090,"parentPid":26089,"at":1791440809983,"monitorPid":26258,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] real restored Fable and Fantomas execute after external archives are removed and release only their owned roots
+    ok 6 - WHAT[verification-system-016] real restored Fable and Fantomas execute after external archives are removed and release only their owned roots
+      ---
+      duration_ms: 2676.295709
+      type: 'test'
+      ...
+    1..6
+ok 3 - WHAT[verification-system-016] selected complete SDK restores original repository local tools from explicitly identified NuGet archives
+  ---
+  duration_ms: 17241.059
+  type: 'test'
+  ...
+# {"sdkDigest":"e05f113650fea2e9a5555367038c52dabf9dc1f58d104eb36dc3be65f940f248","sdkArchiveSha256":"bb2a21b70337ec025bba77bb3a64160043268804dba244d4ce5cff4fd183d5d0","toolManifestSha256":"87d70c4ba7b3031d6cc2c870a6ef6d0e04da67945e06061d6128a97e4569dd02","packages":[{"id":"fable","version":"5.13.0","sha512":"XbPbm+0ZLocSdlXAu3812SoXpZQocxpY6fL2tqSvk4Ln7D1Iv8kAfM4f3PfDrJ8J4U7KL3p0saFAZ94TciCgbQ=="},{"id":"fantomas","version":"6.3.0","sha512":"pwg1buPBNciNdZ+SqsddJy+ecG8f0VHdTa2w1rgIsWljatxAh1oOhYqPurnlAGpHWzus1nEufSAN7aF/ZFLQxg=="}],"provenance":"explicit caller-selected archive bytes; this test does not authenticate the publisher"}
+# {"toolsDigest":"dedcbddff101b4777872e32090f1a3dad3d023539e6f521f9c8718209706f777","entries":476,"tools":[{"id":"fable","version":"5.13.0","command":"fable","executable":"packages/fable/5.13.0/tools/net10.0/any/fable.dll"},{"id":"fantomas","version":"6.3.0","command":"fantomas","executable":"packages/fantomas/6.3.0/tools/net6.0/any/fantomas.dll"}],"projectRestore":false,"fableCompilation":false,"readOnlyMounted":false,"actualVerifyBound":false}
+# {"command":"fable","actualVersionOutput":"5.13.0","selectedExecutable":"packages/fable/5.13.0/tools/net10.0/any/fable.dll"}
+# {"command":"fantomas","actualVersionOutput":"Fantomas v6.3.0+e2d6de066b56c67aeef0c6cf92b28ff4a30f46d2","selectedExecutable":"packages/fantomas/6.3.0/tools/net6.0/any/fantomas.dll"}
+# Subtest: WHAT[verification-system-016] selected complete Git source and SDK restore the original foundation identity project through a fresh-cache locked NuGet graph
+    # Subtest: WHAT[verification-system-016] project restore captures an explicit complete Git tree, selected SDK, and four package archive identities
+    not ok 1 - WHAT[verification-system-016] project restore captures an explicit complete Git tree, selected SDK, and four package archive identities
+      ---
+      duration_ms: 556.384
+      type: 'test'
+      location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/repository-nuget-project-tests.mjs:94:13'
+      failureType: 'testCodeFailure'
+      error: 'spawnSync git ENOBUFS'
+      code: 'ENOBUFS'
+      stack: |-
+        Object.spawnSync (node:internal/child_process:1120:20)
+        spawnSync (node:child_process:902:24)
+        execFileSync (node:child_process:945:15)
+        git (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:13:10)
+        prepareGitSourceCandidate (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:64:17)
+        TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/repository-nuget-project-tests.mjs:98:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        TestContext.test (node:internal/test_runner/test:373:20)
+      ...
+    1..1
+not ok 4 - WHAT[verification-system-016] selected complete Git source and SDK restore the original foundation identity project through a fresh-cache locked NuGet graph
+  ---
+  duration_ms: 558.997083
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/tier-gate.mjs:26:12'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: WHAT[verification-system-016] four selected input owners compile the original foundation identity project with Fable into isolated outputs
+    # Subtest: WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+    not ok 1 - WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+      ---
+      duration_ms: 382.469792
+      type: 'test'
+      location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/repository-fable-project-tests.mjs:109:13'
+      failureType: 'testCodeFailure'
+      error: 'spawnSync git ENOBUFS'
+      code: 'ENOBUFS'
+      stack: |-
+        Object.spawnSync (node:internal/child_process:1120:20)
+        spawnSync (node:child_process:902:24)
+        execFileSync (node:child_process:945:15)
+        git (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:13:10)
+        prepareGitSourceCandidate (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:64:17)
+        TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/repository-fable-project-tests.mjs:113:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        TestContext.test (node:internal/test_runner/test:373:20)
+      ...
+    1..1
+not ok 5 - WHAT[verification-system-016] four selected input owners compile the original foundation identity project with Fable into isolated outputs
+  ---
+  duration_ms: 384.529125
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/tier-gate.mjs:26:12'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: WHAT[verification-system-016] mac readonly views protect actual original-project Fable inputs and restore all prepared owners
+    # Subtest: WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+    not ok 1 - WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+      ---
+      duration_ms: 391.044458
+      type: 'test'
+      location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/repository-fable-project-tests.mjs:109:13'
+      failureType: 'testCodeFailure'
+      error: 'spawnSync git ENOBUFS'
+      code: 'ENOBUFS'
+      stack: |-
+        Object.spawnSync (node:internal/child_process:1120:20)
+        spawnSync (node:child_process:902:24)
+        execFileSync (node:child_process:945:15)
+        git (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:13:10)
+        prepareGitSourceCandidate (file:///Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-source-candidate.mjs:64:17)
+        TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/repository-fable-project-tests.mjs:113:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        TestContext.test (node:internal/test_runner/test:373:20)
+      ...
+    1..1
+not ok 6 - WHAT[verification-system-016] mac readonly views protect actual original-project Fable inputs and restore all prepared owners
+  ---
+  duration_ms: 393.125042
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/tier-gate.mjs:26:12'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..6
+# tests 19
+# suites 0
+# pass 11
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 35361.112542

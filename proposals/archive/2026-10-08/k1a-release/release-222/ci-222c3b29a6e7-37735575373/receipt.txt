@@ -1,0 +1,25 @@
+Exact-head CI audit: https://github.com/dyx13/vibe-fs/actions/runs/37735575373
+Completed failure, attempt1. SHA222c3b29a6e7f599e648542a761b4ec562962917, treeb5b5b6b528c4a5ba7051467ebe41d2ea1161d0c1. GitHub run metadata and actual checkout log agree with expected SHA; local committed tree agrees. No old/local receipt is substituted.
+
+CI environment: Linux x64; Node22.23.3, npm10.9.9, SDK setup reports10.0.401/runtime10.0.12; local tools Fable5.13.0/Fantomas6.3.0. NODE_TEST_CONCURRENCY=2 and UNIT_VERDICT_SILENCE_MS=30000. Actual command node scripts/verify.mjs --release. Inputs prefixafa132c68d15b499. Full input digest/build manifest unknown because artifact only contains stage logs.
+
+Stage matrix, all same exact head:
+format:check exit0 12.1s.
+check exit0 7.5s; report-only shard audit findings are not a static failure.
+clean Fable build exit0 82.1s, generation1; 175 registered surfaces,835 linked emitted modules; unit freshness gate1815sources/891artifacts.
+unit exit1 300.6s. Original300000ms physical backstop. 824planned,629started,627drained,2active,195queued. Global pass/fail/skip/TODO unknown, no authoritative summary.
+integration/e2e/package not-run after unit failure. Unified release total403.8s exit1, not merely pending-proof policy.
+
+Active provider-projection011 began294471.533ms, latest actual body 'real argument changes alter the durable production digest'; supervisor last verdict was preceding semantic-prefix test pass. Active relay-assessment006 began299195.151ms, latest actual body 'actual accepted revise assessment removes permission for a new review call'; supervisor last verdict was preceding perfect-assessment test pass. These late admissions do not prove either file is deadlocked. Complete queued/planned/started names are in unit-cost-analysis.json.
+
+No ordinary outer assertion failure observed and no outer native worker nonzero exit record. The missing.fixture/broken.fixture reds in log belong to verification-system021's intentional negative supervisor probes. Do not report global fail0: summary absent and two workers incomplete. Cost status625complete/2invalid/2missing; invalid records in verification021 and capability019 are observational identity rejections, not assertions.
+
+016 actual: started16.248s/drained94.112s; worker77.814s, own CPU44.085s user+16.705s system.201 monitor launches/201 tool launches/201 tool terminals/201 group-drained/201 monitor-closed all paired; tool physical running intervals sum12.527s. Node archive14 phases4.024s; node preparation29 phases11.218s; npm selection20 actual version probes1.686s.8 full Node/npm archive captures4.271s, each137549312bytes,total1100394496bytes;10 archive-install phases20.517s;20 registry fixture disposals0.189s. Scopes may overlap: do not add all phases as independent suite time. This proves real repeated complete preparation work, not that safely removing it is possible or would close throughput.
+
+625 complete worker intervals sum557.252s wall (overlap),487.774s user+51.315s system (own process CPU, excludes separately spawned children). Highest other wall costs: verifier00625.447s;delegation02524.358s;context-compression02419.980s;durable-events02415.150s;durable-events00614.750s;host-boundary03214.343s. These include intentional independent process/replay/fault cases and permutations. No evidence yet of universal full Host import overhead; direct Plugin.js import search alone cannot establish transitive or module-load CPU costs.
+
+Cleanup: outer supervisor group2985 accepted=true,6.592ms. All201 owned tool groups in016 drained/monitors closed. This is remote receipt evidence; no local PID probe can independently inspect a remote runner or prove every filesystem cleanup.
+
+Root cause of incomplete CI throughput remains unknown. Verify next with non-overlapping preparation/execution/module-load CPU phases. Investigate safely sharing immutable source archive bytes while preserving per-case fresh roots, validation, mutation/cancellation barriers and cleanup; never share live owned candidate receipts. Do not change scope/concurrency/budgets/skips to create a green result. Local270s full drain does not close this exact CI. Later docs head needs its own CI receipt.
+
+Saved complete metadata run.json/jobs.json/artifacts.json, full job-logs.zip and extracted job logs, verify-logs.zip and extracted canonical stage directory2026-10-08T06-04-11-981Z. Artifact SHA2561cf0d0b4af99de9d0b399a878d17a690f9ed7c35fdc3874a49fc0255fe9e7b88 matches GitHub published digest; full job zip SHA256fb62ccd9cef6ba84ccffdf7b45385de22a265967233729e754f7c52661af234f. receipt.json contains matrix and exact references; unit-cost-analysis.json contains all cost/phase records and file lists. Auditor ran no tests/builds and edited no repository source.

@@ -1,0 +1,29 @@
+{
+  "label": "e2e",
+  "command": [
+    "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs"
+  ],
+  "inputCommit": "222c3b29a6e7f599e648542a761b4ec562962917",
+  "currentCommit": "222c3b29a6e7f599e648542a761b4ec562962917",
+  "startedAt": "2026-10-08T06:14:22.089Z",
+  "durationMs": 4121.532208,
+  "timeoutMs": 1500000,
+  "digest": "ace2adec0299705b92949d98526c360edf7e651d637206ec1ef71d94542521a5",
+  "afterDigest": "ace2adec0299705b92949d98526c360edf7e651d637206ec1ef71d94542521a5",
+  "inputsEqual": true,
+  "env": {
+    "NODE_TEST_CONCURRENCY": "2",
+    "UNIT_VERDICT_SILENCE_MS": "30000",
+    "WXS_RELEASE": "0",
+    "WXS_TIER_RELEASE": "1",
+    "WXS_E2E_QUIET": "1"
+  },
+  "timedOut": false,
+  "exitCode": 1,
+  "signal": null,
+  "monitorPid": 12872,
+  "monitorObservation": "ESRCH",
+  "cleanupFailure": null,
+  "log": "/private/tmp/vibe-fs-oct8-alias-release/independent-e2e.log"
+}

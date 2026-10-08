@@ -1,0 +1,11 @@
+﻿2026-10-08T06:03:58.7133781Z ##[group]Run actions/setup-dotnet@v4
+2026-10-08T06:03:58.7134060Z with:
+2026-10-08T06:03:58.7134287Z   global-json-file: global.json
+2026-10-08T06:03:58.7134530Z   cache: false
+2026-10-08T06:03:58.7134727Z ##[endgroup]
+2026-10-08T06:03:58.8476265Z (node:2273) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-08T06:03:58.8477395Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-08T06:03:58.8493170Z [command]/home/runner/work/_actions/actions/setup-dotnet/v4/externals/install-dotnet.sh --skip-non-versioned-files --runtime dotnet --channel LTS
+2026-10-08T06:03:59.0787912Z dotnet-install: .NET Core Runtime with version '10.0.12' is already installed.
+2026-10-08T06:03:59.0811727Z [command]/home/runner/work/_actions/actions/setup-dotnet/v4/externals/install-dotnet.sh --skip-non-versioned-files --channel 10.0
+2026-10-08T06:03:59.2912517Z dotnet-install: .NET Core SDK with version '10.0.401' is already installed.

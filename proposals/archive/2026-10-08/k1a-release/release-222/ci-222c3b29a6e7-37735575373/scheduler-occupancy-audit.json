@@ -1,0 +1,156 @@
+{
+  "evidence": "outer file-start/drained receipt elapsedMs, exact CI owner2985; active files counted through original300000ms cut",
+  "occupancyWallMs": {
+    "0": 42.86813900000004,
+    "1": 1677.66354299996,
+    "2": 298279.468318
+  },
+  "occupiedSlotMs": 598236.6001790001,
+  "availableSlotMs": 600000,
+  "idleSlotMs": 1763.3998209999602,
+  "fractionSlotsOccupied": 0.9970610002983334,
+  "topShortages": [
+    {
+      "fromMs": 0,
+      "toMs": 42.86813900000004,
+      "durationMs": 42.86813900000004,
+      "active": 0,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/verification-system/tests/002.test.mjs"
+    },
+    {
+      "fromMs": 277385.96555799997,
+      "toMs": 277397.68429899996,
+      "durationMs": 11.718740999989677,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/prefix-stability/tests/008.test.mjs"
+    },
+    {
+      "fromMs": 261507.560769,
+      "toMs": 261517.943804,
+      "durationMs": 10.383035000006203,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/managed-session-lifecycle/tests/016.test.mjs"
+    },
+    {
+      "fromMs": 203865.09406,
+      "toMs": 203873.332716,
+      "durationMs": 8.238656000001356,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/host-boundary/tests/011.test.mjs"
+    },
+    {
+      "fromMs": 145913.769957,
+      "toMs": 145921.930866,
+      "durationMs": 8.160908999998355,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/dispatch-protocol/tests/008.test.mjs"
+    },
+    {
+      "fromMs": 268987.03382199997,
+      "toMs": 268995.072636,
+      "durationMs": 8.038814000028651,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/office-capability/tests/001.test.mjs"
+    },
+    {
+      "fromMs": 195682.62588200002,
+      "toMs": 195690.308416,
+      "durationMs": 7.682533999992302,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/execution-model-routing/tests/017.test.mjs"
+    },
+    {
+      "fromMs": 87240.03170899999,
+      "toMs": 87247.234304,
+      "durationMs": 7.202595000009751,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/change-integration/tests/004.test.mjs"
+    },
+    {
+      "fromMs": 58107.365466,
+      "toMs": 58114.237606,
+      "durationMs": 6.87213999999949,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/behavior-diagnosis/tests/019.test.mjs"
+    },
+    {
+      "fromMs": 231648.22988700002,
+      "toMs": 231654.87272100002,
+      "durationMs": 6.642833999998402,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/intra-participant-parallelism/tests/009.test.mjs"
+    },
+    {
+      "fromMs": 34593.933245,
+      "toMs": 34600.509268,
+      "durationMs": 6.576023000001442,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/action-affordance/tests/010.test.mjs"
+    },
+    {
+      "fromMs": 207741.878969,
+      "toMs": 207748.34156,
+      "durationMs": 6.462590999988606,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/host-boundary/tests/027.test.mjs"
+    },
+    {
+      "fromMs": 207103.599607,
+      "toMs": 207109.888643,
+      "durationMs": 6.289036000001943,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/host-boundary/tests/024.test.mjs"
+    },
+    {
+      "fromMs": 161391.50742100002,
+      "toMs": 161397.57511200002,
+      "durationMs": 6.067691000003833,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/durable-events/tests/005.test.mjs"
+    },
+    {
+      "fromMs": 293591.332374,
+      "toMs": 293597.373081,
+      "durationMs": 6.040707000007387,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/provider-projection/tests/003.test.mjs"
+    },
+    {
+      "fromMs": 268422.92524899996,
+      "toMs": 268428.936328,
+      "durationMs": 6.011079000018071,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/obligation-ledger/tests/004.test.mjs"
+    },
+    {
+      "fromMs": 267133.994037,
+      "toMs": 267139.940242,
+      "durationMs": 5.946204999985639,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/managed-session-lifecycle/tests/023.test.mjs"
+    },
+    {
+      "fromMs": 273917.462773,
+      "toMs": 273923.329936,
+      "durationMs": 5.867162999988068,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/participant-identity/tests/010.test.mjs"
+    },
+    {
+      "fromMs": 159589.39343,
+      "toMs": 159594.903649,
+      "durationMs": 5.510219000017969,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/durable-convergence/tests/010.test.mjs"
+    },
+    {
+      "fromMs": 192154.157994,
+      "toMs": 192159.390877,
+      "durationMs": 5.23288299998967,
+      "active": 1,
+      "until": "/home/runner/work/vibe-fs/vibe-fs/requirements/execution-model-routing/tests/004.test.mjs"
+    }
+  ],
+  "maxConcurrentObserved": 2,
+  "costBoundaries": "Occupancy means a node:test file stream owns a lane, not actual CPU utilization; it includes module load, tests, descendant processes, output/reporter backpressure and close/drain."
+}

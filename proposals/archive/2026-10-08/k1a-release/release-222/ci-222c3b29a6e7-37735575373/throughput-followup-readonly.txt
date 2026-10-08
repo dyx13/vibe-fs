@@ -1,0 +1,31 @@
+CI37735575373 throughput follow-up, exact source222c3b29a6e7f599e648542a761b4ec562962917. Read-only source/log analysis; no tests rerun, no repository edits, no process/resource actions.
+
+Conclusion: incomplete CI throughput is real, but a specific avoidable cause has not been proved. It remains unknown. This exact run retained824 planned files and stopped at original300000ms with627drained,2active,195queued. Local270.3s full drain is separate evidence, not a CI certificate.
+
+1. Scheduler idle is tightly bounded and cannot explain the backlog.
+Using only outer2985 file-start/drained receipt timestamps: two file lanes occupied298279.468ms, one lane1677.664ms, zero lanes42.868ms. Aggregate available slot time600000ms; occupied598236.600ms,99.7061%; empty slot time1763.400ms. Largest replacement gap after initial startup11.719ms. This excludes long no-admission periods, but lane occupancy includes module load, tests, child work and reporter/stream drain; it does not establish CPU utilization. See scheduler-occupancy-audit.json.
+
+2. Cleanup did not consume repeated full grace windows in the measured016 tools.
+All201 monitor/tool/exit/drain/close records pair. Exit-to-group-drain sum1468ms,median7ms,max15ms. Monitor start-to-tool-spawn sum7017ms,median33ms,max51ms. Actual physical tool intervals sum12527ms. Drain-to-monitor-close sum1048ms,max353ms. Total201 monitor intervals22060ms. The source1000ms cleanup grace is a bound, not an unconditional wait. These measurements cover016 only; other business subprocess cleanup is unknown without equivalent phase records. See verifier016-tool-latency-audit.json.
+
+3. Stream envelopes also exclude long generic drain delays in625 valid completed files.
+File admission-to-drain duration minus native preImport-to-exit duration totals28517.537ms across625 files,median43.306ms,p9058.461ms,max101.388ms. This includes process startup before preImport plus native exit/parent stream completion; it does not isolate avoidable reporter/cleanup overhead. See stream-native-envelope-audit.json.
+
+4. No evidence of wrong integration/release tier in unit.
+verify.mjs unit step does not enable WXS_TIER_INTEGRATION or WXS_TIER_RELEASE. tier-gate requires exact1. The six016 repository-native integration bodies and014 physical Long Stroke body have no actual beforeEach runtime-start marker in this CI. Active016 SDK/NuGet protocol cases are explicitly default-tier adapter fixtures, not proof that repository SDK integration was accidentally started. No cases are proposed for tier migration or skipping on cost alone.
+
+5. Repeated preparation exists, but does not explain CI-versus-local slowdown by itself.
+016 CI wall77.814s/ownCPU60.790s; local same-source wall149.714s/ownCPU42.779s. CI016 is71.900s faster, despite slower whole-suite throughput.17 paired verifier files sumwallCI121.136s/local185.827s.608 paired business files sumwallCI436.115s/local240.141s,ownCPUCI462.827s/local201.846s. Largest wall increases:delegation025+13.230s,durable-events024+7.154s,durable-events006+6.956s,context-compression024+6.186s. These comparisons use625 valid matched completed files only; queued195 are unmeasured in CI.
+The first three high-wall business files explicitly run independent child processes.025 runs20 recovery/guard/repair subprocess scenarios;durable006/024 retain measured and independent cold subprocesses. Their own worker CPU does not include monitor/tool CPU. Wall minus parent CPU cannot be labelled I/O, sleep, cleanup or idle. Source independence, ambient routing initialization and cold-state assertions forbid treating live owners as reusable test fixtures.
+016's8 full Node/npm captures write1100394496bytes in4.271s;29 tool preparations11.218s;10archive installations20.517s;20npm version selections1.686s. Their scopes may nest. This is actual repeated work, but neither illegitimacy nor safe removability has been proved. No live-owner caching is proposed. See unit-cost-analysis.json and local-ci-cost-comparison.json.
+
+6. Environment attribution remains unknown.
+Same source SHA/tree is necessary but not equal complete inputs:local Darwin arm64 Node22.23.3/npm11.12.1/SDK10.0.302,digestace2adec…;CI Linux x64 Node22.23.3/npm10.9.9/setup SDK10.0.401,digestprefixafa132c6…. Actual CPU quota,throttling,host load,physical CPU model and child CPU were not captured. Uniformly higher business own CPU is evidence of greater cost, not a causal hardware diagnosis. Static direct Plugin.js imports are limited; current receipts do not split module initialization from test body, so universal full Host import cost is not established.
+
+Finite follow-up plan, no acceptance claim:
+A. Add narrowly scoped observation for the three largest independent-process files025/de006/de024: bind parent,monitor,tool PIDs; record before-entry-import and exit own CPU/wall in a dedicated receipt/diagnostic channel that does not corrupt the helper's JSON stdout. Preserve every independent measure/cold child and routing scope. Capture tool-start,tool-exit,group-drain,monitor-close to separate actual work from cleanup.
+B. Observe context024's import phase versus twelve fixed interleavings and100 fixed-seed generated runs, retaining all schedules/numRuns/barriers. Existing19.980s wall/20.582s own CPU identifies a substantial measured local-worker computation cost, not a justification to reduce coverage.
+C. On the same CI runner/input, record CPU quota/throttling and actual selected tool identities alongside observations. Inspect emitted import closure for the measured slow paths only after phase evidence identifies module loading as material. Do not change budgets,concurrency,tier,skip/TODO or share independent live owners.
+D. Only after a specific redundant computation or unintended import is demonstrated, write a formal failure/cost invariant regression and apply a bounded fix. Then freeze changed inputs and execute the unchanged unified release scope/budgets. Retain any failure/truncation and separately bound later-stage independent proofs. A local full drain and different-head CI must remain separate.
+
+No performance fix is claimed. All original negative controls,owner isolation,physical cleanup contracts and release evidence boundaries remain.

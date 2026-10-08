@@ -1,0 +1,25 @@
+﻿2026-10-08T06:03:59.3063357Z ##[group]Run npm ci
+2026-10-08T06:03:59.3063692Z [36;1mnpm ci[0m
+2026-10-08T06:03:59.3240460Z shell: /usr/bin/bash -e {0}
+2026-10-08T06:03:59.3240733Z env:
+2026-10-08T06:03:59.3240962Z   DOTNET_ROOT: /usr/share/dotnet
+2026-10-08T06:03:59.3241205Z ##[endgroup]
+2026-10-08T06:04:01.9877957Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-10-08T06:04:06.1195554Z 
+2026-10-08T06:04:06.1196361Z added 236 packages, and audited 237 packages in 7s
+2026-10-08T06:04:06.1197047Z 
+2026-10-08T06:04:06.1197384Z 63 packages are looking for funding
+2026-10-08T06:04:06.1197932Z   run `npm fund` for details
+2026-10-08T06:04:06.1290170Z 
+2026-10-08T06:04:06.1291515Z 13 vulnerabilities (4 moderate, 8 high, 1 critical)
+2026-10-08T06:04:06.1292242Z 
+2026-10-08T06:04:06.1293198Z To address issues that do not require attention, run:
+2026-10-08T06:04:06.1293908Z   npm audit fix
+2026-10-08T06:04:06.1294134Z 
+2026-10-08T06:04:06.1294315Z To address all issues possible, run:
+2026-10-08T06:04:06.1294612Z   npm audit fix --force
+2026-10-08T06:04:06.1294764Z 
+2026-10-08T06:04:06.1294974Z Some issues need review, and may require choosing
+2026-10-08T06:04:06.1295302Z a different dependency.
+2026-10-08T06:04:06.1295441Z 
+2026-10-08T06:04:06.1295576Z Run `npm audit` for details.

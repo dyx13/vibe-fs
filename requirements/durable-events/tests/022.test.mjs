@@ -346,7 +346,7 @@ integrationTest('WHAT[durable-events-022] each actual bounded locality compiles 
       assert.equal(
         result.ok,
         true,
-        `${shard} locality must compile as one flat project\n${result.stdout}\n${result.stderr}`,
+        `${shard} locality must compile as one flat project (exit=${result.code}, signal=${result.signal})\n${result.stdout}\n${result.stderr}`,
       )
     }
 

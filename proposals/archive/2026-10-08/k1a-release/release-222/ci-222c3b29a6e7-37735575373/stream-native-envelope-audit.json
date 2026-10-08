@@ -1,0 +1,117 @@
+{
+  "input": "222c3b29a6e7f599e648542a761b4ec562962917",
+  "count": 625,
+  "sumMs": 28517.53716699998,
+  "minMs": 30.046205000003123,
+  "medianMs": 43.30561700000342,
+  "p90Ms": 58.46061200000031,
+  "maxMs": 101.38771599998722,
+  "top": [
+    {
+      "file": "requirements/concern-routing/tests/005.test.mjs",
+      "streamSpanMs": 1716.1050599999871,
+      "workerIntervalMs": 1614.717344,
+      "outsideObservedWorkerIntervalMs": 101.38771599998722,
+      "workerPreImportMonotonicMs": 47.816794
+    },
+    {
+      "file": "requirements/js-semantic-surface/tests/006.test.mjs",
+      "streamSpanMs": 4286.823578999989,
+      "workerIntervalMs": 4194.426746,
+      "outsideObservedWorkerIntervalMs": 92.39683299998887,
+      "workerPreImportMonotonicMs": 28.971982
+    },
+    {
+      "file": "requirements/delegation/tests/028.test.mjs",
+      "streamSpanMs": 359.6096789999865,
+      "workerIntervalMs": 279.32386,
+      "outsideObservedWorkerIntervalMs": 80.28581899998647,
+      "workerPreImportMonotonicMs": 72.344678
+    },
+    {
+      "file": "requirements/concern-routing/tests/004.test.mjs",
+      "streamSpanMs": 1980.5630459999957,
+      "workerIntervalMs": 1901.850084,
+      "outsideObservedWorkerIntervalMs": 78.71296199999574,
+      "workerPreImportMonotonicMs": 44.142033
+    },
+    {
+      "file": "requirements/intra-participant-parallelism/tests/017.test.mjs",
+      "streamSpanMs": 2156.806486000016,
+      "workerIntervalMs": 2078.397056,
+      "outsideObservedWorkerIntervalMs": 78.40943000001607,
+      "workerPreImportMonotonicMs": 29.532384
+    },
+    {
+      "file": "requirements/dispatch-protocol/tests/003.test.mjs",
+      "streamSpanMs": 1064.7574550000136,
+      "workerIntervalMs": 987.146568,
+      "outsideObservedWorkerIntervalMs": 77.61088700001358,
+      "workerPreImportMonotonicMs": 30.895506
+    },
+    {
+      "file": "requirements/prefix-stability/tests/003.test.mjs",
+      "streamSpanMs": 6707.408597999951,
+      "workerIntervalMs": 6631.981989999999,
+      "outsideObservedWorkerIntervalMs": 75.42660799995156,
+      "workerPreImportMonotonicMs": 46.259756
+    },
+    {
+      "file": "requirements/verification-system/tests/008.test.mjs",
+      "streamSpanMs": 3672.6176810000006,
+      "workerIntervalMs": 3597.2426960000003,
+      "outsideObservedWorkerIntervalMs": 75.37498500000038,
+      "workerPreImportMonotonicMs": 27.801259
+    },
+    {
+      "file": "requirements/host-boundary/tests/032.test.mjs",
+      "streamSpanMs": 14418.325744000002,
+      "workerIntervalMs": 14343.221981,
+      "outsideObservedWorkerIntervalMs": 75.10376300000098,
+      "workerPreImportMonotonicMs": 32.691041
+    },
+    {
+      "file": "requirements/institutional-learning/tests/004.test.mjs",
+      "streamSpanMs": 1694.227224000002,
+      "workerIntervalMs": 1620.8825789999999,
+      "outsideObservedWorkerIntervalMs": 73.34464500000217,
+      "workerPreImportMonotonicMs": 42.964447
+    },
+    {
+      "file": "requirements/execution-model-routing/tests/008.test.mjs",
+      "streamSpanMs": 1626.4474890000129,
+      "workerIntervalMs": 1553.451384,
+      "outsideObservedWorkerIntervalMs": 72.9961050000129,
+      "workerPreImportMonotonicMs": 29.733362
+    },
+    {
+      "file": "requirements/capability-enforcement/tests/025.test.mjs",
+      "streamSpanMs": 2740.2984600000054,
+      "workerIntervalMs": 2667.484547,
+      "outsideObservedWorkerIntervalMs": 72.81391300000541,
+      "workerPreImportMonotonicMs": 43.398398
+    },
+    {
+      "file": "requirements/managed-session-lifecycle/tests/022.test.mjs",
+      "streamSpanMs": 3141.8965629999875,
+      "workerIntervalMs": 3069.480861,
+      "outsideObservedWorkerIntervalMs": 72.4157019999875,
+      "workerPreImportMonotonicMs": 39.797274
+    },
+    {
+      "file": "requirements/attention-regulation/tests/005.test.mjs",
+      "streamSpanMs": 1712.105942000002,
+      "workerIntervalMs": 1640.782325,
+      "outsideObservedWorkerIntervalMs": 71.32361700000206,
+      "workerPreImportMonotonicMs": 36.190816
+    },
+    {
+      "file": "requirements/js-semantic-surface/tests/003.test.mjs",
+      "streamSpanMs": 2182.6487730000226,
+      "workerIntervalMs": 2111.3370090000003,
+      "outsideObservedWorkerIntervalMs": 71.31176400002232,
+      "workerPreImportMonotonicMs": 41.89967
+    }
+  ],
+  "interpretation": "Per-file stream lifetime minus native preImport-to-exit interval; different durations, no cross-process timestamp subtraction. Includes process start before preImport and parent/stream close after exit, not isolated cleanup or output latency. Nothing proves it avoidable."
+}

@@ -1,0 +1,63 @@
+{
+  "capturedAt": "2026-10-08T06:16:32.111772+00:00",
+  "workerPid": 12034,
+  "loggedOwnedMonitorPid": 12142,
+  "loggedOwnedToolPid": 12143,
+  "currentAttachedImages": [],
+  "temporaryMountLines": [],
+  "provenRemainingRoots": [],
+  "candidateCount": 2,
+  "unattributedCandidateCount": 2,
+  "unknownCandidateNamesOmitted": true,
+  "currentKnownPidChecks": [
+    {
+      "pid": 2798,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 2801,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 11718,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12034,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12142,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12143,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12171,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12174,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12177,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12241,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12242,
+      "status": "ESRCH"
+    },
+    {
+      "pid": 12243,
+      "status": "ESRCH"
+    }
+  ],
+  "scope": "Read-only. Narrow top-level fixture-prefix inventory; only a persisted receipt naming actual logged owned pid12143 can prove a root attribution. Prefix and time alone do not authorize cleanup. No test/build, detach, delete, or process termination."
+}

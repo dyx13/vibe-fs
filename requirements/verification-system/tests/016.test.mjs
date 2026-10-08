@@ -1,8 +1,9 @@
 // Verification inputs collection and mid-run perturbation detection tests.
 
 import assert from 'node:assert/strict'
-import { execFileSync } from 'node:child_process'
+import childProcess, { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
+import { syncBuiltinESMExports } from 'node:module'
 import { gzipSync } from 'node:zlib'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -552,6 +553,72 @@ test('WHAT[verification-system-016] dependency preparation fully consumes compre
     fs.rmSync(parent, { recursive: true, force: true })
   }
 })
+
+test('WHAT[verification-system-016] complete selected Git blobs do not depend on a bounded child stdout buffer', async (t) => {
+  const fixture = setupFixtureRepo()
+  const parent = fs.mkdtempSync(path.join(os.tmpdir(), 'source-batch-parent-'))
+  const bytes = Buffer.alloc(4096, 0xa5)
+  let candidate
+  let boundedBatch
+  try {
+    fs.writeFileSync(path.join(fixture, 'resources/binary.bin'), bytes)
+    fixtureGit(fixture, 'add', '.')
+    const treeId = fixtureGit(fixture, 'write-tree')
+    const originalExec = childProcess.execFileSync
+    boundedBatch = t.mock.method(childProcess, 'execFileSync', (file, args, options) =>
+      originalExec(file, args, file === 'git' && args.includes('--batch')
+        ? { ...options, maxBuffer: 1024 }
+        : options))
+    syncBuiltinESMExports()
+    candidate = await prepareSource({ repositoryRoot: fixture, treeId, parentDirectory: parent })
+    assert.deepEqual(fs.readFileSync(path.join(candidate.sourceRoot, 'resources/binary.bin')), bytes)
+    assert.equal(fixtureGit(candidate.sourceRoot, 'write-tree'), treeId)
+    assert.equal(candidate.entries.find(entry => entry.path === 'resources/binary.bin').sha256, computeFileDigest(bytes))
+    candidate.revalidate()
+    candidate.dispose()
+    assert.deepEqual(fs.readdirSync(parent), [])
+  } finally {
+    boundedBatch?.mock.restore()
+    syncBuiltinESMExports()
+    candidate?.dispose()
+    fs.rmSync(fixture, { recursive: true, force: true })
+    fs.rmSync(parent, { recursive: true, force: true })
+  }
+})
+
+for (const closeFailure of [false, true]) {
+test(`WHAT[verification-system-016] a failed Git batch ${closeFailure ? 'and failed close preserve both causes' : 'preserves its cause'} and reclaims only its owned source output`, async (t) => {
+  const fixture = setupFixtureRepo()
+  const parent = fs.mkdtempSync(path.join(os.tmpdir(), 'source-batch-failure-parent-'))
+  const cause = new Error('controlled Git batch failure')
+  let failedBatch
+  try {
+    fixtureGit(fixture, 'add', '.')
+    const treeId = fixtureGit(fixture, 'write-tree')
+    const original = fs.readFileSync(path.join(fixture, 'src/Foo.fs'))
+    const originalExec = childProcess.execFileSync
+    failedBatch = t.mock.method(childProcess, 'execFileSync', (file, args, options) => {
+      if (file === 'git' && args.includes('--batch')) {
+        if (closeFailure) fs.closeSync(options.stdio[1])
+        throw cause
+      }
+      return originalExec(file, args, options)
+    })
+    syncBuiltinESMExports()
+    await assert.rejects(() => prepareSource({ repositoryRoot: fixture, treeId, parentDirectory: parent }), error =>
+      closeFailure
+        ? error instanceof AggregateError && error.cause === cause && error.errors[0] === cause && error.errors[1].code === 'EBADF'
+        : error === cause)
+    assert.deepEqual(fs.readdirSync(parent), [])
+    assert.deepEqual(fs.readFileSync(path.join(fixture, 'src/Foo.fs')), original)
+  } finally {
+    failedBatch?.mock.restore()
+    syncBuiltinESMExports()
+    fs.rmSync(fixture, { recursive: true, force: true })
+    fs.rmSync(parent, { recursive: true, force: true })
+  }
+})
+}
 
 test('WHAT[verification-system-016] a selected Git tree preserves complete raw source bytes and its own corpus inventory despite later workspace and index edits', async () => {
   const fixture = setupFixtureRepo()

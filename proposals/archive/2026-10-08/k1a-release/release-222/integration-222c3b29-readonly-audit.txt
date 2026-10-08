@@ -1,0 +1,20 @@
+本轮 input 为 222c3b29a6e7f599e648542a761b4ec562962917，digest ace2adec0299705b92949d98526c360edf7e651d637206ec1ef71d94542521a5。独立 wrapper 前后 digest 相同、inputsEqual=true。此收据独立于旧 0c6c170d3 的 integration 失败，不能互相替换。
+
+命令 WXS_RELEASE=1 node requirements/verification-system/tests/integration/run.mjs；实际解释器 /private/tmp/node-v22.23.3-darwin-arm64/bin/node，NODE_TEST_CONCURRENCY=2、UNIT_VERDICT_SILENCE_MS=30000。开始 2026-10-08T06:09:03.353Z，wrapper 313971.596583ms、exit1、signal=null、outer1200000ms未超时。三个 child groups 均实际执行；原父套件 300000ms backstop 截断。
+
+父 requirement integration：44 planned、44 admitted、42 drained、2 active、0 queued。全部 pass/fail/skip/TODO 都是 unknown，原日志明确没有 authoritative summary。不能把42文件排空写为42文件通过。实际已观察至少1个普通断言失败：log382 WHAT[durable-events-022] each actual bounded locality compiles as one flat project and a reversed dependency is rejected，52312.576ms。失败发生在 journal-outcome-contract 的正例编译，要求 result.ok===true；Fable5.13.0 ProjectCracker 抛 System.AggregateException，表示 design-time msbuild failed。显示诊断只有重复 Directory.Build.props import 的 MSB4011 警告，没有实际MSBuild退出原因；不能直接把警告认定根因，也不能把该正例失败当负控。actual worker8256最终exit1。42个完整cost中41个exit0、1个exit1；另两个active缺少exit观察。
+
+截断 active：structured-workflow/012 在210487.169833ms准入，实际worker11718，最后实际body为 switching focused closures in one output directory emits the newly selected module。verification-system/016 在265599.173333ms准入，实际worker12034，最后实际body为 same UID nonforce detach preserves an independent foreign device。二者完整wall/CPU未知。completed admission占用475987.651421ms，加两个active截至300秒的最低占用123913.656834ms，总599901.308255ms；本次仍无足够空lane可凭调度重排回收。
+
+资源清理：inner group2801截断后发现11718/12171/12174/12177仍存活，随后回收，但原accepted=false、33.523ms仍必须保留。wrapper cleanupFailure=null不能覆盖该拒绝。分发group12242独立accepted=true、16.741ms。
+
+016 mount专项只读审计时间 2026-10-08T06:16:32.111772Z：hdiutil info images=[]，mount仅系统卷，未发现当前临时挂载。日志唯一实际Node consumer由12034拥有monitor12142/tool12143，完整toolexit0、groupdrained、monitorclosed0；它属于已完成的第二个readonly用例。第三个用例开始后未记录随机根目录、device或consumer PID。当前12034/12142/12143均ESRCH；本次其他精确known PIDs2798/2801/11718/12171/12174/12177/12241/12242/12243也ESRCH。精确PID探测是有限资源证据，不代表未知后代或文件系统全部清理。
+
+fixture源码 withDirectories 仅在restoreProven后删除root；随机root和directory owner的dev/inode存在内存，未写持久pid归属凭据。限定读取临时目录下同prefix候选的consumer-ready/result收据，没有找到包含实际logged tool12143身份的残留root。两个同prefix候选无法仅凭prefix/时间归属12034，其名字未列入清理清单。当前没有可证明属于该worker的剩余挂载或可安全删除root，因此建议不做额外卸载/删除；剩余临时文件是否属于本次为unknown，不能宣布文件系统完全清理。
+
+Distribution child：1/1文件，3pass、0fail、0skip、1TODO，exit1仅GAP-210 pending-proof，0.2s。Harness child：290计划/290完成、290pass/0fail、exit0，outer12.1s、child11.9s；custom runner没有发布skip/TODO计数，二者unknown，成功输出被折叠，逐case清理收据unknown。父orchestrator合计2groups failed/1passed、313.2s。以上不能消除父suite截断、普通编译失败和accepted=false。
+
+原log /private/tmp/vibe-fs-oct8-alias-release/independent-integration.log，SHA256 b352b88cc56102ded5505bb2241249ea73c4ce40720b0e73090d9fa1c57d068b。
+详尽收据 /private/tmp/vibe-fs-oct8-alias-release/integration-222c3b29-readonly-audit.json。
+资源快照 /private/tmp/vibe-fs-oct8-alias-release/integration-222-readonly-resources/receipt.json、mount.txt、hdiutil-info.plist；正例编译失败原文 durable022-positive-compile-failure.txt。
+本次仅只读审计与/tmp收据写入；没有运行测试、构建、卸载、删除、终止进程或修改仓库。未干扰进行中的E2E。
