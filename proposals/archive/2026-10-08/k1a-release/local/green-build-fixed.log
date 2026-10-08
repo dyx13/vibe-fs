@@ -1,0 +1,20 @@
+[36m[build][0m Compiling F# (focused)...
+[37mFable 5.13.0: F# to JavaScript compiler
+[39m[22m[37mMinimum @fable-org/fable-library-js version (when installed from npm): 2.5.1
+[39m[22m[37m
+Thanks to the contributor! @forki
+[39m[22m[37mStand with Ukraine! https://standwithukraine.com.ua/
+
+[39m[22m[37mParsing src/Wanxiangshu/.fable-build/output-compile/1736af1e65d7b600f0ad2ab86ce2071116792a0ef7bb0d10687470206692ceae/Wanxiangshu.Impact.fsproj...
+[39m[22m[37mProject and references (1568 source files) parsed in 1030ms
+
+[39m[22m[37mStarted Fable compilation...
+[39m[22m[37m
+Fable compilation finished in 54756ms
+
+[39m[22m[31m./src/Wanxiangshu/OpenCode/Tools/FetchTool.fs(155,9): (155,13) error FSHARP: Module 'Wanxiangshu.OpenCode.FetchTool' contains    val spec: factory: HostToolFactory -> workspaceRoot: string -> owner: CasebookSettlementOwner -> (IEventStore -> ToolSpec)    but its signature specifies    val spec: factory: HostToolFactory -> workspaceRoot: string -> owner: CasebookSettlementOwner -> store: IEventStore -> ToolSpec    The arities in the signature and implementation differ. The signature specifies that 'spec' is function definition or lambda expression accepting at least 4 argument(s), but the implementation is a computed function value. To declare that a computed function value is a permitted implementation simply parenthesize its type in the signature, e.g. val spec: int -> (int -> int)instead of val spec: int -> int -> int. (code 34)
+[39m[22m[31mCompilation failed
+[39m[22m[31m════════════════════════════════════════════════════════════════════════════════
+  BUILD FAILED
+════════════════════════════════════════════════════════════════════════════════[0m
+Fable compilation failed with exit code 1

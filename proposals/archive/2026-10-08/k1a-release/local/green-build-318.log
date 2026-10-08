@@ -1,0 +1,26 @@
+[36m[build][0m Compiling F# (focused)...
+[37mFable 5.13.0: F# to JavaScript compiler
+[39m[22m[37mMinimum @fable-org/fable-library-js version (when installed from npm): 2.5.1
+[39m[22m[37m
+Thanks to the contributor! @stroborobo
+[39m[22m[37mStand with Ukraine! https://standwithukraine.com.ua/
+
+[39m[22m[37mParsing src/Wanxiangshu/.fable-build/output-compile/1736af1e65d7b600f0ad2ab86ce2071116792a0ef7bb0d10687470206692ceae/Wanxiangshu.Impact.fsproj...
+[39m[22m[37mProject and references (1568 source files) parsed in 1027ms
+
+[39m[22m[37mStarted Fable compilation...
+[39m[22m[37m
+Fable compilation finished in 53868ms
+
+[39m[22m[31m./src/Wanxiangshu/OpenCode/Tools/FetchTool.fs(167,10): (184,20) error FSHARP: No assignment given for field 'Description' of type 'Wanxiangshu.OpenCode.ToolSpec' (code 764)
+[39m[22m[31m./src/Wanxiangshu/OpenCode/Tools/FetchTool.fs(167,19): (184,18) error FSHARP: This expression was expected to have type    'string'    but here has type    'bool' (code 1)
+[39m[22m[31m./src/Wanxiangshu/OpenCode/Tools/FetchTool.fs(167,19): (167,26) error FSHARP: This value is not a function and cannot be applied. (code 3)
+[39m[22m[31m./src/Wanxiangshu/OpenCode/Tools/FetchTool.fs(168,25): (168,97) error FSHARP: This value is not a function and cannot be applied. (code 3)
+[39m[22m[31m./src/Wanxiangshu/OpenCode/Tools/FetchTool.fs(169,23): (169,32) error FSHARP: This value is not a function and cannot be applied. (code 3)
+[39m[22m[31m./src/Wanxiangshu/OpenCode/Tools/FetchTool.fs(170,23): (170,32) error FSHARP: This value is not a function and cannot be applied. (code 3)
+[39m[22m[31m./src/Wanxiangshu/OpenCode/Tools/FetchTool.fs(172,13): (184,18) error FSHARP: This function takes too many arguments, or is used in a context where a function is not expected (code 2)
+[39m[22m[31mCompilation failed
+[39m[22m[31m════════════════════════════════════════════════════════════════════════════════
+  BUILD FAILED
+════════════════════════════════════════════════════════════════════════════════[0m
+Fable compilation failed with exit code 1

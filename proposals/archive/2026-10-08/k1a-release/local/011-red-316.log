@@ -1,0 +1,89 @@
+runner: scoped 使用 TESTS_MJS_FILES=1 files
+runner: build is current (1815 sources, 891 artifacts)
+runner: discovery OVERRIDDEN by TESTS_MJS_FILES (1 file(s))
+runner: 1 test file(s), 5000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","pid":96278,"parentPid":96262,"type":"runner:file-start","elapsedMs":39.07683399999996}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","pid":96279,"parentPid":96278,"monotonicMs":17.883958,"cpuUserMicros":23135,"cpuSystemMicros":5285}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] overlapping fetches join one actual in-flight maintenance and receive the same result","fullName":"WHAT[knowledge-reuse-011] overlapping fetches join one actual in-flight maintenance and receive the same result"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] physical workspace identical bindings and different required owners share one actual flight","fullName":"WHAT[knowledge-reuse-011] physical workspace identical bindings and different required owners share one actual flight"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] physical workspace dot bindings and different required owners share one actual flight","fullName":"WHAT[knowledge-reuse-011] physical workspace dot bindings and different required owners share one actual flight"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] physical workspace relative bindings and different required owners share one actual flight","fullName":"WHAT[knowledge-reuse-011] physical workspace relative bindings and different required owners share one actual flight"}
+
+✖ failing tests:
+
+test at /Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:50:1
+✖ WHAT[knowledge-reuse-011] physical workspace dot bindings and different required owners share one actual flight (68.418ms)
+  AssertionError [ERR_ASSERTION]: different required owners must not split the workspace flight
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:106:12)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] physical workspace symlink bindings and different required owners share one actual flight","fullName":"WHAT[knowledge-reuse-011] physical workspace symlink bindings and different required owners share one actual flight"}
+test at /Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:50:1
+✖ WHAT[knowledge-reuse-011] physical workspace relative bindings and different required owners share one actual flight (68.503ms)
+  AssertionError [ERR_ASSERTION]: different required owners must not split the workspace flight
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:106:12)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] different workspaces with the same shelfmark keep the paused Refresh and actual malformed Access cut with their own owners","fullName":"WHAT[knowledge-reuse-011] different workspaces with the same shelfmark keep the paused Refresh and actual malformed Access cut with their own owners"}
+test at /Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:50:1
+✖ WHAT[knowledge-reuse-011] physical workspace symlink bindings and different required owners share one actual flight (63.723ms)
+  AssertionError [ERR_ASSERTION]: different required owners must not split the workspace flight
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:106:12)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] real linked worktrees sharing a common directory and Store retain separate physical flights","fullName":"WHAT[knowledge-reuse-011] real linked worktrees sharing a common directory and Store retain separate physical flights"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] same key and actual Store execute again after success settlement","fullName":"WHAT[knowledge-reuse-011] same key and actual Store execute again after success settlement"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] same key and actual Store execute again after ordinary-exception settlement","fullName":"WHAT[knowledge-reuse-011] same key and actual Store execute again after ordinary-exception settlement"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] same key and actual Store execute again after fatal-return settlement","fullName":"WHAT[knowledge-reuse-011] same key and actual Store execute again after fatal-return settlement"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] same key and actual Store execute again after fatal-throw settlement","fullName":"WHAT[knowledge-reuse-011] same key and actual Store execute again after fatal-throw settlement"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] an active workspace flight rejects a different actual store capability without a second Bookkeeper or append","fullName":"WHAT[knowledge-reuse-011] an active workspace flight rejects a different actual store capability without a second Bookkeeper or append"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] two required owners on one workspace store share the original settled cut rejection and one callback","fullName":"WHAT[knowledge-reuse-011] two required owners on one workspace store share the original settled cut rejection and one callback"}
+test at /Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:372:1
+✖ WHAT[knowledge-reuse-011] an active workspace flight rejects a different actual store capability without a second Bookkeeper or append (65.092ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:419:12)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] two required owners on one workspace store share one actual CurrentCommitUnknown cut, original incident and Prepared","fullName":"WHAT[knowledge-reuse-011] two required owners on one workspace store share one actual CurrentCommitUnknown cut, original incident and Prepared"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] two required owners on one workspace store share one actual CurrentCommitUnknown without cuts and retain the stale response","fullName":"WHAT[knowledge-reuse-011] two required owners on one workspace store share one actual CurrentCommitUnknown without cuts and retain the stale response"}
+[verification-test-start] {"pid":96279,"parentPid":96278,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","name":"WHAT[knowledge-reuse-011] GAP-160: real replica branches become DomainConflict and converge through explicit resolution without LWW","fullName":"WHAT[knowledge-reuse-011] GAP-160: real replica branches become DomainConflict and converge through explicit resolution without LWW"}
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","pid":96279,"parentPid":96278,"monotonicMs":2479.857333,"cpuUserMicros":387136,"cpuSystemMicros":142751,"exitCode":1}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","type":"runner:file-drained","elapsedMs":2535.4200419999997}
+
+[test-summary] 1 file(s), 11 passed, 4 failed, 1 todo (2.50s wall, 2.34s test time)
+  todo: /Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs:WHAT[knowledge-reuse-011] GAP-160: real replica branches become DomainConflict and converge through explicit resolution without LWW — reason not supplied
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","enabled":true,"pid":96279,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","pid":96279,"parentPid":96278,"monotonicMs":17.883958,"cpuUserMicros":23135,"cpuSystemMicros":5285},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/011.test.mjs","pid":96279,"parentPid":96278,"monotonicMs":2479.857333,"cpuUserMicros":387136,"cpuSystemMicros":142751,"exitCode":1},"interval":{"clockPid":96279,"wallMs":2461.973375,"cpuUserMicros":364001,"cpuSystemMicros":137466}}
+runner: post-exit group verification/reclamation: pid=96278; elapsedMs=21.116; accepted=true
+runner: 16 test(s), 2.3s of test time; max 301ms, p90 224ms, median 189ms
+runner:     301ms  WHAT[knowledge-reuse-011] real linked worktrees sharing a common directory and Store retain separate physical flights
+runner:     224ms  WHAT[knowledge-reuse-011] physical workspace identical bindings and different required owners share one actual flight
+runner:     208ms  WHAT[knowledge-reuse-011] same key and actual Store execute again after fatal-throw settlement
+runner:     202ms  WHAT[knowledge-reuse-011] same key and actual Store execute again after success settlement
+runner:     192ms  WHAT[knowledge-reuse-011] two required owners on one workspace store share one actual CurrentCommitUnknown cut, original incident and Prepared
+
+runner: 11 passed, 4 failed; 1/1 planned file(s) completed
+Error: runner: supervised suite failed (exit 1)
+    at fail (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:258:25)
+    at superviseOwnedNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:486:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async superviseNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:235:14)
+    at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/run.mjs:94:1 {
+  exitCode: 1,
+  [cause]: undefined
+}

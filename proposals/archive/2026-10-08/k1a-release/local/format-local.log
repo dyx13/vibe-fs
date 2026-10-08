@@ -1,0 +1,4 @@
+                                                             
+  Formatted │ 1 │ Ignored │ 0 │ Unchanged │ 2 │ Errored │ 1  
+                                                             
+Failed to format file: src/Wanxiangshu/OpenCode/Tools/FetchTool.fs : Formatting src/Wanxiangshu/OpenCode/Tools/FetchTool.fs leads to invalid F# code

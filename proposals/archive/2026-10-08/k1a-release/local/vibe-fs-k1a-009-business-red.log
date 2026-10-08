@@ -1,0 +1,53 @@
+runner: scoped 使用 TESTS_MJS_FILES=1 files
+runner: build is current (1815 sources, 891 artifacts)
+runner: discovery OVERRIDDEN by TESTS_MJS_FILES (1 file(s))
+runner: 1 test file(s), 5000ms verdict-silence window
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","pid":96194,"parentPid":96175,"type":"runner:file-start","elapsedMs":37.023124999999936}
+[verification-worker-cost] {"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","pid":96195,"parentPid":96194,"monotonicMs":18.490541,"cpuUserMicros":24136,"cpuSystemMicros":4642}
+[verification-test-start] {"pid":96195,"parentPid":96194,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","name":"WHAT[knowledge-reuse-009] absent marker keeps an existing root neutral and the bound fetch recognizes later enabling","fullName":"WHAT[knowledge-reuse-009] absent marker keeps an existing root neutral and the bound fetch recognizes later enabling"}
+[verification-test-start] {"pid":96195,"parentPid":96194,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","name":"WHAT[knowledge-reuse-009] a missing root binds a neutral fetch without creating a directory, index or event","fullName":"WHAT[knowledge-reuse-009] a missing root binds a neutral fetch without creating a directory, index or event"}
+[verification-test-start] {"pid":96195,"parentPid":96194,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","name":"WHAT[knowledge-reuse-009] a root resolution I/O fault refuses binding with its original error and no fallback or Casebook effects","fullName":"WHAT[knowledge-reuse-009] a root resolution I/O fault refuses binding with its original error and no fallback or Casebook effects"}
+[verification-test-start] {"pid":96195,"parentPid":96194,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","name":"WHAT[knowledge-reuse-009] actual lifecycle finalization without a marker does not publish a case","fullName":"WHAT[knowledge-reuse-009] actual lifecycle finalization without a marker does not publish a case"}
+
+✖ failing tests:
+
+test at /Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs:60:1
+✖ WHAT[knowledge-reuse-009] a root resolution I/O fault refuses binding with its original error and no fallback or Casebook effects (24.544ms)
+  AssertionError [ERR_ASSERTION]: an I/O fault must refuse binding rather than silently retaining the raw path
+  + actual - expected
+  
+  + undefined
+  - Error: controlled workspace realpath I/O failure
+  -     at TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs:63:31)
+  -     at Test.runInAsyncScope (node:async_hooks:214:14)
+  -     at Test.run (node:internal/test_runner/test:1047:25)
+  -     at async Test.processPendingSubtests (node:internal/test_runner/test:744:7) {
+  -   code: 'EIO'
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs:94:12)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+[verification-test-start] {"pid":96195,"parentPid":96194,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","name":"WHAT[knowledge-reuse-009] GAP-160: actual plugin excludes description and index and appends no Casebook facts while disabled","fullName":"WHAT[knowledge-reuse-009] GAP-160: actual plugin excludes description and index and appends no Casebook facts while disabled"}
+[verification-worker-cost] {"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","pid":96195,"parentPid":96194,"monotonicMs":493.639666,"cpuUserMicros":189983,"cpuSystemMicros":34429,"exitCode":1}
+runner: file lifecycle {"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","type":"runner:file-drained","elapsedMs":546.5795420000001}
+
+[test-summary] 1 file(s), 3 passed, 1 failed, 1 todo (0.51s wall, 0.36s test time)
+  todo: /Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs:WHAT[knowledge-reuse-009] GAP-160: actual plugin excludes description and index and appends no Casebook facts while disabled — reason not supplied
+runner: worker cost {"version":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","enabled":true,"pid":96195,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","pid":96195,"parentPid":96194,"monotonicMs":18.490541,"cpuUserMicros":24136,"cpuSystemMicros":4642},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/Users/yuanxi/Workwork/vibe-fs/requirements/knowledge-reuse/tests/009.test.mjs","pid":96195,"parentPid":96194,"monotonicMs":493.639666,"cpuUserMicros":189983,"cpuSystemMicros":34429,"exitCode":1},"interval":{"clockPid":96195,"wallMs":475.14912499999997,"cpuUserMicros":165847,"cpuSystemMicros":29787}}
+runner: could not verify process group 96194 after inner exit: spawnSync ps EPERM
+runner: process group 96194 reclamation failed: spawnSync ps EPERM
+runner: post-exit group verification/reclamation: pid=96194; elapsedMs=2.160; accepted=false
+runner: 5 test(s), 0.4s of test time; max 313ms, p90 313ms, median 21ms
+
+runner: 3 passed, 1 failed; 1/1 planned file(s) completed
+Error: runner: supervised suite failed (exit 1)
+    at fail (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:258:25)
+    at superviseOwnedNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:486:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async superviseNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:235:14)
+    at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/run.mjs:94:1 {
+  exitCode: 1,
+  [cause]: undefined
+}

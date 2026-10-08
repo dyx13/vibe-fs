@@ -174,14 +174,9 @@ module FetchTool =
                         let language = lang ctx
                         let shelfmark = args.Text "shelfmark"
 
-                        match physicalRoot with
-                        | Some root when CasebookFeature.isEnabled root ->
-                            if String.IsNullOrWhiteSpace shelfmark then
-                                return
-                                    ToolHostCodec.tomlObjectWithInstructions
-                                        [ prose language Path.ShelfmarkRequired ]
-                                        []
-                            else
-                                return! getOrCreateFlightWork owner language root store shelfmark
-                        | _ -> return unavailable language
+                        match physicalRoot |> Option.filter CasebookFeature.isEnabled with
+                        | None -> return unavailable language
+                        | Some _ when String.IsNullOrWhiteSpace shelfmark ->
+                            return ToolHostCodec.tomlObjectWithInstructions [ prose language Path.ShelfmarkRequired ] []
+                        | Some root -> return! getOrCreateFlightWork owner language root store shelfmark
                     } }
