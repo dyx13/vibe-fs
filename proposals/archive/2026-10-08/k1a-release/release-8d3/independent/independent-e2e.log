@@ -1,0 +1,124 @@
+TAP version 13
+# Subtest: WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+ok 1 - WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+  ---
+  duration_ms: 1.172958
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+ok 2 - WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+  ---
+  duration_ms: 0.660083
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+ok 3 - WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+  ---
+  duration_ms: 10.173083
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+ok 4 - WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+  ---
+  duration_ms: 17.616292
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+ok 5 - WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+  ---
+  duration_ms: 25.501417
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+ok 6 - WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+  ---
+  duration_ms: 13.403292
+  type: 'test'
+  ...
+[setupScenario] ready
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[MOCK-FATAL] first script mismatch: reason=no-declared-turn session=ses_ee5b8ae4dffe41pjFMzLH2p7Bc parent=- model="test-model" tools=["abandon","assume","celebrate","defer","enough","fork","horizon","join","js-manager","publish","regret","resume","review","skill","subscribe","suicide","todowrite"] msgs=7 lastUser="STRENGTH_HOST_CANARY: inspect README.md through the real nested Replica path.\u0000﻿<system>\n# # Wait-cost calibration: this session has existed for about 0 minutes 0 seconds of wall-clock time.\n# # Hold that duration beside useful work already accomplished only to price another interval of waiting or resource commitment.\n# # Question: if you spent the next interval working instead of waiting for a com" candidates=["manager-reopened-loop.3@undefined/chat/step-3","manager-join-guard.2@undefined/chat/step-3","manager-current-action.3@undefined/chat/step-3","blogger.3@undefined/chat/step-3"]
+[MSG-ROLES] system user assistant tool assistant tool assistant
+[MSG-TOOL-RESULTS] ["# ok\n\n[data]\ninspected = true\n\u0000﻿# # Wait-cost calibration: this session has existed for about 0 minutes 1 second of wall-clock time.\n# # Hold that duration beside useful work already accomplished only to price another interval of waiting or resource commitment.\n# # Question: if you spent the next in","# ok\n\ndata = \"LARGE_READ_PROBE_MARKER line 0001 pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp"]
+── fatal script mismatch: no-declared-turn (lane=manager|strength-canary-owner kind=chat step=3) ──
+session=ses_ee5b8ae4dffe41pjFMzLH2p7Bc lastUser="STRENGTH_HOST_CANARY: inspect README.md through the real nested Replica path.\u0000﻿<system>\n# # Wait-cost calibration: this session has existed for about 0 minutes 0 seconds of wall-clock time.\n# # Hold that duration beside useful work already accomplished only to price another interval of waiting or resource commitment.\n# # Question: if you spent the next interval working instead of waiting for a com"
+candidates=["manager-reopened-loop.3@undefined/chat/step-3","manager-join-guard.2@undefined/chat/step-3","manager-current-action.3@undefined/chat/step-3","blogger.3@undefined/chat/step-3"]
+── event tail ──
+#166 06:50:46.408 sync
+#167 06:50:46.408 message.part.updated session=ses_ee5b8a59
+#168 06:50:46.408 sync
+#169 06:50:46.408 message.part.delta session=ses_ee5b8a59 msg=msg_11a475ac
+#170 06:50:46.408 message.part.updated session=ses_ee5b8a59
+#171 06:50:46.408 sync
+#172 06:50:46.408 message.part.updated session=ses_ee5b8a59 finish=stop
+#173 06:50:46.408 sync
+#174 06:50:46.408 message.updated session=ses_ee5b8a59 finish=stop
+#175 06:50:46.408 sync
+#176 06:50:46.408 message.updated session=ses_ee5b8a59 finish=stop
+#177 06:50:46.408 sync
+#178 06:50:46.408 session.status session=ses_ee5b8a59
+#179 06:50:46.408 session.status session=ses_ee5b8a59
+#180 06:50:46.408 session.idle session=ses_ee5b8a59
+#181 06:50:46.425 session.updated session=ses_ee5b8a59
+#182 06:50:46.425 sync
+#183 06:50:46.425 session.diff session=ses_ee5b8a59
+#184 06:50:46.425 file.watcher.updated
+#185 06:50:46.425 file.watcher.updated
+── Host stderr tail ──
+{"operation":"strength-delegation-skip","session_id":"ses_ee5b8ae4dffe41pjFMzLH2p7Bc","result":"no-completed-source-batch"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee5b8aca6ffeaAIZo3FPR71jHJ","result":"owner provider run is not uniquely bound"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee5b8aca6ffeaAIZo3FPR71jHJ","result":"apply-surface-failed:owner provider run is not uniquely bound"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee5b8aca6ffeaAIZo3FPR71jHJ","result":"owner provider run is not uniquely bound"}
+
+── Journal fact tail ──
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:0:Accepted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:1:TransactionCommitted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:2:UnknownFact
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:3:AuthorityRootAccepted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:4:BloggerRequestMaterialized
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:5:AuthorityRootAccepted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:6:SessionStartedAtBound
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:7:XTracePartAppended
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:8:AuthorityRootAccepted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:9:ProviderStarted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:10:PairProgrammingGuidelineAnchored
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:11:UnknownFact
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:12:RuntimeStarted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:13:PluginPromptClaimed
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:14:UnknownFact
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:15:Accepted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:16:PluginPromptPhysicalAccepted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:17:Accepted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:18:BloggerRequestMaterialized
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:19:XTracePartAppended
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:20:ProviderStarted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:21:BloggerRequestMaterialized
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:22:PluginPromptClaimed
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:23:ProviderStarted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:24:BlogObservationCommitted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:25:PluginPromptSubmitted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:26:PluginPromptPhysicalAccepted
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:27:Terminal
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:28:XTracePartAppended
+a0af757c0b6a449be14d078306a1e399a2ed233b4f224083844afa26c9f9b39b:29:BloggerRequestMaterialized
+  pending blocking humanroot-manager-title.0 humanroot-manager-title.0@humanroot-manager/title/step-0
+  pending blocking humanroot-loop.0 humanroot-loop.0@humanroot-manager/chat/step-0
+  pending blocking humanroot-loop.1 humanroot-loop.1@humanroot-manager/chat/step-1
+  pending blocking title.0 title.0@title/title/step-0
+  pending blocking orch.0 orch.0@orchestrator/chat/step-0
+  pending blocking orch.1 orch.1@orchestrator/chat/step-1
+  pending blocking orch.2 orch.2@orchestrator/chat/step-2
+  pending blocking manager-loop.0 manager-loop.0@manager/chat/step-0
+  pending blocking manager-loop.1 manager-loop.1@manager/chat/step-1
+  pending blocking manager-loop.2 manager-loop.2@manager/chat/step-2
+  pending blocking manager-interrupt.0 manager-interrupt.0@manager/chat/step-0
+  pending blocking engineer.0 engineer.0@engineer/chat/step-0
+  pending blocking engineer.1 engineer.1@engineer/chat/step-1
+  pending blocking engineer.2 engineer.2@engineer/chat/step-2
+  pending blocking strength-recovery-owner.0 strength-recovery-owner.0@strength-recovery-owner/chat/step-0
+  pending blocking strength-recovery-owner.1 strength-recovery-owner.1@strength-recovery-owner/chat/step-1
+  pending blocking strength-recovery-owner.2 strength-recovery-owner.2@strength-recovery-owner/chat/step-2

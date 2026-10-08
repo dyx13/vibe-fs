@@ -1,0 +1,140 @@
+--- a/src/Wanxiangshu/Mission/Manager/WorkflowSurface.fs
++++ b/src/Wanxiangshu/Mission/Manager/WorkflowSurface.fs
+@@ -10,6 +10,21 @@
+ 
+ [<RequireQualifiedAccess>]
+ module ManagerWorkflowSurface =
++    let continueAfterRetiredAttempt
++        (port: obj)
++        (journal: JournalHandle)
++        (session: string)
++        (directory: string)
++        (stopRetiredAttempt: string -> Task<unit>)
++        : Task =
++        ManagerWorkflow.continueAfterRetiredAttempt
++            (DispatchSurface.sessionPort port)
++            (DispatchSurface.rootWorkspaceReader (box directory))
++            (Some journal.Journal)
++            (Some directory)
++            (SessionId.value >> stopRetiredAttempt)
++            (SessionId.create session)
++
+     let maybeDeliverLoop (port: obj) (journal: JournalHandle) (session: string) (directory: string) : Task =
+         ManagerWorkflow.maybeDeliverLoop
+             (DispatchSurface.sessionPort port)
+--- a/src/Wanxiangshu/Mission/Manager/WorkflowSurface.fsi
++++ b/src/Wanxiangshu/Mission/Manager/WorkflowSurface.fsi
+@@ -7,6 +7,14 @@
+ 
+ [<RequireQualifiedAccess>]
+ module ManagerWorkflowSurface =
++    val continueAfterRetiredAttempt:
++        port: obj ->
++        journal: JournalHandle ->
++        session: string ->
++        directory: string ->
++        stopRetiredAttempt: (string -> Task<unit>) ->
++            Task
++
+     val maybeDeliverLoop: port: obj -> journal: JournalHandle -> session: string -> directory: string -> Task
+ 
+     val observeIdle:
+--- a/scripts/lib/test-surface-scan.mjs
++++ b/scripts/lib/test-surface-scan.mjs
+@@ -1657,7 +1657,7 @@
+   {
+     module: 'Mission/Manager/WorkflowSurface.js',
+     owner: 'relay-retirement',
+-    laws: ['DISPATCH-PROTOCOL-002', 'CRASH-RECONCILIATION-006', 'RELAY-INCUMBENCY-006'],
++    laws: ['DISPATCH-PROTOCOL-002', 'CRASH-RECONCILIATION-006', 'RELAY-INCUMBENCY-006', 'RELAY-RETIREMENT-008'],
+     lawOwners: { 'DISPATCH-PROTOCOL-002': 'dispatch-protocol', 'CRASH-RECONCILIATION-006': 'crash-reconciliation', 'RELAY-INCUMBENCY-006': 'relay-incumbency' },
+     source: 'src/Wanxiangshu/Mission/Manager/WorkflowSurface.fs',
+     representation: 'opaque-capability',
+@@ -1806,7 +1806,8 @@
+   {
+     module: 'Mission/Relay/ProjectionSurface.js',
+     owner: 'relay-context-projection',
+-    laws: ['PROJ-001', 'PROJ-002', 'PROJ-003', 'PROJ-004', 'PROJ-005', 'PROJ-006', 'PROJ-007', 'PROJ-008', 'PROJ-009'],
++    laws: ['PROJ-001', 'PROJ-002', 'PROJ-003', 'PROJ-004', 'PROJ-005', 'PROJ-006', 'PROJ-007', 'PROJ-008', 'PROJ-009', 'RELAY-RETIREMENT-008'],
++    lawOwners: { 'RELAY-RETIREMENT-008': 'relay-retirement' },
+     source: 'src/Wanxiangshu/Mission/Relay/ProjectionSurface.fs',
+     representation: 'opaque-capability',
+     kind: 'resource',
+--- a/requirements/relay-retirement/tests/008.test.mjs
++++ b/requirements/relay-retirement/tests/008.test.mjs
+@@ -3,6 +3,10 @@
+ import {withReview, scores} from '../../relay-assessment/tests/support/plugin.mjs'
+ import {withSuccessor, messageId} from '../../relay-context-projection/tests/support/cut.mjs'
+ import { withExecutablePlugin, acceptAuthorityRoot } from '../../verification-system/tests/support/plugin-fixture.mjs'
++import * as workflow from '../../../dist/Mission/Manager/WorkflowSurface.js'
++import * as dispatch from '../../../dist/Interaction/Dispatch/DispatchSurface.js'
++import * as projection from '../../../dist/Mission/Relay/ProjectionSurface.js'
++import { withManagerLoop } from '../../relay-incumbency/tests/support/manager-loop.mjs'
+ 
+ test('WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt', async () => {
+   await withReview(async ({execute, hooks, runtime, session}) => {
+@@ -122,4 +126,64 @@
+   })
+ })
+ 
++test('WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends', async () => {
++  await withManagerLoop('invalid-accepted-active', async context => {
++    const { directory, session, profile, road } = context
++    const original = dispatch.projectionObservation(context.journal(), session)
++    const beforeRoad = road()
++    const stale = [
++      { info: { id: profile.authorityRoot, role: 'user', sessionID: session },
++        parts: [{ type: 'text', text: 'Deliver this original Manager charge.' }] },
++      { info: { id: 'provider:1', role: 'assistant', sessionID: session, parentID: profile.authorityRoot },
++        parts: [{ type: 'tool', tool: 'suicide', callID: 'suicide:1',
++          state: { status: 'completed', input: {}, output: 'finished = true' } }] },
++    ]
++    assert.deepEqual(await projection.apply(context.journal(), session, false, stale), {
++      disposition: 'retired-attempt-stopped', messages: [], interrupted: [session],
++    }, 'certificate invalidation and the active successor cannot turn the old physical request into new authority')
++    const stopping = Promise.withResolvers()
++    const release = Promise.withResolvers()
++    const stopped = []
++    const sent = []
++    const port = {
++      SubscribeTerminal: () => ({ Dispose() {} }),
++      SubscribeFutureTerminal: () => ({ Dispose() {} }),
++      AbortSession: () => assert.fail('ordinary continuation must not abort the session'),
++      InterruptAttempt: () => assert.fail('the exact interruption is owned by the supplied stop callback'),
++      SendPrompt: async (target, text, options) => {
++        const key = options.Metadata.wanxiangshu_prompt_key
++        const pending = dispatch.projectionObservation(context.journal(), session).pendingClaims
++        const claim = pending.find(value => value.promptKey === key)
++        assert.equal(target, session)
++        assert.equal(claim?.origin, 'ManagerGuard')
++        assert.equal(claim?.logicalRun, profile.logicalRun)
++        assert.equal(claim?.authorityRoot, profile.authorityRoot)
++        sent.push({ key, text })
++        return dispatch.admittedWithPhysicalMessage(`ordinary-accepted-${session}`)
++      },
++    }
++    const attempt = workflow.continueAfterRetiredAttempt(port, context.journal(), session, directory, async exact => {
++      stopped.push(exact)
++      stopping.resolve()
++      await release.promise
++    })
++    try {
++      await stopping.promise
++      assert.deepEqual(stopped, [session])
++      assert.equal(sent.length, 0, 'the old physical attempt must finish stopping first')
++    } finally {
++      release.resolve()
++    }
++    await attempt
++    assert.equal(sent.length, 0, 'Accepted must never automatically dispatch after stale-attempt interruption')
++    assert.deepEqual(road(), beforeRoad)
++    assert.deepEqual(dispatch.projectionObservation(context.journal(), session), original,
++      'stopping a stale Accepted attempt must leave the actual live AgentOwnerRoot and claims untouched')
++    await workflow.maybeDeliverLoop(port, context.journal(), session, directory)
++    assert.equal(sent.length, 1, 'explicit ordinary ContinueLoop still dispatches the exact invalidated Accepted retirement')
++    assert.deepEqual(dispatch.projectionObservation(context.journal(), session).activeLogicalRun, profile)
++    context.assertSubscriptionLive()
++  })
++})
++
+ test.todo('WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete')

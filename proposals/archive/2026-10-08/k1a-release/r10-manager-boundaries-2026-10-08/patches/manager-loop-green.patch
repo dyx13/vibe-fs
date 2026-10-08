@@ -1,0 +1,17 @@
+--- a/src/Wanxiangshu/Mission/Manager/Workflow.fs
++++ b/src/Wanxiangshu/Mission/Manager/Workflow.fs
+@@ -182,9 +182,11 @@
+             |> Result.defaultValue opening.Transaction
+ 
+     let private requiresContinuation (road: RoadView) (retirement: RetirementSummary) =
+-        match retirement.Outcome with
+-        | RetirementOutcome.Continue -> true
+-        | RetirementOutcome.Accepted _ -> false
++        match retirement.Outcome, road.Certificate with
++        | RetirementOutcome.Continue, _ -> true
++        | RetirementOutcome.Accepted certificateId, Some certificate ->
++            certificate.Id = certificateId && not certificate.Valid
++        | RetirementOutcome.Accepted _, _ -> false
+ 
+     let private isAcceptedWithValidCertificate (road: RoadView) (retirement: RetirementSummary) =
+         match retirement.Outcome, road.Certificate with

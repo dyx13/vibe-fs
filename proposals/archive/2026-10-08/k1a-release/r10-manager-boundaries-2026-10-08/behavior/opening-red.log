@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt
+not ok 1 - WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt
+  ---
+  duration_ms: 743.142625
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/relay-retirement/tests/008.test.mjs:14:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the stale physical request must leave the Accepted certificate, opening ordinal and inactive road unchanged
+    + actual - expected
+    
+      {
+        roadCount: 1,
+        roads: [
+          {
+    +       activeIncumbencyPresent: true,
+    -       activeIncumbencyPresent: false,
+            authorityMessageIdCount: 1,
+            authorityRevisionCount: 1,
+            boundDevOps: 'devops:review-manager',
+            certificatePresent: true,
+    +       iterationOrdinal: 2,
+    -       iterationOrdinal: 1,
+            latestRetirementPresent: true,
+            retiredIncumbencyCount: 1,
+            roadId: 'review-manager'
+          }
+        ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    roadCount: 1
+    roads:
+      0:
+        activeIncumbencyPresent: false
+        authorityMessageIdCount: 1
+        authorityRevisionCount: 1
+        boundDevOps: 'devops:review-manager'
+        certificatePresent: true
+        iterationOrdinal: 1
+        latestRetirementPresent: true
+        retiredIncumbencyCount: 1
+        roadId: 'review-manager'
+  actual:
+    roadCount: 1
+    roads:
+      0:
+        activeIncumbencyPresent: true
+        authorityMessageIdCount: 1
+        authorityRevisionCount: 1
+        boundDevOps: 'devops:review-manager'
+        certificatePresent: true
+        iterationOrdinal: 2
+        latestRetirementPresent: true
+        retiredIncumbencyCount: 1
+        roadId: 'review-manager'
+  operator: 'deepStrictEqual'
+  stack: |-
+    file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-retirement/tests/008.test.mjs:39:12
+    async file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-assessment/tests/support/plugin.mjs:29:3
+    async withExecutablePlugin (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/plugin-fixture.mjs:276:7)
+    async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-retirement/tests/008.test.mjs:15:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: WHAT[relay-retirement-008] actual Continue starts one same-session successor whose transform retains the old physical history without another abort
+ok 2 - WHAT[relay-retirement-008] actual Continue starts one same-session successor whose transform retains the old physical history without another abort
+  ---
+  duration_ms: 621.749583
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools
+ok 3 - WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools
+  ---
+  duration_ms: 666.737041
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends
+ok 4 - WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends
+  ---
+  duration_ms: 88.748792
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete
+ok 5 - WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete # TODO
+  ---
+  duration_ms: 0.0995
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 1
+# duration_ms 2262.273625

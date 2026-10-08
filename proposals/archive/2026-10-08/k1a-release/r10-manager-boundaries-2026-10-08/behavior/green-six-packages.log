@@ -1,0 +1,2407 @@
+TAP version 13
+# Subtest: WHAT[change-integration-001] fresh quality candidate runs the full publish lifecycle to Published
+ok 1 - WHAT[change-integration-001] fresh quality candidate runs the full publish lifecycle to Published
+  ---
+  duration_ms: 4.378917
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-001] retirement without a valid certificate continues the loop
+ok 2 - WHAT[change-integration-001] retirement without a valid certificate continues the loop
+  ---
+  duration_ms: 0.233125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-001] ORCH_003_a_created_job_persists_the_manager_agent_and_the_worktree_identity
+ok 3 - WHAT[change-integration-001] ORCH_003_a_created_job_persists_the_manager_agent_and_the_worktree_identity
+  ---
+  duration_ms: 0.484833
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-001] fresh quality candidate runs to Published with verified publication evidence
+ok 4 - WHAT[change-integration-001] fresh quality candidate runs to Published with verified publication evidence
+  ---
+  duration_ms: 0.52575
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-001] pre-rebase C1/S1 certificate cannot authorize rebased S2 candidate and fails closed
+ok 5 - WHAT[change-integration-001] pre-rebase C1/S1 certificate cannot authorize rebased S2 candidate and fails closed
+  ---
+  duration_ms: 0.323792
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-001] cancellation during manager loop returns Cancelled verdict and does not burn retry budget
+ok 6 - WHAT[change-integration-001] cancellation during manager loop returns Cancelled verdict and does not burn retry budget
+  ---
+  duration_ms: 0.13
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-001] reentry gate cancellation returns Cancelled with zero FF
+ok 7 - WHAT[change-integration-001] reentry gate cancellation returns Cancelled with zero FF
+  ---
+  duration_ms: 0.374458
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-001] old certificate still fails closed after the rebased record supersedes it
+ok 8 - WHAT[change-integration-001] old certificate still fails closed after the rebased record supersedes it
+  ---
+  duration_ms: 0.343875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] GIT_is_dirty_true_only_on_nonempty_porcelain
+ok 9 - WHAT[change-integration-002] GIT_is_dirty_true_only_on_nonempty_porcelain
+  ---
+  duration_ms: 1.306167
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] failed cleanliness inspection preserves the command failure
+ok 10 - WHAT[change-integration-002] failed cleanliness inspection preserves the command failure
+  ---
+  duration_ms: 0.528542
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] rejected cleanliness command preserves its original exception
+ok 11 - WHAT[change-integration-002] rejected cleanliness command preserves its original exception
+  ---
+  duration_ms: 0.4075
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] unreadable target cleanliness cannot authorize ff publication
+ok 12 - WHAT[change-integration-002] unreadable target cleanliness cannot authorize ff publication
+  ---
+  duration_ms: 1.067666
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] GIT_ff_merge_refuses_dirty_target_worktree
+ok 13 - WHAT[change-integration-002] GIT_ff_merge_refuses_dirty_target_worktree
+  ---
+  duration_ms: 4.071333
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] Git adapter reports worktree enumeration failure
+ok 14 - WHAT[change-integration-002] Git adapter reports worktree enumeration failure
+  ---
+  duration_ms: 0.357042
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] Git adapter detects a modified target worktree
+ok 15 - WHAT[change-integration-002] Git adapter detects a modified target worktree
+  ---
+  duration_ms: 0.120458
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] WORKTREE_CMD_is_dirty_reads_porcelain
+ok 16 - WHAT[change-integration-002] WORKTREE_CMD_is_dirty_reads_porcelain
+  ---
+  duration_ms: 0.177083
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] failed Git cleanliness blocks a new Host job before its worktree request or Manager creation
+ok 17 - WHAT[change-integration-002] failed Git cleanliness blocks a new Host job before its worktree request or Manager creation # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.244291
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] rejected Git command leaves a new Host job without its worktree request or Manager creation
+ok 18 - WHAT[change-integration-002] rejected Git command leaves a new Host job without its worktree request or Manager creation # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.265834
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] dirty Git result still rejects admission while clean permits the worktree request
+ok 19 - WHAT[change-integration-002] dirty Git result still rejects admission while clean permits the worktree request # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.084292
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] actual Git status failure returns an inspection error
+ok 20 - WHAT[change-integration-002] actual Git status failure returns an inspection error # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.02125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-002] Adapter_ffMerge_dirty_target_fails_closed_without_advancing_head
+ok 21 - WHAT[change-integration-002] Adapter_ffMerge_dirty_target_fails_closed_without_advancing_head # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.016334
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] GIT_rebase_ok_on_zero_exit
+ok 22 - WHAT[change-integration-003] GIT_rebase_ok_on_zero_exit
+  ---
+  duration_ms: 1.332959
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] GIT_rebase_stale_rebase_head_is_cleared_before_fresh_rebase
+ok 23 - WHAT[change-integration-003] GIT_rebase_stale_rebase_head_is_cleared_before_fresh_rebase
+  ---
+  duration_ms: 0.575959
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] GIT_rebase_in_progress_stages_and_continues
+ok 24 - WHAT[change-integration-003] GIT_rebase_in_progress_stages_and_continues
+  ---
+  duration_ms: 1.0285
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] GIT_rebase_continue_failure_surfaces_stderr
+ok 25 - WHAT[change-integration-003] GIT_rebase_continue_failure_surfaces_stderr
+  ---
+  duration_ms: 0.299125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] GIT_rebase_stage_failure_is_an_error
+ok 26 - WHAT[change-integration-003] GIT_rebase_stage_failure_is_an_error
+  ---
+  duration_ms: 0.30475
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] GIT_rebase_surfaces_stderr_on_failure
+ok 27 - WHAT[change-integration-003] GIT_rebase_surfaces_stderr_on_failure
+  ---
+  duration_ms: 0.091541
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] GIT_candidate_commit_deletes_stale_rebase_head_before_commit_and_surfaces_failure
+ok 28 - WHAT[change-integration-003] GIT_candidate_commit_deletes_stale_rebase_head_before_commit_and_surfaces_failure
+  ---
+  duration_ms: 0.66325
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] GIT_has_rebase_head_true_only_when_git_path_dir_exists
+ok 29 - WHAT[change-integration-003] GIT_has_rebase_head_true_only_when_git_path_dir_exists
+  ---
+  duration_ms: 0.36775
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] ORCH_007_each_durable_fact_has_one_projection_slot
+ok 30 - WHAT[change-integration-003] ORCH_007_each_durable_fact_has_one_projection_slot
+  ---
+  duration_ms: 0.991208
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] ORCH_007_incomplete_publish_claimed_evidence_is_rejected
+ok 31 - WHAT[change-integration-003] ORCH_007_incomplete_publish_claimed_evidence_is_rejected
+  ---
+  duration_ms: 0.424083
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] THEOREM_publish_claimed_without_rebased_candidate_is_rejected
+ok 32 - WHAT[change-integration-003] THEOREM_publish_claimed_without_rebased_candidate_is_rejected
+  ---
+  duration_ms: 0.260833
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] THEOREM_publish_claimed_with_incomplete_evidence_is_rejected
+ok 33 - WHAT[change-integration-003] THEOREM_publish_claimed_with_incomplete_evidence_is_rejected
+  ---
+  duration_ms: 0.09625
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] reentry with valid complete claim reenters without CandidateReady and publishes on the pin
+ok 34 - WHAT[change-integration-003] reentry with valid complete claim reenters without CandidateReady and publishes on the pin
+  ---
+  duration_ms: 2.244375
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] reentry missing RebasedCandidateReady evidence sends zero FF
+ok 35 - WHAT[change-integration-003] reentry missing RebasedCandidateReady evidence sends zero FF
+  ---
+  duration_ms: 0.175375
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] reentry with conflicting claim snapshot sends zero FF
+ok 36 - WHAT[change-integration-003] reentry with conflicting claim snapshot sends zero FF
+  ---
+  duration_ms: 0.162042
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] reentry with conflicting claim target sends zero FF
+ok 37 - WHAT[change-integration-003] reentry with conflicting claim target sends zero FF
+  ---
+  duration_ms: 0.071292
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] old incomplete claim decode fails closed in fold and recordFact
+ok 38 - WHAT[change-integration-003] old incomplete claim decode fails closed in fold and recordFact
+  ---
+  duration_ms: 0.131417
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] reentry FF-success with Published-append failure never masquerades as success
+ok 39 - WHAT[change-integration-003] reentry FF-success with Published-append failure never masquerades as success
+  ---
+  duration_ms: 0.236542
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] WORKTREE_create_propagates_port_error
+ok 40 - WHAT[change-integration-003] WORKTREE_create_propagates_port_error
+  ---
+  duration_ms: 0.208583
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] WORKTREE_CMD_create_returns_identity_on_success
+ok 41 - WHAT[change-integration-003] WORKTREE_CMD_create_returns_identity_on_success
+  ---
+  duration_ms: 0.086834
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] WORKTREE_CMD_create_surfaces_stderr_on_failure
+ok 42 - WHAT[change-integration-003] WORKTREE_CMD_create_surfaces_stderr_on_failure
+  ---
+  duration_ms: 0.11075
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-003] publication claim requires every explicit binding field even when candidate facts already exist
+ok 43 - WHAT[change-integration-003] publication claim requires every explicit binding field even when candidate facts already exist
+  ---
+  duration_ms: 0.241708
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] rebase work holds the gate only for the ff mutation
+ok 44 - WHAT[change-integration-004] rebase work holds the gate only for the ff mutation
+  ---
+  duration_ms: 4.384709
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] conflict resolution never acquires the publish gate
+ok 45 - WHAT[change-integration-004] conflict resolution never acquires the publish gate
+  ---
+  duration_ms: 0.587917
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] 10,000 Continue signals complete the real manager loop with exact effects and balanced resources
+ok 46 - WHAT[change-integration-004] 10,000 Continue signals complete the real manager loop with exact effects and balanced resources
+  ---
+  duration_ms: 46.161625
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] GATE_lock_path_is_stable_per_repo_and_branch
+ok 47 - WHAT[change-integration-004] GATE_lock_path_is_stable_per_repo_and_branch
+  ---
+  duration_ms: 0.521625
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] GATE_acquire_and_release_round_trips
+ok 48 - WHAT[change-integration-004] GATE_acquire_and_release_round_trips
+  ---
+  duration_ms: 4.190875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] GATE_dispose_releases_the_lock
+ok 49 - WHAT[change-integration-004] GATE_dispose_releases_the_lock
+  ---
+  duration_ms: 1.053208
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] GATE_second_acquire_on_held_lock_eventually_fails
+ok 50 - WHAT[change-integration-004] GATE_second_acquire_on_held_lock_eventually_fails
+  ---
+  duration_ms: 318.876875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] ORCH_004_multiple_jobs_are_active_at_once_and_terminal_ones_drop_out
+ok 51 - WHAT[change-integration-004] ORCH_004_multiple_jobs_are_active_at_once_and_terminal_ones_drop_out
+  ---
+  duration_ms: 1.115292
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] THEOREM_orchestrator_independent_jobs_confluent_across_interleavings
+ok 52 - WHAT[change-integration-004] THEOREM_orchestrator_independent_jobs_confluent_across_interleavings
+  ---
+  duration_ms: 1.225333
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] actual publish program releases the gate before cleaning Road resources exactly once
+ok 53 - WHAT[change-integration-004] actual publish program releases the gate before cleaning Road resources exactly once
+  ---
+  duration_ms: 0.760584
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-004] GAP-215 / 55-D1: determine how durable claim and Published writes fit the stated ref-only critical section; actual program currently performs them under the gate
+ok 54 - WHAT[change-integration-004] GAP-215 / 55-D1: determine how durable claim and Published writes fit the stated ref-only critical section; actual program currently performs them under the gate # TODO
+  ---
+  duration_ms: 0.104958
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] rebase conflict records machine fact and continues the loop outside the gate
+ok 55 - WHAT[change-integration-005] rebase conflict records machine fact and continues the loop outside the gate
+  ---
+  duration_ms: 53.179
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] artifact conflict continues the loop outside the gate
+ok 56 - WHAT[change-integration-005] artifact conflict continues the loop outside the gate
+  ---
+  duration_ms: 1.017875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] GIT_conflicted_files_parses_lines
+ok 57 - WHAT[change-integration-005] GIT_conflicted_files_parses_lines
+  ---
+  duration_ms: 0.74325
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] GIT_conflicted_files_error_propagates
+ok 58 - WHAT[change-integration-005] GIT_conflicted_files_error_propagates
+  ---
+  duration_ms: 0.280125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] ConflictDetected_preserves_machine_conflict_evidence_on_the_same_Road_worktree
+ok 59 - WHAT[change-integration-005] ConflictDetected_preserves_machine_conflict_evidence_on_the_same_Road_worktree
+  ---
+  duration_ms: 0.489125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] THEOREM_conflict_detected_remains_independent_durable_evidence
+ok 60 - WHAT[change-integration-005] THEOREM_conflict_detected_remains_independent_durable_evidence
+  ---
+  duration_ms: 0.250667
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] THEOREM_drop_ephemeral_preserves_conflict_evidence
+ok 61 - WHAT[change-integration-005] THEOREM_drop_ephemeral_preserves_conflict_evidence
+  ---
+  duration_ms: 0.229292
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] cleanup failure after landed FF preserves published fact as PublishedPendingCleanup
+ok 62 - WHAT[change-integration-005] cleanup failure after landed FF preserves published fact as PublishedPendingCleanup
+  ---
+  duration_ms: 1.364208
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] reentry cleanup failure preserves PublishedPendingCleanup
+ok 63 - WHAT[change-integration-005] reentry cleanup failure preserves PublishedPendingCleanup
+  ---
+  duration_ms: 0.643
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] WORKTREE_create_returns_owned_resource_and_marks_path_identity
+ok 64 - WHAT[change-integration-005] WORKTREE_create_returns_owned_resource_and_marks_path_identity
+  ---
+  duration_ms: 0.470292
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] WORKTREE_release_removes_worktree_and_branch_once
+ok 65 - WHAT[change-integration-005] WORKTREE_release_removes_worktree_and_branch_once
+  ---
+  duration_ms: 0.226583
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] WORKTREE_release_aggregates_both_failures
+ok 66 - WHAT[change-integration-005] WORKTREE_release_aggregates_both_failures
+  ---
+  duration_ms: 0.270625
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] WORKTREE_release_reports_single_failure_side
+ok 67 - WHAT[change-integration-005] WORKTREE_release_reports_single_failure_side
+  ---
+  duration_ms: 0.124083
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] WORKTREE_unreleased_resource_disposes_by_releasing
+ok 68 - WHAT[change-integration-005] WORKTREE_unreleased_resource_disposes_by_releasing
+  ---
+  duration_ms: 0.106292
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] WORKTREE_CMD_remove_force_flag_and_no_cwd
+ok 69 - WHAT[change-integration-005] WORKTREE_CMD_remove_force_flag_and_no_cwd
+  ---
+  duration_ms: 0.098542
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] CHGINT_worktree_create_argv_is_accepted_by_real_git
+ok 70 - WHAT[change-integration-005] CHGINT_worktree_create_argv_is_accepted_by_real_git # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.0135
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-005] CHGINT_worktree_create_survives_installed_wanxiang_reference_transaction_hook
+ok 71 - WHAT[change-integration-005] CHGINT_worktree_create_survives_installed_wanxiang_reference_transaction_hook # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.012167
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] projecting candidate and conflict facts preserves the recorded Road worktree identity
+ok 72 - WHAT[change-integration-006] projecting candidate and conflict facts preserves the recorded Road worktree identity
+  ---
+  duration_ms: 1.440833
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] worktree resource preserves its configured path through controlled creation and disposal
+ok 73 - WHAT[change-integration-006] worktree resource preserves its configured path through controlled creation and disposal
+  ---
+  duration_ms: 1.447875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] ORCH_003_fact_for_an_unknown_job_is_a_no_op_rather_than_a_new_entry
+ok 74 - WHAT[change-integration-006] ORCH_003_fact_for_an_unknown_job_is_a_no_op_rather_than_a_new_entry
+  ---
+  duration_ms: 0.195083
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] ORCH_006_a_terminal_job_stays_in_the_map_so_a_replay_is_recognised
+ok 75 - WHAT[change-integration-006] ORCH_006_a_terminal_job_stays_in_the_map_so_a_replay_is_recognised
+  ---
+  duration_ms: 0.215625
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] ORCH_006_a_terminal_job_accepts_no_further_facts
+ok 76 - WHAT[change-integration-006] ORCH_006_a_terminal_job_accepts_no_further_facts
+  ---
+  duration_ms: 0.215166
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] ORCH_006_all_three_terminal_cases_end_the_job
+ok 77 - WHAT[change-integration-006] ORCH_006_all_three_terminal_cases_end_the_job
+  ---
+  duration_ms: 0.219125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] ORCH_007_projection_keeps_independent_facts_instead_of_latest_stage
+ok 78 - WHAT[change-integration-006] ORCH_007_projection_keeps_independent_facts_instead_of_latest_stage
+  ---
+  duration_ms: 0.205875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] ORCH_006_the_journal_replays_independent_facts_and_terminal
+ok 79 - WHAT[change-integration-006] ORCH_006_the_journal_replays_independent_facts_and_terminal
+  ---
+  duration_ms: 0.379334
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] ORCH_006_a_fact_before_its_create_is_dropped_not_promoted
+ok 80 - WHAT[change-integration-006] ORCH_006_a_fact_before_its_create_is_dropped_not_promoted
+  ---
+  duration_ms: 0.271292
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] ORCH_006_a_replayed_create_does_not_reset_a_job_that_already_made_progress
+ok 81 - WHAT[change-integration-006] ORCH_006_a_replayed_create_does_not_reset_a_job_that_already_made_progress
+  ---
+  duration_ms: 0.27175
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] PERSIST_009_worktree_request_then_created_marks_identity_created
+ok 82 - WHAT[change-integration-006] PERSIST_009_worktree_request_then_created_marks_identity_created
+  ---
+  duration_ms: 0.118125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] PERSIST_009_duplicate_request_after_created_does_not_regress_to_requested
+ok 83 - WHAT[change-integration-006] PERSIST_009_duplicate_request_after_created_does_not_regress_to_requested
+  ---
+  duration_ms: 0.235125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] PERSIST_009_duplicate_created_is_idempotent
+ok 84 - WHAT[change-integration-006] PERSIST_009_duplicate_created_is_idempotent
+  ---
+  duration_ms: 0.107291
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] PERSIST_009_request_alone_is_not_created
+ok 85 - WHAT[change-integration-006] PERSIST_009_request_alone_is_not_created
+  ---
+  duration_ms: 0.047333
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] PERSIST_009_direct_request_accept_helpers_match_fold
+ok 86 - WHAT[change-integration-006] PERSIST_009_direct_request_accept_helpers_match_fold
+  ---
+  duration_ms: 0.055625
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] EXEC_016_active_manager_jobs_are_outstanding_for_orchestrator
+ok 87 - WHAT[change-integration-006] EXEC_016_active_manager_jobs_are_outstanding_for_orchestrator
+  ---
+  duration_ms: 0.132292
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] THEOREM_independent_facts_survive_and_published_is_terminal
+ok 88 - WHAT[change-integration-006] THEOREM_independent_facts_survive_and_published_is_terminal
+  ---
+  duration_ms: 0.485375
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] WORKTREE_adopt_never_releases_on_dispose
+ok 89 - WHAT[change-integration-006] WORKTREE_adopt_never_releases_on_dispose
+  ---
+  duration_ms: 0.112958
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] WORKTREE_mark_durable_disposes_without_release
+ok 90 - WHAT[change-integration-006] WORKTREE_mark_durable_disposes_without_release
+  ---
+  duration_ms: 0.158709
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] WORKTREE_CMD_list_parses_porcelain_blocks
+ok 91 - WHAT[change-integration-006] WORKTREE_CMD_list_parses_porcelain_blocks
+  ---
+  duration_ms: 0.365708
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] WORKTREE_CMD_list_error_propagates
+ok 92 - WHAT[change-integration-006] WORKTREE_CMD_list_error_propagates
+  ---
+  duration_ms: 0.061959
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] WORKTREE_CMD_list_branches_strips_current_and_worktree_markers
+ok 93 - WHAT[change-integration-006] WORKTREE_CMD_list_branches_strips_current_and_worktree_markers
+  ---
+  duration_ms: 0.170834
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] WORKTREE_CMD_delete_branch_uses_force_delete
+ok 94 - WHAT[change-integration-006] WORKTREE_CMD_delete_branch_uses_force_delete
+  ---
+  duration_ms: 0.069792
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] WORKTREE_CMD_delete_branch_falls_back_to_stdout_when_stderr_blank
+ok 95 - WHAT[change-integration-006] WORKTREE_CMD_delete_branch_falls_back_to_stdout_when_stderr_blank
+  ---
+  duration_ms: 0.145916
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] PERSIST_009_worktree_requested_created_reentry_is_finite_and_fail_closed
+ok 96 - WHAT[change-integration-006] PERSIST_009_worktree_requested_created_reentry_is_finite_and_fail_closed
+  ---
+  duration_ms: 0.357708
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-006] GAP-212: an interrupted publish resumes from its actual durable events and actual Git refs in a fresh process without replacing the Road worktree
+ok 97 - WHAT[change-integration-006] GAP-212: an interrupted publish resumes from its actual durable events and actual Git refs in a fresh process without replacing the Road worktree # TODO
+  ---
+  duration_ms: 0.0205
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-007] publish_claimed_recovery_three_branch_order_is_fixed
+ok 98 - WHAT[change-integration-007] publish_claimed_recovery_three_branch_order_is_fixed
+  ---
+  duration_ms: 1.555125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-007] ORCH_007_the_three_publish_claim_branches_are_evaluated_in_the_clause_order
+ok 99 - WHAT[change-integration-007] ORCH_007_the_three_publish_claim_branches_are_evaluated_in_the_clause_order
+  ---
+  duration_ms: 0.1055
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-007] ORCH_008_an_unreadable_target_head_fails_closed_for_every_head_dependent_case
+ok 100 - WHAT[change-integration-007] ORCH_008_an_unreadable_target_head_fails_closed_for_every_head_dependent_case
+  ---
+  duration_ms: 0.122041
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-007] THEOREM_publish_claimed_three_branch_order_is_fixed
+ok 101 - WHAT[change-integration-007] THEOREM_publish_claimed_three_branch_order_is_fixed
+  ---
+  duration_ms: 0.316166
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-007] repeating the same pure fold preserves publish-claim classification
+ok 102 - WHAT[change-integration-007] repeating the same pure fold preserves publish-claim classification
+  ---
+  duration_ms: 0.300375
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-007] classifyPublishClaim three-way reality ordering
+ok 103 - WHAT[change-integration-007] classifyPublishClaim three-way reality ordering
+  ---
+  duration_ms: 0.214042
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-007] published-but-unsettled reentry never replays FF
+ok 104 - WHAT[change-integration-007] published-but-unsettled reentry never replays FF
+  ---
+  duration_ms: 1.091042
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_freeze_target_branch_reads_symbolic_ref
+ok 105 - WHAT[change-integration-008] GIT_freeze_target_branch_reads_symbolic_ref
+  ---
+  duration_ms: 1.024458
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_freeze_target_branch_refuses_detached_head
+ok 106 - WHAT[change-integration-008] GIT_freeze_target_branch_refuses_detached_head
+  ---
+  duration_ms: 0.22775
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_freeze_target_branch_blank_stdout_is_detached
+ok 107 - WHAT[change-integration-008] GIT_freeze_target_branch_blank_stdout_is_detached
+  ---
+  duration_ms: 0.207417
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_read_head_returns_commit_hash
+ok 108 - WHAT[change-integration-008] GIT_read_head_returns_commit_hash
+  ---
+  duration_ms: 0.228709
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_read_head_empty_stdout_is_missing
+ok 109 - WHAT[change-integration-008] GIT_read_head_empty_stdout_is_missing
+  ---
+  duration_ms: 0.19025
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_get_target_head_missing_branch
+ok 110 - WHAT[change-integration-008] GIT_get_target_head_missing_branch
+  ---
+  duration_ms: 0.351125
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_happy_path_advances_to_candidate
+ok 111 - WHAT[change-integration-008] GIT_ff_merge_happy_path_advances_to_candidate
+  ---
+  duration_ms: 1.049625
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_refuses_when_repo_on_wrong_branch
+ok 112 - WHAT[change-integration-008] GIT_ff_merge_refuses_when_repo_on_wrong_branch
+  ---
+  duration_ms: 0.167834
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_refuses_detached_with_placeholder
+ok 113 - WHAT[change-integration-008] GIT_ff_merge_refuses_detached_with_placeholder
+  ---
+  duration_ms: 0.348959
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_refuses_when_target_moved_since_head_read
+ok 114 - WHAT[change-integration-008] GIT_ff_merge_refuses_when_target_moved_since_head_read
+  ---
+  duration_ms: 0.360291
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_refuses_non_fast_forward_candidate
+ok 115 - WHAT[change-integration-008] GIT_ff_merge_refuses_non_fast_forward_candidate
+  ---
+  duration_ms: 0.220375
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_ref_moved_lock_diagnostic_maps_to_cas_error
+ok 116 - WHAT[change-integration-008] GIT_ff_merge_ref_moved_lock_diagnostic_maps_to_cas_error
+  ---
+  duration_ms: 0.223833
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_generic_merge_failure_surfaces_message
+ok 117 - WHAT[change-integration-008] GIT_ff_merge_generic_merge_failure_surfaces_message
+  ---
+  duration_ms: 0.179708
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_empty_candidate_head_is_an_error
+ok 118 - WHAT[change-integration-008] GIT_ff_merge_empty_candidate_head_is_an_error
+  ---
+  duration_ms: 0.072083
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_ff_merge_verify_head_mismatch_reports_actual
+ok 119 - WHAT[change-integration-008] GIT_ff_merge_verify_head_mismatch_reports_actual
+  ---
+  duration_ms: 0.15875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] GIT_create_with_runner_binds_dot_repo
+ok 120 - WHAT[change-integration-008] GIT_create_with_runner_binds_dot_repo
+  ---
+  duration_ms: 0.047
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] THEOREM_unreadable_target_head_fails_closed
+ok 121 - WHAT[change-integration-008] THEOREM_unreadable_target_head_fails_closed
+  ---
+  duration_ms: 0.114541
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] reentry with candidate moving between read and merge sends zero FF
+ok 122 - WHAT[change-integration-008] reentry with candidate moving between read and merge sends zero FF
+  ---
+  duration_ms: 1.717916
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] reentry with landed mismatch never records Published
+ok 123 - WHAT[change-integration-008] reentry with landed mismatch never records Published
+  ---
+  duration_ms: 0.672416
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] Adapter_ffMerge_clean_fast_forward_returns_exact_candidate_receipt
+ok 124 - WHAT[change-integration-008] Adapter_ffMerge_clean_fast_forward_returns_exact_candidate_receipt # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.032833
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-008] Adapter_ffMerge_moved_head_fails_closed_without_advancing_head
+ok 125 - WHAT[change-integration-008] Adapter_ffMerge_moved_head_fails_closed_without_advancing_head # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.023875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-009] manager loop keeps the durable job worktree
+ok 126 - WHAT[change-integration-009] manager loop keeps the durable job worktree
+  ---
+  duration_ms: 1.327042
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-009] ORCH_006_the_worktree_is_located_by_identity_and_the_path_is_only_diagnostic
+ok 127 - WHAT[change-integration-009] ORCH_006_the_worktree_is_located_by_identity_and_the_path_is_only_diagnostic
+  ---
+  duration_ms: 0.251666
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-009] ORCH_003_durable_facts_do_not_change_job_identity
+ok 128 - WHAT[change-integration-009] ORCH_003_durable_facts_do_not_change_job_identity
+  ---
+  duration_ms: 0.2665
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-009] ORCH_003_a_manager_session_resolves_to_its_one_job
+ok 129 - WHAT[change-integration-009] ORCH_003_a_manager_session_resolves_to_its_one_job
+  ---
+  duration_ms: 0.104209
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-009] ORCH_003_a_second_create_for_one_job_id_cannot_change_its_manager_or_worktree
+ok 130 - WHAT[change-integration-009] ORCH_003_a_second_create_for_one_job_id_cannot_change_its_manager_or_worktree
+  ---
+  duration_ms: 0.361167
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-009] WORKTREE_CMD_identity_of_is_manager_slash_job
+ok 131 - WHAT[change-integration-009] WORKTREE_CMD_identity_of_is_manager_slash_job
+  ---
+  duration_ms: 0.27325
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-011] GAP-212: actual Orchestrator fork/resume/join provider output contains work results without internal gate, ref, job or worktree mechanics
+ok 132 - WHAT[change-integration-011] GAP-212: actual Orchestrator fork/resume/join provider output contains work results without internal gate, ref, job or worktree mechanics # TODO
+  ---
+  duration_ms: 0.281917
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] ORCH_005_a_rebased_candidate_publishes_only_while_the_target_has_not_moved
+ok 133 - WHAT[change-integration-013] ORCH_005_a_rebased_candidate_publishes_only_while_the_target_has_not_moved
+  ---
+  duration_ms: 0.414333
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] target movement before publish invalidates the certificate and continues the loop without entering the gate
+ok 134 - WHAT[change-integration-013] target movement before publish invalidates the certificate and continues the loop without entering the gate
+  ---
+  duration_ms: 2.793667
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] CAS miss invalidates certificate rebases and continues the loop after releasing the gate
+ok 135 - WHAT[change-integration-013] CAS miss invalidates certificate rebases and continues the loop after releasing the gate
+  ---
+  duration_ms: 1.4915
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] CAS miss appends the complete claim then a superseding rebased record, continues once, publishes at most once
+ok 136 - WHAT[change-integration-013] CAS miss appends the complete claim then a superseding rebased record, continues once, publishes at most once
+  ---
+  duration_ms: 0.40225
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] target movement appends a superseding rebased record and continues once without publishing
+ok 137 - WHAT[change-integration-013] target movement appends a superseding rebased record and continues once without publishing
+  ---
+  duration_ms: 0.202583
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] target_movement_makes_the_rebased_binding_stale
+ok 138 - WHAT[change-integration-013] target_movement_makes_the_rebased_binding_stale
+  ---
+  duration_ms: 0.096375
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] THEOREM_stale_target_invalidates_the_rebased_binding
+ok 139 - WHAT[change-integration-013] THEOREM_stale_target_invalidates_the_rebased_binding
+  ---
+  duration_ms: 0.697708
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] CAS miss releases gate and invalidates certificate without publishing
+ok 140 - WHAT[change-integration-013] CAS miss releases gate and invalidates certificate without publishing
+  ---
+  duration_ms: 0.484958
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] superseding rebased evidence appends while the old claim cannot reenter after supersession
+ok 141 - WHAT[change-integration-013] superseding rebased evidence appends while the old claim cannot reenter after supersession
+  ---
+  duration_ms: 0.607833
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] recordFact keeps the latest rebased record instead of the first write
+ok 142 - WHAT[change-integration-013] recordFact keeps the latest rebased record instead of the first write
+  ---
+  duration_ms: 0.268333
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-013] stale claim superseded by newer rebased evidence re-enters the loop without FF
+ok 143 - WHAT[change-integration-013] stale claim superseded by newer rebased evidence re-enters the loop without FF
+  ---
+  duration_ms: 0.187875
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-014] real publish program invalidates a stale certificate before acquiring the gate
+ok 144 - WHAT[change-integration-014] real publish program invalidates a stale certificate before acquiring the gate
+  ---
+  duration_ms: 2.0025
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-014] real publish program refuses a perfect candidate with unmerged files
+ok 145 - WHAT[change-integration-014] real publish program refuses a perfect candidate with unmerged files
+  ---
+  duration_ms: 1.09025
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-014] claim recovery cannot publish a different workspace snapshot
+ok 146 - WHAT[change-integration-014] claim recovery cannot publish a different workspace snapshot
+  ---
+  duration_ms: 0.346625
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-015] actual publish program requests a new assessment when the observed workspace differs from its certificate
+ok 147 - WHAT[change-integration-015] actual publish program requests a new assessment when the observed workspace differs from its certificate
+  ---
+  duration_ms: 3.950583
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-015] GAP-212: actual Engineer or DevOps mutation invalidates the prior test evidence and a new independent assessment authorizes only the new snapshot
+ok 148 - WHAT[change-integration-015] GAP-212: actual Engineer or DevOps mutation invalidates the prior test evidence and a new independent assessment authorizes only the new snapshot # TODO
+  ---
+  duration_ms: 0.0485
+  type: 'test'
+  ...
+# Subtest: WHAT[change-integration-017] GAP-212: two actual Roads converge and the final combined workspace is independently verified before publication
+ok 149 - WHAT[change-integration-017] GAP-212: two actual Roads converge and the final combined workspace is independently verified before publication # TODO
+  ---
+  duration_ms: 0.276541
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-001] independently created gates cannot share process-local permits
+ok 150 - WHAT[crash-reconciliation-001] independently created gates cannot share process-local permits
+  ---
+  duration_ms: 1.085375
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-001] idle without a current attempt cannot mint send authority
+ok 151 - WHAT[crash-reconciliation-001] idle without a current attempt cannot mint send authority
+  ---
+  duration_ms: 0.0935
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-001] real process restart drops all guard permit waiter and detector state without automatic side effects (GAP-149)
+ok 152 - WHAT[crash-reconciliation-001] real process restart drops all guard permit waiter and detector state without automatic side effects (GAP-149) # TODO
+  ---
+  duration_ms: 0.040833
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-002] child resolver uses durable completion or current terminal evidence while missing evidence remains incomplete
+ok 153 - WHAT[crash-reconciliation-002] child resolver uses durable completion or current terminal evidence while missing evidence remains incomplete
+  ---
+  duration_ms: 0.611166
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-002] local handle projection preserves completion across a duplicate completion transition
+ok 154 - WHAT[crash-reconciliation-002] local handle projection preserves completion across a duplicate completion transition
+  ---
+  duration_ms: 0.729667
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-002] fresh process reconstructs completion from committed journal and physical snapshot without cache clock or prose evidence (GAP-149)
+ok 155 - WHAT[crash-reconciliation-002] fresh process reconstructs completion from committed journal and physical snapshot without cache clock or prose evidence (GAP-149) # TODO
+  ---
+  duration_ms: 0.040333
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-003] unknown_effect_without_quiescence_is_not_replayed
+ok 156 - WHAT[crash-reconciliation-003] unknown_effect_without_quiescence_is_not_replayed
+  ---
+  duration_ms: 0.893625
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-003] actual reconciliation never replays an unresolved external effect before fresh physical evidence (GAP-149)
+ok 157 - WHAT[crash-reconciliation-003] actual reconciliation never replays an unresolved external effect before fresh physical evidence (GAP-149) # TODO
+  ---
+  duration_ms: 0.109292
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-004] actual explicit recovery re-enters ordinary workflows from durable facts without replaying tool continuations or program counters (GAP-149)
+ok 158 - WHAT[crash-reconciliation-004] actual explicit recovery re-enters ordinary workflows from durable facts without replaying tool continuations or program counters (GAP-149) # TODO
+  ---
+  duration_ms: 0.275125
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-005] missing unreadable and blank terminal evidence never produce readiness
+ok 159 - WHAT[crash-reconciliation-005] missing unreadable and blank terminal evidence never produce readiness
+  ---
+  duration_ms: 0.827333
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-005] family authorization preserves waiting and blocked outcomes
+ok 160 - WHAT[crash-reconciliation-005] family authorization preserves waiting and blocked outcomes
+  ---
+  duration_ms: 0.833041
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-005] actual Waiting consumers cannot send publish completion or enter Ready effects while physical evidence is pending (GAP-149)
+ok 161 - WHAT[crash-reconciliation-005] actual Waiting consumers cannot send publish completion or enter Ready effects while physical evidence is pending (GAP-149) # TODO
+  ---
+  duration_ms: 0.040792
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-006] one stable idle permits one consumption despite repeated idle observations
+ok 162 - WHAT[crash-reconciliation-006] one stable idle permits one consumption despite repeated idle observations
+  ---
+  duration_ms: 1.14825
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-006] new attempt invalidates the old permit and creates its own idle right
+ok 163 - WHAT[crash-reconciliation-006] new attempt invalidates the old permit and creates its own idle right
+  ---
+  duration_ms: 0.231625
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-006] transport idle becomes consumable only after the last active tool ends
+ok 164 - WHAT[crash-reconciliation-006] transport idle becomes consumable only after the last active tool ends
+  ---
+  duration_ms: 0.221542
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-006] new physical material revokes old idle but exact and older replay remain inert
+ok 165 - WHAT[crash-reconciliation-006] new physical material revokes old idle but exact and older replay remain inert
+  ---
+  duration_ms: 0.398541
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-006] exact consumed idle can be returned until a newer attempt or physical message supersedes it
+ok 166 - WHAT[crash-reconciliation-006] exact consumed idle can be returned until a newer attempt or physical message supersedes it
+  ---
+  duration_ms: 0.232875
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-006] session deletion revokes its permit without affecting another session
+ok 167 - WHAT[crash-reconciliation-006] session deletion revokes its permit without affecting another session
+  ---
+  duration_ms: 0.183
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-006] a delayed Host idle snapshot cannot grant a later attempt its idle right
+ok 168 - WHAT[crash-reconciliation-006] a delayed Host idle snapshot cannot grant a later attempt its idle right
+  ---
+  duration_ms: 0.222417
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-006] real sending boundary returns a permit only for proven pre-acceptance rejection and never for acceptance unknown (GAP-149)
+ok 169 - WHAT[crash-reconciliation-006] real sending boundary returns a permit only for proven pre-acceptance rejection and never for acceptance unknown (GAP-149) # TODO
+  ---
+  duration_ms: 0.035667
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-007] turn_unknown_is_snapshot_observation_not_turn_outcome
+ok 170 - WHAT[crash-reconciliation-007] turn_unknown_is_snapshot_observation_not_turn_outcome
+  ---
+  duration_ms: 0.461875
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-007] publish_boundary_carries_turn_outcome_not_snapshot_observation
+ok 171 - WHAT[crash-reconciliation-007] publish_boundary_carries_turn_outcome_not_snapshot_observation
+  ---
+  duration_ms: 0.687417
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-008] actual gate revocation invalidates an unconsumed idle permit
+ok 172 - WHAT[crash-reconciliation-008] actual gate revocation invalidates an unconsumed idle permit
+  ---
+  duration_ms: 1.155959
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-008] delayed idle cannot remint a revoked attempt permit
+ok 173 - WHAT[crash-reconciliation-008] delayed idle cannot remint a revoked attempt permit
+  ---
+  duration_ms: 0.156041
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-008] actual Host abort decodes to AttemptAborted wakes reconciliation and revokes capabilities without ProviderFailure (GAP-149)
+ok 174 - WHAT[crash-reconciliation-008] actual Host abort decodes to AttemptAborted wakes reconciliation and revokes capabilities without ProviderFailure (GAP-149) # TODO
+  ---
+  duration_ms: 0.0385
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-009] abort-only evidence is incomplete and terminal proof requires a body
+ok 175 - WHAT[crash-reconciliation-009] abort-only evidence is incomplete and terminal proof requires a body
+  ---
+  duration_ms: 0.933125
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-009] actual durable completion decoder rejects legacy aborted material as joinable completion
+ok 176 - WHAT[crash-reconciliation-009] actual durable completion decoder rejects legacy aborted material as joinable completion
+  ---
+  duration_ms: 0.166958
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-009] trace checker distinguishes supplied proof commit return order and identities
+ok 177 - WHAT[crash-reconciliation-009] trace checker distinguishes supplied proof commit return order and identities
+  ---
+  duration_ms: 0.478125
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-009] real child recovery and join consume decoded completion while abort alone cannot publish child terminal (GAP-149)
+ok 178 - WHAT[crash-reconciliation-009] real child recovery and join consume decoded completion while abort alone cannot publish child terminal (GAP-149) # TODO
+  ---
+  duration_ms: 0.080625
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-010] child resolution distinguishes active incomplete blocked terminal and abandoned
+ok 179 - WHAT[crash-reconciliation-010] child resolution distinguishes active incomplete blocked terminal and abandoned
+  ---
+  duration_ms: 1.121625
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-010] handle and job family mappings preserve every recovery result branch
+ok 180 - WHAT[crash-reconciliation-010] handle and job family mappings preserve every recovery result branch
+  ---
+  duration_ms: 1.097541
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-011] actual permit membership rejects loss and admits monotone growth
+ok 181 - WHAT[crash-reconciliation-011] actual permit membership rejects loss and admits monotone growth
+  ---
+  duration_ms: 1.078875
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-011] actual join and targeted await validate root journal sequence and membership again at every effect boundary (GAP-149)
+ok 182 - WHAT[crash-reconciliation-011] actual join and targeted await validate root journal sequence and membership again at every effect boundary (GAP-149) # TODO
+  ---
+  duration_ms: 0.08175
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-012] handle projection keeps retired completion unavailable after repeated retire and late completion
+ok 183 - WHAT[crash-reconciliation-012] handle projection keeps retired completion unavailable after repeated retire and late completion
+  ---
+  duration_ms: 0.785834
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-012] actual completion owner commits blob before fact rejects duplicate claims and preserves single delivery through crash cuts (GAP-149)
+ok 184 - WHAT[crash-reconciliation-012] actual completion owner commits blob before fact rejects duplicate claims and preserves single delivery through crash cuts (GAP-149) # TODO
+  ---
+  duration_ms: 0.087958
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-013] all finite outcome triples respect priority independent of order
+ok 185 - WHAT[crash-reconciliation-013] all finite outcome triples respect priority independent of order
+  ---
+  duration_ms: 1.31275
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-013] actual family authorization follows blocked then waiting then ready
+ok 186 - WHAT[crash-reconciliation-013] actual family authorization follows blocked then waiting then ready
+  ---
+  duration_ms: 0.573667
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-014] closure validator accepts unique sessions and returns exact membership
+ok 187 - WHAT[crash-reconciliation-014] closure validator accepts unique sessions and returns exact membership
+  ---
+  duration_ms: 1.303125
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-014] CRASH_CLOSURE_duplicate_session_is_a_cycle_block
+ok 188 - WHAT[crash-reconciliation-014] CRASH_CLOSURE_duplicate_session_is_a_cycle_block
+  ---
+  duration_ms: 0.137416
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-014] CRASH_CLOSURE_member_tokens_are_stable_identities
+ok 189 - WHAT[crash-reconciliation-014] CRASH_CLOSURE_member_tokens_are_stable_identities
+  ---
+  duration_ms: 0.1165
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-014] CRASH_CLOSURE_members_set_matches_tokens
+ok 190 - WHAT[crash-reconciliation-014] CRASH_CLOSURE_members_set_matches_tokens
+  ---
+  duration_ms: 0.213917
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-014] MISC_recovery_validate_closure_pure
+ok 191 - WHAT[crash-reconciliation-014] MISC_recovery_validate_closure_pure
+  ---
+  duration_ms: 0.237458
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-015] actual delegate adapter reuses unique exact children creates missing ones and refuses ambiguous or failed queries
+ok 192 - WHAT[crash-reconciliation-015] actual delegate adapter reuses unique exact children creates missing ones and refuses ambiguous or failed queries
+  ---
+  duration_ms: 170.216125
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-015] simultaneous callers share one actual attachment observation and creation
+ok 193 - WHAT[crash-reconciliation-015] simultaneous callers share one actual attachment observation and creation
+  ---
+  duration_ms: 0.694042
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-015] actual restart replacement requires proven old-session loss and Close before Link after explicit authorization (GAP-149)
+ok 194 - WHAT[crash-reconciliation-015] actual restart replacement requires proven old-session loss and Close before Link after explicit authorization (GAP-149) # TODO
+  ---
+  duration_ms: 0.045333
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-016] explicit scope disposal cancels its waiter and a fresh scope has no inherited flight
+ok 195 - WHAT[crash-reconciliation-016] explicit scope disposal cancels its waiter and a fresh scope has no inherited flight
+  ---
+  duration_ms: 2.135834
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-016] actual process restart with durable Blogger dispatch never rebuilds an old repair episode or sends it automatically (GAP-149)
+ok 196 - WHAT[crash-reconciliation-016] actual process restart with durable Blogger dispatch never rebuilds an old repair episode or sends it automatically (GAP-149) # TODO
+  ---
+  duration_ms: 0.048583
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-017] real process restart with interrupted tools produces no automatic replay completion write or repair (GAP-149)
+ok 197 - WHAT[crash-reconciliation-017] real process restart with interrupted tools produces no automatic replay completion write or repair (GAP-149) # TODO
+  ---
+  duration_ms: 0.283625
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-018] canonical load settlement voids the exact admitted child work and preserves its stable road for explicit new work
+ok 198 - WHAT[crash-reconciliation-018] canonical load settlement voids the exact admitted child work and preserves its stable road for explicit new work
+  ---
+  duration_ms: 182.9955
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-018] CRASH_018_no_explicit_resume_command_is_registered
+ok 199 - WHAT[crash-reconciliation-018] CRASH_018_no_explicit_resume_command_is_registered
+  ---
+  duration_ms: 723.741166
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-018] structural audit finds no retired explicit-resume source files
+ok 200 - WHAT[crash-reconciliation-018] structural audit finds no retired explicit-resume source files
+  ---
+  duration_ms: 5.405
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-018] a restarted plugin normalizes durable child runs before reuse without replaying tools or hiding their interrupted history (GAP-149)
+ok 201 - WHAT[crash-reconciliation-018] a restarted plugin normalizes durable child runs before reuse without replaying tools or hiding their interrupted history (GAP-149) # TODO
+  ---
+  duration_ms: 0.039959
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-019] each external effect has a validated exact contract and independent physical ambiguity evidence without persistent program counters (GAP-150)
+ok 202 - WHAT[crash-reconciliation-019] each external effect has a validated exact contract and independent physical ambiguity evidence without persistent program counters (GAP-150) # TODO
+  ---
+  duration_ms: 0.278208
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] current role vocabulary includes DevOps and Engineer but excludes legacy Coder
+ok 203 - WHAT[crash-reconciliation-020] current role vocabulary includes DevOps and Engineer but excludes legacy Coder
+  ---
+  duration_ms: 0.410458
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] in-process physical terminals preserve an active child logical run and handle
+ok 204 - WHAT[crash-reconciliation-020] in-process physical terminals preserve an active child logical run and handle
+  ---
+  duration_ms: 12.282625
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] production load decision voids active child runs without creating a completion
+ok 205 - WHAT[crash-reconciliation-020] production load decision voids active child runs without creating a completion
+  ---
+  duration_ms: 3.887542
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] human roots and child runs without a durable handle are not selected for load settlement
+ok 206 - WHAT[crash-reconciliation-020] human roots and child runs without a durable handle are not selected for load settlement
+  ---
+  duration_ms: 1.964875
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] stale Blogger selection respects exact live flight and abandonment clears the same folded open request
+ok 207 - WHAT[crash-reconciliation-020] stale Blogger selection respects exact live flight and abandonment clears the same folded open request
+  ---
+  duration_ms: 2.818917
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] actual child settlement persists voids across journal reopen without a completion
+ok 208 - WHAT[crash-reconciliation-020] actual child settlement persists voids across journal reopen without a completion # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.050209
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] actual child settlement propagates unknown and unattempted append failures
+ok 209 - WHAT[crash-reconciliation-020] actual child settlement propagates unknown and unattempted append failures # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.036291
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] a BeforePhysicalAppend directory fault is explicitly unattempted and poisons further settlement
+ok 210 - WHAT[crash-reconciliation-020] a BeforePhysicalAppend directory fault is explicitly unattempted and poisons further settlement # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.031791
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] actual plugin activation durably settles orphan child and Blogger work before ordinary execution, preserves exact live flights, and refuses append failure (GAP-149)
+ok 211 - WHAT[crash-reconciliation-020] actual plugin activation durably settles orphan child and Blogger work before ordinary execution, preserves exact live flights, and refuses append failure (GAP-149) # TODO
+  ---
+  duration_ms: 0.224625
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-020] a real interrupted run and PTY input are not replayed after restart while unique DevOps authority and durable model Persona binding are retained (GAP-149; GAP-129; GAP-132)
+ok 212 - WHAT[crash-reconciliation-020] a real interrupted run and PTY input are not replayed after restart while unique DevOps authority and durable model Persona binding are retained (GAP-149; GAP-129; GAP-132) # TODO
+  ---
+  duration_ms: 0.257125
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-021] durable handles answer by id and byname without process registration
+ok 213 - WHAT[crash-reconciliation-021] durable handles answer by id and byname without process registration
+  ---
+  duration_ms: 3.262209
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-021] durable child evidence is the latest TargetAgent rather than the logical byname
+ok 214 - WHAT[crash-reconciliation-021] durable child evidence is the latest TargetAgent rather than the logical byname
+  ---
+  duration_ms: 1.069583
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-021] a hidden Host-owned leaf yields no parent-visible execution binding
+ok 215 - WHAT[crash-reconciliation-021] a hidden Host-owned leaf yields no parent-visible execution binding
+  ---
+  duration_ms: 0.350916
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-021] a Companion resolves its durable main session and Blogger agent
+ok 216 - WHAT[crash-reconciliation-021] a Companion resolves its durable main session and Blogger agent
+  ---
+  duration_ms: 0.547542
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-021] a Fission lane resolves the folded owner and slot without pre-registration
+ok 217 - WHAT[crash-reconciliation-021] a Fission lane resolves the folded owner and slot without pre-registration
+  ---
+  duration_ms: 0.880708
+  type: 'test'
+  ...
+# Subtest: WHAT[crash-reconciliation-021] actual reuse, placement and await entry points all resolve durable children after an OS restart without registry prewarming (GAP-149)
+ok 218 - WHAT[crash-reconciliation-021] actual reuse, placement and await entry points all resolve durable children after an OS restart without registry prewarming (GAP-149) # TODO
+  ---
+  duration_ms: 0.036958
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-001] actual owner-root and continuation sends reach Host with an already registered exact claim
+ok 219 - WHAT[dispatch-protocol-001] actual owner-root and continuation sends reach Host with an already registered exact claim
+  ---
+  duration_ms: 97.934625
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-001] every actual synthetic-message producer uses the registered dispatcher, including Guard, repair, nudge and Orchestrator paths (GAP-136)
+ok 220 - WHAT[dispatch-protocol-001] every actual synthetic-message producer uses the registered dispatcher, including Guard, repair, nudge and Orchestrator paths (GAP-136) # TODO
+  ---
+  duration_ms: 0.094208
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] DP_002_submit_records_the_receipt_without_resolving_the_claim
+ok 221 - WHAT[dispatch-protocol-002] DP_002_submit_records_the_receipt_without_resolving_the_claim
+  ---
+  duration_ms: 3.099042
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] DP_002_abandon_removes_the_claim_and_leaves_the_active_run_alone
+ok 222 - WHAT[dispatch-protocol-002] DP_002_abandon_removes_the_claim_and_leaves_the_active_run_alone
+  ---
+  duration_ms: 0.425417
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] DP_002_claim_records_payload_digest_and_participant
+ok 223 - WHAT[dispatch-protocol-002] DP_002_claim_records_payload_digest_and_participant
+  ---
+  duration_ms: 0.324
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] PROMPT_011_RuntimeStarted_advances_a_workspace_watermark_not_every_session
+ok 224 - WHAT[dispatch-protocol-002] PROMPT_011_RuntimeStarted_advances_a_workspace_watermark_not_every_session
+  ---
+  duration_ms: 1.926167
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] HOST_004_stale_idle_repair_is_abandoned_at_the_final_physical_send_boundary
+ok 225 - WHAT[dispatch-protocol-002] HOST_004_stale_idle_repair_is_abandoned_at_the_final_physical_send_boundary
+  ---
+  duration_ms: 63.159792
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] a journal that cannot persist the claim prevents the Host send and leaves no durable trace
+ok 226 - WHAT[dispatch-protocol-002] a journal that cannot persist the claim prevents the Host send and leaves no durable trace
+  ---
+  duration_ms: 14.036667
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] the exact claim is already durable while the transport invocation is still in flight
+ok 227 - WHAT[dispatch-protocol-002] the exact claim is already durable while the transport invocation is still in flight
+  ---
+  duration_ms: 28.974875
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] production Manager idle dispatch (crash-reconciliation-006 compatibility) sends with the same road and fresh captured permit
+ok 228 - WHAT[dispatch-protocol-002] production Manager idle dispatch (crash-reconciliation-006 compatibility) sends with the same road and fresh captured permit
+  ---
+  duration_ms: 36.229458
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-002] production Manager idle dispatch (crash-reconciliation-006 compatibility) abandons a captured permit revoked by Human physical ingress before SDK send
+ok 229 - WHAT[dispatch-protocol-002] production Manager idle dispatch (crash-reconciliation-006 compatibility) abandons a captured permit revoked by Human physical ingress before SDK send
+  ---
+  duration_ms: 30.611708
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-003] typed transport receipt accepted-queue-entry remains pending and grants no authority after journal reopen
+ok 230 - WHAT[dispatch-protocol-003] typed transport receipt accepted-queue-entry remains pending and grants no authority after journal reopen
+  ---
+  duration_ms: 66.2935
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-003] typed transport receipt msg-looks-like-physical remains pending and grants no authority after journal reopen
+ok 231 - WHAT[dispatch-protocol-003] typed transport receipt msg-looks-like-physical remains pending and grants no authority after journal reopen
+  ---
+  duration_ms: 33.843917
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-003] observed receipt-only send stays unaccepted until true physical ingress while preserving the original receipt carrier
+ok 232 - WHAT[dispatch-protocol-003] observed receipt-only send stays unaccepted until true physical ingress while preserving the original receipt carrier
+  ---
+  duration_ms: 83.421708
+  type: 'test'
+  ...
+# (node:25342) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: WHAT[dispatch-protocol-004] a detached root observer exception propagates without losing actual acceptance or other confirmation results
+ok 233 - WHAT[dispatch-protocol-004] a detached root observer exception propagates without losing actual acceptance or other confirmation results
+  ---
+  duration_ms: 95.748125
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-004] a detached continuation observer exception propagates without losing actual acceptance or other confirmation results
+ok 234 - WHAT[dispatch-protocol-004] a detached continuation observer exception propagates without losing actual acceptance or other confirmation results
+  ---
+  duration_ms: 89.552334
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-004] ingress_accepts_the_exact_nonblank_Host_identity
+ok 235 - WHAT[dispatch-protocol-004] ingress_accepts_the_exact_nonblank_Host_identity
+  ---
+  duration_ms: 0.927709
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-004] ingress_rejects_missing_or_blank_Host_identity
+ok 236 - WHAT[dispatch-protocol-004] ingress_rejects_missing_or_blank_Host_identity
+  ---
+  duration_ms: 0.332416
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-004] ingress_rejects_conflicting_Host_identity_carriers
+ok 237 - WHAT[dispatch-protocol-004] ingress_rejects_conflicting_Host_identity_carriers
+  ---
+  duration_ms: 0.213209
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-004] ingress_ignores_non_contract_identity_decoys
+ok 238 - WHAT[dispatch-protocol-004] ingress_ignores_non_contract_identity_decoys
+  ---
+  duration_ms: 0.413708
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-004] DP_004_physical_acceptance_is_proven_only_by_physical_message
+ok 239 - WHAT[dispatch-protocol-004] DP_004_physical_acceptance_is_proven_only_by_physical_message
+  ---
+  duration_ms: 57.830542
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-004] actual process restart matches exact durable PromptKey including read-only historical agent-bearing keys without re-encoding them (GAP-136)
+ok 240 - WHAT[dispatch-protocol-004] actual process restart matches exact durable PromptKey including read-only historical agent-bearing keys without re-encoding them (GAP-136) # TODO
+  ---
+  duration_ms: 0.047625
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-005] DP_005_prompt_key_is_deterministic_and_moves_with_every_component
+ok 241 - WHAT[dispatch-protocol-005] DP_005_prompt_key_is_deterministic_and_moves_with_every_component
+  ---
+  duration_ms: 1.602583
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-005] DP_005_claim_scope_names_exactly_session_run_origin_and_payload
+ok 242 - WHAT[dispatch-protocol-005] DP_005_claim_scope_names_exactly_session_run_origin_and_payload
+  ---
+  duration_ms: 0.1715
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-005] DP_005_legacy_identity_fields_are_dropped_never_reencoded
+ok 243 - WHAT[dispatch-protocol-005] DP_005_legacy_identity_fields_are_dropped_never_reencoded
+  ---
+  duration_ms: 0.623667
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-006] DP_006_abandon_keeps_the_claim_sequence_consumed
+ok 244 - WHAT[dispatch-protocol-006] DP_006_abandon_keeps_the_claim_sequence_consumed
+  ---
+  duration_ms: 2.605292
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-006] DP_006_claim_sequence_advances_on_registration_not_on_resolution
+ok 245 - WHAT[dispatch-protocol-006] DP_006_claim_sequence_advances_on_registration_not_on_resolution
+  ---
+  duration_ms: 0.792125
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-006] DP_006_same_payload_landings_stay_exact_per_physical_message
+ok 246 - WHAT[dispatch-protocol-006] DP_006_same_payload_landings_stay_exact_per_physical_message
+  ---
+  duration_ms: 0.997958
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-006] an accepted None-root scope keeps its consumed sequence across new root
+ok 247 - WHAT[dispatch-protocol-006] an accepted None-root scope keeps its consumed sequence across new root
+  ---
+  duration_ms: 0.636958
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-006] an accepted None-root scope keeps its consumed sequence across exact run close
+ok 248 - WHAT[dispatch-protocol-006] an accepted None-root scope keeps its consumed sequence across exact run close
+  ---
+  duration_ms: 1.134917
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-006] exact close clears a Some continuation scope even when its run id equals the absence marker
+ok 249 - WHAT[dispatch-protocol-006] exact close clears a Some continuation scope even when its run id equals the absence marker
+  ---
+  duration_ms: 0.758417
+  type: 'test'
+  ...
+# (node:25345) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: WHAT[dispatch-protocol-007] accepting another real root preserves an earlier native Unknown root claim through cold reopen
+ok 250 - WHAT[dispatch-protocol-007] accepting another real root preserves an earlier native Unknown root claim through cold reopen
+  ---
+  duration_ms: 104.215541
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] the pure authority owner preserves an unlanded root when establishing and closing another exact run
+ok 251 - WHAT[dispatch-protocol-007] the pure authority owner preserves an unlanded root when establishing and closing another exact run
+  ---
+  duration_ms: 2.6155
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] the pure Manager Ledger close preserves unknown roots and consumed None scopes while clearing only Manager run resources
+ok 252 - WHAT[dispatch-protocol-007] the pure Manager Ledger close preserves unknown roots and consumed None scopes while clearing only Manager run resources
+  ---
+  duration_ms: 2.723292
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] the real root sender hands its exact local registration to the caller before entering the Host effect
+ok 253 - WHAT[dispatch-protocol-007] the real root sender hands its exact local registration to the caller before entering the Host effect
+  ---
+  duration_ms: 48.609375
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] a real Await root native Unknown result cannot reject another caller's waiter or alter its durable Pending claim
+ok 254 - WHAT[dispatch-protocol-007] a real Await root native Unknown result cannot reject another caller's waiter or alter its durable Pending claim
+  ---
+  duration_ms: 44.5405
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] the real continuation sender hands its exact local registration to the caller before entering the Host effect
+ok 255 - WHAT[dispatch-protocol-007] the real continuation sender hands its exact local registration to the caller before entering the Host effect
+  ---
+  duration_ms: 82.097667
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] a real Await continuation native Unknown result cannot reject another caller's waiter or alter its durable Pending claim
+ok 256 - WHAT[dispatch-protocol-007] a real Await continuation native Unknown result cannot reject another caller's waiter or alter its durable Pending claim
+  ---
+  duration_ms: 66.048333
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] repeated registration of the same root callback gives independent leases and an old release preserves the current observer
+ok 257 - WHAT[dispatch-protocol-007] repeated registration of the same root callback gives independent leases and an old release preserves the current observer
+  ---
+  duration_ms: 46.310334
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] disposing an old root lease twice cannot remove a different later observer
+ok 258 - WHAT[dispatch-protocol-007] disposing an old root lease twice cannot remove a different later observer
+  ---
+  duration_ms: 49.86175
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] releasing a local root lease after Host Unknown preserves durable Pending bytes and other actual confirmation waiters
+ok 259 - WHAT[dispatch-protocol-007] releasing a local root lease after Host Unknown preserves durable Pending bytes and other actual confirmation waiters
+  ---
+  duration_ms: 51.266916
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] a current root lease callback exception preserves actual Accepted for every independent waiter
+ok 260 - WHAT[dispatch-protocol-007] a current root lease callback exception preserves actual Accepted for every independent waiter
+  ---
+  duration_ms: 59.875583
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] repeated registration of the same continuation callback gives independent leases and an old release preserves the current observer
+ok 261 - WHAT[dispatch-protocol-007] repeated registration of the same continuation callback gives independent leases and an old release preserves the current observer
+  ---
+  duration_ms: 86.786667
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] disposing an old continuation lease twice cannot remove a different later observer
+ok 262 - WHAT[dispatch-protocol-007] disposing an old continuation lease twice cannot remove a different later observer
+  ---
+  duration_ms: 79.726042
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] releasing a local continuation lease after Host Unknown preserves durable Pending bytes and other actual confirmation waiters
+ok 263 - WHAT[dispatch-protocol-007] releasing a local continuation lease after Host Unknown preserves durable Pending bytes and other actual confirmation waiters
+  ---
+  duration_ms: 81.671042
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] a current continuation lease callback exception preserves actual Accepted for every independent waiter
+ok 264 - WHAT[dispatch-protocol-007] a current continuation lease callback exception preserves actual Accepted for every independent waiter
+  ---
+  duration_ms: 82.4065
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] one detached root confirmation timeout leaves another waiter and the real acceptance observer intact
+ok 265 - WHAT[dispatch-protocol-007] one detached root confirmation timeout leaves another waiter and the real acceptance observer intact
+  ---
+  duration_ms: 59.107083
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] detached root remains observable after both existing confirmation waiters time out
+ok 266 - WHAT[dispatch-protocol-007] detached root remains observable after both existing confirmation waiters time out
+  ---
+  duration_ms: 47.915166
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] one detached continuation confirmation timeout leaves another waiter and the real acceptance observer intact
+ok 267 - WHAT[dispatch-protocol-007] one detached continuation confirmation timeout leaves another waiter and the real acceptance observer intact
+  ---
+  duration_ms: 75.714833
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] detached continuation remains observable after both existing confirmation waiters time out
+ok 268 - WHAT[dispatch-protocol-007] detached continuation remains observable after both existing confirmation waiters time out
+  ---
+  duration_ms: 82.199292
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] observed AcceptanceUnknown retains its actual PromptKey and native verdict without resending or guessing from reason text
+ok 269 - WHAT[dispatch-protocol-007] observed AcceptanceUnknown retains its actual PromptKey and native verdict without resending or guessing from reason text
+  ---
+  duration_ms: 29.270417
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] observed Fatal retains its actual PromptKey and native verdict without resending or guessing from reason text
+ok 270 - WHAT[dispatch-protocol-007] observed Fatal retains its actual PromptKey and native verdict without resending or guessing from reason text
+  ---
+  duration_ms: 30.418875
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] fresh claim projection begins with no observed runtime restarts
+ok 271 - WHAT[dispatch-protocol-007] fresh claim projection begins with no observed runtime restarts
+  ---
+  duration_ms: 0.237542
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] PROMPT_007_detached_refused_abandons_send_failed_without_resend
+ok 272 - WHAT[dispatch-protocol-007] PROMPT_007_detached_refused_abandons_send_failed_without_resend
+  ---
+  duration_ms: 55.543833
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] PROMPT_007_detached_outcome_unknown_keeps_claim_pending_never_resends
+ok 273 - WHAT[dispatch-protocol-007] PROMPT_007_detached_outcome_unknown_keeps_claim_pending_never_resends
+  ---
+  duration_ms: 52.354208
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] JNGD_nudge_releases_the_key_when_send_fails_and_retries
+ok 274 - WHAT[dispatch-protocol-007] JNGD_nudge_releases_the_key_when_send_fails_and_retries
+  ---
+  duration_ms: 53.657667
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] JNGD_join_gate_dedupes_same_terminal_but_rearms_for_fresh_terminal
+ok 275 - WHAT[dispatch-protocol-007] JNGD_join_gate_dedupes_same_terminal_but_rearms_for_fresh_terminal
+  ---
+  duration_ms: 49.358375
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-007] opening additional journal writers does not abandon an unresolved claim
+ok 276 - WHAT[dispatch-protocol-007] opening additional journal writers does not abandon an unresolved claim
+  ---
+  duration_ms: 33.357208
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-008] DP_008_unproven_outcome_stays_pending_never_resends
+ok 277 - WHAT[dispatch-protocol-008] DP_008_unproven_outcome_stays_pending_never_resends
+  ---
+  duration_ms: 70.171208
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-008] DP_008_snapshot_unreadable_is_no_proof_and_keeps_the_claim_pending
+ok 278 - WHAT[dispatch-protocol-008] DP_008_snapshot_unreadable_is_no_proof_and_keeps_the_claim_pending
+  ---
+  duration_ms: 28.064042
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-008] DP_008_concurrent_exact_gate_nudges_share_one_claim_and_send
+ok 279 - WHAT[dispatch-protocol-008] DP_008_concurrent_exact_gate_nudges_share_one_claim_and_send
+  ---
+  duration_ms: 30.081625
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-008] repeated post-flight exact occasions send again only after durable Abandoned, never after Pending, Submitted or PhysicalAccepted (GAP-136)
+ok 280 - WHAT[dispatch-protocol-008] repeated post-flight exact occasions send again only after durable Abandoned, never after Pending, Submitted or PhysicalAccepted (GAP-136) # TODO
+  ---
+  duration_ms: 0.104625
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] PROMPT_007_detached_claims_and_persists_without_physical_accepted
+ok 281 - WHAT[dispatch-protocol-009] PROMPT_007_detached_claims_and_persists_without_physical_accepted
+  ---
+  duration_ms: 65.948291
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] PROMPT_007_detached_sdk_physical_id_does_not_race_chat_message_acceptance
+ok 282 - WHAT[dispatch-protocol-009] PROMPT_007_detached_sdk_physical_id_does_not_race_chat_message_acceptance
+  ---
+  duration_ms: 30.390916
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] PROMPT_007_detached_returns_even_when_session_send_task_never_settles
+ok 283 - WHAT[dispatch-protocol-009] PROMPT_007_detached_returns_even_when_session_send_task_never_settles
+  ---
+  duration_ms: 35.1005
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] PROMPT_007_detached_continuation_same_claim_path
+ok 284 - WHAT[dispatch-protocol-009] PROMPT_007_detached_continuation_same_claim_path
+  ---
+  duration_ms: 59.077208
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] PROMPT_007_detached_late_listener_verdict_routes_to_exact_owner
+ok 285 - WHAT[dispatch-protocol-009] PROMPT_007_detached_late_listener_verdict_routes_to_exact_owner
+  ---
+  duration_ms: 63.5145
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] PROMPT_007_detached_late_unknown_keeps_claim_then_refused_abandons
+ok 286 - WHAT[dispatch-protocol-009] PROMPT_007_detached_late_unknown_keeps_claim_then_refused_abandons
+  ---
+  duration_ms: 60.175084
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] PROMPT_007_detached_owned_settled_late_delivery_writes_no_fact
+ok 287 - WHAT[dispatch-protocol-009] PROMPT_007_detached_owned_settled_late_delivery_writes_no_fact
+  ---
+  duration_ms: 50.878167
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] definite refusal of a detached root still cancels all confirmation waits for the abandoned key
+ok 288 - WHAT[dispatch-protocol-009] definite refusal of a detached root still cancels all confirmation waits for the abandoned key
+  ---
+  duration_ms: 37.913833
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] detached root returns while SDK is unresolved and observes actual managed acceptance
+ok 289 - WHAT[dispatch-protocol-009] detached root returns while SDK is unresolved and observes actual managed acceptance
+  ---
+  duration_ms: 55.47075
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] detached root OwnedSettled delivery retains its observer without proving physical acceptance
+ok 290 - WHAT[dispatch-protocol-009] detached root OwnedSettled delivery retains its observer without proving physical acceptance
+  ---
+  duration_ms: 54.51025
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] detached root retains its observer after a real Host Unknown delivery until actual physical evidence
+ok 291 - WHAT[dispatch-protocol-009] detached root retains its observer after a real Host Unknown delivery until actual physical evidence
+  ---
+  duration_ms: 57.434666
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] detached root definite Host refusal rejects later acceptance of the abandoned key without notifying
+ok 292 - WHAT[dispatch-protocol-009] detached root definite Host refusal rejects later acceptance of the abandoned key without notifying
+  ---
+  duration_ms: 35.022541
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] definite refusal of a detached continuation still cancels all confirmation waits for the abandoned key
+ok 293 - WHAT[dispatch-protocol-009] definite refusal of a detached continuation still cancels all confirmation waits for the abandoned key
+  ---
+  duration_ms: 69.021625
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] detached continuation returns while SDK is unresolved and observes actual managed acceptance
+ok 294 - WHAT[dispatch-protocol-009] detached continuation returns while SDK is unresolved and observes actual managed acceptance
+  ---
+  duration_ms: 83.58775
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] detached continuation OwnedSettled delivery retains its observer without proving physical acceptance
+ok 295 - WHAT[dispatch-protocol-009] detached continuation OwnedSettled delivery retains its observer without proving physical acceptance
+  ---
+  duration_ms: 82.381292
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] detached continuation retains its observer after a real Host Unknown delivery until actual physical evidence
+ok 296 - WHAT[dispatch-protocol-009] detached continuation retains its observer after a real Host Unknown delivery until actual physical evidence
+  ---
+  duration_ms: 87.78675
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-009] detached continuation definite Host refusal rejects later acceptance of the abandoned key without notifying
+ok 297 - WHAT[dispatch-protocol-009] detached continuation definite Host refusal rejects later acceptance of the abandoned key without notifying
+  ---
+  duration_ms: 79.525625
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] authority root public profile exposes identity without a model field
+ok 298 - WHAT[dispatch-protocol-010] authority root public profile exposes identity without a model field
+  ---
+  duration_ms: 1.462625
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] PROMPT_006_unknown_authority_kind_fails_closed
+ok 299 - WHAT[dispatch-protocol-010] PROMPT_006_unknown_authority_kind_fails_closed
+  ---
+  duration_ms: 2.724208
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] PROMPT_006_send_payload_carries_participant_and_no_model
+ok 300 - WHAT[dispatch-protocol-010] PROMPT_006_send_payload_carries_participant_and_no_model
+  ---
+  duration_ms: 110.542708
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] DP_010_send_agent_owner_root_is_strictly_model_free
+ok 301 - WHAT[dispatch-protocol-010] DP_010_send_agent_owner_root_is_strictly_model_free
+  ---
+  duration_ms: 30.215333
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] DP_010_send_without_session_agent_cache_succeeds
+ok 302 - WHAT[dispatch-protocol-010] DP_010_send_without_session_agent_cache_succeeds
+  ---
+  duration_ms: 29.997209
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] managed manager assignments retain the accepted run and tool boundary across journal reopen
+ok 303 - WHAT[dispatch-protocol-010] managed manager assignments retain the accepted run and tool boundary across journal reopen
+  ---
+  duration_ms: 74.172208
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] managed blogger assignments retain the accepted run and tool boundary across journal reopen
+ok 304 - WHAT[dispatch-protocol-010] managed blogger assignments retain the accepted run and tool boundary across journal reopen
+  ---
+  duration_ms: 73.331708
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] synthetic send producers leave model selection to admission at the wire
+ok 305 - WHAT[dispatch-protocol-010] synthetic send producers leave model selection to admission at the wire
+  ---
+  duration_ms: 190.511041
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-010] compiler rejects adding physical model authority to the opaque root
+ok 306 - WHAT[dispatch-protocol-010] compiler rejects adding physical model authority to the opaque root # SKIP integration tier not enabled
+  ---
+  duration_ms: 0.220167
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-011] PROMPT_006_send_payload_carries_prompt_key_metadata
+ok 307 - WHAT[dispatch-protocol-011] PROMPT_006_send_payload_carries_prompt_key_metadata
+  ---
+  duration_ms: 109.077208
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-012] recovered turn binding restores durable participant and role when process-local role is absent
+ok 308 - WHAT[dispatch-protocol-012] recovered turn binding restores durable participant and role when process-local role is absent
+  ---
+  duration_ms: 76.774042
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-012] DP_012_physical_acceptance_hands_exact_claim_identity_to_managed_execution
+ok 309 - WHAT[dispatch-protocol-012] DP_012_physical_acceptance_hands_exact_claim_identity_to_managed_execution
+  ---
+  duration_ms: 53.201667
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-012] DP_012_continuation_inherits_identity_from_profile_without_host_cache
+ok 310 - WHAT[dispatch-protocol-012] DP_012_continuation_inherits_identity_from_profile_without_host_cache
+  ---
+  duration_ms: 26.683875
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-012] DP_012_ingress_missing_agent_remains_none_without_cache_synthesis
+ok 311 - WHAT[dispatch-protocol-012] DP_012_ingress_missing_agent_remains_none_without_cache_synthesis
+  ---
+  duration_ms: 0.430708
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-012] real PhysicalAccepted handoff retains the whole atomic profile and only managed execution acquires exact capacity and creates execution facts (GAP-136)
+ok 312 - WHAT[dispatch-protocol-012] real PhysicalAccepted handoff retains the whole atomic profile and only managed execution acquires exact capacity and creates execution facts (GAP-136) # TODO
+  ---
+  duration_ms: 0.049459
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-013] reopened journal retains a pending claim until explicit reconciliation observes its physical message
+ok 313 - WHAT[dispatch-protocol-013] reopened journal retains a pending claim until explicit reconciliation observes its physical message
+  ---
+  duration_ms: 89.351917
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-013] actual plugin construction reads no journal or Host evidence and recovery cannot run before successful durability activation (GAP-136)
+ok 314 - WHAT[dispatch-protocol-013] actual plugin construction reads no journal or Host evidence and recovery cannot run before successful durability activation (GAP-136) # TODO
+  ---
+  duration_ms: 0.093666
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-014] actual invariant incident retains exact committed or unknown claim truth before invoking the injected fatal capability (GAP-136)
+ok 315 - WHAT[dispatch-protocol-014] actual invariant incident retains exact committed or unknown claim truth before invoking the injected fatal capability (GAP-136) # TODO
+  ---
+  duration_ms: 0.343625
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-014] duplicated actual dispatch incident reports and kills once without relabeling an accepted send as unsent (GAP-136)
+ok 316 - WHAT[dispatch-protocol-014] duplicated actual dispatch incident reports and kills once without relabeling an accepted send as unsent (GAP-136) # TODO
+  ---
+  duration_ms: 0.04875
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] ingress identity property rejects every malformed or ambiguous carrier world
+ok 317 - WHAT[dispatch-protocol-015] ingress identity property rejects every malformed or ambiguous carrier world
+  ---
+  duration_ms: 40.711875
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] generated non-arrays and non-booleans remain inert without exceptions
+ok 318 - WHAT[dispatch-protocol-015] generated non-arrays and non-booleans remain inert without exceptions
+  ---
+  duration_ms: 17.083458
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] ingress identity carrier algebra is exact conflict closed and byte preserving
+ok 319 - WHAT[dispatch-protocol-015] ingress identity carrier algebra is exact conflict closed and byte preserving
+  ---
+  duration_ms: 1.042417
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] ingress rejects conflicting or explicitly invalid SessionId carriers
+ok 320 - WHAT[dispatch-protocol-015] ingress rejects conflicting or explicitly invalid SessionId carriers
+  ---
+  duration_ms: 0.228042
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] ingress accepts plain own data fields only and never invokes accessors
+ok 321 - WHAT[dispatch-protocol-015] ingress accepts plain own data fields only and never invokes accessors
+  ---
+  duration_ms: 0.162916
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] agent and PromptKey require one exact primitive string
+ok 322 - WHAT[dispatch-protocol-015] agent and PromptKey require one exact primitive string
+  ---
+  duration_ms: 0.137125
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] explicit malformed carrier containers cannot collapse into Missing
+ok 323 - WHAT[dispatch-protocol-015] explicit malformed carrier containers cannot collapse into Missing
+  ---
+  duration_ms: 0.498833
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] malformed parts and boolean lookalikes are absent and never throw
+ok 324 - WHAT[dispatch-protocol-015] malformed parts and boolean lookalikes are absent and never throw
+  ---
+  duration_ms: 1.399333
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] actual ingress cannot reinterpret a malformed PromptKey as an external user root
+ok 325 - WHAT[dispatch-protocol-015] actual ingress cannot reinterpret a malformed PromptKey as an external user root
+  ---
+  duration_ms: 587.643333
+  type: 'test'
+  ...
+# Subtest: WHAT[dispatch-protocol-015] malformed explicit agent cannot inherit identity from an otherwise valid pending claim
+ok 326 - WHAT[dispatch-protocol-015] malformed explicit agent cannot inherit identity from an otherwise valid pending claim
+  ---
+  duration_ms: 215.087209
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-001] actual retirement owner then NarrativeTransform retain all physical history for its successor
+ok 327 - WHAT[relay-context-projection-001] actual retirement owner then NarrativeTransform retain all physical history for its successor
+  ---
+  duration_ms: 859.5105
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-001] Host physical transcript and durable audit survive actual process restart without loss
+ok 328 - WHAT[relay-context-projection-001] Host physical transcript and durable audit survive actual process restart without loss # TODO
+  ---
+  duration_ms: 0.083416
+  type: 'test'
+  ...
+# HOOK CHAT MESSAGE FAILED: ChatAdmissionHookException {
+#   message: 'Managed chat admission failed: TransactionStopped (Superseded (ManagedChatAcceptanceWitness ({ SessionId = SessionId "review-manager"\\n' +
+#     '  PhysicalUserMessageId = PhysicalUserMessageId "msg-review-manager-3" }, { SessionId = SessionId "review-manager"\\n' +
+#     '  LogicalRunId = LogicalRunId "78662e3507515ffc55130dd16bb9b0c319dc9742b00af9fee2d32d61ebcd7f72"\\n' +
+#     '  AuthorityRootUserMessageId = AuthorityRootUserMessageId "user-root"\\n' +
+#     '  AuthorityKind = HumanRoot\\n' +
+#     '  IdentitySeed = RootSelection ({ Identity = { SelectedAgent = PersonaName "manager"\\n' +
+#     '  Kind = ManagedRole Manager\\n' +
+#     '  Persona = "Lead"\\n' +
+#     '  PersonaCatalogVersion = PersonaCatalogVersion 1\\n' +
+#     '  Origin = ResolvedAtRoot } })\\n' +
+#     '  PhysicalUserMessageId = PhysicalUserMessageId "msg-review-manager-3"\\n' +
+#     '  Origin = Continuation ManagerGuard })))',
+#   innerException: undefined,
+#   failure: ChatAdmissionHookFailure {
+#     tag: 2,
+#     fields: [ [ChatAdmissionTransactionOutcome] ]
+#   },
+#   executionKey: ChatExecutionKey {
+#     SessionId: SessionId { tag: 0, fields: [Array] },
+#     PhysicalUserMessageId: PhysicalUserMessageId { tag: 0, fields: [Array] }
+#   }
+# }
+# Subtest: WHAT[relay-context-projection-002] real cut rejects an old request but accepts the owner-issued successor identity
+ok 329 - WHAT[relay-context-projection-002] real cut rejects an old request but accepts the owner-issued successor identity
+  ---
+  duration_ms: 865.093791
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-002] the registered transform accepts an admitted successor retry and rejects an unadmitted physical key
+ok 330 - WHAT[relay-context-projection-002] the registered transform accepts an admitted successor retry and rejects an unadmitted physical key
+  ---
+  duration_ms: 724.330167
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-002] a terminal successor cannot reenter the registered provider boundary through its retained acceptance record
+ok 331 - WHAT[relay-context-projection-002] a terminal successor cannot reenter the registered provider boundary through its retained acceptance record
+  ---
+  duration_ms: 511.481833
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-003] complete provider serialization carries no private control identifiers secrets or synthetic workspace narrative
+ok 332 - WHAT[relay-context-projection-003] complete provider serialization carries no private control identifiers secrets or synthetic workspace narrative # TODO
+  ---
+  duration_ms: 0.281125
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-004] first and successor Managers independently investigate the actual inherited work and never fabricate predecessor evidence
+ok 333 - WHAT[relay-context-projection-004] first and successor Managers independently investigate the actual inherited work and never fabricate predecessor evidence # TODO
+  ---
+  duration_ms: 0.277125
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-005] actual Continue dispatch stays in the same physical session and preserves the prior history
+ok 334 - WHAT[relay-context-projection-005] actual Continue dispatch stays in the same physical session and preserves the prior history
+  ---
+  duration_ms: 848.185709
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-006] actual projection of the same committed facts is deterministic and adds no messages
+ok 335 - WHAT[relay-context-projection-006] actual projection of the same committed facts is deterministic and adds no messages
+  ---
+  duration_ms: 839.765625
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-007] crash recovery and Accepted-certificate invalidation keep the committed retired request identity without filtering physical history
+ok 336 - WHAT[relay-context-projection-007] crash recovery and Accepted-certificate invalidation keep the committed retired request identity without filtering physical history # TODO
+  ---
+  duration_ms: 0.275791
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-008] an internal wake is retained as history but cannot become successor authority
+ok 337 - WHAT[relay-context-projection-008] an internal wake is retained as history but cannot become successor authority
+  ---
+  duration_ms: 841.306666
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-008] every accepted physical authority revision is retained across restart and successor projection
+ok 338 - WHAT[relay-context-projection-008] every accepted physical authority revision is retained across restart and successor projection # TODO
+  ---
+  duration_ms: 0.086416
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-009] fixed DevOps execution facts and predecessor interactions reach the successor through their real owners without synthesized conclusions
+ok 339 - WHAT[relay-context-projection-009] fixed DevOps execution facts and predecessor interactions reach the successor through their real owners without synthesized conclusions # TODO
+  ---
+  duration_ms: 0.276708
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-001] one open road admits at most one active iteration
+ok 340 - WHAT[relay-incumbency-001] one open road admits at most one active iteration
+  ---
+  duration_ms: 1.407042
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-001] concurrent production opening derives one identity and admits one physical loop prompt
+ok 341 - WHAT[relay-incumbency-001] concurrent production opening derives one identity and admits one physical loop prompt # TODO GAP-192: sequential Road fold calls do not exercise concurrent opening or prompt dispatch
+  ---
+  duration_ms: 0.051041
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-002] every iteration opens on the same AuditPending algebra
+ok 342 - WHAT[relay-incumbency-002] every iteration opens on the same AuditPending algebra
+  ---
+  duration_ms: 2.348375
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-002] repeat-round has same meaning, assessment replay is idempotent, conflicting-snapshot assessment fails
+ok 343 - WHAT[relay-incumbency-002] repeat-round has same meaning, assessment replay is idempotent, conflicting-snapshot assessment fails
+  ---
+  duration_ms: 0.719958
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-003] opening projection starts AuditPending without certificate or retirement
+ok 344 - WHAT[relay-incumbency-003] opening projection starts AuditPending without certificate or retirement
+  ---
+  duration_ms: 1.046166
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-003] actual Manager tool admission grants management powers before assessment
+ok 345 - WHAT[relay-incumbency-003] actual Manager tool admission grants management powers before assessment # TODO GAP-192: phase and certificate fields do not prove capability enforcement
+  ---
+  duration_ms: 0.086958
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-004] low-score assessor takes work ownership in place without a new iteration
+ok 346 - WHAT[relay-incumbency-004] low-score assessor takes work ownership in place without a new iteration
+  ---
+  duration_ms: 2.002334
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-005] Road fold refuses to reopen or revise a retired incumbent
+ok 347 - WHAT[relay-incumbency-005] Road fold refuses to reopen or revise a retired incumbent
+  ---
+  duration_ms: 2.016708
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-005] stale provider runs remain absorbed across multiple real handovers and recovery
+ok 348 - WHAT[relay-incumbency-005] stale provider runs remain absorbed across multiple real handovers and recovery # TODO GAP-192: retired-id rejection alone does not deliver late tool or terminal observations
+  ---
+  duration_ms: 0.100792
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] Continue keeps the road open for a next iteration
+ok 349 - WHAT[relay-incumbency-006] Continue keeps the road open for a next iteration
+  ---
+  duration_ms: 2.017291
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalidation reopens it
+ok 350 - WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalidation reopens it
+  ---
+  duration_ms: 0.62775
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop continue preserves the original Root and completion observer
+ok 351 - WHAT[relay-incumbency-006] production ContinueLoop continue preserves the original Root and completion observer
+  ---
+  duration_ms: 205.114042
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop continue-active preserves the original Root and completion observer
+ok 352 - WHAT[relay-incumbency-006] production ContinueLoop continue-active preserves the original Root and completion observer
+  ---
+  duration_ms: 92.216542
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop valid-accepted preserves the original Root and completion observer
+ok 353 - WHAT[relay-incumbency-006] production ContinueLoop valid-accepted preserves the original Root and completion observer
+  ---
+  duration_ms: 69.017875
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted preserves the original Root and completion observer
+ok 354 - WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted preserves the original Root and completion observer
+  ---
+  duration_ms: 150.579542
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted-active preserves the original Root and completion observer
+ok 355 - WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted-active preserves the original Root and completion observer
+  ---
+  duration_ms: 88.3205
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop missing-certificate preserves the original Root and completion observer
+ok 356 - WHAT[relay-incumbency-006] production ContinueLoop missing-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 61.485666
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop foreign-valid-certificate preserves the original Root and completion observer
+ok 357 - WHAT[relay-incumbency-006] production ContinueLoop foreign-valid-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 65.510375
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop foreign-invalid-certificate preserves the original Root and completion observer
+ok 358 - WHAT[relay-incumbency-006] production ContinueLoop foreign-invalid-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 63.859333
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-008] authority update invalidates a perfect certificate without restoring work ownership
+ok 359 - WHAT[relay-incumbency-008] authority update invalidates a perfect certificate without restoring work ownership
+  ---
+  duration_ms: 2.024333
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-008] certificate invalidation is explicit and never reactivates its assessor
+ok 360 - WHAT[relay-incumbency-008] certificate invalidation is explicit and never reactivates its assessor
+  ---
+  duration_ms: 0.331375
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-009] active authority update advances revision and snapshot exactly once
+ok 361 - WHAT[relay-incumbency-009] active authority update advances revision and snapshot exactly once
+  ---
+  duration_ms: 2.363625
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-010] an absent Road has no DevOps binding
+ok 362 - WHAT[relay-incumbency-010] an absent Road has no DevOps binding
+  ---
+  duration_ms: 0.50575
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-010] Road fold reports an explicit DevOps binding and current incumbent
+ok 363 - WHAT[relay-incumbency-010] Road fold reports an explicit DevOps binding and current incumbent
+  ---
+  duration_ms: 0.922333
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-010] actual retired and current Managers receive exclusive DevOps invocation authority
+ok 364 - WHAT[relay-incumbency-010] actual retired and current Managers receive exclusive DevOps invocation authority # TODO GAP-192: Road projection does not exercise resume, join or horizon authorization
+  ---
+  duration_ms: 0.040917
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-011] explicit DevOps binding survives retirement and a new incumbent in the Road fold
+ok 365 - WHAT[relay-incumbency-011] explicit DevOps binding survives retirement and a new incumbent in the Road fold
+  ---
+  duration_ms: 2.424583
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-011] actual in-flight assignments, processes and completion attribution survive Manager handover
+ok 366 - WHAT[relay-incumbency-011] actual in-flight assignments, processes and completion attribution survive Manager handover # TODO GAP-192: no assignment or process is started by the Road fold fixture
+  ---
+  duration_ms: 0.051833
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-012] explicit DevOps binding replays idempotently and rejects a second identity
+ok 367 - WHAT[relay-incumbency-012] explicit DevOps binding replays idempotently and rejects a second identity
+  ---
+  duration_ms: 1.201875
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-012] uncertain Host acceptance and crash recovery retain one DevOps and original PromptKey
+ok 368 - WHAT[relay-incumbency-012] uncertain Host acceptance and crash recovery retain one DevOps and original PromptKey # TODO GAP-192: direct binding replay does not cross Host acceptance or a crash
+  ---
+  duration_ms: 0.050541
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-013] each successful opening advances the projected ordinal once
+ok 369 - WHAT[relay-incumbency-013] each successful opening advances the projected ordinal once
+  ---
+  duration_ms: 2.2575
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-013] the ordinal counts durable openings, not provider requests
+ok 370 - WHAT[relay-incumbency-013] the ordinal counts durable openings, not provider requests
+  ---
+  duration_ms: 0.172291
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-013] both assessment resource templates expose the ordinal substitution
+ok 371 - WHAT[relay-incumbency-013] both assessment resource templates expose the ordinal substitution
+  ---
+  duration_ms: 0.20425
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-013] actual provider requests receive the committed ordinal and equivalent bilingual guidance
+ok 372 - WHAT[relay-incumbency-013] actual provider requests receive the committed ordinal and equivalent bilingual guidance # TODO GAP-192: template placeholders and Road fold counts do not prove delivery or translation meaning
+  ---
+  duration_ms: 0.03875
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-001] ordinary assistant stop does not retire Manager and exceptional terminals are not forged suicide
+ok 373 - WHAT[relay-retirement-001] ordinary assistant stop does not retire Manager and exceptional terminals are not forged suicide # TODO GAP-197: requires actual Manager terminal workflow; removed test merely returned Retire for an empty array
+  ---
+  duration_ms: 0.304709
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-002] actual suicide refuses unassessed work then permits assessed REVISE with a dirty workspace
+ok 374 - WHAT[relay-retirement-002] actual suicide refuses unassessed work then permits assessed REVISE with a dirty workspace
+  ---
+  duration_ms: 857.722125
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-002] unmerged changes failed tests and open obligations do not independently block actual retirement
+ok 375 - WHAT[relay-retirement-002] unmerged changes failed tests and open obligations do not independently block actual retirement # TODO GAP-197: actual assessed dirty-workspace path is covered; remaining conditions require actual owned fixtures
+  ---
+  duration_ms: 0.08625
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-003] an actual accepted unfinished Engineer child blocks retirement
+ok 376 - WHAT[relay-retirement-003] an actual accepted unfinished Engineer child blocks retirement
+  ---
+  duration_ms: 808.854417
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-003] recursive descendants PTYs leases active tools and unobserved cancellation all block by current incumbent ownership
+ok 377 - WHAT[relay-retirement-003] recursive descendants PTYs leases active tools and unobserved cancellation all block by current incumbent ownership # TODO GAP-197: one actual Engineer child does not establish every ownership kind or recursive cancellation boundary
+  ---
+  duration_ms: 0.091291
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-004] actual cleanup-blocked retirement keeps new work admission frozen
+ok 378 - WHAT[relay-retirement-004] actual cleanup-blocked retirement keeps new work admission frozen
+  ---
+  duration_ms: 818.052958
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-004] exact-incumbency freeze precedes recursive observation and never leaks into next incarnation of the same session
+ok 379 - WHAT[relay-retirement-004] exact-incumbency freeze precedes recursive observation and never leaks into next incarnation of the same session # TODO GAP-197: a sequential child blocker does not prove an admission race or same-session successor fence
+  ---
+  duration_ms: 0.087292
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] Continue retirement commits a closed Continue outcome with cut binding
+ok 380 - WHAT[relay-retirement-007] Continue retirement commits a closed Continue outcome with cut binding
+  ---
+  duration_ms: 2.3825
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] Accepted retirement commits a closed Accepted outcome with certificate binding
+ok 381 - WHAT[relay-retirement-007] Accepted retirement commits a closed Accepted outcome with certificate binding
+  ---
+  duration_ms: 0.418125
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] Accepted with a stale different snapshot fails
+ok 382 - WHAT[relay-retirement-007] Accepted with a stale different snapshot fails
+  ---
+  duration_ms: 0.251625
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] cleanup-blocked fold accepts a subsequent exact certificate retirement transaction
+ok 383 - WHAT[relay-retirement-007] cleanup-blocked fold accepts a subsequent exact certificate retirement transaction
+  ---
+  duration_ms: 0.24
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] real durable retirement is atomic across crash points and cleanup retry
+ok 384 - WHAT[relay-retirement-007] real durable retirement is atomic across crash points and cleanup retry # TODO GAP-197: pure fold transition does not persist a transaction or clear actual resource blockers
+  ---
+  duration_ms: 0.079834
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] retirement ends incumbent obligations without rewriting independent context-compression history
+ok 385 - WHAT[relay-retirement-007] retirement ends incumbent obligations without rewriting independent context-compression history # TODO
+  ---
+  duration_ms: 0.034125
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] Accepted road cannot reopen new incumbency while certificate is valid
+ok 386 - WHAT[relay-retirement-007] Accepted road cannot reopen new incumbency while certificate is valid
+  ---
+  duration_ms: 0.268375
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt
+ok 387 - WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt
+  ---
+  duration_ms: 738.183958
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] actual Continue starts one same-session successor whose transform retains the old physical history without another abort
+ok 388 - WHAT[relay-retirement-008] actual Continue starts one same-session successor whose transform retains the old physical history without another abort
+  ---
+  duration_ms: 664.20125
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools
+ok 389 - WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools
+  ---
+  duration_ms: 704.518125
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends
+ok 390 - WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends
+  ---
+  duration_ms: 90.379375
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete
+ok 391 - WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete # TODO
+  ---
+  duration_ms: 0.112125
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-009] real scope tracking excludes fixed DevOps work from Manager retirement blockers
+ok 392 - WHAT[relay-retirement-009] real scope tracking excludes fixed DevOps work from Manager retirement blockers
+  ---
+  duration_ms: 93.369708
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-009] real scope tracking still blocks an incumbent Engineer and its PTY
+ok 393 - WHAT[relay-retirement-009] real scope tracking still blocks an incumbent Engineer and its PTY
+  ---
+  duration_ms: 86.254458
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-009] a PTY name containing devops does not change its actual Engineer ownership
+ok 394 - WHAT[relay-retirement-009] a PTY name containing devops does not change its actual Engineer ownership
+  ---
+  duration_ms: 72.01275
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-009] actual Continue transfers fixed DevOps work and processes while Accepted or exceptional termination physically closes them
+ok 395 - WHAT[relay-retirement-009] actual Continue transfers fixed DevOps work and processes while Accepted or exceptional termination physically closes them # TODO
+  ---
+  duration_ms: 0.055125
+  type: 'test'
+  ...
+1..395
+# tests 395
+# suites 0
+# pass 331
+# fail 0
+# cancelled 0
+# skipped 13
+# todo 51
+# duration_ms 13027.19375

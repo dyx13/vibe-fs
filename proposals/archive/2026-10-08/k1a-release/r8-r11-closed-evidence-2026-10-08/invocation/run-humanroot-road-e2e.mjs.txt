@@ -1,0 +1,34 @@
+import fs from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { verificationSteps } from '/Users/yuanxi/Workwork/vibe-fs/scripts/verify.mjs'
+import { assertBuildFresh, collectVerificationInputs, computeDigest } from '/Users/yuanxi/Workwork/vibe-fs/scripts/lib/build-state.mjs'
+import { spawnOwnedVerificationTool } from '/Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-owned-tool.mjs'
+
+const root = '/Users/yuanxi/Workwork/vibe-fs'
+const directory = '/private/tmp/vibe-fs-oct8-alias-release'
+const git = args => execFileSync('git', args, { cwd: root, encoding: 'utf8' })
+const before = { commit: git(['rev-parse', 'HEAD']).trim(), status: git(['status', '--porcelain=v1']), diff: git(['diff', '--binary']),
+  digest: computeDigest(collectVerificationInputs(root)), build: assertBuildFresh({ root }) }
+const step = verificationSteps({ root, release: true, env: process.env }).find(step => step.label === 'e2e')
+const log = fs.createWriteStream(`${directory}/humanroot-road-e2e.log`, { flags: 'wx' })
+const startedAt = new Date().toISOString()
+const start = performance.now()
+const owned = spawnOwnedVerificationTool(step.cmd, step.argv, { cwd: root, env: step.env })
+for (const stream of [owned.child.stdout, owned.child.stderr]) stream.on('data', chunk => log.write(chunk))
+let timedOut = false
+const timer = setTimeout(() => { timedOut = true; owned.stop() }, step.timeoutMs)
+const result = await owned.completed
+clearTimeout(timer)
+await new Promise(resolve => log.end(resolve))
+let monitorObservation
+try { process.kill(owned.child.pid, 0); monitorObservation = 'still-running' } catch (error) { monitorObservation = error.code }
+const after = { commit: git(['rev-parse', 'HEAD']).trim(), status: git(['status', '--porcelain=v1']), diff: git(['diff', '--binary']),
+  digest: computeDigest(collectVerificationInputs(root)), build: assertBuildFresh({ root }) }
+const inputsEqual = JSON.stringify(before) === JSON.stringify(after)
+const receipt = { preliminaryDirtyInput: true, before, after, inputsEqual, command: [step.cmd, ...step.argv],
+  timeoutMs: step.timeoutMs, startedAt, durationMs: performance.now() - start, timedOut,
+  exitCode: result.exitCode, signal: result.signal, failure: result.failure ? String(result.failure) : null,
+  monitorPid: owned.child.pid, monitorObservation }
+fs.writeFileSync(`${directory}/humanroot-road-e2e.json`, JSON.stringify(receipt, null, 2), { flag: 'wx' })
+process.stdout.write(JSON.stringify({ ...receipt, before: { ...before, diff: 'recorded in receipt' }, after: { ...after, diff: 'recorded in receipt' } }, null, 2) + '\n')
+process.exitCode = result.exitCode || (timedOut || result.signal || result.failure || !inputsEqual ? 1 : 0)

@@ -5,10 +5,10 @@
  * Side-effect-free functions live here; the main class file imports them.
  */
 
-import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { spawnOwnedVerificationTool } from "../../../../../scripts/lib/verification-owned-tool.mjs";
 import { getDescendantPids } from "./process-host-checks.js";
 import { terminateTree } from "./process-lifecycle.js";
 import { recordSpawn, recordExit } from "./spawn-ledger.js";
@@ -26,12 +26,11 @@ function defaultOpencodeBin() {
 export const OPENCODE_BIN = process.env.OPENCODE_BIN || defaultOpencodeBin();
 
 const STDOUT_RING_MAX = 100;
-const activeChildPids = new Set();
 
 /** In-process OpenCode serve spawn counter (G4R §2: exactly one lifetime). */
 let opencodeServeSpawnCount = 0;
 
-/** How many times `spawnOpencodeServe` succeeded in creating a child with a pid. */
+/** How many times the actual OpenCode process reported its spawned PID. */
 export function getOpencodeSpawnCount() {
   return opencodeServeSpawnCount;
 }
@@ -42,22 +41,6 @@ export function resetOpencodeSpawnCount() {
 }
 
 export const READY_POLL_INTERVAL_MS = 100;
-
-function cleanupAllActiveChildren() {
-  for (const pid of activeChildPids) {
-    try {
-      if (process.platform !== "win32") {
-        process.kill(-pid, "SIGKILL");
-      }
-    } catch {}
-    try { process.kill(pid, "SIGKILL"); } catch {}
-  }
-  activeChildPids.clear();
-}
-
-process.on("exit", cleanupAllActiveChildren);
-process.on("SIGINT", () => { cleanupAllActiveChildren(); process.exit(130); });
-process.on("SIGTERM", () => { cleanupAllActiveChildren(); process.exit(143); });
 
 export function parseListenPort(listenLine) {
   const m = listenLine.match(/http:\/\/127\.0\.0\.1:(\d+)/)
@@ -82,10 +65,10 @@ export function ringPush(buffer, s) {
   if (buffer.length > STDOUT_RING_MAX) buffer.shift();
 }
 
+/** Raw child termination for process fixtures; ProcessHost owns a lifeline handle. */
 export async function terminateChild(child, termMs = SIGTERM_GRACE_MS, killMs = SIGKILL_GRACE_MS) {
   const pid = child?.pid;
   if (!pid) return;
-  activeChildPids.delete(pid);
 
   try {
     const descendants = await getDescendantPids(pid);
@@ -134,31 +117,29 @@ export async function initGitWorkspace(workDir) {
   }
 }
 
-export function spawnOpencodeServe(workDir, env, hooks) {
-  const child = spawn(
+export function spawnOwnedOpencodeServe(workDir, env, hooks) {
+  const owner = spawnOwnedVerificationTool(
     OPENCODE_BIN,
     ["serve", "--port", "0", "--hostname", "127.0.0.1"],
-    {
-      cwd: workDir,
-      env,
-      stdio: ["pipe", "pipe", "pipe"],
-      windowsHide: true,
-      detached: process.platform !== "win32",
-    },
+    { cwd: workDir, env },
   );
-  if (child.pid) {
-    activeChildPids.add(child.pid);
-    opencodeServeSpawnCount += 1;
-    recordSpawn(child.pid, `opencode serve ${workDir}`);
-  }
-  child.stdout.on("data", (chunk) => hooks.onStdoutChunk(chunk.toString()));
-  child.stderr.on("data", (chunk) => hooks.onStderrChunk(chunk.toString()));
-  child.on("exit", (code, signal) => {
-    if (child.pid) {
-      activeChildPids.delete(child.pid);
-      recordExit(child.pid);
+  const terminal = new AbortController();
+  let hostPid = null;
+  const started = owner.started.then(result => {
+    if (result.failure === null) {
+      hostPid = result.pid;
+      opencodeServeSpawnCount += 1;
+      recordSpawn(hostPid, `opencode serve ${workDir}`);
     }
-    hooks.onExit(code, signal);
+    return result;
   });
-  return child;
+  owner.child.stdout.on("data", (chunk) => hooks.onStdoutChunk(chunk.toString()));
+  owner.child.stderr.on("data", (chunk) => hooks.onStderrChunk(chunk.toString()));
+  const completed = owner.completed.then(result => {
+    if (hostPid !== null && (result.exitCode !== null || result.signal !== null)) recordExit(hostPid);
+    hooks.onExit(result.exitCode, result.signal, result.failure);
+    terminal.abort(result);
+    return result;
+  });
+  return { child: owner.child, stop: owner.stop, started, completed, terminal: terminal.signal };
 }

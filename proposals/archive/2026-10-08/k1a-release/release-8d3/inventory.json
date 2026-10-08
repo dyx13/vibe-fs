@@ -1,0 +1,857 @@
+{
+  "capturedAt": "2026-10-08T07:24:44.331364+00:00",
+  "sourceCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "sourceTree": "bbeba1c9618c41d125d83f3047edbc93e0a6b5fe",
+  "inputDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+  "ready": true,
+  "defaultTarget": "/Users/yuanxi/Workwork/vibe-fs/proposals/archive/2026-10-08/k1a-release/release-8d3",
+  "fileCount": 134,
+  "totalBytes": 23235505,
+  "missing": [],
+  "entries": [
+    {
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T06-38-40-702Z/format-check.log",
+      "destination": "local/unified/2026-10-08T06-38-40-702Z/format-check.log",
+      "bytes": 130,
+      "sha256": "eaf4f835cbf7f2f9356d3dc9c1c438f7b94f50b9a95378fff01619f2abbe2134"
+    },
+    {
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T06-38-40-702Z/check.log",
+      "destination": "local/unified/2026-10-08T06-38-40-702Z/check.log",
+      "bytes": 169851,
+      "sha256": "95a417b2be22bc2b0c036848df912e3730fe0a37b623d8a3129863fc3662d689"
+    },
+    {
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T06-38-40-702Z/build.log",
+      "destination": "local/unified/2026-10-08T06-38-40-702Z/build.log",
+      "bytes": 989,
+      "sha256": "1696433942c5c446fa7471f7a81628a14fd5cb4ee0e4b57154844993611e5d6d"
+    },
+    {
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T06-38-40-702Z/unit.log",
+      "destination": "local/unified/2026-10-08T06-38-40-702Z/unit.log",
+      "bytes": 3929746,
+      "sha256": "314b268ad131bef05dc9adeefd5d2937ddb48b8208c37ebfb63a0139490ced01"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/release-console-8d3.log",
+      "destination": "local/release-console-8d3.log",
+      "bytes": 1513092,
+      "sha256": "1cb9149d2a086e5ca1b0a9aa5f89afde272456124e4a6391320665a595820bb5"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/frozen-input.json",
+      "destination": "local/frozen-input.json",
+      "bytes": 1199497,
+      "sha256": "38429cae8c60d27f5f07efc726bcad3eba4f4cafaeae0825701868dd139c5fab"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/unit-8d3-build-manifest-readonly.json",
+      "destination": "local/unit-8d3-build-manifest-readonly.json",
+      "bytes": 1152870,
+      "sha256": "af51a89d5471d5a2c7e0e151e9f3dcf773f9903361ebb245e5c249b335c9b78d"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/unit-8d3-final-input-readonly.json",
+      "destination": "local/unit-8d3-final-input-readonly.json",
+      "bytes": 1357,
+      "sha256": "b7ef19473d558b2c662a2a693a4dbac3b4c92f853dddc1ee4d3a5b65ece39df1"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/unit-8d3-discovery-readonly.json",
+      "destination": "local/unit-8d3-discovery-readonly.json",
+      "bytes": 297,
+      "sha256": "de0fd9874151b78e603bc32bd202ff1d872f693e583674ceaad7d58b4b7ea174"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/unit-8d3-process-readonly.json",
+      "destination": "local/unit-8d3-process-readonly.json",
+      "bytes": 387,
+      "sha256": "6cfbf59277c7f1c4b9c5bc4c7c541f7e8e949e5dd35338dbe9f4a26680f093a5"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/unit-8d3-readonly-audit.json",
+      "destination": "local/unit-8d3-readonly-audit.json",
+      "bytes": 3973814,
+      "sha256": "6e75da7ec3848c81c18b41c62f5039189d38641e43e5d4752332771d38fa3b14"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/unit-8d3-readonly-audit.txt",
+      "destination": "local/unit-8d3-readonly-audit.txt",
+      "bytes": 3792,
+      "sha256": "e25b088bd0007913663ab3db2243b14f8b9eb6a5df343c2809f20ce202ae1c3d"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration.json",
+      "destination": "independent/independent-integration.json",
+      "bytes": 967,
+      "sha256": "5cbe7f30153dfd96f827ece1ffa53953146a025fa7dfd4be38f72a46b61a037f"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration.log",
+      "destination": "independent/independent-integration.log",
+      "bytes": 190670,
+      "sha256": "ebc8b34ce4b7d618a8eefedb07e099c9ff2a7b5ba264e1429afd6dfd4e764cce"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration-console.log",
+      "destination": "independent/independent-integration-console.log",
+      "bytes": 968,
+      "sha256": "d7252d5e76165b9aa94514829c2a836265eee152e9c7a68e0e2582cb13ee7834"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-e2e.json",
+      "destination": "independent/independent-e2e.json",
+      "bytes": 971,
+      "sha256": "e7c16f50e38890d038b7cd9ef820dcca01a4f1707010c42a5198e7b6de1fa68e"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-e2e.log",
+      "destination": "independent/independent-e2e.log",
+      "bytes": 9904,
+      "sha256": "438c407fc0b69c0b70ccfd2ecc42b5f64e6d404b1cfac08120aa0d2e9a939cc4"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-e2e-console.log",
+      "destination": "independent/independent-e2e-console.log",
+      "bytes": 972,
+      "sha256": "eb54c23f84ae8e20f763ebed71505751a6b270814f7d102fa3d76a0350844c3b"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-package.json",
+      "destination": "independent/independent-package.json",
+      "bytes": 924,
+      "sha256": "a3396a8adfff7dbcf9bc9e4ba12d76ecc778a1bed4600c1bccd1b5aeea2145fb"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-package.log",
+      "destination": "independent/independent-package.log",
+      "bytes": 305,
+      "sha256": "e0089683aaece34d9b0bf8c80465525dcfd73059bf8f03c277cc8584ac39c270"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/independent-package-console.log",
+      "destination": "independent/independent-package-console.log",
+      "bytes": 925,
+      "sha256": "b0962c02807612d9d47c037012f9929630a49a337cce0c5b5186ac6bd3ac4b66"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-unstarted.json",
+      "destination": "supplemental/supplemental-unstarted.json",
+      "bytes": 2339,
+      "sha256": "708faaac0b56f952d7d1781d688e3259d90fe953e0a2d5eb0281f1cbd970a1ba"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-unstarted.log",
+      "destination": "supplemental/supplemental-unstarted.log",
+      "bytes": 74320,
+      "sha256": "68fd9c0909b313c1a7cad7f9089ef0131f19d03de47a4d3addd6e23212891fd4"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-unstarted-readonly-audit.json",
+      "destination": "supplemental/supplemental-unstarted-readonly-audit.json",
+      "bytes": 22853,
+      "sha256": "e15fff9f05388160bfbac5d2a6f21c8a5aa95949b486bb5540cfcbce90407e14"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-unstarted-readonly-audit.txt",
+      "destination": "supplemental/supplemental-unstarted-readonly-audit.txt",
+      "bytes": 1579,
+      "sha256": "84d05dcfeee7b77ac452561070d2a8323c7df78a60a347ac0d13b41a0aeaa14c"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016.json",
+      "destination": "supplemental/supplemental-physical016.json",
+      "bytes": 2659,
+      "sha256": "6503cdca8c60f89431c61d84e2a4e4761138838aeb818bb4eef302fb221ab7cd"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016.log",
+      "destination": "supplemental/supplemental-physical016.log",
+      "bytes": 49174,
+      "sha256": "d39b5ddc2d6cadf8b617f1632e4a58deb6663e09abec779e2a9d643d0bd3a65d"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016.console",
+      "destination": "supplemental/supplemental-physical016.console",
+      "bytes": 2660,
+      "sha256": "4480dccca94b1a3bd91d703c738f68b6065d52904e1ef651a0fae35b344a0307"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-tail.json",
+      "destination": "supplemental/supplemental-physical016-tail.json",
+      "bytes": 1742,
+      "sha256": "246bce4f78851d30ce420268054274783275a7777a22da83c1a09d2553638064"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-tail.log",
+      "destination": "supplemental/supplemental-physical016-tail.log",
+      "bytes": 24947,
+      "sha256": "65c502e5d1c70c6e21eec5d920257f701deaa3216accdc65f6cc8ab29604f708"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-tail.console",
+      "destination": "supplemental/supplemental-physical016-tail.console",
+      "bytes": 1743,
+      "sha256": "4a091ec73e790f07ad877d2e34633822e9dd1081f1a1a3ca7a2e5cfbec7427e0"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/package-supplemental-8d3-readonly-matrix.json",
+      "destination": "audits/package-supplemental-8d3-readonly-matrix.json",
+      "bytes": 6098,
+      "sha256": "2faed1c456d04d48cf647bd2d352402946234312046689d9f5835afd9bfa671c"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/package-supplemental-8d3-readonly-matrix.tmp",
+      "destination": "audits/package-supplemental-8d3-readonly-matrix.tmp",
+      "bytes": 2097,
+      "sha256": "8cf3ade8ef8abfa5cd1763f1d4a3051d9fbf95b186e324ac96addefa7ac6ae27"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-readonly-audit.json",
+      "destination": "audits/integration-8d3-readonly-audit.json",
+      "bytes": 21013,
+      "sha256": "fc16eadac6bc3b2a5edd5eb279b9ea0e611274f6f214596ccb2692b8617d8ae0"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-readonly-audit.txt",
+      "destination": "audits/integration-8d3-readonly-audit.txt",
+      "bytes": 4875,
+      "sha256": "0cb3580107387f2ff92bd0d1de11b8143875cdc2f879d986893af49fe660854e"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-readonly.json",
+      "destination": "audits/integration-8d3-de022-owned-scratch-readonly.json",
+      "bytes": 55969,
+      "sha256": "be8c4fa959978d5cfef9c9250bb9a1adbb45bd6f1c2c99982bf9ca08d2a1a8d8"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-readonly.txt",
+      "destination": "audits/integration-8d3-de022-owned-scratch-readonly.txt",
+      "bytes": 4449,
+      "sha256": "afea85617c5052110fdf6f4512397383dc27abccbd14f0240f3cc9c137a8f72a"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-locality-project-map-readonly.json",
+      "destination": "audits/integration-8d3-de022-locality-project-map-readonly.json",
+      "bytes": 78694,
+      "sha256": "2658922bfaf1b143e489763b04547f59ae95d582119ef41751b78ff7e9c78c30"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-owned-processes-during.txt",
+      "destination": "owned-resources/integration-8d3-owned-processes-during.txt",
+      "bytes": 6714,
+      "sha256": "21b0e168dfb1a7615f73bb7b7a32d6217cde3330d5c60c8439956bb0f8f145aa"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-final-process-observation.txt",
+      "destination": "owned-resources/integration-8d3-final-process-observation.txt",
+      "bytes": 35,
+      "sha256": "314a451b3efec44807da02737b4b14081da300686787976387210b9e849b76d2"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-final-hdiutil.plist",
+      "destination": "owned-resources/integration-8d3-final-hdiutil.plist",
+      "bytes": 359,
+      "sha256": "a69b71579f66e204297541105f78393d142db2098a0a23d9ef162c30c11502b8"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-final-mount.txt",
+      "destination": "owned-resources/integration-8d3-final-mount.txt",
+      "bytes": 750,
+      "sha256": "e0dcd638a1a1a216aed96ff1260ed70e1b1e3134787cfe591c1c3f7b0fb5a145"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-0474116c1bf879856a7d602b0f4dd82e049b1d2965f8cb3c31949a732fde75eb.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-0474116c1bf879856a7d602b0f4dd82e049b1d2965f8cb3c31949a732fde75eb.fsproj",
+      "bytes": 669,
+      "sha256": "476257e2c1d11dc96771939bf383eb671d588b1e791bb43122e00d490524ea7b"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-0474116c1bf879856a7d602b0f4dd82e049b1d2965f8cb3c31949a732fde75eb.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-0474116c1bf879856a7d602b0f4dd82e049b1d2965f8cb3c31949a732fde75eb.project-cracked.json",
+      "bytes": 15095,
+      "sha256": "c983327477595e648b88a6ab978cbe51fa7e8a5528333df0624db4b0df3d24dd"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-0474116c1bf879856a7d602b0f4dd82e049b1d2965f8cb3c31949a732fde75eb.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-0474116c1bf879856a7d602b0f4dd82e049b1d2965f8cb3c31949a732fde75eb.success.json",
+      "bytes": 119,
+      "sha256": "1227d9bbda07d0249ec4c5497e19fcec3740b3d72c6b5eceefca0bf29890bb5b"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-19885b0d27a311e72cfd93b668934e5c0db3c24156e64385b1e82457d368957b.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-19885b0d27a311e72cfd93b668934e5c0db3c24156e64385b1e82457d368957b.fsproj",
+      "bytes": 2686,
+      "sha256": "ac91a00fc39b9b56357177c10ebb1115e30eacb1db6486538a0d766b668f2148"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-19885b0d27a311e72cfd93b668934e5c0db3c24156e64385b1e82457d368957b.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-19885b0d27a311e72cfd93b668934e5c0db3c24156e64385b1e82457d368957b.project-cracked.json",
+      "bytes": 16197,
+      "sha256": "16c5dd4ee0275d0aac2b4c6881f382c7dafd3c5c49eea1926cfa251802009061"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-19885b0d27a311e72cfd93b668934e5c0db3c24156e64385b1e82457d368957b.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-19885b0d27a311e72cfd93b668934e5c0db3c24156e64385b1e82457d368957b.success.json",
+      "bytes": 119,
+      "sha256": "d4ad3cec5f66836cd295b133b5620bd01a7be61c599ec8d7daa26ba879e3dc0c"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-222a2a0e903d1220d8dfc21095c7e860be3e60980f47a585fdec07725118e69b.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-222a2a0e903d1220d8dfc21095c7e860be3e60980f47a585fdec07725118e69b.fsproj",
+      "bytes": 8199,
+      "sha256": "985e707e9e0549d24ec8e8e1a3b0de01a30657190d30d1c08270cd545b8fbd8f"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-222a2a0e903d1220d8dfc21095c7e860be3e60980f47a585fdec07725118e69b.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-222a2a0e903d1220d8dfc21095c7e860be3e60980f47a585fdec07725118e69b.project-cracked.json",
+      "bytes": 20937,
+      "sha256": "6951074690c1eeecf0eee0bd9fa183280f315d15a85879a602d093f599eb648d"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-222a2a0e903d1220d8dfc21095c7e860be3e60980f47a585fdec07725118e69b.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-222a2a0e903d1220d8dfc21095c7e860be3e60980f47a585fdec07725118e69b.success.json",
+      "bytes": 119,
+      "sha256": "59345d04f3118b49fbebc9fba94a10123dd26bce2a03f2283d413b0002095915"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-2d21974186089532c53fb9d46044eceb8ade9cdea662151fdcf3bf9d02b22b92.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-2d21974186089532c53fb9d46044eceb8ade9cdea662151fdcf3bf9d02b22b92.fsproj",
+      "bytes": 2231,
+      "sha256": "7b40657cf3d35d8f832d0e05b2108f2501ef8d2dc91eb9096c3e097c841e704b"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-2d21974186089532c53fb9d46044eceb8ade9cdea662151fdcf3bf9d02b22b92.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-2d21974186089532c53fb9d46044eceb8ade9cdea662151fdcf3bf9d02b22b92.project-cracked.json",
+      "bytes": 16254,
+      "sha256": "f9a33b39c2fbdcddd0b54315997a18fdb1a661116e07bc39773d464f5d1380a9"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-2d21974186089532c53fb9d46044eceb8ade9cdea662151fdcf3bf9d02b22b92.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-2d21974186089532c53fb9d46044eceb8ade9cdea662151fdcf3bf9d02b22b92.success.json",
+      "bytes": 119,
+      "sha256": "a7e2dd0e6430803eff7236331400a616f2f835033039ca6efd2e602eaf26f69a"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-52ee7763d8a806faf41a326eddf489b7fb787e80931c4258b53bee33bcdaa12c.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-52ee7763d8a806faf41a326eddf489b7fb787e80931c4258b53bee33bcdaa12c.fsproj",
+      "bytes": 32686,
+      "sha256": "59d862d88285119e4491d589ff5c41f98fa5dc99ce497e715f97f3ee80d5ed79"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-52ee7763d8a806faf41a326eddf489b7fb787e80931c4258b53bee33bcdaa12c.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-52ee7763d8a806faf41a326eddf489b7fb787e80931c4258b53bee33bcdaa12c.project-cracked.json",
+      "bytes": 40139,
+      "sha256": "86ccaa1d3bece95180729d461a114685d332725d3a7b984626afe7848705273e"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-52ee7763d8a806faf41a326eddf489b7fb787e80931c4258b53bee33bcdaa12c.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-52ee7763d8a806faf41a326eddf489b7fb787e80931c4258b53bee33bcdaa12c.success.json",
+      "bytes": 119,
+      "sha256": "7b622a80ba0b3729c6e0513e8c61cfb236d4c8fbffa60911ad8d2eb02334e1aa"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-570d8ae4080872d9bb9a81de5bfc7640a8cc05c7861b94010bd85be37be5aee2.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-570d8ae4080872d9bb9a81de5bfc7640a8cc05c7861b94010bd85be37be5aee2.fsproj",
+      "bytes": 2683,
+      "sha256": "0216bcc2b26e5110549e92cc5484e78f9e0f49c98f1c7e5422e3f41b53a36195"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-570d8ae4080872d9bb9a81de5bfc7640a8cc05c7861b94010bd85be37be5aee2.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-570d8ae4080872d9bb9a81de5bfc7640a8cc05c7861b94010bd85be37be5aee2.project-cracked.json",
+      "bytes": 16626,
+      "sha256": "d486f146651a64c65649b62607d16bef967eb9c75b7fc0a3468e418b64028605"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-570d8ae4080872d9bb9a81de5bfc7640a8cc05c7861b94010bd85be37be5aee2.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-570d8ae4080872d9bb9a81de5bfc7640a8cc05c7861b94010bd85be37be5aee2.success.json",
+      "bytes": 119,
+      "sha256": "83ee4a7755961358f4c38a52c76c582af255c06594d9c1c778dd1a623592a7bc"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-5b6c827542eff1b619ba185c93cc23a20525eeede3b0f289885f41d6a65f7841.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-5b6c827542eff1b619ba185c93cc23a20525eeede3b0f289885f41d6a65f7841.fsproj",
+      "bytes": 677,
+      "sha256": "1ce7a47d649774c020a138d99ece50725838c2bec86e33b7c476050c2d21b617"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-5b6c827542eff1b619ba185c93cc23a20525eeede3b0f289885f41d6a65f7841.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-5b6c827542eff1b619ba185c93cc23a20525eeede3b0f289885f41d6a65f7841.project-cracked.json",
+      "bytes": 15100,
+      "sha256": "a1e5c5d69b1572f5f77a84e808a2fff691bebd750fe6f597229c4ca8dc40a04d"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-5b6c827542eff1b619ba185c93cc23a20525eeede3b0f289885f41d6a65f7841.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-5b6c827542eff1b619ba185c93cc23a20525eeede3b0f289885f41d6a65f7841.success.json",
+      "bytes": 119,
+      "sha256": "e001538393f3dfcccd70a85b2cd5a86579b679e2cccd0baa43e31db216ac2d29"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-613d2afb7d108b7e01a3692af0d9f0787262ccbd8aef4140bc38b64255f03ee2.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-613d2afb7d108b7e01a3692af0d9f0787262ccbd8aef4140bc38b64255f03ee2.fsproj",
+      "bytes": 3794,
+      "sha256": "a28c4f7fe984ed4cdd2dff622cf4641fcd5e1a4c366888f4a8c5c94a518a7454"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-613d2afb7d108b7e01a3692af0d9f0787262ccbd8aef4140bc38b64255f03ee2.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-613d2afb7d108b7e01a3692af0d9f0787262ccbd8aef4140bc38b64255f03ee2.project-cracked.json",
+      "bytes": 17514,
+      "sha256": "60cfe25526785c4dfc70daca7e93e9514088c6426af0d1e810966e92bed13de2"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-613d2afb7d108b7e01a3692af0d9f0787262ccbd8aef4140bc38b64255f03ee2.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-613d2afb7d108b7e01a3692af0d9f0787262ccbd8aef4140bc38b64255f03ee2.success.json",
+      "bytes": 119,
+      "sha256": "edd77f24a09e480615ad3a7c92729ff21b747426dc305cc45747d02e70fc1d45"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-791a42e21aa7d1add40c74ffd5bd2ef7a3a1938a1a552baa5390749f492f5c67.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-791a42e21aa7d1add40c74ffd5bd2ef7a3a1938a1a552baa5390749f492f5c67.fsproj",
+      "bytes": 2134,
+      "sha256": "17a12df807d0e761f4e46726a055fd65c23298d9481232e901d3354812aa9e9e"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-791a42e21aa7d1add40c74ffd5bd2ef7a3a1938a1a552baa5390749f492f5c67.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-791a42e21aa7d1add40c74ffd5bd2ef7a3a1938a1a552baa5390749f492f5c67.project-cracked.json",
+      "bytes": 15856,
+      "sha256": "5094ca72bd1eef81141b1d8e59ac858b38299ae3023a474747b426080f1d8c83"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-791a42e21aa7d1add40c74ffd5bd2ef7a3a1938a1a552baa5390749f492f5c67.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-791a42e21aa7d1add40c74ffd5bd2ef7a3a1938a1a552baa5390749f492f5c67.success.json",
+      "bytes": 119,
+      "sha256": "88a2f8531d9696015670f06b679f24917372e8eb45bf87b87bbb5bdcf004d4fa"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-8c4af1473557c1979cbfc1b384eb69879e93ef2ff25be4eeafde4c1a77b4aad3.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-8c4af1473557c1979cbfc1b384eb69879e93ef2ff25be4eeafde4c1a77b4aad3.fsproj",
+      "bytes": 1029,
+      "sha256": "b6a99d61ba9729ff2b1eb0072e84d78c6f075d2d8e40cf85cd618aa44b3b0f32"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-8c4af1473557c1979cbfc1b384eb69879e93ef2ff25be4eeafde4c1a77b4aad3.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-8c4af1473557c1979cbfc1b384eb69879e93ef2ff25be4eeafde4c1a77b4aad3.project-cracked.json",
+      "bytes": 15332,
+      "sha256": "1598f787e9f2cddb8560edf49252b8b2c193217d8f10f6367138aa7bffbadf98"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-8c4af1473557c1979cbfc1b384eb69879e93ef2ff25be4eeafde4c1a77b4aad3.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-8c4af1473557c1979cbfc1b384eb69879e93ef2ff25be4eeafde4c1a77b4aad3.success.json",
+      "bytes": 119,
+      "sha256": "4d26aceab56d53ae7285428f32bc6845c1afe49018b4a11fe51082edf20acd67"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-9688c906da656761cdfffed51e96ba13194907953222d155f385c63bc678ac5a.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-9688c906da656761cdfffed51e96ba13194907953222d155f385c63bc678ac5a.fsproj",
+      "bytes": 158524,
+      "sha256": "521c6102701f22a2d16cf4903f606e386b2e2894fc24aa23cebd4f4d3f879205"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-9688c906da656761cdfffed51e96ba13194907953222d155f385c63bc678ac5a.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-9688c906da656761cdfffed51e96ba13194907953222d155f385c63bc678ac5a.project-cracked.json",
+      "bytes": 146082,
+      "sha256": "6b4987acaa56f3b571429eae2679b53a8d6dc28b4bbf7598744d076bd3164e9a"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-99e3a7fb81f8693a80d800b170c70d2dd1d92392bfd3ea3c1cb869810fa3cebf.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-99e3a7fb81f8693a80d800b170c70d2dd1d92392bfd3ea3c1cb869810fa3cebf.fsproj",
+      "bytes": 4397,
+      "sha256": "7684dfdbca561c53c6716b4c63a4b602411fde319721b3767ef4765aa3165916"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-99e3a7fb81f8693a80d800b170c70d2dd1d92392bfd3ea3c1cb869810fa3cebf.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-99e3a7fb81f8693a80d800b170c70d2dd1d92392bfd3ea3c1cb869810fa3cebf.project-cracked.json",
+      "bytes": 17969,
+      "sha256": "d9fe23c008eda356116eb2be3f676e4f1dac48e40103ca40f0d76912c45de71f"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-99e3a7fb81f8693a80d800b170c70d2dd1d92392bfd3ea3c1cb869810fa3cebf.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-99e3a7fb81f8693a80d800b170c70d2dd1d92392bfd3ea3c1cb869810fa3cebf.success.json",
+      "bytes": 119,
+      "sha256": "9f96fe9edbd389e16bdf7f85cd026cfdd7e4f01b34cfd9a5f9adce4f90f5b5f4"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-9c33110d788c6cdbc7d34e50957804acadb09467dda48008bc28ec97dcffe010.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-9c33110d788c6cdbc7d34e50957804acadb09467dda48008bc28ec97dcffe010.fsproj",
+      "bytes": 3286,
+      "sha256": "4068a5932adb0d95460ab9a10790f08bf9b5caf9321d1a8f4effa73a5e7a3860"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-9c33110d788c6cdbc7d34e50957804acadb09467dda48008bc28ec97dcffe010.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-9c33110d788c6cdbc7d34e50957804acadb09467dda48008bc28ec97dcffe010.project-cracked.json",
+      "bytes": 17100,
+      "sha256": "a8ee7ed51e1abd0249a3f7b486d8c3232aa3f773a647fb120ec8a93dbd15fd74"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-9c33110d788c6cdbc7d34e50957804acadb09467dda48008bc28ec97dcffe010.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-9c33110d788c6cdbc7d34e50957804acadb09467dda48008bc28ec97dcffe010.success.json",
+      "bytes": 119,
+      "sha256": "4ea387e9a42ff19df0822aea10de51d8d1a19aba4b867c36e53d78e5d630adfd"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-a1f5c1fc735ad8962d3a8b802231bc58b30e1ca5b6a4dab71ad4405bfb2294ee.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-a1f5c1fc735ad8962d3a8b802231bc58b30e1ca5b6a4dab71ad4405bfb2294ee.fsproj",
+      "bytes": 16487,
+      "sha256": "f75c18a6e0edf92da43f5fca40caca3256e3f3123a70ebb2bbc9b77ca68697de"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-a1f5c1fc735ad8962d3a8b802231bc58b30e1ca5b6a4dab71ad4405bfb2294ee.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-a1f5c1fc735ad8962d3a8b802231bc58b30e1ca5b6a4dab71ad4405bfb2294ee.project-cracked.json",
+      "bytes": 27469,
+      "sha256": "b5547a1fb5c7f00eb5a650a7558f81549483e4f6f155ab4731213b3029b6a609"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-a1f5c1fc735ad8962d3a8b802231bc58b30e1ca5b6a4dab71ad4405bfb2294ee.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-a1f5c1fc735ad8962d3a8b802231bc58b30e1ca5b6a4dab71ad4405bfb2294ee.success.json",
+      "bytes": 119,
+      "sha256": "5bae5655aaec943091fc58f5b7058ece727d19e3b4c83213e7372dad4d304dad"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-bd5eb2f0fcc07cae5669d56661d985ce08700e839ab1f37fa5646669cdf75229.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-bd5eb2f0fcc07cae5669d56661d985ce08700e839ab1f37fa5646669cdf75229.fsproj",
+      "bytes": 1258,
+      "sha256": "679269dd80878d3ead651ca9e278c43a19810c47bf10cffae60ed1d68e83f0c7"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-bd5eb2f0fcc07cae5669d56661d985ce08700e839ab1f37fa5646669cdf75229.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-bd5eb2f0fcc07cae5669d56661d985ce08700e839ab1f37fa5646669cdf75229.project-cracked.json",
+      "bytes": 15523,
+      "sha256": "901726bd49c48e7d695b7300e9bfe0a20dade2a1667467f1156d32a2dc77d2d9"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-bd5eb2f0fcc07cae5669d56661d985ce08700e839ab1f37fa5646669cdf75229.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-bd5eb2f0fcc07cae5669d56661d985ce08700e839ab1f37fa5646669cdf75229.success.json",
+      "bytes": 119,
+      "sha256": "edfba191999edd98b874b90b0e2ff7452cae98d19bf5cf0b4a9812eb97af7947"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-ca64b7b3196ed1c6c28425a9e8315b7a04cba157af062312b3466b9dfcc313ae.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-ca64b7b3196ed1c6c28425a9e8315b7a04cba157af062312b3466b9dfcc313ae.fsproj",
+      "bytes": 1463,
+      "sha256": "e4277b2a47ade08c8515bc0544f049b774717c02b4d8fd61763f2359ece9f120"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-ca64b7b3196ed1c6c28425a9e8315b7a04cba157af062312b3466b9dfcc313ae.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-ca64b7b3196ed1c6c28425a9e8315b7a04cba157af062312b3466b9dfcc313ae.project-cracked.json",
+      "bytes": 15669,
+      "sha256": "6238c82a0e910a2e30dc552dd7aa397a14f1a9210618f9b8dee68627730de2b4"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-ca64b7b3196ed1c6c28425a9e8315b7a04cba157af062312b3466b9dfcc313ae.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-ca64b7b3196ed1c6c28425a9e8315b7a04cba157af062312b3466b9dfcc313ae.success.json",
+      "bytes": 119,
+      "sha256": "cfd8c58b23d3da12934825f8ac90f0215225e442d2f81180614f9b73ddd96526"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e0cadd6eeb7b8e679a745ac116cdf9a4d85f3149b2dc23889a45bcca8af3295a.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-e0cadd6eeb7b8e679a745ac116cdf9a4d85f3149b2dc23889a45bcca8af3295a.fsproj",
+      "bytes": 6036,
+      "sha256": "b133d1cadfe57bae68665629c9a3fed0de5acab841690cf33898c4beb4985ba3"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e0cadd6eeb7b8e679a745ac116cdf9a4d85f3149b2dc23889a45bcca8af3295a.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-e0cadd6eeb7b8e679a745ac116cdf9a4d85f3149b2dc23889a45bcca8af3295a.project-cracked.json",
+      "bytes": 19286,
+      "sha256": "3bde9ce72a2761bbd8fe2608317f829b05e3d6de05ea27161552f0cb0e70c196"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e0cadd6eeb7b8e679a745ac116cdf9a4d85f3149b2dc23889a45bcca8af3295a.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-e0cadd6eeb7b8e679a745ac116cdf9a4d85f3149b2dc23889a45bcca8af3295a.success.json",
+      "bytes": 119,
+      "sha256": "7051f09f194c95884bfdf38b485e1dd973a3b8b37ccff84ec9eb7dce94bb5665"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e74412c5029edd19e35ece1d5eba39b1b02a42093c1d05046696a140f3c6834e.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-e74412c5029edd19e35ece1d5eba39b1b02a42093c1d05046696a140f3c6834e.fsproj",
+      "bytes": 7017,
+      "sha256": "a43d8925bdf4f683fd9880d4d3eae3ccc9ee6ed4e22c2a3dcc1cde9676b14658"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e74412c5029edd19e35ece1d5eba39b1b02a42093c1d05046696a140f3c6834e.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-e74412c5029edd19e35ece1d5eba39b1b02a42093c1d05046696a140f3c6834e.project-cracked.json",
+      "bytes": 20048,
+      "sha256": "87dc75186f881bbefa1c3d8ad70587d774eb71e0c501c6e76602883daf8140da"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e74412c5029edd19e35ece1d5eba39b1b02a42093c1d05046696a140f3c6834e.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-e74412c5029edd19e35ece1d5eba39b1b02a42093c1d05046696a140f3c6834e.success.json",
+      "bytes": 119,
+      "sha256": "bd0456c066182c4dfa8173db39811b5b1699b981575cabdb1dc9e73a678c7e12"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e865f01a705c20f838d7a833b220c5b981bd936a534dec6c55d0eec5348bb390.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-e865f01a705c20f838d7a833b220c5b981bd936a534dec6c55d0eec5348bb390.fsproj",
+      "bytes": 1248,
+      "sha256": "84a7916c09406b33528f9cfa0db310acff2d1dd09e2efb13ec2749532c869397"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e865f01a705c20f838d7a833b220c5b981bd936a534dec6c55d0eec5348bb390.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-e865f01a705c20f838d7a833b220c5b981bd936a534dec6c55d0eec5348bb390.project-cracked.json",
+      "bytes": 15510,
+      "sha256": "aff6143d15faed93657041e1f204d66c888b61078643b3137f57f7857f44115f"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-e865f01a705c20f838d7a833b220c5b981bd936a534dec6c55d0eec5348bb390.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-e865f01a705c20f838d7a833b220c5b981bd936a534dec6c55d0eec5348bb390.success.json",
+      "bytes": 119,
+      "sha256": "a1419e99f2e242b77ef3edd5269e098d2fd47dd8f5c1427030f8e54ba3addcbb"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-edf69bfd42f395079361aac63f63c978130a9f3ea6357fb0ef1950a7cf403c66.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-edf69bfd42f395079361aac63f63c978130a9f3ea6357fb0ef1950a7cf403c66.fsproj",
+      "bytes": 26629,
+      "sha256": "1051d5e8879726b942a56b8a7110e832820b9d7a9a6f036aaf885c615a493e79"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-edf69bfd42f395079361aac63f63c978130a9f3ea6357fb0ef1950a7cf403c66.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-edf69bfd42f395079361aac63f63c978130a9f3ea6357fb0ef1950a7cf403c66.project-cracked.json",
+      "bytes": 35490,
+      "sha256": "a875748d976e28f439696ac4b65761787dd686a53bc1a8c43dcea523d25d833a"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-edf69bfd42f395079361aac63f63c978130a9f3ea6357fb0ef1950a7cf403c66.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-edf69bfd42f395079361aac63f63c978130a9f3ea6357fb0ef1950a7cf403c66.success.json",
+      "bytes": 119,
+      "sha256": "81cc6b8b5d3d6197fdaec04a7f3035695fda9519b5bd27277fb1fba46fcac8bf"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-ee45a906da29053935e95790a3477352ee381e93cf2e222db25912a844dad539.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-ee45a906da29053935e95790a3477352ee381e93cf2e222db25912a844dad539.fsproj",
+      "bytes": 4606,
+      "sha256": "cae710c0507d5820036ee068b40dc94c6822a375811fc7cc41408b8e2ffbb18e"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-ee45a906da29053935e95790a3477352ee381e93cf2e222db25912a844dad539.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-ee45a906da29053935e95790a3477352ee381e93cf2e222db25912a844dad539.project-cracked.json",
+      "bytes": 18134,
+      "sha256": "c854b7d6108921431378e0d5f967aa405b671adf2453ee754031314ec2341867"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-ee45a906da29053935e95790a3477352ee381e93cf2e222db25912a844dad539.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-ee45a906da29053935e95790a3477352ee381e93cf2e222db25912a844dad539.success.json",
+      "bytes": 119,
+      "sha256": "425c96ff239d0aadb9b3caaa982100b1cbe10264731711f459f61157b5c1b793"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-f18386c665fec1ca94f0b812fc7123fb5da281de0ba5003cb5e9d530db284244.fsproj",
+      "destination": "owned-resources/de022-scratch/artifact-f18386c665fec1ca94f0b812fc7123fb5da281de0ba5003cb5e9d530db284244.fsproj",
+      "bytes": 2686,
+      "sha256": "ac91a00fc39b9b56357177c10ebb1115e30eacb1db6486538a0d766b668f2148"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-f18386c665fec1ca94f0b812fc7123fb5da281de0ba5003cb5e9d530db284244.project-cracked.json",
+      "destination": "owned-resources/de022-scratch/artifact-f18386c665fec1ca94f0b812fc7123fb5da281de0ba5003cb5e9d530db284244.project-cracked.json",
+      "bytes": 16730,
+      "sha256": "c6d185b66e8346a0dffd8c9db2bfb08be92d0d6551ab9fcbfb52eed7fb182349"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence/artifact-f18386c665fec1ca94f0b812fc7123fb5da281de0ba5003cb5e9d530db284244.success.json",
+      "destination": "owned-resources/de022-scratch/artifact-f18386c665fec1ca94f0b812fc7123fb5da281de0ba5003cb5e9d530db284244.success.json",
+      "bytes": 119,
+      "sha256": "310b18cd8548e4243970e3d0fb82201020b263781c19c818d0823505eddbc550"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/run-independent.mjs",
+      "destination": "invocation/run-independent.mjs.txt",
+      "bytes": 3123,
+      "sha256": "242adefa3849983574e608ee0ce82fec07cbd8fa662f26e939c91f7910a3f5a9"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/run-unstarted-integration.mjs",
+      "destination": "invocation/run-unstarted-integration.mjs.txt",
+      "bytes": 2555,
+      "sha256": "6454b0a51e0cc82a07addead7bc6d0d110af99b0c191257f7a7bb2c798bd5561"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/run-physical016.mjs",
+      "destination": "invocation/run-physical016.mjs.txt",
+      "bytes": 4116,
+      "sha256": "69e3f45560e2377668650a20d76cecfd62382657ac4061a80a5de087d035baed"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/run-physical016-tail.mjs",
+      "destination": "invocation/run-physical016-tail.mjs.txt",
+      "bytes": 3665,
+      "sha256": "73d8b3d3698b7b527ab0e016cfee3bf9d985d1aa73af619821ed47bdde61df86"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/run.json",
+      "destination": "ci-37738719900/run.json",
+      "bytes": 11345,
+      "sha256": "1871ca252b0471a6f46b95e10135fe755d60a2ead405b61171c51560d8a524ff"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/jobs.json",
+      "destination": "ci-37738719900/jobs.json",
+      "bytes": 2838,
+      "sha256": "df0fc2d3ca9631273b62ef08cf620c37d34ada7372865b093d0b210193cac014"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/artifacts.json",
+      "destination": "ci-37738719900/artifacts.json",
+      "bytes": 699,
+      "sha256": "8f2cdf33aecfee45d9d72453506021664e918e015076b7c652ddfb51c6e49c11"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/receipt.json",
+      "destination": "ci-37738719900/receipt.json",
+      "bytes": 6653,
+      "sha256": "bf3ab7cf03895b11864fa33ef1fbcfc4a06d47abe3124883e0331c60975dfce3"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/receipt.txt",
+      "destination": "ci-37738719900/receipt.txt",
+      "bytes": 2061,
+      "sha256": "207007388f7018e61d783aae6d144998d3769abdcd46fe29cb097f3ee74a7bee"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/unit-cost-analysis.json",
+      "destination": "ci-37738719900/unit-cost-analysis.json",
+      "bytes": 1550453,
+      "sha256": "7ec71281b100352e00ab0b619a34c2ce18c065a5517db2da982eb07944e97e31"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/download-checksums.json",
+      "destination": "ci-37738719900/download-checksums.json",
+      "bytes": 2947,
+      "sha256": "90198d37d2f6f4c217948ba2edc965ff0a1422f83171b443fe6e4a1a6c9bc0b4"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/16_Post Run actions_checkout@v4.txt",
+      "destination": "ci-37738719900/job-logs/check/16_Post Run actions_checkout@v4.txt",
+      "bytes": 1709,
+      "sha256": "b43e89e114cabb4c3f6620161cd68c9a3065461424b52458124f351421525acf"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/17_Complete job.txt",
+      "destination": "ci-37738719900/job-logs/check/17_Complete job.txt",
+      "bytes": 424,
+      "sha256": "24f55908c3145feca107b7800f505148f8480f007890843d546b13ca0bdd527e"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/1_Set up job.txt",
+      "destination": "ci-37738719900/job-logs/check/1_Set up job.txt",
+      "bytes": 2290,
+      "sha256": "8119e5744c841090a7aa0920dc55534aea6fb00438cdfdc32ad04d21bca82baf"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/2_Run actions_checkout@v4.txt",
+      "destination": "ci-37738719900/job-logs/check/2_Run actions_checkout@v4.txt",
+      "bytes": 5723,
+      "sha256": "72fdb4603dff069966b50614ec60c13749b6f6800dd7af7c487e85191ff3de13"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/3_Run actions_setup-node@v4.txt",
+      "destination": "ci-37738719900/job-logs/check/3_Run actions_setup-node@v4.txt",
+      "bytes": 1144,
+      "sha256": "2edc01d036aaf2290834d02bdba2bab260e4afcf979c362f493509ce741df4af"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/4_Run actions_setup-dotnet@v4.txt",
+      "destination": "ci-37738719900/job-logs/check/4_Run actions_setup-dotnet@v4.txt",
+      "bytes": 1053,
+      "sha256": "a93d22cf716f9e95067840c380d00057f608357dfedc2f7ef9c62426b41c68a8"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/5_Run npm ci.txt",
+      "destination": "ci-37738719900/job-logs/check/5_Run npm ci.txt",
+      "bytes": 1531,
+      "sha256": "5ed034423b391f74f62488a62becd4b3323fb30f4117af1bf308a9030e2c1346"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/6_Run dotnet tool restore.txt",
+      "destination": "ci-37738719900/job-logs/check/6_Run dotnet tool restore.txt",
+      "bytes": 906,
+      "sha256": "094da876f52ac7f55fd26701efe359102f3cf34f5eed9509b3dba0970ed43440"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/7_Run verification.txt",
+      "destination": "ci-37738719900/job-logs/check/7_Run verification.txt",
+      "bytes": 1642232,
+      "sha256": "c7709e0e1967f070e2096bc5fc01ad10f25d4a5269232eed3d255eee384639fe"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/8_Upload verify logs on failure.txt",
+      "destination": "ci-37738719900/job-logs/check/8_Upload verify logs on failure.txt",
+      "bytes": 2057,
+      "sha256": "e1ab07ef9970c05479785faaa6257b10b0cffa89d00c8a2e53c14553a5607a88"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/check/system.txt",
+      "destination": "ci-37738719900/job-logs/check/system.txt",
+      "bytes": 564,
+      "sha256": "58911a85fc00eaf34f93b5bc44b242235af3dbb1aa9396fa76123b8eaf2163ef"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/verify-logs/2026-10-08T06-38-49-796Z/format-check.log",
+      "destination": "ci-37738719900/verify-logs/2026-10-08T06-38-49-796Z/format-check.log",
+      "bytes": 133,
+      "sha256": "fe90e7c0d9a2bb57c0e300b75e13e9ddd4e587f5a12e15bbd15ae90cf769e1a7"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/verify-logs/2026-10-08T06-38-49-796Z/check.log",
+      "destination": "ci-37738719900/verify-logs/2026-10-08T06-38-49-796Z/check.log",
+      "bytes": 169851,
+      "sha256": "8a94941503130060b14320eebb14b03b058ba2651c44c76e91f64b73d52b28f2"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/verify-logs/2026-10-08T06-38-49-796Z/build.log",
+      "destination": "ci-37738719900/verify-logs/2026-10-08T06-38-49-796Z/build.log",
+      "bytes": 988,
+      "sha256": "78f09697259526cfb8e24fcbd40dc97864ba3b03213bed0cf4bee9a9bf0099df"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/verify-logs/2026-10-08T06-38-49-796Z/unit.log",
+      "destination": "ci-37738719900/verify-logs/2026-10-08T06-38-49-796Z/unit.log",
+      "bytes": 3917439,
+      "sha256": "8747d35839946e3605bd082f69e5c9db51b1fbd9867801fa58080031121531a5"
+    },
+    {
+      "source": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/package/wanxiangshu-0.9.0.tgz",
+      "destination": "package/wanxiangshu-0.9.0.tgz",
+      "bytes": 2532525,
+      "sha256": "3200b8bfd642b26453bd68266b41e96d902c867d624d53a80101e9f0e890d8da"
+    }
+  ],
+  "exclusions": [
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-process-snapshot.txt",
+      "reason": "Whole-system ps snapshot; only exact owned subset is selected."
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs.zip",
+      "reason": "Binary download duplicate of selected complete extracted per-step logs; original digest remains in receipt/download-checksums."
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/verify-logs.zip",
+      "reason": "Binary download duplicate of selected canonical raw stage logs; published digest remains in artifact metadata/receipt/download-checksums."
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/job-logs/0_check.txt",
+      "reason": "Combined job log duplicates the complete selected per-step log set."
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/ci-8d3-37738719900/verify-logs/latest",
+      "reason": "Duplicate of the selected exact canonical stage directory."
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/release-build-manifest.json",
+      "reason": "Old generation320 baseline, not this8d3 build."
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/local-build-manifest.json",
+      "reason": "Old generation319 baseline, not this8d3 build."
+    },
+    {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/package-sleep-cleanup.json",
+      "reason": "Old222 run, not this8d3 run."
+    }
+  ],
+  "limits": [
+    "Evidence covers release8d3 only. A later documentation commit needs a separate CI receipt.",
+    "Independent supplemental runs do not replace failed unified acceptance or combine into one full integration pass.",
+    "Omitted binary CI downloads and duplicate logs retain their original checksums in the selected CI receipt and download-checksums.",
+    "No test, build, CI retry, source edit or repo archive copy is performed in inventory mode."
+  ]
+}

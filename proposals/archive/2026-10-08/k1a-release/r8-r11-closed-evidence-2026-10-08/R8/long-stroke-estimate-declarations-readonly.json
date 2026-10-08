@@ -1,0 +1,1424 @@
+{
+  "allToolCalls": [
+    {
+      "turn": "protocol-repair",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "humanroot-loop",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "review",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "language_algorithms",
+        "simplicity",
+        "structure",
+        "granularity",
+        "tests_evidence",
+        "logic_reliability_boundaries",
+        "caller_ergonomics",
+        "completeness"
+      ]
+    },
+    {
+      "turn": "humanroot-loop",
+      "index": 1,
+      "runtimeStep": 1,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "orch",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "commission",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "calling",
+        "name",
+        "charge"
+      ]
+    },
+    {
+      "turn": "orch",
+      "index": 1,
+      "runtimeStep": 1,
+      "tool": "join",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "orch-join-guard",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "join",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-t1-commitment",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "assume",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "assumption"
+      ]
+    },
+    {
+      "turn": "manager-loop",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "review",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "language_algorithms",
+        "simplicity",
+        "structure",
+        "granularity",
+        "tests_evidence",
+        "logic_reliability_boundaries",
+        "caller_ergonomics",
+        "completeness"
+      ]
+    },
+    {
+      "turn": "manager-loop",
+      "index": 1,
+      "runtimeStep": 1,
+      "tool": "fork",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "calling",
+        "name",
+        "charge"
+      ]
+    },
+    {
+      "turn": "manager-loop",
+      "index": 2,
+      "runtimeStep": 2,
+      "tool": "join",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-reopened-loop",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "review",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "language_algorithms",
+        "simplicity",
+        "structure",
+        "granularity",
+        "tests_evidence",
+        "logic_reliability_boundaries",
+        "caller_ergonomics",
+        "completeness"
+      ]
+    },
+    {
+      "turn": "manager-reopened-loop",
+      "index": 1,
+      "runtimeStep": 1,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-reopened-loop",
+      "index": 2,
+      "runtimeStep": 2,
+      "tool": "join",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-reopened-loop",
+      "index": 3,
+      "runtimeStep": 3,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-reopened-loop",
+      "index": 4,
+      "runtimeStep": 4,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 0,
+      "runtimeStep": 1,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "last_words"
+      ]
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 1,
+      "runtimeStep": 2,
+      "tool": "assume",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "assumption"
+      ]
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 2,
+      "runtimeStep": 3,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "last_words"
+      ]
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 3,
+      "runtimeStep": 4,
+      "tool": "fork",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "calling",
+        "name",
+        "charge"
+      ]
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 4,
+      "runtimeStep": 5,
+      "tool": "join",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 5,
+      "runtimeStep": 6,
+      "tool": "fork",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "name",
+        "charge"
+      ]
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 6,
+      "runtimeStep": 7,
+      "tool": "join",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 7,
+      "runtimeStep": 8,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "last_words"
+      ]
+    },
+    {
+      "turn": "manager-join-guard",
+      "index": 8,
+      "runtimeStep": 9,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "last_words"
+      ]
+    },
+    {
+      "turn": "continue",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "join",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "assume",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "assumption"
+      ]
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 1,
+      "runtimeStep": 1,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 2,
+      "runtimeStep": 2,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 3,
+      "runtimeStep": 3,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 4,
+      "runtimeStep": 4,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 5,
+      "runtimeStep": 5,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 6,
+      "runtimeStep": 6,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 7,
+      "runtimeStep": 7,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 8,
+      "runtimeStep": 8,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 9,
+      "runtimeStep": 9,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "manager-current-action",
+      "index": 10,
+      "runtimeStep": 10,
+      "tool": "suicide",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": []
+    },
+    {
+      "turn": "engineer",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "js-engineer",
+      "participates": true,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "program"
+      ]
+    },
+    {
+      "turn": "engineer",
+      "index": 1,
+      "runtimeStep": 1,
+      "tool": "read",
+      "participates": true,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "filePath"
+      ]
+    },
+    {
+      "turn": "engineer-resolve",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "write",
+      "participates": true,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "filePath",
+        "content"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 1,
+      "runtimeStep": 1,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 2,
+      "runtimeStep": 2,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 3,
+      "runtimeStep": 3,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 4,
+      "runtimeStep": 4,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 5,
+      "runtimeStep": 5,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 6,
+      "runtimeStep": 6,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 7,
+      "runtimeStep": 7,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 8,
+      "runtimeStep": 8,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 9,
+      "runtimeStep": 9,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 10,
+      "runtimeStep": 10,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 11,
+      "runtimeStep": 11,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 12,
+      "runtimeStep": 12,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 13,
+      "runtimeStep": 13,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 14,
+      "runtimeStep": 14,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 15,
+      "runtimeStep": 15,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 16,
+      "runtimeStep": 16,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 17,
+      "runtimeStep": 17,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 18,
+      "runtimeStep": 18,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 19,
+      "runtimeStep": 19,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 20,
+      "runtimeStep": 20,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 21,
+      "runtimeStep": 21,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 22,
+      "runtimeStep": 22,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 23,
+      "runtimeStep": 23,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 24,
+      "runtimeStep": 24,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 25,
+      "runtimeStep": 25,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 26,
+      "runtimeStep": 26,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 27,
+      "runtimeStep": 27,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 28,
+      "runtimeStep": 28,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 29,
+      "runtimeStep": 29,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 30,
+      "runtimeStep": 30,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 31,
+      "runtimeStep": 31,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 32,
+      "runtimeStep": 32,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 33,
+      "runtimeStep": 33,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 34,
+      "runtimeStep": 34,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 35,
+      "runtimeStep": 35,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 36,
+      "runtimeStep": 36,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 37,
+      "runtimeStep": 37,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 38,
+      "runtimeStep": 38,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 39,
+      "runtimeStep": 39,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 40,
+      "runtimeStep": 40,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 41,
+      "runtimeStep": 41,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 42,
+      "runtimeStep": 42,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 43,
+      "runtimeStep": 43,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 44,
+      "runtimeStep": 44,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 45,
+      "runtimeStep": 45,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 46,
+      "runtimeStep": 46,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 47,
+      "runtimeStep": 47,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 48,
+      "runtimeStep": 48,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 49,
+      "runtimeStep": 49,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 50,
+      "runtimeStep": 50,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 51,
+      "runtimeStep": 51,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 52,
+      "runtimeStep": 52,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 53,
+      "runtimeStep": 53,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 54,
+      "runtimeStep": 54,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "blogger",
+      "index": 55,
+      "runtimeStep": 55,
+      "tool": "chronicle",
+      "participates": false,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "charge",
+        "occurrence",
+        "settlement",
+        "consequence",
+        "tip"
+      ]
+    },
+    {
+      "turn": "strength-canary-owner",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "js-manager",
+      "participates": true,
+      "hasEstimate": true,
+      "estimate": 2,
+      "argKeys": [
+        "program",
+        "estimated_readonly_rounds",
+        "self_note"
+      ]
+    },
+    {
+      "turn": "strength-canary-owner",
+      "index": 1,
+      "runtimeStep": 3,
+      "tool": "js-manager",
+      "participates": true,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "program"
+      ]
+    },
+    {
+      "turn": "strength-readonly-replica",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "js-predictor",
+      "participates": false,
+      "hasEstimate": true,
+      "estimate": 0,
+      "argKeys": [
+        "program",
+        "estimated_readonly_rounds"
+      ]
+    },
+    {
+      "turn": "strength-recovery-owner",
+      "index": 0,
+      "runtimeStep": 0,
+      "tool": "js-manager",
+      "participates": true,
+      "hasEstimate": true,
+      "estimate": 1,
+      "argKeys": [
+        "program",
+        "estimated_readonly_rounds",
+        "self_note"
+      ]
+    },
+    {
+      "turn": "strength-recovery-owner",
+      "index": 1,
+      "runtimeStep": 2,
+      "tool": "js-manager",
+      "participates": true,
+      "hasEstimate": false,
+      "estimate": null,
+      "argKeys": [
+        "program"
+      ]
+    }
+  ]
+}

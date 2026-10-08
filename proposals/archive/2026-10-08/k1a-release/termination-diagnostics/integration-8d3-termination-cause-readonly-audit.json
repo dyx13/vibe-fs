@@ -1,0 +1,145 @@
+{
+  "capturedAt": "2026-10-08T07:30:40.728557+00:00",
+  "inputCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "inputDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+  "scope": "Read-only source/log audit only. No tests, build, source edit, budget adjustment, process termination or root inspection/deletion.",
+  "log": {
+    "path": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration.log",
+    "sha256": "ebc8b34ce4b7d618a8eefedb07e099c9ff2a7b5ba264e1429afd6dfd4e764cce",
+    "excerpts": [
+      {
+        "line": 506,
+        "text": "integration:suites: suite exceeded the 300000ms physical backstop"
+      },
+      {
+        "line": 507,
+        "text": "integration:suites: file streams: 30 drained, 2 active, 12 queued"
+      },
+      {
+        "line": 508,
+        "text": "integration:suites: active file requirements/durable-events/tests/022.test.mjs; waiting for stream drain; last verdict: test:pass:WHAT[durable-events-022] append results have one pure compile owner without acquiring the store capability"
+      },
+      {
+        "line": 511,
+        "text": "integration:suites: active file requirements/host-provider-failure-ownership/tests/002.test.mjs; waiting for stream drain; last verdict: none received"
+      },
+      {
+        "line": 513,
+        "text": "integration:suites: 12 queued file(s) have not started"
+      },
+      {
+        "line": 514,
+        "text": "integration:suites: Could not complete owned runner termination: Owned termination and remaining group observation failed"
+      },
+      {
+        "line": 515,
+        "text": "integration:suites: post-exit group verification/reclamation: pid=84353; elapsedMs=73.681; accepted=true"
+      },
+      {
+        "line": 517,
+        "text": "integration:suites: verdict counts unavailable; no authoritative summary; 30/44 planned file(s) completed"
+      },
+      {
+        "line": 518,
+        "text": "\u2717 suites (301.1s): integration:suites: supervised suite failed (exit 1)"
+      }
+    ]
+  },
+  "proven": [
+    "The original300000ms backstop fired;30/44 drained,2active,12queued;original suite remainsfailed.",
+    "Exact message at514 is generated only by failAfterObservedCleanup when a primary termination error is followed by a failure while observing remaining captured groups.",
+    "The original Error and secondary cleanup Error are both retained by AggregateError.errors;cause references the primary. Supervisor subsequently preserves that AggregateError as the suite error cause.",
+    "Only the outer message is emitted in termination catch. Integration then also renders only the suite err.message, so in-memory nested errors are lost from final CLI receipts.",
+    "accepted=true at515 means pid84353 root group is empty in its successful native ps snapshot. It does not retroactively certify detached groups remembered during termination.",
+    "Existing006native failure fixtures already establish original cause identity and secondary native failure preservation; they currently assert caught JSON artifacts rather than detailed stderrdiagnostics."
+  ],
+  "unknown": [
+    "Which exact primary phase failed:initial/frozen capture vs descendant-drain. No phase trace is retained in this log.",
+    "Primary and secondary original error names/messages/codes, native ps status/signal/stderr, survivor pid/pgid inventory, and exact durations.",
+    "Whether shared1000ms deadline was consumed by ps/freeze/drain;this is plausible from code and301.1s groupwalltime but not uniquely proven.",
+    "Whether any detached group remained at moment of rejection;accepted=true only covers84353 and no captured group inventory was logged."
+  ],
+  "sourceReferences": {
+    "aggregate": {
+      "file": "requirements/verification-system/tests/e2e/support/supervise-node-test.mjs",
+      "line": 158,
+      "meaning": "AggregateError errors=[primary failure, failure-drain failure], cause=primary failure"
+    },
+    "primary_possible_paths": {
+      "file": "requirements/verification-system/tests/e2e/support/supervise-node-test.mjs",
+      "line": 323,
+      "meaning": "Capture failure uses failAfterObservedCleanup; descendant-drain failure does too at327"
+    },
+    "message_only_termination_log": {
+      "file": "requirements/verification-system/tests/e2e/support/supervise-node-test.mjs",
+      "line": 329,
+      "meaning": "Keeps terminationFailure=original Error but logs only error.message at331-332"
+    },
+    "cause_retained_on_suite_error": {
+      "file": "requirements/verification-system/tests/e2e/support/supervise-node-test.mjs",
+      "line": 257,
+      "meaning": "The final suite error cause references terminationFailure; backstop triggers fail at490"
+    },
+    "message_only_integration_log": {
+      "file": "requirements/verification-system/tests/integration/run.mjs",
+      "line": 96,
+      "meaning": "Stores err in failedGroups, emits only err.message at98, final summary does not serialize failures"
+    },
+    "root_group_only": {
+      "file": "requirements/verification-system/tests/e2e/support/supervise-node-test.mjs",
+      "line": 163,
+      "meaning": "verifyExitedGroup true only when liveGroupMembers(pgid) returns[]; does not cover captured detached groups"
+    },
+    "shared_termination_deadline": {
+      "file": "requirements/verification-system/tests/e2e/support/supervise-node-test.mjs",
+      "line": 298,
+      "meaning": "Same deadline supplied to capture, first drain and failure-drain;1000ms SIGKILL_GRACE_MS"
+    },
+    "budgets": {
+      "file": "requirements/verification-system/tests/e2e/support/time-budget.js",
+      "line": 226,
+      "meaning": "SIGKILL_GRACE_MS=1000; PROCESS_TREE_TIMEOUT_MS=2000 at229; individual snapshot uses min remaining deadline atsupervisor82"
+    },
+    "formal_test_registration": {
+      "file": "requirements/verification-system/tests/006.test.mjs",
+      "line": 24,
+      "meaning": "registerSupervisedToolReclamationTests formalWHAT006 suite"
+    },
+    "existing_native_double_failure": {
+      "file": "requirements/verification-system/tests/support/supervised-tool-reclamation-tests.mjs",
+      "line": 48,
+      "meaning": "Real native ps freeze-confirmation + failure-drain failures with original causes and incomplete cleanup"
+    },
+    "existing_object_identity_assertions": {
+      "file": "requirements/verification-system/tests/support/supervised-tool-reclamation-tests.mjs",
+      "line": 329,
+      "meaning": "Checks second native ps failure, distinct preserved Error objects through recursive cause/errors, and remaining owned monitor"
+    },
+    "existing_error_walk": {
+      "file": "requirements/verification-system/tests/support/supervised-tool-reclamation-tests.mjs",
+      "line": 198,
+      "meaning": "containsFailure/failureRecords walk cause and AggregateError.errors with seenSet; currently fixture-private"
+    }
+  },
+  "sourceHashes": {
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/006.test.mjs": "ce2ad54142be100e4ea4d0c9fe8ab39d9f4451f9226f5987dc3eed4c0db5234e",
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs": "9773d420e490bdfd0c6fee2766dd2f28454e8e15acb5b12c40cd51fd4fbff072",
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/time-budget.js": "29738c27666efc8e2b88d0d2331b3c50e8f271cbdf696df716ce8d0bd9b87b2a",
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/run.mjs": "9946df5bcb1c07602e380a7a759b50fa7dc14c02e0be4cb4a0a2fde5532812a4",
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/supervised-tool-reclamation-tests.mjs": "a94dcb7ffb1dc821babd2c70d5a85c0856e430b4c085513d77338867dd94a77a"
+  },
+  "minimalNextStepSuggestion": [
+    "Do not change budget,concurrency,tier or retrytheoriginalfullrun solely to disambiguate this old error. Preserve the incomplete originalreceipt.",
+    "First extend the existing006native double-inspection failure case to require stdout/stderr include both actual distinct native failure messages/fields in addition to existing identity,foreign-group and cleanup assertions. Existing real controlled invalid ps columns provide deterministic primary/secondary causes without sleep/probability.",
+    "Then emit the preserved termination Error graph at the supervisor catch boundary, traversing cause and AggregateError.errors with cycle handling and preserving name,message,code,syscall,status,signal,killed and available native stderr. Avoid a new error type or general logging framework;keep all original error identities and failure acceptanceunchanged.",
+    "If phase timing/group identity is still needed after those formal assertions pass, record the existing inspect phase and exact owned group IDs at the diagnostic boundary. Do not infer ownership from process names or prefixes.",
+    "No historical nested cause can be reconstructed uniquely after this process has exited;report old cause asunknown even if future controlled cases produce detailed output."
+  ],
+  "noWorkDone": [
+    "No source changes",
+    "No tests/builds executed",
+    "No live-resource inspections of cleanedroots",
+    "No deletion/termination",
+    "No timeoutchanges"
+  ]
+}

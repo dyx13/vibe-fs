@@ -1,0 +1,103 @@
+import fs from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { assertBuildFresh, collectVerificationInputs, computeDigest } from '/Users/yuanxi/Workwork/vibe-fs/scripts/lib/build-state.mjs'
+import { spawnOwnedVerificationTool } from '/Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-owned-tool.mjs'
+
+const root = '/Users/yuanxi/Workwork/vibe-fs'
+const directory = '/private/tmp/vibe-fs-oct8-alias-release'
+const expectedCommit = '8d3a7406ab7df9e13a4af8fca12c0799df5c2398'
+const expectedDigest = 'f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6'
+const frozen = JSON.parse(fs.readFileSync(`${directory}/frozen-input.json`))
+const currentCommit = () => execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim()
+const digest = computeDigest(collectVerificationInputs(root))
+const build = assertBuildFresh({ root })
+if (frozen.commit !== expectedCommit || frozen.digest !== expectedDigest ||
+    currentCommit() !== expectedCommit || digest !== expectedDigest || process.version !== frozen.node) {
+  throw new Error('Readonly 016 scope differs from the fixed 8d3 verification input or Node version')
+}
+
+const scope = [
+  'a real readonly mount protects original role paths and rejects foreign or expired view capabilities',
+  'a paused actual Node consumer keeps four readonly namespaces intact through valid write add delete rename and new symlink attempts',
+  'an actual same UID nonforce detach makes a successful readonly consumer insufficient for scope success and preserves an independent foreign device',
+  'an early Error action failure drains its actual Node consumer before readonly device recovery',
+  'actual readonly mount cleanup preserves Error operation failure and restores every original directory',
+  'cancellation of an attached readonly scope preserves Error and removes only its owned image',
+  'an early null action failure drains its actual Node consumer before readonly device recovery',
+  'actual readonly mount cleanup preserves null operation failure and restores every original directory',
+  'cancellation of an attached readonly scope preserves null and removes only its owned image',
+  'a successful action omitting await drains and rejects its actual Node consumer before readonly device recovery',
+  'a normal action return cannot conceal an independently failed actual readonly Node consumer',
+  'the original Error action failure remains the cause alongside an independently failed actual readonly Node consumer',
+  'the original null action failure remains the cause alongside an independently failed actual readonly Node consumer',
+]
+const titles = scope.map(name => `WHAT[verification-system-016] ${name}`)
+const escapePattern = name => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const pattern = '^(?:' + titles.map(escapePattern).join('|') + ')$'
+const log = `${directory}/supplemental-readonly016.log`
+const receiptPath = `${directory}/supplemental-readonly016.json`
+if (fs.existsSync(log) || fs.existsSync(receiptPath)) throw new Error('Readonly 016 evidence already exists; preserve its original receipt')
+
+const ownedHome = fs.realpathSync(fs.mkdtempSync('/private/tmp/vibe-fs-readonly016-home-'))
+const env = {
+  ...process.env,
+  WXS_RELEASE: '1', WXS_TIER_INTEGRATION: '1', WXS_E2E_QUIET: '1',
+  PER_TEST_TIMEOUT_MS: '180000', WANXIANGSHU_NO_FATAL_EXIT: '1',
+  HOME: ownedHome, USERPROFILE: ownedHome,
+  DOTNET_CLI_HOME: process.env.DOTNET_CLI_HOME ?? process.env.HOME,
+}
+for (const name of ['TESTS_MJS_FILES', 'NODE_TEST_CONTEXT', 'WXS_TIER_RELEASE']) delete env[name]
+const argv = ['--test', '--test-concurrency=1', `--test-name-pattern=${pattern}`, 'requirements/verification-system/tests/016.test.mjs']
+const startedAt = new Date().toISOString()
+const start = performance.now()
+const output = fs.createWriteStream(log, { flags: 'wx' })
+let result
+let runError = null
+let cleanupError = null
+let timedOut = false
+let monitorPid
+let timer
+try {
+  const owned = spawnOwnedVerificationTool(process.execPath, argv, { cwd: root, env })
+  monitorPid = owned.child.pid
+  for (const stream of [owned.child.stdout, owned.child.stderr]) stream.on('data', chunk => output.write(chunk))
+  timer = setTimeout(() => { timedOut = true; owned.stop() }, 300000)
+  result = await owned.completed
+} catch (error) {
+  runError = String(error.stack ?? error)
+} finally {
+  clearTimeout(timer)
+  await new Promise(resolve => output.end(resolve))
+  try { fs.rmSync(ownedHome, { recursive: true }) } catch (error) { cleanupError = String(error.stack ?? error) }
+}
+
+let monitorObservation = 'not-spawned'
+if (monitorPid !== undefined) {
+  try { process.kill(monitorPid, 0); monitorObservation = 'still-running' } catch (error) { monitorObservation = error.code }
+}
+const afterDigest = computeDigest(collectVerificationInputs(root))
+const afterCommit = currentCommit()
+const receipt = {
+  completeIntegrationStage: false,
+  scopeSource: 'requirements/verification-system/tests/support/readonly-input-tests.mjs',
+  plannedScopeFiles: 1, plannedScopeTests: titles.length, titles,
+  excludedScope: 'Every other 016 test; unmatched-name skips are filtering evidence and not passes.',
+  command: [process.execPath, ...argv], startedAt, durationMs: performance.now() - start,
+  inputCommit: expectedCommit, currentCommit: afterCommit, digest, afterDigest,
+  inputsEqual: digest === afterDigest && afterCommit === expectedCommit,
+  build, originalBackstopMs: 300000, nodeFileTimeout: null, perTestTimeoutEnvMs: 180000,
+  cliFileConcurrency: 1, declaredFileConcurrency: env.NODE_TEST_CONCURRENCY,
+  env: { WXS_RELEASE: env.WXS_RELEASE, WXS_TIER_INTEGRATION: env.WXS_TIER_INTEGRATION, WXS_E2E_QUIET: env.WXS_E2E_QUIET, PER_TEST_TIMEOUT_MS: env.PER_TEST_TIMEOUT_MS },
+  platform: process.platform, node: process.version,
+  timedOut, exitCode: result?.exitCode ?? null, signal: result?.signal ?? null,
+  failure: result?.failure ? String(result.failure.stack ?? result.failure) : null,
+  runError, monitorPid, monitorObservation,
+  ownedHome, ownedHomeRemoved: !fs.existsSync(ownedHome), cleanupError,
+  cleanupBoundary: 'The helper removes only its isolated home. The existing owned monitor drains its process group. Test-owned fixtures retain their original finally/identity rules; this helper never deletes retained fixture roots or force-detaches devices.',
+  counts: { pass: 'unknown', fail: 'unknown', skip: 'unknown', TODO: 'unknown', note: 'Read authoritative Node output in the log; the helper does not infer counts from process exit.' },
+  log,
+}
+fs.writeFileSync(receiptPath, JSON.stringify(receipt, null, 2), { flag: 'wx' })
+process.stdout.write(JSON.stringify(receipt, null, 2) + '\n')
+process.exitCode = result?.exitCode || (runError || timedOut || result?.signal || result?.failure || cleanupError ||
+  monitorObservation !== 'ESRCH' || !receipt.inputsEqual || !receipt.ownedHomeRemoved || result === undefined ? 1 : 0)

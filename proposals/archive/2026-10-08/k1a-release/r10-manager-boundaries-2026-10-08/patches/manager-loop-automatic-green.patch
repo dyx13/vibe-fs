@@ -1,0 +1,29 @@
+--- a/src/Wanxiangshu/Mission/Manager/Workflow.fs
++++ b/src/Wanxiangshu/Mission/Manager/Workflow.fs
+@@ -234,6 +234,10 @@
+         | Some sidText, Some durable when not (System.String.IsNullOrWhiteSpace sidText) ->
+             loopContextFor durable sidText
+         | _ -> None
++
++    let private decideAutomaticLoopContext journal sessionIdTextOpt =
++        decideLoopContext journal sessionIdTextOpt
++        |> Option.filter (fun (_, _, _, _, retirement, _) -> retirement.Outcome = RetirementOutcome.Continue)
+ 
+     let private tryBuildAcceptedOpening
+         durable
+@@ -432,13 +436,13 @@
+         (sessionId: SessionId)
+         : Task<unit> =
+         task {
+-            let loopContext = decideLoopContext journal (Some(SessionId.value sessionId))
++            let loopContext = decideAutomaticLoopContext journal (Some(SessionId.value sessionId))
+ 
+             do! stopRetiredAttempt sessionId
+ 
+             match
+                 loopContext
+-                |> Option.orElseWith (fun () -> decideLoopContext journal (Some(SessionId.value sessionId)))
++                |> Option.orElseWith (fun () -> decideAutomaticLoopContext journal (Some(SessionId.value sessionId)))
+             with
+             | Some context -> do! deliverLoopContext sessionPort rootWorkspace workspaceDirectory context
+             | None -> return ()

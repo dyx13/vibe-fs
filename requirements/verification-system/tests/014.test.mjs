@@ -44,11 +44,14 @@ import {
   publicToolResults,
   HUMANROOT_MANAGER_LOOP_CANARY_PROMPT,
   assertHumanRootManagerLoop,
+  awaitNamedFact,
+  waitFactShape,
   retireCompanionForDeletion,
   INVESTIGATION_OUTLOOK_MARKERS,
   matchInvestigationOutlookMarker,
 } from './e2e/support/long-stroke-oracles.mjs'
-import { factPayloads } from './e2e/support/journal-observer.js'
+import { factPayloads, countFactCase } from './e2e/support/journal-observer.js'
+import { withHumanRootLoopFixture } from './support/humanroot-loop-fixture.mjs'
 import { WAIT_FACT_WINDOW_MS } from './e2e/support/time-budget.js'
 import {
   getOpencodeSpawnCount,
@@ -361,6 +364,323 @@ test('WHAT[verification-system-014] readonly replica finish requires its actual 
   }
 })
 
+test('WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault', () => {
+  const source = readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8')
+  const compiled = compileScenario(source, { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  const call = (id, name, args = {}) => ({
+    role: 'assistant', tool_calls: [{ id, type: 'function', function: { name, arguments: JSON.stringify(args) } }],
+  })
+  const result = (id, content) => ({ role: 'tool', tool_call_id: id, content })
+  const body = (messages) => ({ model: 'test-model', messages, tools: [{ function: { name: 'js-manager' } }] })
+  for (const leg of [
+    { owner: 'strength-canary-owner', prompt: 'STRENGTH_HOST_CANARY: inspect README.md through the real nested Replica path.', rounds: 2, continuationStep: 3, finalStep: 4 },
+    { owner: 'strength-recovery-owner', prompt: 'STRENGTH_RECOVERY: resume the readonly delegation after a provider failure.', rounds: 1, continuationStep: 2, finalStep: 3 },
+  ]) {
+    const runtime = new ScenarioRuntime(compiled.scenario)
+    const context = { sessionId: 'ses_' + leg.owner }
+    runtime.bindAlias(leg.owner, context.sessionId)
+    const initial = [{ role: 'user', content: leg.prompt }]
+    const first = runtime.select(body(initial), context)
+    assert.equal(first.entry?.id, leg.owner + '.0')
+    runtime.consume(body(initial), first, context)
+    const estimated = [...initial,
+      call('owner-estimate', 'js-manager', { estimated_readonly_rounds: leg.rounds }),
+      result('owner-estimate', '# ok\n\n[data]\ninspected = true'),
+    ]
+    const promotedRead = [...estimated,
+      call('replica-probe', 'js-predictor'),
+      result('replica-probe', 'LARGE_READ_PROBE_MARKER actual file bytes'),
+    ]
+    const continued = leg.rounds === 2
+      ? [...promotedRead, { role: 'assistant', content: 'Read-only survey complete; returning the gathered evidence.' }]
+      : promotedRead
+    assert.deepEqual(publicToolResults([body(continued)], 'js-predictor'), ['LARGE_READ_PROBE_MARKER actual file bytes'])
+    const continuation = runtime.select(body(continued), context)
+    assert.equal(continuation.entry?.id, leg.owner + '.1',
+      'completed Replica batches must select the owner continuation at its actual assistant cursor')
+    assert.equal(continuation.entry.step, leg.continuationStep)
+    assert.equal(continuation.entry.respond.tool, 'js-manager')
+    runtime.consume(body(continued), continuation, context)
+    if (leg.rounds === 1) {
+      assert.deepEqual({ status: continuation.fault?.status, retryable: continuation.fault?.retryable },
+        { status: 500, retryable: true })
+      const retry = runtime.select(body(continued), context)
+      assert.equal(retry.entry?.id, leg.owner + '.1')
+      assert.equal(retry.fault, undefined, 'the declared first-delivery fault must leave the same content for the retry')
+      runtime.consume(body(continued), retry, context)
+    } else {
+      assert.equal(continuation.fault, undefined)
+    }
+    const final = [...continued, call('owner-continuation', 'js-manager'),
+      result('owner-continuation', '# ok\n\n[data]\ninspected = true')]
+    const successor = runtime.select(body(final), context)
+    assert.equal(successor.entry?.id, leg.owner + '.2')
+    assert.equal(successor.entry.step, leg.finalStep)
+    assert.equal(successor.entry.respond.type, 'text')
+    assert.equal(successor.fault, undefined)
+    runtime.consume(body(final), successor, context)
+    for (const partial of [estimated, ...(leg.rounds === 2 ? [promotedRead] : [])]) {
+      assert.ok(resolveEntry(body(partial), compiled.scenario.entries, runtime.bindings, context).unmatched,
+        'the uncompleted promotion cursor must have no filler declaration')
+    }
+    const extra = [...final, { role: 'assistant', content: 'undeclared extra reply' }]
+    assert.ok(resolveEntry(body(extra), compiled.scenario.entries, runtime.bindings, context).unmatched)
+    assert.ok(resolveEntry({ ...body(continued), tools: [{ function: { name: 'js-predictor' } }] },
+      compiled.scenario.entries, runtime.bindings, context).unmatched)
+  }
+  assert.deepEqual(compiled.scenario.faults.filter((fault) => fault.kind === 'provider-error' && fault.status === 400)
+    .map((fault) => fault.entryId), ['manager-loop.2', 'continue.0'])
+})
+
+test('WHAT[verification-system-014] another Road cannot supply the HumanRoot canary missing assessment or retirement', async () => {
+  await withHumanRootLoopFixture(async (fixture) => {
+    const { target, foreign, workDir, open, assess, retire, assertReplayed } = fixture
+    open(target, 1)
+    assess(target, 1, 'Revise')
+    retire(target, 1, false)
+    open(foreign, 1)
+    assess(foreign, 1, 'Perfect')
+    retire(foreign, 1, true)
+    await assertReplayed(target, 1, false)
+    await assertReplayed(foreign, 1, false)
+    for (const name of ['AssessmentCommitted', 'RetirementCommitted', 'IncumbencyOpened']) {
+      assert.equal(countFactCase(workDir, name), 2, 'the whole-world count deliberately mixes two real Roads')
+      assert.equal((await awaitNamedFact(workDir, waitFactShape(name, { eq: 2 }), { timeoutMs: 0 })).named, 2,
+        'an explicitly global barrier must retain its original whole-world contract')
+      await assert.rejects(awaitNamedFact(workDir, waitFactShape(name, { eq: 2, session: target }), { timeoutMs: 0 }),
+        /not satisfied .*got 1/, 'foreign facts must not complete the target Road barrier')
+    }
+  })
+})
+
+test('WHAT[verification-system-014] the original HumanRoot loop oracle keeps exact Road facts and physical deliveries amid other owners', async () => {
+  await withHumanRootLoopFixture(async (fixture) => {
+    const { target, foreign, scenario, open, assess, retire, reopen, assertReplayed } = fixture
+    open(foreign, 1)
+    assess(foreign, 1, 'Perfect')
+    retire(foreign, 1, true)
+    reopen(foreign, 2)
+    open(target, 1)
+    assess(target, 1, 'Revise')
+    retire(target, 1, false)
+    open(target, 2)
+    assess(target, 2, 'Perfect')
+    retire(target, 2, true)
+    await assertReplayed(target, 2, false)
+    await assertReplayed(foreign, 1, true)
+    assert.equal(scenario.provider.matchCount('manager-reopened-loop.0'), 2)
+    assert.equal(scenario.provider.matchCount('manager-reopened-loop.0', target), 1)
+    await assertHumanRootManagerLoop(scenario, target)
+    const firstReview = scenario.provider.requests[2].messages
+    scenario.provider.requests[2].messages = firstReview.filter((message) => message.role === 'system' || message.role === 'user')
+    await assert.rejects(assertHumanRootManagerLoop(scenario, target), /retain the predecessor physical history/)
+    scenario.provider.requests[2].messages = firstReview
+    fixture.signals.consume({ id: 'manager-reopened-loop.0', sessionId: target })
+    await assert.rejects(assertHumanRootManagerLoop(scenario, target), /successor iteration audit must be delivered once/)
+    reopen(target, 3)
+    await assertReplayed(target, 2, true)
+    await assert.rejects(assertHumanRootManagerLoop(scenario, target), /IncumbencyOpened overshot eq 2 \(got 3\)/)
+  })
+})
+
+test('WHAT[verification-system-014] Manager loop response binding isolates each other Road from the main five-iteration spine', async () => {
+  const language = await import('../../../dist/Participant/Provider/LanguageSurface.js')
+  const compiled = compileScenario(readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8'),
+    { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  const runtime = new ScenarioRuntime(compiled.scenario)
+  for (const sessionId of ['ses_main', 'ses_strength', 'ses_human']) runtime.bindAlias('manager', sessionId)
+  runtime.bindAlias('humanroot-manager', 'ses_human')
+  const histories = new Map()
+  const dispatch = (sessionId, user, id) => {
+    const history = histories.get(sessionId) ?? []
+    if (user !== null) history.push({ role: 'user', content: user })
+    const body = { messages: [...history], tools: ['fork', 'resume', 'join', 'horizon', 'review', 'suicide', 'assume']
+      .map((name) => ({ function: { name } })) }
+    const selection = runtime.select(body, { sessionId })
+    assert.equal(selection.entry?.id, id, JSON.stringify(selection))
+    runtime.consume(body, selection, { sessionId })
+    const response = selection.entry.respond
+    const callId = `${sessionId}:${history.length}`
+    history.push({ role: 'assistant', content: response.prefixText ?? '', tool_calls: [{ id: callId,
+      type: 'function', function: { name: response.tool, arguments: JSON.stringify(response.args ?? {}) } }] },
+    { role: 'tool', tool_call_id: callId, content: 'completed' })
+    histories.set(sessionId, history)
+    return response
+  }
+  const successor = (ordinal) => '# ' + language.substitute(language.readText('en', 'runtime/manager-assess'),
+    { ordinal: String(ordinal) }).trim().replace(/\n/g, '\n# ')
+  const work = '# ' + language.readText('en', 'runtime/manager-work').trim().replace(/\n/g, '\n# ')
+  await CUSTOMS.bindManagerLoopSequence({ provider: { _scenario: runtime } })
+  assert.equal(dispatch('ses_strength', successor(2), 'manager-reopened-loop.0').args.completeness, 'PERFECT')
+  assert.equal(dispatch('ses_strength', null, 'manager-reopened-loop.1').tool, 'suicide')
+  assert.equal(dispatch('ses_human', HUMANROOT_MANAGER_LOOP_CANARY_PROMPT, 'humanroot-loop.0').args.completeness, 'REVISE')
+  assert.equal(dispatch('ses_human', null, 'humanroot-loop.1').tool, 'suicide')
+  assert.equal(dispatch('ses_human', successor(2), 'manager-reopened-loop.0').args.completeness, 'PERFECT')
+  assert.equal(dispatch('ses_human', null, 'manager-reopened-loop.1').tool, 'suicide')
+  assert.equal(dispatch('ses_strength', work, 'manager-current-action.0').tool, 'assume')
+  const initial = compiled.scenario.entries.find((entry) => entry.id === 'manager-loop.0').turn
+  assert.equal(dispatch('ses_main', initial, 'manager-loop.0').args.completeness, 'REVISE')
+  assert.equal(dispatch('ses_main', null, 'manager-loop.1').args.name, 'Proof Writer')
+  assert.equal(dispatch('ses_main', work, 'manager-current-action.0').tool, 'assume')
+  assert.equal(dispatch('ses_main', null, 'manager-current-action.1').tool, 'join')
+  assert.equal(dispatch('ses_strength', work, 'manager-current-action.0').tool, 'assume')
+  assert.equal(dispatch('ses_strength', null, 'manager-current-action.1').tool, 'suicide')
+  assert.equal(dispatch('ses_main', successor(2), 'manager-reopened-loop.0').args.completeness, 'PERFECT')
+  assert.equal(dispatch('ses_main', null, 'manager-reopened-loop.1').tool, 'suicide')
+  assert.equal(dispatch('ses_main', successor(3), 'manager-reopened-loop.0').args.completeness, 'REVISE')
+  assert.equal(dispatch('ses_strength', successor(3), 'manager-reopened-loop.0').args.completeness, 'PERFECT',
+    'the shared audit entry must reset after the main Road repair response')
+  assert.equal(dispatch('ses_main', null, 'manager-reopened-loop.1').args.name, 'Conflict Resolver')
+  assert.equal(dispatch('ses_strength', null, 'manager-reopened-loop.1').tool, 'suicide',
+    'the shared action entry must reset after the main Road fork response')
+  for (const ordinal of [4, 5]) {
+    assert.equal(dispatch('ses_main', successor(ordinal), 'manager-reopened-loop.0').args.completeness, 'PERFECT')
+    assert.equal(dispatch('ses_main', null, 'manager-reopened-loop.1').tool, 'suicide')
+  }
+  assert.throws(() => dispatch('ses_strength', initial, 'manager-loop.0'), /main Manager Road cannot change/)
+})
+
+test('WHAT[verification-system-014] all main relay barriers count the bound Road independently of preflow owners', () => {
+  const compiled = compileScenario(readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8'),
+    { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  const relay = new Set(['AssessmentCommitted', 'RetirementCommitted', 'IncumbencyOpened'])
+  assert.deepEqual(compiled.scenario.flow.filter((step) => relay.has(step.waitFact?.name)).map((step) => step.waitFact), [
+    { name: 'AssessmentCommitted', eq: 1, session: 'child' },
+    { name: 'RetirementCommitted', gte: 1, session: 'child' },
+    { name: 'IncumbencyOpened', gte: 2, session: 'child' },
+    { name: 'AssessmentCommitted', gte: 2, session: 'child' },
+    { name: 'RetirementCommitted', gte: 2, session: 'child' },
+    { name: 'IncumbencyOpened', gte: 3, session: 'child' },
+    { name: 'AssessmentCommitted', gte: 3, session: 'child' },
+    { name: 'RetirementCommitted', gte: 3, session: 'child' },
+    { name: 'IncumbencyOpened', gte: 4, session: 'child' },
+    { name: 'AssessmentCommitted', gte: 4, session: 'child' },
+    { name: 'RetirementCommitted', gte: 4, session: 'child' },
+  ])
+})
+
+test('WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work', async () => {
+  const compiled = compileScenario(readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8'),
+    { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  const barriers = compiled.scenario.flow.filter((step) => step.waitFact?.name.startsWith('Handle'))
+  assert.deepEqual(barriers.map((step) => ({ waitFact: step.waitFact, timeoutMs: step.timeoutMs })), [
+    { waitFact: { name: 'HandleWorkCompleted', gte: 1, session: 'child' }, timeoutMs: 60000 },
+  ])
+  const { assertJoinWakePath, PLANNED_WAIT_FACTS } = await import('./e2e/support/long-stroke-oracles.mjs')
+  assert.deepEqual(PLANNED_WAIT_FACTS.handleWorkCompleted,
+    { name: 'HandleWorkCompleted', gte: 1, session: 'child', renewOn: [] })
+  const { execFileSync } = await import('node:child_process')
+  const { withForkRuntime, toolModule } = await import('../../delegation/tests/support/fork-runtime.mjs')
+  const fork = await import('../../../dist/Execution/Delegation/Fork/OpenCode/ToolSurface.js')
+  const { releaseSharedObserver } = await import('./e2e/support/journal-observer.js')
+  const owner = 'long-stroke-original-work'
+  const pair = await import('../../../dist/OpenCode/Host/PairProgrammingThoughtSurface.js')
+  await withForkRuntime(owner, async (runtime, directory) => {
+    execFileSync('git', ['init', '--bare', '--quiet', directory])
+    const requests = []
+    const scenario = { host: { workDir: directory }, provider: { requests } }
+    const admit = async (name) => {
+      fork.acceptNextPrompt(runtime)
+      assert.match(await fork.executeManagerFork(runtime, toolModule, owner, 'engineer', name, `Charge ${name}`),
+        new RegExp(name))
+      assert.equal(fork.promptCount(runtime), 1)
+      return fork.workSnapshot(runtime, owner).find((work) => work.byname === name && work.lifecycle === 'Active')
+    }
+    const deliver = async (answer, providerRun) => {
+      const terminal = await fork.prepareTerminalDelivery(runtime, owner, answer, providerRun)
+      await terminal()
+    }
+    const onWire = (sessionID, callId, text) => ({ sessionID, messages: [
+      { role: 'assistant', tool_calls: [{ id: callId, function: { name: 'join', arguments: '{}' } }] },
+      { role: 'tool', tool_call_id: callId, content: text },
+    ] })
+    const withHostGuidance = async (text) => {
+      const input = [
+        { info: { id: 'original-user', role: 'user' }, parts: [{ type: 'text', text: 'Join the original admitted work.' }] },
+        { info: { id: 'original-join', role: 'assistant' }, parts: [
+          { type: 'tool', tool: 'join', callID: 'original-join-call', state: {
+            status: 'completed', input: {}, output: text, time: { start: 0, end: 1 },
+          } },
+        ] },
+      ]
+      const before = structuredClone(input)
+      const injected = await pair.tryInject(owner, pair.canonicalText, input)
+      assert.equal(injected.ok, true, injected.error)
+      assert.deepEqual(input, before, 'the actual Host projection must preserve the physical Join result')
+      const output = injected.value.at(-1).parts[0].state.output
+      assert.equal(output, text + '\0\uFEFF' + pair.canonicalText)
+      return output
+    }
+    try {
+      await admit('Other Engineer')
+      await deliver('OTHER-WORK-ANSWER', 'provider-other-work')
+      const otherResult = await fork.executeJoin(runtime, owner)
+      requests.push(onWire(owner, 'join-other-work', otherResult))
+      assert.equal(countFactCase(directory, 'HandleWorkCompleted'), 1)
+      assert.equal(countFactCase(directory, 'HandleWorkConsumed'), 1)
+      assert.throws(() => assertJoinWakePath(scenario, owner), /original Proof Writer binding required exactly once/)
+
+      const original = await admit('Proof Writer')
+      assert.ok(original)
+      assert.throws(() => assertJoinWakePath(scenario, owner), /original Work terminal completion required exactly once/)
+      await deliver('ORIGINAL-WORK-ANSWER', 'provider-original-work')
+      assert.equal(countFactCase(directory, 'HandleCompleted'), 0, 'current producer must not manufacture a historical terminal')
+      assert.equal(countFactCase(directory, 'HandleWorkCompleted'), 2)
+      assert.equal(countFactCase(directory, 'HandleWorkConsumed'), 1)
+      assert.throws(() => assertJoinWakePath(scenario, owner), /same original Work must be consumed exactly once/,
+        'another Work completion and consumption cannot settle the original Work')
+      assert.deepEqual(await fork.coldWorkSnapshot(directory, owner), fork.workSnapshot(runtime, owner))
+
+      const result = await fork.executeJoin(runtime, owner)
+      assert.match(result, /ORIGINAL-WORK-ANSWER/)
+      assert.doesNotMatch(result, /OTHER-WORK-ANSWER/)
+      assert.equal(countFactCase(directory, 'HandleWorkConsumed'), 2)
+      const completed = factPayloads(directory, 'HandleWorkCompleted')
+        .find((payload) => payload.Work?.AuthorityRoot?.[1] === original.root)
+      const consumed = factPayloads(directory, 'HandleWorkConsumed')
+        .find((payload) => payload.Work?.AuthorityRoot?.[1] === original.root)
+      assert.deepEqual(consumed.Work, completed.Work)
+      assert.equal(completed.Work.ChildSessionId[1], original.child)
+      assert.deepEqual(completed.Work.Handle, factPayloads(directory, 'HandleLinked')
+        .find((payload) => payload.Byname === 'Proof Writer').Handle)
+      assert.deepEqual(consumed.CompletionRef, completed.CompletionRef)
+      assert.deepEqual(consumed.CompletionDigest, completed.CompletionDigest)
+      assert.deepEqual(await fork.coldWorkSnapshot(directory, owner), fork.workSnapshot(runtime, owner))
+      assert.throws(() => assertJoinWakePath(scenario, owner), /one successful public join result/,
+        'a consumed fact alone is not a provider-visible successful Join')
+      requests.push(onWire(owner, 'join-original-plain', result))
+      assertJoinWakePath(scenario, owner)
+      requests.pop()
+      const presented = await withHostGuidance(result)
+      requests.push(onWire('another-owner', 'join-foreign-owner', presented))
+      assert.throws(() => assertJoinWakePath(scenario, owner), /one successful public join result/)
+      requests.push(onWire(owner, 'join-guidance-only', otherResult + '\0\uFEFF' + result))
+      assert.throws(() => assertJoinWakePath(scenario, owner), /one successful public join result/,
+        'the original completion quoted only in guidance cannot deliver the original Work')
+      requests.push(onWire(owner, 'join-edited-body', await withHostGuidance(result + 'changed')))
+      assert.throws(() => assertJoinWakePath(scenario, owner), /one successful public join result/,
+        'guidance must not excuse a change to the actual completion body')
+      requests.push(onWire(owner, 'join-unseparated-suffix', result + pair.canonicalText))
+      assert.throws(() => assertJoinWakePath(scenario, owner), /one successful public join result/,
+        'an appended text without the real guidance-plane delimiter changes the completion body')
+      const originalWire = onWire(owner, 'join-original-work', presented)
+      requests.push(originalWire)
+      assertJoinWakePath(scenario, owner)
+      requests.push(structuredClone(originalWire))
+      assertJoinWakePath(scenario, owner)
+      assert.throws(() => assertJoinWakePath(scenario, 'another-owner'), /original Proof Writer binding required exactly once/)
+      requests.push(onWire(owner, 'join-duplicate-original-work', presented))
+      assert.throws(() => assertJoinWakePath(scenario, owner), /one successful public join result/)
+    } finally {
+      await releaseSharedObserver(directory)
+    }
+  })
+})
+
 const STRENGTH_HOST_CANARY_PROMPT =
   'STRENGTH_HOST_CANARY: inspect README.md through the real nested Replica path.'
 
@@ -416,12 +736,6 @@ const preFlowCanaries = async (scenario) => {
   })
   assert.ok(humanrootPrompt.ok, `humanroot-manager prompt failed: ${JSON.stringify(humanrootPrompt.data)}`)
 
-  // The successor iteration appends the owner-controlled assess resource, so its two
-  // deliveries are answered by the assess-resource family instead of the reusable
-  // authority-turn family. One delivery of each step is what the two iterations produce.
-  for (const id of ['humanroot-loop.0', 'humanroot-loop.1', 'manager-reopened-loop.0', 'manager-reopened-loop.1']) {
-    await scenario.provider.waitForExpectationAttempt(id, 1, WAIT_FACT_WINDOW_MS)
-  }
   await assertHumanRootManagerLoop(scenario, humanrootSessionId)
 
   const linkedBlogger = factPayloads(scenario.host.workDir, 'CompanionBloggerLinked')
@@ -454,6 +768,56 @@ const assertManagerToolSurfaceOnWire = async (scenario, ctx) => {
   const result = assertManagerToolSurface({ managerProviderWire })
   console.log(`[manager-surface] ok tools=${result.unionTools.join(',')} requests=${result.requestCount}`)
 }
+
+test('WHAT[verification-system-014] declared participating tool arguments satisfy the production estimate contract', async () => {
+  const Strength = await import('../../../dist/Strength/Surface.js')
+  const Hooks = await import('../../../dist/OpenCode/Host/PluginHooksSurface.js')
+  const compiled = compileScenario(readFileSync(new URL('./e2e/scenarios/long-stroke.toml', import.meta.url), 'utf8'),
+    { name: 'long-stroke.toml' })
+  assert.equal(compiled.ok, true, compiled.ok ? '' : compiled.problems.join('\n'))
+  const rejected = []
+  const estimates = []
+  let participating = 0
+  for (const entry of compiled.scenario.entries) {
+    const response = entry.respond
+    if (response.type !== 'tool-call' || Strength.classifyTool(response.tool) !== 'EstimateAfterCall') continue
+    participating += 1
+    const args = JSON.parse(JSON.stringify(response.args ?? {}))
+    const definition = {
+      description: 'Scenario estimate contract',
+      parameters: { type: 'object', properties: {}, required: [] },
+    }
+    Hooks.decorateReadonlyDelegationToolDefinition(response.tool, definition)
+    assert.ok(definition.parameters.required.includes('estimated_readonly_rounds'), entry.id)
+    const parsed = Strength.parseParticipatingArguments(args)
+    const boundary = Hooks.readonlyDelegationSelfNoteOf(args)
+    assert.equal(boundary.ok, parsed.ok, entry.id)
+    if (parsed.ok) {
+      assert.equal(boundary.note, parsed.selfNote, entry.id)
+      estimates.push({ id: entry.id, rounds: parsed.rounds })
+    } else {
+      assert.equal(boundary.error, parsed.error, entry.id)
+      rejected.push({ id: entry.id, tool: response.tool, error: parsed.error })
+    }
+    const missing = { ...args }
+    delete missing.estimated_readonly_rounds
+    assert.deepEqual(Strength.parseParticipatingArguments(missing),
+      { ok: false, error: 'MissingEstimate' }, `${entry.id}: deleting the required estimate must be rejected`)
+    assert.deepEqual(Hooks.readonlyDelegationSelfNoteOf(missing),
+      { ok: false, error: 'MissingEstimate' }, `${entry.id}: the production argument boundary must reject missing input`)
+  }
+  assert.equal(participating, 7, 'all declared participating calls must reach the production argument contract')
+  assert.deepEqual(rejected, [], 'the configured-Predictor scenario must not script invalid participating arguments')
+  assert.deepEqual(estimates, [
+    { id: 'engineer.0', rounds: 0 },
+    { id: 'engineer.1', rounds: 0 },
+    { id: 'engineer-resolve.0', rounds: 0 },
+    { id: 'strength-canary-owner.0', rounds: 2 },
+    { id: 'strength-canary-owner.1', rounds: 0 },
+    { id: 'strength-recovery-owner.0', rounds: 1 },
+    { id: 'strength-recovery-owner.1', rounds: 0 },
+  ])
+})
 
 releaseTest('WHAT[verification-system-014] Long Stroke 真实物理验收环境', async () => {
   resetOpencodeSpawnCount()

@@ -13,8 +13,6 @@ import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { createIsolatedEnv } from './isolated-env.js';
 import {
-  SIGTERM_GRACE_MS,
-  SIGKILL_GRACE_MS,
   SOCKET_CHECK_TIMEOUT_MS,
   PROCESS_TREE_TIMEOUT_MS,
   HOST_START_TIMEOUT_MS,
@@ -23,8 +21,7 @@ import {
   READY_POLL_INTERVAL_MS,
   parseListenPort,
   ringPush,
-  terminateChild,
-  spawnOpencodeServe,
+  spawnOwnedOpencodeServe,
 } from './process-host-utils.js';
 import {
   isPidAlive,
@@ -41,7 +38,7 @@ const STDOUT_RING_MAX = 100;
 
 export class ProcessHost {
   constructor() {
-    this._child = null;
+    this._owner = null;
     this._pid = null;
     this._baseUrl = null;
     this._port = null;
@@ -60,7 +57,7 @@ export class ProcessHost {
   get workDir() { return this._workDir; }
   get stderrLog() { return this._stderrBuffer.join(''); }
   get stdoutLog() { return this._stdoutBuffer.join(''); }
-  get pid() { return this._child?.pid || null; }
+  get pid() { return this._pid; }
   get scenarioDir() { return this._scenarioDir; }
   get exitInfo() { return this._exitInfo; }
 
@@ -74,11 +71,17 @@ export class ProcessHost {
     this._workDir = ensureWorkspace(opts.scenarioDir);
     this._env = buildEnv(opts);
     const ht0 = Date.now();
-    this._child = spawnOpencodeServe(this._workDir, this._env, {
+    this._owner = spawnOwnedOpencodeServe(this._workDir, this._env, {
       onStdoutChunk: this._onStdout.bind(this),
       onStderrChunk: this._onStderr.bind(this),
       onExit: this._onChildExit.bind(this),
     });
+    const started = await this._owner.started;
+    if (started.failure !== null) {
+      await this._owner.completed;
+      throw started.failure;
+    }
+    this._pid = started.pid;
     const startTimeout = opts.startTimeoutMs || HOST_START_TIMEOUT_MS;
     const listenLine = await this._waitForListening(startTimeout, () => {
       if (process.env.CANARY_VERBOSE || process.env.DEBUG) {
@@ -91,14 +94,15 @@ export class ProcessHost {
       console.error(`[host.start] _waitForListening took ${ht1 - ht0}ms`);
     }
     if (!listenLine) {
-      try { this._child?.kill('SIGKILL'); } catch {}
+      this._owner.stop();
+      const completed = await this._owner.completed;
       throw new Error(
         'opencode serve did not output listening line within timeout\n' +
         `stdout tail:\n${this._stdoutBuffer.slice(-20).join('\n')}\n` +
         `stderr tail:\n${this._stderrBuffer.slice(-20).join('\n')}`,
+        { cause: completed.failure ?? undefined },
       );
     }
-    this._pid = this._child?.pid || null;
     this._port = parseListenPort(listenLine);
     this._baseUrl = `http://127.0.0.1:${this._port}`;
     opts.onProgress?.('listening');
@@ -148,15 +152,17 @@ export class ProcessHost {
     const started = Date.now();
     const deadline = started + timeoutMs;
     const url = `${this._baseUrl}${pathname}`;
-    const child = this._child;
+    const terminal = this._owner?.terminal;
     const controller = new AbortController();
     let attempts = 0;
     let lastObservation = 'waiting for response headers; no request completed';
-    const onExit = (code, signal) => controller.abort(new Error(`Host exited: code=${code} signal=${signal}`));
+    const onExit = (code, signal, failure) => controller.abort(failure ?? new Error(`Host exited: code=${code} signal=${signal}`));
+    const observeExit = () => onExit(terminal.reason.exitCode, terminal.reason.signal, terminal.reason.failure);
     const timer = setTimeout(() => controller.abort(new Error(`stage deadline expired; ${lastObservation}`)), timeoutMs);
-    child?.once('exit', onExit);
+    terminal?.addEventListener('abort', observeExit, { once: true });
     try {
-      if (this._exitInfo) onExit(this._exitInfo.code, this._exitInfo.signal);
+      if (terminal?.aborted) observeExit();
+      if (this._exitInfo) onExit(this._exitInfo.code, this._exitInfo.signal, this._exitInfo.failure);
       while (true) {
         controller.signal.throwIfAborted();
         attempts += 1;
@@ -190,7 +196,7 @@ export class ProcessHost {
       );
     } finally {
       clearTimeout(timer);
-      child?.removeListener('exit', onExit);
+      terminal?.removeEventListener('abort', observeExit);
       controller.abort();
     }
   }
@@ -199,7 +205,7 @@ export class ProcessHost {
   async stop({ assert = true } = {}) {
     if (this._stopped) return;
     this._stopped = true;
-    if (!this._child) {
+    if (!this._owner) {
       // Already stopped, but reset flags so a fresh host can be started.
       this._started = false;
       this._stopped = false;
@@ -209,42 +215,17 @@ export class ProcessHost {
       this._exitInfo = null;
       return;
     }
-    const port = this._port;
-    const pid = this._pid;
     try {
-      await terminateChild(this._child, SIGTERM_GRACE_MS, SIGKILL_GRACE_MS);
-      try { this._child.stdout.destroy(); } catch {}
-      try { this._child.stderr.destroy(); } catch {}
-      try { this._child.stdin.destroy(); } catch {}
-      this._child = null;
+      this._owner.stop();
+      const completed = await this._owner.completed;
+      if (completed.failure !== null) throw completed.failure;
       if (assert) {
-        // Parallel canaries under load: SIGKILL can leave the listen socket
-        // accept-able (orphaned descendant / mid-fork escape). Reclaim before
-        // fail-closed assert — still assert, never paper over a true leak.
-        if (port && !(await checkSocketClosed(port, SOCKET_CHECK_TIMEOUT_MS))) {
-          if (pid) {
-            try {
-              if (process.platform !== 'win32') process.kill(-pid, 'SIGKILL');
-            } catch {}
-            try {
-              process.kill(pid, 'SIGKILL');
-            } catch {}
-          }
-          // Last-resort reclaim of the listen socket owner (harness-only).
-          if (process.platform === 'linux') {
-            try {
-              const { execSync } = await import('node:child_process');
-              execSync(`fuser -k ${port}/tcp`, {
-                stdio: 'ignore',
-                timeout: 2000,
-              });
-            } catch {}
-          }
-          await checkSocketClosed(port, SOCKET_CHECK_TIMEOUT_MS);
-        }
         await this.assertNoLeak();
       }
     } finally {
+      try { this._owner.child.stdout.destroy(); } catch {}
+      try { this._owner.child.stderr.destroy(); } catch {}
+      this._owner = null;
       // Allow the same ProcessHost instance to be re-used in a future
       // scenario. New scenarios must always get a fresh instance via
       // `new ProcessHost()`, but resetting here keeps the API forgiving.
@@ -279,8 +260,8 @@ export class ProcessHost {
     if (process.env.DEBUG) process.stderr.write(s);
     ringPush(this._stderrBuffer, s, STDOUT_RING_MAX);
   }
-  _onChildExit(code, signal) {
-    this._exitInfo = { code, signal, time: Date.now() };
+  _onChildExit(code, signal, failure) {
+    this._exitInfo = { code, signal, time: Date.now(), ...(failure ? { failure } : {}) };
     if (!this._stopped) {
       this._stderrBuffer.push(`\n[PROCESS] Unexpected exit: code=${code} signal=${signal}\n`);
     }
@@ -288,7 +269,9 @@ export class ProcessHost {
 
   async _waitForListening(timeoutMs, onBootstrap) {
     return new Promise((resolve) => {
-      const child = this._child;
+      const owner = this._owner;
+      const child = owner?.child;
+      const terminal = owner?.terminal;
       if (!child || !child.stdout) {
         resolve(null);
         return;
@@ -301,7 +284,7 @@ export class ProcessHost {
         if (settled) return;
         settled = true;
         try { child.stdout.removeListener('data', handler); } catch {}
-        try { child.removeListener('exit', onExit); } catch {}
+        terminal?.removeEventListener('abort', onExit);
         resolve(value);
       };
       const handler = (chunk) => {
@@ -323,9 +306,12 @@ export class ProcessHost {
       const onExit = () => {
         finish(null);
       };
-      child.once('exit', onExit);
       child.stdout.on('data', handler);
+      terminal?.addEventListener('abort', onExit, { once: true });
+      handler(this._stdoutBuffer.join(''));
+      if (terminal?.aborted || this._exitInfo) onExit();
       const poll = () => {
+        if (settled) return;
         if (tryResolve()) return;
         if (Date.now() > deadline) {
           finish(null);

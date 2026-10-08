@@ -1,0 +1,1372 @@
+[
+  {
+    "shard": "opencode-tools-executortoolsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.action-affordance.opencode-tools-executortoolsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.action-affordance.opencode-tools-executortoolsurface.fsproj"
+  },
+  {
+    "shard": "opencode-tools-managedagent",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.action-affordance.opencode-tools-managedagent.fsproj",
+    "projectName": "Wanxiangshu.Owner.action-affordance.opencode-tools-managedagent.fsproj"
+  },
+  {
+    "shard": "node-fs",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.action-affordance.opencode-tools-nodefs.fsproj",
+    "projectName": "Wanxiangshu.Owner.action-affordance.opencode-tools-nodefs.fsproj"
+  },
+  {
+    "shard": "opencode-tools-statictools",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.action-affordance.opencode-tools-statictools.fsproj",
+    "projectName": "Wanxiangshu.Owner.action-affordance.opencode-tools-statictools.fsproj"
+  },
+  {
+    "shard": "persistence-runtime-path",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.action-affordance.persistence-runtime-path.fsproj",
+    "projectName": "Wanxiangshu.Owner.action-affordance.persistence-runtime-path.fsproj"
+  },
+  {
+    "shard": "git-subject",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.action-affordance.runtime-platform-git-subject.fsproj",
+    "projectName": "Wanxiangshu.Owner.action-affordance.runtime-platform-git-subject.fsproj"
+  },
+  {
+    "shard": "tool-runtime-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.action-affordance.runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.action-affordance.runtime.fsproj"
+  },
+  {
+    "shard": "interaction-attention-facts",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.attention-regulation.interaction-attention-facts.fsproj",
+    "projectName": "Wanxiangshu.Owner.attention-regulation.interaction-attention-facts.fsproj"
+  },
+  {
+    "shard": "interaction-attention-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.attention-regulation.interaction-attention-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.attention-regulation.interaction-attention-fold.fsproj"
+  },
+  {
+    "shard": "enforcer-catalog",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.behavior-diagnosis.enforcer-catalog.fsproj",
+    "projectName": "Wanxiangshu.Owner.behavior-diagnosis.enforcer-catalog.fsproj"
+  },
+  {
+    "shard": "enforcer-codec",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.behavior-diagnosis.enforcer-codec.fsproj",
+    "projectName": "Wanxiangshu.Owner.behavior-diagnosis.enforcer-codec.fsproj"
+  },
+  {
+    "shard": "enforcer-continuation",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.behavior-diagnosis.enforcer-continuation.fsproj",
+    "projectName": "Wanxiangshu.Owner.behavior-diagnosis.enforcer-continuation.fsproj"
+  },
+  {
+    "shard": "enforcer-projection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.behavior-diagnosis.enforcer-projection.fsproj",
+    "projectName": "Wanxiangshu.Owner.behavior-diagnosis.enforcer-projection.fsproj"
+  },
+  {
+    "shard": "repair",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.behavior-diagnosis.enforcer-repair.fsproj",
+    "projectName": "Wanxiangshu.Owner.behavior-diagnosis.enforcer-repair.fsproj"
+  },
+  {
+    "shard": "opencode-host-managedagentconfig",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.capability-enforcement.opencode-host-managedagentconfig.fsproj",
+    "projectName": "Wanxiangshu.Owner.capability-enforcement.opencode-host-managedagentconfig.fsproj"
+  },
+  {
+    "shard": "execution-session-wait-completion-mailbox",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.causal-wait.execution-session-wait-completion-mailbox.fsproj",
+    "projectName": "Wanxiangshu.Owner.causal-wait.execution-session-wait-completion-mailbox.fsproj"
+  },
+  {
+    "shard": "execution-session-wait-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.causal-wait.execution-session-wait-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.causal-wait.execution-session-wait-contract.fsproj"
+  },
+  {
+    "shard": "execution-session-wait-diagnostic-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.causal-wait.execution-session-wait-diagnostic-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.causal-wait.execution-session-wait-diagnostic-adapter.fsproj"
+  },
+  {
+    "shard": "execution-session-wait-proof-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.causal-wait.execution-session-wait-proof-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.causal-wait.execution-session-wait-proof-surface.fsproj"
+  },
+  {
+    "shard": "execution-session-wait-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.causal-wait.execution-session-wait-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.causal-wait.execution-session-wait-runtime.fsproj"
+  },
+  {
+    "shard": "change-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.change-integration.change-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.change-integration.change-fact.fsproj"
+  },
+  {
+    "shard": "change-facts",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.change-integration.change-facts.fsproj",
+    "projectName": "Wanxiangshu.Owner.change-integration.change-facts.fsproj"
+  },
+  {
+    "shard": "change-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.change-integration.change-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.change-integration.change-fold.fsproj"
+  },
+  {
+    "shard": "change-orchestrator-port-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.change-integration.change-orchestrator-port-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.change-integration.change-orchestrator-port-adapter.fsproj"
+  },
+  {
+    "shard": "git-gateway",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.change-integration.git-gateway.fsproj",
+    "projectName": "Wanxiangshu.Owner.change-integration.git-gateway.fsproj"
+  },
+  {
+    "shard": "git-integrationgate",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.change-integration.git-integrationgate.fsproj",
+    "projectName": "Wanxiangshu.Owner.change-integration.git-integrationgate.fsproj"
+  },
+  {
+    "shard": "resources-promptcatalog",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.cognitive-environment.resources-promptcatalog.fsproj",
+    "projectName": "Wanxiangshu.Owner.cognitive-environment.resources-promptcatalog.fsproj"
+  },
+  {
+    "shard": "resources-promptresources",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.cognitive-environment.resources-promptresources.fsproj",
+    "projectName": "Wanxiangshu.Owner.cognitive-environment.resources-promptresources.fsproj"
+  },
+  {
+    "shard": "resources-promptsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.cognitive-environment.resources-promptsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.cognitive-environment.resources-promptsurface.fsproj"
+  },
+  {
+    "shard": "resources-runtimeresources",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.cognitive-environment.resources-runtimeresources.fsproj",
+    "projectName": "Wanxiangshu.Owner.cognitive-environment.resources-runtimeresources.fsproj"
+  },
+  {
+    "shard": "interaction-concern-facts",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.concern-routing.interaction-concern-facts.fsproj",
+    "projectName": "Wanxiangshu.Owner.concern-routing.interaction-concern-facts.fsproj"
+  },
+  {
+    "shard": "interaction-concern-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.concern-routing.interaction-concern-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.concern-routing.interaction-concern-fold.fsproj"
+  },
+  {
+    "shard": "companion-host-blogger",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.context-compression.companion-host-blogger.fsproj",
+    "projectName": "Wanxiangshu.Owner.context-compression.companion-host-blogger.fsproj"
+  },
+  {
+    "shard": "context-companion-companionfactfold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.context-compression.context-companion-companionfactfold.fsproj",
+    "projectName": "Wanxiangshu.Owner.context-compression.context-companion-companionfactfold.fsproj"
+  },
+  {
+    "shard": "context-companion-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.context-compression.context-companion-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.context-compression.context-companion-fact.fsproj"
+  },
+  {
+    "shard": "context-companion-facts",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.context-compression.context-companion-facts.fsproj",
+    "projectName": "Wanxiangshu.Owner.context-compression.context-companion-facts.fsproj"
+  },
+  {
+    "shard": "context-companion-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.context-compression.context-companion-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.context-compression.context-companion-fold.fsproj"
+  },
+  {
+    "shard": "context-companion-foldsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.context-compression.context-companion-foldsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.context-compression.context-companion-foldsurface.fsproj"
+  },
+  {
+    "shard": "context-companion-runtimesurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.context-compression.context-companion-runtimesurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.context-compression.context-companion-runtimesurface.fsproj"
+  },
+  {
+    "shard": "context-compression-runtime-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.context-compression.runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.context-compression.runtime.fsproj"
+  },
+  {
+    "shard": "execution-session-loopdetector",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.degeneration-guard.execution-session-loopdetector.fsproj",
+    "projectName": "Wanxiangshu.Owner.degeneration-guard.execution-session-loopdetector.fsproj"
+  },
+  {
+    "shard": "delegation-host-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-host-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.delegation-host-adapter.fsproj"
+  },
+  {
+    "shard": "delegation-joinguard-port",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-joinguard-port.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.delegation-joinguard-port.fsproj"
+  },
+  {
+    "shard": "delegation-journal-port",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-journal-port.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.delegation-journal-port.fsproj"
+  },
+  {
+    "shard": "delegation-linkage-projection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-linkage-projection.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.delegation-linkage-projection.fsproj"
+  },
+  {
+    "shard": "delegation-pty-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-pty-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.delegation-pty-adapter.fsproj"
+  },
+  {
+    "shard": "delegation-pty-port",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-pty-port.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.delegation-pty-port.fsproj"
+  },
+  {
+    "shard": "delegation-recovery-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-recovery-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.delegation-recovery-runtime.fsproj"
+  },
+  {
+    "shard": "delegation-sync-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-sync-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.delegation-sync-runtime.fsproj"
+  },
+  {
+    "shard": "delegation-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.execution-delegation-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.execution-delegation-fact.fsproj"
+  },
+  {
+    "shard": "delegation-fork-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.execution-delegation-fork-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.execution-delegation-fork-runtime.fsproj"
+  },
+  {
+    "shard": "delegation-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.execution-delegation-handle-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.execution-delegation-handle-surface.fsproj"
+  },
+  {
+    "shard": "execution-delegation-hostturnobservedsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.execution-delegation-hostturnobservedsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.execution-delegation-hostturnobservedsurface.fsproj"
+  },
+  {
+    "shard": "delegation-ledger",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.execution-delegation-ledger.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.execution-delegation-ledger.fsproj"
+  },
+  {
+    "shard": "delegation-sync-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.execution-delegation-syncdelegate-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.execution-delegation-syncdelegate-model.fsproj"
+  },
+  {
+    "shard": "join-attempt-registry",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.join-attempt-registry.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.join-attempt-registry.fsproj"
+  },
+  {
+    "shard": "join-guard-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.join-guard-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.join-guard-surface.fsproj"
+  },
+  {
+    "shard": "delegation-runtime-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.delegation.runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.delegation.runtime.fsproj"
+  },
+  {
+    "shard": "chat-admission-transaction",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.chat-admission-transaction.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.chat-admission-transaction.fsproj"
+  },
+  {
+    "shard": "composition-turn-observation-port",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.composition-turn-observation-port.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.composition-turn-observation-port.fsproj"
+  },
+  {
+    "shard": "composition-turn-reconcilesurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.composition-turn-reconcilesurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.composition-turn-reconcilesurface.fsproj"
+  },
+  {
+    "shard": "composition-turn-recovery-workflow",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.composition-turn-recovery-workflow.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.composition-turn-recovery-workflow.fsproj"
+  },
+  {
+    "shard": "composition-turn-scheduler",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.composition-turn-scheduler.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.composition-turn-scheduler.fsproj"
+  },
+  {
+    "shard": "dispatch-attempt-planner",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-planner.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-planner.fsproj"
+  },
+  {
+    "shard": "dispatch-attempt-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-surface.fsproj"
+  },
+  {
+    "shard": "dispatch-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.dispatch-runtime.fsproj"
+  },
+  {
+    "shard": "dispatch-model-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.execution-session-recovery-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.execution-session-recovery-model.fsproj"
+  },
+  {
+    "shard": "canonical-json",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.foundation-canonical-json.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.foundation-canonical-json.fsproj"
+  },
+  {
+    "shard": "identity",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.foundation-identity.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.foundation-identity.fsproj"
+  },
+  {
+    "shard": "llm-facing",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.foundation-llm-facing.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.foundation-llm-facing.fsproj"
+  },
+  {
+    "shard": "outcome",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.foundation-outcome.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.foundation-outcome.fsproj"
+  },
+  {
+    "shard": "interaction-attempt-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.interaction-attempt-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.interaction-attempt-contract.fsproj"
+  },
+  {
+    "shard": "prompt-metadata-codec",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.interaction-dispatch-metadata-codec.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.interaction-dispatch-metadata-codec.fsproj"
+  },
+  {
+    "shard": "runtime-nudge",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.interaction-dispatch-nudge.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.interaction-dispatch-nudge.fsproj"
+  },
+  {
+    "shard": "interaction-dispatch-opencode-ingresscodec",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.interaction-dispatch-opencode-ingresscodec.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.interaction-dispatch-opencode-ingresscodec.fsproj"
+  },
+  {
+    "shard": "interaction-repair-completedturn",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.interaction-repair-completedturn.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.interaction-repair-completedturn.fsproj"
+  },
+  {
+    "shard": "session-nudge",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.session-nudge.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch-protocol.session-nudge.fsproj"
+  },
+  {
+    "shard": "session-recovery-coordinator",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.dispatch.session-recovery-coordinator.fsproj",
+    "projectName": "Wanxiangshu.Owner.dispatch.session-recovery-coordinator.fsproj"
+  },
+  {
+    "shard": "runtime-platform-assemblyinfo",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.distribution.assemblyinfo.fsproj",
+    "projectName": "Wanxiangshu.Owner.distribution.assemblyinfo.fsproj"
+  },
+  {
+    "shard": "enforcer-catalog-resource",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.distribution.resources-enforcercatalogresource.fsproj",
+    "projectName": "Wanxiangshu.Owner.distribution.resources-enforcercatalogresource.fsproj"
+  },
+  {
+    "shard": "composition-durable-contextfact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.composition-durable-contextfact.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.composition-durable-contextfact.fsproj"
+  },
+  {
+    "shard": "composition-durable-providerfailure-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.composition-durable-providerfailure-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.composition-durable-providerfailure-fact.fsproj"
+  },
+  {
+    "shard": "durable-adapter-attention-concern",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-attention-concern.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.durable-adapter-attention-concern.fsproj"
+  },
+  {
+    "shard": "durable-adapter-delegation",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-delegation.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.durable-adapter-delegation.fsproj"
+  },
+  {
+    "shard": "durable-adapter-institutional-learning",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-institutional-learning.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.durable-adapter-institutional-learning.fsproj"
+  },
+  {
+    "shard": "durable-adapter-requirement-grounding",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-requirement-grounding.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.durable-adapter-requirement-grounding.fsproj"
+  },
+  {
+    "shard": "durable-adapter-session-started-at",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-session-started-at.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.durable-adapter-session-started-at.fsproj"
+  },
+  {
+    "shard": "durable-trace-capture",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj"
+  },
+  {
+    "shard": "journal-integration-rule",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.journal-integration-rule.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-composition.journal-integration-rule.fsproj"
+  },
+  {
+    "shard": "eventstore-integrator-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-convergence.eventstore-integrator-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-convergence.eventstore-integrator-contract.fsproj"
+  },
+  {
+    "shard": "eventstore-integrator-engine",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-convergence.eventstore-integrator-engine.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-convergence.eventstore-integrator-engine.fsproj"
+  },
+  {
+    "shard": "eventstore-merge-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-convergence.eventstore-merge-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-convergence.eventstore-merge-runtime.fsproj"
+  },
+  {
+    "shard": "eventstore-process-log",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-convergence.eventstore-process-log.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-convergence.eventstore-process-log.fsproj"
+  },
+  {
+    "shard": "eventstore-sync-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-convergence.eventstore-sync-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-convergence.eventstore-sync-runtime.fsproj"
+  },
+  {
+    "shard": "git-hook-sync",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-convergence.git-hook-sync.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-convergence.git-hook-sync.fsproj"
+  },
+  {
+    "shard": "persistence-eventstore-canonicalintegrator",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-convergence.persistence-eventstore-canonicalintegrator.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-convergence.persistence-eventstore-canonicalintegrator.fsproj"
+  },
+  {
+    "shard": "eventstore-core-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-convergence.persistence-eventstore-processeventlog.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-convergence.persistence-eventstore-processeventlog.fsproj"
+  },
+  {
+    "shard": "composition-durable-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.composition-durable-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.composition-durable-fact.fsproj"
+  },
+  {
+    "shard": "composition-durable-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.composition-durable-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.composition-durable-fold.fsproj"
+  },
+  {
+    "shard": "composition-durable-projection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.composition-durable-projection.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.composition-durable-projection.fsproj"
+  },
+  {
+    "shard": "durable-journal-port-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.durable-journal-port-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.durable-journal-port-adapter.fsproj"
+  },
+  {
+    "shard": "eventstore-append-result-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.eventstore-append-result-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.eventstore-append-result-contract.fsproj"
+  },
+  {
+    "shard": "eventstore-authoritative-vocabulary",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.eventstore-authoritative-vocabulary.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.eventstore-authoritative-vocabulary.fsproj"
+  },
+  {
+    "shard": "eventstore-event-vocabulary-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.eventstore-event-vocabulary-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.eventstore-event-vocabulary-contract.fsproj"
+  },
+  {
+    "shard": "eventstore-git-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.eventstore-git-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.eventstore-git-contract.fsproj"
+  },
+  {
+    "shard": "eventstore-git-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.eventstore-git-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.eventstore-git-runtime.fsproj"
+  },
+  {
+    "shard": "journal-outcome-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj"
+  },
+  {
+    "shard": "eventstore-canonical-codec",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-eventstore-canonicalcodec.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-eventstore-canonicalcodec.fsproj"
+  },
+  {
+    "shard": "eventstore-model-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-eventstore-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-eventstore-model.fsproj"
+  },
+  {
+    "shard": "eventstore-port-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-eventstore-storetypes.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-eventstore-storetypes.fsproj"
+  },
+  {
+    "shard": "persistence-eventstore-strengthsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-eventstore-strengthsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-eventstore-strengthsurface.fsproj"
+  },
+  {
+    "shard": "persistence-journal-agentjournal",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-journal-agentjournal.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-journal-agentjournal.fsproj"
+  },
+  {
+    "shard": "persistence-journal-eventstorewriter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-journal-eventstorewriter.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-journal-eventstorewriter.fsproj"
+  },
+  {
+    "shard": "persistence-journal-obligationsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-journal-obligationsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-journal-obligationsurface.fsproj"
+  },
+  {
+    "shard": "persistence-journal-promptfactcodec",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-journal-promptfactcodec.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-journal-promptfactcodec.fsproj"
+  },
+  {
+    "shard": "persistence-journal-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.persistence-journal-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.persistence-journal-surface.fsproj"
+  },
+  {
+    "shard": "durable-runtime-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.runtime.fsproj"
+  },
+  {
+    "shard": "strength-persistence-durabilityport",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.durable-events.strength-persistence-durabilityport.fsproj",
+    "projectName": "Wanxiangshu.Owner.durable-events.strength-persistence-durabilityport.fsproj"
+  },
+  {
+    "shard": "sphinx-v2-core",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.epistemic-reasoning.sphinx-v2-core.fsproj",
+    "projectName": "Wanxiangshu.Owner.epistemic-reasoning.sphinx-v2-core.fsproj"
+  },
+  {
+    "shard": "sphinx-v2-integration",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.epistemic-reasoning.sphinx-v2-integration.fsproj",
+    "projectName": "Wanxiangshu.Owner.epistemic-reasoning.sphinx-v2-integration.fsproj"
+  },
+  {
+    "shard": "execution-failure-decision",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.execution-failure-policy.execution-failure-decision.fsproj",
+    "projectName": "Wanxiangshu.Owner.execution-failure-policy.execution-failure-decision.fsproj"
+  },
+  {
+    "shard": "execution-failure-vocab",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.execution-failure-policy.execution-failure-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.execution-failure-policy.execution-failure-model.fsproj"
+  },
+  {
+    "shard": "opencode-host-modelroutingsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.execution-model-routing.opencode-host-modelroutingsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.execution-model-routing.opencode-host-modelroutingsurface.fsproj"
+  },
+  {
+    "shard": "opencode-host-opencodeport-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.execution-model-routing.opencode-host-opencodeport-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.execution-model-routing.opencode-host-opencodeport-adapter.fsproj"
+  },
+  {
+    "shard": "opencode-host-opencodeport",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.execution-model-routing.opencode-host-opencodeport.fsproj",
+    "projectName": "Wanxiangshu.Owner.execution-model-routing.opencode-host-opencodeport.fsproj"
+  },
+  {
+    "shard": "strength-policy",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.execution-model-routing.strength-policy.fsproj",
+    "projectName": "Wanxiangshu.Owner.execution-model-routing.strength-policy.fsproj"
+  },
+  {
+    "shard": "ablation-kernel",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.feature-ablation.ablation-kernel.fsproj",
+    "projectName": "Wanxiangshu.Owner.feature-ablation.ablation-kernel.fsproj"
+  },
+  {
+    "shard": "enforcer-guidance-tip",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.guidance-delivery.enforcer-guidance-tip.fsproj",
+    "projectName": "Wanxiangshu.Owner.guidance-delivery.enforcer-guidance-tip.fsproj"
+  },
+  {
+    "shard": "opencode-host-pairprogramming-guidelineprojection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.guidance-delivery.opencode-host-pairprogramming-guidelineprojection.fsproj",
+    "projectName": "Wanxiangshu.Owner.guidance-delivery.opencode-host-pairprogramming-guidelineprojection.fsproj"
+  },
+  {
+    "shard": "opencode-host-pairprogrammingcalibration",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.guidance-delivery.opencode-host-pairprogrammingcalibration.fsproj",
+    "projectName": "Wanxiangshu.Owner.guidance-delivery.opencode-host-pairprogrammingcalibration.fsproj"
+  },
+  {
+    "shard": "host-diagnostics-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-diagnostics-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-diagnostics-runtime.fsproj"
+  },
+  {
+    "shard": "host-signal-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-digest.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-digest.fsproj"
+  },
+  {
+    "shard": "host-event-envelope",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-event-envelope.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-event-envelope.fsproj"
+  },
+  {
+    "shard": "host-fatal-effect",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-fatal-effect.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-fatal-effect.fsproj"
+  },
+  {
+    "shard": "host-message-codec",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-message-codec.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-message-codec.fsproj"
+  },
+  {
+    "shard": "host-message-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-message-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-message-contract.fsproj"
+  },
+  {
+    "shard": "host-opencode-types",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-opencode-types.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-opencode-types.fsproj"
+  },
+  {
+    "shard": "host-root-workspace-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-root-workspace-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-root-workspace-contract.fsproj"
+  },
+  {
+    "shard": "host-root-workspace-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-root-workspace-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-root-workspace-runtime.fsproj"
+  },
+  {
+    "shard": "host-session-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-session-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-session-contract.fsproj"
+  },
+  {
+    "shard": "host-session-snapshot-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj"
+  },
+  {
+    "shard": "host-signal-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-signal-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-signal-adapter.fsproj"
+  },
+  {
+    "shard": "host-tool-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-tool-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.host-tool-adapter.fsproj"
+  },
+  {
+    "shard": "loop-event-codec",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.loop-event-codec.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.loop-event-codec.fsproj"
+  },
+  {
+    "shard": "opencode-host-fissionhostsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-fissionhostsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.opencode-host-fissionhostsurface.fsproj"
+  },
+  {
+    "shard": "opencode-host-hostsignalbootstrap",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-hostsignalbootstrap.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.opencode-host-hostsignalbootstrap.fsproj"
+  },
+  {
+    "shard": "opencode-host-pluginrecoveryscopesurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-pluginrecoveryscopesurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.opencode-host-pluginrecoveryscopesurface.fsproj"
+  },
+  {
+    "shard": "opencode-host-providerrunbinding",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-providerrunbinding.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.opencode-host-providerrunbinding.fsproj"
+  },
+  {
+    "shard": "host-session-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-sessionquiescencegate.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.opencode-host-sessionquiescencegate.fsproj"
+  },
+  {
+    "shard": "opencode-host-sharedstate",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-sharedstate.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.opencode-host-sharedstate.fsproj"
+  },
+  {
+    "shard": "opencode-host-sharedstatesurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-sharedstatesurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.opencode-host-sharedstatesurface.fsproj"
+  },
+  {
+    "shard": "opencode-host-workspaceeventstore",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-workspaceeventstore.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.opencode-host-workspaceeventstore.fsproj"
+  },
+  {
+    "shard": "provider-system-transform",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.provider-system-transform.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-boundary.provider-system-transform.fsproj"
+  },
+  {
+    "shard": "opencode-host-providerfailurepresentation",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.host-provider-failure-ownership.opencode-host-providerfailurepresentation.fsproj",
+    "projectName": "Wanxiangshu.Owner.host-provider-failure-ownership.opencode-host-providerfailurepresentation.fsproj"
+  },
+  {
+    "shard": "enforcer-institutionallearning-facts",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.institutional-learning.enforcer-institutionallearning-facts.fsproj",
+    "projectName": "Wanxiangshu.Owner.institutional-learning.enforcer-institutionallearning-facts.fsproj"
+  },
+  {
+    "shard": "enforcer-institutionallearning-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.institutional-learning.enforcer-institutionallearning-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.institutional-learning.enforcer-institutionallearning-fold.fsproj"
+  },
+  {
+    "shard": "interaction-authority-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.interaction-authority-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.interaction-authority-fact.fsproj"
+  },
+  {
+    "shard": "interaction-authority-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.interaction-authority-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.interaction-authority-fold.fsproj"
+  },
+  {
+    "shard": "interaction-authority-identityseed",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.interaction-authority-identityseed.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.interaction-authority-identityseed.fsproj"
+  },
+  {
+    "shard": "interaction-authority-ledger",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.interaction-authority-ledger.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.interaction-authority-ledger.fsproj"
+  },
+  {
+    "shard": "interaction-authority-model",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.interaction-authority-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.interaction-authority-model.fsproj"
+  },
+  {
+    "shard": "interaction-authority-projection-queries",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.interaction-authority-projection-queries.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.interaction-authority-projection-queries.fsproj"
+  },
+  {
+    "shard": "interaction-authority-prompt-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.interaction-authority-prompt-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.interaction-authority-prompt-fact.fsproj"
+  },
+  {
+    "shard": "interaction-repair-interactionrepair",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.interaction-repair-interactionrepair.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.interaction-repair-interactionrepair.fsproj"
+  },
+  {
+    "shard": "opencode-host-chatadmission-intent",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.opencode-host-chatadmission-intent.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.opencode-host-chatadmission-intent.fsproj"
+  },
+  {
+    "shard": "authority-runtime-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction-authority.runtime.fsproj"
+  },
+  {
+    "shard": "opencode-tools-filemutationtools",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.interaction.opencode-tools-filemutationtools.fsproj",
+    "projectName": "Wanxiangshu.Owner.interaction.opencode-tools-filemutationtools.fsproj"
+  },
+  {
+    "shard": "execution-fission-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-fact.fsproj"
+  },
+  {
+    "shard": "fission-facts",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-facts.fsproj",
+    "projectName": "Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-facts.fsproj"
+  },
+  {
+    "shard": "execution-fission-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-fold.fsproj"
+  },
+  {
+    "shard": "execution-fission-opencode-host",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-opencode-host.fsproj",
+    "projectName": "Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-opencode-host.fsproj"
+  },
+  {
+    "shard": "async-support",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.intra-participant-parallelism.foundation-async-support.fsproj",
+    "projectName": "Wanxiangshu.Owner.intra-participant-parallelism.foundation-async-support.fsproj"
+  },
+  {
+    "shard": "bounded-parallel",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.intra-participant-parallelism.foundation-parallel.fsproj",
+    "projectName": "Wanxiangshu.Owner.intra-participant-parallelism.foundation-parallel.fsproj"
+  },
+  {
+    "shard": "task-result",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.intra-participant-parallelism.foundation-taskresult.fsproj",
+    "projectName": "Wanxiangshu.Owner.intra-participant-parallelism.foundation-taskresult.fsproj"
+  },
+  {
+    "shard": "casebook-lifecycle-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.casebook-lifecycle-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.casebook-lifecycle-surface.fsproj"
+  },
+  {
+    "shard": "knowledge-integration-rules",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.knowledge-integration-rules.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.knowledge-integration-rules.fsproj"
+  },
+  {
+    "shard": "opencode-tools-bookkeepertool",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.opencode-tools-bookkeepertool.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.opencode-tools-bookkeepertool.fsproj"
+  },
+  {
+    "shard": "opencode-tools-fetchtool",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.opencode-tools-fetchtool.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.opencode-tools-fetchtool.fsproj"
+  },
+  {
+    "shard": "repository-knowledge-casebook-bookkeeper",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-bookkeeper.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-bookkeeper.fsproj"
+  },
+  {
+    "shard": "casebook-event-vocabulary-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-event-vocabulary-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-event-vocabulary-contract.fsproj"
+  },
+  {
+    "shard": "repository-knowledge-casebook-lifecyclesurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-lifecyclesurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-lifecyclesurface.fsproj"
+  },
+  {
+    "shard": "repository-knowledge-casebook-model",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-model.fsproj"
+  },
+  {
+    "shard": "casebook-runtime-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.knowledge-reuse.runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.knowledge-reuse.runtime.fsproj"
+  },
+  {
+    "shard": "execution-session-chatexecution-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-fact.fsproj"
+  },
+  {
+    "shard": "execution-session-chatexecution-facts",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-facts.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-facts.fsproj"
+  },
+  {
+    "shard": "execution-session-chatexecution-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-fold.fsproj"
+  },
+  {
+    "shard": "opencode-host-chatadmission-transaction",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-chat-execution.opencode-host-chatadmission-transaction.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-chat-execution.opencode-host-chatadmission-transaction.fsproj"
+  },
+  {
+    "shard": "managed-chat-runtime-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-chat-execution.runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-chat-execution.runtime.fsproj"
+  },
+  {
+    "shard": "execution-session-recoveryclosureprojection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-session-lifecycle.execution-session-recoveryclosureprojection.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-session-lifecycle.execution-session-recoveryclosureprojection.fsproj"
+  },
+  {
+    "shard": "opencode-host-pluginruntimescope",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-session-lifecycle.opencode-host-pluginruntimescope.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-session-lifecycle.opencode-host-pluginruntimescope.fsproj"
+  },
+  {
+    "shard": "opencode-host-turnruntimepreparation",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-session-lifecycle.opencode-host-turnruntimepreparation.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-session-lifecycle.opencode-host-turnruntimepreparation.fsproj"
+  },
+  {
+    "shard": "opencode-tools-toolruntimescope",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-session-lifecycle.opencode-tools-toolruntimescope.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-session-lifecycle.opencode-tools-toolruntimescope.fsproj"
+  },
+  {
+    "shard": "session-attachment-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-session-lifecycle.session-attachment-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-session-lifecycle.session-attachment-contract.fsproj"
+  },
+  {
+    "shard": "session-attachment-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.managed-session-lifecycle.session-attachment-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.managed-session-lifecycle.session-attachment-runtime.fsproj"
+  },
+  {
+    "shard": "foundation-officecapability",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.office-capability.foundation-officecapability.fsproj",
+    "projectName": "Wanxiangshu.Owner.office-capability.foundation-officecapability.fsproj"
+  },
+  {
+    "shard": "plugin-composition",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.opencode-plugin.plugin-composition.fsproj",
+    "projectName": "Wanxiangshu.Owner.opencode-plugin.plugin-composition.fsproj"
+  },
+  {
+    "shard": "execution-session-opencode-horizontool",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.participant-horizon.execution-session-opencode-horizontool.fsproj",
+    "projectName": "Wanxiangshu.Owner.participant-horizon.execution-session-opencode-horizontool.fsproj"
+  },
+  {
+    "shard": "opencode-host-messagevisibility",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.participant-horizon.opencode-host-messagevisibility.fsproj",
+    "projectName": "Wanxiangshu.Owner.participant-horizon.opencode-host-messagevisibility.fsproj"
+  },
+  {
+    "shard": "foundation-roles",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.participant-identity.foundation-roles.fsproj",
+    "projectName": "Wanxiangshu.Owner.participant-identity.foundation-roles.fsproj"
+  },
+  {
+    "shard": "participant-persona",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.participant-identity.participant-persona.fsproj",
+    "projectName": "Wanxiangshu.Owner.participant-identity.participant-persona.fsproj"
+  },
+  {
+    "shard": "context-prefix-candidate",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-candidate.fsproj",
+    "projectName": "Wanxiangshu.Owner.prefix-stability.context-prefix-candidate.fsproj"
+  },
+  {
+    "shard": "context-prefix-wire-port",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-wire-port.fsproj",
+    "projectName": "Wanxiangshu.Owner.prefix-stability.context-prefix-wire-port.fsproj"
+  },
+  {
+    "shard": "context-prefix-wire",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj",
+    "projectName": "Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj"
+  },
+  {
+    "shard": "context-prefix-epoch",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.mission-obligation-todo-prefixepoch.fsproj",
+    "projectName": "Wanxiangshu.Owner.prefix-stability.mission-obligation-todo-prefixepoch.fsproj"
+  },
+  {
+    "shard": "host-contract-toolresultbound",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.process-execution.host-contract-toolresultbound.fsproj",
+    "projectName": "Wanxiangshu.Owner.process-execution.host-contract-toolresultbound.fsproj"
+  },
+  {
+    "shard": "opencode-tools-ptytool",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.process-execution.opencode-tools-ptytool.fsproj",
+    "projectName": "Wanxiangshu.Owner.process-execution.opencode-tools-ptytool.fsproj"
+  },
+  {
+    "shard": "process-largegatesurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.process-execution.process-largegatesurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.process-execution.process-largegatesurface.fsproj"
+  },
+  {
+    "shard": "process-processrequest",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.process-execution.process-processrequest.fsproj",
+    "projectName": "Wanxiangshu.Owner.process-execution.process-processrequest.fsproj"
+  },
+  {
+    "shard": "composition-turn-ordinaryturnworkflow",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-attempt-recovery.composition-turn-ordinaryturnworkflow.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-attempt-recovery.composition-turn-ordinaryturnworkflow.fsproj"
+  },
+  {
+    "shard": "participant-provider-attempt-failure",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-failure.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-failure.fsproj"
+  },
+  {
+    "shard": "participant-provider-attempt-fallback-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-fact.fsproj"
+  },
+  {
+    "shard": "participant-provider-attempt-fallback-facts",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-facts.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-facts.fsproj"
+  },
+  {
+    "shard": "participant-provider-attempt-fallback-fold",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-fold.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-fold.fsproj"
+  },
+  {
+    "shard": "participant-provider-attempt-fallback-ledger",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-ledger.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-ledger.fsproj"
+  },
+  {
+    "shard": "participant-provider-attempt-requestkind",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-requestkind.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-requestkind.fsproj"
+  },
+  {
+    "shard": "provider-failure-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-attempt-recovery.provider-failure-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-attempt-recovery.provider-failure-surface.fsproj"
+  },
+  {
+    "shard": "participant-provider-language",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-language.participant-provider-language.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-language.participant-provider-language.fsproj"
+  },
+  {
+    "shard": "participant-provider-languagesurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-language.participant-provider-languagesurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-language.participant-provider-languagesurface.fsproj"
+  },
+  {
+    "shard": "opencode-codec-providerprojectionsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.opencode-codec-providerprojectionsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-projection.opencode-codec-providerprojectionsurface.fsproj"
+  },
+  {
+    "shard": "opencode-codec-providerwiredecode",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.opencode-codec-providerwiredecode.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-projection.opencode-codec-providerwiredecode.fsproj"
+  },
+  {
+    "shard": "participant-provider-projection-plan",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.participant-provider-projection-plan.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-projection.participant-provider-projection-plan.fsproj"
+  },
+  {
+    "shard": "participant-provider-projection-wire",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.participant-provider-projection-wire.fsproj",
+    "projectName": "Wanxiangshu.Owner.provider-projection.participant-provider-projection-wire.fsproj"
+  },
+  {
+    "shard": "mission-relay-assessment",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-assessment.mission-relay-assessment.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-assessment.mission-relay-assessment.fsproj"
+  },
+  {
+    "shard": "mission-relay-reviewtool",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-assessment.mission-relay-reviewtool.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-assessment.mission-relay-reviewtool.fsproj"
+  },
+  {
+    "shard": "mission-relay-workspace-snapshot",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-assessment.mission-relay-workspace-snapshot.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-assessment.mission-relay-workspace-snapshot.fsproj"
+  },
+  {
+    "shard": "mission-relay-narrative-transform",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-context-projection.mission-relay-narrative-transform.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-context-projection.mission-relay-narrative-transform.fsproj"
+  },
+  {
+    "shard": "mission-relay-projection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-context-projection.mission-relay-projection.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-context-projection.mission-relay-projection.fsproj"
+  },
+  {
+    "shard": "mission-relay-core",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-incumbency.mission-relay-core.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-incumbency.mission-relay-core.fsproj"
+  },
+  {
+    "shard": "composition-turn-workflow",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-retirement.composition-turn-workflow.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-retirement.composition-turn-workflow.fsproj"
+  },
+  {
+    "shard": "manager-workflow-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-retirement.manager-workflow-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-retirement.manager-workflow-surface.fsproj"
+  },
+  {
+    "shard": "mission-relay-retirement",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-retirement.mission-relay-retirement.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-retirement.mission-relay-retirement.fsproj"
+  },
+  {
+    "shard": "mission-relay-suicidetool",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.relay-retirement.mission-relay-suicidetool.fsproj",
+    "projectName": "Wanxiangshu.Owner.relay-retirement.mission-relay-suicidetool.fsproj"
+  },
+  {
+    "shard": "repository-investigation-semble-mcp",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.repository-investigation.repository-investigation-semble-mcp.fsproj",
+    "projectName": "Wanxiangshu.Owner.repository-investigation.repository-investigation-semble-mcp.fsproj"
+  },
+  {
+    "shard": "repository-programming-js-capability",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.repository-programming.repository-programming-js-capability.fsproj",
+    "projectName": "Wanxiangshu.Owner.repository-programming.repository-programming-js-capability.fsproj"
+  },
+  {
+    "shard": "js-transaction-event-vocabulary-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.repository-programming.repository-programming-js-event-vocabulary-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.repository-programming.repository-programming-js-event-vocabulary-contract.fsproj"
+  },
+  {
+    "shard": "repository-programming-js-integration-rules",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.repository-programming.repository-programming-js-integration-rules.fsproj",
+    "projectName": "Wanxiangshu.Owner.repository-programming.repository-programming-js-integration-rules.fsproj"
+  },
+  {
+    "shard": "repository-programming-js-toolbindings",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.repository-programming.repository-programming-js-toolbindings.fsproj",
+    "projectName": "Wanxiangshu.Owner.repository-programming.repository-programming-js-toolbindings.fsproj"
+  },
+  {
+    "shard": "js-programming-runtime-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.repository-programming.runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.repository-programming.runtime.fsproj"
+  },
+  {
+    "shard": "host-fact",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.requirement-grounding.host-fact.fsproj",
+    "projectName": "Wanxiangshu.Owner.requirement-grounding.host-fact.fsproj"
+  },
+  {
+    "shard": "opencode-host-requirementgrounding-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.requirement-grounding.opencode-host-requirementgrounding-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.requirement-grounding.opencode-host-requirementgrounding-runtime.fsproj"
+  },
+  {
+    "shard": "requirement-grounding-model",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.requirement-grounding.requirement-grounding-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.requirement-grounding.requirement-grounding-model.fsproj"
+  },
+  {
+    "shard": "requirement-grounding-projection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.requirement-grounding.requirement-grounding-projection.fsproj",
+    "projectName": "Wanxiangshu.Owner.requirement-grounding.requirement-grounding-projection.fsproj"
+  },
+  {
+    "shard": "digest",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.runtime-platform.digest.fsproj",
+    "projectName": "Wanxiangshu.Owner.runtime-platform.digest.fsproj"
+  },
+  {
+    "shard": "globmatch",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.runtime-platform.foundation-globmatch.fsproj",
+    "projectName": "Wanxiangshu.Owner.runtime-platform.foundation-globmatch.fsproj"
+  },
+  {
+    "shard": "runtime-platform-language",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.runtime-platform.language.fsproj",
+    "projectName": "Wanxiangshu.Owner.runtime-platform.language.fsproj"
+  },
+  {
+    "shard": "context-trace-cursor",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.semantic-trace.context-trace-cursor.fsproj",
+    "projectName": "Wanxiangshu.Owner.semantic-trace.context-trace-cursor.fsproj"
+  },
+  {
+    "shard": "context-trace-model",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.semantic-trace.context-trace-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.semantic-trace.context-trace-model.fsproj"
+  },
+  {
+    "shard": "context-trace-semantictracesurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.semantic-trace.context-trace-semantictracesurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.semantic-trace.context-trace-semantictracesurface.fsproj"
+  },
+  {
+    "shard": "execution-session-association",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.session-ontology.execution-session-association.fsproj",
+    "projectName": "Wanxiangshu.Owner.session-ontology.execution-session-association.fsproj"
+  },
+  {
+    "shard": "execution-session-ownership",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.session-ontology.execution-session-ownership.fsproj",
+    "projectName": "Wanxiangshu.Owner.session-ontology.execution-session-ownership.fsproj"
+  },
+  {
+    "shard": "execution-session-syncdelegaterole",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.session-ontology.execution-session-syncdelegaterole.fsproj",
+    "projectName": "Wanxiangshu.Owner.session-ontology.execution-session-syncdelegaterole.fsproj"
+  },
+  {
+    "shard": "opencode-host-sessionbindingsurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.session-ontology.opencode-host-sessionbindingsurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.session-ontology.opencode-host-sessionbindingsurface.fsproj"
+  },
+  {
+    "shard": "opencode-host-sessionexecutionbinding",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.session-ontology.opencode-host-sessionexecutionbinding.fsproj",
+    "projectName": "Wanxiangshu.Owner.session-ontology.opencode-host-sessionexecutionbinding.fsproj"
+  },
+  {
+    "shard": "strength-delegation-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-delegation-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-delegation-contract.fsproj"
+  },
+  {
+    "shard": "strength-event-vocabulary-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-event-vocabulary-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-event-vocabulary-contract.fsproj"
+  },
+  {
+    "shard": "strength-frame-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-frame-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-frame-contract.fsproj"
+  },
+  {
+    "shard": "strength-integration-rules",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-integration-rules.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-integration-rules.fsproj"
+  },
+  {
+    "shard": "strength-migration",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-migration.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-migration.fsproj"
+  },
+  {
+    "shard": "strength-opencode-delegate",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-opencode-delegate.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-opencode-delegate.fsproj"
+  },
+  {
+    "shard": "strength-projection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-projection.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-projection.fsproj"
+  },
+  {
+    "shard": "strength-replica-core",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-replica-core.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-replica-core.fsproj"
+  },
+  {
+    "shard": "strength-replica-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-replica-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-replica-runtime.fsproj"
+  },
+  {
+    "shard": "strength-turnevidence",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-turnevidence.fsproj",
+    "projectName": "Wanxiangshu.Owner.speculative-investigation.strength-turnevidence.fsproj"
+  },
+  {
+    "shard": "execution-session-sessionstartedatledger",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.time-capability.execution-session-sessionstartedatledger.fsproj",
+    "projectName": "Wanxiangshu.Owner.time-capability.execution-session-sessionstartedatledger.fsproj"
+  },
+  {
+    "shard": "execution-session-sessionstartedatprojection",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.time-capability.execution-session-sessionstartedatprojection.fsproj",
+    "projectName": "Wanxiangshu.Owner.time-capability.execution-session-sessionstartedatprojection.fsproj"
+  },
+  {
+    "shard": "foundation-temporal-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.time-capability.foundation-temporal-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.time-capability.foundation-temporal-contract.fsproj"
+  },
+  {
+    "shard": "foundation-temporal",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.time-capability.foundation-temporal.fsproj",
+    "projectName": "Wanxiangshu.Owner.time-capability.foundation-temporal.fsproj"
+  },
+  {
+    "shard": "process-deadline-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.time-capability.process-deadline-contract.fsproj",
+    "projectName": "Wanxiangshu.Owner.time-capability.process-deadline-contract.fsproj"
+  },
+  {
+    "shard": "process-node-timing-adapter",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.time-capability.process-node-timing-adapter.fsproj",
+    "projectName": "Wanxiangshu.Owner.time-capability.process-node-timing-adapter.fsproj"
+  },
+  {
+    "shard": "process-virtual-timing",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.time-capability.process-virtual-timing.fsproj",
+    "projectName": "Wanxiangshu.Owner.time-capability.process-virtual-timing.fsproj"
+  },
+  {
+    "shard": "verification-eventstorewritersurface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.verification-system.verification-eventstorewritersurface.fsproj",
+    "projectName": "Wanxiangshu.Owner.verification-system.verification-eventstorewritersurface.fsproj"
+  },
+  {
+    "shard": "mission-workrecord-materialize-runtime",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.work-record.mission-workrecord-materialize-runtime.fsproj",
+    "projectName": "Wanxiangshu.Owner.work-record.mission-workrecord-materialize-runtime.fsproj"
+  },
+  {
+    "shard": "mission-workrecord-model-contract",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.work-record.mission-workrecord-model.fsproj",
+    "projectName": "Wanxiangshu.Owner.work-record.mission-workrecord-model.fsproj"
+  },
+  {
+    "shard": "mission-workrecord-surface",
+    "projectPath": "/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Wanxiangshu.Owner.work-record.mission-workrecord-surface.fsproj",
+    "projectName": "Wanxiangshu.Owner.work-record.mission-workrecord-surface.fsproj"
+  }
+]

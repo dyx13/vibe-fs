@@ -7,6 +7,16 @@ open Wanxiangshu.Persistence.Journal
 
 [<RequireQualifiedAccess>]
 module ManagerWorkflowSurface =
+    val continueAfterRetiredAttempt:
+        port: obj ->
+        journal: JournalHandle ->
+        session: string ->
+        directory: string ->
+        stopRetiredAttempt: (string -> Task<unit>) ->
+            Task
+
+    val maybeDeliverLoop: port: obj -> journal: JournalHandle -> session: string -> directory: string -> Task
+
     val observeIdle:
         port: obj ->
         journal: JournalHandle ->

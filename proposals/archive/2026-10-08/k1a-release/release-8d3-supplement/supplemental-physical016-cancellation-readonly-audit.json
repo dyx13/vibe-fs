@@ -1,0 +1,2504 @@
+{
+  "capturedAt": "2026-10-08T07:25:44.728808+00:00",
+  "scope": "Read-only exact resources of cancelled physical016 worker 95780 and previously proven original durable022 scratch; no prefix sweep, deletion, test or source edit.",
+  "input": {
+    "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "digest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+    "buildGeneration": 326,
+    "inputsEqual": true
+  },
+  "sourceLog": {
+    "path": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016.log",
+    "sha256": "d39b5ddc2d6cadf8b617f1632e4a58deb6663e09abec779e2a9d643d0bd3a65d"
+  },
+  "sourceReceipt": {
+    "path": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016.json",
+    "sha256": "6503cdca8c60f89431c61d84e2a4e4761138838aeb818bb4eef302fb221ab7cd"
+  },
+  "cancelledResult": {
+    "command": [
+      "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-timeout=180000",
+      "--test-name-pattern=^WHAT\\[verification-system-016\\] (exact repository Git inputs install through a selected npm 11\\.12\\.1 bundle and real JavaScript consumers|a complete selected SDK archive resolves the captured repository global\\.json and reclaims its owned roots|selected complete SDK restores original repository local tools from explicitly identified NuGet archives|selected complete Git source and SDK restore the original foundation identity project through a fresh-cache locked NuGet graph|four selected input owners compile the original foundation identity project with Fable into isolated outputs|mac readonly views protect actual original-project Fable inputs and restore all prepared owners)$",
+      "requirements/verification-system/tests/016.test.mjs"
+    ],
+    "durationMs": 180842.949375,
+    "originalBackstopMs": 300000,
+    "originalBackstopFired": false,
+    "exitCode": 1,
+    "signal": null,
+    "summary": {
+      "tests": {
+        "value": 22,
+        "line": 329
+      },
+      "suites": {
+        "value": 0,
+        "line": 330
+      },
+      "pass": {
+        "value": 21,
+        "line": 331
+      },
+      "fail": {
+        "value": 0,
+        "line": 332
+      },
+      "cancelled": {
+        "value": 1,
+        "line": 333
+      },
+      "skipped": {
+        "value": 0,
+        "line": 334
+      },
+      "todo": {
+        "value": 0,
+        "line": 335
+      },
+      "duration_ms": {
+        "value": 180011.113208,
+        "line": 336
+      }
+    },
+    "topLevelVerdicts": [
+      {
+        "line": 57,
+        "text": "ok 1 - WHAT[verification-system-016] exact repository Git inputs install through a selected npm 11.12.1 bundle and real JavaScript consumers"
+      },
+      {
+        "line": 109,
+        "text": "ok 2 - WHAT[verification-system-016] a complete selected SDK archive resolves the captured repository global.json and reclaims its owned roots"
+      },
+      {
+        "line": 189,
+        "text": "ok 3 - WHAT[verification-system-016] selected complete SDK restores original repository local tools from explicitly identified NuGet archives"
+      },
+      {
+        "line": 253,
+        "text": "ok 4 - WHAT[verification-system-016] selected complete Git source and SDK restore the original foundation identity project through a fresh-cache locked NuGet graph"
+      },
+      {
+        "line": 319,
+        "text": "not ok 1 - requirements/verification-system/tests/016.test.mjs"
+      }
+    ],
+    "interpretation": "Additional CLI --test-timeout=180000 cancelled the file wrapper, not the original 300000ms backstop. First four selected top-level bodies passed; fifth has only two recorded child passes and no parent verdict; sixth was not run. Keep this failure independently of supplemental tail results."
+  },
+  "ownedHome": {
+    "removed": true,
+    "cleanupError": null,
+    "exactPath": "unknown: original helper did not persist its random HOME path; no prefix search performed"
+  },
+  "ownedTools": {
+    "monitors": [
+      {
+        "monitorPid": 95972,
+        "events": [
+          {
+            "line": 2,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443734008,
+            "monitorPid": 95972,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node"
+          },
+          {
+            "line": 3,
+            "phase": "tool-spawned",
+            "pid": 95972,
+            "parentPid": 95780,
+            "at": 1791443734047,
+            "toolPid": 95973,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node"
+          },
+          {
+            "line": 4,
+            "phase": "tool-exited",
+            "pid": 95972,
+            "parentPid": 95780,
+            "at": 1791443736070,
+            "toolPid": 95973,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 5,
+            "phase": "group-drained",
+            "pid": 95972,
+            "parentPid": 95780,
+            "at": 1791443736087,
+            "toolPid": 95973
+          },
+          {
+            "line": 6,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443736090,
+            "monitorPid": 95972,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 95973,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 95984,
+        "events": [
+          {
+            "line": 7,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443736189,
+            "monitorPid": 95984,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node"
+          },
+          {
+            "line": 8,
+            "phase": "tool-spawned",
+            "pid": 95984,
+            "parentPid": 95780,
+            "at": 1791443736216,
+            "toolPid": 95985,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node"
+          },
+          {
+            "line": 9,
+            "phase": "tool-exited",
+            "pid": 95984,
+            "parentPid": 95780,
+            "at": 1791443736334,
+            "toolPid": 95985,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 10,
+            "phase": "group-drained",
+            "pid": 95984,
+            "parentPid": 95780,
+            "at": 1791443736354,
+            "toolPid": 95985
+          },
+          {
+            "line": 11,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443736356,
+            "monitorPid": 95984,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 95985,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 95987,
+        "events": [
+          {
+            "line": 12,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443737047,
+            "monitorPid": 95987,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 20,
+            "phase": "tool-spawned",
+            "pid": 95987,
+            "parentPid": 95780,
+            "at": 1791443737082,
+            "toolPid": 95988,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 21,
+            "phase": "tool-exited",
+            "pid": 95987,
+            "parentPid": 95780,
+            "at": 1791443738394,
+            "toolPid": 95988,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 22,
+            "phase": "group-drained",
+            "pid": 95987,
+            "parentPid": 95780,
+            "at": 1791443738412,
+            "toolPid": 95988
+          },
+          {
+            "line": 23,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443738415,
+            "monitorPid": 95987,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 95988,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 95990,
+        "events": [
+          {
+            "line": 24,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443738513,
+            "monitorPid": 95990,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 25,
+            "phase": "tool-spawned",
+            "pid": 95990,
+            "parentPid": 95780,
+            "at": 1791443738540,
+            "toolPid": 95991,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 26,
+            "phase": "tool-exited",
+            "pid": 95990,
+            "parentPid": 95780,
+            "at": 1791443738610,
+            "toolPid": 95991,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 27,
+            "phase": "group-drained",
+            "pid": 95990,
+            "parentPid": 95780,
+            "at": 1791443738626,
+            "toolPid": 95991
+          },
+          {
+            "line": 28,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443738627,
+            "monitorPid": 95990,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 95991,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 95993,
+        "events": [
+          {
+            "line": 29,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443738846,
+            "monitorPid": 95993,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 30,
+            "phase": "tool-spawned",
+            "pid": 95993,
+            "parentPid": 95780,
+            "at": 1791443738874,
+            "toolPid": 95994,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 31,
+            "phase": "tool-exited",
+            "pid": 95993,
+            "parentPid": 95780,
+            "at": 1791443738897,
+            "toolPid": 95994,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 32,
+            "phase": "group-drained",
+            "pid": 95993,
+            "parentPid": 95780,
+            "at": 1791443738913,
+            "toolPid": 95994
+          },
+          {
+            "line": 33,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443738914,
+            "monitorPid": 95993,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 95994,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 95996,
+        "events": [
+          {
+            "line": 34,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443739011,
+            "monitorPid": 95996,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 35,
+            "phase": "tool-spawned",
+            "pid": 95996,
+            "parentPid": 95780,
+            "at": 1791443739038,
+            "toolPid": 95997,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 36,
+            "phase": "tool-exited",
+            "pid": 95996,
+            "parentPid": 95780,
+            "at": 1791443739105,
+            "toolPid": 95997,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 37,
+            "phase": "group-drained",
+            "pid": 95996,
+            "parentPid": 95780,
+            "at": 1791443739121,
+            "toolPid": 95997
+          },
+          {
+            "line": 38,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443739122,
+            "monitorPid": 95996,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 95997,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 95999,
+        "events": [
+          {
+            "line": 39,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443739218,
+            "monitorPid": 95999,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 40,
+            "phase": "tool-spawned",
+            "pid": 95999,
+            "parentPid": 95780,
+            "at": 1791443739245,
+            "toolPid": 96000,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"
+          },
+          {
+            "line": 41,
+            "phase": "tool-exited",
+            "pid": 95999,
+            "parentPid": 95780,
+            "at": 1791443766297,
+            "toolPid": 96000,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 42,
+            "phase": "group-drained",
+            "pid": 95999,
+            "parentPid": 95780,
+            "at": 1791443766316,
+            "toolPid": 96000
+          },
+          {
+            "line": 43,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443766318,
+            "monitorPid": 95999,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96000,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96029,
+        "events": [
+          {
+            "line": 76,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443778608,
+            "monitorPid": 96029,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 77,
+            "phase": "tool-spawned",
+            "pid": 96029,
+            "parentPid": 95780,
+            "at": 1791443778642,
+            "toolPid": 96030,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 78,
+            "phase": "tool-exited",
+            "pid": 96029,
+            "parentPid": 95780,
+            "at": 1791443781127,
+            "toolPid": 96030,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 79,
+            "phase": "group-drained",
+            "pid": 96029,
+            "parentPid": 95780,
+            "at": 1791443781143,
+            "toolPid": 96030
+          },
+          {
+            "line": 80,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443781145,
+            "monitorPid": 96029,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96030,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96032,
+        "events": [
+          {
+            "line": 81,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443781633,
+            "monitorPid": 96032,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 82,
+            "phase": "tool-spawned",
+            "pid": 96032,
+            "parentPid": 95780,
+            "at": 1791443781663,
+            "toolPid": 96033,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 83,
+            "phase": "tool-exited",
+            "pid": 96032,
+            "parentPid": 95780,
+            "at": 1791443781665,
+            "toolPid": 96033,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 84,
+            "phase": "group-drained",
+            "pid": 96032,
+            "parentPid": 95780,
+            "at": 1791443781681,
+            "toolPid": 96033
+          },
+          {
+            "line": 85,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443781682,
+            "monitorPid": 96032,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96033,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96035,
+        "events": [
+          {
+            "line": 86,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443782154,
+            "monitorPid": 96035,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 87,
+            "phase": "tool-spawned",
+            "pid": 96035,
+            "parentPid": 95780,
+            "at": 1791443782180,
+            "toolPid": 96036,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 88,
+            "phase": "tool-exited",
+            "pid": 96035,
+            "parentPid": 95780,
+            "at": 1791443782182,
+            "toolPid": 96036,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 89,
+            "phase": "group-drained",
+            "pid": 96035,
+            "parentPid": 95780,
+            "at": 1791443782198,
+            "toolPid": 96036
+          },
+          {
+            "line": 90,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443782200,
+            "monitorPid": 96035,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96036,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96038,
+        "events": [
+          {
+            "line": 91,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443782676,
+            "monitorPid": 96038,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 92,
+            "phase": "tool-spawned",
+            "pid": 96038,
+            "parentPid": 95780,
+            "at": 1791443782704,
+            "toolPid": 96039,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 93,
+            "phase": "tool-exited",
+            "pid": 96038,
+            "parentPid": 95780,
+            "at": 1791443782803,
+            "toolPid": 96039,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 94,
+            "phase": "group-drained",
+            "pid": 96038,
+            "parentPid": 95780,
+            "at": 1791443782820,
+            "toolPid": 96039
+          },
+          {
+            "line": 95,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443782822,
+            "monitorPid": 96038,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96039,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96099,
+        "events": [
+          {
+            "line": 116,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443789937,
+            "monitorPid": 96099,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 117,
+            "phase": "tool-spawned",
+            "pid": 96099,
+            "parentPid": 95780,
+            "at": 1791443789993,
+            "toolPid": 96100,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 118,
+            "phase": "tool-exited",
+            "pid": 96099,
+            "parentPid": 95780,
+            "at": 1791443791201,
+            "toolPid": 96100,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 119,
+            "phase": "group-drained",
+            "pid": 96099,
+            "parentPid": 95780,
+            "at": 1791443791218,
+            "toolPid": 96100
+          },
+          {
+            "line": 120,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443791220,
+            "monitorPid": 96099,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96100,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96102,
+        "events": [
+          {
+            "line": 121,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443791710,
+            "monitorPid": 96102,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 122,
+            "phase": "tool-spawned",
+            "pid": 96102,
+            "parentPid": 95780,
+            "at": 1791443791736,
+            "toolPid": 96103,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 123,
+            "phase": "tool-exited",
+            "pid": 96102,
+            "parentPid": 95780,
+            "at": 1791443791738,
+            "toolPid": 96103,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 124,
+            "phase": "group-drained",
+            "pid": 96102,
+            "parentPid": 95780,
+            "at": 1791443791754,
+            "toolPid": 96103
+          },
+          {
+            "line": 125,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443791756,
+            "monitorPid": 96102,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96103,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96105,
+        "events": [
+          {
+            "line": 126,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443792242,
+            "monitorPid": 96105,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 127,
+            "phase": "tool-spawned",
+            "pid": 96105,
+            "parentPid": 95780,
+            "at": 1791443792269,
+            "toolPid": 96106,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 128,
+            "phase": "tool-exited",
+            "pid": 96105,
+            "parentPid": 95780,
+            "at": 1791443792271,
+            "toolPid": 96106,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 129,
+            "phase": "group-drained",
+            "pid": 96105,
+            "parentPid": 95780,
+            "at": 1791443792288,
+            "toolPid": 96106
+          },
+          {
+            "line": 130,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443792290,
+            "monitorPid": 96105,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96106,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96108,
+        "events": [
+          {
+            "line": 131,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443792757,
+            "monitorPid": 96108,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 132,
+            "phase": "tool-spawned",
+            "pid": 96108,
+            "parentPid": 95780,
+            "at": 1791443792783,
+            "toolPid": 96109,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 133,
+            "phase": "tool-exited",
+            "pid": 96108,
+            "parentPid": 95780,
+            "at": 1791443792878,
+            "toolPid": 96109,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 134,
+            "phase": "group-drained",
+            "pid": 96108,
+            "parentPid": 95780,
+            "at": 1791443792894,
+            "toolPid": 96109
+          },
+          {
+            "line": 135,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443792896,
+            "monitorPid": 96108,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96109,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96115,
+        "events": [
+          {
+            "line": 143,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443795107,
+            "monitorPid": 96115,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 150,
+            "phase": "tool-spawned",
+            "pid": 96115,
+            "parentPid": 95780,
+            "at": 1791443795135,
+            "toolPid": 96116,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 151,
+            "phase": "tool-exited",
+            "pid": 96115,
+            "parentPid": 95780,
+            "at": 1791443795592,
+            "toolPid": 96116,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 152,
+            "phase": "group-drained",
+            "pid": 96115,
+            "parentPid": 95780,
+            "at": 1791443795610,
+            "toolPid": 96116
+          },
+          {
+            "line": 153,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443795611,
+            "monitorPid": 96115,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96116,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96127,
+        "events": [
+          {
+            "line": 160,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443800604,
+            "monitorPid": 96127,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 173,
+            "phase": "tool-spawned",
+            "pid": 96127,
+            "parentPid": 95780,
+            "at": 1791443800629,
+            "toolPid": 96128,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 174,
+            "phase": "tool-exited",
+            "pid": 96127,
+            "parentPid": 95780,
+            "at": 1791443800702,
+            "toolPid": 96128,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 175,
+            "phase": "group-drained",
+            "pid": 96127,
+            "parentPid": 95780,
+            "at": 1791443800718,
+            "toolPid": 96128
+          },
+          {
+            "line": 176,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443800720,
+            "monitorPid": 96127,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96128,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96130,
+        "events": [
+          {
+            "line": 177,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443800720,
+            "monitorPid": 96130,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 178,
+            "phase": "tool-spawned",
+            "pid": 96130,
+            "parentPid": 95780,
+            "at": 1791443800746,
+            "toolPid": 96131,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 179,
+            "phase": "tool-exited",
+            "pid": 96130,
+            "parentPid": 95780,
+            "at": 1791443800859,
+            "toolPid": 96131,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 180,
+            "phase": "group-drained",
+            "pid": 96130,
+            "parentPid": 95780,
+            "at": 1791443800875,
+            "toolPid": 96131
+          },
+          {
+            "line": 181,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443800877,
+            "monitorPid": 96130,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96131,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96262,
+        "events": [
+          {
+            "line": 198,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443817433,
+            "monitorPid": 96262,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 199,
+            "phase": "tool-spawned",
+            "pid": 96262,
+            "parentPid": 95780,
+            "at": 1791443817520,
+            "toolPid": 96263,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 200,
+            "phase": "tool-exited",
+            "pid": 96262,
+            "parentPid": 95780,
+            "at": 1791443819412,
+            "toolPid": 96263,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 201,
+            "phase": "group-drained",
+            "pid": 96262,
+            "parentPid": 95780,
+            "at": 1791443819429,
+            "toolPid": 96263
+          },
+          {
+            "line": 202,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443819431,
+            "monitorPid": 96262,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96263,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96266,
+        "events": [
+          {
+            "line": 203,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443819937,
+            "monitorPid": 96266,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 204,
+            "phase": "tool-spawned",
+            "pid": 96266,
+            "parentPid": 95780,
+            "at": 1791443819963,
+            "toolPid": 96267,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 205,
+            "phase": "tool-exited",
+            "pid": 96266,
+            "parentPid": 95780,
+            "at": 1791443819965,
+            "toolPid": 96267,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 206,
+            "phase": "group-drained",
+            "pid": 96266,
+            "parentPid": 95780,
+            "at": 1791443819980,
+            "toolPid": 96267
+          },
+          {
+            "line": 207,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443819981,
+            "monitorPid": 96266,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96267,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96270,
+        "events": [
+          {
+            "line": 208,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443820476,
+            "monitorPid": 96270,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 209,
+            "phase": "tool-spawned",
+            "pid": 96270,
+            "parentPid": 95780,
+            "at": 1791443820503,
+            "toolPid": 96271,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 210,
+            "phase": "tool-exited",
+            "pid": 96270,
+            "parentPid": 95780,
+            "at": 1791443820506,
+            "toolPid": 96271,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 211,
+            "phase": "group-drained",
+            "pid": 96270,
+            "parentPid": 95780,
+            "at": 1791443820521,
+            "toolPid": 96271
+          },
+          {
+            "line": 212,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443820523,
+            "monitorPid": 96270,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96271,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96273,
+        "events": [
+          {
+            "line": 213,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443821007,
+            "monitorPid": 96273,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 214,
+            "phase": "tool-spawned",
+            "pid": 96273,
+            "parentPid": 95780,
+            "at": 1791443821033,
+            "toolPid": 96274,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 215,
+            "phase": "tool-exited",
+            "pid": 96273,
+            "parentPid": 95780,
+            "at": 1791443821123,
+            "toolPid": 96274,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 216,
+            "phase": "group-drained",
+            "pid": 96273,
+            "parentPid": 95780,
+            "at": 1791443821140,
+            "toolPid": 96274
+          },
+          {
+            "line": 217,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443821141,
+            "monitorPid": 96273,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96274,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96283,
+        "events": [
+          {
+            "line": 225,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443825879,
+            "monitorPid": 96283,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 226,
+            "phase": "tool-spawned",
+            "pid": 96283,
+            "parentPid": 95780,
+            "at": 1791443825908,
+            "toolPid": 96284,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 227,
+            "phase": "tool-exited",
+            "pid": 96283,
+            "parentPid": 95780,
+            "at": 1791443826288,
+            "toolPid": 96284,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 228,
+            "phase": "group-drained",
+            "pid": 96283,
+            "parentPid": 95780,
+            "at": 1791443826305,
+            "toolPid": 96284
+          },
+          {
+            "line": 229,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443826307,
+            "monitorPid": 96283,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96284,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96286,
+        "events": [
+          {
+            "line": 230,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443827464,
+            "monitorPid": 96286,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 231,
+            "phase": "tool-spawned",
+            "pid": 96286,
+            "parentPid": 95780,
+            "at": 1791443827492,
+            "toolPid": 96287,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 232,
+            "phase": "tool-exited",
+            "pid": 96286,
+            "parentPid": 95780,
+            "at": 1791443828014,
+            "toolPid": 96287,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 233,
+            "phase": "group-drained",
+            "pid": 96286,
+            "parentPid": 95780,
+            "at": 1791443828031,
+            "toolPid": 96287
+          },
+          {
+            "line": 234,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443828033,
+            "monitorPid": 96286,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96287,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96289,
+        "events": [
+          {
+            "line": 235,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443829289,
+            "monitorPid": 96289,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 236,
+            "phase": "tool-spawned",
+            "pid": 96289,
+            "parentPid": 95780,
+            "at": 1791443829318,
+            "toolPid": 96290,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 237,
+            "phase": "tool-exited",
+            "pid": 96289,
+            "parentPid": 95780,
+            "at": 1791443829843,
+            "toolPid": 96290,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 238,
+            "phase": "group-drained",
+            "pid": 96289,
+            "parentPid": 95780,
+            "at": 1791443829860,
+            "toolPid": 96290
+          },
+          {
+            "line": 239,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443829861,
+            "monitorPid": 96289,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96290,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96425,
+        "events": [
+          {
+            "line": 260,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443856498,
+            "monitorPid": 96425,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 261,
+            "phase": "tool-spawned",
+            "pid": 96425,
+            "parentPid": 95780,
+            "at": 1791443856531,
+            "toolPid": 96426,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 262,
+            "phase": "tool-exited",
+            "pid": 96425,
+            "parentPid": 95780,
+            "at": 1791443858317,
+            "toolPid": 96426,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 263,
+            "phase": "group-drained",
+            "pid": 96425,
+            "parentPid": 95780,
+            "at": 1791443858334,
+            "toolPid": 96426
+          },
+          {
+            "line": 264,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443858336,
+            "monitorPid": 96425,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96426,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96428,
+        "events": [
+          {
+            "line": 265,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443858826,
+            "monitorPid": 96428,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 266,
+            "phase": "tool-spawned",
+            "pid": 96428,
+            "parentPid": 95780,
+            "at": 1791443858852,
+            "toolPid": 96429,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 267,
+            "phase": "tool-exited",
+            "pid": 96428,
+            "parentPid": 95780,
+            "at": 1791443858854,
+            "toolPid": 96429,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 268,
+            "phase": "group-drained",
+            "pid": 96428,
+            "parentPid": 95780,
+            "at": 1791443858869,
+            "toolPid": 96429
+          },
+          {
+            "line": 269,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443858870,
+            "monitorPid": 96428,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96429,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96433,
+        "events": [
+          {
+            "line": 270,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443859331,
+            "monitorPid": 96433,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 271,
+            "phase": "tool-spawned",
+            "pid": 96433,
+            "parentPid": 95780,
+            "at": 1791443859360,
+            "toolPid": 96434,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 272,
+            "phase": "tool-exited",
+            "pid": 96433,
+            "parentPid": 95780,
+            "at": 1791443859362,
+            "toolPid": 96434,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 273,
+            "phase": "group-drained",
+            "pid": 96433,
+            "parentPid": 95780,
+            "at": 1791443859379,
+            "toolPid": 96434
+          },
+          {
+            "line": 274,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443859381,
+            "monitorPid": 96433,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96434,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96436,
+        "events": [
+          {
+            "line": 275,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443859866,
+            "monitorPid": 96436,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 276,
+            "phase": "tool-spawned",
+            "pid": 96436,
+            "parentPid": 95780,
+            "at": 1791443859896,
+            "toolPid": 96437,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 277,
+            "phase": "tool-exited",
+            "pid": 96436,
+            "parentPid": 95780,
+            "at": 1791443859999,
+            "toolPid": 96437,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 278,
+            "phase": "group-drained",
+            "pid": 96436,
+            "parentPid": 95780,
+            "at": 1791443860015,
+            "toolPid": 96437
+          },
+          {
+            "line": 279,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443860017,
+            "monitorPid": 96436,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96437,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96458,
+        "events": [
+          {
+            "line": 280,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443866757,
+            "monitorPid": 96458,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 288,
+            "phase": "tool-spawned",
+            "pid": 96458,
+            "parentPid": 95780,
+            "at": 1791443866784,
+            "toolPid": 96459,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 289,
+            "phase": "tool-exited",
+            "pid": 96458,
+            "parentPid": 95780,
+            "at": 1791443867250,
+            "toolPid": 96459,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 290,
+            "phase": "group-drained",
+            "pid": 96458,
+            "parentPid": 95780,
+            "at": 1791443867266,
+            "toolPid": 96459
+          },
+          {
+            "line": 291,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443867268,
+            "monitorPid": 96458,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96459,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96470,
+        "events": [
+          {
+            "line": 292,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443870260,
+            "monitorPid": 96470,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 293,
+            "phase": "tool-spawned",
+            "pid": 96470,
+            "parentPid": 95780,
+            "at": 1791443870288,
+            "toolPid": 96471,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 294,
+            "phase": "tool-exited",
+            "pid": 96470,
+            "parentPid": 95780,
+            "at": 1791443870706,
+            "toolPid": 96471,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 295,
+            "phase": "group-drained",
+            "pid": 96470,
+            "parentPid": 95780,
+            "at": 1791443870723,
+            "toolPid": 96471
+          },
+          {
+            "line": 296,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443870725,
+            "monitorPid": 96470,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96471,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96480,
+        "events": [
+          {
+            "line": 297,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443872305,
+            "monitorPid": 96480,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 298,
+            "phase": "tool-spawned",
+            "pid": 96480,
+            "parentPid": 95780,
+            "at": 1791443872331,
+            "toolPid": 96481,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 299,
+            "phase": "tool-exited",
+            "pid": 96480,
+            "parentPid": 95780,
+            "at": 1791443872862,
+            "toolPid": 96481,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 300,
+            "phase": "group-drained",
+            "pid": 96480,
+            "parentPid": 95780,
+            "at": 1791443872879,
+            "toolPid": 96481
+          },
+          {
+            "line": 301,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443872880,
+            "monitorPid": 96480,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96481,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96498,
+        "events": [
+          {
+            "line": 302,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443874169,
+            "monitorPid": 96498,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 303,
+            "phase": "tool-spawned",
+            "pid": 96498,
+            "parentPid": 95780,
+            "at": 1791443874200,
+            "toolPid": 96499,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 304,
+            "phase": "tool-exited",
+            "pid": 96498,
+            "parentPid": 95780,
+            "at": 1791443874750,
+            "toolPid": 96499,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 305,
+            "phase": "group-drained",
+            "pid": 96498,
+            "parentPid": 95780,
+            "at": 1791443874773,
+            "toolPid": 96499
+          },
+          {
+            "line": 306,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443874775,
+            "monitorPid": 96498,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96499,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      },
+      {
+        "monitorPid": 96532,
+        "events": [
+          {
+            "line": 313,
+            "phase": "monitor-spawned",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443887184,
+            "monitorPid": 96532,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 314,
+            "phase": "tool-spawned",
+            "pid": 96532,
+            "parentPid": 95780,
+            "at": 1791443887289,
+            "toolPid": 96533,
+            "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"
+          },
+          {
+            "line": 315,
+            "phase": "tool-exited",
+            "pid": 96532,
+            "parentPid": 95780,
+            "at": 1791443891162,
+            "toolPid": 96533,
+            "exitCode": 0,
+            "signal": null
+          },
+          {
+            "line": 316,
+            "phase": "group-drained",
+            "pid": 96532,
+            "parentPid": 95780,
+            "at": 1791443891182,
+            "toolPid": 96533
+          },
+          {
+            "line": 317,
+            "phase": "monitor-closed",
+            "pid": 95780,
+            "parentPid": 95779,
+            "at": 1791443891184,
+            "monitorPid": 96532,
+            "exitCode": 0,
+            "signal": null
+          }
+        ],
+        "executable": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet",
+        "ownerWorkerPid": 95780,
+        "ownerParentPid": 95779,
+        "toolPid": 96533,
+        "completeFivePhaseLifecycle": true,
+        "successfulToolAndMonitorClose": true
+      }
+    ],
+    "monitorCount": 34,
+    "completeFivePhaseCount": 34,
+    "successfulCloseCount": 34
+  },
+  "cancelledFifthRoot": {
+    "identity": {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv",
+      "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv",
+      "dev": 16777231,
+      "ino": 158068775,
+      "uid": 501,
+      "gid": 20,
+      "isDirectory": true,
+      "isSymlink": false,
+      "immediateEntries": [
+        "archives",
+        "candidates"
+      ]
+    },
+    "workerPid": 95780,
+    "parentPid": 95779,
+    "matchingMonitorIds": [
+      96425,
+      96428,
+      96433,
+      96436,
+      96458,
+      96470,
+      96480,
+      96498,
+      96532
+    ],
+    "bindingLogLines": [
+      260,
+      265,
+      270,
+      275,
+      280,
+      292,
+      297,
+      302,
+      313
+    ],
+    "mountAllowedInBody": false,
+    "sourceEvidence": "repository-fable-project-tests.mjs:55,57-59,237-256,269-278; fifth body uses readonly=false. Scope of liveness observations is exact recorded PIDs only, not a global orphan-process proof.",
+    "cleanupRecommendation": "After review, parent may remove only this exact non-symlink directory after rechecking dev=16777231, ino=158068775, uid=501, dead recorded owners and no mount under it. Whole-file cancellation prevented the fixture finally from finishing."
+  },
+  "durable022Root": {
+    "identity": {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-dVK3sN",
+      "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-compile-dVK3sN",
+      "dev": 16777231,
+      "ino": 157892990,
+      "uid": 501,
+      "gid": 20,
+      "isDirectory": true,
+      "isSymlink": false,
+      "immediateEntries": [
+        "artifact-0474116c1bf879856a7d602b0f4dd82e049b1d2965f8cb3c31949a732fde75eb",
+        "artifact-113531e58dacab674d5923c4c44a1019308ad11c60438986dfe4269af444d33f",
+        "artifact-19885b0d27a311e72cfd93b668934e5c0db3c24156e64385b1e82457d368957b",
+        "artifact-222a2a0e903d1220d8dfc21095c7e860be3e60980f47a585fdec07725118e69b",
+        "artifact-2d21974186089532c53fb9d46044eceb8ade9cdea662151fdcf3bf9d02b22b92",
+        "artifact-52ee7763d8a806faf41a326eddf489b7fb787e80931c4258b53bee33bcdaa12c",
+        "artifact-570d8ae4080872d9bb9a81de5bfc7640a8cc05c7861b94010bd85be37be5aee2",
+        "artifact-5b6c827542eff1b619ba185c93cc23a20525eeede3b0f289885f41d6a65f7841",
+        "artifact-613d2afb7d108b7e01a3692af0d9f0787262ccbd8aef4140bc38b64255f03ee2",
+        "artifact-791a42e21aa7d1add40c74ffd5bd2ef7a3a1938a1a552baa5390749f492f5c67",
+        "artifact-8c4af1473557c1979cbfc1b384eb69879e93ef2ff25be4eeafde4c1a77b4aad3",
+        "artifact-9688c906da656761cdfffed51e96ba13194907953222d155f385c63bc678ac5a",
+        "artifact-99e3a7fb81f8693a80d800b170c70d2dd1d92392bfd3ea3c1cb869810fa3cebf",
+        "artifact-9c33110d788c6cdbc7d34e50957804acadb09467dda48008bc28ec97dcffe010",
+        "artifact-a1f5c1fc735ad8962d3a8b802231bc58b30e1ca5b6a4dab71ad4405bfb2294ee",
+        "artifact-bd5eb2f0fcc07cae5669d56661d985ce08700e839ab1f37fa5646669cdf75229",
+        "artifact-ca64b7b3196ed1c6c28425a9e8315b7a04cba157af062312b3466b9dfcc313ae",
+        "artifact-e0cadd6eeb7b8e679a745ac116cdf9a4d85f3149b2dc23889a45bcca8af3295a",
+        "artifact-e74412c5029edd19e35ece1d5eba39b1b02a42093c1d05046696a140f3c6834e",
+        "artifact-e865f01a705c20f838d7a833b220c5b981bd936a534dec6c55d0eec5348bb390",
+        "artifact-edf69bfd42f395079361aac63f63c978130a9f3ea6357fb0ef1950a7cf403c66",
+        "artifact-ee45a906da29053935e95790a3477352ee381e93cf2e222db25912a844dad539",
+        "artifact-f18386c665fec1ca94f0b812fc7123fb5da281de0ba5003cb5e9d530db284244",
+        "project-06b380606014efd2b6aa1f6c85f2e2e173c010d6182f8564e61d7ad7a117c2c6",
+        "project-089882115f6919ee5200fc64dc5523cc732d411895cd4ede9184dc5ae164fdd4",
+        "project-1f05280e3e5e758a720719f1218c153fc3ed11fde5f57931e8a143e2de03aa8e",
+        "project-2476ee23036a3e208de613be1119b087c6c0a2119886447218ecddea26601168",
+        "project-42c03c27c32d0918bc6cc6b042c90d0b8a501de0f85921e281888b3be01de8cd",
+        "project-517562f46a7aeb544b00fd88d515c46f1912e4727dcd582646d514adfb18d73a",
+        "project-60958152cb792793f4ca35bba4b4ffbdf47e2c9463a72f47698268775a83d080",
+        "project-67dcce56d85a703bff90220b4c8bce38805e1738e8206ba0e205bb64b7b860b6",
+        "project-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243",
+        "project-82229295c1dc4433dd3929cd788c038322c82944a4a7efef2884938967f21f79",
+        "project-88dee6d659a0caaa9d307e712751b3f9baefccd15b3714fab231f9192a7305f0",
+        "project-90b7ce5d767dad8819b6b33ec62c10d18097597a2be122589176dae2e267e1cd",
+        "project-b0d39b5973d71e5e1db85670f6855199e5eaf619dbe7053bca967320b3c2ef27",
+        "project-b15e111d80d8875a6626d6502085cca5bd142051894b3bf61ffdc458c0b89a16",
+        "project-b70910e5a2abca552e68a516d541e0a96412ff23a4fbe219e8108ace99d240d9",
+        "project-b86389ebfce09df83a6bed28c88ef2292757d6f7440462ac489b498df0c07698",
+        "project-b8824e1e759f27c3685a52026804d8395a07fe71274590943cf4fe7ddcad7f76",
+        "project-cdbab229895d5f3eb8e86d1efe9e499795fe6d5613f2024f6e82648f2f8e3d91",
+        "project-cfa5333c722e7fedf6e4f3b47d581fba719fbf5c2efdab28a39dba2a3141fdd7",
+        "project-db4b1bde0885bf7cc93f3f46db395abe049758de64debeaf706593557583b65c",
+        "project-df25bb47893659c325bda55100cca3afd92b6e366f43cd6902579bd7948bf481",
+        "restore-06b380606014efd2b6aa1f6c85f2e2e173c010d6182f8564e61d7ad7a117c2c6",
+        "restore-089882115f6919ee5200fc64dc5523cc732d411895cd4ede9184dc5ae164fdd4",
+        "restore-1f05280e3e5e758a720719f1218c153fc3ed11fde5f57931e8a143e2de03aa8e",
+        "restore-2476ee23036a3e208de613be1119b087c6c0a2119886447218ecddea26601168",
+        "restore-42c03c27c32d0918bc6cc6b042c90d0b8a501de0f85921e281888b3be01de8cd",
+        "restore-517562f46a7aeb544b00fd88d515c46f1912e4727dcd582646d514adfb18d73a",
+        "restore-60958152cb792793f4ca35bba4b4ffbdf47e2c9463a72f47698268775a83d080",
+        "restore-67dcce56d85a703bff90220b4c8bce38805e1738e8206ba0e205bb64b7b860b6",
+        "restore-688c2c8dffe16db9091a2430109db25f061698ddb5d465d69e419422c4914243",
+        "restore-82229295c1dc4433dd3929cd788c038322c82944a4a7efef2884938967f21f79",
+        "restore-88dee6d659a0caaa9d307e712751b3f9baefccd15b3714fab231f9192a7305f0",
+        "restore-90b7ce5d767dad8819b6b33ec62c10d18097597a2be122589176dae2e267e1cd",
+        "restore-b0d39b5973d71e5e1db85670f6855199e5eaf619dbe7053bca967320b3c2ef27",
+        "restore-b15e111d80d8875a6626d6502085cca5bd142051894b3bf61ffdc458c0b89a16",
+        "restore-b70910e5a2abca552e68a516d541e0a96412ff23a4fbe219e8108ace99d240d9",
+        "restore-b86389ebfce09df83a6bed28c88ef2292757d6f7440462ac489b498df0c07698",
+        "restore-b8824e1e759f27c3685a52026804d8395a07fe71274590943cf4fe7ddcad7f76",
+        "restore-cdbab229895d5f3eb8e86d1efe9e499795fe6d5613f2024f6e82648f2f8e3d91",
+        "restore-cfa5333c722e7fedf6e4f3b47d581fba719fbf5c2efdab28a39dba2a3141fdd7",
+        "restore-db4b1bde0885bf7cc93f3f46db395abe049758de64debeaf706593557583b65c",
+        "restore-df25bb47893659c325bda55100cca3afd92b6e366f43cd6902579bd7948bf481"
+      ]
+    },
+    "evidenceReceipt": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-readonly.json",
+    "copiedEvidenceDirectory": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-de022-owned-scratch-evidence",
+    "originalOwners": [
+      84347,
+      84353,
+      89818
+    ],
+    "cleanupRecommendation": "Evidence has already been copied. Parent may reclaim only this exact root after matching dev=16777231, ino=157892990, uid=501 and non-symlink directory identity and confirming no active owner or mount; original integration backstop terminated owner before fixture cleanup."
+  },
+  "exactRecordedPidObservations": [
+    {
+      "pid": 84347,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 84353,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 89818,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 90302,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 90303,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95778,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95779,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95780,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95972,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95973,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95984,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95985,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95987,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95988,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95990,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95991,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95993,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95994,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95996,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95997,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 95999,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96000,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96029,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96030,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96032,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96033,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96035,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96036,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96038,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96039,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96099,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96100,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96102,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96103,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96105,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96106,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96108,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96109,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96115,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96116,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96127,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96128,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96130,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96131,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96262,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96263,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96266,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96267,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96270,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96271,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96273,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96274,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96283,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96284,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96286,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96287,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96289,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96290,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96425,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96426,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96428,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96429,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96433,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96434,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96436,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96437,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96458,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96459,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96470,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96471,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96480,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96481,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96498,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96499,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96532,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 96533,
+      "observation": "ESRCH"
+    }
+  ],
+  "mountInventory": {
+    "hdiutil": {
+      "command": [
+        "hdiutil",
+        "info",
+        "-plist"
+      ],
+      "exitCode": 0,
+      "stdoutPath": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-cancellation-hdiutil-readonly.txt",
+      "stderr": "",
+      "images": []
+    },
+    "mount": {
+      "command": [
+        "mount"
+      ],
+      "exitCode": 0,
+      "stdoutPath": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-cancellation-mount-readonly.txt",
+      "stderr": "",
+      "matchesExactCancelledRoot": [],
+      "matchesExactDurableRoot": []
+    }
+  },
+  "limitations": [
+    "kill(pid,0) ESRCH proves sampled recorded PIDs absent at capture, not all conceivable escaped descendants.",
+    "No full-project acceptance conclusion; original full integration remains truncated.",
+    "Earlier mounts outside these exact roots were not attributed to the cancelled run; latest captured inventory is authoritative for this snapshot only."
+  ]
+}

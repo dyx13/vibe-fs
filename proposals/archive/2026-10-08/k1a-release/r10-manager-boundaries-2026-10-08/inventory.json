@@ -1,0 +1,238 @@
+{
+  "repositoryDestination": "proposals/archive/2026-10-08/k1a-release/r10-manager-boundaries-2026-10-08",
+  "scope": "completed R10 evidence only; no live log",
+  "copiedArtifacts": [
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/red.log",
+      "destination": "behavior/red.log",
+      "bytes": 4816,
+      "sha256": "28d507310e22553bb9f8b942867001592c7ee7e198526a1b0b491ae6ebc3bf53"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/green-related.log",
+      "destination": "behavior/green-related.log",
+      "bytes": 102341,
+      "sha256": "44309ef368c03ce0e45212f1d2a7ffe128e142dc340764546f8901f4f68c0a02"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/green-adjacent.log",
+      "destination": "behavior/green-adjacent.log",
+      "bytes": 13401,
+      "sha256": "7f5beef3414587eb38bf0e420fe019842fc60818034ef6420fc1fc4e29c676c2"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/green-adjacent.json",
+      "destination": "behavior/green-adjacent.json",
+      "bytes": 4335,
+      "sha256": "2272086fe1198a0dcb1e5b770f93a80ac6c95d5876eff3d49e1069c0e48e2bcc"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/green-adjacent.command.txt",
+      "destination": "behavior/green-adjacent.command.txt",
+      "bytes": 992,
+      "sha256": "9a61d3fc7862a3c669a07a0b35f24fd6675cc3077756ab55ec7a5e64aa0fefcb"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/automatic-red.log",
+      "destination": "behavior/automatic-red.log",
+      "bytes": 5969,
+      "sha256": "7844ced78c04a716a25bf4140b7dedb6f0923aff5a6a7b7eff8ceb49e8fbb8e3"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/automatic-green.log",
+      "destination": "behavior/automatic-green.log",
+      "bytes": 4861,
+      "sha256": "6ccf9f344aa4ad17138f8ff56aad6f06d2b949a50f85fade36168581ce1b3979"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/opening-red.log",
+      "destination": "behavior/opening-red.log",
+      "bytes": 4117,
+      "sha256": "a4e7b7011e61cf534a258596e57608d5830952949a407364d906473e3e1350c6"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/green-six-packages.log",
+      "destination": "behavior/green-six-packages.log",
+      "bytes": 115779,
+      "sha256": "717dacca69fd5061c544c1b17edd52ab3e1f5f21b59dcd6fdd96c461b369ade3"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/build-red.log",
+      "destination": "build/build-red.log",
+      "bytes": 989,
+      "sha256": "caa004d318351ee30e590300a7d32093a2018433a9458709a449e261b4f22afd"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/build-green.log",
+      "destination": "build/build-green.log",
+      "bytes": 989,
+      "sha256": "bf73b3931b6430300e02e9a6df8f412d204813a6709e2bb0301d448fc4a6c069"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/build-automatic-red.log",
+      "destination": "build/build-automatic-red.log",
+      "bytes": 1000,
+      "sha256": "13bc93e631a918eb649bb47bc2bdadcd0091dad502a9c740840dcf56895bffb1"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/build-automatic-green.log",
+      "destination": "build/build-automatic-green.log",
+      "bytes": 989,
+      "sha256": "5c06aaa297b3b7da9a4773f35d6a3de5cb484cf65c038ac3edef199714e90f44"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/build-opening-green.log",
+      "destination": "build/build-opening-green.log",
+      "bytes": 995,
+      "sha256": "0d23c68b75a89fa008aa4906f8ea9022a29d27f60d94a736c102624958dcd3ac"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/build-formatted-green.log",
+      "destination": "build/build-formatted-green.log",
+      "bytes": 1531,
+      "sha256": "d2668cf94d61414d9800d477d529760242e81825683d59879ffe285dc45f6558"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/build-docs-frozen-green.log",
+      "destination": "build/build-docs-frozen-green.log",
+      "bytes": 990,
+      "sha256": "a059dea1b33d6af9c709a76183df50fb5dea90d2aee7af0296c6926e66921bb1"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/precommit-format-opening.log",
+      "destination": "gates/precommit-format-opening.log",
+      "bytes": 220,
+      "sha256": "e30e8b0b1c80e05e737c55a189e102db9e092145dc5d7b7afc398bcc3bb34247"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/precommit-format-r10.log",
+      "destination": "gates/precommit-format-r10.log",
+      "bytes": 130,
+      "sha256": "eaf4f835cbf7f2f9356d3dc9c1c438f7b94f50b9a95378fff01619f2abbe2134"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/precommit-format-final.log",
+      "destination": "gates/precommit-format-final.log",
+      "bytes": 132,
+      "sha256": "ca18ff77fe26fec8d8557dfdf04035438109e735566d29589d292ead8884db1b"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/precommit-check-opening.log",
+      "destination": "gates/precommit-check-opening.log",
+      "bytes": 169851,
+      "sha256": "a7a8a010cd0eb4de2870873b11d917328e035b879e82f51deab4f422e51bb85e"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/precommit-check-r10.log",
+      "destination": "gates/precommit-check-r10.log",
+      "bytes": 169851,
+      "sha256": "b6da7e4bfc40d59ec420cd0351989ac992112312e5cf786da3ee1531560baed9"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted-e2e.log",
+      "destination": "e2e/manager-invalidated-accepted-e2e.log",
+      "bytes": 19264,
+      "sha256": "cfe3e9d1fb44175916a5417e4b5f7d8d2062cb046e769305e63c058cbfe3e75d"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted-e2e.json",
+      "destination": "e2e/manager-invalidated-accepted-e2e.json",
+      "bytes": 293412,
+      "sha256": "2889f65b1755d9502bcb3b6501c156ec4b0e927c7f21c612bb844e32d5cd2ff7"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-rephrase-readonly-audit.json",
+      "destination": "e2e/manager-rephrase-readonly-audit.json",
+      "bytes": 98432,
+      "sha256": "b337e2bd748317c17a7e066979f4ebdbc2cdddf821022f6373a1ffc65b293d60"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-cut-before-opening-e2e.log",
+      "destination": "e2e/manager-cut-before-opening-e2e.log",
+      "bytes": 8405,
+      "sha256": "594890c967b9cdf146a0c38f6638c44db1d7351f924fe36c1cdfda63e17294a1"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-cut-before-opening-e2e.json",
+      "destination": "e2e/manager-cut-before-opening-e2e.json",
+      "bytes": 335904,
+      "sha256": "5dd5c96ac365cbffa88bb27391c6e04bc0a3ec865d689b1f37a883672fd403d7"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/actual-main-road-evidence.ndjson",
+      "destination": "e2e/actual-main-road-evidence.ndjson",
+      "bytes": 28028,
+      "sha256": "a6382ad9aadb6f5275e7bc0bd8ac986142590e5690f04bfa9664ad40ed944375"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/actual-main-host-evidence.json",
+      "destination": "e2e/actual-main-host-evidence.json",
+      "bytes": 8385,
+      "sha256": "50e369e8d641396f9950ebea04cd0cb682357acd5b1d675d90838d57755893fa"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/actual-change-evidence.ndjson",
+      "destination": "e2e/actual-change-evidence.ndjson",
+      "bytes": 1678,
+      "sha256": "6d0e281ebfd8a5c85543d6a6a442c59db8544acede4ce24ff6890ba4700a0420"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/actual-evidence-summary.json",
+      "destination": "e2e/actual-evidence-summary.json",
+      "bytes": 2155,
+      "sha256": "a7df50f9915c2ec88fefc93112919886fd97d6d5aaf2eee429eb68c4d7498c6f"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/manager-loop-red.patch",
+      "destination": "patches/manager-loop-red.patch",
+      "bytes": 13577,
+      "sha256": "9bd5bb91349ed19ea093b1e76684b3779551b83c7393e9de7d7f24c816a97318"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/manager-loop-green.patch",
+      "destination": "patches/manager-loop-green.patch",
+      "bytes": 860,
+      "sha256": "307ed2fd2bf3958fe9a625c5116ad61e7583efa26adc96093de7d0fe82a7e460"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/manager-loop-automatic-red.patch",
+      "destination": "patches/manager-loop-automatic-red.patch",
+      "bytes": 7359,
+      "sha256": "eecc68482dfd015293fd45adc4cd1bf789027945f28b330f607314d9e0194c5b"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/manager-loop-automatic-green.patch",
+      "destination": "patches/manager-loop-automatic-green.patch",
+      "bytes": 1345,
+      "sha256": "55c92eb2516794538660dce97faff06305bcb5d3399270588a191524da431adf"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/manager-loop-opening-red.patch",
+      "destination": "patches/manager-loop-opening-red.patch",
+      "bytes": 3979,
+      "sha256": "4d72e9fc6631933e8c23da59fc2635d393b65b09bd778522bb339acf411be485"
+    },
+    {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/manager-loop-opening-green.patch",
+      "destination": "patches/manager-loop-opening-green.patch",
+      "bytes": 1295,
+      "sha256": "946f7a1fc2f519fdd8064544caf23632a6febc0557b8044a04826d8e4ecf8b6a"
+    }
+  ],
+  "authoredMetadata": [
+    {
+      "destination": "README.md",
+      "bytes": 5140,
+      "sha256": "4271e1c96ff839e4f46d37e71ebc2acf0604d7b6144c34ca66ad361db6fa7328",
+      "source": "collector-authored explanatory metadata; not an execution receipt"
+    },
+    {
+      "destination": "behavior/green-six-packages.command.txt",
+      "bytes": 882,
+      "sha256": "851ef752789fee956c9c07a7c1f2569d904943d4eeeaa188e5fbb072af0fc8ea",
+      "source": "collector-authored explanatory metadata; not an execution receipt"
+    }
+  ],
+  "resourceCleanup": "not performed; only observations present in individual receipts apply",
+  "collectionPerformedTestsOrBuilds": false
+}

@@ -1,0 +1,34 @@
+8d3 original durable-events022 worker89818 exact-owned-scratch audit
+
+All20 declared bounded locality flat project compiles and their original loop assertions completed normally. Git-runtime owning positive and reversed negative original asserts also completed. Evidence reaches actual isolated Host owning positive compile, whose success/result is not published; Host negative and complete parent remain unproven.
+
+Ownership: original PS lines658/659 bind parent89818 -> dotnet90302 -> Fable90303 -> exact scratch wxs-de022-compile-dVK3sN. No prefix/time-only attribution.
+23 artifact directories;21 valid fingerprint/schema/path-matched success markers.
+
+01. eventstore-model-contract: success=True; zeroProjectReference=True; CompileIncludes=6; publication=2026-10-08T06:45:26.774040+00:00
+02. eventstore-append-result-contract: success=True; zeroProjectReference=True; CompileIncludes=8; publication=2026-10-08T06:45:30.912822+00:00
+03. eventstore-port-contract: success=True; zeroProjectReference=True; CompileIncludes=13; publication=2026-10-08T06:45:35.013139+00:00
+04. eventstore-event-vocabulary-contract: success=True; zeroProjectReference=True; CompileIncludes=8; publication=2026-10-08T06:45:39.212397+00:00
+05. eventstore-git-contract: success=True; zeroProjectReference=True; CompileIncludes=10; publication=2026-10-08T06:45:43.419876+00:00
+06. strength-event-vocabulary-contract: success=True; zeroProjectReference=True; CompileIncludes=28; publication=2026-10-08T06:45:47.714807+00:00
+07. casebook-event-vocabulary-contract: success=True; zeroProjectReference=True; CompileIncludes=2; publication=2026-10-08T06:45:51.730704+00:00
+08. js-transaction-event-vocabulary-contract: success=True; zeroProjectReference=True; CompileIncludes=2; publication=2026-10-08T06:45:55.873603+00:00
+09. eventstore-core-runtime: success=True; zeroProjectReference=True; CompileIncludes=32; publication=2026-10-08T06:46:00.508370+00:00
+10. eventstore-git-runtime: success=True; zeroProjectReference=True; CompileIncludes=17; publication=2026-10-08T06:46:05.243641+00:00
+11. interaction-authority-fold: success=True; zeroProjectReference=True; CompileIncludes=52; publication=2026-10-08T06:46:22.530793+00:00
+12. execution-session-syncdelegaterole: success=True; zeroProjectReference=True; CompileIncludes=22; publication=2026-10-08T06:46:43.923562+00:00
+13. journal-outcome-contract: success=True; zeroProjectReference=True; CompileIncludes=18; publication=2026-10-08T06:47:04.375379+00:00
+14. repository-programming-js-capability: success=True; zeroProjectReference=True; CompileIncludes=62; publication=2026-10-08T06:47:27.983628+00:00
+15. interaction-authority-fact: success=True; zeroProjectReference=True; CompileIncludes=38; publication=2026-10-08T06:47:49.047005+00:00
+16. interaction-authority-ledger: success=True; zeroProjectReference=True; CompileIncludes=40; publication=2026-10-08T06:48:09.949739+00:00
+17. authority-runtime-surface: success=True; zeroProjectReference=True; CompileIncludes=242; publication=2026-10-08T06:48:21.271877+00:00
+18. dispatch-runtime: success=True; zeroProjectReference=True; CompileIncludes=150; publication=2026-10-08T06:48:29.145523+00:00
+19. context-companion-fold: success=True; zeroProjectReference=True; CompileIncludes=74; publication=2026-10-08T06:48:34.764034+00:00
+20. persistence-journal-agentjournal: success=True; zeroProjectReference=True; CompileIncludes=304; publication=2026-10-08T06:48:44.161515+00:00
+
+Git owning positive success marker at06:48:49.207549Z. Later actual Host owning-positive cracked project includes the real WorkspaceEventStore.programWithoutRegistration probe in copied sources; existing serial code reaches it only after Git negative result and both diagnostic assertions passed. Host owning positive has0ProjectReference/1169CompileIncludes but no success marker; resultunknown. Host negative and outer full-body verdict unknown.
+
+Publication timestamps are not elapsed/CPU costs. Per-locality costs remainunknown. Existing stdio pipe suppresses successful elapsed logs, and artifacts do not contain original stdout. No new test/case/verdict is invented, and this evidence does not turn the30/44 parent300s failure into a pass.
+
+Saved exact marker JSON, cracked-project JSON, flat fsproj and hashes under integration-8d3-de022-owned-scratch-evidence/. Main receipt integration-8d3-de022-owned-scratch-readonly.json.
+No source edits, no tests/builds, no resource deletion.

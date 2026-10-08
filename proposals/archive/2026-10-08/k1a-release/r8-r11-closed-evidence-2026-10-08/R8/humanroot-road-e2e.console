@@ -1,0 +1,41 @@
+{
+  "preliminaryDirtyInput": true,
+  "before": {
+    "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "status": " M \"proposals/K1A\\344\\270\\216\\345\\205\\250\\351\\241\\271\\347\\233\\256release\\351\\252\\214\\346\\224\\266-2026-10-08.md\"\n M \"proposals/TODO\\346\\226\\275\\345\\267\\245\\346\\200\\273\\350\\256\\241\\345\\210\\222-2026-10-03.md\"\n M \"proposals/U0-A1-Casebook-K1AF\\346\\226\\275\\345\\267\\245\\345\\215\\241-2026-10-08.md\"\n M requirements/verification-system/tests/014.test.mjs\n M requirements/verification-system/tests/README.md\n M requirements/verification-system/tests/e2e/scenarios/long-stroke.toml\n M requirements/verification-system/tests/e2e/support/long-stroke-oracles.mjs\n M requirements/verification-system/tests/e2e/support/supervise-node-test.mjs\n M requirements/verification-system/tests/support/supervised-tool-reclamation-tests.mjs\n?? proposals/archive/2026-10-08/k1a-release/release-8d3-supplement/\n?? proposals/archive/2026-10-08/k1a-release/release-8d3/\n?? proposals/archive/2026-10-08/k1a-release/termination-diagnostics/\n?? requirements/verification-system/tests/support/humanroot-loop-fixture.mjs\n",
+    "diff": "recorded in receipt",
+    "digest": "aafb55e048ed4042481199ea374153eddc09e7433c64b8f708b804dbe03cba56",
+    "build": {
+      "generation": 330,
+      "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+      "generatedInputDigest": "b28c5a8725e16cac8bcf3159cbc669d0988f7f6565b4320109e14a6e3896dad7",
+      "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+    }
+  },
+  "after": {
+    "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "status": " M \"proposals/K1A\\344\\270\\216\\345\\205\\250\\351\\241\\271\\347\\233\\256release\\351\\252\\214\\346\\224\\266-2026-10-08.md\"\n M \"proposals/TODO\\346\\226\\275\\345\\267\\245\\346\\200\\273\\350\\256\\241\\345\\210\\222-2026-10-03.md\"\n M \"proposals/U0-A1-Casebook-K1AF\\346\\226\\275\\345\\267\\245\\345\\215\\241-2026-10-08.md\"\n M requirements/verification-system/tests/014.test.mjs\n M requirements/verification-system/tests/README.md\n M requirements/verification-system/tests/e2e/scenarios/long-stroke.toml\n M requirements/verification-system/tests/e2e/support/long-stroke-oracles.mjs\n M requirements/verification-system/tests/e2e/support/supervise-node-test.mjs\n M requirements/verification-system/tests/support/supervised-tool-reclamation-tests.mjs\n?? proposals/archive/2026-10-08/k1a-release/release-8d3-supplement/\n?? proposals/archive/2026-10-08/k1a-release/release-8d3/\n?? proposals/archive/2026-10-08/k1a-release/termination-diagnostics/\n?? requirements/verification-system/tests/support/humanroot-loop-fixture.mjs\n",
+    "diff": "recorded in receipt",
+    "digest": "aafb55e048ed4042481199ea374153eddc09e7433c64b8f708b804dbe03cba56",
+    "build": {
+      "generation": 330,
+      "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+      "generatedInputDigest": "b28c5a8725e16cac8bcf3159cbc669d0988f7f6565b4320109e14a6e3896dad7",
+      "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+    }
+  },
+  "inputsEqual": true,
+  "command": [
+    "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs"
+  ],
+  "timeoutMs": 1500000,
+  "startedAt": "2026-10-08T07:45:28.550Z",
+  "durationMs": 69541.038084,
+  "timedOut": false,
+  "exitCode": 1,
+  "signal": null,
+  "failure": null,
+  "monitorPid": 3457,
+  "monitorObservation": "ESRCH"
+}

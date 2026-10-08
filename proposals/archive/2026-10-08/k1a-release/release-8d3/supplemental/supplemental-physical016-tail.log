@@ -1,0 +1,176 @@
+TAP version 13
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444031411,"monitorPid":96878,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96878,"parentPid":96698,"at":1791444031519,"toolPid":96879,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96878,"parentPid":96698,"at":1791444033463,"toolPid":96879,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96878,"parentPid":96698,"at":1791444033479,"toolPid":96879}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444033481,"monitorPid":96878,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444033970,"monitorPid":96883,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96883,"parentPid":96698,"at":1791444033996,"toolPid":96884,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96883,"parentPid":96698,"at":1791444033998,"toolPid":96884,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96883,"parentPid":96698,"at":1791444034014,"toolPid":96884}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444034016,"monitorPid":96883,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444034471,"monitorPid":96886,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96886,"parentPid":96698,"at":1791444034498,"toolPid":96887,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96886,"parentPid":96698,"at":1791444034500,"toolPid":96887,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96886,"parentPid":96698,"at":1791444034516,"toolPid":96887}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444034518,"monitorPid":96886,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444035012,"monitorPid":96889,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96889,"parentPid":96698,"at":1791444035036,"toolPid":96890,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96889,"parentPid":96698,"at":1791444035138,"toolPid":96890,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96889,"parentPid":96698,"at":1791444035155,"toolPid":96890}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444035157,"monitorPid":96889,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444040318,"monitorPid":96903,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# Subtest: WHAT[verification-system-016] four selected input owners compile the original foundation identity project with Fable into isolated outputs
+    # Subtest: WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+    ok 1 - WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+      ---
+      duration_ms: 26166.863958
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96903,"parentPid":96698,"at":1791444040344,"toolPid":96904,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96903,"parentPid":96698,"at":1791444040849,"toolPid":96904,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96903,"parentPid":96698,"at":1791444040866,"toolPid":96904}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444040868,"monitorPid":96903,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444042767,"monitorPid":96906,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96906,"parentPid":96698,"at":1791444042792,"toolPid":96907,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96906,"parentPid":96698,"at":1791444043198,"toolPid":96907,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96906,"parentPid":96698,"at":1791444043215,"toolPid":96907}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444043217,"monitorPid":96906,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444044341,"monitorPid":96911,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96911,"parentPid":96698,"at":1791444044368,"toolPid":96912,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96911,"parentPid":96698,"at":1791444044941,"toolPid":96912,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96911,"parentPid":96698,"at":1791444044958,"toolPid":96912}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444044960,"monitorPid":96911,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444046218,"monitorPid":96914,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96914,"parentPid":96698,"at":1791444046246,"toolPid":96915,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96914,"parentPid":96698,"at":1791444046776,"toolPid":96915,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96914,"parentPid":96698,"at":1791444046809,"toolPid":96915}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444046813,"monitorPid":96914,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444057623,"monitorPid":96919,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+    # Subtest: WHAT[verification-system-016] real selected Fable tools and original project restore produce independent prepared input owners
+    ok 2 - WHAT[verification-system-016] real selected Fable tools and original project restore produce independent prepared input owners
+      ---
+      duration_ms: 12151.708625
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96919,"parentPid":96698,"at":1791444057652,"toolPid":96920,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-VAAbif/candidates/verification-archive-j2q3Aj/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96919,"parentPid":96698,"at":1791444061382,"toolPid":96920,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96919,"parentPid":96698,"at":1791444061400,"toolPid":96920}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444061402,"monitorPid":96919,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444070802,"monitorPid":96925,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+    # Subtest: WHAT[verification-system-016] actual Fable compiles the original project into an owned seed and binds the complete output receipt
+    ok 3 - WHAT[verification-system-016] actual Fable compiles the original project into an owned seed and binds the complete output receipt
+      ---
+      duration_ms: 18827.288625
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96925,"parentPid":96698,"at":1791444070827,"toolPid":96926,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96925,"parentPid":96698,"at":1791444070856,"toolPid":96926,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96925,"parentPid":96698,"at":1791444070871,"toolPid":96926}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444070873,"monitorPid":96925,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] actual generated JavaScript preserves public Identity behavior and all prepared owner lifetimes
+    ok 4 - WHAT[verification-system-016] actual generated JavaScript preserves public Identity behavior and all prepared owner lifetimes
+      ---
+      duration_ms: 10698.796583
+      type: 'test'
+      ...
+    1..4
+ok 1 - WHAT[verification-system-016] four selected input owners compile the original foundation identity project with Fable into isolated outputs
+  ---
+  duration_ms: 70592.556333
+  type: 'test'
+  ...
+# {"treeId":"bbeba1c9618c41d125d83f3047edbc93e0a6b5fe","sourceDigest":"8acc541fef97a248ef8f6179d1cbe907090e6c2c18be03dfd5270446339a32a7","sdkDigest":"e05f113650fea2e9a5555367038c52dabf9dc1f58d104eb36dc3be65f940f248","projectPath":"src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.foundation-identity.fsproj","provenance":"explicit selected archive bytes; this fixture does not authenticate their publisher"}
+# {"compileDigest":"e71c8b1145fa0686f96f4d31fda56225a4e634db9ae5c4648d25d3410dbeba6e","entries":196,"fable":{"id":"fable","version":"5.13.0","command":"fable","executable":"packages/fable/5.13.0/tools/net10.0/any/fable.dll"},"actualJavaScriptConsumer":{"session":"selected-session","revision":"8","quiescenceLoaded":true,"nodeVersion":"v22.23.3"},"readOnlyMounted":false,"actualVerifyBound":false}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444098751,"monitorPid":97138,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97138,"parentPid":96698,"at":1791444098781,"toolPid":97139,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97138,"parentPid":96698,"at":1791444101147,"toolPid":97139,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97138,"parentPid":96698,"at":1791444101163,"toolPid":97139}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444101165,"monitorPid":97138,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444101665,"monitorPid":97142,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97142,"parentPid":96698,"at":1791444101692,"toolPid":97143,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97142,"parentPid":96698,"at":1791444101694,"toolPid":97143,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97142,"parentPid":96698,"at":1791444101710,"toolPid":97143}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444101713,"monitorPid":97142,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444102192,"monitorPid":97149,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97149,"parentPid":96698,"at":1791444102219,"toolPid":97150,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97149,"parentPid":96698,"at":1791444102221,"toolPid":97150,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97149,"parentPid":96698,"at":1791444102238,"toolPid":97150}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444102240,"monitorPid":97149,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444102722,"monitorPid":97152,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97152,"parentPid":96698,"at":1791444102748,"toolPid":97153,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97152,"parentPid":96698,"at":1791444102838,"toolPid":97153,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97152,"parentPid":96698,"at":1791444102855,"toolPid":97153}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444102856,"monitorPid":97152,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444107521,"monitorPid":97224,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# Subtest: WHAT[verification-system-016] mac readonly views protect actual original-project Fable inputs and restore all prepared owners
+    # Subtest: WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+    ok 1 - WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+      ---
+      duration_ms: 22736.252958
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97224,"parentPid":96698,"at":1791444107549,"toolPid":97227,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97224,"parentPid":96698,"at":1791444108017,"toolPid":97227,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97224,"parentPid":96698,"at":1791444108085,"toolPid":97227}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444108088,"monitorPid":97224,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444110131,"monitorPid":97239,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97239,"parentPid":96698,"at":1791444110159,"toolPid":97241,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97239,"parentPid":96698,"at":1791444110579,"toolPid":97241,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97239,"parentPid":96698,"at":1791444110596,"toolPid":97241}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444110598,"monitorPid":97239,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444111828,"monitorPid":97246,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97246,"parentPid":96698,"at":1791444111854,"toolPid":97247,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97246,"parentPid":96698,"at":1791444112419,"toolPid":97247,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97246,"parentPid":96698,"at":1791444112436,"toolPid":97247}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444112439,"monitorPid":97246,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444113716,"monitorPid":97254,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97254,"parentPid":96698,"at":1791444113744,"toolPid":97255,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97254,"parentPid":96698,"at":1791444114276,"toolPid":97255,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97254,"parentPid":96698,"at":1791444114295,"toolPid":97255}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444114297,"monitorPid":97254,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] real selected Fable tools and original project restore produce independent prepared input owners
+    ok 2 - WHAT[verification-system-016] real selected Fable tools and original project restore produce independent prepared input owners
+      ---
+      duration_ms: 12592.65175
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444163526,"monitorPid":97572,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97572,"parentPid":96698,"at":1791444163558,"toolPid":97573,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-dK51iY/candidates/verification-archive-fnYaij/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97572,"parentPid":96698,"at":1791444169023,"toolPid":97573,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97572,"parentPid":96698,"at":1791444169040,"toolPid":97573}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444169042,"monitorPid":97572,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":96698,"parentPid":96697,"at":1791444179827,"monitorPid":97625,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+    # Subtest: WHAT[verification-system-016] actual Fable compiles the original project into an owned seed and binds the complete output receipt
+    ok 3 - WHAT[verification-system-016] actual Fable compiles the original project into an owned seed and binds the complete output receipt
+      ---
+      duration_ms: 22261.623125
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97625,"parentPid":96698,"at":1791444179854,"toolPid":97626,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97625,"parentPid":96698,"at":1791444179885,"toolPid":97626,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97625,"parentPid":96698,"at":1791444179902,"toolPid":97626}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":96698,"parentPid":96697,"at":1791444179904,"monitorPid":97625,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] actual generated JavaScript preserves public Identity behavior and all prepared owner lifetimes
+    ok 4 - WHAT[verification-system-016] actual generated JavaScript preserves public Identity behavior and all prepared owner lifetimes
+      ---
+      duration_ms: 10636.402708
+      type: 'test'
+      ...
+    1..4
+ok 2 - WHAT[verification-system-016] mac readonly views protect actual original-project Fable inputs and restore all prepared owners
+  ---
+  duration_ms: 119915.512834
+  type: 'test'
+  ...
+# {"treeId":"bbeba1c9618c41d125d83f3047edbc93e0a6b5fe","sourceDigest":"8acc541fef97a248ef8f6179d1cbe907090e6c2c18be03dfd5270446339a32a7","sdkDigest":"e05f113650fea2e9a5555367038c52dabf9dc1f58d104eb36dc3be65f940f248","projectPath":"src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.foundation-identity.fsproj","provenance":"explicit selected archive bytes; this fixture does not authenticate their publisher"}
+# {"compileDigest":"491e34a011bd3c9ec857ec5e3bd4e9c6a147230caa878b4d1fa554e6db37ffc5","entries":196,"fable":{"id":"fable","version":"5.13.0","command":"fable","executable":"packages/fable/5.13.0/tools/net10.0/any/fable.dll"},"actualJavaScriptConsumer":{"session":"selected-session","revision":"8","quiescenceLoaded":true,"nodeVersion":"v22.23.3"},"readOnlyMounted":true,"actualVerifyBound":false}
+1..2
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 190602.819958

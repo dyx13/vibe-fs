@@ -1,0 +1,47 @@
+8d3 独立完整 integration 只读终局审计
+记录时间：2026-10-08T07:10:07.755Z
+输入：8d3a7406ab7df9e13a4af8fca12c0799df5c2398；git status clean=true；冻结/前后/审计 digest 一致=true；buildFresh=true；manifest generation=326
+命令：/private/tmp/node-v22.23.3-darwin-arm64/bin/node /Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/run.mjs；env={"NODE_TEST_CONCURRENCY":"2","UNIT_VERDICT_SILENCE_MS":"30000","WXS_RELEASE":"1","WXS_E2E_QUIET":"1"}
+外层：319662.971042ms；exit=1；timedOut=false；monitor=84346/ESRCH；outer cleanupFailure=null
+
+父 suites：44 计划，32 admitted，30 drained，2 active，12 queued；300000ms physical backstop（非 silence）停止；301.1s。
+总 pass/fail/skip/TODO：unknown（没有权威 summary）。30 个完整 worker cost receipt exitCode 均 0 不能写成全部测试通过。没有观察到普通断言失败；尚未完成的文件最终结果仍 unknown。
+active：
+- requirements/durable-events/tests/022.test.mjs：start=42415.405458ms；budget 内至少驻留=257584.594542ms；worker=89818；exit/cost interval 缺失；最后实际进入=WHAT[durable-events-022] each actual bounded locality compiles as one flat project and a reversed dependency is rejected
+- requirements/host-provider-failure-ownership/tests/002.test.mjs：start=293098.93041699997ms；budget 内至少驻留=6901.069583000033ms；worker=92220；exit/cost interval 缺失；最后实际进入=WHAT[host-provider-failure-ownership-002] installed Host makes one upstream request for one failed physical run with production retry configuration
+注意：022 supervisor 最后 cheap pure-owner test:pass 不证明 flat compile 已结束；实际 Fable 子进程 CPU/project 进展也不等于完成。
+queued：
+- requirements/managed-chat-execution/tests/009.test.mjs
+- requirements/obligation-ledger/tests/001.test.mjs
+- requirements/obligation-ledger/tests/002.test.mjs
+- requirements/obligation-ledger/tests/004.test.mjs
+- requirements/obligation-ledger/tests/005.test.mjs
+- requirements/participant-horizon/tests/010.test.mjs
+- requirements/repository-programming/tests/020.test.mjs
+- requirements/requirement-grounding/tests/006.test.mjs
+- requirements/speculative-investigation/tests/008.test.mjs
+- requirements/speculative-investigation/tests/013.test.mjs
+- requirements/structured-workflow/tests/012.test.mjs
+- requirements/verification-system/tests/016.test.mjs
+
+distribution：1/1 文件，3 pass、0 fail、0 skip、1 TODO，exit 1（GAP-210 pending-proof policy）；0.8s。
+harness：290/290 cases，290 pass、0 fail，skip/TODO unknown（自定义 child summary 未公布）；exit 0；14.8s（inner14.1s）。
+总体：3 groups 全部执行，2 failed、1 passed；317.6s。不能写为完整 integration 通过。
+
+清理：内层真实报告 Could not complete owned runner termination。随后 suite group accepted=true /73.681ms；outer cleanupFailure=null，二者不能覆盖此前失败。
+只读最终 ps：已知 suite/wrapper/distribution PIDs 和 PGID 无存活行；hdiutil images=[]；mount 无本次 fixture 挂载。审计没有结束任何进程或删除资源。
+仅记录本次可归属 PGID 84353 在运行时的进程；其他系统/用户 PID 未操作。原始 snapshot 全表不复制进审计，owned subset 单独保存。
+
+worker complete cost（只含 Node worker，不含后代 compiler/Host CPU）慢项：
+- requirements/durable-events/tests/023.test.mjs：wall=132913.29058300002ms，cpuUser=712679us，cpuSystem=1090123us，exit=0
+- requirements/effect-accounting/tests/001.test.mjs：wall=40650.976ms，cpuUser=844030us，cpuSystem=607306us，exit=0
+- requirements/host-boundary/tests/033.test.mjs：wall=35217.026625000006ms，cpuUser=1839155us，cpuSystem=282738us，exit=0
+- requirements/dispatch-protocol/tests/010.test.mjs：wall=29634.649041999997ms，cpuUser=667897us，cpuSystem=288653us，exit=0
+- requirements/host-boundary/tests/032.test.mjs：wall=22623.211833ms，cpuUser=7226033us，cpuSystem=1412199us，exit=0
+- requirements/context-compression/tests/027.test.mjs：wall=15849.040332999999ms，cpuUser=290966us，cpuSystem=121345us，exit=0
+- requirements/delegation/tests/027.test.mjs：wall=11552.385ms，cpuUser=1427701us，cpuSystem=191079us，exit=0
+- requirements/cognitive-environment/tests/015.test.mjs：wall=10470.127917ms，cpuUser=2072295us，cpuSystem=328898us，exit=0
+
+日志：/private/tmp/vibe-fs-oct8-alias-release/independent-integration.log；sha256=ebc8b34ce4b7d618a8eefedb07e099c9ff2a7b5ba264e1429afd6dfd4e764cce
+完整结构化证据：/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-readonly-audit.json
+结论：本次完整 integration 未验收；物理预算吞吐与 owned termination 仍为真实失败。保持 pending/TODO，不声称整个 Host、全仓 CI 或吞吐问题已闭合。

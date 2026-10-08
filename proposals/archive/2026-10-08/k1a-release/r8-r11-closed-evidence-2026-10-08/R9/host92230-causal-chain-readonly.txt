@@ -1,0 +1,51 @@
+Original 8d3 integration residual Host: causal-chain audit
+
+Scope and input
+Original reviewed verification input: 8d3a7406ab7df9e13a4af8fca12c0799df5c2398.
+Input digest f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6, build generation326.
+Original log: /private/tmp/vibe-fs-oct8-alias-release/independent-integration.log
+Original log SHA256: ebc8b34ce4b7d618a8eefedb07e099c9ff2a7b5ba264e1429afd6dfd4e764cce.
+No source edits, tests, builds or broad process/resource cleanup were performed by this audit agent.
+
+Exact residual ownership
+PID/PGID92230, UID501, original start2026-10-08 14:49:35+0800, parentPID1 at audit.
+Actual command is repository-installed opencode serve --port0 --hostname127.0.0.1.
+CWD is /private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/workspace.
+Private scenario root BFAgRf was an ordinary nonsymlink directory, dev16777231, ino157913256, UID501.
+Unique retry-canary collector64208 and provider64209, exact retry-canary-plugin.mjs, scenario HOME/XDG/TMP variables, and original spawn ledger all agree on the same controlled canary instance.
+Ledger is /private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wanxiang-ledger/1791442173526-92221-cayf6n.jsonl; its .run marker owner is92221.
+Original ancestor processes84346,84347,84353,92220,92221 had all exited. Host92230 was the sole observed member of its independent group, listening on127.0.0.1:4096.
+Full read-only binding receipt: /private/tmp/vibe-fs-oct8-alias-release/host92230-owned-residual-readonly-audit.json.
+
+Proven lifecycle gap at the original input
+requirements/host-provider-failure-ownership/tests/002.test.mjs:8 uses spawnSync to launch the actual retry canary from file worker92220.
+support/run-host-retry-canary.mjs:46 creates the exact private scenario root;61-65 starts ProcessHost;95-105 finally stops Host and removes the scenario.
+requirements/verification-system/tests/e2e/support/process-host-utils.js:137-153 directly spawns Host detached and records its actual PID. This path does not call the owned-tool lifeline monitor.
+The same helper's46-60 in-process exit/SIGTERM/SIGINT hooks cannot run when the canary owner is SIGKILLed.
+supervise-node-test.mjs:91-105 records other groups reached by actual descendant ancestry. It does not assign blanket ownership to all such groups.
+Its requestTermination uses one original1000ms SIGKILL observation deadline, captures/freeze-confirms the inner runner, and314 signals only the owned root group84353.142-150 and154-160 observe other captured groups draining; neither sends a termination signal to direct detached Host groups.
+Thus killing root84353 can kill the canary before its finally/exit hooks execute while leaving detached Host92230 alive. There is no independent Host lifeline to perform owner-death cleanup. The observed residual is consistent with this concrete missing ownership path, and the formal controlled negative below reproduces it.
+
+Historical error limitation
+Original log514 prints only Owned termination and remaining group observation failed. The original implementation kept nested AggregateError errors/causes in memory but formatted only the top message. Log515 accepted=true refers only to the root group84353.
+The original log does not record the frozen descendant inventory or the native nested failure. It cannot uniquely establish whether92230 was captured, which native inspection failed, whether the first or recovery observation exhausted its deadline, or whether another captured group was involved.
+The later narrow diagnostics fix preserves actual native causes but cannot retroactively recover the original hidden cause. Do not describe the original AggregateError's exact native cause as known.
+
+Controlled formal regression obtained by parent
+Official new WHAT[verification-system-006] integration case creates a real installed ProcessHost, awaits its actual health barrier, records its actual detached group/port, then emits two runner:file-start messages for the same planned entry. Ordered IPC deterministically triggers the same requestTermination path on an invalid active-file lifecycle.
+It checks the caller rejection boundary before fixture cleanup: exact Host group empty and port closed, original invalid lifecycle diagnostic retained, unrelated caller-owned group alive, no silence/backstop trigger.
+Actual red log /private/tmp/vibe-fs-oct8-alias-release/host-owned-lifeline-red.log first case fails after2147.857042ms because actual Host8573/PGID8573 is still live with PPID1. No sleep ordering, probability retry or budget increase was used. The fixture finally then reclaims only its captured Host and foreign groups.
+That log also contains owned-tool started-contract reds (unrelated to the first Host assertion): aggregate5pass4fail including parent subtest failures,2617.865666ms. Do not report all4 failures as distinct Host leaks.
+Parent subsequently implemented explicit owned-tool started protocol and has11pass0fail738.81375ms at owned-tool-start-protocol-green.log. This is local API proof, not complete Host acceptance.
+
+Selected repair direction
+Reuse the existing owned-tool monitor lifeline. Explicitly represent ProcessHost's internal owner handle; keep public ProcessHost.pid and ledger/counter identities as the actual Host PID, never the monitor PID. Observe actual tool terminal/failure through completed. Forward monitor stdout/stderr, consume stdout already received before started settles, close lifeline and await full actual owner completion before stop succeeds.
+Do not replace a ChildProcess with a monitor-shaped facade or signal every observed descendant group. Keep foreign-group preservation and existing deliberately incomplete native capture/drain controls.
+API started is a settled result {pid,failure}, not a rejecting Promise, so existing callers that only consume completed cannot acquire unhandled startup rejections. Unconditional actual start IPC must be validated independently of the diagnostics flag.
+Caller draft only: /private/tmp/vibe-fs-oct8-alias-release/process-host-owned-caller-green.patch. Parent owns applying/validating source changes. This audit does not claim the complete repair is accepted.
+
+Exact cleanup separately performed under explicit parent authorization
+Receipt /private/tmp/vibe-fs-oct8-alias-release/host92230-owned-cleanup.json records before/after checks of startup identity, UID/PGID/CWD, ledger and root dev/inode/ownership/nonsymlink status.
+SIGTERM was sent to the exact owned group92230 at2026-10-08T08:04:19.774111Z. Group became empty/PID ESRCH within86.498958ms; SIGKILL was unnecessary. No remaining listener at4096, no open files or mount under the exact root were observed.
+The exact root inode was rechecked and only BFAgRf was removed at08:04:20.174285Z. Shared ledger, dependencies and symlink targets were preserved. Final receipt completed08:04:20.191327Z with removed=true.
+This manual cleanup resolves only this owned residual; it does not substitute for a green formal regression and project verification on the new source input.

@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: WHAT[relay-incumbency-006] Continue keeps the road open for a next iteration
+ok 1 - WHAT[relay-incumbency-006] Continue keeps the road open for a next iteration
+  ---
+  duration_ms: 1.920708
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalidation reopens it
+ok 2 - WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalidation reopens it
+  ---
+  duration_ms: 0.599708
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop continue preserves the original Root and completion observer
+ok 3 - WHAT[relay-incumbency-006] production ContinueLoop continue preserves the original Root and completion observer
+  ---
+  duration_ms: 204.811459
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop continue-active preserves the original Root and completion observer
+ok 4 - WHAT[relay-incumbency-006] production ContinueLoop continue-active preserves the original Root and completion observer
+  ---
+  duration_ms: 93.857667
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop valid-accepted preserves the original Root and completion observer
+ok 5 - WHAT[relay-incumbency-006] production ContinueLoop valid-accepted preserves the original Root and completion observer
+  ---
+  duration_ms: 63.526083
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted preserves the original Root and completion observer
+ok 6 - WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted preserves the original Root and completion observer
+  ---
+  duration_ms: 146.392916
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted-active preserves the original Root and completion observer
+ok 7 - WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted-active preserves the original Root and completion observer
+  ---
+  duration_ms: 93.36275
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop missing-certificate preserves the original Root and completion observer
+ok 8 - WHAT[relay-incumbency-006] production ContinueLoop missing-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 70.320167
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop foreign-valid-certificate preserves the original Root and completion observer
+ok 9 - WHAT[relay-incumbency-006] production ContinueLoop foreign-valid-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 59.739
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop foreign-invalid-certificate preserves the original Root and completion observer
+ok 10 - WHAT[relay-incumbency-006] production ContinueLoop foreign-invalid-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 64.802708
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt
+ok 11 - WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt
+  ---
+  duration_ms: 860.481
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] actual Continue starts one same-session successor whose transform retains the old physical history without another abort
+ok 12 - WHAT[relay-retirement-008] actual Continue starts one same-session successor whose transform retains the old physical history without another abort
+  ---
+  duration_ms: 616.856792
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools
+ok 13 - WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools
+  ---
+  duration_ms: 689.431334
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends
+ok 14 - WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends
+  ---
+  duration_ms: 87.763334
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete
+ok 15 - WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete # TODO
+  ---
+  duration_ms: 0.100083
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 1
+# duration_ms 2407.701958

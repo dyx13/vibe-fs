@@ -1,0 +1,102 @@
+Running requirements/verification-system/tests/integration harness tests (290 cases, 8 at a time, 20000ms case-silence window)...
+
+harness: 290 cases, 281 passed, 9 failed (11.8s)
+  ✗ ProcessHost health request obeys its deadline (8ms)
+    Error: a connected server that never answers must reach the health deadline: Cannot read properties of null (reading 'completed')
+        at assertTrue (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/lib.mjs:17:17)
+        at runProcessHostHealthDeadline (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:114:5)
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:5)
+        at async worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:22)
+        at async Promise.all (index 2)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+  ✗ WHAT[verification-system-006] ProcessHost preserves one initialization request until its stage deadline (8ms)
+    TypeError: Cannot read properties of null (reading 'completed')
+        at ProcessHost._waitForReadiness (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/process-host.js:162:11)
+        at ProcessHost._waitForHealth (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/process-host.js:139:16)
+        at runProcessHostInitializationRequest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:148:16)
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:5)
+        at async worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:22)
+        at async Promise.all (index 3)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+  ✗ WHAT[verification-system-005] ProcessHost rejects failed HTTP readiness responses (8ms)
+    AssertionError [ERR_ASSERTION]: The input did not match the regular expression /project.*\/path.*HTTP 500/s. Input:
+    
+    "TypeError: Cannot read properties of null (reading 'completed')"
+    
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async runProcessHostRejectsHttpError (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:166:5)
+        at async runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:5)
+        at async worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:22)
+        at async Promise.all (index 4)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+  ✗ WHAT[verification-system-005] ProcessHost rejects malformed health responses (8ms)
+    AssertionError [ERR_ASSERTION]: The input did not match the regular expression /global.*\/global\/health.*JSON/s. Input:
+    
+    "TypeError: Cannot read properties of null (reading 'completed')"
+    
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async runProcessHostRejectsMalformedHealth (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:179:5)
+        at async runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:5)
+        at async worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:22)
+        at async Promise.all (index 5)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+  ✗ WHAT[verification-system-005] ProcessHost rejects readiness for a foreign project (8ms)
+    AssertionError [ERR_ASSERTION]: The input did not match the regular expression /project.*\/path.*directory.*\/other\/workspace/s. Input:
+    
+    "TypeError: Cannot read properties of null (reading 'completed')"
+    
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async runProcessHostRejectsForeignProject (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:195:5)
+        at async runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:5)
+        at async worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:22)
+        at async Promise.all (index 6)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+  ✗ WHAT[verification-system-005] ProcessHost interrupts readiness on child exit (8ms)
+    AssertionError [ERR_ASSERTION]: The input did not match the regular expression /project.*\/path.*code=17/s. Input:
+    
+    "TypeError: Cannot read properties of null (reading 'completed')"
+    
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async runProcessHostExitDuringHealth (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:215:5)
+        at async runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:5)
+        at async worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:22)
+        at async Promise.all (index 7)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+  ✗ WHAT[verification-system-006] ProcessHost repeated unready responses do not renew the deadline (8ms)
+    AssertionError [ERR_ASSERTION]: The input did not match the regular expression /global.*\/global\/health.*deadline.*healthy=false/s. Input:
+    
+    "TypeError: Cannot read properties of null (reading 'completed')"
+    
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async runProcessHostUnreadyDoesNotRenew (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:242:5)
+        at async runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:5)
+        at async worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:22)
+        at async Promise.all (index 0)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+  ✗ WHAT[verification-system-005] ProcessHost releases the original child observer after disposal (11ms)
+    TypeError: Cannot read properties of null (reading 'completed')
+        at ProcessHost._waitForReadiness (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/process-host.js:162:11)
+        at ProcessHost._waitForGlobalHealth (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/process-host.js:132:16)
+        at runProcessHostReleasesObservedChild (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:267:16)
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:5)
+        at async worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:22)
+        at async Promise.all (index 2)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+  ✗ ProcessHost dispose contract (0ms)
+    Error: ProcessHost dispose must escalate to SIGKILL
+        at assertTrue (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/lib.mjs:17:17)
+        at runProcessHostDisposeContract (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/cases.mjs:568:3)
+        at runCase (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:93:11)
+        at worker (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:110:28)
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async Promise.all (index 3)
+        at async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/harness/run.mjs:115:3
+harness: slowest cases:
+  9048ms  verification-system-006 verdicts actually renew the window, so legitimate slow work is not killed
+  7131ms  verification-system-006 a hung test that keeps printing is ended by the verdict-silence window
+  5029ms  watchdog restores default window
+  4022ms  verification-system-005 fact barrier rejects startup silence
+  3684ms  verification-system-006 a green ledger with a leaked handle is a failure, not a pass

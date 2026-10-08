@@ -1,0 +1,561 @@
+{
+  "schema": "readonly-integration-audit-v1",
+  "capturedAt": "2026-10-08T07:10:07.755Z",
+  "scope": "One complete independent integration entry execution on frozen 8d3; no tests or builds executed by this audit; no repository edits or resource cleanup.",
+  "input": {
+    "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "status": "",
+    "frozenCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "frozenDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+    "beforeDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+    "afterDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+    "auditDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+    "allEqual": true,
+    "buildFresh": {
+      "accepted": true,
+      "generation": 326,
+      "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+      "generatedInputDigest": "5ab4f3ccba7cf6ee6d2876294e00c74b89c350d172bd74068f4b7753d413fd76",
+      "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+    },
+    "manifest": {
+      "path": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/build-manifest.json",
+      "sha256": "af51a89d5471d5a2c7e0e151e9f3dcf773f9903361ebb245e5c249b335c9b78d",
+      "generation": 326,
+      "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+      "compilerToolIdentity": "dotnet 10.0.302 / fable \u001b[37m5.13.0\n\u001b[39m\u001b[22m",
+      "node": "v22.23.3"
+    }
+  },
+  "wrapper": {
+    "label": "integration",
+    "command": [
+      "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+      "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/integration/run.mjs"
+    ],
+    "inputCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "currentCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "startedAt": "2026-10-08T06:44:39.126Z",
+    "durationMs": 319662.971042,
+    "timeoutMs": 1200000,
+    "digest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+    "afterDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+    "inputsEqual": true,
+    "env": {
+      "NODE_TEST_CONCURRENCY": "2",
+      "UNIT_VERDICT_SILENCE_MS": "30000",
+      "WXS_RELEASE": "1",
+      "WXS_E2E_QUIET": "1"
+    },
+    "timedOut": false,
+    "exitCode": 1,
+    "signal": null,
+    "monitorPid": 84346,
+    "monitorObservation": "ESRCH",
+    "cleanupFailure": null,
+    "log": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration.log"
+  },
+  "suites": {
+    "plannedFiles": 44,
+    "admittedFiles": 32,
+    "drainedFiles": 30,
+    "activeFiles": 2,
+    "queuedFiles": 12,
+    "authoritativeTestCounts": {
+      "pass": "unknown",
+      "fail": "unknown",
+      "skip": "unknown",
+      "TODO": "unknown"
+    },
+    "exitCode": 1,
+    "durationSecondsRounded": 301.1,
+    "physicalBackstopMs": 300000,
+    "verdictSilenceMs": 185000,
+    "classification": "incomplete at original physical backstop; owned termination also reported failure",
+    "ordinaryAssertionFailuresObserved": 0,
+    "ordinaryFailureEvidenceLimit": "No ordinary assertion failure in available log; no authoritative suite summary, so this is not a claim of zero failures or complete acceptance.",
+    "active": [
+      {
+        "entryFile": "requirements/durable-events/tests/022.test.mjs",
+        "startElapsedMs": 42415.405458,
+        "elapsedAtPhysicalBackstopMs": 257584.594542,
+        "workerCost": {
+          "line": 509,
+          "version": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/022.test.mjs",
+          "enabled": true,
+          "pid": 89818,
+          "status": "missing",
+          "reason": "Exit observation not received",
+          "preImport": {
+            "version": 1,
+            "phase": "pre-import",
+            "sequence": 0,
+            "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/022.test.mjs",
+            "pid": 89818,
+            "parentPid": 84353,
+            "monotonicMs": 17.559875,
+            "cpuUserMicros": 22977,
+            "cpuSystemMicros": 4563
+          },
+          "exit": null,
+          "interval": null
+        },
+        "lastDirectWorkerTestStart": {
+          "line": 360,
+          "pid": 89818,
+          "parentPid": 84353,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/022.test.mjs",
+          "name": "WHAT[durable-events-022] each actual bounded locality compiles as one flat project and a reversed dependency is rejected",
+          "fullName": "WHAT[durable-events-022] each actual bounded locality compiles as one flat project and a reversed dependency is rejected"
+        }
+      },
+      {
+        "entryFile": "requirements/host-provider-failure-ownership/tests/002.test.mjs",
+        "startElapsedMs": 293098.93041699997,
+        "elapsedAtPhysicalBackstopMs": 6901.069583000033,
+        "workerCost": {
+          "line": 512,
+          "version": 1,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-provider-failure-ownership/tests/002.test.mjs",
+          "enabled": true,
+          "pid": 92220,
+          "status": "missing",
+          "reason": "Exit observation not received",
+          "preImport": {
+            "version": 1,
+            "phase": "pre-import",
+            "sequence": 0,
+            "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-provider-failure-ownership/tests/002.test.mjs",
+            "pid": 92220,
+            "parentPid": 84353,
+            "monotonicMs": 79.379459,
+            "cpuUserMicros": 109962,
+            "cpuSystemMicros": 15777
+          },
+          "exit": null,
+          "interval": null
+        },
+        "lastDirectWorkerTestStart": {
+          "line": 505,
+          "pid": 92220,
+          "parentPid": 84353,
+          "entryFile": "/Users/yuanxi/Workwork/vibe-fs/requirements/host-provider-failure-ownership/tests/002.test.mjs",
+          "name": "WHAT[host-provider-failure-ownership-002] installed Host makes one upstream request for one failed physical run with production retry configuration",
+          "fullName": "WHAT[host-provider-failure-ownership-002] installed Host makes one upstream request for one failed physical run with production retry configuration"
+        }
+      }
+    ],
+    "queued": [
+      "requirements/managed-chat-execution/tests/009.test.mjs",
+      "requirements/obligation-ledger/tests/001.test.mjs",
+      "requirements/obligation-ledger/tests/002.test.mjs",
+      "requirements/obligation-ledger/tests/004.test.mjs",
+      "requirements/obligation-ledger/tests/005.test.mjs",
+      "requirements/participant-horizon/tests/010.test.mjs",
+      "requirements/repository-programming/tests/020.test.mjs",
+      "requirements/requirement-grounding/tests/006.test.mjs",
+      "requirements/speculative-investigation/tests/008.test.mjs",
+      "requirements/speculative-investigation/tests/013.test.mjs",
+      "requirements/structured-workflow/tests/012.test.mjs",
+      "requirements/verification-system/tests/016.test.mjs"
+    ],
+    "drained": [
+      {
+        "entryFile": "requirements/action-affordance/tests/009.test.mjs",
+        "elapsedMs": 689.521292,
+        "line": 10
+      },
+      {
+        "entryFile": "requirements/action-affordance/tests/001.test.mjs",
+        "elapsedMs": 728.8583750000001,
+        "line": 16
+      },
+      {
+        "entryFile": "requirements/action-affordance/tests/014.test.mjs",
+        "elapsedMs": 1589.1892079999998,
+        "line": 25
+      },
+      {
+        "entryFile": "requirements/action-affordance/tests/015.test.mjs",
+        "elapsedMs": 1619.110208,
+        "line": 30
+      },
+      {
+        "entryFile": "requirements/behavior-diagnosis/tests/002.test.mjs",
+        "elapsedMs": 1831.582292,
+        "line": 39
+      },
+      {
+        "entryFile": "requirements/behavior-diagnosis/tests/005.test.mjs",
+        "elapsedMs": 1908.8983749999998,
+        "line": 45
+      },
+      {
+        "entryFile": "requirements/capability-enforcement/tests/010.test.mjs",
+        "elapsedMs": 4167.2191250000005,
+        "line": 84
+      },
+      {
+        "entryFile": "requirements/capability-enforcement/tests/006.test.mjs",
+        "elapsedMs": 4361.228667,
+        "line": 91
+      },
+      {
+        "entryFile": "requirements/capability-enforcement/tests/011.test.mjs",
+        "elapsedMs": 5457.90725,
+        "line": 117
+      },
+      {
+        "entryFile": "requirements/change-integration/tests/002.test.mjs",
+        "elapsedMs": 5943.148,
+        "line": 141
+      },
+      {
+        "entryFile": "requirements/change-integration/tests/008.test.mjs",
+        "elapsedMs": 6644.372542,
+        "line": 167
+      },
+      {
+        "entryFile": "requirements/change-integration/tests/005.test.mjs",
+        "elapsedMs": 6898.397417,
+        "line": 173
+      },
+      {
+        "entryFile": "requirements/cognitive-environment/tests/015.test.mjs",
+        "elapsedMs": 17152.124582999997,
+        "line": 210
+      },
+      {
+        "entryFile": "requirements/crash-reconciliation/tests/020.test.mjs",
+        "elapsedMs": 17728.55825,
+        "line": 226
+      },
+      {
+        "entryFile": "requirements/context-compression/tests/027.test.mjs",
+        "elapsedMs": 22777.177458,
+        "line": 237
+      },
+      {
+        "entryFile": "requirements/degeneration-guard/tests/004.test.mjs",
+        "elapsedMs": 24064.088292,
+        "line": 250
+      },
+      {
+        "entryFile": "requirements/delegation/tests/027.test.mjs",
+        "elapsedMs": 34363.845792,
+        "line": 268
+      },
+      {
+        "entryFile": "requirements/durable-convergence/tests/008.test.mjs",
+        "elapsedMs": 36144.554417,
+        "line": 278
+      },
+      {
+        "entryFile": "requirements/durable-convergence/tests/009.test.mjs",
+        "elapsedMs": 37465.587167000005,
+        "line": 286
+      },
+      {
+        "entryFile": "requirements/durable-convergence/tests/010.test.mjs",
+        "elapsedMs": 40910.741292,
+        "line": 298
+      },
+      {
+        "entryFile": "requirements/durable-events/tests/003.test.mjs",
+        "elapsedMs": 41086.774042000005,
+        "line": 333
+      },
+      {
+        "entryFile": "requirements/durable-events/tests/009.test.mjs",
+        "elapsedMs": 42414.794917,
+        "line": 352
+      },
+      {
+        "entryFile": "requirements/dispatch-protocol/tests/010.test.mjs",
+        "elapsedMs": 53731.425958,
+        "line": 362
+      },
+      {
+        "entryFile": "requirements/durable-events/tests/023.test.mjs",
+        "elapsedMs": 186684.926375,
+        "line": 377
+      },
+      {
+        "entryFile": "requirements/effect-accounting/tests/001.test.mjs",
+        "elapsedMs": 227487.544542,
+        "line": 385
+      },
+      {
+        "entryFile": "requirements/effect-accounting/tests/008.test.mjs",
+        "elapsedMs": 228690.990667,
+        "line": 401
+      },
+      {
+        "entryFile": "requirements/guidance-delivery/tests/008.test.mjs",
+        "elapsedMs": 229187.789417,
+        "line": 411
+      },
+      {
+        "entryFile": "requirements/host-boundary/tests/026.test.mjs",
+        "elapsedMs": 235158.677375,
+        "line": 420
+      },
+      {
+        "entryFile": "requirements/host-boundary/tests/032.test.mjs",
+        "elapsedMs": 257821.574875,
+        "line": 488
+      },
+      {
+        "entryFile": "requirements/host-boundary/tests/033.test.mjs",
+        "elapsedMs": 293095.718,
+        "line": 501
+      }
+    ],
+    "workerCost": {
+      "completeReceipts": 30,
+      "allCompleteWorkerExitCodesZero": true,
+      "summedCompleteWorkerWallMs": 334263.63425000006,
+      "summedCompleteWorkerCpuMicros": 48583184,
+      "limit": "Costs exclude descendant compiler/Host CPU; active worker exits/intervals unavailable.",
+      "slowestComplete": [
+        {
+          "entryFile": "requirements/durable-events/tests/023.test.mjs",
+          "pid": 89960,
+          "clockPid": 89960,
+          "wallMs": 132913.29058300002,
+          "cpuUserMicros": 712679,
+          "cpuSystemMicros": 1090123,
+          "exitCode": 0
+        },
+        {
+          "entryFile": "requirements/effect-accounting/tests/001.test.mjs",
+          "pid": 90345,
+          "clockPid": 90345,
+          "wallMs": 40650.976,
+          "cpuUserMicros": 844030,
+          "cpuSystemMicros": 607306,
+          "exitCode": 0
+        },
+        {
+          "entryFile": "requirements/host-boundary/tests/033.test.mjs",
+          "pid": 91943,
+          "clockPid": 91943,
+          "wallMs": 35217.026625000006,
+          "cpuUserMicros": 1839155,
+          "cpuSystemMicros": 282738,
+          "exitCode": 0
+        },
+        {
+          "entryFile": "requirements/dispatch-protocol/tests/010.test.mjs",
+          "pid": 87015,
+          "clockPid": 87015,
+          "wallMs": 29634.649041999997,
+          "cpuUserMicros": 667897,
+          "cpuSystemMicros": 288653,
+          "exitCode": 0
+        },
+        {
+          "entryFile": "requirements/host-boundary/tests/032.test.mjs",
+          "pid": 90501,
+          "clockPid": 90501,
+          "wallMs": 22623.211833,
+          "cpuUserMicros": 7226033,
+          "cpuSystemMicros": 1412199,
+          "exitCode": 0
+        },
+        {
+          "entryFile": "requirements/context-compression/tests/027.test.mjs",
+          "pid": 86650,
+          "clockPid": 86650,
+          "wallMs": 15849.040332999999,
+          "cpuUserMicros": 290966,
+          "cpuSystemMicros": 121345,
+          "exitCode": 0
+        },
+        {
+          "entryFile": "requirements/delegation/tests/027.test.mjs",
+          "pid": 87014,
+          "clockPid": 87014,
+          "wallMs": 11552.385,
+          "cpuUserMicros": 1427701,
+          "cpuSystemMicros": 191079,
+          "exitCode": 0
+        },
+        {
+          "entryFile": "requirements/cognitive-environment/tests/015.test.mjs",
+          "pid": 86621,
+          "clockPid": 86621,
+          "wallMs": 10470.127917,
+          "cpuUserMicros": 2072295,
+          "cpuSystemMicros": 328898,
+          "exitCode": 0
+        }
+      ]
+    },
+    "directWorkerTestStartLimit": "Direct worker start is the last entered body; parent runtime start/verdict may still refer to preceding cheap tests. The last pure-owner pass does not prove flat compilation finished.",
+    "lastSupervisorState": [
+      {
+        "line": 507,
+        "text": "integration:suites: file streams: 30 drained, 2 active, 12 queued"
+      },
+      {
+        "line": 508,
+        "text": "integration:suites: active file requirements/durable-events/tests/022.test.mjs; waiting for stream drain; last verdict: test:pass:WHAT[durable-events-022] append results have one pure compile owner without acquiring the store capability"
+      },
+      {
+        "line": 510,
+        "text": "integration:suites: last runtime test start {\"name\":\"WHAT[durable-events-022] append results have one pure compile owner without acquiring the store capability\",\"file\":\"/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/022.test.mjs\",\"entryFile\":\"/Users/yuanxi/Workwork/vibe-fs/requirements/durable-events/tests/022.test.mjs\",\"line\":258,\"column\":1,\"nesting\":0,\"pid\":84353,\"parentPid\":84347}"
+      },
+      {
+        "line": 511,
+        "text": "integration:suites: active file requirements/host-provider-failure-ownership/tests/002.test.mjs; waiting for stream drain; last verdict: none received"
+      }
+    ]
+  },
+  "distribution": {
+    "plannedFiles": 1,
+    "completedFiles": 1,
+    "pass": 3,
+    "fail": 0,
+    "skip": 0,
+    "TODO": 1,
+    "exitCode": 1,
+    "durationSecondsRounded": 0.8,
+    "authoritativeSummaryLine": 536,
+    "classification": "pending-proof policy",
+    "pending": "WHAT[distribution-008] GAP-210: every declared resource is available from the exact installed artifact",
+    "workerPid": 92416,
+    "groupPid": 92415,
+    "groupVerification": {
+      "accepted": true,
+      "elapsedMs": 75.397
+    }
+  },
+  "harness": {
+    "plannedCases": 290,
+    "completedCases": 290,
+    "pass": 290,
+    "fail": 0,
+    "skip": "unknown",
+    "TODO": "unknown",
+    "exitCode": 0,
+    "durationSecondsRounded": 14.8,
+    "testSecondsRounded": 14.1,
+    "authoritativeSummaryLine": 554,
+    "resourceReceipt": "unknown; child success output is folded by integration runner"
+  },
+  "groups": {
+    "planned": 3,
+    "executed": 3,
+    "failed": 2,
+    "passed": 1,
+    "parentDurationSecondsRounded": 317.6
+  },
+  "failureClassification": {
+    "ordinary": {
+      "observed": [],
+      "completeAuthoritativeCounts": "unknown"
+    },
+    "nestedNegative": "Negative compiler/authority cases are formal fixture expectations, not ordinary failures; successful child output is folded. No raw nested negative errors were present in this log. 022 flat compile case was still active and its final result is unknown.",
+    "failureHeadlines": [
+      {
+        "line": 518,
+        "text": "✗ suites (301.1s): integration:suites: supervised suite failed (exit 1)"
+      },
+      {
+        "line": 519,
+        "text": "✗ package/run.mjs (distribution) (exit 1, 0.8s)"
+      }
+    ]
+  },
+  "resources": {
+    "ownership": "Only known suite/wrapper/distribution PIDs and recorded PGID 84353 attributed; unrelated system/user processes were not operated on.",
+    "cleanupActionsByAudit": [],
+    "innerTerminationFailure": {
+      "reported": true,
+      "line": 514,
+      "message": "integration:suites: Could not complete owned runner termination: Owned termination and remaining group observation failed"
+    },
+    "postExitSuiteGroup": {
+      "pid": 84353,
+      "accepted": true,
+      "elapsedMs": 73.681,
+      "line": 515
+    },
+    "outerCleanupFailure": null,
+    "interpretation": "The earlier owned termination failure remains a failure even though subsequent group verification is accepted and the outer wrapper cleanupFailure is null.",
+    "finalProcessObservation": {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-final-process-observation.txt",
+      "sha256": "314a451b3efec44807da02737b4b14081da300686787976387210b9e849b76d2",
+      "knownPids": [
+        84346,
+        84347,
+        84353,
+        89818,
+        92220,
+        92414,
+        92415,
+        92416
+      ],
+      "knownPgids": [
+        84347,
+        84353
+      ],
+      "survivingRows": [],
+      "result": "No matching known PID, descendant/group row, or hdiutil process in targeted final ps."
+    },
+    "duringObservation": {
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-process-snapshot.txt",
+      "ownedSubset": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-owned-processes-during.txt",
+      "ownedRows": 7,
+      "limitedProgressEvidence": [
+        {
+          "pid": 90303,
+          "project": "repository-programming-js-capability",
+          "cpuPercent": 173,
+          "reportedBy": "parent readonly snapshot at approximately 2m47s"
+        },
+        {
+          "pid": 90324,
+          "project": "delegation-handle-surface",
+          "cpuPercent": 101,
+          "reportedBy": "parent readonly snapshot at approximately 2m47s"
+        }
+      ],
+      "limit": "Observed real CPU/project work is not a completion verdict or proof of a hang."
+    },
+    "hdiutil": {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-final-hdiutil.plist",
+      "sha256": "a69b71579f66e204297541105f78393d142db2098a0a23d9ef162c30c11502b8",
+      "imagesEmpty": true
+    },
+    "mount": {
+      "path": "/private/tmp/vibe-fs-oct8-alias-release/integration-8d3-final-mount.txt",
+      "sha256": "e0dcd638a1a1a216aed96ff1260ed70e1b1e3134787cfe591c1c3f7b0fb5a145",
+      "fixtureMountsObserved": []
+    },
+    "logReceipts": [
+      {
+        "line": 514,
+        "text": "integration:suites: Could not complete owned runner termination: Owned termination and remaining group observation failed"
+      },
+      {
+        "line": 515,
+        "text": "integration:suites: post-exit group verification/reclamation: pid=84353; elapsedMs=73.681; accepted=true"
+      },
+      {
+        "line": 538,
+        "text": "package: post-exit group verification/reclamation: pid=92415; elapsedMs=75.397; accepted=true"
+      }
+    ]
+  },
+  "evidence": {
+    "log": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration.log",
+    "logSha256": "ebc8b34ce4b7d618a8eefedb07e099c9ff2a7b5ba264e1429afd6dfd4e764cce",
+    "logLines": 557,
+    "wrapperReceipt": "/private/tmp/vibe-fs-oct8-alias-release/independent-integration.json",
+    "frozenInput": "/private/tmp/vibe-fs-oct8-alias-release/frozen-input.json"
+  },
+  "conclusion": "Integration is not accepted: original-budget suite truncation plus owned termination failure; distribution pending proof. Harness alone passed. No full Host/integration or throughput closure claimed."
+}

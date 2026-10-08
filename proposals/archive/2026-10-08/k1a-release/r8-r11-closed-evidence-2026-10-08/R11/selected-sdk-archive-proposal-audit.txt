@@ -1,0 +1,103 @@
+Selected raw SDK archive reuse: review proposal only
+Date: 2026-10-08
+Repository HEAD inspected: 8d3a7406ab7df9e13a4af8fca12c0799df5c2398
+Parent-owned working changes retained; no repository edit by this auditor.
+Basis: physical016-selected-sdk-preparation-readonly.txt and the actual support
+body/production preparation sources; verification-system WHAT[008]/[010]/[016].
+
+Files prepared under /private/tmp/vibe-fs-oct8-alias-release:
+- selected-sdk-archive-complete.patch (complete reviewed proposal)
+- selected-sdk-archive-reuse.patch (helper and three physical body changes)
+- selected-sdk-archive-regression.patch (formal 016 regression)
+- selected-sdk-patch-work/old and /new (byte-exact input copies and manual edits)
+
+Checks performed, not test execution:
+- git apply --check selected-sdk-archive-complete.patch: exit 0.
+- node --check on each of the five proposed .mjs files: each exit 0.
+- No imports executed, test run, build, archive capture, restore, tool probe,
+  owner allocation, CI request, commit, or push was performed for this proposal.
+
+Implementation boundary
+
+copySelectedSdkArchive(target, env=process.env) is a small synchronous test-support
+helper. It returns null only when BOTH WXS_VERIFICATION_READONLY_SDK_ARCHIVE and
+WXS_VERIFICATION_READONLY_SDK_ARCHIVE_SHA256 are undefined. Otherwise it requires
+an absolute selected path, a declared lowercase raw SHA256 string, and a regular
+file via lstat, then creates an exclusive private copy and returns the declared
+SHA. A malformed/empty/half-selected input, missing file, directory or linked
+selected file throws. Nothing catches such errors to fall back to live capture.
+
+The helper does NOT read or hash archive bytes, validate an SDK, normalize a
+physical workspace identity, authenticate provenance, or allocate a candidate.
+The unchanged prepareVerificationDotnetSdk reads the private copy. Its existing
+materializeVerificationArchive validates bytes against the declared raw SHA
+before allocating the extracted archive owner or starting any selected probe.
+This remains the sole raw-byte hash validation in the selected-archive path.
+
+repository-dotnet-tools-tests, repository-nuget-project-tests and ordinary
+repository-fable-project-tests use that copy when configured; only unconfigured
+selection executes the original live SDK cp -> tar -> compute tar digest path.
+Readonly Fable reuses the helper and explicitly rejects null selection, preserving
+the requirement for a selected raw archive. No hidden live-capture fallback is
+introduced for readonly operation. The prior readonly pre/post-copy full hashes
+are removed because production preparation validates the accepted copied bytes.
+
+Each body still calls fresh prepareVerificationDotnetSdk with its own existing
+parentDirectory. No prepared SDK owner is shared, cached, or reused. Independent
+source/tools/project owners, complete inventories, revalidation, NuGet packages,
+locks, real Fable/Fantomas execution, output consumers, archive-removal assertions,
+namespace substitution controls, readonly mount proofs and cleanup remain intact.
+
+The complete-SDK body repositoryDotnetSdkTest and its independent live-installation
+inventory/candidate.entries comparison are intentionally untouched. That stronger
+control cannot be replaced by trusting the production parser or comparing the
+prepared inventory to itself. Source and package identity rules are also unchanged.
+
+Formal regression proposal
+
+One official WHAT[verification-system-016] test is added inside the existing
+registerDotnetSdkTests registration. It uses its real fixture/tar utility, adds
+an executable that would write a calls marker if run, and invokes the actual new
+helper followed by the unchanged production prepareVerificationDotnetSdk.
+
+Assertions:
+- Completely absent configuration returns null and produces no private copy.
+- Half configuration, empty path/SHA, invalid SHA syntax, relative path, directory
+  and missing path all reject explicitly without producing a copy or candidate.
+- Valid declared selection creates two independently named private copies with
+  exact caller bytes; repeated target selection fails EEXIST rather than overwrites.
+- A syntactically valid but wrong declared SHA is returned unchanged by the helper;
+  actual SDK preparation must reject verification-dotnet-sdk-integrity-invalid.
+- After that rejection candidates is empty, captured global.json is byte-exact,
+  the selected executable marker is absent, and the original caller archive bytes
+  and mode remain unchanged. The copied archive may remain until fixture finally.
+- The fixture finally removes only its own root and private copies.
+
+The input is an intentionally small selected SDK archive with a would-be executable,
+not a claim that a fabricated miniature bundle is a complete actual SDK. This test
+proves the exact selection-to-production-integrity rejection boundary without
+starting heavy tools. Existing physical bodies remain responsible for complete
+SDK acceptance, actual restore/compile behavior and independent owner lifetimes.
+It does not by itself execute all three outer-body fallback paths or prove a
+whole physical 016 run. Those require the parent-approved frozen-input validation.
+
+Suggested review/validation after parent approval
+
+1. Inspect the complete patch and apply normally to the existing working changes.
+2. Run the official 016 test filtered by the new exact test title for the local
+   contract check; preserve command/input/counts and do not describe it as 016 full.
+3. Run the corresponding unchanged requirement/static checks, then a fresh frozen
+   physical 016 execution with the explicitly selected complete SDK archive and
+   original packages/tree. Do not alter tier, concurrency, timeout or skip/TODO.
+4. Keep both configured-archive and deliberately absent-archive fixture evidence
+   separate if validating compatibility; do not concatenate filtered runs into a
+   single full-suite pass. Preserve all raw errors and cleanup evidence.
+
+Cost and acceptance limits
+
+Historical first-four body sum 119.245s and corrected tail-two sum 190.508s are
+from DIFFERENT executions. Their sum is neither one full run nor a strict runtime
+lower bound. Copy/tar-specific timings and post-change physical body timings are
+unknown. This proposal removes identified redundant input preparation, but no
+performance gain, 300s integration closure, stable unit throughput, or project-wide
+acceptance is claimed before new exact-input execution evidence exists.

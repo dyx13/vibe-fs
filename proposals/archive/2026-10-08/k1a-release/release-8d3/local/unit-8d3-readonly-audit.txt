@@ -1,0 +1,36 @@
+8d3 full unit / unified release — read-only audit
+
+Input: 8d3a7406ab7df9e13a4af8fca12c0799df5c2398
+Tree: bbeba1c9618c41d125d83f3047edbc93e0a6b5fe
+Digest: f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6
+Inputs: 4635; initial and final HEAD/status/diff unchanged, clean. Final read-only hash comparison equal at 2026-10-08T06:46:38.868Z.
+Tools: Node v22.23.3 / npm 11.12.1 / dotnet SDK 10.0.302 / Fable 5.13.0.
+Build: original release --clean Fable build, generation 326, current; 1815 sources / 891 artifacts.
+Manifest SHA256: af51a89d5471d5a2c7e0e151e9f3dcf773f9903361ebb245e5c249b335c9b78d
+
+Unified command: NODE_TEST_CONCURRENCY=2 UNIT_VERDICT_SILENCE_MS=30000 npm run verify:release
+format:check 4.1s exit0; check 3.8s exit0; clean build 41.4s exit0; unit 270.7s exit1.
+Unified terminal: 321.6s exit1, pending-proof policy. Integration / E2E / package are not-run in this invocation. Independent supplemental results cannot overwrite it.
+Budgets: original 300000ms suite physical backstop (not fired), 30000ms actual unit verdict silence, file concurrency2 / per-file1; pipeline unit outer default600000ms. No budget/tier/skip/TODO/concurrency changes in this run.
+
+824 planned / 824 admitted / 824 drained / active0 / queued0. Exact independently discovered set and complete stable admission order match, no missing/unexpected/duplicate files.
+Authoritative counts: 4919 pass / 0 fail / 126 skip / 388 TODO. Skip/TODO are not pass.
+Compact summary line11029: 270.14s wall,565.29s test time. Supervisor summary line11552 agrees.
+Ordinary failure count0. Glyph-red missing.fixture (line644, runner37274) and broken.fixture (line685, runner37297) are formal021 nested failed-container negative controls, owner37099; owner raw exit0 line712.
+
+Infrastructure first two admissions verification-system002/003 at32.147/33.588ms.
+Verification-system016: admitted9311.9795ms; drained159403.918458ms; occupancy150091.938958ms.
+Actual016 worker34947: valid interval150056.257959ms, own CPU17.701228s user+23.331716s system=41.032944s (excludes children), exit0.
+Valid worker costs: 822 complete / 2 invalid / 0 missing. Complete-only summed worker wall509860.061433ms; own CPU253.979926s user+58.661752s system=312.641678s. These parallel sums are not suite elapsed time and omit children.
+Invalid cost files021/capability019 reject forwarded foreign-process records; both raw actual-worker exits0, but their full valid intervals remain unknown. Do not count them as complete cost coverage.
+
+Owned tools: 203 monitor spawns / 203 complete five-phase closures / 203 group-drained / 203 monitor-closed / zero abnormal monitor closes / zero incomplete. Tool nonzero exits may be intentional negatives; no claim that every tool exit is0.
+Root group32628 cleanup line11544 accepted=true16.780ms. Original outer32591/inner32628/016worker34947 all ESRCH at 2026-10-08T06:47:00.633330+00:00. No resources were killed or removed by this audit. Arbitrary filesystem cleanup unknown.
+
+Unit log: /Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T06-38-40-702Z/unit.log
+SHA256: 314b268ad131bef05dc9adeefd5d2937ddb48b8208c37ebfb63a0139490ced01
+Console: /private/tmp/vibe-fs-oct8-alias-release/release-console-8d3.log
+SHA256: 1cb9149d2a086e5ca1b0a9aa5f89afde272456124e4a6391320665a595820bb5
+Evidence: unit-8d3-readonly-audit.json; unit-8d3-final-input-readonly.json; unit-8d3-build-manifest-readonly.json; unit-8d3-discovery-readonly.json; unit-8d3-process-readonly.json.
+
+Conclusion: this frozen full unit invocation completed the entire824-file set within the unchanged300s source backstop, with0 ordinary failures; release acceptance remains failed because388 TODO persist. It does not close the whole Host/CI/integration project or the two invalid diagnostic cost intervals.

@@ -30,7 +30,7 @@ import { fileURLToPath } from 'node:url';
 
 import { assertEq, assertTrue, tmpScenarioDir } from './lib.mjs';
 import { ReadinessLadder, READINESS_STAGES } from '../../e2e/support/readiness.js';
-import { CANARY_READY_MS, READINESS_STAGE_MS } from '../../e2e/support/time-budget.js';
+import { CANARY_READY_MS, GATE_HOST_START_TIMEOUT_MS, READINESS_STAGE_MS } from '../../e2e/support/time-budget.js';
 
 const REPO_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 
@@ -142,7 +142,151 @@ process.stdout.write(JSON.stringify({ phases, hostOutputCaptured: host.stdoutLog
   }
 }
 
+async function processHostOwnedLifecycle(mode) {
+  const scenarioDir = tmpScenarioDir();
+  const executable = join(scenarioDir, 'owned-host.mjs');
+  const identityPath = join(scenarioDir, 'actual-host.json');
+  const requestPath = join(scenarioDir, 'global-request.json');
+  writeFileSync(executable, `#!${process.execPath}
+import http from 'node:http';
+import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
+const server = http.createServer((request, response) => {
+  response.setHeader('content-type', 'application/json');
+  if (request.url === '/global/health') {
+    fs.writeFileSync(${JSON.stringify(requestPath)}, JSON.stringify({ pid: process.pid, path: request.url }));
+    if (${JSON.stringify(mode)} === 'exit') process.exit(23);
+    response.end(JSON.stringify({ healthy: true }));
+  } else if (request.url === '/path') {
+    response.end(JSON.stringify({ home: process.env.HOME, state: process.env.XDG_STATE_HOME,
+      config: process.env.XDG_CONFIG_HOME, worktree: process.cwd(), directory: process.cwd() }));
+  } else response.writeHead(404).end();
+});
+process.stdout.write('Warning: OPENCODE_SERVER_PASSWORD is not set; server is unsecured.\\n');
+server.listen(0, '127.0.0.1', () => {
+  const pgid = Number(execFileSync('/bin/ps', ['-o', 'pgid=', '-p', String(process.pid)], { encoding: 'utf8' }).trim());
+  fs.writeFileSync(${JSON.stringify(identityPath)}, JSON.stringify({ pid: process.pid, parentPid: process.ppid, pgid, port: server.address().port }));
+  process.stdout.write('opencode server listening on http://127.0.0.1:' + server.address().port + '\\n');
+});
+`, { mode: 0o755 });
+  const hostModule = new URL('../../e2e/support/process-host.js', import.meta.url).href;
+  const monitorPath = fileURLToPath(new URL('../../../../../scripts/lib/verification-tool-monitor.mjs', import.meta.url));
+  const hostUtilsModule = new URL('../../e2e/support/process-host-utils.js', import.meta.url).href;
+  const subject = `
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { ChildProcess, execFileSync } from 'node:child_process';
+import { getEventListeners } from 'node:events';
+import { ProcessHost } from ${JSON.stringify(hostModule)};
+import { getOpencodeSpawnCount } from ${JSON.stringify(hostUtilsModule)};
+const host = new ProcessHost();
+const phases = [];
+const trace = [];
+const emit = ChildProcess.prototype.emit;
+let monitor;
+let heldStart;
+let readyForwarded = false;
+let readyObserver;
+let terminalSignal;
+let beforeStop;
+function releaseStart() {
+  if (!readyForwarded || !heldStart) return;
+  assert.ok(host.stdoutLog.includes('opencode server listening on http://'));
+  const held = heldStart;
+  heldStart = null;
+  trace.push('start-delivered');
+  Reflect.apply(emit, held.receiver, ['message', ...held.args]);
+}
+ChildProcess.prototype.emit = function(event, ...args) {
+  if (event === 'spawn' && this.spawnargs[1] === ${JSON.stringify(monitorPath)}) {
+    monitor = this;
+    if (${JSON.stringify(mode)} === 'early-ready') {
+      let stdout = '';
+      readyObserver = chunk => {
+        stdout += chunk.toString();
+        if (readyForwarded || !/opencode server listening on http:\\/\\/127[.]0[.]0[.]1:\\d+\\n/.test(stdout)) return;
+        assert.ok(host.stdoutLog.includes('opencode server listening on http://'), 'Actual Host stdout is forwarded before release');
+        readyForwarded = true;
+        trace.push('ready-forwarded');
+        queueMicrotask(releaseStart);
+      };
+      this.stdout.on('data', readyObserver);
+    }
+  }
+  if (${JSON.stringify(mode)} === 'early-ready' && this === monitor && event === 'message' && args[0]?.type === 'verification-tool-started') {
+    assert.equal(heldStart, undefined, 'Only the actual first start record is held');
+    heldStart = { receiver: this, args };
+    trace.push('start-held');
+    queueMicrotask(releaseStart);
+    return true;
+  }
+  return Reflect.apply(emit, this, [event, ...args]);
+};
+try {
+  const starting = host.start({ scenarioDir: ${JSON.stringify(scenarioDir)}, providerUrl: 'http://127.0.0.1:1/v1',
+    pluginPaths: [], startTimeoutMs: ${GATE_HOST_START_TIMEOUT_MS}, onProgress: phase => phases.push(phase) });
+  if (${JSON.stringify(mode)} === 'exit') {
+    await assert.rejects(starting, /global.*\\/global\\/health/s);
+    const completed = await host._owner.completed;
+    assert.equal(completed.exitCode, 23);
+    assert.equal(completed.signal, null);
+    assert.equal(completed.failure, null);
+    assert.equal(host.exitInfo.code, 23);
+    assert.equal(host.exitInfo.signal, null);
+    assert.equal(host.exitInfo.failure, undefined);
+  } else {
+    await starting;
+    assert.ok(phases.includes('healthy'));
+    assert.ok(readyForwarded);
+    assert.ok(trace.indexOf('ready-forwarded') < trace.indexOf('start-delivered'));
+  }
+  const actual = JSON.parse(fs.readFileSync(${JSON.stringify(identityPath)}, 'utf8'));
+  assert.equal(host.pid, actual.pid, 'Public PID must name the selected Host');
+  assert.equal(actual.pgid, actual.pid);
+  assert.equal(actual.parentPid, monitor.pid);
+  assert.notEqual(host.pid, monitor.pid);
+  assert.equal(getOpencodeSpawnCount(), 1, 'Exactly one actual Host was spawned in this lifecycle');
+  assert.deepEqual(JSON.parse(fs.readFileSync(${JSON.stringify(requestPath)}, 'utf8')), { pid: actual.pid, path: '/global/health' });
+  terminalSignal = host._owner.terminal;
+  assert.equal(getEventListeners(terminalSignal, 'abort').length, 0, 'All completed readiness stages release their terminal observer');
+  beforeStop = { actual, publicPid: host.pid, exitCode: host.exitInfo?.code ?? null, signal: host.exitInfo?.signal ?? null };
+} finally {
+  ChildProcess.prototype.emit = emit;
+  if (monitor && readyObserver) monitor.stdout.off('data', readyObserver);
+  await host.stop();
+}
+const groups = [beforeStop.actual.pgid, monitor.pid];
+const live = execFileSync('/bin/ps', ['-eo', 'pid=,pgid=,stat='], { encoding: 'utf8' }).trim().split('\\n').filter(line => {
+  const fields = /^\\s*(\\d+)\\s+(\\d+)\\s+(\\S+)\\s*$/.exec(line);
+  if (!fields) throw new Error('Invalid actual final process row');
+  return groups.includes(Number(fields[2])) && !/^[ZX]/.test(fields[3]);
+});
+assert.deepEqual(live, []);
+assert.equal(host.pid, null);
+assert.equal(host.baseUrl, null);
+assert.equal(getEventListeners(terminalSignal, 'abort').length, 0);
+process.stdout.write(JSON.stringify({ mode: ${JSON.stringify(mode)}, beforeStop, trace, groupsDrained: true, reset: true }) + '\\n');
+`;
+  try {
+    const { stdout, stderr } = await execFileAsync(process.execPath, ['--input-type=module', '-e', subject], {
+      env: { ...process.env, OPENCODE_BIN: executable, CANARY_VERBOSE: '', DEBUG: '' },
+    });
+    const result = JSON.parse(stdout);
+    assert.equal(result.mode, mode);
+    assert.equal(result.beforeStop.publicPid, result.beforeStop.actual.pid);
+    assert.equal(result.groupsDrained, true);
+    assert.equal(result.reset, true);
+    assert.doesNotMatch(stderr, /UnhandledPromiseRejection|uncaughtException/);
+    if (mode === 'exit') assert.equal(result.beforeStop.exitCode, 23);
+    else assert.ok(result.trace.indexOf('ready-forwarded') < result.trace.indexOf('start-delivered'));
+  } finally {
+    rmSync(scenarioDir, { recursive: true, force: true });
+  }
+}
+
 export const readinessCases = [
+  { name: 'WHAT[verification-system-005] ProcessHost public PID and exitInfo retain the actual Host exit before cleanup', fn: () => processHostOwnedLifecycle('exit') },
+  { name: 'WHAT[verification-system-005] ProcessHost consumes actual ready stdout forwarded before its start record is admitted', fn: () => processHostOwnedLifecycle('early-ready') },
   ...['CANARY_VERBOSE', 'DEBUG'].map(mode => ({
     name: `WHAT[verification-system-005] ProcessHost ${mode} startup diagnostics preserve protocol stdout and report progress on stderr`,
     fn: () => processHostDiagnosticChannels(mode),

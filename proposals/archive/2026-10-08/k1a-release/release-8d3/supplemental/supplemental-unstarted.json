@@ -1,0 +1,36 @@
+{
+  "completeIntegrationStage": false,
+  "files": [
+    "requirements/host-provider-failure-ownership/tests/002.test.mjs",
+    "requirements/managed-chat-execution/tests/009.test.mjs",
+    "requirements/obligation-ledger/tests/001.test.mjs",
+    "requirements/obligation-ledger/tests/002.test.mjs",
+    "requirements/obligation-ledger/tests/004.test.mjs",
+    "requirements/obligation-ledger/tests/005.test.mjs",
+    "requirements/participant-horizon/tests/010.test.mjs",
+    "requirements/repository-programming/tests/020.test.mjs",
+    "requirements/requirement-grounding/tests/006.test.mjs",
+    "requirements/speculative-investigation/tests/008.test.mjs",
+    "requirements/speculative-investigation/tests/013.test.mjs",
+    "requirements/structured-workflow/tests/012.test.mjs"
+  ],
+  "startedAt": "2026-10-08T07:11:15.690Z",
+  "durationMs": 66146.72937500001,
+  "inputCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "currentCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "digest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+  "afterDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+  "inputsEqual": true,
+  "build": {
+    "generation": 326,
+    "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+    "generatedInputDigest": "5ab4f3ccba7cf6ee6d2876294e00c74b89c350d172bd74068f4b7753d413fd76",
+    "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+  },
+  "concurrency": "2",
+  "physicalBackstopMs": 300000,
+  "verdictSilenceMs": 185000,
+  "perTestTimeoutEnvMs": 180000,
+  "exitCode": 1,
+  "failure": "Error: supplemental:unstarted: supervised suite failed (exit 1)\n    at fail (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:258:25)\n    at superviseOwnedNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:541:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async superviseNodeTest (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs:235:14)\n    at async file:///private/tmp/vibe-fs-oct8-alias-release/run-unstarted-integration.mjs:25:3"
+}

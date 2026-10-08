@@ -1,0 +1,214 @@
+{
+  "auditedAt": "2026-10-08T06:49:43.297078+00:00",
+  "kind": "exact-head read-only CI audit; no builds, tests, source edits or CI retries",
+  "run": {
+    "id": 37738719900,
+    "url": "https://github.com/dyx13/vibe-fs/actions/runs/37738719900",
+    "status": "completed",
+    "conclusion": "failure",
+    "createdAt": "2026-10-08T06:38:26Z",
+    "updatedAt": "2026-10-08T06:45:06Z"
+  },
+  "source": {
+    "expectedSha": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "actualSha": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "shaMatches": true,
+    "githubTree": "bbeba1c9618c41d125d83f3047edbc93e0a6b5fe",
+    "localTree": "bbeba1c9618c41d125d83f3047edbc93e0a6b5fe",
+    "treeMatches": true,
+    "checkoutLog": "job-logs/check/2_Run actions_checkout@v4.txt:72-73",
+    "inputDigestPrefix": "49a07f6844c5d0d6",
+    "fullInputDigest": "unknown; not included in artifact",
+    "buildManifest": "unknown; not included in artifact",
+    "artifactWorkflowHeadMatches": true
+  },
+  "environment": {
+    "platform": "Linux x64, GitHub ubuntu-latest",
+    "node": "22.23.3",
+    "npm": "10.9.9",
+    "sdkSetupReported": "10.0.401",
+    "runtimeSetupReported": "10.0.12",
+    "fable": "5.13.0",
+    "fantomas": "6.3.0",
+    "NODE_TEST_CONCURRENCY": "2",
+    "UNIT_VERDICT_SILENCE_MS": "30000",
+    "scope": "no outer TESTS_MJS_FILES override; unit 824 planned. Skips are reported honestly."
+  },
+  "command": "NODE_TEST_CONCURRENCY=2 UNIT_VERDICT_SILENCE_MS=30000 node scripts/verify.mjs --release",
+  "durationSeconds": 373.3,
+  "exitCode": 1,
+  "stages": [
+    {
+      "stage": "format:check",
+      "command": "npm run format:check",
+      "durationSeconds": 13.3,
+      "exitCode": 0,
+      "status": "pass",
+      "counts": {
+        "pass": "unknown",
+        "fail": "unknown",
+        "skip": "unknown",
+        "TODO": "unknown"
+      }
+    },
+    {
+      "stage": "check",
+      "command": "npm run check",
+      "durationSeconds": 5.6,
+      "exitCode": 0,
+      "status": "pass",
+      "counts": {
+        "pass": "unknown",
+        "fail": "unknown",
+        "skip": "unknown",
+        "TODO": "unknown"
+      }
+    },
+    {
+      "stage": "build",
+      "command": "node scripts/build.mjs --clean",
+      "durationSeconds": 61.9,
+      "exitCode": 0,
+      "status": "pass",
+      "counts": {
+        "pass": "unknown",
+        "fail": "unknown",
+        "skip": "unknown",
+        "TODO": "unknown"
+      }
+    },
+    {
+      "stage": "unit",
+      "command": "node requirements/verification-system/tests/run.mjs",
+      "durationSeconds": 291.0,
+      "exitCode": 1,
+      "status": "fail",
+      "counts": {
+        "fail": 0,
+        "skip": 127,
+        "TODO": 388,
+        "pass": 4918
+      },
+      "plannedFiles": 824,
+      "completedFiles": 824,
+      "activeFiles": 0,
+      "queuedFiles": 0,
+      "reason": "pending-proof policy, not test assertion failure or truncation",
+      "cleanup": [
+        {
+          "pid": 2889,
+          "elapsedMs": 8.228,
+          "accepted": true
+        }
+      ]
+    },
+    {
+      "stage": "integration",
+      "status": "not-run",
+      "command": "WXS_RELEASE=1 node requirements/verification-system/tests/integration/run.mjs",
+      "durationSeconds": "not-run",
+      "exitCode": "not-run",
+      "plannedFiles": "unknown",
+      "completedFiles": "not-run",
+      "counts": {
+        "pass": "not-run",
+        "fail": "not-run",
+        "skip": "not-run",
+        "TODO": "not-run"
+      },
+      "cleanup": "not-run"
+    },
+    {
+      "stage": "e2e",
+      "status": "not-run",
+      "command": "WXS_TIER_RELEASE=1 node requirements/verification-system/tests/014.test.mjs",
+      "durationSeconds": "not-run",
+      "exitCode": "not-run",
+      "plannedFiles": "unknown",
+      "completedFiles": "not-run",
+      "counts": {
+        "pass": "not-run",
+        "fail": "not-run",
+        "skip": "not-run",
+        "TODO": "not-run"
+      },
+      "cleanup": "not-run"
+    },
+    {
+      "stage": "package",
+      "status": "not-run",
+      "command": "node scripts/verify-package.mjs",
+      "durationSeconds": "not-run",
+      "exitCode": "not-run",
+      "plannedFiles": "unknown",
+      "completedFiles": "not-run",
+      "counts": {
+        "pass": "not-run",
+        "fail": "not-run",
+        "skip": "not-run",
+        "TODO": "not-run"
+      },
+      "cleanup": "not-run"
+    }
+  ],
+  "build": {
+    "clean": true,
+    "generation": 1,
+    "freshness": {
+      "sources": 1815,
+      "artifacts": 891
+    },
+    "registeredSurfaces": 175,
+    "linkedEmittedModules": 835,
+    "ownerCompileMs": 52365,
+    "fableCompilationMs": 48021
+  },
+  "unit": {
+    "planned": 824,
+    "started": 824,
+    "drained": 824,
+    "active": [],
+    "queued": [],
+    "counts": {
+      "fail": 0,
+      "skip": 127,
+      "TODO": 388,
+      "pass": 4918
+    },
+    "ordinaryAssertionFailures": [],
+    "authoritativeSummary": "4918 passed, 0 failed; 824/824 planned files completed; 127 skipped, 388 TODO",
+    "terminationReason": "pending-proof policy",
+    "costStatus": {
+      "complete": 822,
+      "invalid": 2
+    },
+    "cleanup": [
+      {
+        "pid": 2889,
+        "elapsedMs": 8.228,
+        "accepted": true
+      }
+    ],
+    "details": "unit-cost-analysis.json"
+  },
+  "downloads": {
+    "runMetadata": "run.json",
+    "jobsMetadata": "jobs.json",
+    "artifactsMetadata": "artifacts.json",
+    "completeJobZip": "job-logs.zip",
+    "completeJobZipSha256": "4ea470904bd39c268ce3ee112efbe7612275ce3054884ea30206d234362a0291",
+    "verifyArtifactZip": "verify-logs.zip",
+    "verifyArtifactSha256": "4238d57c1e86cfc2f02defaf5850afbde1898a8c920abbce126e8d2bdc02a801",
+    "githubArtifactId": 11532694424,
+    "githubArtifactDigest": "sha256:4238d57c1e86cfc2f02defaf5850afbde1898a8c920abbce126e8d2bdc02a801",
+    "artifactDigestMatches": true,
+    "extractedStageDirectory": "verify-logs/2026-10-08T06-38-49-796Z"
+  },
+  "conclusion": "CI failure remains: all 824 requirement files drained with zero assertion failures, but pending proofs prevent acceptance and integration/e2e/package were not run. No project-wide green claim.",
+  "limits": [
+    "Own worker CPU excludes child CPU and does not isolate module import from body execution.",
+    "A complete drain within the original budget is one observation; reproducible throughput root cause and stable performance closure remain unproved.",
+    "Nested fixture red reports and invalid cost records in cost-observation negative controls are not ordinary outer assertion failures.",
+    "Remote filesystem disposal cannot be checked after the CI runner exits; owned group acceptance is the logged cleanup authority."
+  ]
+}

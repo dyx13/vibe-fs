@@ -1,0 +1,14 @@
+[
+  {
+    "id": "fable",
+    "version": "5.13.0",
+    "archivePath": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/fable.5.13.0.nupkg",
+    "sha512": "XbPbm+0ZLocSdlXAu3812SoXpZQocxpY6fL2tqSvk4Ln7D1Iv8kAfM4f3PfDrJ8J4U7KL3p0saFAZ94TciCgbQ=="
+  },
+  {
+    "id": "fantomas",
+    "version": "6.3.0",
+    "archivePath": "/private/tmp/vibe-fs-release-env-oct8-7eQsBo/archives/fantomas.6.3.0.nupkg",
+    "sha512": "pwg1buPBNciNdZ+SqsddJy+ecG8f0VHdTa2w1rgIsWljatxAh1oOhYqPurnlAGpHWzus1nEufSAN7aF/ZFLQxg=="
+  }
+]

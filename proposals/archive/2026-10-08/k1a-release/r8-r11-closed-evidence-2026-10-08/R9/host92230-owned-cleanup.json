@@ -1,0 +1,166 @@
+{
+  "startedAt": "2026-10-08T08:04:19.717500+00:00",
+  "scope": "Only original8d3 registered HostPID/PGID92230 and exact rootBFAgRf. Existing repositorySIGTERM5000ms/SIGKILL1000ms bounds. No globalkill, prefix deletion, sharedcache or ledger deletion.",
+  "actions": [
+    {
+      "action": "SIGTERM",
+      "pgid": 92230,
+      "at": "2026-10-08T08:04:19.774111+00:00"
+    },
+    {
+      "action": "remove-exact-root",
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf",
+      "at": "2026-10-08T08:04:20.174285+00:00"
+    }
+  ],
+  "removed": true,
+  "before": {
+    "rootIdentity": {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf",
+      "dev": 16777231,
+      "ino": 157913256,
+      "uid": 501,
+      "isDirectory": true,
+      "isSymlink": false
+    },
+    "processIdentity": {
+      "command": [
+        "ps",
+        "-p",
+        "92230",
+        "-o",
+        "pid=,ppid=,pgid=,uid=,lstart=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "92230     1 92230   501 Thu Oct  8 14:49:35 2026     /Users/yuanxi/Workwork/vibe-fs/node_modules/.bin/opencode serve --port 0 --hostname 127.0.0.1\n",
+      "stderr": ""
+    },
+    "groupRows": [
+      {
+        "pid": 92230,
+        "ppid": 1,
+        "pgid": 92230,
+        "uid": 501,
+        "state": "Ss"
+      }
+    ],
+    "cwd": {
+      "command": [
+        "lsof",
+        "-nP",
+        "-a",
+        "-p",
+        "92230",
+        "-d",
+        "cwd",
+        "-Fn"
+      ],
+      "exitCode": 0,
+      "stdout": "p92230\nfcwd\nn/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/workspace\n",
+      "stderr": ""
+    },
+    "ledgerEntries": [
+      {
+        "pid": 92230,
+        "pgid": 92230,
+        "startTime": null,
+        "cmd": "opencode serve /private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/workspace",
+        "runId": "1791442173526-92221-cayf6n",
+        "expiresAt": 1791443975369
+      }
+    ],
+    "ledgerOwner": {
+      "pid": 92221,
+      "startTime": null,
+      "runId": "1791442173526-92221-cayf6n",
+      "startedAt": 1791442173526
+    },
+    "socket": {
+      "command": [
+        "lsof",
+        "-nP",
+        "-a",
+        "-p",
+        "92230",
+        "-iTCP:4096",
+        "-sTCP:LISTEN",
+        "-Fn"
+      ],
+      "exitCode": 0,
+      "stdout": "p92230\nf10\nn127.0.0.1:4096\n",
+      "stderr": ""
+    }
+  },
+  "sigtermObservations": [
+    {
+      "elapsedMs": 17.960541998036206,
+      "rows": [
+        {
+          "pid": 92230,
+          "ppid": 1,
+          "pgid": 92230,
+          "uid": 501,
+          "state": "?Es"
+        }
+      ],
+      "pidObservation": "ESRCH"
+    },
+    {
+      "elapsedMs": 86.4989580004476,
+      "rows": [],
+      "pidObservation": "ESRCH"
+    }
+  ],
+  "afterBeforeRemoval": {
+    "groupRows": [],
+    "pidObservation": "ESRCH",
+    "socket": {
+      "command": [
+        "lsof",
+        "-nP",
+        "-a",
+        "-p",
+        "92230",
+        "-iTCP:4096",
+        "-sTCP:LISTEN",
+        "-Fn"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "rootBeforeRemoval": {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf",
+      "dev": 16777231,
+      "ino": 157913256,
+      "uid": 501,
+      "isDirectory": true,
+      "isSymlink": false
+    },
+    "openFilesUnderRoot": {
+      "command": [
+        "lsof",
+        "-nP",
+        "+D",
+        "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "mount": {
+      "command": [
+        "mount"
+      ],
+      "exitCode": 0,
+      "exactRootMatches": []
+    }
+  },
+  "after": {
+    "rootExists": false,
+    "pidObservation": "ESRCH",
+    "groupRows": [],
+    "ledgerPreserved": true
+  },
+  "finishedAt": "2026-10-08T08:04:20.191327+00:00"
+}

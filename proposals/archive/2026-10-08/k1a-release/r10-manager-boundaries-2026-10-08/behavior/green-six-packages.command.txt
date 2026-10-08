@@ -1,0 +1,5 @@
+Exact command supplied by the parent agent after the run, not reconstructed as a contemporaneous process receipt:
+
+node --test --test-concurrency=2 requirements/relay-incumbency/tests/*.test.mjs requirements/change-integration/tests/*.test.mjs requirements/dispatch-protocol/tests/*.test.mjs requirements/crash-reconciliation/tests/*.test.mjs requirements/relay-retirement/tests/*.test.mjs requirements/relay-context-projection/tests/*.test.mjs > /private/tmp/vibe-fs-oct8-alias-release/manager-invalidated-accepted/green-six-packages.log 2>&1
+
+The parent sourced the selected environment with Node v22.23.3 and reported no additional tier selection; direct Node exit code was 0. The expected input expands to 78 numbered requirement files. The TAP output has no separate authoritative completed-file count. No independent whole-resource cleanup receipt exists for this scoped run.

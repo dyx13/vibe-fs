@@ -1,0 +1,74 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Wanxiangshu</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Identity.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Identity.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Quiescence.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Quiescence.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/GlobMatch.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/GlobMatch.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Roles.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Roles.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/OfficeCapability.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/OfficeCapability.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/Catalog.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/Catalog.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/ManagedCatalog.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/ManagedCatalog.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/Identity.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/Identity.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/RolesSurface.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/RolesSurface.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/FatalProcess.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/FatalProcess.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Outcome.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Outcome.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/Model.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/Model.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/StoreTypes.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/StoreTypes.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/OfficeCapabilitySurface.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/OfficeCapabilitySurface.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/Surface.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Persona/Surface.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Capability.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Capability.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Description.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Description.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Surface.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Surface.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Failure.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Failure.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Anchor.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Anchor.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Transaction.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Transaction.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/Port.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/Port.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/EventStoreHandle.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/EventStoreHandle.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/EventVocabulary.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/EventVocabulary.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Process/JsSandbox.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Process/JsSandbox.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Utf8Fs.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/Utf8Fs.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/GlobFs.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/GlobFs.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/AnchorFs.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/AnchorFs.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/MutationFs.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/MutationFs.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/TransactionStore.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/TransactionStore.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/OutcomeSurface.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/OutcomeSurface.fs"/>
+  </ItemGroup>
+</Project>

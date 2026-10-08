@@ -1,0 +1,73 @@
+﻿2026-10-08T06:38:31.9694247Z ##[group]Run actions/checkout@v4
+2026-10-08T06:38:31.9694636Z with:
+2026-10-08T06:38:31.9694805Z   repository: dyx13/vibe-fs
+2026-10-08T06:38:31.9696440Z   token: ***
+2026-10-08T06:38:31.9696605Z   ssh-strict: true
+2026-10-08T06:38:31.9696766Z   ssh-user: git
+2026-10-08T06:38:31.9696936Z   persist-credentials: true
+2026-10-08T06:38:31.9697116Z   clean: true
+2026-10-08T06:38:31.9697286Z   sparse-checkout-cone-mode: true
+2026-10-08T06:38:31.9697487Z   fetch-depth: 1
+2026-10-08T06:38:31.9697651Z   fetch-tags: false
+2026-10-08T06:38:31.9697831Z   show-progress: true
+2026-10-08T06:38:31.9697997Z   lfs: false
+2026-10-08T06:38:31.9698151Z   submodules: false
+2026-10-08T06:38:31.9698324Z   set-safe-directory: true
+2026-10-08T06:38:31.9698516Z   allow-unsafe-pr-checkout: false
+2026-10-08T06:38:31.9698913Z ##[endgroup]
+2026-10-08T06:38:32.0507452Z Syncing repository: dyx13/vibe-fs
+2026-10-08T06:38:32.0508954Z ##[group]Getting Git version info
+2026-10-08T06:38:32.0509364Z Working directory is '/home/runner/work/vibe-fs/vibe-fs'
+2026-10-08T06:38:32.0510379Z [command]/usr/bin/git version
+2026-10-08T06:38:32.0603472Z git version 2.55.0
+2026-10-08T06:38:32.0618867Z ##[endgroup]
+2026-10-08T06:38:32.0630469Z Temporarily overriding HOME='/home/runner/work/_temp/7ea1dc15-3d62-4f20-9ff8-ffd65f81ba47' before making global git config changes
+2026-10-08T06:38:32.0631580Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-08T06:38:32.0642148Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/vibe-fs/vibe-fs
+2026-10-08T06:38:32.0695964Z Deleting the contents of '/home/runner/work/vibe-fs/vibe-fs'
+2026-10-08T06:38:32.0700518Z ##[group]Initializing the repository
+2026-10-08T06:38:32.0703532Z [command]/usr/bin/git init /home/runner/work/vibe-fs/vibe-fs
+2026-10-08T06:38:32.0903667Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-08T06:38:32.0904808Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-08T06:38:32.0905509Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-08T06:38:32.0905925Z hint: call:
+2026-10-08T06:38:32.0906601Z hint:
+2026-10-08T06:38:32.0906900Z hint: 	git config --global init.defaultBranch <name>
+2026-10-08T06:38:32.0907132Z hint:
+2026-10-08T06:38:32.0907350Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-08T06:38:32.0907703Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-08T06:38:32.0907969Z hint:
+2026-10-08T06:38:32.0908130Z hint: 	git branch -m <name>
+2026-10-08T06:38:32.0908308Z hint:
+2026-10-08T06:38:32.0908539Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-08T06:38:32.0908989Z Initialized empty Git repository in /home/runner/work/vibe-fs/vibe-fs/.git/
+2026-10-08T06:38:32.0920808Z [command]/usr/bin/git remote add origin https://github.com/dyx13/vibe-fs
+2026-10-08T06:38:32.1046418Z ##[endgroup]
+2026-10-08T06:38:32.1047534Z ##[group]Disabling automatic garbage collection
+2026-10-08T06:38:32.1051881Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-08T06:38:32.1089076Z ##[endgroup]
+2026-10-08T06:38:32.1089644Z ##[group]Setting up auth
+2026-10-08T06:38:32.1095106Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-08T06:38:32.1130635Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-08T06:38:32.1453155Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-08T06:38:32.1485097Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-08T06:38:32.1689724Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-08T06:38:32.1722474Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-08T06:38:32.1926695Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-08T06:38:32.2036344Z ##[endgroup]
+2026-10-08T06:38:32.2037381Z ##[group]Fetching the repository
+2026-10-08T06:38:32.2041430Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +8d3a7406ab7df9e13a4af8fca12c0799df5c2398:refs/remotes/origin/master
+2026-10-08T06:38:36.9874281Z From https://github.com/dyx13/vibe-fs
+2026-10-08T06:38:36.9875009Z  * [new ref]         8d3a7406ab7df9e13a4af8fca12c0799df5c2398 -> origin/master
+2026-10-08T06:38:36.9886480Z ##[endgroup]
+2026-10-08T06:38:36.9895430Z ##[group]Determining the checkout info
+2026-10-08T06:38:36.9895742Z ##[endgroup]
+2026-10-08T06:38:36.9896080Z [command]/usr/bin/git sparse-checkout disable
+2026-10-08T06:38:36.9943157Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-08T06:38:36.9982823Z ##[group]Checking out the ref
+2026-10-08T06:38:36.9988144Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2026-10-08T06:38:37.8743246Z Reset branch 'master'
+2026-10-08T06:38:37.8750269Z branch 'master' set up to track 'origin/master'.
+2026-10-08T06:38:37.8825084Z ##[endgroup]
+2026-10-08T06:38:37.8873206Z [command]/usr/bin/git log -1 --format=%H
+2026-10-08T06:38:37.8901125Z 8d3a7406ab7df9e13a4af8fca12c0799df5c2398

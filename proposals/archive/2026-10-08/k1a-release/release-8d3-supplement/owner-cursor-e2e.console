@@ -1,0 +1,41 @@
+{
+  "preliminaryDirtyInput": true,
+  "before": {
+    "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "status": " M requirements/verification-system/tests/014.test.mjs\n M requirements/verification-system/tests/e2e/scenarios/long-stroke.toml\n?? proposals/archive/2026-10-08/k1a-release/release-8d3/\n",
+    "diff": "recorded in receipt",
+    "digest": "d2c1635dfab1aea511bf9324f0d9b1f84eb9e07fcf6b43ddce07ef6a9330fc21",
+    "build": {
+      "generation": 327,
+      "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+      "generatedInputDigest": "d8816ba4f9df96415f864ce362ed172eb1913d293ef00e98d5e0f718f2f9ade5",
+      "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+    }
+  },
+  "after": {
+    "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "status": " M requirements/verification-system/tests/014.test.mjs\n M requirements/verification-system/tests/e2e/scenarios/long-stroke.toml\n?? proposals/archive/2026-10-08/k1a-release/release-8d3/\n",
+    "diff": "recorded in receipt",
+    "digest": "d2c1635dfab1aea511bf9324f0d9b1f84eb9e07fcf6b43ddce07ef6a9330fc21",
+    "build": {
+      "generation": 327,
+      "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+      "generatedInputDigest": "d8816ba4f9df96415f864ce362ed172eb1913d293ef00e98d5e0f718f2f9ade5",
+      "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+    }
+  },
+  "inputsEqual": true,
+  "command": [
+    "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs"
+  ],
+  "timeoutMs": 1500000,
+  "startedAt": "2026-10-08T07:27:42.917Z",
+  "durationMs": 6424.88375,
+  "timedOut": false,
+  "exitCode": 1,
+  "signal": null,
+  "failure": null,
+  "monitorPid": 98684,
+  "monitorObservation": "ESRCH"
+}

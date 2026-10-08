@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Wanxiangshu</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/EventVocabulary.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Repository/Programming/Js/EventVocabulary.fs"/>
+  </ItemGroup>
+</Project>

@@ -62,8 +62,9 @@ async function captureTool(executable, argv, options) {
   let stderr = ''
   owner.child.stdout.setEncoding('utf8').on('data', chunk => { stdout += chunk })
   owner.child.stderr.setEncoding('utf8').on('data', chunk => { stderr += chunk })
+  const started = await owner.started
   const outcome = await owner.completed
-  return { ...outcome, stdout, stderr, monitorPid: owner.child.pid }
+  return { ...outcome, started, stdout, stderr, monitorPid: owner.child.pid }
 }
 
 function registerProbeSetupFailureTest(failCleanup) {
@@ -246,6 +247,7 @@ process.stderr.write('actual selected stderr\\n')
         assert.equal(outcome.exitCode, 0)
         assert.equal(outcome.signal, null)
         const selected = JSON.parse(outcome.stdout)
+        assert.deepEqual(outcome.started, { pid: selected.pid, failure: null })
         assert.deepEqual(selected.env, env)
         assert.equal(selected.ipc, 'undefined')
         assert.equal(selected.pgid, selected.pid)
@@ -278,6 +280,8 @@ process.stderr.write('actual selected stderr\\n')
         assert.equal(outcome.failure.code, 'ENOENT')
         assert.equal(outcome.failure.path, executable)
         assert.match(outcome.failure.syscall, /spawn/)
+        assert.equal(outcome.started.pid, null)
+        assert.equal(outcome.started.failure, outcome.failure)
       })
 
       for (const kind of ['missing', 'malformed', 'duplicate']) {
@@ -301,6 +305,46 @@ process.exit(0)
           assert.equal(fs.existsSync(selectedMarker), false, 'This protocol rejection precedes selected spawn; it does not prove recovery from a running monitor crash')
           assert.ok(outcome.failure instanceof Error)
           assert.match(outcome.failure.message, /terminal record|tool or its monitor failed/)
+        })
+      }
+      for (const kind of ['missing', 'malformed', 'duplicate']) {
+        await t.test(`WHAT[verification-system-006] ${kind} actual tool start evidence rejects acceptance and drains its group`, async () => {
+          const preload = path.join(directory, `${kind}-start-preload.mjs`)
+          const selectedMarker = path.join(directory, `${kind}-actual-tool.json`)
+          fs.writeFileSync(preload, `import fs from 'node:fs'
+import { ChildProcess, execFileSync } from 'node:child_process'
+if (typeof process.send === 'function' && process.argv[1]?.endsWith('verification-tool-monitor.mjs')) {
+  const emit = ChildProcess.prototype.emit
+  ChildProcess.prototype.emit = function (event, ...args) {
+    if (event === 'spawn') {
+      ChildProcess.prototype.emit = emit
+      fs.writeFileSync(${JSON.stringify(selectedMarker)}, JSON.stringify({ pid: this.pid,
+        pgid: Number(execFileSync('/bin/ps', ['-o', 'pgid=', '-p', String(this.pid)], { encoding: 'utf8' })) }))
+    }
+    return Reflect.apply(emit, this, [event, ...args])
+  }
+  const send = process.send.bind(process)
+  process.send = (message, callback) => {
+    if (message.type !== 'verification-tool-started') return send(message, callback)
+    if (${JSON.stringify(kind)} === 'missing') { callback?.(null); return true }
+    if (${JSON.stringify(kind)} === 'malformed') return send({ ...message, pid: message.monitorPid }, callback)
+    send(message, () => {})
+    return send(message, callback)
+  }
+}
+`)
+          const outcome = await captureTool(process.execPath, ['-e', 'process.stdout.write("selected tool ran")'], {
+            cwd: directory, env: { ...env, NODE_OPTIONS: `--import=${preload}` },
+          })
+          const selected = JSON.parse(fs.readFileSync(selectedMarker, 'utf8'))
+          assert.equal(selected.pgid, selected.pid, 'The actual selected process established its own group')
+          assert.notEqual(selected.pid, outcome.monitorPid)
+          assert.ok(outcome.failure instanceof Error)
+          assert.match(outcome.failure.message, /start record|tool or its monitor failed/)
+          if (kind === 'duplicate') assert.deepEqual(outcome.started, { pid: selected.pid, failure: null })
+          else assert.deepEqual(outcome.started, { pid: null, failure: outcome.failure })
+          assert.deepEqual(liveProcessRows().filter(row => row.pgid === selected.pgid || row.pgid === outcome.monitorPid), [],
+            'Both owned groups must drain before the invalid protocol outcome is returned')
         })
       }
     } finally {

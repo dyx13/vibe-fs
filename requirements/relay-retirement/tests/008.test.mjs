@@ -1,15 +1,33 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { cpSync, readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import {withReview, scores} from '../../relay-assessment/tests/support/plugin.mjs'
 import {withSuccessor, messageId} from '../../relay-context-projection/tests/support/cut.mjs'
 import { withExecutablePlugin, acceptAuthorityRoot } from '../../verification-system/tests/support/plugin-fixture.mjs'
+import * as workflow from '../../../dist/Mission/Manager/WorkflowSurface.js'
+import * as dispatch from '../../../dist/Interaction/Dispatch/DispatchSurface.js'
+import * as projection from '../../../dist/Mission/Relay/ProjectionSurface.js'
+import * as journal from '../../../dist/Persistence/Journal/Surface.js'
+import { withManagerLoop } from '../../relay-incumbency/tests/support/manager-loop.mjs'
 
 test('WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt', async () => {
-  await withReview(async ({execute, hooks, runtime, session}) => {
+  await withReview(async ({execute, hooks, directory, runtime, session}) => {
     assert.match(await execute(scores('PERFECT')), /recorded = true/)
     const result = await hooks.tool.suicide.execute({}, {sessionID: session, callID: 'suicide-call', messageID: 'retirement-run', agent: 'manager'})
     assert.match(result, /finished = true/)
     assert.deepEqual(runtime.abortedIds, [])
+    const road = handle => journal.JournalSurface_snapshot(handle).sessionProjections[session].relay
+    const acceptedRoad = structuredClone(road(runtime.journal))
+    assert.equal(acceptedRoad.roads[0].certificatePresent, true)
+    assert.equal(acceptedRoad.roads[0].activeIncumbencyPresent, false)
+    const eventDirectory = join(directory, '.git', 'wanxiang', 'events')
+    const relayFacts = () => readdirSync(eventDirectory).filter(name => name.endsWith('.ndjson')).sort()
+      .flatMap(name => readFileSync(join(eventDirectory, name), 'utf8').trim().split('\n'))
+      .filter(line => line.includes('"TransactionCommitted"'))
+    const acceptedFacts = relayFacts()
+    assert.ok(acceptedFacts.some(line => line.includes('"RetirementCommitted"')))
+    assert.equal(acceptedFacts.filter(line => line.includes('"QualityCertificateInvalidated"')).length, 0)
     const output = {messages: [
       {info: {id: 'user-root', role: 'user', sessionID: session, model: {providerID: 'provider', modelID: 'manager-model'}}, parts: [{type: 'text', text: 'Deliver the requested behavior and verification.'}]},
       {info: {id: 'retirement-run', role: 'assistant'}, parts: [{type: 'text', text: 'Old closing tail'}]},
@@ -18,6 +36,21 @@ test('WHAT[relay-retirement-008] actual Accepted suicide returns without abort a
     assert.deepEqual(output.messages, [])
     assert.deepEqual(runtime.abortedIds, [session])
     assert.equal(runtime.prompts.length, 0)
+    assert.deepEqual(road(runtime.journal), acceptedRoad,
+      'the stale physical request must leave the Accepted certificate, opening ordinal and inactive road unchanged')
+    assert.deepEqual(relayFacts(), acceptedFacts,
+      'interrupting the old cut must not commit certificate invalidation or a successor opening')
+    const coldDirectory = join(directory, 'cold-accepted-road')
+    cpSync(join(directory, '.git', 'wanxiang'), join(coldDirectory, 'wanxiang'), { recursive: true })
+    const reopened = await journal.JournalSurface_bootWithWriterId(coldDirectory, 'accepted-cold',
+      'rt_accepted_cold', process.pid, '2026-10-08T00:00:00Z')
+    assert.equal(reopened.ok, true, JSON.stringify(reopened.error))
+    try {
+      assert.deepEqual(road(reopened.journal), acceptedRoad,
+        'an independent cold fold must retain the exact Accepted road after the stale transform')
+    } finally {
+      journal.JournalSurface_dispose(reopened.journal)
+    }
   })
 })
 
@@ -119,6 +152,66 @@ test('WHAT[relay-retirement-008] physical prompt after Accepted suicide invalida
       context('call-fork-successor', 'msg-successor'),
     )
     assert.doesNotMatch(forkSuccessor, /(当前不可用|is not available right now)/, 'fork must be unblocked after human input advances the continuous session')
+  })
+})
+
+test('WHAT[relay-retirement-008] invalidated Accepted keeps its stale cut and stops without automatic send while ordinary ContinueLoop sends', async () => {
+  await withManagerLoop('invalid-accepted-active', async context => {
+    const { directory, session, profile, road } = context
+    const original = dispatch.projectionObservation(context.journal(), session)
+    const beforeRoad = road()
+    const stale = [
+      { info: { id: profile.authorityRoot, role: 'user', sessionID: session },
+        parts: [{ type: 'text', text: 'Deliver this original Manager charge.' }] },
+      { info: { id: 'provider:1', role: 'assistant', sessionID: session, parentID: profile.authorityRoot },
+        parts: [{ type: 'tool', tool: 'suicide', callID: 'suicide:1',
+          state: { status: 'completed', input: {}, output: 'finished = true' } }] },
+    ]
+    assert.deepEqual(await projection.apply(context.journal(), session, false, stale), {
+      disposition: 'retired-attempt-stopped', messages: [], interrupted: [session],
+    }, 'certificate invalidation and the active successor cannot turn the old physical request into new authority')
+    const stopping = Promise.withResolvers()
+    const release = Promise.withResolvers()
+    const stopped = []
+    const sent = []
+    const port = {
+      SubscribeTerminal: () => ({ Dispose() {} }),
+      SubscribeFutureTerminal: () => ({ Dispose() {} }),
+      AbortSession: () => assert.fail('ordinary continuation must not abort the session'),
+      InterruptAttempt: () => assert.fail('the exact interruption is owned by the supplied stop callback'),
+      SendPrompt: async (target, text, options) => {
+        const key = options.Metadata.wanxiangshu_prompt_key
+        const pending = dispatch.projectionObservation(context.journal(), session).pendingClaims
+        const claim = pending.find(value => value.promptKey === key)
+        assert.equal(target, session)
+        assert.equal(claim?.origin, 'ManagerGuard')
+        assert.equal(claim?.logicalRun, profile.logicalRun)
+        assert.equal(claim?.authorityRoot, profile.authorityRoot)
+        sent.push({ key, text })
+        return dispatch.admittedWithPhysicalMessage(`ordinary-accepted-${session}`)
+      },
+    }
+    const attempt = workflow.continueAfterRetiredAttempt(port, context.journal(), session, directory, async exact => {
+      stopped.push(exact)
+      stopping.resolve()
+      await release.promise
+    })
+    try {
+      await stopping.promise
+      assert.deepEqual(stopped, [session])
+      assert.equal(sent.length, 0, 'the old physical attempt must finish stopping first')
+    } finally {
+      release.resolve()
+    }
+    await attempt
+    assert.equal(sent.length, 0, 'Accepted must never automatically dispatch after stale-attempt interruption')
+    assert.deepEqual(road(), beforeRoad)
+    assert.deepEqual(dispatch.projectionObservation(context.journal(), session), original,
+      'stopping a stale Accepted attempt must leave the actual live AgentOwnerRoot and claims untouched')
+    await workflow.maybeDeliverLoop(port, context.journal(), session, directory)
+    assert.equal(sent.length, 1, 'explicit ordinary ContinueLoop still dispatches the exact invalidated Accepted retirement')
+    assert.deepEqual(dispatch.projectionObservation(context.journal(), session).activeLogicalRun, profile)
+    context.assertSubscriptionLive()
   })
 })
 

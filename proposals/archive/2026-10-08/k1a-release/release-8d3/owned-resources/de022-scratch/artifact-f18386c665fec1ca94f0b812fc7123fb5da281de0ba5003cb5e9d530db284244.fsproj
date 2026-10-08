@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Wanxiangshu</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Foundation/Identity.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Foundation/Identity.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Foundation/Quiescence.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Foundation/Quiescence.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Foundation/AsyncSupport.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Foundation/AsyncSupport.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/Model.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/Model.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/StoreTypes.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/StoreTypes.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/GitTypes.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/GitTypes.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/GitObjectDatabase.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/GitObjectDatabase.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/ProcessGitRawStore.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/src/Persistence/EventStore/ProcessGitRawStore.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-vucZDC/probe-reversed-dependency.fs"/>
+  </ItemGroup>
+</Project>

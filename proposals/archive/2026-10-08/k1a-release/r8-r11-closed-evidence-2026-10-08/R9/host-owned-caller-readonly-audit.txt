@@ -1,0 +1,26 @@
+Read-only review of parent-applied Host lifeline caller/API changes
+Status: no new tests/builds run by this audit agent, no repository edits.
+Parent reports complete WXS_TIER_INTEGRATION=1 node --test requirements/verification-system/tests/006.test.mjs:63pass0fail0skip0TODO,26.903s. This receipt does not independently recreate that execution.
+
+Correct interface wiring observed
+ProcessHost now owns an explicit owned-tool handle. Its public PID is the actual selected Host PID from the unconditional validated started IPC, not owner.child.pid (the monitor).
+Spawn counter and ledger entries use actual Host PID. Exit ledger entry is emitted only when a real exitCode or signal exists; missing monitor terminal does not erase the actual Host's ledger evidence.
+stdout/stderr hooks attach before awaiting started. _waitForListening consumes already observed ring-buffer stdout. Its poll returns after settlement.
+Readiness and public exitInfo observe completed's actual selected exitCode/signal/failure; no monitor exit is mislabeled as the Host exit.
+Started failure awaits completed before throwing; listening failure closes lifeline and awaits completion. Health failure retains the original existing caller-finally-stop contract.
+Normal stop closes the lifeline, waits completed and fails on monitor/cleanup evidence failure, then performs the existing actual PID/port/process checks. It does not signal unrelated socket owners with fuser.
+Raw terminateChild remains used by support/fixtures/late-orphan-after-stop.fixture.mjs. Its rawchild behavior was not replaced by a monitor facade. The old Host-only activeChildPids/hooks are removed rather than kept as an alternate authority.
+
+Concrete existing harness premise mismatches needing correction before broader harness acceptance
+integration/harness/cases.mjs:88-121,133-199,229-255 directly exercise private HTTP health adapters on a ProcessHost with no running _owner. Original child?.once tolerated no lifecycle object. New owner.completed dereference before the try will throw TypeError after allocating the health timer. Either preserve ownerless adapter observation with optional chaining, or supply an explicit pending completed port in those adapter fixtures; do not revive _child compatibility state.
+cases.mjs:201-226 and257-273 still assign host._child=EventEmitter. Their exit/release input no longer drives actual readiness. Replace that fixture port with Promise.withResolvers().promise as owned completion; resolve in the actual HTTP request handler, preserving exit17/interrupt/release behavior without sleep ordering.
+cases.mjs:562-572 still scans process-host.js for the SIGKILL literal. The actual SIGKILL responsibility moved to the owned-tool monitor. Replace this obsolete implementation-location assertion with actual normal-stop/owned-group/port/foreign-preservation behavior rather than moving the string scan to another file. Keep all disposal/reset assertions and fail propagation.
+These source-proven mismatches are not reported as executed failures in this receipt.
+
+Minimal remaining formal caller coverage
+Actual stub OpenCode can exit23 on receiving the first /global/health request. Assert start rejects due to actual23, publicpid matches the stub's own PID and differs from monitor, exitInfo reports actual23/null before stop, and owned process/port are gone after stop. Request receipt is the causal barrier; no sleep is needed.
+For early stdout, reuse the existing native ChildProcess.emit test-hook style: hold only the actual verification-tool-started IPC delivery until actual monitor.stdout has forwarded the complete ready line. Then release the exact message and require successful health. This proves ready-before-started and makes a caller that fails to consume already buffered stdout deterministically red.
+OS spawn failure and missing/malformed/duplicate actual start/terminal outcomes already have independent owned-tool formal tests. They do not by themselves prove ProcessHost's public PID/exitInfo mapping.
+
+Scope limits
+No claim of complete installed Host, all integration44files, Long Stroke or release acceptance is made. Platform expansion, budgets, concurrency, tiers, existing skips/TODOs and SDK ownership remain outside this review.

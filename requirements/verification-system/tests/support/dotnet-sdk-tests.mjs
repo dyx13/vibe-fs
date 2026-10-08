@@ -5,6 +5,7 @@ import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
 import { create } from 'tar'
+import { copySelectedSdkArchive } from './selected-sdk-archive.mjs'
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..')
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex')
@@ -79,6 +80,56 @@ function capturedInventory(root) {
 }
 
 export function registerDotnetSdkTests() {
+  test('WHAT[verification-system-016] explicit SDK archive selection keeps independent copies and rejects a bad raw identity before ownership or probes', async () => {
+    const selected = fixture()
+    try {
+      const calls = path.join(selected.root, 'calls')
+      writeExecutable(selected, `require('node:fs').appendFileSync(${JSON.stringify(calls)}, 'unexpected probe'); process.exit(73)`)
+      const options = await archive(selected)
+      const originalBytes = fs.readFileSync(options.archivePath)
+      const originalMode = fs.lstatSync(options.archivePath).mode
+      const selection = {
+        WXS_VERIFICATION_READONLY_SDK_ARCHIVE: options.archivePath,
+        WXS_VERIFICATION_READONLY_SDK_ARCHIVE_SHA256: options.archiveSha256,
+        WXS_VERIFICATION_DOTNET_ROOT: path.join(selected.root, 'missing-live-sdk'),
+      }
+      const absentPath = path.join(selected.root, 'absent.tar')
+      assert.equal(copySelectedSdkArchive(absentPath, {}), null)
+      assert.equal(fs.existsSync(absentPath), false)
+      const invalidSelections = [
+        { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE: undefined },
+        { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE_SHA256: undefined },
+        { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE: '' },
+        { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE_SHA256: '' },
+        { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE_SHA256: 'not-a-sha256' },
+        { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE: 'relative.tar' },
+        { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE: selected.selectedRoot },
+        { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE: path.join(selected.root, 'missing.tar') },
+      ]
+      for (const invalid of invalidSelections) {
+        assert.throws(() => copySelectedSdkArchive(absentPath, invalid))
+        assert.equal(fs.existsSync(absentPath), false, 'Malformed explicit selection must not fall back or publish a copy')
+        assertReleased(selected)
+      }
+      const copies = [path.join(selected.root, 'first.tar'), path.join(selected.root, 'second.tar')]
+      for (const copy of copies) {
+        assert.equal(copySelectedSdkArchive(copy, selection), options.archiveSha256)
+        assert.deepEqual(fs.readFileSync(copy), originalBytes)
+      }
+      assert.throws(() => copySelectedSdkArchive(copies[0], selection), { code: 'EEXIST' })
+      const badCopy = path.join(selected.root, 'bad-identity.tar')
+      const declaredSha256 = copySelectedSdkArchive(badCopy, { ...selection, WXS_VERIFICATION_READONLY_SDK_ARCHIVE_SHA256: '0'.repeat(64) })
+      assert.equal(declaredSha256, '0'.repeat(64), 'Only the real SDK preparation accepts or rejects raw archive bytes')
+      await rejectedPreparation({ ...options, archivePath: badCopy, archiveSha256: declaredSha256 }, error => error.code === 'verification-dotnet-sdk-integrity-invalid')
+      assertReleased(selected)
+      assert.equal(fs.existsSync(calls), false, 'A rejected selected archive must never reach the selected executable')
+      assert.deepEqual(fs.readFileSync(options.archivePath), originalBytes, 'The original caller archive remains unchanged')
+      assert.equal(fs.lstatSync(options.archivePath).mode, originalMode)
+      for (const copy of [...copies, badCopy]) assert.deepEqual(fs.readFileSync(copy), originalBytes)
+    } finally {
+      fs.rmSync(selected.root, { recursive: true, force: true })
+    }
+  })
   for (const replaced of ['archive', 'probe']) {
     test(`WHAT[verification-system-016] successful SDK probe replacing its ${replaced} root cannot start another selected executable`, async () => {
       const selected = fixture()

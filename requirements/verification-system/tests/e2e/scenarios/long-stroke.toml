@@ -229,15 +229,15 @@ flow = [
   { wait = "engineer.2", timeoutMs = 60000 },
   { awaitIdle = { after = "engineer.2" }, timeoutMs = 60000 },
   { awaitIdle = { after = "manager-interrupt.0" }, timeoutMs = 60000 },
-  { waitFact = { name = "HandleCompleted", gte = 1 }, timeoutMs = 60000 },
+  { waitFact = { name = "HandleWorkCompleted", gte = 1, session = "child" }, timeoutMs = 60000 },
 
   # Bounded current-action cursors are verified by durable retirement and the
   # Host cognitive-tool canary (assume) rather than one incidental transport step number.
-  # HumanRoot preflow baseline: +2 RetirementCommitted(Continue+Accepted) / +2 IncumbencyOpened.
+  # These barriers count the bound Manager road, independently of other HumanRoot roads.
   # A Continue retirement is followed by another ordinary IncumbencyOpened event
   # and a physically observed provider request; Accepted exits.
-  { waitFact = { name = "RetirementCommitted", gte = 3 }, timeoutMs = 60000 },
-  { waitFact = { name = "IncumbencyOpened", gte = 4 }, timeoutMs = 60000 },
+  { waitFact = { name = "RetirementCommitted", gte = 1, session = "child" }, timeoutMs = 60000 },
+  { waitFact = { name = "IncumbencyOpened", gte = 2, session = "child" }, timeoutMs = 60000 },
 
   # Iteration #2 independently audits the current snapshot at 8×10 and retires
   # with Outcome Continue. Every iteration starts from the same typed authority
@@ -246,8 +246,8 @@ flow = [
   # deliberately conflicting target edit yields the machine ConflictDetected fact.
   # The Manager owner opens iteration #2 through the same manager-assess resource.
   # Durable facts order every later incarnation; prompt text never encodes an index.
-  { waitFact = { name = "AssessmentCommitted", gte = 4 }, timeoutMs = 60000 },
-  { waitFact = { name = "RetirementCommitted", gte = 4 }, timeoutMs = 60000 },
+  { waitFact = { name = "AssessmentCommitted", gte = 2, session = "child" }, timeoutMs = 60000 },
+  { waitFact = { name = "RetirementCommitted", gte = 2, session = "child" }, timeoutMs = 60000 },
   { waitFact = { name = "CandidateReady", eq = 1 }, timeoutMs = 60000 },
   { waitFact = { name = "ConflictDetected", gte = 1 }, timeoutMs = 60000 },
 
@@ -256,21 +256,21 @@ flow = [
   # then retires with Outcome Continue. A retired iteration
   # never resumes; each iteration-first carries only the current iteration, with
   # the exact owner-controlled assessment resource after the authority prefix.
-  { waitFact = { name = "IncumbencyOpened", gte = 5 }, timeoutMs = 60000 },
-  { waitFact = { name = "AssessmentCommitted", gte = 5 }, timeoutMs = 60000 },
+  { waitFact = { name = "IncumbencyOpened", gte = 3, session = "child" }, timeoutMs = 60000 },
+  { waitFact = { name = "AssessmentCommitted", gte = 3, session = "child" }, timeoutMs = 60000 },
   { wait = "engineer-resolve.0", timeoutMs = 60000 },
   { wait = "engineer-resolve.1", timeoutMs = 60000 },
   { awaitIdle = { after = "engineer-resolve.1" }, timeoutMs = 60000 },
   # The conflict repair uses the same manager-work resource and a fresh owned handle;
   # the owner harvests and retires it without an external continuation prompt.
-  { waitFact = { name = "RetirementCommitted", gte = 5 }, timeoutMs = 60000 },
+  { waitFact = { name = "RetirementCommitted", gte = 3, session = "child" }, timeoutMs = 60000 },
 
   # Iteration #4 independently re-audits the repaired snapshot at 8×10 from the
   # same authority. A fresh certificate (Outcome Accepted) is required before
   # rebase completion/publish can proceed; Accepted exits with no further iteration.
-  { waitFact = { name = "IncumbencyOpened", gte = 6 }, timeoutMs = 60000 },
-  { waitFact = { name = "AssessmentCommitted", gte = 6 }, timeoutMs = 60000 },
-  { waitFact = { name = "RetirementCommitted", gte = 6 }, timeoutMs = 60000 },
+  { waitFact = { name = "IncumbencyOpened", gte = 4, session = "child" }, timeoutMs = 60000 },
+  { waitFact = { name = "AssessmentCommitted", gte = 4, session = "child" }, timeoutMs = 60000 },
+  { waitFact = { name = "RetirementCommitted", gte = 4, session = "child" }, timeoutMs = 60000 },
   { waitFact = { name = "RebasedCandidateReady", gte = 1 }, timeoutMs = 90000 },
   { waitFact = { name = "Published", eq = 1 }, timeoutMs = 90000 },
 
@@ -655,12 +655,12 @@ user = "# Write publish_proof.txt."
 tools = ["js-engineer", "read"]
 
   [[turn.step]]
-  respond = { type = "tool-call", tool = "js-engineer", args = { program = "class Js extends JsProgram { async run() { await this.write('publish_proof.txt', 'Published by long-stroke canary\\n'); return { written: true }; } }" } }
+  respond = { type = "tool-call", tool = "js-engineer", args = { program = "class Js extends JsProgram { async run() { await this.write('publish_proof.txt', 'Published by long-stroke canary\\n'); return { written: true }; } }", estimated_readonly_rounds = 0 } }
 
   # Native-read failure probe: ordinary Engineer mainline, not Strength Replica.
   # Unique path makes message.part.updated correlation unambiguous in the real Host SSE stream.
   [[turn.step]]
-  respond = { type = "tool-call", tool = "read", args = { filePath = "read_probe.txt" } }
+  respond = { type = "tool-call", tool = "read", args = { filePath = "read_probe.txt", estimated_readonly_rounds = 0 } }
 
   [[turn.step]]
   respond = { type = "text", text = "Engineer finished." }
@@ -672,7 +672,7 @@ user = "# Resolve the conflicted publish_proof.txt so it contains exactly: Publi
 tools = ["write"]
 
   [[turn.step]]
-  respond = { type = "tool-call", tool = "write", args = { filePath = "publish_proof.txt", content = "Published by long-stroke canary\n" } }
+  respond = { type = "tool-call", tool = "write", args = { filePath = "publish_proof.txt", content = "Published by long-stroke canary\n", estimated_readonly_rounds = 0 } }
 
   [[turn.step]]
   respond = { type = "text", text = "Conflict file resolved." }
@@ -1228,15 +1228,16 @@ tools = ["js-manager"]
   [[turn.step]]
   respond = { type = "tool-call", tool = "js-manager", args = { program = "class Js extends JsProgram { async run() { return { inspected: true } } }", estimated_readonly_rounds = 2, self_note = "read-only survey before publishing" } }
 
-  # The continuation whose transform starts the decision (Bound → companion
-  # rounds → Prepared) and renders the candidate before the target assistant
-  # output — the mid-insertion the prefix-probe epoch below admits.
+  # The completed real-read and plain early-end Replica batches each add an
+  # assistant row. With the owner's initial call, this request has cursor 3.
   [[turn.step]]
-  respond = { type = "tool-call", tool = "js-manager", args = { program = "class Js extends JsProgram { async run() { return { inspected: true } } }" } }
+  runtimeStep = 3
+  respond = { type = "tool-call", tool = "js-manager", args = { program = "class Js extends JsProgram { async run() { return { inspected: true } } }", estimated_readonly_rounds = 0 } }
 
   # Successor transform replays the Promoted frames into XTrace before capture
   # (WHAT[speculative-investigation-008]) → StrengthFramesTraced.
   [[turn.step]]
+  runtimeStep = 4
   respond = { type = "text", text = "Companion survey received; the publish can proceed." }
 
 # Both decisions use the production readonly resource and exact JS tool.
@@ -1279,9 +1280,11 @@ tools = ["js-manager"]
   # capture phase before the fault; the Prepared candidate re-renders
   # identically on the retry (DELEGATE-10).
   [[turn.step]]
-  respond = { type = "tool-call", tool = "js-manager", args = { program = "class Js extends JsProgram { async run() { return { inspected: true } } }" } }
+  runtimeStep = 2
+  respond = { type = "tool-call", tool = "js-manager", args = { program = "class Js extends JsProgram { async run() { return { inspected: true } } }", estimated_readonly_rounds = 0 } }
 
   [[turn.step]]
+  runtimeStep = 3
   respond = { type = "text", text = "Recovered delegation consumed; continuing the road." }
 
 # The recovery replica reaches the same readonly declaration. Its estimate-1
@@ -1295,13 +1298,13 @@ tools = ["js-manager"]
 # admitted when it fires, tolerated if a future host projection appends instead.
 [[epoch]]
 turn = "strength-canary-owner"
-step = 1
+step = 3
 reason = "prefix-probe"
 optional = true
 
 [[epoch]]
 turn = "strength-recovery-owner"
-step = 1
+step = 2
 reason = "prefix-probe"
 optional = true
 
@@ -1320,7 +1323,7 @@ optional = true
 # (manager-loop.2 / continue.0) asserted by 003.test.mjs stays untouched.
 [[fault]]
 turn = "strength-recovery-owner"
-step = 1
+step = 2
 delivery = "provider-error"
 status = 500
 retryable = true

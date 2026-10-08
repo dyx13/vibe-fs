@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Wanxiangshu</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Foundation/Identity.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Foundation/Identity.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Foundation/Quiescence.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Foundation/Quiescence.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Persistence/EventStore/Model.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Persistence/EventStore/Model.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Persistence/EventStore/StoreTypes.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Persistence/EventStore/StoreTypes.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Persistence/EventStore/Port.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Persistence/EventStore/Port.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Persistence/EventStore/EventStoreHandle.fsi"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/src/Persistence/EventStore/EventStoreHandle.fs"/>
+    <Compile Include="/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-de022-iso-5rKm7m/probe-reversed-dependency.fs"/>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,336 @@
+TAP version 13
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443734008,"monitorPid":95972,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":95972,"parentPid":95780,"at":1791443734047,"toolPid":95973,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":95972,"parentPid":95780,"at":1791443736070,"toolPid":95973,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":95972,"parentPid":95780,"at":1791443736087,"toolPid":95973}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443736090,"monitorPid":95972,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443736189,"monitorPid":95984,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":95984,"parentPid":95780,"at":1791443736216,"toolPid":95985,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-dn80xR/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":95984,"parentPid":95780,"at":1791443736334,"toolPid":95985,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":95984,"parentPid":95780,"at":1791443736354,"toolPid":95985}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443736356,"monitorPid":95984,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443737047,"monitorPid":95987,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# Subtest: WHAT[verification-system-016] exact repository Git inputs install through a selected npm 11.12.1 bundle and real JavaScript consumers
+    # Subtest: WHAT[verification-system-016] selected committed source tree and complete Node/npm archive have explicit identities before installation
+    ok 1 - WHAT[verification-system-016] selected committed source tree and complete Node/npm archive have explicit identities before installation
+      ---
+      duration_ms: 15306.6025
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":95987,"parentPid":95780,"at":1791443737082,"toolPid":95988,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":95987,"parentPid":95780,"at":1791443738394,"toolPid":95988,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":95987,"parentPid":95780,"at":1791443738412,"toolPid":95988}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443738415,"monitorPid":95987,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443738513,"monitorPid":95990,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":95990,"parentPid":95780,"at":1791443738540,"toolPid":95991,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":95990,"parentPid":95780,"at":1791443738610,"toolPid":95991,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":95990,"parentPid":95780,"at":1791443738626,"toolPid":95991}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443738627,"monitorPid":95990,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443738846,"monitorPid":95993,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":95993,"parentPid":95780,"at":1791443738874,"toolPid":95994,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":95993,"parentPid":95780,"at":1791443738897,"toolPid":95994,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":95993,"parentPid":95780,"at":1791443738913,"toolPid":95994}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443738914,"monitorPid":95993,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443739011,"monitorPid":95996,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":95996,"parentPid":95780,"at":1791443739038,"toolPid":95997,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":95996,"parentPid":95780,"at":1791443739105,"toolPid":95997,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":95996,"parentPid":95780,"at":1791443739121,"toolPid":95997}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443739122,"monitorPid":95996,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443739218,"monitorPid":95999,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":95999,"parentPid":95780,"at":1791443739245,"toolPid":96000,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-npm-j1ollI/candidates/verification-archive-nKB3N6/toolchain/node/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":95999,"parentPid":95780,"at":1791443766297,"toolPid":96000,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":95999,"parentPid":95780,"at":1791443766316,"toolPid":96000}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443766318,"monitorPid":95999,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] actual repository registry installation binds complete dependencies and retains no installer tools
+    ok 2 - WHAT[verification-system-016] actual repository registry installation binds complete dependencies and retains no installer tools
+      ---
+      duration_ms: 34746.900209
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-016] isolated installed Fable Acorn and Tar consumers complete before all candidate resources are released
+    ok 3 - WHAT[verification-system-016] isolated installed Fable Acorn and Tar consumers complete before all candidate resources are released
+      ---
+      duration_ms: 2034.169625
+      type: 'test'
+      ...
+    1..3
+ok 1 - WHAT[verification-system-016] exact repository Git inputs install through a selected npm 11.12.1 bundle and real JavaScript consumers
+  ---
+  duration_ms: 52089.532084
+  type: 'test'
+  ...
+# {"treeId":"bbeba1c9618c41d125d83f3047edbc93e0a6b5fe","sourceDigest":"8acc541fef97a248ef8f6179d1cbe907090e6c2c18be03dfd5270446339a32a7","toolArchiveSha256":"283e1149e0f1e2a4a08ef4f8f4bed6bedaeae10ba0047e634bc53d0a1b6a540e","toolDigest":"a18c87fab80eddbc3c6c592dd8b641148e3a2cb3e03d6ed97acef7201a393496","node":{"path":"toolchain/node/bin/node","sha256":"68f4d07ca49e0500cc135c7e0a445093e228e42e126ac22306d045f0a8c2636b","version":"v22.23.3","platform":"darwin","arch":"arm64"},"npm":{"cliPath":"toolchain/npm/bin/npm-cli.js","cliSha256":"8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7","manifestSha256":"48a06e6aeede3499e391710db82fe948afa7e74ecbf3e819b66121f3cd54666b","version":"11.12.1"}}
+# {"platform":"darwin","arch":"arm64"}\\n
+# 11.12.1\\n
+# npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me\\n
+# \\nadded 236 packages in 27s\\n
+# {"dependencyDigest":"809584f6b1a24cde2dcf1521c5839e03251f5f9ba93120fbb76c70b5d913acea","inventoryEntries":11693,"presentOptional":["node_modules/@msgpackr-extract/msgpackr-extract-darwin-arm64","node_modules/@pkgjs/parseargs","node_modules/detect-libc","node_modules/fsevents","node_modules/msgpackr-extract","node_modules/node-gyp-build-optional-packages","node_modules/opencode-darwin-arm64"],"absentOptional":["node_modules/@msgpackr-extract/msgpackr-extract-darwin-x64","node_modules/@msgpackr-extract/msgpackr-extract-linux-arm","node_modules/@msgpackr-extract/msgpackr-extract-linux-arm64","node_modules/@msgpackr-extract/msgpackr-extract-linux-x64","node_modules/@msgpackr-extract/msgpackr-extract-win32-x64","node_modules/opencode-darwin-x64","node_modules/opencode-darwin-x64-baseline","node_modules/opencode-linux-arm64","node_modules/opencode-linux-arm64-musl","node_modules/opencode-linux-x64","node_modules/opencode-linux-x64-baseline","node_modules/opencode-linux-x64-baseline-musl","node_modules/opencode-linux-x64-musl","node_modules/opencode-windows-arm64","node_modules/opencode-windows-x64","node_modules/opencode-windows-x64-baseline"],"lifecycleScripts":"disabled","nativeHostProven":false}
+# {"consumers":{"fable":true,"acorn":true,"tar":true,"nodeVersion":"v22.23.3"},"candidateRootsRemaining":0,"nativeHostProven":false}
+# Subtest: WHAT[verification-system-016] a complete selected SDK archive resolves the captured repository global.json and reclaims its owned roots
+    # Subtest: WHAT[verification-system-016] the complete explicitly selected SDK is captured with all files and internal links
+    ok 1 - WHAT[verification-system-016] the complete explicitly selected SDK is captured with all files and internal links
+      ---
+      duration_ms: 2730.753833
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443778608,"monitorPid":96029,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96029,"parentPid":95780,"at":1791443778642,"toolPid":96030,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96029,"parentPid":95780,"at":1791443781127,"toolPid":96030,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96029,"parentPid":95780,"at":1791443781143,"toolPid":96030}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443781145,"monitorPid":96029,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443781633,"monitorPid":96032,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96032,"parentPid":95780,"at":1791443781663,"toolPid":96033,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96032,"parentPid":95780,"at":1791443781665,"toolPid":96033,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96032,"parentPid":95780,"at":1791443781681,"toolPid":96033}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443781682,"monitorPid":96032,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443782154,"monitorPid":96035,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96035,"parentPid":95780,"at":1791443782180,"toolPid":96036,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96035,"parentPid":95780,"at":1791443782182,"toolPid":96036,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96035,"parentPid":95780,"at":1791443782198,"toolPid":96036}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443782200,"monitorPid":96035,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443782676,"monitorPid":96038,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96038,"parentPid":95780,"at":1791443782704,"toolPid":96039,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-dotnet-sdk-test-JMHBXo/candidates/verification-archive-4snOUS/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96038,"parentPid":95780,"at":1791443782803,"toolPid":96039,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96038,"parentPid":95780,"at":1791443782820,"toolPid":96039}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443782822,"monitorPid":96038,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] captured global.json selects the actual in-bundle SDK and runtime paths without ambient inputs
+    ok 2 - WHAT[verification-system-016] captured global.json selects the actual in-bundle SDK and runtime paths without ambient inputs
+      ---
+      duration_ms: 7794.469417
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-016] the prepared SDK revalidates without its archive and releases every private root
+    ok 3 - WHAT[verification-system-016] the prepared SDK revalidates without its archive and releases every private root
+      ---
+      duration_ms: 881.327125
+      type: 'test'
+      ...
+    1..3
+ok 2 - WHAT[verification-system-016] a complete selected SDK archive resolves the captured repository global.json and reclaims its owned roots
+  ---
+  duration_ms: 11699.230667
+  type: 'test'
+  ...
+# {"archiveSha256":"bb2a21b70337ec025bba77bb3a64160043268804dba244d4ce5cff4fd183d5d0","entries":5588,"fileBytes":688059912,"internalLinks":331}
+# {"sdk":{"version":"10.0.302","basePath":"dotnet-sdk/sdk/10.0.302"},"runtimes":[{"name":"Microsoft.AspNetCore.App","version":"10.0.10","path":"dotnet-sdk/shared/Microsoft.AspNetCore.App/10.0.10"},{"name":"Microsoft.NETCore.App","version":"10.0.10","path":"dotnet-sdk/shared/Microsoft.NETCore.App/10.0.10"}],"sdkDigest":"e05f113650fea2e9a5555367038c52dabf9dc1f58d104eb36dc3be65f940f248","archiveSha256":"bb2a21b70337ec025bba77bb3a64160043268804dba244d4ce5cff4fd183d5d0","entries":5588,"internalLinks":331,"nugetRun":false,"fableRun":false,"readOnlyMounted":false}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443789937,"monitorPid":96099,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96099,"parentPid":95780,"at":1791443789993,"toolPid":96100,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96099,"parentPid":95780,"at":1791443791201,"toolPid":96100,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96099,"parentPid":95780,"at":1791443791218,"toolPid":96100}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443791220,"monitorPid":96099,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443791710,"monitorPid":96102,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96102,"parentPid":95780,"at":1791443791736,"toolPid":96103,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96102,"parentPid":95780,"at":1791443791738,"toolPid":96103,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96102,"parentPid":95780,"at":1791443791754,"toolPid":96103}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443791756,"monitorPid":96102,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443792242,"monitorPid":96105,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96105,"parentPid":95780,"at":1791443792269,"toolPid":96106,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96105,"parentPid":95780,"at":1791443792271,"toolPid":96106,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96105,"parentPid":95780,"at":1791443792288,"toolPid":96106}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443792290,"monitorPid":96105,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443792757,"monitorPid":96108,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96108,"parentPid":95780,"at":1791443792783,"toolPid":96109,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96108,"parentPid":95780,"at":1791443792878,"toolPid":96109,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96108,"parentPid":95780,"at":1791443792894,"toolPid":96109}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443792896,"monitorPid":96108,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] selected complete SDK restores original repository local tools from explicitly identified NuGet archives
+    # Subtest: WHAT[verification-system-016] the repository tool manifest and complete SDK use explicit selected archive identities
+    ok 1 - WHAT[verification-system-016] the repository tool manifest and complete SDK use explicit selected archive identities
+      ---
+      duration_ms: 9130.279625
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443795107,"monitorPid":96115,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+    # Subtest: WHAT[verification-system-016] the selected SDK rejects a public root redirected to an existing foreign directory
+    ok 2 - WHAT[verification-system-016] the selected SDK rejects a public root redirected to an existing foreign directory
+      ---
+      duration_ms: 497.286292
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96115,"parentPid":95780,"at":1791443795135,"toolPid":96116,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96115,"parentPid":95780,"at":1791443795592,"toolPid":96116,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96115,"parentPid":95780,"at":1791443795610,"toolPid":96116}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443795611,"monitorPid":96115,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] actual private NuGet tool restore binds the complete package inventory and owned resolver paths
+    ok 3 - WHAT[verification-system-016] actual private NuGet tool restore binds the complete package inventory and owned resolver paths
+      ---
+      duration_ms: 2690.625667
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443800604,"monitorPid":96127,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+    # Subtest: WHAT[verification-system-016] actually restored tools reject root namespace substitution and preserve foreign data
+    ok 4 - WHAT[verification-system-016] actually restored tools reject root namespace substitution and preserve foreign data
+      ---
+      duration_ms: 1277.868125
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-016] actually restored tools reject parent-with-missing-root namespace substitution and preserve foreign data
+    ok 5 - WHAT[verification-system-016] actually restored tools reject parent-with-missing-root namespace substitution and preserve foreign data
+      ---
+      duration_ms: 1031.360917
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96127,"parentPid":95780,"at":1791443800629,"toolPid":96128,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96127,"parentPid":95780,"at":1791443800702,"toolPid":96128,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96127,"parentPid":95780,"at":1791443800718,"toolPid":96128}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443800720,"monitorPid":96127,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443800720,"monitorPid":96130,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96130,"parentPid":95780,"at":1791443800746,"toolPid":96131,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-dotnet-tools-TZgrAq/candidates/verification-archive-1aNM4L/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96130,"parentPid":95780,"at":1791443800859,"toolPid":96131,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96130,"parentPid":95780,"at":1791443800875,"toolPid":96131}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443800877,"monitorPid":96130,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] real restored Fable and Fantomas execute after external archives are removed and release only their owned roots
+    ok 6 - WHAT[verification-system-016] real restored Fable and Fantomas execute after external archives are removed and release only their owned roots
+      ---
+      duration_ms: 2652.070959
+      type: 'test'
+      ...
+    1..6
+ok 3 - WHAT[verification-system-016] selected complete SDK restores original repository local tools from explicitly identified NuGet archives
+  ---
+  duration_ms: 17283.506833
+  type: 'test'
+  ...
+# {"sdkDigest":"e05f113650fea2e9a5555367038c52dabf9dc1f58d104eb36dc3be65f940f248","sdkArchiveSha256":"bb2a21b70337ec025bba77bb3a64160043268804dba244d4ce5cff4fd183d5d0","toolManifestSha256":"87d70c4ba7b3031d6cc2c870a6ef6d0e04da67945e06061d6128a97e4569dd02","packages":[{"id":"fable","version":"5.13.0","sha512":"XbPbm+0ZLocSdlXAu3812SoXpZQocxpY6fL2tqSvk4Ln7D1Iv8kAfM4f3PfDrJ8J4U7KL3p0saFAZ94TciCgbQ=="},{"id":"fantomas","version":"6.3.0","sha512":"pwg1buPBNciNdZ+SqsddJy+ecG8f0VHdTa2w1rgIsWljatxAh1oOhYqPurnlAGpHWzus1nEufSAN7aF/ZFLQxg=="}],"provenance":"explicit caller-selected archive bytes; this test does not authenticate the publisher"}
+# {"toolsDigest":"b9cfa57723c273fcdc88e0900eeaff68f250caabf3a1136510023102b3c4cdc3","entries":476,"tools":[{"id":"fable","version":"5.13.0","command":"fable","executable":"packages/fable/5.13.0/tools/net10.0/any/fable.dll"},{"id":"fantomas","version":"6.3.0","command":"fantomas","executable":"packages/fantomas/6.3.0/tools/net6.0/any/fantomas.dll"}],"projectRestore":false,"fableCompilation":false,"readOnlyMounted":false,"actualVerifyBound":false}
+# {"command":"fable","actualVersionOutput":"5.13.0","selectedExecutable":"packages/fable/5.13.0/tools/net10.0/any/fable.dll"}
+# {"command":"fantomas","actualVersionOutput":"Fantomas v6.3.0+e2d6de066b56c67aeef0c6cf92b28ff4a30f46d2","selectedExecutable":"packages/fantomas/6.3.0/tools/net6.0/any/fantomas.dll"}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443817433,"monitorPid":96262,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96262,"parentPid":95780,"at":1791443817520,"toolPid":96263,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96262,"parentPid":95780,"at":1791443819412,"toolPid":96263,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96262,"parentPid":95780,"at":1791443819429,"toolPid":96263}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443819431,"monitorPid":96262,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443819937,"monitorPid":96266,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96266,"parentPid":95780,"at":1791443819963,"toolPid":96267,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96266,"parentPid":95780,"at":1791443819965,"toolPid":96267,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96266,"parentPid":95780,"at":1791443819980,"toolPid":96267}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443819981,"monitorPid":96266,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443820476,"monitorPid":96270,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96270,"parentPid":95780,"at":1791443820503,"toolPid":96271,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96270,"parentPid":95780,"at":1791443820506,"toolPid":96271,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96270,"parentPid":95780,"at":1791443820521,"toolPid":96271}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443820523,"monitorPid":96270,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443821007,"monitorPid":96273,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96273,"parentPid":95780,"at":1791443821033,"toolPid":96274,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96273,"parentPid":95780,"at":1791443821123,"toolPid":96274,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96273,"parentPid":95780,"at":1791443821140,"toolPid":96274}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443821141,"monitorPid":96273,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] selected complete Git source and SDK restore the original foundation identity project through a fresh-cache locked NuGet graph
+    # Subtest: WHAT[verification-system-016] project restore captures an explicit complete Git tree, selected SDK, and four package archive identities
+    ok 1 - WHAT[verification-system-016] project restore captures an explicit complete Git tree, selected SDK, and four package archive identities
+      ---
+      duration_ms: 22441.35375
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443825879,"monitorPid":96283,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96283,"parentPid":95780,"at":1791443825908,"toolPid":96284,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96283,"parentPid":95780,"at":1791443826288,"toolPid":96284,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96283,"parentPid":95780,"at":1791443826305,"toolPid":96284}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443826307,"monitorPid":96283,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443827464,"monitorPid":96286,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96286,"parentPid":95780,"at":1791443827492,"toolPid":96287,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96286,"parentPid":95780,"at":1791443828014,"toolPid":96287,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96286,"parentPid":95780,"at":1791443828031,"toolPid":96287}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443828033,"monitorPid":96286,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443829289,"monitorPid":96289,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96289,"parentPid":95780,"at":1791443829318,"toolPid":96290,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-nuget-project-VJ33T5/candidates/verification-archive-0TVuva/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96289,"parentPid":95780,"at":1791443829843,"toolPid":96290,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96289,"parentPid":95780,"at":1791443829860,"toolPid":96290}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443829861,"monitorPid":96289,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] actual original project restore binds the four-package assets and derived lock in separate owned outputs
+    ok 2 - WHAT[verification-system-016] actual original project restore binds the four-package assets and derived lock in separate owned outputs
+      ---
+      duration_ms: 9079.262542
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-016] project receipt survives removal of fixture archives and disposes outputs without owning source or SDK
+    ok 3 - WHAT[verification-system-016] project receipt survives removal of fixture archives and disposes outputs without owning source or SDK
+      ---
+      duration_ms: 6650.841709
+      type: 'test'
+      ...
+    1..3
+ok 4 - WHAT[verification-system-016] selected complete Git source and SDK restore the original foundation identity project through a fresh-cache locked NuGet graph
+  ---
+  duration_ms: 38173.22625
+  type: 'test'
+  ...
+# {"treeId":"bbeba1c9618c41d125d83f3047edbc93e0a6b5fe","sourceDigest":"8acc541fef97a248ef8f6179d1cbe907090e6c2c18be03dfd5270446339a32a7","sdkDigest":"e05f113650fea2e9a5555367038c52dabf9dc1f58d104eb36dc3be65f940f248","sdkArchiveSha256":"bb2a21b70337ec025bba77bb3a64160043268804dba244d4ce5cff4fd183d5d0","projectPath":"src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.foundation-identity.fsproj","packages":[{"id":"fsharp.core","version":"10.1.203","sha512":"97FbaR75afYTJW/eu1dyLUdns4FPW7WJ1XJ71N6ETTWcRmNQr6WAcBdd6RsRRuax6tvy6hF1JdFiBvWV6/zifQ=="},{"id":"fable.core","version":"5.0.0","sha512":"65IxKwus/l/ceVMKsB3z41Szb4+1Zj63muviXFEK/u0ixYQjQ/emnFQdwVba6TL4oXhX/8NuHdoEVO+6dBX1gA=="},{"id":"fstoolkit.errorhandling","version":"5.2.0","sha512":"PJ26PxiwVm4WIWs8hQCXgamI8beCdrxRK/UkO8wexwrtPLewUOXEhPmGjFJsL7PGztpvPRwbSIPCoZmTVxHNUw=="},{"id":"thoth.json","version":"10.5.1","sha512":"w4HNNEe8FhlH/+6F6AKTWReqmrg9Eba/eyTnz0nRE1VWRccBwyZYUad90uxua8MgvJS+wVLE4xtgMlL11S0rQQ=="}],"provenance":"explicit caller-selected archive bytes; this fixture does not authenticate the publisher"}
+# {"projectDigest":"25a02ecaad47b34b5d8ef68d76de20c1e6629b84b21f4d6d321e607a70a1ef6d","graphDigest":"4238dd18f9ee739fb2985863ea6a40e00a01bf0e08eba56a8e4f41831018b543","entries":228,"packages":[{"id":"fable.core","version":"5.0.0","rawSha512":"65IxKwus/l/ceVMKsB3z41Szb4+1Zj63muviXFEK/u0ixYQjQ/emnFQdwVba6TL4oXhX/8NuHdoEVO+6dBX1gA=="},{"id":"fsharp.core","version":"10.1.203","rawSha512":"97FbaR75afYTJW/eu1dyLUdns4FPW7WJ1XJ71N6ETTWcRmNQr6WAcBdd6RsRRuax6tvy6hF1JdFiBvWV6/zifQ=="},{"id":"fstoolkit.errorhandling","version":"5.2.0","rawSha512":"PJ26PxiwVm4WIWs8hQCXgamI8beCdrxRK/UkO8wexwrtPLewUOXEhPmGjFJsL7PGztpvPRwbSIPCoZmTVxHNUw=="},{"id":"thoth.json","version":"10.5.1","rawSha512":"w4HNNEe8FhlH/+6F6AKTWReqmrg9Eba/eyTnz0nRE1VWRccBwyZYUad90uxua8MgvJS+wVLE4xtgMlL11S0rQQ=="}],"contentHashes":[{"id":"fable.core","version":"5.0.0","contentHash":"pJOXJjfhjvNa1cgtF+klgR3DxQI7x9D/fFzZbjUBZLBJyYIioPsTFsKUnIOqNdCq1Oby9lINUSwnL4TqspMQOA=="},{"id":"fsharp.core","version":"10.1.203","contentHash":"I2MFk72yHqfgI594gKFigq8PVIso0Mh1ZUgG9R4n8gyYQ4IwpBxmvecfjnKA7iMLdVHYULB70PsLwYW/K76gew=="},{"id":"fstoolkit.errorhandling","version":"5.2.0","contentHash":"Y7NfN1gDJ5eOANmi8/aEjGHTWrJOYyqwmgtdA3BIZggd0Ph0IIsbewtgNaLkDYFGgkKw6mGlk0iw4RZ2ZRKZhA=="},{"id":"thoth.json","version":"10.5.1","contentHash":"HMh+zRyOhz7ASGNLgcSQFsrZWv4mcMZfqIsya0aQ2ixFWZpav9RRvYR5C9tL33qmRDX4n+73Bpo6brSfUQ4nQA=="}],"derivedLock":true,"sourceLockProvided":false,"fableCompilation":false,"readOnlyMounted":false,"actualVerifyBound":false}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443856498,"monitorPid":96425,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96425,"parentPid":95780,"at":1791443856531,"toolPid":96426,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96425,"parentPid":95780,"at":1791443858317,"toolPid":96426,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96425,"parentPid":95780,"at":1791443858334,"toolPid":96426}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443858336,"monitorPid":96425,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443858826,"monitorPid":96428,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96428,"parentPid":95780,"at":1791443858852,"toolPid":96429,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96428,"parentPid":95780,"at":1791443858854,"toolPid":96429,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96428,"parentPid":95780,"at":1791443858869,"toolPid":96429}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443858870,"monitorPid":96428,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443859331,"monitorPid":96433,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96433,"parentPid":95780,"at":1791443859360,"toolPid":96434,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96433,"parentPid":95780,"at":1791443859362,"toolPid":96434,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96433,"parentPid":95780,"at":1791443859379,"toolPid":96434}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443859381,"monitorPid":96433,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443859866,"monitorPid":96436,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96436,"parentPid":95780,"at":1791443859896,"toolPid":96437,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96436,"parentPid":95780,"at":1791443859999,"toolPid":96437,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96436,"parentPid":95780,"at":1791443860015,"toolPid":96437}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443860017,"monitorPid":96436,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443866757,"monitorPid":96458,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# Subtest: WHAT[verification-system-016] four selected input owners compile the original foundation identity project with Fable into isolated outputs
+    # Subtest: WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+    ok 1 - WHAT[verification-system-016] real Fable preparation selects a complete immutable Git tree and SDK archive without rewriting the original project
+      ---
+      duration_ms: 25764.624459
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96458,"parentPid":95780,"at":1791443866784,"toolPid":96459,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96458,"parentPid":95780,"at":1791443867250,"toolPid":96459,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96458,"parentPid":95780,"at":1791443867266,"toolPid":96459}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443867268,"monitorPid":96458,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443870260,"monitorPid":96470,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96470,"parentPid":95780,"at":1791443870288,"toolPid":96471,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96470,"parentPid":95780,"at":1791443870706,"toolPid":96471,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96470,"parentPid":95780,"at":1791443870723,"toolPid":96471}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443870725,"monitorPid":96470,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443872305,"monitorPid":96480,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96480,"parentPid":95780,"at":1791443872331,"toolPid":96481,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96480,"parentPid":95780,"at":1791443872862,"toolPid":96481,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96480,"parentPid":95780,"at":1791443872879,"toolPid":96481}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443872880,"monitorPid":96480,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443874169,"monitorPid":96498,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96498,"parentPid":95780,"at":1791443874200,"toolPid":96499,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96498,"parentPid":95780,"at":1791443874750,"toolPid":96499,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96498,"parentPid":95780,"at":1791443874773,"toolPid":96499}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443874775,"monitorPid":96498,"exitCode":0,"signal":null}
+    # Subtest: WHAT[verification-system-016] real selected Fable tools and original project restore produce independent prepared input owners
+    ok 2 - WHAT[verification-system-016] real selected Fable tools and original project restore produce independent prepared input owners
+      ---
+      duration_ms: 14768.532917
+      type: 'test'
+      ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":95780,"parentPid":95779,"at":1791443887184,"monitorPid":96532,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":96532,"parentPid":95780,"at":1791443887289,"toolPid":96533,"executable":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/verification-repository-fable-project-4kWaNv/candidates/verification-archive-L61YQe/dotnet-sdk/dotnet"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":96532,"parentPid":95780,"at":1791443891162,"toolPid":96533,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":96532,"parentPid":95780,"at":1791443891182,"toolPid":96533}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":95780,"parentPid":95779,"at":1791443891184,"monitorPid":96532,"exitCode":0,"signal":null}
+# Subtest: requirements/verification-system/tests/016.test.mjs
+not ok 1 - requirements/verification-system/tests/016.test.mjs
+  ---
+  duration_ms: 180003.858958
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/016.test.mjs:1:1'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 180000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..5
+# tests 22
+# suites 0
+# pass 21
+# fail 0
+# cancelled 1
+# skipped 0
+# todo 0
+# duration_ms 180011.113208

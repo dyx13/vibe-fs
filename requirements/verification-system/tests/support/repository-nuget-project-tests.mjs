@@ -6,6 +6,7 @@ import path from 'node:path'
 import { create } from 'tar'
 import { prepareGitSourceCandidate } from '../../../../scripts/lib/verification-source-candidate.mjs'
 import { prepareVerificationDotnetSdk } from '../../../../scripts/lib/verification-dotnet-sdk.mjs'
+import { copySelectedSdkArchive } from './selected-sdk-archive.mjs'
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..')
 const selectedProjectPath = 'src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.foundation-identity.fsproj'
@@ -94,7 +95,6 @@ export async function repositoryNugetProjectTest(t) {
     await t.test('WHAT[verification-system-016] project restore captures an explicit complete Git tree, selected SDK, and four package archive identities', async () => {
       const treeId = process.env.WXS_VERIFICATION_NUGET_PROJECT_TREE_ID
       assert.match(treeId ?? '', /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/, 'An explicit immutable source tree must be selected independently of the current dirty workspace')
-      assert.ok(process.env.WXS_VERIFICATION_DOTNET_ROOT, 'The complete SDK installation must be selected explicitly')
       source = prepareGitSourceCandidate({ repositoryRoot, treeId, parentDirectory })
       assert.equal(source.treeId, treeId)
       originalInventory = actualInventory(source.sourceRoot, true)
@@ -106,11 +106,16 @@ export async function repositoryNugetProjectTest(t) {
         fs.writeFileSync(archivePath, bytes, { flag: 'wx' })
         return { id, version, archivePath, sha512 }
       })
-      const sdkDirectory = fs.realpathSync(process.env.WXS_VERIFICATION_DOTNET_ROOT)
-      fs.cpSync(sdkDirectory, path.join(selectedRoot, 'dotnet-sdk'), { recursive: true, verbatimSymlinks: true })
       sdkArchivePath = path.join(archiveRoot, 'sdk.tar')
-      await create({ cwd: selectedRoot, file: sdkArchivePath, portable: true, noMtime: true }, ['dotnet-sdk'])
-      sdk = await prepareVerificationDotnetSdk({ sourceRoot: source.sourceRoot, parentDirectory, archivePath: sdkArchivePath, archiveSha256: hash('sha256', fs.readFileSync(sdkArchivePath)), expectedSdkVersion: '10.0.302', signal: t.signal })
+      let sdkArchiveSha256 = copySelectedSdkArchive(sdkArchivePath)
+      if (sdkArchiveSha256 === null) {
+        assert.ok(process.env.WXS_VERIFICATION_DOTNET_ROOT, 'The complete SDK installation must be selected explicitly')
+        const sdkDirectory = fs.realpathSync(process.env.WXS_VERIFICATION_DOTNET_ROOT)
+        fs.cpSync(sdkDirectory, path.join(selectedRoot, 'dotnet-sdk'), { recursive: true, verbatimSymlinks: true })
+        await create({ cwd: selectedRoot, file: sdkArchivePath, portable: true, noMtime: true }, ['dotnet-sdk'])
+        sdkArchiveSha256 = hash('sha256', fs.readFileSync(sdkArchivePath))
+      }
+      sdk = await prepareVerificationDotnetSdk({ sourceRoot: source.sourceRoot, parentDirectory, archivePath: sdkArchivePath, archiveSha256: sdkArchiveSha256, expectedSdkVersion: '10.0.302', signal: t.signal })
       fs.rmSync(selectedRoot, { recursive: true, force: true })
       assertSource()
       assertArchives()

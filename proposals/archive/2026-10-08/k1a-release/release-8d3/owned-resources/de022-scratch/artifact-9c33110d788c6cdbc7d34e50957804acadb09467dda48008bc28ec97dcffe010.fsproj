@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Wanxiangshu</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/AssemblyInfo.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/AssemblyInfo.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Identity.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Identity.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Quiescence.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Quiescence.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Resources/PackageMetadata.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Resources/PackageMetadata.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/Model.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/Model.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Provider/Language.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Provider/Language.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Strength/Budget.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Strength/Budget.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Strength/InvestigationEstimateContract.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Strength/InvestigationEstimateContract.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Strength/Delegation.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Strength/Delegation.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Strength/EventVocabulary.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Strength/EventVocabulary.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Resources/PackageResources.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Resources/PackageResources.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Resources/ProviderResourceBytes.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Resources/ProviderResourceBytes.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Resources/ModelRoutingResource.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Resources/ModelRoutingResource.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Provider/ProviderResources.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Participant/Provider/ProviderResources.fs"/>
+  </ItemGroup>
+</Project>

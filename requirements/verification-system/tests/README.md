@@ -120,7 +120,11 @@ ProcessHost 的 health 与项目 `/path` 各自在原阶段 deadline 内观察�
 
 021还经真实unit入口、原freshness和并发2验证默认完整发现集合、整包verification-system稳定前置、组内与其余顺序，含同名前缀负控、support文件和原e2e/integration排除；显式TESTS_MJS_FILES保留混排、重复的原lifecycle拒绝及缺失文件失败。调序不改变集合、tier或预算，不把设施优先准入等同于依赖完成，也不授予全仓300秒吞吐闭合。014通过实际CompanionProjectionSurface生成normal/squash/newWork指导，交原ScenarioRuntime严格匹配与消费，保双session和旧/未知文本拒绝；该契约局部证明不能代替真实Long Stroke。2026-10-08全项目执行与失败处理见[本轮记录](../../../proposals/K1A与全项目release验收-2026-10-08.md)。
 
-016新增真实Git batch有限缓冲反例：受控1KiB捕获上限、4KiB二进制blob，完整源字节、tree、SHA和清理均验；非零batch保原cause并回收owned输出。生产使用owned .git临时文件接stdout，未缩小完整树；仍不是流式RAM优化。014还从实际LanguageSurface与StrengthSurface核readonly资源及exact js-predictor capability；同一严格Replica声明凭完整call/result probe交换选早停，含未完成、异工具、孤立marker、重复交付和第二session负控。两种物理budget/owner与原故障oracle仍保留，局部契约通过不授完整Long Stroke。
+016新增真实Git batch有限缓冲反例：受控1KiB捕获上限、4KiB二进制blob，完整源字节、tree、SHA和清理均验；非零batch保原cause并回收owned输出。生产使用owned .git临时文件接stdout，未缩小完整树；仍不是流式RAM优化。014还从实际LanguageSurface与StrengthSurface核readonly资源及exact js-predictor capability；同一严格Replica声明凭完整call/result probe交换选早停，含未完成、异工具、孤立marker、重复交付和第二session负控。两种物理budget/owner与原故障oracle仍保留。正式owner续行还固定promoted Replica真实assistant cursor，复用runtimeStep并保持逻辑ID、同body500重试/400pair、未完成cursor及异工具拒绝；局部契约通过不授完整Long Stroke。
+
+2026-10-08最新完整8d3输入：本地及该SHA官方CI均排空824文件，仍因388TODO拒绝release；此前原300s截断证据不撤销。独立integration仍截断并有内层termination失败，计数unknown；有限补跑、实际Fable/readonly和package不能拼成一次全量绿。一次补跑脚本误加CLI --test-timeout180000取消整个016文件，失败与not-run保留；仓库原run-inner无此filetimeout，仅恢复原300s backstop规则。各输入、计数、成本、原件与剩余边界以[本轮记录](../../../proposals/K1A与全项目release验收-2026-10-08.md)为准。
+
+006既有双native inspection负控还独立检查supervisor stderr包含两个真实原Error的完整message及实际存在的status/code/syscall；受控caller只打印外层message，不能借uncaught格式制造假绿。输出已保留的Error对象仅修诊断，不改变错误身份、拒绝、所有权或回收预算；8d3历史具体cause仍unknown，更深未知嵌套不由标准格式局部证明闭合。
 
 016的2026-10-04准备增量使用真实Git tree/blob/index证明指定源码身份：工作区/index后改不污染原tree，特殊路径/二进制/执行位保留，SHA1/SHA256均可重构；attributes与replace refs不改原blob，继承Git环境不重定向读取或写回，缺对象/不支持的entry/promisor仓/无法忠实物化的tree都拒绝并回收自有root。该API尚未接实际verify；源码receipt不证明运行期不可改、依赖封闭或全阶段同源，两个TODO仍保留。
 
@@ -156,6 +160,8 @@ T418/T419与GAP-055 PARTIAL保留。工具、SDK、单项目工程与编译各�
 [GAP](../../GAP.md) 区分实现缺陷、证明不足与人工审阅责任。[本批记录](../../../proposals/archive/2026-10-03/35模块PR施工记录-2026-09-28.md) 保存新上游基线的实际验证结果，不沿用旧版本的通过数字。
 
 ## 运行
+
+2026-10-08完整验收接续：006增加实际Host健康屏障后父运行器强制终止的回收负控，复用原owned-tool lifeline并核实际tool PID；最终局部63/63，完整harness292/292，均不等同全integration通过。014的原Work证明核Root、completion/consumption/blob及真实公开Join；生产指导以NUL+BOM另起平面，完整完成正文仍逐字匹配，foreign/篡改/重复负控保留。016显式完整SDK归档可给各独立owner复制，raw SHA仍由原prepare唯一验证，不缓存owner、不改变完整SDK inventory。所有红绿、失败前提和最终全阶段结果见[本轮记录](../../../proposals/K1A与全项目release验收-2026-10-08.md)，skip/TODO不算通过。
 
 在仓库根目录先执行 `node scripts/build.mjs`，再运行 00—02 条款测试：
 

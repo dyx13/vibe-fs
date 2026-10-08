@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-10-08T06:46:38.868Z",
+  "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "tree": "bbeba1c9618c41d125d83f3047edbc93e0a6b5fe",
+  "status": "",
+  "diff": "",
+  "digest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+  "inputCount": 4635,
+  "comparison": {
+    "equal": true
+  },
+  "freshness": {
+    "generation": 326,
+    "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+    "generatedInputDigest": "5ab4f3ccba7cf6ee6d2876294e00c74b89c350d172bd74068f4b7753d413fd76",
+    "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+  },
+  "manifest": {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/build-manifest.json",
+    "copiedTo": "/private/tmp/vibe-fs-oct8-alias-release/unit-8d3-build-manifest-readonly.json",
+    "sha256": "af51a89d5471d5a2c7e0e151e9f3dcf773f9903361ebb245e5c249b335c9b78d",
+    "generation": 326,
+    "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+    "generatedInputDigest": "5ab4f3ccba7cf6ee6d2876294e00c74b89c350d172bd74068f4b7753d413fd76",
+    "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2",
+    "toolIdentity": "dotnet 10.0.302 / fable \u001b[37m5.13.0\n\u001b[39m\u001b[22m",
+    "outputCount": 891
+  }
+}

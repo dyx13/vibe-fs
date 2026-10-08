@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-10-08T06:47:25.875Z",
+  "inputCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "discoveredFiles": 824,
+  "admittedFiles": 824,
+  "uniqueAdmittedFiles": 824,
+  "missing": [],
+  "unexpected": [],
+  "sameCompleteAdmissionOrder": true,
+  "firstTwoInfrastructure": true
+}

@@ -1,0 +1,14 @@
+8d3 supplemental12-file audit
+
+Input 8d3a7406ab7df9e13a4af8fca12c0799df5c2398, digestf451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6; wrapper afterDigest equal; gen326 current.
+Started 2026-10-08T07:11:15.690Z; elapsed 66146.729ms; exit1. Original300000ms backstop,185000ms verdictsilence,180000ms per-test env, concurrency2 retained.
+12 planned/admitted/drained; active0/queued0. Authority:124pass/0fail/0skip/2TODO (summaryline191; supervisorline202).
+Exit1 is pending-proof policy, not an ordinary failure or timeout. Existing Host-provider002 GAP144 executes its installedretry canary as TODO, but actualproviderRequests are unknown because compactTODO output does not retain its assertion diagnostics. GAP143 is still a bodyless TODO. Neither is a pass.
+12 complete valid worker costs, all actualworker exit0; no missing/invalid. Root93715 accepted=true17.512ms; all captured original outer/inner/12worker PIDs ESRCH afterterminal.
+
+Coverage correction: this12-list consists of11 originallyqueued files plus previouslyactive Host-provider002. The original queued verification-system016 is not in this supplement. Original fullscope remains30/44 incomplete. This supplement must not be merged with the30files into an alleged single full pass.
+
+Original exactsource: /private/tmp/vibe-fs-oct8-alias-release/supplemental-unstarted.log
+SHA256: 68fd9c0909b313c1a7cad7f9089ef0131f19d03de47a4d3addd6e23212891fd4
+Wrapper: /private/tmp/vibe-fs-oct8-alias-release/supplemental-unstarted.json
+No source changes, tests/builds, process termination or resource deletion.

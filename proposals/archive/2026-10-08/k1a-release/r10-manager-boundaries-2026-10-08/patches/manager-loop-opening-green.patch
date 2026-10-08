@@ -1,0 +1,32 @@
+--- a/src/Wanxiangshu/OpenCode/Plugin/PluginTransforms.fs
++++ b/src/Wanxiangshu/OpenCode/Plugin/PluginTransforms.fs
+@@ -593,8 +593,6 @@
+           ApplyRelayProjection =
+             fun sidOpt outObj ->
+                 task {
+-                    do! ManagerWorkflow.ensureManagerRoadOpened journal workspaceDirectory sidOpt None
+-
+                     let physicalUserMessageId =
+                         outObj
+                         |> ProviderWireDecode.messagesFromTransformOutput
+@@ -614,7 +612,7 @@
+                             |> Option.isSome
+                         | _ -> false
+ 
+-                    return!
++                    let! disposition =
+                         RelayNarrativeTransform.apply
+                             journal
+                             acceptedSuccessorRequest
+@@ -650,6 +648,11 @@
+                                     sid)
+                             sidOpt
+                             outObj
++
++                    if disposition <> RelayProjectionDisposition.RetiredAttemptStopped then
++                        do! ManagerWorkflow.ensureManagerRoadOpened journal workspaceDirectory sidOpt None
++
++                    return disposition
+                 }
+           CaptureXTraceMessages =
+             fun projectionSessionIdOpt outObj ->

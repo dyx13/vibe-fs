@@ -1,0 +1,34 @@
+import fs from 'node:fs'
+import path from 'node:path'
+import { execFileSync } from 'node:child_process'
+import { assertBuildFresh, collectVerificationInputs, computeDigest } from '/Users/yuanxi/Workwork/vibe-fs/scripts/lib/build-state.mjs'
+import { superviseNodeTest } from '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/supervise-node-test.mjs'
+
+const root = '/Users/yuanxi/Workwork/vibe-fs'
+const directory = '/private/tmp/vibe-fs-oct8-alias-release'
+const files = [
+  'host-provider-failure-ownership/002', 'managed-chat-execution/009',
+  'obligation-ledger/001', 'obligation-ledger/002', 'obligation-ledger/004', 'obligation-ledger/005',
+  'participant-horizon/010', 'repository-programming/020', 'requirement-grounding/006',
+  'speculative-investigation/008', 'speculative-investigation/013', 'structured-workflow/012',
+].map(item => { const [pkg, number] = item.split('/'); return `requirements/${pkg}/tests/${number}.test.mjs` })
+const frozen = JSON.parse(fs.readFileSync(`${directory}/frozen-input.json`))
+const digest = computeDigest(collectVerificationInputs(root))
+const build = assertBuildFresh({ root })
+if (digest !== frozen.digest) throw new Error('Unstarted scope input differs')
+const env = { ...process.env, WXS_RELEASE: '1', WXS_TIER_INTEGRATION: '1', WXS_E2E_QUIET: '1', PER_TEST_TIMEOUT_MS: '180000' }
+for (const name of ['TESTS_MJS_FILES', 'NODE_TEST_CONTEXT', 'WXS_TIER_RELEASE']) delete env[name]
+const startedAt = new Date().toISOString()
+const start = performance.now()
+let failure = null
+try {
+  await superviseNodeTest({ files: files.map(file => path.join(root, file)), label: 'unstarted-integration',
+    silenceMs: 185000, logPrefix: 'supplemental:unstarted', env, throwOnFailure: true })
+} catch (error) { failure = String(error.stack ?? error); process.stderr.write(failure + '\n') }
+const afterDigest = computeDigest(collectVerificationInputs(root))
+const receipt = { completeIntegrationStage: false, files, startedAt, durationMs: performance.now() - start,
+  inputCommit: frozen.commit, currentCommit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(), digest, afterDigest,
+  inputsEqual: digest === afterDigest, build, concurrency: env.NODE_TEST_CONCURRENCY, physicalBackstopMs: 300000,
+  verdictSilenceMs: 185000, perTestTimeoutEnvMs: 180000, exitCode: failure ? 1 : 0, failure }
+fs.writeFileSync(`${directory}/supplemental-unstarted.json`, JSON.stringify(receipt, null, 2), { flag: 'wx' })
+process.exitCode = failure || !receipt.inputsEqual ? 1 : 0

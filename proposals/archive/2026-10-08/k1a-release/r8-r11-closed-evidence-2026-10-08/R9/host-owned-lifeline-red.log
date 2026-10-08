@@ -1,0 +1,137 @@
+TAP version 13
+# Subtest: WHAT[verification-system-006] invalid lifecycle termination drains the actual detached installed Host before rejection and preserves a foreign group
+not ok 1 - WHAT[verification-system-006] invalid lifecycle termination drains the actual detached installed Host before rejection and preserves a foreign group
+  ---
+  duration_ms: 2147.857042
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/tier-gate.mjs:26:12'
+  failureType: 'testCodeFailure'
+  error: |-
+    The exact detached Host group must already be empty at caller rejection
+    + actual - expected
+    
+    + [
+    +   {
+    +     parentPid: 1,
+    +     pgid: 8573,
+    +     pid: 8573,
+    +     state: 'Ss'
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      pid: 8573
+      parentPid: 1
+      pgid: 8573
+      state: 'Ss'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/supervised-host-reclamation-tests.mjs:145:14)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: WHAT[verification-system-006] owned tool monitoring preserves actual terminals and rejects missing control evidence
+    # Subtest: WHAT[verification-system-006] empty PATH preserves exact selected environment and actual independent process group
+    not ok 1 - WHAT[verification-system-006] empty PATH preserves exact selected environment and actual independent process group
+      ---
+      duration_ms: 65.44125
+      type: 'test'
+      location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/owned-tool-tests.mjs:240:15'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+        + undefined
+        - {
+        -   failure: null,
+        -   pid: 9073
+        - }
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        pid: 9073
+        failure: ~
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/owned-tool-tests.mjs:250:16)
+        process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/owned-tool-tests.mjs:240:7)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: WHAT[verification-system-006] a selected nonzero exit is preserved instead of the monitor exit
+    ok 2 - WHAT[verification-system-006] a selected nonzero exit is preserved instead of the monitor exit
+      ---
+      duration_ms: 64.010417
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] a selected process signal is preserved instead of the monitor exit
+    ok 3 - WHAT[verification-system-006] a selected process signal is preserved instead of the monitor exit
+      ---
+      duration_ms: 59.731166
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] a real selected executable spawn failure retains its OS cause
+    not ok 4 - WHAT[verification-system-006] a real selected executable spawn failure retains its OS cause
+      ---
+      duration_ms: 26.613208
+      type: 'test'
+      location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/owned-tool-tests.mjs:274:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'pid')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/owned-tool-tests.mjs:283:38)
+        process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/owned-tool-tests.mjs:274:7)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: WHAT[verification-system-006] missing monitor terminal before selected spawn rejects acceptance
+    ok 5 - WHAT[verification-system-006] missing monitor terminal before selected spawn rejects acceptance
+      ---
+      duration_ms: 22.771333
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] malformed monitor terminal before selected spawn rejects acceptance
+    ok 6 - WHAT[verification-system-006] malformed monitor terminal before selected spawn rejects acceptance
+      ---
+      duration_ms: 24.730917
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] duplicate monitor terminal before selected spawn rejects acceptance
+    ok 7 - WHAT[verification-system-006] duplicate monitor terminal before selected spawn rejects acceptance
+      ---
+      duration_ms: 24.499167
+      type: 'test'
+      ...
+    1..7
+not ok 2 - WHAT[verification-system-006] owned tool monitoring preserves actual terminals and rejects missing control evidence
+  ---
+  duration_ms: 288.95325
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/owned-tool-tests.mjs:233:3'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..2
+# tests 9
+# suites 0
+# pass 5
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2617.865666

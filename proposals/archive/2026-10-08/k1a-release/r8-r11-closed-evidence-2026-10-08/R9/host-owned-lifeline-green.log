@@ -1,0 +1,390 @@
+TAP version 13
+# Subtest: WHAT[verification-system-006] silence termination reclaims an actual detached tool and its descendant while preserving the caller's foreign group
+ok 1 - WHAT[verification-system-006] silence termination reclaims an actual detached tool and its descendant while preserving the caller's foreign group
+  ---
+  duration_ms: 1277.164375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] native initial inspection failure preserves its cause and drains actual frozen descendants before rejection
+ok 2 - WHAT[verification-system-006] native initial inspection failure preserves its cause and drains actual frozen descendants before rejection
+  ---
+  duration_ms: 1330.888375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] native initial and frozen inspection failures preserve both causes without claiming complete inventory
+ok 3 - WHAT[verification-system-006] native initial and frozen inspection failures preserve both causes without claiming complete inventory
+  ---
+  duration_ms: 1268.150666
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] native incomplete snapshot cannot certify a missing root as fully captured
+ok 4 - WHAT[verification-system-006] native incomplete snapshot cannot certify a missing root as fully captured
+  ---
+  duration_ms: 1288.058333
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] native freeze inspection failure preserves its original cause and drains known owned resources while retaining a foreign group
+ok 5 - WHAT[verification-system-006] native freeze inspection failure preserves its original cause and drains known owned resources while retaining a foreign group
+  ---
+  duration_ms: 1294.01075
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] native drain inspection failure preserves its original cause and drains captured owned resources while retaining a foreign group
+ok 6 - WHAT[verification-system-006] native drain inspection failure preserves its original cause and drains captured owned resources while retaining a foreign group
+  ---
+  duration_ms: 1318.9065
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] native double inspection failure preserves both original causes and reports incomplete owned cleanup
+ok 7 - WHAT[verification-system-006] native double inspection failure preserves both original causes and reports incomplete owned cleanup
+  ---
+  duration_ms: 1268.510917
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] invalid lifecycle termination drains the actual detached installed Host before rejection and preserves a foreign group
+ok 8 - WHAT[verification-system-006] invalid lifecycle termination drains the actual detached installed Host before rejection and preserves a foreign group
+  ---
+  duration_ms: 1353.439209
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] a complete passing native ledger rejects and reclaims its actual same-group residue while preserving a foreign group
+ok 9 - WHAT[verification-system-006] a complete passing native ledger rejects and reclaims its actual same-group residue while preserving a foreign group
+  ---
+  duration_ms: 319.353958
+  type: 'test'
+  ...
+# {"caught":{"error":{"name":"Error","message":"runner: supervised suite failed (exit 1)","exitCode":1},"owned":{"inner":{"pid":10774,"parentPid":10746,"pgid":10774,"state":"Ss","started":"Thu Oct  8 16:36:40 2026"},"worker":{"pid":10775,"parentPid":10774,"pgid":10774,"state":"S","started":"Thu Oct  8 16:36:41 2026"},"resource":{"pid":10776,"parentPid":10775,"pgid":10774,"state":"S","started":"Thu Oct  8 16:36:41 2026"},"home":"/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/normal-exit-residual-g3ThVw/wxs-runner-home-kAa8EX"},"foreign":{"pid":10747,"parentPid":10746,"pgid":10747,"state":"Ss","started":"Thu Oct  8 16:36:40 2026"},"ownedMembers":[],"foreignCurrent":{"pid":10747,"parentPid":10746,"pgid":10747,"state":"Ss","started":"Thu Oct  8 16:36:40 2026"},"homeExists":false},"foreignCleanup":{"pid":10747,"members":[]},"workerCost":{"version":1,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/normal-exit-residual-g3ThVw/normal-exit-residual.fixture.mjs","enabled":true,"pid":10775,"status":"complete","reason":null,"preImport":{"version":1,"phase":"pre-import","sequence":0,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/normal-exit-residual-g3ThVw/normal-exit-residual.fixture.mjs","pid":10775,"parentPid":10774,"monotonicMs":13.896375,"cpuUserMicros":19060,"cpuSystemMicros":3438},"exit":{"version":1,"phase":"exit","sequence":1,"entryFile":"/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/normal-exit-residual-g3ThVw/normal-exit-residual.fixture.mjs","pid":10775,"parentPid":10774,"monotonicMs":83.761166,"cpuUserMicros":31145,"cpuSystemMicros":5967,"exitCode":0},"interval":{"clockPid":10775,"wallMs":69.864791,"cpuUserMicros":12085,"cpuSystemMicros":2529}},"supervisorLines":["[test-summary] 1 file(s), 1 passed, 0 failed (0.10s wall, 0.06s test time)","runner: residual process group 10774 after inner exit; surviving pids: 10776","runner: process group 10774 reclaimed; the run still fails","runner: post-exit group verification/reclamation: pid=10774; elapsedMs=30.503; accepted=false","runner: 1 passed, 0 failed; 1/1 planned file(s) completed"]}
+# Subtest: WHAT[verification-system-006] probe consumer setup failure settles its already running native owner before rejection
+ok 10 - WHAT[verification-system-006] probe consumer setup failure settles its already running native owner before rejection
+  ---
+  duration_ms: 205.592833
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] probe consumer setup and native cleanup failure preserve both causes after actual owner settlement
+ok 11 - WHAT[verification-system-006] probe consumer setup and native cleanup failure preserve both causes after actual owner settlement
+  ---
+  duration_ms: 200.627667
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] owned tool monitoring preserves actual terminals and rejects missing control evidence
+    # Subtest: WHAT[verification-system-006] empty PATH preserves exact selected environment and actual independent process group
+    ok 1 - WHAT[verification-system-006] empty PATH preserves exact selected environment and actual independent process group
+      ---
+      duration_ms: 67.439333
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] a selected nonzero exit is preserved instead of the monitor exit
+    ok 2 - WHAT[verification-system-006] a selected nonzero exit is preserved instead of the monitor exit
+      ---
+      duration_ms: 65.55975
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] a selected process signal is preserved instead of the monitor exit
+    ok 3 - WHAT[verification-system-006] a selected process signal is preserved instead of the monitor exit
+      ---
+      duration_ms: 65.099375
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] a real selected executable spawn failure retains its OS cause
+    ok 4 - WHAT[verification-system-006] a real selected executable spawn failure retains its OS cause
+      ---
+      duration_ms: 26.84125
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] missing monitor terminal before selected spawn rejects acceptance
+    ok 5 - WHAT[verification-system-006] missing monitor terminal before selected spawn rejects acceptance
+      ---
+      duration_ms: 23.959958
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] malformed monitor terminal before selected spawn rejects acceptance
+    ok 6 - WHAT[verification-system-006] malformed monitor terminal before selected spawn rejects acceptance
+      ---
+      duration_ms: 24.598
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] duplicate monitor terminal before selected spawn rejects acceptance
+    ok 7 - WHAT[verification-system-006] duplicate monitor terminal before selected spawn rejects acceptance
+      ---
+      duration_ms: 23.595208
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] missing actual tool start evidence rejects acceptance and drains its group
+    ok 8 - WHAT[verification-system-006] missing actual tool start evidence rejects acceptance and drains its group
+      ---
+      duration_ms: 82.988542
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] malformed actual tool start evidence rejects acceptance and drains its group
+    ok 9 - WHAT[verification-system-006] malformed actual tool start evidence rejects acceptance and drains its group
+      ---
+      duration_ms: 58.122542
+      type: 'test'
+      ...
+    # Subtest: WHAT[verification-system-006] duplicate actual tool start evidence rejects acceptance and drains its group
+    ok 10 - WHAT[verification-system-006] duplicate actual tool start evidence rejects acceptance and drains its group
+      ---
+      duration_ms: 56.718542
+      type: 'test'
+      ...
+    1..10
+ok 12 - WHAT[verification-system-006] owned tool monitoring preserves actual terminals and rejects missing control evidence
+  ---
+  duration_ms: 496.541
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] event safety ceilings validate input and count actual non-heartbeat events
+ok 13 - WHAT[verification-system-006] event safety ceilings validate input and count actual non-heartbeat events
+  ---
+  duration_ms: 0.473208
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] diagnostics preserve the actual wait and monitored subject
+ok 14 - WHAT[verification-system-006] diagnostics preserve the actual wait and monitored subject
+  ---
+  duration_ms: 13.333333
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] missing and corrupt wait snapshots disclose the diagnostic gap
+ok 15 - WHAT[verification-system-006] missing and corrupt wait snapshots disclose the diagnostic gap
+  ---
+  duration_ms: 9.835167
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] the initial silence window covers execution before its first progress
+ok 16 - WHAT[verification-system-006] the initial silence window covers execution before its first progress
+  ---
+  duration_ms: 0.837458
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] continuing progress outlives a window and silence is measured from its last advance
+ok 17 - WHAT[verification-system-006] continuing progress outlives a window and silence is measured from its last advance
+  ---
+  duration_ms: 0.358
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] completed verdicts renew the window while repeated log traffic cannot
+ok 18 - WHAT[verification-system-006] completed verdicts renew the window while repeated log traffic cannot
+  ---
+  duration_ms: 0.976542
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] scheduling events do not renew the silence window
+ok 19 - WHAT[verification-system-006] scheduling events do not renew the silence window
+  ---
+  duration_ms: 0.31725
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] the real verdict transport records body entry with its actual parent test and process identity
+ok 20 - WHAT[verification-system-006] the real verdict transport records body entry with its actual parent test and process identity
+  ---
+  duration_ms: 64.537625
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] worker cost observations identify two actual file processes and leave an unobserved exit missing
+ok 21 - WHAT[verification-system-006] worker cost observations identify two actual file processes and leave an unobserved exit missing
+  ---
+  duration_ms: 112.0275
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] worker cost diagnostics preserve actual success and assertion failure with a closed exit sink
+ok 22 - WHAT[verification-system-006] worker cost diagnostics preserve actual success and assertion failure with a closed exit sink
+  ---
+  duration_ms: 883.794042
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] continuing worker cost IPC cannot renew a pending file after invalid diagnostic evidence
+ok 23 - WHAT[verification-system-006] continuing worker cost IPC cannot renew a pending file after invalid diagnostic evidence
+  ---
+  duration_ms: 409.77825
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] invalid worker cost IPC leaves actual runner verdicts and process cleanup unchanged
+ok 24 - WHAT[verification-system-006] invalid worker cost IPC leaves actual runner verdicts and process cleanup unchanged
+  ---
+  duration_ms: 220.982708
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] the worker cost collector rejects observations and invalid states presented as disabled
+ok 25 - WHAT[verification-system-006] the worker cost collector rejects observations and invalid states presented as disabled
+  ---
+  duration_ms: 0.453375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] the worker cost collector preserves native cumulative units and only derives a same-process interval
+ok 26 - WHAT[verification-system-006] the worker cost collector preserves native cumulative units and only derives a same-process interval
+  ---
+  duration_ms: 0.246709
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] the worker cost collector invalidates forged, duplicate, reordered and wrongly attributed observations without a business verdict
+ok 27 - WHAT[verification-system-006] the worker cost collector invalidates forged, duplicate, reordered and wrongly attributed observations without a business verdict
+  ---
+  duration_ms: 0.721083
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] the worker cost collector bounds fragmented bytes and distinguishes disabled, missing and truncated observations
+ok 28 - WHAT[verification-system-006] the worker cost collector bounds fragmented bytes and distinguishes disabled, missing and truncated observations
+  ---
+  duration_ms: 0.310209
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] file waits distinguish queued, active and verdicts awaiting stream drain
+ok 29 - WHAT[verification-system-006] file waits distinguish queued, active and verdicts awaiting stream drain
+  ---
+  duration_ms: 0.14725
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] file lifecycle facts reject unknown entries and impossible transitions
+ok 30 - WHAT[verification-system-006] file lifecycle facts reject unknown entries and impossible transitions
+  ---
+  duration_ms: 0.153375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] a pending runtime test start remains diagnostic evidence without becoming a verdict
+ok 31 - WHAT[verification-system-006] a pending runtime test start remains diagnostic evidence without becoming a verdict
+  ---
+  duration_ms: 0.051083
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] continuing body entry diagnostics cannot keep a genuinely pending test alive
+ok 32 - WHAT[verification-system-006] continuing body entry diagnostics cannot keep a genuinely pending test alive
+  ---
+  duration_ms: 413.672541
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] real tool diagnostics preserve stdout failure and complete cleanup without forwarding the control field
+ok 33 - WHAT[verification-system-006] real tool diagnostics preserve stdout failure and complete cleanup without forwarding the control field
+  ---
+  duration_ms: 531.148208
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] real silence diagnostics identify active waits separately from queued files
+ok 34 - WHAT[verification-system-006] real silence diagnostics identify active waits separately from queued files
+  ---
+  duration_ms: 1188.441375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] silence failure reclaims its process group before the caller catches it and completes cleanup
+ok 35 - WHAT[verification-system-006] silence failure reclaims its process group before the caller catches it and completes cleanup
+  ---
+  duration_ms: 1134.556541
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] synchronous runner spawn failure preserves its cause and stops its watchdog
+ok 36 - WHAT[verification-system-006] synchronous runner spawn failure preserves its cause and stops its watchdog
+  ---
+  duration_ms: 440.120958
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] suite HOME cleanup failure preserves the original failed verdict and rejects acceptance
+ok 37 - WHAT[verification-system-006] suite HOME cleanup failure preserves the original failed verdict and rejects acceptance
+  ---
+  duration_ms: 134.284791
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] standalone inner owns only its allocated HOME and always releases it
+ok 38 - WHAT[verification-system-006] standalone inner owns only its allocated HOME and always releases it
+  ---
+  duration_ms: 156.358584
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] physical backstop diagnostics retain active verdicts and queued files while completed leaves continue advancing
+ok 39 - WHAT[verification-system-006] physical backstop diagnostics retain active verdicts and queued files while completed leaves continue advancing
+  ---
+  duration_ms: 1598.009875
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] synchronous work and microtasks deliver completed verdicts before the file ends
+ok 40 - WHAT[verification-system-006] synchronous work and microtasks deliver completed verdicts before the file ends
+  ---
+  duration_ms: 2222.539208
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] transport scheduling cannot renew unfinished work or background noise
+ok 41 - WHAT[verification-system-006] transport scheduling cannot renew unfinished work or background noise
+  ---
+  duration_ms: 3258.310583
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] transport scheduling preserves after-hook failure verdicts
+ok 42 - WHAT[verification-system-006] transport scheduling preserves after-hook failure verdicts
+  ---
+  duration_ms: 2249.406917
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] repeat observations of one causal state do not renew twice
+ok 43 - WHAT[verification-system-006] repeat observations of one causal state do not renew twice
+  ---
+  duration_ms: 0.343292
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] stop cancels monitoring and late signals cannot resurrect it
+ok 44 - WHAT[verification-system-006] stop cancels monitoring and late signals cannot resurrect it
+  ---
+  duration_ms: 0.100709
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] changing the window does not invent new causal progress
+ok 45 - WHAT[verification-system-006] changing the window does not invent new causal progress
+  ---
+  duration_ms: 0.093083
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] restoring the default window retains the original last-progress time
+ok 46 - WHAT[verification-system-006] restoring the default window retains the original last-progress time
+  ---
+  duration_ms: 0.10875
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] failed diagnostic collection discloses its cause before exit
+ok 47 - WHAT[verification-system-006] failed diagnostic collection discloses its cause before exit
+  ---
+  duration_ms: 0.193083
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] hung diagnostic collection discloses missing information and cannot prevent exit
+ok 48 - WHAT[verification-system-006] hung diagnostic collection discloses missing information and cannot prevent exit
+  ---
+  duration_ms: 0.150166
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] successful diagnostic collection completes before a single exit
+ok 49 - WHAT[verification-system-006] successful diagnostic collection completes before a single exit
+  ---
+  duration_ms: 0.098209
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] a diagnostic output failure still terminates once and cannot restart monitoring
+ok 50 - WHAT[verification-system-006] a diagnostic output failure still terminates once and cannot restart monitoring
+  ---
+  duration_ms: 0.125459
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] consumed expectation observations preserve the matched physical attempt
+ok 51 - WHAT[verification-system-006] consumed expectation observations preserve the matched physical attempt
+  ---
+  duration_ms: 0.245833
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] turn observations keep session identity and forget pre-restart cursors
+ok 52 - WHAT[verification-system-006] turn observations keep session identity and forget pre-restart cursors
+  ---
+  duration_ms: 0.21375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-006] alternative progress waits resolve the observed branch and release siblings
+ok 53 - WHAT[verification-system-006] alternative progress waits resolve the observed branch and release siblings
+  ---
+  duration_ms: 0.180584
+  type: 'test'
+  ...
+1..53
+# tests 63
+# suites 0
+# pass 63
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 26903.062667

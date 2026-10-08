@@ -1,0 +1,49 @@
+import fs from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { verificationSteps } from '/Users/yuanxi/Workwork/vibe-fs/scripts/verify.mjs'
+import { assertBuildFresh, collectVerificationInputs, computeDigest } from '/Users/yuanxi/Workwork/vibe-fs/scripts/lib/build-state.mjs'
+import { spawnOwnedVerificationTool } from '/Users/yuanxi/Workwork/vibe-fs/scripts/lib/verification-owned-tool.mjs'
+
+const root = '/Users/yuanxi/Workwork/vibe-fs'
+const directory = '/private/tmp/vibe-fs-oct8-alias-release'
+const label = process.argv[2]
+const plan = verificationSteps({ root, release: true, env: process.env }).find(step => step.label === label)
+if (!['integration', 'e2e', 'package'].includes(label) || !plan) throw new Error('Unknown independent release stage')
+assertBuildFresh({ root })
+const digest = computeDigest(collectVerificationInputs(root))
+const frozen = JSON.parse(fs.readFileSync(`${directory}/frozen-input.json`))
+if (digest !== frozen.digest) throw new Error('Frozen verification input differs before the independent stage')
+const env = { ...plan.env, WXS_RELEASE: plan.env.WXS_RELEASE ?? '0' }
+delete env.TESTS_MJS_FILES
+delete env.WXS_TIER_INTEGRATION
+if (label !== 'e2e') delete env.WXS_TIER_RELEASE
+const log = fs.createWriteStream(`${directory}/independent-${label}.log`, { flags: 'wx' })
+const startedAt = new Date().toISOString()
+const start = performance.now()
+const owned = spawnOwnedVerificationTool(plan.cmd, plan.argv, { cwd: root, env })
+for (const stream of [owned.child.stdout, owned.child.stderr]) stream.on('data', chunk => log.write(chunk))
+let timedOut = false
+const timer = setTimeout(() => {
+  timedOut = true
+  owned.stop()
+}, plan.timeoutMs)
+const result = await owned.completed
+clearTimeout(timer)
+await new Promise(resolve => log.end(resolve))
+let monitorObservation
+try { process.kill(owned.child.pid, 0); monitorObservation = 'still-running' }
+catch (error) { monitorObservation = error.code }
+const afterDigest = computeDigest(collectVerificationInputs(root))
+const receipt = { label, command: [plan.cmd, ...plan.argv], inputCommit: frozen.commit,
+  currentCommit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
+  startedAt, durationMs: performance.now() - start, timeoutMs: plan.timeoutMs,
+  digest, afterDigest, inputsEqual: digest === afterDigest,
+  env: { NODE_TEST_CONCURRENCY: env.NODE_TEST_CONCURRENCY, UNIT_VERDICT_SILENCE_MS: env.UNIT_VERDICT_SILENCE_MS,
+    WXS_RELEASE: env.WXS_RELEASE, WXS_TIER_RELEASE: env.WXS_TIER_RELEASE, WXS_E2E_QUIET: env.WXS_E2E_QUIET },
+  timedOut, exitCode: result.exitCode, signal: result.signal,
+  monitorPid: owned.child.pid, monitorObservation,
+  cleanupFailure: result.failure === null ? null : String(result.failure.stack ?? result.failure),
+  log: `${directory}/independent-${label}.log` }
+fs.writeFileSync(`${directory}/independent-${label}.json`, JSON.stringify(receipt, null, 2))
+process.stdout.write(JSON.stringify(receipt, null, 2) + '\n')
+process.exitCode = !timedOut && result.exitCode === 0 && result.signal === null && result.failure === null && receipt.inputsEqual ? 0 : 1

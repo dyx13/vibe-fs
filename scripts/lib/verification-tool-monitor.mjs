@@ -106,7 +106,20 @@ try {
     cwd: process.cwd(), env,
     detached: process.platform !== 'win32', stdio: ['ignore', 'inherit', 'inherit'],
   })
-  tool.once('spawn', () => publishVerificationToolPhase(diagnostics, 'tool-spawned', { toolPid: tool.pid, executable: process.argv[2] }))
+  tool.once('spawn', () => {
+    publishVerificationToolPhase(diagnostics, 'tool-spawned', { toolPid: tool.pid, executable: process.argv[2] })
+    try {
+      if (!process.connected) throw cleanupFailure('The selected tool start has no owner channel')
+      process.send({ type: 'verification-tool-started', version: 1, pid: tool.pid, monitorPid: process.pid }, error => {
+        if (!error) return
+        failures.push(error)
+        stop()
+      })
+    } catch (error) {
+      failures.push(error)
+      stop()
+    }
+  })
   tool.once('exit', (exitCode, signal) => {
     publishVerificationToolPhase(diagnostics, 'tool-exited', { toolPid: tool.pid, exitCode, signal })
     terminal = { exitCode, signal }

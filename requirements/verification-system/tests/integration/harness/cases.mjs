@@ -7,7 +7,8 @@ import path from 'node:path';
 import net from 'node:net';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { EventEmitter } from 'node:events';
+import { getEventListeners } from 'node:events';
+import { PassThrough } from 'node:stream';
 import {
   assertEq,
   assertTrue,
@@ -199,17 +200,16 @@ async function runProcessHostRejectsForeignProject() {
 }
 
 async function runProcessHostExitDuringHealth() {
-  const child = new EventEmitter();
-  let exitTimer;
+  const terminal = new AbortController();
+  let requests = 0;
   const { server, url } = await startHttpServer(() => {
-    exitTimer = setTimeout(() => {
-      host._onChildExit(17, null);
-      child.emit('exit', 17, null);
-    }, 20);
+    requests += 1;
+    host._onChildExit(17, null);
+    terminal.abort({ exitCode: 17, signal: null, failure: null });
   });
   const host = new ProcessHost();
   host._baseUrl = url;
-  host._child = child;
+  host._owner = { terminal: terminal.signal };
   let guardTimer;
   try {
     await assert.rejects(Promise.race([
@@ -218,9 +218,10 @@ async function runProcessHostExitDuringHealth() {
         guardTimer = setTimeout(() => reject(new Error('health wait ignored child exit')), 500);
       }),
     ]), /project.*\/path.*code=17/s);
-    assert.equal(child.listenerCount('exit'), 0, 'completed health wait must release its exit observer');
+    assert.equal(requests, 1, 'The actual HTTP request must reach the terminal barrier');
+    assert.equal(host.exitInfo.code, 17);
+    assert.equal(getEventListeners(terminal.signal, 'abort').length, 0, 'completed health wait must release its terminal observer');
   } finally {
-    clearTimeout(exitTimer);
     clearTimeout(guardTimer);
     await stopHttpServer(server);
   }
@@ -254,18 +255,21 @@ async function runProcessHostUnreadyDoesNotRenew() {
   }
 }
 
-async function runProcessHostReleasesObservedChild() {
-  const child = new EventEmitter();
+async function runProcessHostReleasesObservedOwner() {
+  const terminal = new AbortController();
+  let observedListenerCount;
   const { server, url } = await startHttpServer((_request, response) => {
-    host._child = null;
+    observedListenerCount = getEventListeners(terminal.signal, 'abort').length;
+    host._owner = null;
     response.end('{"healthy":true}');
   });
   const host = new ProcessHost();
   host._baseUrl = url;
-  host._child = child;
+  host._owner = { terminal: terminal.signal };
   try {
     await host._waitForGlobalHealth(1000);
-    assert.equal(child.listenerCount('exit'), 0, 'readiness must release the child it observed even after instance disposal');
+    assert.equal(observedListenerCount, 1, 'The actual HTTP request must observe the original terminal subscription');
+    assert.equal(getEventListeners(terminal.signal, 'abort').length, 0, 'readiness must release the terminal it observed even after instance disposal');
   } finally {
     await stopHttpServer(server);
   }
@@ -560,15 +564,27 @@ async function runDiagnosticsCollection() {
 }
 
 async function runProcessHostDisposeContract() {
-  const hostCode = fs.readFileSync(new URL('../../e2e/support/process-host.js', import.meta.url), 'utf8');
-  const checksCode = fs.readFileSync(new URL('../../e2e/support/process-host-checks.js', import.meta.url), 'utf8');
-  assertTrue(hostCode.includes('checkProcessTree'), 'ProcessHost dispose must inspect process tree');
-  assertTrue(hostCode.includes('checkSocketClosed'), 'ProcessHost dispose must check port closed');
-  assertTrue(hostCode.includes('isPidAlive'), 'ProcessHost dispose must check pid dead');
-  assertTrue(hostCode.includes('SIGKILL'), 'ProcessHost dispose must escalate to SIGKILL');
-  assertTrue(checksCode.includes('function checkProcessTree'), 'process-tree helper exported');
-  assertTrue(checksCode.includes('function checkSocketClosed'), 'socket helper exported');
-  assertTrue(checksCode.includes('function getDescendantPids'), 'descendant PID helper exported');
+  const originalFailure = Object.assign(new Error('Selected Host owner did not drain'), { code: 'verification-tool-group-reclamation-failed' });
+  const { server, url } = await startHttpServer((_request, response) => response.end('foreign caller listener'));
+  const host = new ProcessHost();
+  let stops = 0;
+  host._started = true;
+  host._owner = {
+    child: { stdout: new PassThrough(), stderr: new PassThrough() },
+    stop() { stops += 1; },
+    completed: Promise.resolve({ exitCode: null, signal: null, failure: originalFailure }),
+  };
+  try {
+    await assert.rejects(host.stop(), error => error === originalFailure);
+    assert.equal(stops, 1, 'Disposal must close the selected owner lifeline once');
+    assert.equal(await (await fetch(url)).text(), 'foreign caller listener', 'A failed owner cleanup must not reclaim unrelated listeners');
+    assert.equal(host.pid, null);
+    assert.equal(host.baseUrl, null);
+    assert.equal(host._started, false);
+    assert.equal(host._stopped, false);
+  } finally {
+    await stopHttpServer(server);
+  }
 }
 
 async function runScenarioStrictDefault() {
@@ -599,7 +615,7 @@ export const cases = [
   { name: 'WHAT[verification-system-005] ProcessHost rejects readiness for a foreign project', fn: runProcessHostRejectsForeignProject },
   { name: 'WHAT[verification-system-005] ProcessHost interrupts readiness on child exit', fn: runProcessHostExitDuringHealth },
   { name: 'WHAT[verification-system-006] ProcessHost repeated unready responses do not renew the deadline', fn: runProcessHostUnreadyDoesNotRenew },
-  { name: 'WHAT[verification-system-005] ProcessHost releases the original child observer after disposal', fn: runProcessHostReleasesObservedChild },
+  { name: 'WHAT[verification-system-005] ProcessHost releases the original terminal observer after disposal', fn: runProcessHostReleasesObservedOwner },
   { name: 'ProcessHost stderr/stdout ring buffer capture', fn: runProcessHostStderrCapture },
   { name: 'WHAT[verification-system-006] HTTP server closure releases the real listener and is repeatable', fn: runHttpServerClose },
   { name: 'WHAT[verification-system-005] HTTP connection close failure still invokes listener closure and preserves the error', fn: runHttpServerConnectionCloseFailure },

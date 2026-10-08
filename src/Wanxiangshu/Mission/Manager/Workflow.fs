@@ -182,9 +182,11 @@ module ManagerWorkflow =
             |> Result.defaultValue opening.Transaction
 
     let private requiresContinuation (road: RoadView) (retirement: RetirementSummary) =
-        match retirement.Outcome with
-        | RetirementOutcome.Continue -> true
-        | RetirementOutcome.Accepted _ -> false
+        match retirement.Outcome, road.Certificate with
+        | RetirementOutcome.Continue, _ -> true
+        | RetirementOutcome.Accepted certificateId, Some certificate ->
+            certificate.Id = certificateId && not certificate.Valid
+        | RetirementOutcome.Accepted _, _ -> false
 
     let private isAcceptedWithValidCertificate (road: RoadView) (retirement: RetirementSummary) =
         match retirement.Outcome, road.Certificate with
@@ -232,6 +234,10 @@ module ManagerWorkflow =
         | Some sidText, Some durable when not (System.String.IsNullOrWhiteSpace sidText) ->
             loopContextFor durable sidText
         | _ -> None
+
+    let private decideAutomaticLoopContext journal sessionIdTextOpt =
+        decideLoopContext journal sessionIdTextOpt
+        |> Option.filter (fun (_, _, _, _, retirement, _) -> retirement.Outcome = RetirementOutcome.Continue)
 
     let private tryBuildAcceptedOpening
         durable
@@ -430,13 +436,14 @@ module ManagerWorkflow =
         (sessionId: SessionId)
         : Task<unit> =
         task {
-            let loopContext = decideLoopContext journal (Some(SessionId.value sessionId))
+            let loopContext =
+                decideAutomaticLoopContext journal (Some(SessionId.value sessionId))
 
             do! stopRetiredAttempt sessionId
 
             match
                 loopContext
-                |> Option.orElseWith (fun () -> decideLoopContext journal (Some(SessionId.value sessionId)))
+                |> Option.orElseWith (fun () -> decideAutomaticLoopContext journal (Some(SessionId.value sessionId)))
             with
             | Some context -> do! deliverLoopContext sessionPort rootWorkspace workspaceDirectory context
             | None -> return ()

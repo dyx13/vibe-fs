@@ -1,0 +1,144 @@
+{
+  "auditedAt": "2026-10-08T07:18:05.542084+00:00",
+  "scope": "Read-only auxiliary receipt; no tests/builds/source edits by auditor. Independent supplemental evidence does not replace the failed unified pipeline or combine into full integration success.",
+  "input": {
+    "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+    "tree": "bbeba1c9618c41d125d83f3047edbc93e0a6b5fe",
+    "digest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+    "frozenEnvironment": {
+      "node": "v22.23.3",
+      "npm": "11.12.1",
+      "dotnet": "10.0.302"
+    },
+    "receiptsAgree": true,
+    "bothInputsEqual": true
+  },
+  "stages": [
+    {
+      "stage": "independent package",
+      "inputCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+      "command": [
+        "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+        "/Users/yuanxi/Workwork/vibe-fs/scripts/verify-package.mjs"
+      ],
+      "env": {
+        "NODE_TEST_CONCURRENCY": "2",
+        "UNIT_VERDICT_SILENCE_MS": "30000",
+        "WXS_RELEASE": "0",
+        "WXS_E2E_QUIET": "1"
+      },
+      "startedAt": "2026-10-08T07:09:50.194Z",
+      "durationMs": 5489.145708,
+      "timeoutMs": 600000,
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "status": "pass",
+      "plannedTestFiles": "unknown; package CLI is non-TAP",
+      "completedTestFiles": "unknown; no test summary",
+      "counts": {
+        "pass": "unknown",
+        "fail": "unknown",
+        "skip": "unknown",
+        "TODO": "unknown"
+      },
+      "package": {
+        "generation": 326,
+        "artifactPath": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/package/wanxiangshu-0.9.0.tgz",
+        "loggedMembers": 2073,
+        "actualMembers": 2073,
+        "actualRegularFiles": 2073,
+        "contentBytes": 12486826,
+        "archiveBytes": 2532525,
+        "tarballSha256": "3200b8bfd642b26453bd68266b41e96d902c867d624d53a80101e9f0e890d8da",
+        "loggedDigestMatches": true,
+        "retention": "Tarball retained as verification artifact, not cleaned as scratch"
+      },
+      "resources": {
+        "monitorPid": 93476,
+        "monitorObservationAtStageEnd": "ESRCH",
+        "cleanupFailure": null,
+        "scratchFilesystemDeletion": "unknown; scratch path/removal receipt not logged; package finally attempts removal but catches removal errors"
+      },
+      "log": "/private/tmp/vibe-fs-oct8-alias-release/independent-package.log",
+      "rawReceipt": "/private/tmp/vibe-fs-oct8-alias-release/independent-package.json"
+    },
+    {
+      "stage": "supplemental 12 previously unstarted integration files",
+      "inputCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+      "command": "node /private/tmp/vibe-fs-oct8-alias-release/run-unstarted-integration.mjs",
+      "commandQualification": "Helper entry confirmed by stack and script; exact executable path not recorded in raw receipt",
+      "env": {
+        "NODE_TEST_CONCURRENCY": "2",
+        "WXS_RELEASE": "1",
+        "WXS_TIER_INTEGRATION": "1",
+        "WXS_E2E_QUIET": "1",
+        "PER_TEST_TIMEOUT_MS": "180000",
+        "unset": [
+          "TESTS_MJS_FILES",
+          "NODE_TEST_CONTEXT",
+          "WXS_TIER_RELEASE"
+        ]
+      },
+      "startedAt": "2026-10-08T07:11:15.690Z",
+      "durationMs": 66146.72937500001,
+      "physicalBackstopMs": 300000,
+      "verdictSilenceMs": 185000,
+      "perTestTimeoutEnvMs": 180000,
+      "exitCode": 1,
+      "status": "partial evidence; pending-proof policy exit1",
+      "plannedFiles": 12,
+      "startedFiles": 12,
+      "completedFiles": 12,
+      "drainedFiles": 12,
+      "activeFiles": 0,
+      "queuedFiles": 0,
+      "counts": {
+        "pass": 124,
+        "fail": 0,
+        "skip": 0,
+        "TODO": 2
+      },
+      "build": {
+        "generation": 326,
+        "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+        "generatedInputDigest": "5ab4f3ccba7cf6ee6d2876294e00c74b89c350d172bd74068f4b7753d413fd76",
+        "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+      },
+      "resources": {
+        "ownedGroupPid": 93715,
+        "reclamationMs": 17.512,
+        "accepted": true,
+        "filesystemDeletion": "unknown; no per-root removal audit in this receipt"
+      },
+      "remainingTODO": [
+        "host-provider-failure-ownership-002 installed1.18.29 upstream retry configuration GAP-144",
+        "host-provider-failure-ownership-002 licensed fresh-run recovery GAP-143"
+      ],
+      "completeIntegrationStage": false,
+      "files": [
+        "requirements/host-provider-failure-ownership/tests/002.test.mjs",
+        "requirements/managed-chat-execution/tests/009.test.mjs",
+        "requirements/obligation-ledger/tests/001.test.mjs",
+        "requirements/obligation-ledger/tests/002.test.mjs",
+        "requirements/obligation-ledger/tests/004.test.mjs",
+        "requirements/obligation-ledger/tests/005.test.mjs",
+        "requirements/participant-horizon/tests/010.test.mjs",
+        "requirements/repository-programming/tests/020.test.mjs",
+        "requirements/requirement-grounding/tests/006.test.mjs",
+        "requirements/speculative-investigation/tests/008.test.mjs",
+        "requirements/speculative-investigation/tests/013.test.mjs",
+        "requirements/structured-workflow/tests/012.test.mjs"
+      ],
+      "log": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-unstarted.log",
+      "rawReceipt": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-unstarted.json"
+    }
+  ],
+  "logChecksums": {
+    "independent-package.json": "a3396a8adfff7dbcf9bc9e4ba12d76ecc778a1bed4600c1bccd1b5aeea2145fb",
+    "independent-package.log": "e0089683aaece34d9b0bf8c80465525dcfd73059bf8f03c277cc8584ac39c270",
+    "supplemental-unstarted.json": "708faaac0b56f952d7d1781d688e3259d90fe953e0a2d5eb0281f1cbd970a1ba",
+    "supplemental-unstarted.log": "68fd9c0909b313c1a7cad7f9089ef0131f19d03de47a4d3addd6e23212891fd4",
+    "run-unstarted-integration.mjs": "6454b0a51e0cc82a07addead7bc6d0d110af99b0c191257f7a7bb2c798bd5561"
+  }
+}

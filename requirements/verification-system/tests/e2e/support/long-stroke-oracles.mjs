@@ -19,12 +19,16 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { renderAgentCompletion } from '../../../../../dist/OpenCode/JoinResultRendererSurface.js';
 import {
   readJournal,
   watchJournal,
   countFactCase,
   journalEventLines,
   factPayloads,
+  getOrCreateSharedObserver,
+  readBlobRef,
 } from './journal-observer.js';
 import { WAIT_FACT_WINDOW_MS } from './time-budget.js';
 import { isAppendOnlyPrefix, sealHolds, wireOf } from './provider-wire.js';
@@ -89,7 +93,7 @@ export function waitFactShape(name, { eq, gte, renewOn = [], session } = {}) {
 /**
  * Await a named journal fact using the same wake shape as awaitFactBarrier.
  * @param {string} workDir
- * @param {{ name: string, eq?: number, gte?: number, renewOn?: string[] }} waitFact
+ * @param {{ name: string, eq?: number, gte?: number, renewOn?: string[], session?: string }} waitFact
  * @param {{ timeoutMs?: number, onProgress?: (obs: { named: number, renew: number }) => void }} [opts]
  */
 export async function awaitNamedFact(workDir, waitFact, { timeoutMs = WAIT_FACT_WINDOW_MS, onProgress } = {}) {
@@ -105,7 +109,19 @@ export async function awaitNamedFact(workDir, waitFact, { timeoutMs = WAIT_FACT_
     waitFact.eq !== undefined ? (n) => n === need : (n) => n >= need;
 
   const deadline = Date.now() + timeoutMs;
-  let observed = readJournal(workDir, name, renewOn);
+  const readCurrent = async () => {
+    if (waitFact.session === undefined) return readJournal(workDir, name, renewOn);
+    const observer = getOrCreateSharedObserver(workDir);
+    await observer.refresh();
+    const events = observer.select({ sessionId: waitFact.session });
+    return {
+      named: countFactCase(events, name),
+      total: events.length,
+      renew: [...new Set(renewOn)].reduce((sum, fact) => sum + countFactCase(events, fact), 0),
+      tip: observer.tip(),
+    };
+  };
+  let observed = await readCurrent();
 
   if (waitFact.eq !== undefined && observed.named > need) {
     assert.fail(
@@ -128,7 +144,7 @@ export async function awaitNamedFact(workDir, waitFact, { timeoutMs = WAIT_FACT_
       const timer = setTimeout(finish, Math.min(remaining, FACT_WAKE_GUARD_MS));
     });
 
-    const next = readJournal(workDir, name, renewOn);
+    const next = await readCurrent();
     if (waitFact.eq !== undefined && next.named > need) {
       assert.fail(
         `waitFact ${name} overshot eq ${need} (got ${next.named}); use gte when the producer can race past the exact count`,
@@ -203,15 +219,57 @@ function assertConsecutiveRecoveryEpisodes(scenario, ctx, lines) {
 }
 
 /**
- * §21: join blocked then causally awakened — HandleCompleted after user_message wake.
- * The join-wake itself only requires the harvest fact; the full agent lifecycle is
- * proven later by RetirementCommitted (assertRetirementCommitted).
+ * §21: the original Engineer terminal is durably completed, consumed, and delivered.
  */
-export async function assertJoinWakePath(workDir, label = 'long-stroke') {
-  assert.ok(
-    countFactCase(workDir, 'HandleCompleted') >= 1,
-    `${label}: HandleCompleted required after join harvest (join blocked → causally awakened)`,
-  );
+export function assertJoinWakePath(scenario, owner, label = 'long-stroke') {
+  assert.ok(typeof owner === 'string' && owner.length > 0, `${label}: original work owner required`);
+  const workDir = scenario.host.workDir;
+  const lines = journalEventLines(workDir);
+  const links = factPayloads(lines, 'HandleLinked').filter((payload) =>
+    payload?.ParentSessionId?.[1] === owner && payload.Byname === 'Proof Writer');
+  assert.equal(links.length, 1, `${label}: original Proof Writer binding required exactly once`);
+  const linked = links[0];
+  assert.equal(linked.CanonicalRole, 'Engineer');
+  assert.equal(linked.Ownership, 'DurableParentHandle');
+  const roots = factPayloads(lines, 'AuthorityRootAccepted').filter((payload) =>
+    payload?.SessionId?.[1] === linked.ChildSessionId?.[1]
+    && payload.AuthorityKind === 'AgentOwnerRoot'
+    && payload.IdentitySeed?.[0] === 'InheritedFromOwner'
+    && payload.IdentitySeed[1]?.OwnerSessionId?.[1] === owner);
+  assert.equal(roots.length, 1, `${label}: original Proof Writer accepted work root required exactly once`);
+  const work = {
+    Handle: linked.Handle,
+    ChildSessionId: linked.ChildSessionId,
+    AuthorityRoot: roots[0].AuthorityRootUserMessageId,
+  };
+  const belongsToWork = (payload) => payload?.ParentSessionId?.[1] === owner
+    && payload.Work?.ChildSessionId?.[1] === work.ChildSessionId[1]
+    && payload.Work?.AuthorityRoot?.[1] === work.AuthorityRoot[1]
+    && JSON.stringify(payload.Work?.Handle) === JSON.stringify(work.Handle);
+  const completed = factPayloads(lines, 'HandleWorkCompleted').filter(belongsToWork);
+  assert.equal(completed.length, 1, `${label}: original Work terminal completion required exactly once`);
+  assert.equal(completed[0].Kind, 'Terminal', `${label}: original Work must finish normally`);
+  const consumed = factPayloads(lines, 'HandleWorkConsumed').filter(belongsToWork);
+  assert.equal(consumed.length, 1, `${label}: same original Work must be consumed exactly once`);
+  assert.equal(consumed[0].Kind, 'Terminal');
+  assert.deepEqual(consumed[0].CompletionRef, completed[0].CompletionRef);
+  assert.deepEqual(consumed[0].CompletionDigest, completed[0].CompletionDigest);
+  assert.ok(typeof consumed[0].ConsumptionId === 'string' && consumed[0].ConsumptionId.length > 0);
+  const bytes = readBlobRef(workDir, completed[0].CompletionRef);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), completed[0].CompletionDigest?.[1],
+    `${label}: original Work completion bytes must match their durable digest`);
+  const body = JSON.parse(bytes);
+  assert.equal(body.schemaVersion, 2);
+  assert.equal(body.finality, 'completed');
+  assert.equal(body.authority_root, work.AuthorityRoot[1]);
+  assert.equal(body.child_session_id, work.ChildSessionId[1]);
+  assert.ok(typeof body.provider_run === 'string' && body.provider_run.length > 0);
+  assert.ok(typeof body.work_record === 'string' && body.work_record.length > 0);
+  const delivered = publicToolResults((scenario.provider?.requests ?? [])
+    .filter((request) => request.sessionID === owner), 'join');
+  const expected = renderAgentCompletion('english', linked.Byname, body.work_record);
+  assert.equal(delivered.filter((text) => text === expected || text.startsWith(expected + '\0\uFEFF')).length, 1,
+    `${label}: original Work must reach its owner through one successful public join result`);
 }
 
 /**
@@ -364,6 +422,10 @@ export async function bindManagerLoopSequence(scenario) {
   assert.ok(loopJoin, 'long-stroke: manager-loop join entry is required');
   const initialLoopAction = loopAction.respond;
   const initialLoopJoin = loopJoin.respond;
+  const initialLoopAudit = loopAudit.respond;
+  const scopedResponses = new Map(runtime.scenario.entries
+    .filter((entry) => ['manager-reopened-loop', 'manager-current-action', 'manager-t1-commitment'].includes(entry.turnId))
+    .map((entry) => [entry.id, entry.respond]));
   const currentActionAssumption = runtime.scenario.entries.find(
     (entry) => entry.turnId === 'manager-current-action' && entry.step === 0,
   );
@@ -373,6 +435,7 @@ export async function bindManagerLoopSequence(scenario) {
     (entry) => entry.turnId === 'humanroot-loop' && entry.step === 0,
   );
   assert.ok(humanAudit, 'long-stroke: humanroot-loop audit entry is required');
+  const initialHumanAudit = humanAudit.respond;
 
   const scores = (completeness) => ({
     language_algorithms: 'PERFECT',
@@ -407,6 +470,7 @@ export async function bindManagerLoopSequence(scenario) {
  // Initial deliveries stay as declared (low audit + work fork; HumanRoot low).
  // Later responses are selected by the new incarnation's audit delivery count.
   let latestManagerAuditAttempt = 0;
+  let mainManagerSessionId;
   let managerAssumptionDelivered = false;
   let initialWorkJoined = false;
   let repairWorkJoined = false;
@@ -414,15 +478,24 @@ export async function bindManagerLoopSequence(scenario) {
   const originalConsume = (body, selection, context) => consume.call(runtime, body, selection, context);
   runtime.consume = (body, selection, context) => {
     const { entry, attempt } = selection ?? {};
+    if (scopedResponses.has(entry?.id)
+      && (mainManagerSessionId === undefined || context?.sessionId !== mainManagerSessionId)) {
+      entry.respond = scopedResponses.get(entry.id);
+      originalConsume(body, selection, context);
+      return;
+    }
     if (entry?.id === 'manager-loop.0') {
+      assert.ok(typeof context?.sessionId === 'string' && context.sessionId.length > 0,
+        'long-stroke: main Manager Road requires an explicit session');
+      assert.ok(mainManagerSessionId === undefined || mainManagerSessionId === context.sessionId,
+        'long-stroke: main Manager Road cannot change');
+      mainManagerSessionId = context.sessionId;
       latestManagerAuditAttempt = Math.max(latestManagerAuditAttempt, attempt);
-      if (attempt > 1) entry.respond = attempt === 3 ? repairAudit() : candidatePerfect();
+      entry.respond = attempt === 1 ? initialLoopAudit : attempt === 3 ? repairAudit() : candidatePerfect();
     } else if (entry?.turnId === 'manager-reopened-loop' && (entry.step === 0 || entry.id === 'manager-reopened-loop.0')) {
-      latestManagerAuditAttempt = Math.max(latestManagerAuditAttempt + 1, attempt ?? 1);
+      latestManagerAuditAttempt += 1;
       const n = latestManagerAuditAttempt;
-      if (n > 1) {
-        entry.respond = n === 3 ? repairAudit() : candidatePerfect();
-      }
+      entry.respond = n === 3 ? repairAudit() : candidatePerfect();
     } else if (entry?.id === 'manager-loop.1') {
       entry.respond = latestManagerAuditAttempt === 1
         ? initialLoopAction
@@ -476,8 +549,8 @@ export async function bindManagerLoopSequence(scenario) {
       } else {
         entry.respond = retire();
       }
-    } else if (entry?.id === 'humanroot-loop.0' && attempt > 1) {
-      entry.respond = humanPerfect();
+    } else if (entry?.id === 'humanroot-loop.0') {
+      entry.respond = attempt === 1 ? initialHumanAudit : humanPerfect();
     }
     originalConsume(body, selection, context);
   };
@@ -609,7 +682,7 @@ export function assertNativeReadProbeTimeline(scenario) {
 export async function oracleLongStroke(scenario, ctx) {
   const workDir = scenario.host.workDir;
   const journalLines = journalEventLines(workDir);
-  assertJoinWakePath(workDir);
+  assertJoinWakePath(scenario, ctx?.childId);
   assertInterruptedJoin(scenario);
   await assertProviderTransientFailure(workDir);
   await assertProviderFailureContinuation(workDir);
@@ -621,11 +694,8 @@ export async function oracleLongStroke(scenario, ctx) {
   assertSuccessfulReconciliation(workDir);
   assertNativeReadProbeTimeline(scenario);
 
- // HumanRoot preflow baseline (2 assessments / 2 retirements / 2 openings) is
- // already proven exact before the main spine; global gte checks above would
- // pass on preflow alone. Preserve their main-spine meaning by requiring the
- // current loop itself to own every expected iteration and outcome, not merely
- // the global journal.
+ // Other HumanRoot roads can append their own relay facts during this stroke.
+ // Require the current loop itself to own every expected iteration and outcome.
   const currentLoopId = ctx?.childId ?? null;
   if (typeof currentLoopId === 'string' && currentLoopId.length > 0) {
     const loopTransactions = factPayloads(workDir, 'TransactionCommitted')
@@ -740,7 +810,7 @@ export async function oracleLongStroke(scenario, ctx) {
 
 /** waitFact presets mirroring long-stroke.toml flow barriers. */
 export const PLANNED_WAIT_FACTS = Object.freeze({
-  handleCompleted: waitFactShape('HandleCompleted', { gte: 1 }),
+  handleWorkCompleted: waitFactShape('HandleWorkCompleted', { gte: 1, session: 'child' }),
   providerFailure: waitFactShape('FailureRecorded', { eq: 2 }),
   assessmentCommitted: waitFactShape('AssessmentCommitted', { gte: 1 }),
   retirementCommitted: waitFactShape('RetirementCommitted', { gte: 1 }),
@@ -928,9 +998,9 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
   assert.ok(typeof sessionId === 'string' && sessionId.length > 0, `${label}: canary session id required`);
   const workDir = scenario.host.workDir;
 
-  await awaitNamedFact(workDir, waitFactShape('AssessmentCommitted', { eq: 2 }), { timeoutMs: WAIT_FACT_WINDOW_MS });
-  await awaitNamedFact(workDir, waitFactShape('RetirementCommitted', { eq: 2 }), { timeoutMs: WAIT_FACT_WINDOW_MS });
-  await awaitNamedFact(workDir, waitFactShape('IncumbencyOpened', { eq: 2 }), { timeoutMs: WAIT_FACT_WINDOW_MS });
+  await awaitNamedFact(workDir, waitFactShape('AssessmentCommitted', { eq: 2, session: sessionId }), { timeoutMs: WAIT_FACT_WINDOW_MS });
+  await awaitNamedFact(workDir, waitFactShape('RetirementCommitted', { eq: 2, session: sessionId }), { timeoutMs: WAIT_FACT_WINDOW_MS });
+  await awaitNamedFact(workDir, waitFactShape('IncumbencyOpened', { eq: 2, session: sessionId }), { timeoutMs: WAIT_FACT_WINDOW_MS });
 
  // The authority-turn family answers the initial iteration only: once the successor
  // carries the owner-controlled assess resource as its last user message, the
@@ -938,22 +1008,22 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
  // An IncumbencyOpened fact alone is an event-only fake; physically observed
  // deliveries under the same LogicalRun prove the loop.
   assert.equal(
-    scenario.provider.matchCount('humanroot-loop.0'),
+    scenario.provider.matchCount('humanroot-loop.0', sessionId),
     1,
     `${label}: authority-turn audit must be delivered once (low score → Continue)`,
   );
   assert.equal(
-    scenario.provider.matchCount('humanroot-loop.1'),
+    scenario.provider.matchCount('humanroot-loop.1', sessionId),
     1,
     `${label}: authority-turn close must be delivered once (Continue retirement)`,
   );
   assert.equal(
-    scenario.provider.matchCount('manager-reopened-loop.0'),
+    scenario.provider.matchCount('manager-reopened-loop.0', sessionId),
     1,
     `${label}: successor iteration audit must be delivered once (perfect → Accepted)`,
   );
   assert.equal(
-    scenario.provider.matchCount('manager-reopened-loop.1'),
+    scenario.provider.matchCount('manager-reopened-loop.1', sessionId),
     1,
     `${label}: successor iteration close must be delivered once (Accepted retirement)`,
   );
@@ -1008,11 +1078,14 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
 
  // Durable loop behavior: two openings (initial + one after Continue), one
  // Continue retirement followed by one Accepted; positive counts prove the loop.
-  const openings = factPayloads(workDir, 'IncumbencyOpened');
+  const observer = getOrCreateSharedObserver(workDir);
+  await observer.refresh();
+  const canaryEvents = observer.select({ sessionId });
+  const openings = factPayloads(canaryEvents, 'IncumbencyOpened');
   assert.equal(openings.length, 2, `${label}: canary road must open exactly two iterations (got ${openings.length})`);
   const openedIds = incumbencyIdsIn(openings);
   assert.equal(openedIds.length, 2, `${label}: iterations must carry distinct incumbencies (got ${JSON.stringify(openedIds)})`);
-  const canaryRetirements = factPayloads(workDir, 'RetirementCommitted');
+  const canaryRetirements = factPayloads(canaryEvents, 'RetirementCommitted');
   assert.equal(
     canaryRetirements.length,
     2,
@@ -1029,22 +1102,22 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
     `${label}: next retirement must be Outcome Accepted with a certificate`,
   );
   assert.equal(
-    countFactCase(workDir, 'AssessmentCommitted'),
+    countFactCase(canaryEvents, 'AssessmentCommitted'),
     HUMANROOT_CANARY_DELTAS.assessments,
     `${label}: preflow must contribute exactly ${HUMANROOT_CANARY_DELTAS.assessments} AssessmentCommitted before the main spine`,
   );
   assert.equal(
-    countFactCase(workDir, 'RetirementCommitted'),
+    countFactCase(canaryEvents, 'RetirementCommitted'),
     HUMANROOT_CANARY_DELTAS.retirements,
     `${label}: preflow must contribute exactly ${HUMANROOT_CANARY_DELTAS.retirements} RetirementCommitted before the main spine`,
   );
   assert.equal(
-    countFactCase(workDir, 'IncumbencyOpened'),
+    countFactCase(canaryEvents, 'IncumbencyOpened'),
     HUMANROOT_CANARY_DELTAS.incumbencyOpenings,
     `${label}: preflow must contribute exactly ${HUMANROOT_CANARY_DELTAS.incumbencyOpenings} IncumbencyOpened before the main spine`,
   );
   assert.equal(
-    countFactCase(workDir, 'ManagerJobCreated'),
+    countFactCase(canaryEvents, 'ManagerJobCreated'),
     0,
     `${label}: direct HumanRoot canary must not mint a ManagerJob (main spine owns the single ManagerJobCreated)`,
   );

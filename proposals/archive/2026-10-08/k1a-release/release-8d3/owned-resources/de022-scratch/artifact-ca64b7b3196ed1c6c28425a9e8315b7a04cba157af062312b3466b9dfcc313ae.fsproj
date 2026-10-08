@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Wanxiangshu</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Identity.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Identity.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Quiescence.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Quiescence.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/Model.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/Model.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/StoreTypes.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/StoreTypes.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/GitTypes.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Persistence/EventStore/GitTypes.fs"/>
+  </ItemGroup>
+</Project>

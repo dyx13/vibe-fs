@@ -329,7 +329,7 @@ async function superviseOwnedNodeTest({ files, label, silenceMs, env, logPrefix,
     })().catch(error => {
       terminationFailure = error
       runnerError = { message: `Could not complete owned runner termination: ${error.message}` }
-      console.error(`${logPrefix}: ${runnerError.message}`)
+      console.error(`${logPrefix}: ${runnerError.message}`, error)
     })
   }
 

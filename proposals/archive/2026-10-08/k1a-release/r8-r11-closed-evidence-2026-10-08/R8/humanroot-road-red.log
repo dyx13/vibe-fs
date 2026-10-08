@@ -1,0 +1,291 @@
+TAP version 13
+# Subtest: WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+ok 1 - WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+  ---
+  duration_ms: 0.730542
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+ok 2 - WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+  ---
+  duration_ms: 0.569958
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+ok 3 - WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+  ---
+  duration_ms: 8.185375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+ok 4 - WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+  ---
+  duration_ms: 34.445416
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+ok 5 - WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+  ---
+  duration_ms: 34.083917
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+ok 6 - WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+  ---
+  duration_ms: 13.459208
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault
+ok 7 - WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault
+  ---
+  duration_ms: 2.298709
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] another Road cannot supply the HumanRoot canary missing assessment or retirement
+not ok 8 - WHAT[verification-system-014] another Road cannot supply the HumanRoot canary missing assessment or retirement
+  ---
+  duration_ms: 52.306334
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:436:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection: foreign facts must not complete the target Road barrier'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:451:7
+    async withHumanRootLoopFixture (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/humanroot-loop-fixture.mjs:114:12)
+    async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:437:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: WHAT[verification-system-014] the original HumanRoot loop oracle keeps exact Road facts and physical deliveries amid other owners
+not ok 9 - WHAT[verification-system-014] the original HumanRoot loop oracle keeps exact Road facts and physical deliveries amid other owners
+  ---
+  duration_ms: 34.355625
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:457:1'
+  failureType: 'testCodeFailure'
+  error: 'waitFact AssessmentCommitted overshot eq 2 (got 3); use gte when the producer can race past the exact count'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    awaitNamedFact (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/long-stroke-oracles.mjs:111:12)
+    assertHumanRootManagerLoop (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/e2e/support/long-stroke-oracles.mjs:931:9)
+    file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:474:11
+    async withHumanRootLoopFixture (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/humanroot-loop-fixture.mjs:114:12)
+    async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:458:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: WHAT[verification-system-014] Manager loop response binding isolates each other Road from the main five-iteration spine
+not ok 10 - WHAT[verification-system-014] Manager loop response binding isolates each other Road from the main five-iteration spine
+  ---
+  duration_ms: 2.976875
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:487:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'Proof Writer'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Proof Writer'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:523:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: WHAT[verification-system-014] all main relay barriers count the bound Road independently of preflow owners
+not ok 11 - WHAT[verification-system-014] all main relay barriers count the bound Road independently of preflow owners
+  ---
+  duration_ms: 2.578208
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:538:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        {
+          eq: 1,
+          name: 'AssessmentCommitted',
+          session: 'child'
+        },
+        {
+    +     gte: 3,
+    -     gte: 1,
+          name: 'RetirementCommitted',
+    -     session: 'child'
+        },
+        {
+    +     gte: 4,
+    -     gte: 2,
+          name: 'IncumbencyOpened',
+    -     session: 'child'
+        },
+        {
+    +     gte: 4,
+    -     gte: 2,
+          name: 'AssessmentCommitted',
+    -     session: 'child'
+        },
+        {
+    +     gte: 4,
+    -     gte: 2,
+          name: 'RetirementCommitted',
+    -     session: 'child'
+        },
+        {
+    +     gte: 5,
+    -     gte: 3,
+          name: 'IncumbencyOpened',
+    -     session: 'child'
+        },
+        {
+    +     gte: 5,
+    -     gte: 3,
+          name: 'AssessmentCommitted',
+    -     session: 'child'
+        },
+        {
+    +     gte: 5,
+    -     gte: 3,
+          name: 'RetirementCommitted',
+    -     session: 'child'
+        },
+        {
+    +     gte: 6,
+    -     gte: 4,
+          name: 'IncumbencyOpened',
+    -     session: 'child'
+        },
+        {
+    +     gte: 6,
+    -     gte: 4,
+          name: 'AssessmentCommitted',
+    -     session: 'child'
+        },
+        {
+    +     gte: 6,
+    -     gte: 4,
+          name: 'RetirementCommitted',
+    -     session: 'child'
+        }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      name: 'AssessmentCommitted'
+      eq: 1
+      session: 'child'
+    1:
+      name: 'RetirementCommitted'
+      gte: 1
+      session: 'child'
+    2:
+      name: 'IncumbencyOpened'
+      gte: 2
+      session: 'child'
+    3:
+      name: 'AssessmentCommitted'
+      gte: 2
+      session: 'child'
+    4:
+      name: 'RetirementCommitted'
+      gte: 2
+      session: 'child'
+    5:
+      name: 'IncumbencyOpened'
+      gte: 3
+      session: 'child'
+    6:
+      name: 'AssessmentCommitted'
+      gte: 3
+      session: 'child'
+    7:
+      name: 'RetirementCommitted'
+      gte: 3
+      session: 'child'
+    8:
+      name: 'IncumbencyOpened'
+      gte: 4
+      session: 'child'
+    9:
+      name: 'AssessmentCommitted'
+      gte: 4
+      session: 'child'
+    10:
+      name: 'RetirementCommitted'
+      gte: 4
+      session: 'child'
+  actual:
+    0:
+      name: 'AssessmentCommitted'
+      eq: 1
+      session: 'child'
+    1:
+      name: 'RetirementCommitted'
+      gte: 3
+    2:
+      name: 'IncumbencyOpened'
+      gte: 4
+    3:
+      name: 'AssessmentCommitted'
+      gte: 4
+    4:
+      name: 'RetirementCommitted'
+      gte: 4
+    5:
+      name: 'IncumbencyOpened'
+      gte: 5
+    6:
+      name: 'AssessmentCommitted'
+      gte: 5
+    7:
+      name: 'RetirementCommitted'
+      gte: 5
+    8:
+      name: 'IncumbencyOpened'
+      gte: 6
+    9:
+      name: 'AssessmentCommitted'
+      gte: 6
+    10:
+      name: 'RetirementCommitted'
+      gte: 6
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:543:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke 真实物理验收环境
+ok 12 - WHAT[verification-system-014] Long Stroke 真实物理验收环境 # SKIP release tier not enabled
+  ---
+  duration_ms: 0.034875
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 7
+# fail 4
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 400.495875

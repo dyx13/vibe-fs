@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: WHAT[relay-incumbency-006] Continue keeps the road open for a next iteration
+ok 1 - WHAT[relay-incumbency-006] Continue keeps the road open for a next iteration
+  ---
+  duration_ms: 1.927166
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalidation reopens it
+ok 2 - WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalidation reopens it
+  ---
+  duration_ms: 0.606041
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop continue preserves the original Root and completion observer
+ok 3 - WHAT[relay-incumbency-006] production ContinueLoop continue preserves the original Root and completion observer
+  ---
+  duration_ms: 193.700208
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop continue-active preserves the original Root and completion observer
+ok 4 - WHAT[relay-incumbency-006] production ContinueLoop continue-active preserves the original Root and completion observer
+  ---
+  duration_ms: 86.938375
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop valid-accepted preserves the original Root and completion observer
+ok 5 - WHAT[relay-incumbency-006] production ContinueLoop valid-accepted preserves the original Root and completion observer
+  ---
+  duration_ms: 59.028333
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted preserves the original Root and completion observer
+not ok 6 - WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted preserves the original Root and completion observer
+  ---
+  duration_ms: 58.702583
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/relay-incumbency/tests/006.test.mjs:114:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    only Continue or its exact invalidated Accepted certificate may send
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-incumbency/tests/006.test.mjs:140:14
+    async withManagerLoop (file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-incumbency/tests/support/manager-loop.mjs:122:5)
+    async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-incumbency/tests/006.test.mjs:115:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted-active preserves the original Root and completion observer
+not ok 7 - WHAT[relay-incumbency-006] production ContinueLoop invalid-accepted-active preserves the original Root and completion observer
+  ---
+  duration_ms: 60.569459
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/relay-incumbency/tests/006.test.mjs:114:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    only Continue or its exact invalidated Accepted certificate may send
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-incumbency/tests/006.test.mjs:140:14
+    async withManagerLoop (file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-incumbency/tests/support/manager-loop.mjs:122:5)
+    async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/relay-incumbency/tests/006.test.mjs:115:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop missing-certificate preserves the original Root and completion observer
+ok 8 - WHAT[relay-incumbency-006] production ContinueLoop missing-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 62.0175
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop foreign-valid-certificate preserves the original Root and completion observer
+ok 9 - WHAT[relay-incumbency-006] production ContinueLoop foreign-valid-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 57.623834
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-incumbency-006] production ContinueLoop foreign-invalid-certificate preserves the original Root and completion observer
+ok 10 - WHAT[relay-incumbency-006] production ContinueLoop foreign-invalid-certificate preserves the original Root and completion observer
+  ---
+  duration_ms: 60.28125
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 8
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 755.532167

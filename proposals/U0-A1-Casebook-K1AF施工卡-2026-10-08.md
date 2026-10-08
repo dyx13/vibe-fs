@@ -2,6 +2,8 @@
 
 ## 2026-10-08 review 接手状态
 
+本轮完整验收另发现并处理R8–R12：原Work/多Road oracle、Host实际lifeline回收、Accepted显式续行与stale cut、SDK归档夹具准备和Join指导平面。K1-A/K1-F的有限闭环不因这些局部通过升级为GAP-160全闭合；最终完整输入、全阶段及CI仍须逐项登记于[验收记录](K1A与全项目release验收-2026-10-08.md)。
+
 本轮已认领 K1-A 和本卡 K1-F 的成功、普通异常、fatal 返回/抛错四叶再入证明。基线 `c05ee5a22`，起始工作区干净；`0e949fb7b` 忙碌 resume 隔离已在 HEAD 中，不重复施工。
 
 正式旧实现 gen316：011 完成 1/1 文件，11 pass / 4 fail / 0 skip / 1 TODO。三种路径别名及别名异 Store 绑定明确失败；相同路径、真实 linked worktree 负控和原结算控制通过。009 完成 1/1，3 pass / 1 fail / 0 skip / 1 TODO，唯一失败为受控 realpath EIO 未拒绝绑定。原件见[本轮验收记录](K1A与全项目release验收-2026-10-08.md)。review 的 `/tmp` 脚本仅作来源，未替代正式测试。
@@ -10,7 +12,9 @@
 
 K1-A/K1-F四叶局部闭环：gen319完整knowledge-reuse/EFP+JS002/verification017/Host026为33/33、221 pass / 0 fail / 0 skip / 19 TODO，exit1仅pending，outer349 accepted=true/18.785ms。前轮gen318的唯一015失败是临时目录别名导致夹具未拦截物理路径，修正hook目标后完整复验，未弱化只读一次及双次diff断言。显式两阶段绑定的生成JS已核先spec绑定再acquire，仅作发射调序辅助证据；没有新增registry或重绑Store。Unknown再入、双waiter throwing、GAP-160整体继续保留。222本地全仓unit824/824、4914/0/126skip/388TODO仅pending；同提交官方CI截断627/824。完整release仍失败，另按本轮记录继续处理R4/R5与MSBuild未知原因，不将这项Fetch有限闭环扩大为整个GAP或Host验收。
 
-从`b85533202`接续。这里只完成源码审计/施工计划，尚未执行反例或修改实现，不能把预计红/绿填成证据。K1-U/V/W已有限完成，不重复；完整只读审计另存archive。
+最新完整复验8d3：本地unit824/824、4919/0/126skip/388TODO及精确官方CI824/824、4918/0/127skip/388TODO，均仅pending；不能据此关闭整个GAP或稳定吞吐。独立integration30/44截断、内层termination失败，四计数unknown；独立package成功，E2E旧scenario问题继续正式红绿处理。12文件、六物理body的各次有限补验和13项只读正负控均分别登记，取消/未执行不算通过，详见本轮验收记录第四次输入。K1-A产品修复与四叶再入不重复施工。
+
+下列从`b85533202`接续的步骤保留为原验收清单，状态由上面的正式执行收据覆盖。K1-U/V/W已有限完成，不重复；完整只读审计另存archive。
 
 ## K1-A优先：同物理工作区不能因字符串别名分flight
 

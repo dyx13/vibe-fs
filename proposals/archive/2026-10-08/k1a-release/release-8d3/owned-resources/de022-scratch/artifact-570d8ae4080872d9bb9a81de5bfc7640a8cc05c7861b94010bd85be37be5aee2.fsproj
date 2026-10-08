@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Wanxiangshu</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Identity.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Identity.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Quiescence.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Quiescence.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Roles.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Roles.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/RolesSurface.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/RolesSurface.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/TaskResult.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/TaskResult.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/FsToolkitFableCompat.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/FsToolkitFableCompat.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Execution/Session/Ownership.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Execution/Session/Ownership.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Execution/Session/SyncDelegateRole.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Execution/Session/SyncDelegateRole.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Execution/Session/Attachment/AttachmentLeaseCore.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Execution/Session/Attachment/AttachmentLeaseCore.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Outcome.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/Outcome.fs"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/OutcomeSurface.fsi"/>
+    <Compile Include="/Users/yuanxi/Workwork/vibe-fs/src/Wanxiangshu/Foundation/OutcomeSurface.fs"/>
+  </ItemGroup>
+</Project>

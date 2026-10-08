@@ -1,0 +1,247 @@
+TAP version 13
+# Subtest: WHAT[relay-context-projection-001] actual retirement owner then NarrativeTransform retain all physical history for its successor
+ok 1 - WHAT[relay-context-projection-001] actual retirement owner then NarrativeTransform retain all physical history for its successor
+  ---
+  duration_ms: 900.704709
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-001] Host physical transcript and durable audit survive actual process restart without loss
+ok 2 - WHAT[relay-context-projection-001] Host physical transcript and durable audit survive actual process restart without loss # TODO
+  ---
+  duration_ms: 0.084
+  type: 'test'
+  ...
+# HOOK CHAT MESSAGE FAILED: ChatAdmissionHookException {
+#   message: 'Managed chat admission failed: TransactionStopped (Superseded (ManagedChatAcceptanceWitness ({ SessionId = SessionId "review-manager"\\n' +
+#     '  PhysicalUserMessageId = PhysicalUserMessageId "msg-review-manager-3" }, { SessionId = SessionId "review-manager"\\n' +
+#     '  LogicalRunId = LogicalRunId "3b3666322c2c07706eb28338e219a2abc1c94ee69ecb030aff9a7004d2fc79f3"\\n' +
+#     '  AuthorityRootUserMessageId = AuthorityRootUserMessageId "user-root"\\n' +
+#     '  AuthorityKind = HumanRoot\\n' +
+#     '  IdentitySeed = RootSelection ({ Identity = { SelectedAgent = PersonaName "manager"\\n' +
+#     '  Kind = ManagedRole Manager\\n' +
+#     '  Persona = "Lead"\\n' +
+#     '  PersonaCatalogVersion = PersonaCatalogVersion 1\\n' +
+#     '  Origin = ResolvedAtRoot } })\\n' +
+#     '  PhysicalUserMessageId = PhysicalUserMessageId "msg-review-manager-3"\\n' +
+#     '  Origin = Continuation ManagerGuard })))',
+#   innerException: undefined,
+#   failure: ChatAdmissionHookFailure {
+#     tag: 2,
+#     fields: [ [ChatAdmissionTransactionOutcome] ]
+#   },
+#   executionKey: ChatExecutionKey {
+#     SessionId: SessionId { tag: 0, fields: [Array] },
+#     PhysicalUserMessageId: PhysicalUserMessageId { tag: 0, fields: [Array] }
+#   }
+# }
+# Subtest: WHAT[relay-context-projection-002] real cut rejects an old request but accepts the owner-issued successor identity
+ok 3 - WHAT[relay-context-projection-002] real cut rejects an old request but accepts the owner-issued successor identity
+  ---
+  duration_ms: 930.345917
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-002] the registered transform accepts an admitted successor retry and rejects an unadmitted physical key
+ok 4 - WHAT[relay-context-projection-002] the registered transform accepts an admitted successor retry and rejects an unadmitted physical key
+  ---
+  duration_ms: 710.947583
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-002] a terminal successor cannot reenter the registered provider boundary through its retained acceptance record
+ok 5 - WHAT[relay-context-projection-002] a terminal successor cannot reenter the registered provider boundary through its retained acceptance record
+  ---
+  duration_ms: 504.522542
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-003] complete provider serialization carries no private control identifiers secrets or synthetic workspace narrative
+ok 6 - WHAT[relay-context-projection-003] complete provider serialization carries no private control identifiers secrets or synthetic workspace narrative # TODO
+  ---
+  duration_ms: 0.268
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-004] first and successor Managers independently investigate the actual inherited work and never fabricate predecessor evidence
+ok 7 - WHAT[relay-context-projection-004] first and successor Managers independently investigate the actual inherited work and never fabricate predecessor evidence # TODO
+  ---
+  duration_ms: 0.265834
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-005] actual Continue dispatch stays in the same physical session and preserves the prior history
+ok 8 - WHAT[relay-context-projection-005] actual Continue dispatch stays in the same physical session and preserves the prior history
+  ---
+  duration_ms: 834.053083
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-006] actual projection of the same committed facts is deterministic and adds no messages
+ok 9 - WHAT[relay-context-projection-006] actual projection of the same committed facts is deterministic and adds no messages
+  ---
+  duration_ms: 853.869166
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-007] crash recovery and Accepted-certificate invalidation keep the committed retired request identity without filtering physical history
+ok 10 - WHAT[relay-context-projection-007] crash recovery and Accepted-certificate invalidation keep the committed retired request identity without filtering physical history # TODO
+  ---
+  duration_ms: 0.269541
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-008] an internal wake is retained as history but cannot become successor authority
+ok 11 - WHAT[relay-context-projection-008] an internal wake is retained as history but cannot become successor authority
+  ---
+  duration_ms: 830.217
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-008] every accepted physical authority revision is retained across restart and successor projection
+ok 12 - WHAT[relay-context-projection-008] every accepted physical authority revision is retained across restart and successor projection # TODO
+  ---
+  duration_ms: 0.081583
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-context-projection-009] fixed DevOps execution facts and predecessor interactions reach the successor through their real owners without synthesized conclusions
+ok 13 - WHAT[relay-context-projection-009] fixed DevOps execution facts and predecessor interactions reach the successor through their real owners without synthesized conclusions # TODO
+  ---
+  duration_ms: 0.269583
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-001] ordinary assistant stop does not retire Manager and exceptional terminals are not forged suicide
+ok 14 - WHAT[relay-retirement-001] ordinary assistant stop does not retire Manager and exceptional terminals are not forged suicide # TODO GAP-197: requires actual Manager terminal workflow; removed test merely returned Retire for an empty array
+  ---
+  duration_ms: 0.26825
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-002] actual suicide refuses unassessed work then permits assessed REVISE with a dirty workspace
+ok 15 - WHAT[relay-retirement-002] actual suicide refuses unassessed work then permits assessed REVISE with a dirty workspace
+  ---
+  duration_ms: 794.150459
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-002] unmerged changes failed tests and open obligations do not independently block actual retirement
+ok 16 - WHAT[relay-retirement-002] unmerged changes failed tests and open obligations do not independently block actual retirement # TODO GAP-197: actual assessed dirty-workspace path is covered; remaining conditions require actual owned fixtures
+  ---
+  duration_ms: 0.085
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-003] an actual accepted unfinished Engineer child blocks retirement
+ok 17 - WHAT[relay-retirement-003] an actual accepted unfinished Engineer child blocks retirement
+  ---
+  duration_ms: 773.241042
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-003] recursive descendants PTYs leases active tools and unobserved cancellation all block by current incumbent ownership
+ok 18 - WHAT[relay-retirement-003] recursive descendants PTYs leases active tools and unobserved cancellation all block by current incumbent ownership # TODO GAP-197: one actual Engineer child does not establish every ownership kind or recursive cancellation boundary
+  ---
+  duration_ms: 0.082417
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-004] actual cleanup-blocked retirement keeps new work admission frozen
+ok 19 - WHAT[relay-retirement-004] actual cleanup-blocked retirement keeps new work admission frozen
+  ---
+  duration_ms: 794.942333
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-004] exact-incumbency freeze precedes recursive observation and never leaks into next incarnation of the same session
+ok 20 - WHAT[relay-retirement-004] exact-incumbency freeze precedes recursive observation and never leaks into next incarnation of the same session # TODO GAP-197: a sequential child blocker does not prove an admission race or same-session successor fence
+  ---
+  duration_ms: 0.089917
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] Continue retirement commits a closed Continue outcome with cut binding
+ok 21 - WHAT[relay-retirement-007] Continue retirement commits a closed Continue outcome with cut binding
+  ---
+  duration_ms: 2.313084
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] Accepted retirement commits a closed Accepted outcome with certificate binding
+ok 22 - WHAT[relay-retirement-007] Accepted retirement commits a closed Accepted outcome with certificate binding
+  ---
+  duration_ms: 0.413334
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] Accepted with a stale different snapshot fails
+ok 23 - WHAT[relay-retirement-007] Accepted with a stale different snapshot fails
+  ---
+  duration_ms: 0.2465
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] cleanup-blocked fold accepts a subsequent exact certificate retirement transaction
+ok 24 - WHAT[relay-retirement-007] cleanup-blocked fold accepts a subsequent exact certificate retirement transaction
+  ---
+  duration_ms: 0.234167
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] real durable retirement is atomic across crash points and cleanup retry
+ok 25 - WHAT[relay-retirement-007] real durable retirement is atomic across crash points and cleanup retry # TODO GAP-197: pure fold transition does not persist a transaction or clear actual resource blockers
+  ---
+  duration_ms: 0.074375
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] retirement ends incumbent obligations without rewriting independent context-compression history
+ok 26 - WHAT[relay-retirement-007] retirement ends incumbent obligations without rewriting independent context-compression history # TODO
+  ---
+  duration_ms: 0.227917
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-007] Accepted road cannot reopen new incumbency while certificate is valid
+ok 27 - WHAT[relay-retirement-007] Accepted road cannot reopen new incumbency while certificate is valid
+  ---
+  duration_ms: 0.262833
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt
+not ok 28 - WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt
+  ---
+  duration_ms: 797.160125
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/relay-retirement/tests/008.test.mjs:7:1'
+  failureType: 'testCodeFailure'
+  error: 'MANAGER-LOOP-003: loop gate nudge failed: No active authority profile'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: WHAT[relay-retirement-008] actual Continue starts one same-session successor whose transform retains the old physical history without another abort
+ok 29 - WHAT[relay-retirement-008] actual Continue starts one same-session successor whose transform retains the old physical history without another abort
+  ---
+  duration_ms: 694.924083
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools
+ok 30 - WHAT[relay-retirement-008] physical prompt after Accepted suicide invalidates certificate and unblocks successor manager tools
+  ---
+  duration_ms: 677.798792
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete
+ok 31 - WHAT[relay-retirement-008] a controlled in-flight Host interrupt prevents successor dispatch until exact provider-step release and physical interruption complete # TODO
+  ---
+  duration_ms: 0.048916
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-009] real scope tracking excludes fixed DevOps work from Manager retirement blockers
+ok 32 - WHAT[relay-retirement-009] real scope tracking excludes fixed DevOps work from Manager retirement blockers
+  ---
+  duration_ms: 90.821
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-009] real scope tracking still blocks an incumbent Engineer and its PTY
+ok 33 - WHAT[relay-retirement-009] real scope tracking still blocks an incumbent Engineer and its PTY
+  ---
+  duration_ms: 95.540709
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-009] a PTY name containing devops does not change its actual Engineer ownership
+ok 34 - WHAT[relay-retirement-009] a PTY name containing devops does not change its actual Engineer ownership
+  ---
+  duration_ms: 87.58225
+  type: 'test'
+  ...
+# Subtest: WHAT[relay-retirement-009] actual Continue transfers fixed DevOps work and processes while Accepted or exceptional termination physically closes them
+ok 35 - WHAT[relay-retirement-009] actual Continue transfers fixed DevOps work and processes while Accepted or exceptional termination physically closes them # TODO
+  ---
+  duration_ms: 0.056625
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 20
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 14
+# duration_ms 6606.929708

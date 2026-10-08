@@ -1,0 +1,271 @@
+{
+  "item": "R12 original Work public Join guidance plane",
+  "preparedReadOnlyBy": "unit_cost_rootcause",
+  "actualWire": {
+    "run": {
+      "preliminaryDirtyInput": true,
+      "inputsEqual": true,
+      "command": [
+        "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+        "/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs"
+      ],
+      "timeoutMs": 1500000,
+      "startedAt": "2026-10-08T09:11:47.323Z",
+      "durationMs": 14080.415500000001,
+      "timedOut": false,
+      "exitCode": 1,
+      "signal": null,
+      "failure": null,
+      "monitorPid": 29537,
+      "monitorObservation": "ESRCH",
+      "before": {
+        "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+        "digest": "c1a3903216271fd9bbea6c5bb949be3580c67db84ba1c2d9ebd2a0106374a7b3",
+        "build": {
+          "generation": 340,
+          "compilerInputDigest": "e440dd2471f4ee366ed4cce5af039f862b7acca2618b5db4a9fecd107e0cc42f",
+          "generatedInputDigest": "41633eec25a60cdcde9289e6817bed9aa2d56b25838fd557bec5e4299f72fab2",
+          "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+        }
+      },
+      "after": {
+        "commit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+        "digest": "c1a3903216271fd9bbea6c5bb949be3580c67db84ba1c2d9ebd2a0106374a7b3",
+        "build": {
+          "generation": 340,
+          "compilerInputDigest": "e440dd2471f4ee366ed4cce5af039f862b7acca2618b5db4a9fecd107e0cc42f",
+          "generatedInputDigest": "41633eec25a60cdcde9289e6817bed9aa2d56b25838fd557bec5e4299f72fab2",
+          "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+        }
+      },
+      "summary": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 13,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 12777.656542
+      },
+      "plannedFiles": 1,
+      "completedFiles": 1,
+      "resourceCleanup": "monitor PID29537 ESRCH only; no all-resource clean claim from this observation"
+    },
+    "expected": "# Proof Writer has returned.\n# Recent work\n# assistant: Engineer finished.\n",
+    "resultCount": 3,
+    "rawExactCount": 0,
+    "completeExpectedFollowedByDelimiterCount": 1,
+    "guidanceDelimiter": "NUL+BOM",
+    "systemTagPresentAfterDelimiter": false
+  },
+  "localRuns": {
+    "join-wake-wire-diagnostic-e2e.log": {
+      "summary": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 13,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 12777.656542
+      },
+      "failedTests": [
+        "14 - WHAT[verification-system-014] Long Stroke 真实物理验收环境"
+      ]
+    },
+    "join-wake-host013-red.log": {
+      "summary": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 12,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0,
+        "duration_ms": 781.039125
+      },
+      "failedTests": [
+        "12 - WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work"
+      ],
+      "command": "unknown",
+      "exitCode": "unknown",
+      "requestedFiles": "unknown",
+      "scope": "invalid red: fixture canonical marker assertion failed before target oracle",
+      "inputIdentity": {
+        "HEAD": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+        "dirty": true,
+        "exactDigest": "unknown",
+        "availableDistGeneration": 340,
+        "buildFreshnessGateExecuted": false,
+        "note": "JS/tests/registry changed after the build. Available dist generation is not a receipt binding these changed inputs to a fresh build."
+      },
+      "elapsedKind": "Node test runner duration; independent wrapper wall time unknown",
+      "completedFiles": "unknown",
+      "resourceCleanup": "withForkRuntime finally disposes its runtime and removes its exact owned root; independent process/resource inventory unknown"
+    },
+    "join-wake-host013-green.log": {
+      "summary": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 12,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0,
+        "duration_ms": 774.85125
+      },
+      "failedTests": [
+        "12 - WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work"
+      ],
+      "command": "unknown",
+      "exitCode": "unknown",
+      "requestedFiles": "unknown",
+      "scope": "failed fixture attempt; neither green nor target-oracle red",
+      "inputIdentity": {
+        "HEAD": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+        "dirty": true,
+        "exactDigest": "unknown",
+        "availableDistGeneration": 340,
+        "buildFreshnessGateExecuted": false,
+        "note": "JS/tests/registry changed after the build. Available dist generation is not a receipt binding these changed inputs to a fresh build."
+      },
+      "elapsedKind": "Node test runner duration; independent wrapper wall time unknown",
+      "completedFiles": "unknown",
+      "resourceCleanup": "withForkRuntime finally disposes its runtime and removes its exact owned root; independent process/resource inventory unknown"
+    },
+    "join-wake-host013-contract-red.log": {
+      "summary": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 12,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0,
+        "duration_ms": 779.057458
+      },
+      "failedTests": [
+        "12 - WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work"
+      ],
+      "command": "source /private/tmp/vibe-fs-release-env-oct8-7eQsBo/env.sh; node --test requirements/verification-system/tests/014.test.mjs > /private/tmp/vibe-fs-oct8-alias-release/join-wake-host013-contract-red.log",
+      "exitCode": 1,
+      "requestedFiles": 1,
+      "scope": "formal oracle red; corrected canonical Host guidance fixture; release E2E skipped",
+      "inputIdentity": {
+        "HEAD": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+        "dirty": true,
+        "exactDigest": "unknown",
+        "availableDistGeneration": 340,
+        "buildFreshnessGateExecuted": false,
+        "note": "JS/tests/registry changed after the build. Available dist generation is not a receipt binding these changed inputs to a fresh build."
+      },
+      "elapsedKind": "Node test runner duration; independent wrapper wall time unknown",
+      "completedFiles": "unknown",
+      "resourceCleanup": "withForkRuntime finally disposes its runtime and removes its exact owned root; independent process/resource inventory unknown"
+    },
+    "join-wake-host013-contract-green.log": {
+      "summary": {
+        "tests": 20,
+        "suites": 0,
+        "pass": 19,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0,
+        "duration_ms": 754.904084
+      },
+      "failedTests": [],
+      "command": "source /private/tmp/vibe-fs-release-env-oct8-7eQsBo/env.sh; node --test requirements/verification-system/tests/014.test.mjs requirements/verification-system/tests/015.test.mjs > /private/tmp/vibe-fs-oct8-alias-release/join-wake-host013-contract-green.log",
+      "exitCode": 0,
+      "requestedFiles": 2,
+      "scope": "local 014 and 015 regression; release E2E skipped",
+      "inputIdentity": {
+        "HEAD": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+        "dirty": true,
+        "exactDigest": "unknown",
+        "availableDistGeneration": 340,
+        "buildFreshnessGateExecuted": false,
+        "note": "JS/tests/registry changed after the build. Available dist generation is not a receipt binding these changed inputs to a fresh build."
+      },
+      "elapsedKind": "Node test runner duration; independent wrapper wall time unknown",
+      "completedFiles": "unknown",
+      "resourceCleanup": "withForkRuntime finally disposes its runtime and removes its exact owned root; independent process/resource inventory unknown"
+    }
+  },
+  "fixtureCause": "The initial draft attempted to pass the original result as an arbitrary PairProgramming Surface marker. Actual Surface emitted its canonical guidance; the draft output-shape assertion failed before the target oracle. Corrected fixture uses canonical guidance only; guidance-only quoting is a separate explicitly constructed provider-wire negative.",
+  "fix": "text === expected || text.startsWith(expected + NUL+BOM); retain full expected bytes, owner filter, named Join call identity/deduplication, Work/Root/terminal/content-digest/consumption assertions and exactly-one delivery. No generic contains or stripping within expected material.",
+  "formalNegativeControls": [
+    "another Work completion and consumption cannot settle original Work",
+    "correct completion under foreign owner rejected",
+    "original completion quoted only in guidance rejected",
+    "modified completion body before legitimate guidance rejected",
+    "appended text without actual NUL+BOM delimiter rejected",
+    "same tool-call replay counted once",
+    "duplicate result under distinct tool call rejected"
+  ],
+  "contract": [
+    "requirements/guidance-delivery/WHAT.md[009]",
+    "requirements/provider-projection/tests/010.test.mjs",
+    "src/Wanxiangshu/OpenCode/Host/PairProgrammingThoughtTransform.fs:343,380-400"
+  ],
+  "registry": "PairProgrammingThoughtSurface existing narrow entry adds VERIFICATION-SYSTEM-014 law and lawOwner verification-system, retaining existing owner/exports/effect; pending final static gate evidence.",
+  "nextFrozenInput": "Parent reports final build generation341 succeeded; not borrowed as a receipt for these earlier dirty-input runs. Full Long Stroke and project release acceptance pending new frozen input.",
+  "candidateSelection": {
+    "include": [
+      "join-wake-wire-diagnostic-e2e.log",
+      "join-wake-wire-diagnostic-e2e.json",
+      "join-wake-host013-red.log",
+      "join-wake-host013-green.log",
+      "join-wake-host013-contract-red.log",
+      "join-wake-host013-contract-green.log",
+      "R12-evidence-receipt.json",
+      "README.md"
+    ],
+    "exclude": [
+      "join-wake-host013-tests-red.patch: superseded incorrect arbitrary-marker fixture draft",
+      "join-wake-guidance-plane-green.patch: draft patch not authoritative final implementation",
+      "join-wake-guidance-plane-readonly-audit.json: optional old gen339 physical corroboration, not required to prove gen340 actual wire"
+    ],
+    "originalLogsRetained": true
+  },
+  "artifacts": [
+    {
+      "name": "join-wake-wire-diagnostic-e2e.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/join-wake-wire-diagnostic-e2e.log",
+      "size": 12680,
+      "sha256": "ee27e0c8ad9e50530e3dbf934b579f49df25b41fb9348bf43c5cb5ad4f5f8113"
+    },
+    {
+      "name": "join-wake-wire-diagnostic-e2e.json",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/join-wake-wire-diagnostic-e2e.json",
+      "size": 336066,
+      "sha256": "a4be7defb9cbff590babbbda7452666aa4135ff556176eaa836d9f85e05437b8"
+    },
+    {
+      "name": "join-wake-host013-red.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/join-wake-host013-red.log",
+      "size": 7781,
+      "sha256": "b830e3e63f6dd41733483a4db68ea21167665190d3052c4385548d97a960f0b4"
+    },
+    {
+      "name": "join-wake-host013-green.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/join-wake-host013-green.log",
+      "size": 7783,
+      "sha256": "3a8f46350f1418bafd6987d615930846719b9b32f05a22b7300cc42497863e44"
+    },
+    {
+      "name": "join-wake-host013-contract-red.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/join-wake-host013-contract-red.log",
+      "size": 5317,
+      "sha256": "62f3907fcddaab58282ed89cf8a0420efe8451485906dc1c568e52375b7a7f99"
+    },
+    {
+      "name": "join-wake-host013-contract-green.log",
+      "source": "/private/tmp/vibe-fs-oct8-alias-release/join-wake-host013-contract-green.log",
+      "size": 5827,
+      "sha256": "0bc5967f0548f8e50e84abc7744e02f72fa4a2991f8142332cfb150a3794a08b"
+    }
+  ]
+}

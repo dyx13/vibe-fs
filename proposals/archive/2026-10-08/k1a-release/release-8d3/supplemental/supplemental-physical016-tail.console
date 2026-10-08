@@ -1,0 +1,39 @@
+{
+  "completeIntegrationStage": false,
+  "scope": [
+    "four selected input owners compile the original foundation identity project with Fable into isolated outputs",
+    "mac readonly views protect actual original-project Fable inputs and restore all prepared owners"
+  ],
+  "command": [
+    "/private/tmp/node-v22.23.3-darwin-arm64/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern=^WHAT\\[verification-system-016\\] (four selected input owners compile the original foundation identity project with Fable into isolated outputs|mac readonly views protect actual original-project Fable inputs and restore all prepared owners)$",
+    "requirements/verification-system/tests/016.test.mjs"
+  ],
+  "startedAt": "2026-10-08T07:20:13.525Z",
+  "durationMs": 191442.464792,
+  "inputCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "currentCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "digest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+  "afterDigest": "f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6",
+  "inputsEqual": true,
+  "build": {
+    "generation": 326,
+    "compilerInputDigest": "115f5988d96062abe3bb6c5ab59b266b29e50cf2976b5b80b56f523f335afabe",
+    "generatedInputDigest": "5ab4f3ccba7cf6ee6d2876294e00c74b89c350d172bd74068f4b7753d413fd76",
+    "artifactInputDigest": "624e33e4e020e8c42e90f53151e94081b6e9751a81c745978199771889d7bba2"
+  },
+  "originalBackstopMs": 300000,
+  "perTestTimeoutEnvMs": 180000,
+  "nodeFileTimeout": null,
+  "declaredFileConcurrency": "2",
+  "timedOut": false,
+  "exitCode": 0,
+  "signal": null,
+  "failure": null,
+  "monitorPid": 96696,
+  "monitorObservation": "ESRCH",
+  "ownedHomeRemoved": true,
+  "cleanupError": null
+}

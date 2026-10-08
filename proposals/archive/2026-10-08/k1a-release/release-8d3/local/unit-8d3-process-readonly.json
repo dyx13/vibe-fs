@@ -1,0 +1,18 @@
+{
+  "capturedAt": "2026-10-08T06:47:00.633330+00:00",
+  "checks": [
+    {
+      "pid": 32591,
+      "result": "ESRCH"
+    },
+    {
+      "pid": 32628,
+      "result": "ESRCH"
+    },
+    {
+      "pid": 34947,
+      "result": "ESRCH"
+    }
+  ],
+  "scope": "Exact original root/worker PIDs only; root receipt verifies its owned group. No other process or filesystem resource acted upon."
+}

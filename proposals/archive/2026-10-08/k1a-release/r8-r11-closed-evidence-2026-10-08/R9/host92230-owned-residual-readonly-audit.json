@@ -1,0 +1,206 @@
+{
+  "capturedAt": "2026-10-08T08:02:13.391407+00:00",
+  "scope": "Read-only exact PID92230 and known provenance root/ledger. No termination/deletion, no prefix sweep, no HTTP request. Full environment was neither printed nor saved; only task-isolation fields and selected mock-config properties retained.",
+  "originalInputCommit": "8d3a7406ab7df9e13a4af8fca12c0799df5c2398",
+  "processIdentity": {
+    "command": [
+      "ps",
+      "-p",
+      "92230",
+      "-o",
+      "pid=,ppid=,pgid=,uid=,lstart=,etime=,time=,state=,command="
+    ],
+    "exitCode": 0,
+    "stdout": "92230     1 92230   501 Thu Oct  8 14:49:35 2026     01:12:38   0:59.68 Ss   /Users/yuanxi/Workwork/vibe-fs/node_modules/.bin/opencode serve --port 0 --hostname 127.0.0.1\n",
+    "stderr": ""
+  },
+  "observableEnvironment": {
+    "HOME": "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/home",
+    "USERPROFILE": "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/home",
+    "TMPDIR": "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/tmp",
+    "XDG_DATA_HOME": "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/xdg/data",
+    "XDG_CONFIG_HOME": "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/xdg/config",
+    "XDG_CACHE_HOME": "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/xdg/cache",
+    "XDG_STATE_HOME": "/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/xdg/state",
+    "WANXIANGSHU_RETRY_CANARY_COLLECTOR": "http://127.0.0.1:64208",
+    "WANXIANGSHU_CHAT_MAX_RETRIES": "8",
+    "WANXIANGSHU_PROVIDER_LANGUAGE": "en",
+    "WXS_RELEASE": "1",
+    "WXS_TIER_INTEGRATION": "1",
+    "NODE_TEST_CONCURRENCY": "2",
+    "PER_TEST_TIMEOUT_MS": "180000"
+  },
+  "selectedConfig": {
+    "plugin": [
+      "/Users/yuanxi/Workwork/vibe-fs/requirements/host-provider-failure-ownership/tests/support/retry-canary-plugin.mjs"
+    ],
+    "testProviderBaseURL": "http://127.0.0.1:64209/v1",
+    "model": "test/test-model",
+    "snapshot": false,
+    "parseError": null
+  },
+  "configSha256": "2f677cf1dd21f8189a2a4a3b724e0a4026dfeb2c2d0875c0ec47cb2503b519e3",
+  "ownedProcessInventory": {
+    "exitCode": 0,
+    "rows": [
+      {
+        "pid": 92230,
+        "ppid": 1,
+        "pgid": 92230,
+        "uid": 501,
+        "state": "Ss"
+      }
+    ],
+    "limitation": "One native snapshot of exact92230group and its currently descended PIDs; reparented descendants in other unknown groups cannot be inferred from this snapshot."
+  },
+  "cwdAndExecutableFiles": {
+    "exitCode": 0,
+    "stdout": "p92230\nfcwd\nn/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/workspace\nftxt\nn/Users/yuanxi/Workwork/vibe-fs/node_modules/opencode-ai/bin/opencode.exe\nftxt\nn/Library/Preferences/Logging/.plist-cache.IPOLiRJ2\nftxt\nn/private/var/db/timezone/tz/2026c.1.0/icutz/icutz44l.dat\nftxt\nn/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/xdg/data/opencode/opencode.db-shm\nftxt\nn/private/var/db/mds/messages/501/se_SecurityMessages\nftxt\nn/private/var/db/analyticsd/events.allowlist\nftxt\nn/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/tmp/.b8ff7ffcd78bfaf9-00000003.node\nftxt\nn/usr/lib/dyld\nftxt\nn/usr/share/icu/icudt78l.dat\nftxt\nn/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/tmp/.b9dc7badfbbf1fa2-00000002.dylib\n"
+  },
+  "sockets": {
+    "exitCode": 0,
+    "stdout": "p92230\nf10\nn127.0.0.1:4096\n"
+  },
+  "rootIdentity": {
+    "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf",
+    "dev": 16777231,
+    "ino": 157913256,
+    "uid": 501,
+    "isDirectory": true,
+    "isSymlink": false,
+    "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf",
+    "immediateEntries": [
+      "home",
+      "node_modules",
+      "tmp",
+      "workspace",
+      "xdg"
+    ]
+  },
+  "rootChildrenIdentity": [
+    {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/home",
+      "dev": 16777231,
+      "ino": 157913322,
+      "uid": 501,
+      "isDirectory": true,
+      "isSymlink": false,
+      "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/home"
+    },
+    {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/node_modules",
+      "dev": 16777231,
+      "ino": 157913336,
+      "uid": 501,
+      "isDirectory": false,
+      "isSymlink": true,
+      "realpath": "/Users/yuanxi/Workwork/vibe-fs/node_modules"
+    },
+    {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/tmp",
+      "dev": 16777231,
+      "ino": 157913328,
+      "uid": 501,
+      "isDirectory": true,
+      "isSymlink": false,
+      "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/tmp"
+    },
+    {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/workspace",
+      "dev": 16777231,
+      "ino": 157913257,
+      "uid": 501,
+      "isDirectory": true,
+      "isSymlink": false,
+      "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/workspace"
+    },
+    {
+      "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/xdg",
+      "dev": 16777231,
+      "ino": 157913323,
+      "uid": 501,
+      "isDirectory": true,
+      "isSymlink": false,
+      "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/xdg"
+    }
+  ],
+  "ledger": {
+    "jsonlPath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wanxiang-ledger/1791442173526-92221-cayf6n.jsonl",
+    "runPath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wanxiang-ledger/1791442173526-92221-cayf6n.run",
+    "entries": [
+      {
+        "pid": 92230,
+        "pgid": 92230,
+        "startTime": null,
+        "cmd": "opencode serve /private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-host-retry-canary-BFAgRf/workspace",
+        "runId": "1791442173526-92221-cayf6n",
+        "expiresAt": 1791443975369
+      }
+    ],
+    "marker": {
+      "pid": 92221,
+      "startTime": null,
+      "runId": "1791442173526-92221-cayf6n",
+      "startedAt": 1791442173526
+    },
+    "identities": [
+      {
+        "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wanxiang-ledger/1791442173526-92221-cayf6n.jsonl",
+        "dev": 16777231,
+        "ino": 157913337,
+        "uid": 501,
+        "isDirectory": false,
+        "isSymlink": false,
+        "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wanxiang-ledger/1791442173526-92221-cayf6n.jsonl"
+      },
+      {
+        "path": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wanxiang-ledger/1791442173526-92221-cayf6n.run",
+        "dev": 16777231,
+        "ino": 157913245,
+        "uid": 501,
+        "isDirectory": false,
+        "isSymlink": false,
+        "realpath": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wanxiang-ledger/1791442173526-92221-cayf6n.run"
+      }
+    ]
+  },
+  "originalOwnersNow": [
+    {
+      "pid": 84346,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 84347,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 84353,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 92220,
+      "observation": "ESRCH"
+    },
+    {
+      "pid": 92221,
+      "observation": "ESRCH"
+    }
+  ],
+  "bindingEvidence": [
+    "independent-integration.log503-505: formalhost-provider-failure-ownership002 starts at293098.930417ms and worker92220 starts installed retrycanarybody.",
+    "Formal002source8 spawnSync invokes run-host-retry-canary.mjs; source46mkdtemp root;61-65 ProcessHost scenarioDir/root + unique retry-canary plugin/collectorenvironment.",
+    "Exact ledger .run has ownerPID92221 and timestamp1791442173526. Exact .jsonl registers Host92230/PGID92230 with rootBFAgRf workspace. Hoststart14:49:35 follows logged fileadmission14:49:32.",
+    "Observed PID92230cwd, HOME/XDG/TMPDIR and retryplugin config all bind to the exact root. Parent reparentedto1, historical92221parent relation is fromledger not recoverable currentppid.",
+    "ProcessHost spawnOpencodeServe137-153 intentionally usesdetached group and recordSpawn. Direct runnergroup84353empty doesnot certify Hostgroup92230empty."
+  ],
+  "cleanupPlan": [
+    "Parent should recapture PID92230starttime/UID/PGID/command and exactcwd/config-root to exclude PIDreuse before sending anysignal.",
+    "Signal only proven owned PGID92230 after confirming all currentgroupmembers match exactownership; use existing graceful SIGTERM then bounded SIGKILL rules, verify each exactrecorded PID absent and127.0.0.1:4096 no longerowned/listening. No globalopencode kill or service-name matching.",
+    "After exact owned group is confirmedgone and no mount/openresource remainsunderroot, recheck rootdev/ino/uid/nonsymlink and remove only rootBFAgRf. It contains symlinked sharednode_modules/tree-sittercache; unlinksymlink only, never followtarget or remove sharedcache.",
+    "Keep copied ledger evidence; if parent chooses ledgerreclamation, remove only these exact .run/.jsonl after matchingidentity and proving owner92221dead. Do not clear the sharedwanxiang-ledger directory or unrelatedrecords."
+  ],
+  "unknown": [
+    "Historical fullparentchain and any reparented descendantsoutside current ownedgroup not explicitlyregistered.",
+    "Whether termination failure originally caused this Host escape;the log preserved no underlyingcause/pgidinventory. It is proven residual, not proof of that unique rootcause."
+  ]
+}

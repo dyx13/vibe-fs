@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+ok 1 - WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+  ---
+  duration_ms: 1.197125
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+ok 2 - WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+  ---
+  duration_ms: 0.616833
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+ok 3 - WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+  ---
+  duration_ms: 9.919584
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+ok 4 - WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+  ---
+  duration_ms: 17.541333
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+ok 5 - WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+  ---
+  duration_ms: 26.039916
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+ok 6 - WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+  ---
+  duration_ms: 13.812958
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault
+ok 7 - WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault
+  ---
+  duration_ms: 2.227083
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke 真实物理验收环境
+ok 8 - WHAT[verification-system-014] Long Stroke 真实物理验收环境 # SKIP release tier not enabled
+  ---
+  duration_ms: 0.030042
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 204.643791

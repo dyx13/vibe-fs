@@ -1221,7 +1221,8 @@ export const SURFACE_MANIFEST = [
   {
     module: 'OpenCode/Host/PairProgrammingThoughtSurface.js',
     owner: 'provider-projection',
-    laws: ['PROVIDER-PROJECTION-010'],
+    laws: ['PROVIDER-PROJECTION-010', 'VERIFICATION-SYSTEM-014'],
+    lawOwners: { 'PROVIDER-PROJECTION-010': 'provider-projection', 'VERIFICATION-SYSTEM-014': 'verification-system' },
     source: 'src/Wanxiangshu/OpenCode/Host/PairProgrammingThoughtSurface.fs',
     representation: 'opaque-capability',
     kind: 'pure',
@@ -1657,8 +1658,8 @@ export const SURFACE_MANIFEST = [
   {
     module: 'Mission/Manager/WorkflowSurface.js',
     owner: 'relay-retirement',
-    laws: ['DISPATCH-PROTOCOL-002', 'CRASH-RECONCILIATION-006'],
-    lawOwners: { 'DISPATCH-PROTOCOL-002': 'dispatch-protocol', 'CRASH-RECONCILIATION-006': 'crash-reconciliation' },
+    laws: ['DISPATCH-PROTOCOL-002', 'CRASH-RECONCILIATION-006', 'RELAY-INCUMBENCY-006', 'RELAY-RETIREMENT-008'],
+    lawOwners: { 'DISPATCH-PROTOCOL-002': 'dispatch-protocol', 'CRASH-RECONCILIATION-006': 'crash-reconciliation', 'RELAY-INCUMBENCY-006': 'relay-incumbency' },
     source: 'src/Wanxiangshu/Mission/Manager/WorkflowSurface.fs',
     representation: 'opaque-capability',
     kind: 'resource',
@@ -1806,7 +1807,8 @@ export const SURFACE_MANIFEST = [
   {
     module: 'Mission/Relay/ProjectionSurface.js',
     owner: 'relay-context-projection',
-    laws: ['PROJ-001', 'PROJ-002', 'PROJ-003', 'PROJ-004', 'PROJ-005', 'PROJ-006', 'PROJ-007', 'PROJ-008', 'PROJ-009'],
+    laws: ['PROJ-001', 'PROJ-002', 'PROJ-003', 'PROJ-004', 'PROJ-005', 'PROJ-006', 'PROJ-007', 'PROJ-008', 'PROJ-009', 'RELAY-RETIREMENT-008'],
+    lawOwners: { 'RELAY-RETIREMENT-008': 'relay-retirement' },
     source: 'src/Wanxiangshu/Mission/Relay/ProjectionSurface.fs',
     representation: 'opaque-capability',
     kind: 'resource',

@@ -593,8 +593,6 @@ module PluginTransforms =
           ApplyRelayProjection =
             fun sidOpt outObj ->
                 task {
-                    do! ManagerWorkflow.ensureManagerRoadOpened journal workspaceDirectory sidOpt None
-
                     let physicalUserMessageId =
                         outObj
                         |> ProviderWireDecode.messagesFromTransformOutput
@@ -614,7 +612,7 @@ module PluginTransforms =
                             |> Option.isSome
                         | _ -> false
 
-                    return!
+                    let! disposition =
                         RelayNarrativeTransform.apply
                             journal
                             acceptedSuccessorRequest
@@ -650,6 +648,11 @@ module PluginTransforms =
                                     sid)
                             sidOpt
                             outObj
+
+                    if disposition <> RelayProjectionDisposition.RetiredAttemptStopped then
+                        do! ManagerWorkflow.ensureManagerRoadOpened journal workspaceDirectory sidOpt None
+
+                    return disposition
                 }
           CaptureXTraceMessages =
             fun projectionSessionIdOpt outObj ->

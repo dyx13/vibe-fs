@@ -1,0 +1,264 @@
+TAP version 13
+# Subtest: WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+ok 1 - WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+  ---
+  duration_ms: 0.715917
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+ok 2 - WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+  ---
+  duration_ms: 0.556084
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+ok 3 - WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+  ---
+  duration_ms: 8.130209
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+ok 4 - WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+  ---
+  duration_ms: 16.6375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+ok 5 - WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+  ---
+  duration_ms: 24.168375
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+ok 6 - WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+  ---
+  duration_ms: 14.906
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault
+ok 7 - WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault
+  ---
+  duration_ms: 2.459291
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] another Road cannot supply the HumanRoot canary missing assessment or retirement
+ok 8 - WHAT[verification-system-014] another Road cannot supply the HumanRoot canary missing assessment or retirement
+  ---
+  duration_ms: 47.290208
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the original HumanRoot loop oracle keeps exact Road facts and physical deliveries amid other owners
+ok 9 - WHAT[verification-system-014] the original HumanRoot loop oracle keeps exact Road facts and physical deliveries amid other owners
+  ---
+  duration_ms: 39.9285
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Manager loop response binding isolates each other Road from the main five-iteration spine
+ok 10 - WHAT[verification-system-014] Manager loop response binding isolates each other Road from the main five-iteration spine
+  ---
+  duration_ms: 6.540209
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] all main relay barriers count the bound Road independently of preflow owners
+ok 11 - WHAT[verification-system-014] all main relay barriers count the bound Road independently of preflow owners
+  ---
+  duration_ms: 1.797042
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work
+ok 12 - WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work
+  ---
+  duration_ms: 314.351959
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] declared participating tool arguments satisfy the production estimate contract
+ok 13 - WHAT[verification-system-014] declared participating tool arguments satisfy the production estimate contract
+  ---
+  duration_ms: 126.921375
+  type: 'test'
+  ...
+[setupScenario] ready
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[MOCK-FATAL] first script mismatch: reason=no-declared-turn session=ses_ee548e592ffefQpCAaN9yO7NJB parent=ses_ee548e762ffeT2zFL94SAIsjXT model="test-model" tools=["abandon","assume","celebrate","defer","enough","fork","horizon","join","js-manager","publish","regret","resume","review","skill","subscribe","suicide","todowrite"] msgs=138 lastUser="# Your output contains too many repeated characters. Please rephrase it before continuing.\n\u0000﻿<system>\n# tip: primitive-obsession\n# # Wait-cost calibration: this session has existed for about 0 minutes 11 seconds of wall-clock time.\n# # Hold that duration beside useful work already accomplished only to price another interval of waiting or resource commitment.\n# # Question: if you spent the next int" candidates=["protocol-repair.0@undefined/chat/step-0","manager-t1-commitment.0@undefined/chat/step-0","manager-loop.0@manager/chat/step-0","manager-reopened-loop.0@undefined/chat/step-0","continue.0@undefined/chat/step-0","manager-interrupt.0@manager/chat/step-0","manager-current-action.0@undefined/chat/step-0","blogger.0@undefined/chat/step-0","strength-canary-owner.0@undefined/chat/step-0"]
+[MSG-ROLES] system user assistant user assistant tool assistant tool user user assistant tool user assistant user assistant tool assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool assistant tool assistant user assistant tool user
+[MSG-TOOL-RESULTS] ["# Finished. Do not continue work.\n\nfinished = true\n","# Your review has been accepted. The review-only read tools are now disabled; do not read, search, or process repository code yourself anymore. The work is nearly complete, and you are the final closer. Finish the last batch of work found in review, then call suicide to finish.\n\nrecorded = true\n\u0000﻿# ","# Finished. Do not continue work.\n\nfinished = true\n","# Your review has been accepted. The review-only read tools are now disabled; do not read, search, or process repository code yourself anymore. The work is nearly complete, and you are the final closer. Finish the last batch of work found in review, then call suicide to finish.\n\nrecorded = true\n"]
+── fatal script mismatch: no-declared-turn (lane=manager kind=chat step=0) ──
+session=ses_ee548e592ffefQpCAaN9yO7NJB lastUser="# Your output contains too many repeated characters. Please rephrase it before continuing.\n\u0000﻿<system>\n# tip: primitive-obsession\n# # Wait-cost calibration: this session has existed for about 0 minutes 11 seconds of wall-clock time.\n# # Hold that duration beside useful work already accomplished only to price another interval of waiting or resource commitment.\n# # Question: if you spent the next int"
+candidates=["protocol-repair.0@undefined/chat/step-0","manager-t1-commitment.0@undefined/chat/step-0","manager-loop.0@manager/chat/step-0","manager-reopened-loop.0@undefined/chat/step-0","continue.0@undefined/chat/step-0","manager-interrupt.0@manager/chat/step-0","manager-current-action.0@undefined/chat/step-0","blogger.0@undefined/chat/step-0","strength-canary-owner.0@undefined/chat/step-0"]
+── event tail ──
+#2946 08:53:01.809 message.part.updated session=ses_ee548e3d
+#2947 08:53:01.809 sync
+#2948 08:53:01.809 message.part.updated session=ses_ee548e3d
+#2949 08:53:01.809 sync
+#2950 08:53:01.809 message.part.updated session=ses_ee548e3d
+#2951 08:53:01.809 sync
+#2952 08:53:01.809 message.part.updated session=ses_ee548e3d
+#2953 08:53:01.809 sync
+#2954 08:53:01.809 message.part.updated session=ses_ee548e3d finish=tool-calls
+#2955 08:53:01.809 sync
+#2956 08:53:01.809 message.updated session=ses_ee548e3d finish=tool-calls
+#2957 08:53:01.809 sync
+#2958 08:53:01.809 message.updated session=ses_ee548e3d finish=tool-calls
+#2959 08:53:01.809 sync
+#2960 08:53:01.809 session.status session=ses_ee548e3d
+#2961 08:53:01.809 message.updated session=ses_ee548e3d
+#2962 08:53:01.809 sync
+#2963 08:53:01.812 session.updated session=ses_ee548e3d
+#2964 08:53:01.812 sync
+#2965 08:53:01.812 session.diff session=ses_ee548e3d
+── Host stderr tail ──
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"apply-surface-failed:owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"source-batch-not-from-current-physical-request"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e3dbffeW9ZVNFBax7xylq","result":"apply-surface-failed:owner provider run is not uniquely bound"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"no-estimate-opportunity"}
+{"operation":"session-attempt-interrupt","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"apply-surface-failed:owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"source-batch-not-from-current-physical-request"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e3dbffeW9ZVNFBax7xylq","result":"owner provider run is not uniquely bound"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"no-estimate-opportunity"}
+{"operation":"session-attempt-interrupt","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"apply-surface-failed:owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"source-batch-not-from-current-physical-request"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e3dbffeW9ZVNFBax7xylq","result":"apply-surface-failed:owner provider run is not uniquely bound"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"no-estimate-opportunity"}
+{"operation":"session-attempt-interrupt","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"apply-surface-failed:owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"source-batch-not-from-current-physical-request"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"no-estimate-opportunity"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e3dbffeW9ZVNFBax7xylq","result":"owner provider run is not uniquely bound"}
+{"operation":"session-attempt-interrupt","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"apply-surface-failed:owner transform has no physical user message"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"source-batch-not-from-current-physical-request"}
+{"operation":"session-attempt-interrupt","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e3dbffeW9ZVNFBax7xylq","result":"apply-surface-failed:owner provider run is not uniquely bound"}
+{"operation":"strength-delegation-skip","session_id":"ses_ee548e592ffefQpCAaN9yO7NJB","result":"source-batch-not-from-current-physical-request"}
+
+── Journal fact tail ──
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:0:BloggerRequestMaterialized
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:1:PairProgrammingGuidelineAnchored
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:2:PairProgrammingGuidelineAnchored
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:3:BloggerRequestMaterialized
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:4:TransactionCommitted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:5:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:6:ProviderStarted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:7:BloggerRequestMaterialized
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:8:ProviderStarted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:9:PluginPromptClaimed
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:10:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:11:TransactionCommitted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:12:TipGuidanceDelivered
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:13:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:14:PluginPromptClaimed
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:15:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:16:PluginPromptClaimed
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:17:PluginPromptPhysicalAccepted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:18:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:19:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:20:BloggerRequestMaterialized
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:21:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:22:BloggerRequestMaterialized
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:23:Accepted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:24:Accepted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:25:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:26:ProviderStarted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:27:ProviderStarted
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:28:XTracePartAppended
+0f4a2793bcc045b588365ad59ddf98e8ad51fb3869563d7b0fcb29201a183b52:29:TipGuidanceDelivered
+  pending blocking humanroot-manager-title.0 humanroot-manager-title.0@humanroot-manager/title/step-0
+  pending blocking title.0 title.0@title/title/step-0
+  pending blocking strength-recovery-owner.0 strength-recovery-owner.0@strength-recovery-owner/chat/step-0
+  pending blocking strength-recovery-owner.1 strength-recovery-owner.1@strength-recovery-owner/chat/step-2
+  pending blocking strength-recovery-owner.2 strength-recovery-owner.2@strength-recovery-owner/chat/step-3

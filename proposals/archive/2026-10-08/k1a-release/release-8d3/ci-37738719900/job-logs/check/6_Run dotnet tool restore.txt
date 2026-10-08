@@ -1,0 +1,13 @@
+﻿2026-10-08T06:38:45.1406183Z ##[group]Run dotnet tool restore
+2026-10-08T06:38:45.1406407Z [36;1mdotnet tool restore[0m
+2026-10-08T06:38:45.1465309Z shell: /usr/bin/bash -e {0}
+2026-10-08T06:38:45.1465470Z env:
+2026-10-08T06:38:45.1465599Z   DOTNET_ROOT: /usr/share/dotnet
+2026-10-08T06:38:45.1465755Z ##[endgroup]
+2026-10-08T06:38:49.7322939Z Tool 'fantomas' (version '6.3.0') was restored. Available commands: fantomas
+2026-10-08T06:38:49.7323712Z Tool 'fable' (version '5.13.0') was restored. Available commands: fable
+2026-10-08T06:38:49.7327607Z 
+2026-10-08T06:38:49.7329867Z A newer version of tool 'fantomas' is available (version '8.0.7'). Consider updating your manifest file.
+2026-10-08T06:38:49.7331138Z A newer version of tool 'fable' is available (version '5.20.0'). Consider updating your manifest file.
+2026-10-08T06:38:49.7331672Z 
+2026-10-08T06:38:49.7331954Z Restore was successful.

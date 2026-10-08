@@ -1,0 +1,28 @@
+Exact-head CI audit, no tests/builds/source edits or CI retries by auditor
+SHA: 8d3a7406ab7df9e13a4af8fca12c0799df5c2398
+Tree: bbeba1c9618c41d125d83f3047edbc93e0a6b5fe
+Run: https://github.com/dyx13/vibe-fs/actions/runs/37738719900
+GitHub conclusion: failure; verify release exit1, 373.3s
+Source SHA/tree and artifact workflow head agree. Published artifact digest matches downloaded ZIP.
+Input digest prefix: 49a07f6844c5d0d6; full input digest/build manifest unknown (artifact omitted them).
+
+Stage                       seconds exit counts
+format:check                 13.3   0    pass/fail/skip/TODO unknown (not a test summary)
+check                         5.6   0    pass/fail/skip/TODO unknown (not a test summary)
+clean Fable build            61.9   0    generation1; 1815 sources/891 artifacts fresh
+unit                        291.0   1    4918 pass /0 fail /127 skip /388 TODO
+integration                  not-run; unified pipeline stopped at unit
+e2e                          not-run
+package                      not-run
+
+Unit: 824 planned, 824 started, 824 drained, 0 active, 0 queued.
+Termination: pending-proof policy, no physical-backstop truncation.
+Ordinary outer assertion failures: none, authoritative 0 fail. Nested intentional red fixture outputs are not counted as product failures.
+Owned outer group pid2889: accepted=true; reclamation8.228ms. Remote filesystem deletion unknown.
+Complete worker cost observations 822; invalid 2; missing0. Own CPU excludes child CPU.
+016 worker4562: wall76.630s, own CPU user31.764s/sys17.490s; 201 complete owned tool chains, all 201 spawned/exited/group-drained/monitor-closed.
+One full CI drain within unchanged300s budget is observed. Stable throughput and prior regression root cause are not proved fixed.
+
+Files: receipt.json; unit-cost-analysis.json; run/jobs/artifacts.json; complete job-logs.zip and verify-logs.zip/extracted logs.
+Artifact SHA256 4238d57c1e86cfc2f02defaf5850afbde1898a8c920abbce126e8d2bdc02a801
+Job logs SHA256 4ea470904bd39c268ce3ee112efbe7612275ce3054884ea30206d234362a0291

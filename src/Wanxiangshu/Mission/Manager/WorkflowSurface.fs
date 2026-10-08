@@ -10,6 +10,29 @@ open Wanxiangshu.Persistence.Journal
 
 [<RequireQualifiedAccess>]
 module ManagerWorkflowSurface =
+    let continueAfterRetiredAttempt
+        (port: obj)
+        (journal: JournalHandle)
+        (session: string)
+        (directory: string)
+        (stopRetiredAttempt: string -> Task<unit>)
+        : Task =
+        ManagerWorkflow.continueAfterRetiredAttempt
+            (DispatchSurface.sessionPort port)
+            (DispatchSurface.rootWorkspaceReader (box directory))
+            (Some journal.Journal)
+            (Some directory)
+            (SessionId.value >> stopRetiredAttempt)
+            (SessionId.create session)
+
+    let maybeDeliverLoop (port: obj) (journal: JournalHandle) (session: string) (directory: string) : Task =
+        ManagerWorkflow.maybeDeliverLoop
+            (DispatchSurface.sessionPort port)
+            (DispatchSurface.rootWorkspaceReader (box directory))
+            (Some journal.Journal)
+            (Some directory)
+            (Some session)
+
     let observeIdle
         (port: obj)
         (journal: JournalHandle)

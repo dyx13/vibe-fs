@@ -1,0 +1,43 @@
+readonly 016 有限范围 helper（未运行）
+
+helper：/private/tmp/vibe-fs-oct8-alias-release/run-readonly016.mjs
+将来由 parent 明确启动：
+  /private/tmp/node-v22.23.3-darwin-arm64/bin/node /private/tmp/vibe-fs-oct8-alias-release/run-readonly016.mjs
+
+固定输入：8d3a7406ab7df9e13a4af8fca12c0799df5c2398
+digest：f451e24962ad326297db748f5574ea12dc5a4a8d9cc34abf167834a586a34eb6
+同时核对 frozen-input.json、实际 HEAD、Node version 和 build freshness；变化即拒绝。
+本 helper 不能在 owner cursor patch 落库后借旧 freeze 继续执行。
+
+选择的是正式 016.test.mjs 入口中 registerReadonlyInputTests() 注册的全部 13 个
+integrationTest 标题，逐字列在 helper 的 scope 中，以首尾锚定的正则选取：
+  - 固定标题 3：只读挂载/能力过期与错误owner、paused真实consumer写增删改名和新symlink、
+    同UID非force detach且保独立foreign设备。
+  - 动态 drain 3：Error、null、成功action漏await。
+  - 动态 cleanup 2：Error、null。
+  - 动态 cancellation 2：Error、null。
+  - 动态独立失败consumer 3：成功action、Error、null。
+每个选中用例内部原正负控全部执行，不改变平台 skip 或 tier 实现。该支持文件所有
+integrationTest 注册均已人工逐项核对：3+3+2+2+3=13。其他 016 case 不属于本次scope。
+
+与 run-physical016.mjs 相同：spawnOwnedVerificationTool 管理monitor和拥有的进程组，
+隔离 ownedHome，WXS_RELEASE=1/WXS_TIER_INTEGRATION=1，清空 TESTS_MJS_FILES、
+NODE_TEST_CONTEXT、WXS_TIER_RELEASE；Node CLI concurrency=1；保留原
+PER_TEST_TIMEOUT_MS=180000环境；不设置Node CLI file timeout（与run-inner一致）；
+wrapper原300000ms backstop。未改原预算。选中测试仍依照原darwin条件决定skip。
+
+输出使用 wx，拒绝覆盖：
+  supplemental-readonly016.log
+  supplemental-readonly016.json
+收据明确 completeIntegrationStage=false；1文件/13计划case；前后input摘要、命令、
+耗时、exit/signal、timeout、monitor存活观察、ownedHome回收与独立cleanup错误。
+pass/fail/skip/TODO 不能由exit推导，先记unknown，按日志权威Node summary登记；
+因name-pattern产生的未选中skip不能算已通过或选中scope验收。
+
+清理边界：helper只删除自己刚创建的隔离home，原monitor只回收本次拥有的进程组。
+测试继续按原finally、文件身份和设备身份处理自己的fixture。withDirectories()
+在不能证明恢复时有意保留 verification-readonly-test-*；本helper不额外清除这些
+失败证据，也不扫描删除未知根、不force-detach任何设备，不操作其他施工者资源。
+inner failure、outer cleanupError 和最终monitor观察分别保留，不能互相抵消。
+
+本阶段只准备helper与范围说明；未启动Node helper、未运行测试/构建、未改仓库。

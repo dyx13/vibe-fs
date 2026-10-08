@@ -1,0 +1,138 @@
+TAP version 13
+# Subtest: WHAT[verification-system-016] a real readonly mount protects original role paths and rejects foreign or expired view capabilities
+ok 1 - WHAT[verification-system-016] a real readonly mount protects original role paths and rejects foreign or expired view capabilities
+  ---
+  duration_ms: 14077.393125
+  type: 'test'
+  ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444131126,"monitorPid":97399,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97399,"parentPid":97210,"at":1791444131155,"toolPid":97400,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97399,"parentPid":97210,"at":1791444131235,"toolPid":97400,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97399,"parentPid":97210,"at":1791444131253,"toolPid":97400}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444131254,"monitorPid":97399,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] a paused actual Node consumer keeps four readonly namespaces intact through valid write add delete rename and new symlink attempts
+ok 2 - WHAT[verification-system-016] a paused actual Node consumer keeps four readonly namespaces intact through valid write add delete rename and new symlink attempts
+  ---
+  duration_ms: 11149.727709
+  type: 'test'
+  ...
+# {"actualPid":97400,"restoredOwners":4,"protectedOperations":20,"legalOutput":"actual consumer output"}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444156155,"monitorPid":97525,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97525,"parentPid":97210,"at":1791444156183,"toolPid":97526,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444156219,"monitorPid":97527,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97527,"parentPid":97210,"at":1791444156247,"toolPid":97528,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97527,"parentPid":97210,"at":1791444156331,"toolPid":97528,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97527,"parentPid":97210,"at":1791444156348,"toolPid":97528}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444156350,"monitorPid":97527,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97525,"parentPid":97210,"at":1791444156378,"toolPid":97526,"exitCode":0,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":97525,"parentPid":97210,"at":1791444156395,"toolPid":97526}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444156397,"monitorPid":97525,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] an actual same UID nonforce detach makes a successful readonly consumer insufficient for scope success and preserves an independent foreign device
+ok 3 - WHAT[verification-system-016] an actual same UID nonforce detach makes a successful readonly consumer insufficient for scope success and preserves an independent foreign device
+  ---
+  duration_ms: 25164.168417
+  type: 'test'
+  ...
+# {"actualConsumerPid":97526,"actorPid":97528,"detachPid":97529,"uid":501,"targetDevice":"/dev/disk6s1","preservedForeignDevice":"/dev/disk4s1","scopeOutcome":"rejected","producerArtifactsRetainedUntilFixtureRecovery":true}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444168139,"monitorPid":97591,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97591,"parentPid":97210,"at":1791444168169,"toolPid":97592,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97591,"parentPid":97210,"at":1791444168200,"toolPid":97592,"exitCode":null,"signal":"SIGKILL"}
+# [verification-tool-phase] {"phase":"group-drained","pid":97591,"parentPid":97210,"at":1791444168218,"toolPid":97592}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444168220,"monitorPid":97591,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] an early Error action failure drains its actual Node consumer before readonly device recovery
+ok 4 - WHAT[verification-system-016] an early Error action failure drains its actual Node consumer before readonly device recovery
+  ---
+  duration_ms: 11782.612125
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] actual readonly mount cleanup preserves Error operation failure and restores every original directory
+ok 5 - WHAT[verification-system-016] actual readonly mount cleanup preserves Error operation failure and restores every original directory
+  ---
+  duration_ms: 14914.694625
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] cancellation of an attached readonly scope preserves Error and removes only its owned image
+ok 6 - WHAT[verification-system-016] cancellation of an attached readonly scope preserves Error and removes only its owned image
+  ---
+  duration_ms: 10986.649792
+  type: 'test'
+  ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444208214,"monitorPid":97786,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":97786,"parentPid":97210,"at":1791444208253,"toolPid":97787,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":97786,"parentPid":97210,"at":1791444208287,"toolPid":97787,"exitCode":null,"signal":"SIGKILL"}
+# [verification-tool-phase] {"phase":"group-drained","pid":97786,"parentPid":97210,"at":1791444208306,"toolPid":97787}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444208309,"monitorPid":97786,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] an early null action failure drains its actual Node consumer before readonly device recovery
+ok 7 - WHAT[verification-system-016] an early null action failure drains its actual Node consumer before readonly device recovery
+  ---
+  duration_ms: 14198.567458
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] actual readonly mount cleanup preserves null operation failure and restores every original directory
+ok 8 - WHAT[verification-system-016] actual readonly mount cleanup preserves null operation failure and restores every original directory
+  ---
+  duration_ms: 13910.098
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-016] cancellation of an attached readonly scope preserves null and removes only its owned image
+ok 9 - WHAT[verification-system-016] cancellation of an attached readonly scope preserves null and removes only its owned image
+  ---
+  duration_ms: 14040.540708
+  type: 'test'
+  ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444249236,"monitorPid":98019,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":98019,"parentPid":97210,"at":1791444249272,"toolPid":98020,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":98019,"parentPid":97210,"at":1791444249309,"toolPid":98020,"exitCode":null,"signal":"SIGKILL"}
+# [verification-tool-phase] {"phase":"group-drained","pid":98019,"parentPid":97210,"at":1791444249325,"toolPid":98020}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444249326,"monitorPid":98019,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] a successful action omitting await drains and rejects its actual Node consumer before readonly device recovery
+ok 10 - WHAT[verification-system-016] a successful action omitting await drains and rejects its actual Node consumer before readonly device recovery
+  ---
+  duration_ms: 13050.390625
+  type: 'test'
+  ...
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444264243,"monitorPid":98075,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":98075,"parentPid":97210,"at":1791444264275,"toolPid":98076,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":98075,"parentPid":97210,"at":1791444264299,"toolPid":98076,"exitCode":73,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":98075,"parentPid":97210,"at":1791444264315,"toolPid":98076}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444264317,"monitorPid":98075,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] a normal action return cannot conceal an independently failed actual readonly Node consumer
+ok 11 - WHAT[verification-system-016] a normal action return cannot conceal an independently failed actual readonly Node consumer
+  ---
+  duration_ms: 15007.09425
+  type: 'test'
+  ...
+# {"actualPid":98076,"actualExitCode":73,"actualSignal":null,"scopeOutcome":"rejected","restoredOwners":4,"remainingRootEntries":["inputs","output"]}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444276241,"monitorPid":98151,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":98151,"parentPid":97210,"at":1791444276275,"toolPid":98152,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":98151,"parentPid":97210,"at":1791444276299,"toolPid":98152,"exitCode":73,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":98151,"parentPid":97210,"at":1791444276315,"toolPid":98152}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444276317,"monitorPid":98151,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] the original Error action failure remains the cause alongside an independently failed actual readonly Node consumer
+ok 12 - WHAT[verification-system-016] the original Error action failure remains the cause alongside an independently failed actual readonly Node consumer
+  ---
+  duration_ms: 11976.783208
+  type: 'test'
+  ...
+# {"actualPid":98152,"actualExitCode":73,"actualSignal":null,"scopeOutcome":"rejected","restoredOwners":4,"remainingRootEntries":["inputs","output"]}
+# [verification-tool-phase] {"phase":"monitor-spawned","pid":97210,"parentPid":97209,"at":1791444287203,"monitorPid":98213,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-spawned","pid":98213,"parentPid":97210,"at":1791444287236,"toolPid":98214,"executable":"/private/tmp/node-v22.23.3-darwin-arm64/bin/node"}
+# [verification-tool-phase] {"phase":"tool-exited","pid":98213,"parentPid":97210,"at":1791444287261,"toolPid":98214,"exitCode":73,"signal":null}
+# [verification-tool-phase] {"phase":"group-drained","pid":98213,"parentPid":97210,"at":1791444287278,"toolPid":98214}
+# [verification-tool-phase] {"phase":"monitor-closed","pid":97210,"parentPid":97209,"at":1791444287279,"monitorPid":98213,"exitCode":0,"signal":null}
+# Subtest: WHAT[verification-system-016] the original null action failure remains the cause alongside an independently failed actual readonly Node consumer
+ok 13 - WHAT[verification-system-016] the original null action failure remains the cause alongside an independently failed actual readonly Node consumer
+  ---
+  duration_ms: 10962.890208
+  type: 'test'
+  ...
+# {"actualPid":98214,"actualExitCode":73,"actualSignal":null,"scopeOutcome":"rejected","restoredOwners":4,"remainingRootEntries":["inputs","output"]}
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 181300.10925

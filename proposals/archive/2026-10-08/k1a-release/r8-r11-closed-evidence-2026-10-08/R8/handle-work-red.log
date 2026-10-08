@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+ok 1 - WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard
+  ---
+  duration_ms: 1.290834
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+ok 2 - WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description
+  ---
+  duration_ms: 0.766958
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+ok 3 - WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases
+  ---
+  duration_ms: 8.275
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+ok 4 - WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions
+  ---
+  duration_ms: 37.630917
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+ok 5 - WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities
+  ---
+  duration_ms: 33.598542
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+ok 6 - WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries
+  ---
+  duration_ms: 14.136541
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault
+ok 7 - WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault
+  ---
+  duration_ms: 2.326209
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] another Road cannot supply the HumanRoot canary missing assessment or retirement
+ok 8 - WHAT[verification-system-014] another Road cannot supply the HumanRoot canary missing assessment or retirement
+  ---
+  duration_ms: 52.9565
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the original HumanRoot loop oracle keeps exact Road facts and physical deliveries amid other owners
+ok 9 - WHAT[verification-system-014] the original HumanRoot loop oracle keeps exact Road facts and physical deliveries amid other owners
+  ---
+  duration_ms: 39.630875
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Manager loop response binding isolates each other Road from the main five-iteration spine
+ok 10 - WHAT[verification-system-014] Manager loop response binding isolates each other Road from the main five-iteration spine
+  ---
+  duration_ms: 6.4225
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] all main relay barriers count the bound Road independently of preflow owners
+ok 11 - WHAT[verification-system-014] all main relay barriers count the bound Road independently of preflow owners
+  ---
+  duration_ms: 1.793916
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work
+not ok 12 - WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work
+  ---
+  duration_ms: 2.120792
+  type: 'test'
+  location: '/Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:565:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        {
+          timeoutMs: 60000,
+          waitFact: {
+            gte: 1,
+    +       name: 'HandleCompleted'
+    -       name: 'HandleWorkCompleted',
+    -       session: 'child'
+          }
+        }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      waitFact:
+        name: 'HandleWorkCompleted'
+        gte: 1
+        session: 'child'
+      timeoutMs: 60000
+  actual:
+    0:
+      waitFact:
+        name: 'HandleCompleted'
+        gte: 1
+      timeoutMs: 60000
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/014.test.mjs:570:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: WHAT[verification-system-014] declared participating tool arguments satisfy the production estimate contract
+ok 13 - WHAT[verification-system-014] declared participating tool arguments satisfy the production estimate contract
+  ---
+  duration_ms: 204.607625
+  type: 'test'
+  ...
+# Subtest: WHAT[verification-system-014] Long Stroke 真实物理验收环境
+ok 14 - WHAT[verification-system-014] Long Stroke 真实物理验收环境 # SKIP release tier not enabled
+  ---
+  duration_ms: 0.056125
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 12
+# fail 1
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 607.767917

@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: WHAT[verification-system-016] explicit SDK archive selection keeps independent copies and rejects a bad raw identity before ownership or probes
+ok 1 - WHAT[verification-system-016] explicit SDK archive selection keeps independent copies and rejects a bad raw identity before ownership or probes
+  ---
+  duration_ms: 8.5305
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 84.773125

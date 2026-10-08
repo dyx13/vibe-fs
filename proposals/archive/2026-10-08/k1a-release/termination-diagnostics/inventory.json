@@ -1,0 +1,37 @@
+[
+  {
+    "file": "integration-8d3-termination-cause-readonly-audit.json",
+    "bytes": 9279,
+    "sha256": "35594666e96e7dd13c63eac8820a92718782c41299cf677d5a5a344c34407fc0"
+  },
+  {
+    "file": "integration-8d3-termination-cause-readonly-audit.txt",
+    "bytes": 1122,
+    "sha256": "11768c71488191eedebd82ede108a39a01ee7f37cf738a706b7c3904693a1544"
+  },
+  {
+    "file": "termination-diagnostic-red-build.log",
+    "bytes": 193,
+    "sha256": "068951c02ce2c75489fb3b8ccbd409a2b0d375b2454d3f72b20a544d19fe0de4"
+  },
+  {
+    "file": "termination-diagnostic-red.log",
+    "bytes": 3322,
+    "sha256": "fb243fd3ce65f4e816bd271c27a831a6a9c78ce328457d19e113435741a4f440"
+  },
+  {
+    "file": "termination-diagnostic-green-build.log",
+    "bytes": 193,
+    "sha256": "b808cc63e503a611a06357e3c4712357ba022c728be797dc07b09a70361e01d7"
+  },
+  {
+    "file": "termination-diagnostic-green-full006.log",
+    "bytes": 19840,
+    "sha256": "f7342c347865c3e49a71b7d9462da42794f8ab4635c7367c5f6617cb4aa30678"
+  },
+  {
+    "file": "termination-diagnostics-patch-readme.txt",
+    "bytes": 2337,
+    "sha256": "fa61366742204ea38d35fc1ab2b537768e9197b0a2a5bfe010f52634efb5da47"
+  }
+]

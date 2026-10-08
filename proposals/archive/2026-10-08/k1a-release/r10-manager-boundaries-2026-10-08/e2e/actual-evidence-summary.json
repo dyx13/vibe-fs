@@ -1,0 +1,101 @@
+{
+  "scratchRoot": "/private/var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/oc-e2e-t2sMbg",
+  "session": "ses_ee56da9b9ffe5ZRFIrahZak7J6",
+  "selectedJournalRows": 20,
+  "allMainRoadEventNames": [
+    {
+      "seq": "156",
+      "names": [
+        "RoadOpened",
+        "IncumbencyOpened"
+      ]
+    },
+    {
+      "seq": "174",
+      "names": [
+        "AssessmentCommitted"
+      ]
+    },
+    {
+      "seq": "266",
+      "names": [
+        "RetirementCommitted"
+      ]
+    },
+    {
+      "seq": "267",
+      "names": [
+        "IncumbencyOpened"
+      ]
+    },
+    {
+      "seq": "272",
+      "names": [
+        "IncumbencyOpened"
+      ]
+    },
+    {
+      "seq": "278",
+      "names": [
+        "AssessmentCommitted"
+      ]
+    },
+    {
+      "seq": "282",
+      "names": [
+        "RetirementCommitted"
+      ]
+    },
+    {
+      "seq": "283",
+      "names": [
+        "QualityCertificateInvalidated",
+        "IncumbencyOpened"
+      ]
+    },
+    {
+      "seq": "286",
+      "names": [
+        "QualityCertificateInvalidated"
+      ]
+    }
+  ],
+  "selectedEvidenceSha256": "a6382ad9aadb6f5275e7bc0bd8ac986142590e5690f04bfa9664ad40ed944375",
+  "messageCount": 19,
+  "allPhysicalUserMessages": [
+    {
+      "id": "msg_11a9256720010Kotx1ehrHY7xx",
+      "parent": null,
+      "created": 1791447160434
+    },
+    {
+      "id": "msg_11a925aa5001xJKoJIaqIJVRzp",
+      "parent": null,
+      "created": 1791447161509
+    },
+    {
+      "id": "msg_11a925b3b001e4Sbwrz2if9D0I",
+      "parent": null,
+      "created": 1791447161659
+    },
+    {
+      "id": "msg_11a925b790013UKnCilb9vrl8k",
+      "parent": null,
+      "created": 1791447161721
+    },
+    {
+      "id": "msg_11a925c2c001GExeHsoQ6cInja",
+      "parent": null,
+      "created": 1791447161900
+    },
+    {
+      "id": "msg_11a925e39001Frdw7YEjVaXWEk",
+      "parent": null,
+      "created": 1791447162425
+    }
+  ],
+  "lastMessageId": "msg_11a925fe7001xBXml9g3PLJoPS",
+  "selectedHostEvidenceSha256": "50e369e8d641396f9950ebea04cd0cb682357acd5b1d675d90838d57755893fa",
+  "changeEvidenceRows": 2,
+  "changeEvidenceSha256": "6d0e281ebfd8a5c85543d6a6a442c59db8544acede4ce24ff6890ba4700a0420"
+}

@@ -246,6 +246,9 @@ try {
     fs.writeFileSync(${JSON.stringify(caughtPath)}, JSON.stringify({
       failure: { name: error?.name, message: error?.message },
       failureRecords: failureRecords(error),
+      nativeFailures: [inspectionFailure, cleanupInspectionFailure].filter(Boolean).map(error => ({
+        message: error.message, code: error.code, syscall: error.syscall, status: error.status,
+      })),
       inspections,
       nativeErrorPreserved: inspectionFailure ? containsFailure(error, inspectionFailure) : null,
       nativeCleanupErrorPreserved: cleanupInspectionFailure ? containsFailure(error, cleanupInspectionFailure) : null,
@@ -277,19 +280,24 @@ try {
 if (cleanupErrors.length > 0) {
   throw new AggregateError([...(originalFailure ? [originalFailure.error] : []), ...cleanupErrors], 'Supervisor observation or foreign cleanup failed', { cause: originalFailure?.error })
 }
-if (originalFailure) throw originalFailure.error
+if (originalFailure) {
+  console.error(originalFailure.error.message)
+  process.exitCode = 1
+}
 `)
       const env = { ...process.env, NODE_TEST_CONCURRENCY: '1', TMPDIR: directory }
       delete env.NODE_TEST_CONTEXT
       launcher = spawn(process.execPath, [launcherPath], { env, stdio: ['ignore', 'pipe', 'pipe'] })
-      let output = ''
-      launcher.stdout.setEncoding('utf8').on('data', chunk => { output += chunk })
-      launcher.stderr.setEncoding('utf8').on('data', chunk => { output += chunk })
+      let stdout = ''
+      let stderr = ''
+      launcher.stdout.setEncoding('utf8').on('data', chunk => { stdout += chunk })
+      launcher.stderr.setEncoding('utf8').on('data', chunk => { stderr += chunk })
       launcherDrained = Promise.allSettled([new Promise((resolve, reject) => {
         launcher.once('error', reject)
         launcher.once('close', (code, signal) => resolve({ code, signal }))
       })])
       const [outcome] = await launcherDrained
+      const output = stdout + stderr
       assert.equal(outcome.status, 'fulfilled')
       assert.deepEqual(outcome.value, { code: 1, signal: null }, output)
       assert.match(output, /WATCHDOG: 'detached-tool-reclamation' silent for/)
@@ -335,6 +343,19 @@ if (originalFailure) throw originalFailure.error
             cleanupPreserved: caught.nativeCleanupErrorPreserved,
             distinctOriginals: caught.nativeErrorsDistinct,
           }, { primaryPreserved: true, cleanupPreserved: true, distinctOriginals: true }, output)
+          if (scenario.cleanupFailure) {
+            assert.equal(caught.nativeFailures.length, 2)
+            const normalizedStderr = stderr.replace(/\s+/g, ' ').trim()
+            for (const nativeFailure of caught.nativeFailures) {
+              assert.ok(normalizedStderr.includes(nativeFailure.message.replace(/\s+/g, ' ').trim()),
+                `Supervisor stderr must retain each actual native failure message\n${stderr}`)
+              for (const key of ['code', 'syscall', 'status']) {
+                if (nativeFailure[key] === undefined) continue
+                const value = typeof nativeFailure[key] === 'string' ? `'${nativeFailure[key]}'` : String(nativeFailure[key])
+                assert.ok(stderr.includes(`${key}: ${value}`), `Supervisor stderr must retain native ${key}\n${stderr}`)
+              }
+            }
+          }
         }
         assert.ok(caught.monitorMembers.some(row => row.pid === caught.tool.monitorPid && row.pgid === caught.tool.monitorPgid && /^[Tt]/.test(row.state)), 'The observed monitor remains paused; cleanup is explicitly incomplete at caller rejection')
         assert.deepEqual(caught.toolMembers.map(row => row.pid).sort((a, b) => a - b), [caught.tool.pid, caught.tool.childPid].sort((a, b) => a - b), 'The known tool and descendant remain live while their owned monitor is paused')

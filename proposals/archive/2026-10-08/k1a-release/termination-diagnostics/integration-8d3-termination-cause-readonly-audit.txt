@@ -1,0 +1,7 @@
+8d3 integration termination cause audit
+Original log514 only emits outer AggregateError message. Source supervisor158 preserves primary error and remaining-group observation error;329-332 logs only.message. Suite257-260 keeps original AggregateError in cause;integration/run96-98 again logs only.message.
+Exact primary/secondary causes and phases cannot be uniquely reconstructed from the oldlog. Shared1000ms deadline exhaustion is only a hypothesis; no budgetchangesrecommended.
+Accepted=true at515 certifies current emptiness of rootgroup84353, not all captured detachedgroups. Original300s truncated30/44 evidence remainsfailed.
+Formalnextstep: strengthen existingWHAT006 actual native double-inspection fixture(stderr must show both original native errors), then output existing cause/errors at supervisorcatch without changing acceptance/ownership/budgets. Existing causeidentity/incompletecleanup/foreigngroupasserts mustremain.
+No source edits, tests/builds, live-resource inspections, deletion or termination.
+Details: /private/tmp/vibe-fs-oct8-alias-release/integration-8d3-termination-cause-readonly-audit.json

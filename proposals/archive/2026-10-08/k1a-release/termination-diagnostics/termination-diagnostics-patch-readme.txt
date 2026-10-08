@@ -1,0 +1,11 @@
+Source-only proposal. No repository edits or tests were performed by this agent.
+
+Apply tests-red first. It extends existing formal WHAT[verification-system-006] native double-inspection failure case. Existing cause identity, distinct-native-object, foreign-group, exact-owned cleanup and incomplete-cleanup assertions remain unchanged.
+
+The child stdout and stderr are captured separately; the new evidence asserts stderr only. The controlled caller now mirrors integration/run.mjs by printing only its outer error.message and setting exitCode=1, instead of rethrowing the original Error. Without this adjustment, Node's final uncaught-exception formatter would already print cause/errors even on the old supervisor, creating a false green. Genuine caller/foreign cleanup AggregateErrors still throw unchanged.
+
+The independent oracle records original native Error message/code/syscall/status to caught.json without printing it. Each of the two actual native messages must occur in child stderr, normalized only for whitespace because Node indents nested stack/message lines. Native ps itself may emit its short stderr; requiring the complete original Error.message includes 'Command failed: /bin/ps ...' and prevents that stderr alone from satisfying the new assertion. Existing invalid-column failures have status=1; code/syscall are required when actually present rather than invented for normal nonzero ps exits.
+
+Suggested one-line green patch prints the already-preserved Error with Node's standard formatter. Source of actual Node22.23.3 internal/util/inspect was copied read-only to node22-util-inspect-readonly-source.js:formatError adds own cause/errors keys at1699-1711; default depth2 atoptions initialization; each direct native Error under AggregateError.errors is atdepth2 and native scalar fields remain visible. The selected double-inspection case has exactly this shape, so the simple console.error(prefix,error) is sufficient for that formal regression. Deeper unforeseen AggregateError nesting may be abbreviated by standard depth2; do not claim arbitrary-depth serialization completeness or recover unknown historical8d3 causes.
+
+No budget, process/group ownership, failure acceptance or original Error identity changes. Red/green outcomes still need parent execution; these files are proposals, not test receipts.

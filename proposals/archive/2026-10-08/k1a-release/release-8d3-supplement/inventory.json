@@ -1,0 +1,104 @@
+[
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-readonly016.log",
+    "destination": "supplemental-readonly016.log",
+    "bytes": 12476,
+    "sha256": "a0d196b5e648ae1b0857431083afb9c6dc6883a0c3873666b7a45ba893e9a0f7"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-readonly016.json",
+    "destination": "supplemental-readonly016.json",
+    "bytes": 6083,
+    "sha256": "8ea541022d0b41fc8876f5243580c9fb97edf5fe38624149ffe3e6bcb1a39cfd"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-readonly016.console",
+    "destination": "supplemental-readonly016.console",
+    "bytes": 6084,
+    "sha256": "211f76830f2fe15446128b90d5a089e4845952381f0513fdbb3ff104a1873da7"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/run-readonly016.mjs",
+    "destination": "run-readonly016.mjs.txt",
+    "bytes": 6913,
+    "sha256": "a83ef821bb6c013e7d033e45b9f3cd73f85d5de2ad9e0f0a771f0ecca9263714"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/readonly016-scope.txt",
+    "destination": "readonly016-scope.txt",
+    "bytes": 2888,
+    "sha256": "d44a36a976302e3af95e3b5862d7919bd85f9a370c2700c06f80c54072a4ec39"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-cancellation-readonly-audit.json",
+    "destination": "supplemental-physical016-cancellation-readonly-audit.json",
+    "bytes": 84559,
+    "sha256": "92ee9e45a1bf13cddac6e3a1a830b4fe3ef2f450f7546cfb088e028f3e89478f"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-cancellation-readonly-audit.txt",
+    "destination": "supplemental-physical016-cancellation-readonly-audit.txt",
+    "bytes": 7042,
+    "sha256": "f466dd82b2614ff2fc5ced491179bd1509a91c73d5433a710cb481b9fea0be9b"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-cancellation-hdiutil-readonly.txt",
+    "destination": "supplemental-physical016-cancellation-hdiutil-readonly.txt",
+    "bytes": 359,
+    "sha256": "a69b71579f66e204297541105f78393d142db2098a0a23d9ef162c30c11502b8"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/supplemental-physical016-cancellation-mount-readonly.txt",
+    "destination": "supplemental-physical016-cancellation-mount-readonly.txt",
+    "bytes": 750,
+    "sha256": "e0dcd638a1a1a216aed96ff1260ed70e1b1e3134787cfe591c1c3f7b0fb5a145"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/owned-two-roots-cleanup.json",
+    "destination": "owned-two-roots-cleanup.json",
+    "bytes": 6627,
+    "sha256": "00cf0b93d6154d96dfd57825981a7ae42b3ec4f3b40a59f0bfb701d9533cb33e"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/owner-cursor-red.log",
+    "destination": "owner-cursor-red.log",
+    "bytes": 3449,
+    "sha256": "638f11e7d83d470d5477a4ba54e8217f94883ed94858df26c4c8c5854e76e92d"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/owner-cursor-green.log",
+    "destination": "owner-cursor-green.log",
+    "bytes": 2502,
+    "sha256": "8bc9ba6d6f8c2b97fb60cb710aea8f556b33f6df8336d4208d9b3313dc189b13"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/owner-cursor-build.log",
+    "destination": "owner-cursor-build.log",
+    "bytes": 193,
+    "sha256": "432daf118815169dc6c36c55ac6d4a8e864801c9ab5a564508b102f46ebf5a8c"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/owner-cursor-e2e.log",
+    "destination": "owner-cursor-e2e.log",
+    "bytes": 4923,
+    "sha256": "9680b725a34905c1e2854dfede118a795aabde03881a5632b32a3b73b28d57ce"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/owner-cursor-e2e.json",
+    "destination": "owner-cursor-e2e.json",
+    "bytes": 17734,
+    "sha256": "7535f2c05fe0cbba33afa0462c184eb7c737cbc7a82cfb0df6adbf2165a2d8d5"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/owner-cursor-e2e.console",
+    "destination": "owner-cursor-e2e.console",
+    "bytes": 1923,
+    "sha256": "90831637e680556e364824bdece01140a292dcd004b5c6c81cf499a5dd7e092d"
+  },
+  {
+    "source": "/private/tmp/vibe-fs-oct8-alias-release/run-cursor-e2e.mjs",
+    "destination": "run-cursor-e2e.mjs.txt",
+    "bytes": 2701,
+    "sha256": "619384ec8675599f028627fef98c8cc4464c2169ded77dfffa171b0e97856ed0"
+  }
+]
