@@ -527,6 +527,32 @@ module JournalSurface =
         (AgentJournal.snapshot handle.Journal).AgentProjections.Attention
         |> AttentionProjection.wasConsumed (SessionId.create session) occurrence
 
+    let concernView (handle: JournalHandle) address recipient : obj =
+        let state = (AgentJournal.snapshot handle.Journal).AgentProjections.Concern
+
+        let mailbox =
+            state.Mailboxes
+            |> Map.tryFind address
+            |> Option.map (fun mailbox ->
+                box
+                    {| id = mailbox.Id
+                       concern = mailbox.Concern
+                       generation = mailbox.Generation
+                       owner = SessionId.value mailbox.OwnerSessionId
+                       active = mailbox.Active |})
+            |> Option.defaultValue null
+
+        let prepared =
+            Wanxiangshu.Interaction.Concern.ConcernProjection.prepareFragments (SessionId.create recipient) state
+
+        box
+            {| mailbox = mailbox
+               pendingOccurrenceIds = prepared.Batch.DeliveredMessages |> List.toArray
+               pendingMessages =
+                prepared.Messages
+                |> List.map (fun (id, message) -> box {| id = id; message = message |})
+                |> List.toArray |}
+
     /// Append an agent fact and return a normalized projection summary.
     let appendAgent (handle: JournalHandle) (stream: obj) (run: obj) (fact: obj) : Task<obj> =
         task {

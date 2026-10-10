@@ -237,22 +237,6 @@ module ObligationJournalSurface =
 
                     let! result = AgentJournal.appendAgent (streamOfSession sessionId) None fact handle.Journal
 
-                    // concern-routing-006: a completed owner life retires its
-                    // mailboxes before any later publish. The retirement fact
-                    // replays idempotently, so an append failure rejects the
-                    // lifecycle call and the caller retries instead of silently
-                    // leaving a live mailbox for a terminated participant.
-                    match result with
-                    | Error _ -> return appendResult result
-                    | Ok _ ->
-                        let! retired =
-                            AttentionConcernJournalAdapter.retireMailboxesOf
-                                handle.Journal
-                                (SessionId.create sessionId)
-                                None
-
-                        match retired with
-                        | Ok() -> return box {| ok = true |}
-                        | Error reason -> return box {| ok = false; error = reason |}
+                    return appendResult result
             }
         | _ -> Task.FromResult(box {| ok = true |})

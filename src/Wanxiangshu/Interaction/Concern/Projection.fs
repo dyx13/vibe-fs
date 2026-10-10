@@ -161,6 +161,16 @@ module ConcernProjection =
         | _ when Map.containsKey generation state.KnownGenerations -> Ok state
         | _ -> Error "unknown mailbox generation"
 
+    let closeLife owner (state: ConcernProjectionState) =
+        { state with
+            Mailboxes =
+                state.Mailboxes
+                |> Map.map (fun _ mailbox ->
+                    if mailbox.OwnerSessionId = owner then
+                        { mailbox with Active = false }
+                    else
+                        mailbox) }
+
     let applyFact fact (state: ConcernProjectionState) : Result<ConcernProjectionState, string> =
         match fact with
         | ConcernFactCases.MailboxSubscribed payload ->

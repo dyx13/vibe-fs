@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — Pair Hint 与 Accepted 邮箱闭合
+
+- Accepted退休随原持久事实关闭owner邮箱，Continue和首次确认保留邮箱；删除遗漏实际工具的Surface多append路径。正式补证旧Pair Hint冻结、新occurrence投递、双参与者信息不改权威，以及合法Accepted链新进程恢复。完整代次复用和异常终态仍开放。
+
 ## Unreleased — K1 剩余并发叶补证
 
 - 正式补齐committed/Unknown cut的双waiter throwing callback，以及文件恢复原基线后空Cuts Unknown同key/同Store真正追加Access和双事实冷重放。产品实现保持，跨副本和持续stale再入仍开放。

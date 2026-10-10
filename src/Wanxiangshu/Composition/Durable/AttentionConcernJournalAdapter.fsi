@@ -10,11 +10,3 @@ open System.Threading.Tasks
 module AttentionConcernJournalAdapter =
     val forAttention: journal: AgentJournal -> AttentionJournalPort
     val forConcern: journal: AgentJournal -> ConcernJournalPort
-
-    /// concern-routing-006: retire every active mailbox owned by the given
-    /// participant session through a durable MailboxRetired append per mailbox.
-    val retireMailboxesOf:
-        journal: AgentJournal ->
-        owner: SessionId ->
-        providerRun: ProviderRunIdentity option ->
-            Task<Result<unit, string>>

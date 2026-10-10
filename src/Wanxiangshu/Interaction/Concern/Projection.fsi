@@ -57,6 +57,7 @@ module ConcernProjection =
             Result<ConcernFactCases, string>
 
     val applyFact: fact: ConcernFactCases -> state: ConcernProjectionState -> Result<ConcernProjectionState, string>
+    val closeLife: owner: SessionId -> state: ConcernProjectionState -> ConcernProjectionState
 
     val prepareFragments: recipient: SessionId -> state: ConcernProjectionState -> ConcernPreparedFragments
 

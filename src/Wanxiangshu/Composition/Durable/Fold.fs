@@ -43,6 +43,12 @@ module Fold =
         else
             attention
 
+    let private settleConcernLife events sessionId concern =
+        if completesRoad events then
+            Wanxiangshu.Interaction.Concern.ConcernProjection.closeLife sessionId concern
+        else
+            concern
+
     let private foldRelay (projection: AgentProjectionSet) (fact: RelayFactCases) =
         match fact with
         | RelayFactCases.TransactionCommitted payload ->
@@ -53,6 +59,8 @@ module Fold =
             // work with it, so a reused SessionId cannot inherit it.
             let attentionAfterClosure =
                 settleAttentionLife events sessionId projection.Attention
+
+            let concernAfterClosure = settleConcernLife events sessionId projection.Concern
 
             AgentProjection.tryUpdate
                 sessionId
@@ -70,7 +78,8 @@ module Fold =
                 projection
             |> Result.map (fun updated ->
                 { updated with
-                    Attention = attentionAfterClosure })
+                    Attention = attentionAfterClosure
+                    Concern = concernAfterClosure })
             |> Result.mapError (fun reason -> { Fact = "Relay"; Reason = reason })
 
     let foldAgentFact (projection: AgentProjectionSet) (fact: AgentFact) : Result<AgentProjectionSet, FoldRejection> =

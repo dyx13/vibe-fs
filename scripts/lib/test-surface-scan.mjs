@@ -951,12 +951,13 @@ export const SURFACE_MANIFEST = [
   {
     module: 'Persistence/Journal/Surface.js',
     owner: 'durable-events',
-    laws: ['DURABLE-EVENTS-009', 'DURABLE-EVENTS-010', 'DURABLE-EVENTS-012', 'DURABLE-EVENTS-013', 'DURABLE-EVENTS-019', 'EFFECT-ACCOUNTING-008', 'ATTENTION-REGULATION-004', 'ATTENTION-REGULATION-005', 'ATTENTION-REGULATION-006'],
+    laws: ['DURABLE-EVENTS-009', 'DURABLE-EVENTS-010', 'DURABLE-EVENTS-012', 'DURABLE-EVENTS-013', 'DURABLE-EVENTS-019', 'EFFECT-ACCOUNTING-008', 'ATTENTION-REGULATION-004', 'ATTENTION-REGULATION-005', 'ATTENTION-REGULATION-006', 'CONCERN-ROUTING-006'],
     lawOwners: {
       'EFFECT-ACCOUNTING-008': 'effect-accounting',
       'ATTENTION-REGULATION-004': 'attention-regulation',
       'ATTENTION-REGULATION-005': 'attention-regulation',
       'ATTENTION-REGULATION-006': 'attention-regulation',
+      'CONCERN-ROUTING-006': 'concern-routing',
     },
     source: 'src/Wanxiangshu/Persistence/Journal/Surface.fs',
     representation: 'opaque-capability',
