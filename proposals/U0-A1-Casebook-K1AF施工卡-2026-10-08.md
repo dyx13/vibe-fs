@@ -1,5 +1,7 @@
 # K1-A / K1-F：工作区别名与结算后再次准入
 
+2026-10-10 接续：committed/CurrentCommitUnknown cut的双waiter+throwing callback两叶已正式2/0补证；空Cuts Unknown后同key/同实际Store再入在“真实文件恢复原捕获基线”前提下新Access与Refresh两facts冷重放正式1/0。完整011为18/0、1TODO，独立复核通过。持续stale文件另Refresh、热自动reload、跨副本及GAP-160整体仍开放；详见[本轮记录](Upstream四小时施工-2026-10-10.md)。
+
 当前状态：本卡Fetch/四叶再入、R18/R19及R20保持有限完成，不重做Fetch或忙碌resume。干净source candidate `65a70d0fd4c4`的原预算全项目验收已执行，结论FAILED，实际clean Fable为gen375。本机unit824/824、4971pass/0fail/127skip/388TODO仅pending；独立integration43/44原300s截断，四计数unknown；harness292pass/0fail、skip/TODO unknown，真实E2E35pass/0fail/0skip/0TODO及实际package通过。六physical合跑6entered/5父终局后原300s截断，仅未完成第6父另有限5pass/0fail/0skip/0TODO，不拼全量绿。精确CI37783171051仍539/824、2active/283queued原300s截断，四计数unknown；最后活动文件不定位根因。详见[65a矩阵](K1A与全项目release验收-2026-10-08.md#r2165a冻结输入的完整执行与剩余截断)。旧8d0失败不覆盖，最终docs-only提交CI按实际SHA单独核查并由交付链接给出，不借65a；opening append换Root未正式证明、skip/TODO、GAP-160及稳定吞吐/具体环境原因unknown继续保留。下方仅历史。
 
 ## 2026-10-08 review 接手状态

@@ -27,8 +27,15 @@ try {
     const { fact, maintenanceFileState, targetPayloadRef, targetPayloadBytes } = request.refreshed
     assert.equal(fact.type, 'EngineerCaseRefreshed')
     assert.deepEqual(eventStore.read(handle, fact.id), fact)
-    assert.equal(eventStore.head(handle, fact.stream), fact.id)
-    assert.deepEqual(eventStore.heads(handle, fact.stream), [fact.id])
+    const expectedHeads = request.accessed === undefined ? [fact.id] : [fact.id, request.accessed.id].sort()
+    assert.deepEqual(eventStore.heads(handle, fact.stream).sort(), expectedHeads)
+    if (request.accessed === undefined) assert.equal(eventStore.head(handle, fact.stream), fact.id)
+    if (request.accessed !== undefined) {
+      assert.equal(request.accessed.type, 'EngineerCaseAccessed')
+      assert.equal(request.accessed.payload.identity, request.identity)
+      assert.deepEqual(request.accessed.parents, fact.parents)
+      assert.deepEqual(eventStore.read(handle, request.accessed.id), request.accessed)
+    }
     assert.notEqual(maintenanceFileState, request.baseline)
     assert.equal(fact.payload.maintenance_file_state, maintenanceFileState)
     const targetEntry = JSON.parse(maintenanceFileState)['subject.txt']
@@ -39,7 +46,8 @@ try {
     assert.equal(before.accessOrder, 0n)
     assert.equal(before.lastAccessOrder, 0n)
     expected = { ...before, q: fact.payload.q, a: fact.payload.a, maintenanceFileState,
-      accessOrder: 1n, lastAccessOrder: 1n }
+      accessOrder: request.accessed === undefined ? 1n : 2n,
+      lastAccessOrder: request.accessed === undefined ? 1n : 2n }
   }
   const current = await casebook.fetchCaseByIdentity(handle, request.identity)
   assert.deepEqual(current, expected)

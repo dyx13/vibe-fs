@@ -446,10 +446,11 @@ test('WHAT[knowledge-reuse-011] an active workspace flight rejects a different a
   }
 })
 
-const assertSharedCutSettlement = async (t, unknown) => {
+const assertSharedCutSettlement = async (t, unknown, callbackThrows = false) => {
   const directory = realpathSync(mkdtempSync(join(tmpdir(), 'wxs-shared-cut-')))
   mkdirSync(join(directory, '.wanxiang', 'casebook'), { recursive: true })
   const cause = new Error('original shared Refresh Current commit cause')
+  const callbackFailure = new Error('original shared fatal callback exception')
   const reached = deferred()
   const release = deferred()
   const observations = []
@@ -482,6 +483,7 @@ const assertSharedCutSettlement = async (t, unknown) => {
     const leftOwner = settlements.createOwner(value => {
       assert.equal(observations.length, 1, 'the original actual Store settlement precedes owner delivery')
       leftIncidents.push(value)
+      if (callbackThrows) throw callbackFailure
     })
     const rightOwner = settlements.createOwner(value => rightIncidents.push(value))
     assert.notStrictEqual(leftOwner, rightOwner)
@@ -545,10 +547,11 @@ const assertSharedCutSettlement = async (t, unknown) => {
     assert.deepEqual(rightIncidents, [], 'only the first executing flight owns this settlement callback')
     assert.equal(first.status, 'rejected')
     assert.equal(second.status, 'rejected')
-    assert.strictEqual(first.reason, leftIncidents[0])
-    assert.strictEqual(second.reason, leftIncidents[0], 'the waiter receives the same original incident object')
-    assert.equal(settlements.isIncident(first.reason), true)
-    assert.equal(settlements.isIncident(second.reason), true)
+    const expectedRejection = callbackThrows ? callbackFailure : leftIncidents[0]
+    assert.strictEqual(first.reason, expectedRejection)
+    assert.strictEqual(second.reason, expectedRejection, 'both waiters receive the exact original rejection object')
+    assert.equal(settlements.isIncident(first.reason), !callbackThrows)
+    assert.equal(settlements.isIncident(second.reason), !callbackThrows)
     const incident = settlements.describeIncident(leftIncidents[0])
     assert.equal(incident.operation, 'Refresh')
     assert.equal(incident.caseIdentity, identity)
@@ -619,7 +622,13 @@ test('WHAT[knowledge-reuse-011] two required owners on one workspace store share
 test('WHAT[knowledge-reuse-011] two required owners on one workspace store share one actual CurrentCommitUnknown cut, original incident and Prepared',
   t => assertSharedCutSettlement(t, true))
 
-test('WHAT[knowledge-reuse-011] two required owners on one workspace store share one actual CurrentCommitUnknown without cuts and retain the stale response', async t => {
+test('WHAT[knowledge-reuse-011] two waiters share the original callback exception after one actual committed cut without a second owner delivery',
+  t => assertSharedCutSettlement(t, false, true))
+
+test('WHAT[knowledge-reuse-011] two waiters share the original callback exception after one actual CurrentCommitUnknown cut and retain its Prepared evidence',
+  t => assertSharedCutSettlement(t, true, true))
+
+const assertSharedUnknownWithoutCuts = async (t, reenter = false) => {
   const directory = realpathSync(mkdtempSync(join(tmpdir(), 'wxs-shared-unknown-valid-')))
   mkdirSync(join(directory, '.wanxiang', 'casebook'), { recursive: true })
   const cause = new Error('original shared legal Refresh Current commit cause')
@@ -726,10 +735,42 @@ test('WHAT[knowledge-reuse-011] two required owners on one workspace store share
     const targetBytes = Buffer.from(await eventStore.readPayload(handle, targetEntry.payloadRef))
     assert.equal(targetBytes.toString('utf8'), 'version-C')
     assert.deepEqual(Buffer.from(await eventStore.readPayload(handle, baselineEntry.payloadRef)), baselineBytes)
+    let accessed
+    if (reenter) {
+      writeFileSync(join(directory, 'subject.txt'), 'version-B')
+      assert.equal(readFileSync(join(directory, 'subject.txt'), 'utf8'), baselineBytes.toString('utf8'))
+      const next = await executeFetch(leftTool, shelfmark)
+      assert.equal(parse(next).answer, before.a, 'the hot Current still retains the previous body after Unknown')
+      assert.equal(createCalls.length, 1, 'restoring the captured baseline needs no second Bookkeeper')
+      assert.equal(programCalls.length, 1)
+      assert.equal(observations.length, 2, 'the settled key executes a new actual Access')
+      assert.equal(sourceObservations.length, 2)
+      assert.deepEqual(observedTypes(observations), ['EngineerCaseRefreshed', 'EngineerCaseAccessed'])
+      const secondAppend = observations[1].append
+      accessed = observations[1].originalRequested[0]
+      assert.equal(observations[1].originalRequested.length, 1)
+      assert.notEqual(accessed.id, original.id)
+      assert.equal(accessed.payload.identity, identity)
+      assert.deepEqual(accessed.parents, original.parents, 'the unknown Refresh has not advanced hot Current')
+      assert.deepEqual(secondAppend.requested, [accessed])
+      assert.equal(secondAppend.error.code, 'CommitUnknown')
+      assert.equal(secondAppend.error.phase, 'CurrentCommit')
+      assert.strictEqual(secondAppend.error.cause, cause)
+      assert.deepEqual(secondAppend.error.cleanupFailures, [])
+      assert.deepEqual(secondAppend.cuts, [])
+      assert.deepEqual(secondAppend.error.prepared.cuts, [])
+      assert.deepEqual(secondAppend.error.prepared.durableEvents, [accessed])
+      assert.strictEqual(secondAppend.originalError, sourceObservations[1].append.originalError)
+      assert.equal(eventStore.read(handle, accessed.id), null)
+      assert.deepEqual(await casebook.fetchCaseByIdentity(handle, identity), before)
+      assert.deepEqual(leftIncidents, [])
+      assert.deepEqual(rightIncidents, [])
+      assert.deepEqual(index.tryGet(), beforeIndex)
+    }
     const operationFile = join(eventsDirectory, 'operation.ndjson')
     const operationBytes = readFileSync(operationFile)
     const facts = operationBytes.toString('utf8').trimEnd().split('\n').map(JSON.parse)
-    assert.deepEqual(facts.map(event => event.event_id), [original.id])
+    assert.deepEqual(facts.map(event => event.event_id), [original.id, ...(accessed ? [accessed.id] : [])])
     assert.equal(facts[0].event_type, 'EngineerCaseRefreshed')
     assert.deepEqual(facts[0].payload, original.payload)
     assert.deepEqual(facts[0].parents, original.parents)
@@ -748,6 +789,7 @@ test('WHAT[knowledge-reuse-011] two required owners on one workspace store share
       JSON.stringify({ writer: 'operation', setupBytes: setupBytes.toString('base64'), operationBytes: operationBytes.toString('base64'),
         identity, before: { ...before, accessOrder: before.accessOrder.toString(), lastAccessOrder: before.lastAccessOrder.toString() },
         baseline, payloadRef: baselineEntry.payloadRef, payloadBytes: baselineBytes.toString('base64'),
+        accessed,
         refreshed: { fact: original, maintenanceFileState, targetPayloadRef: targetEntry.payloadRef,
           targetPayloadBytes: targetBytes.toString('base64') } }),
     ], { cwd: directory, env, signal: t.signal }).catch(error => {
@@ -756,7 +798,7 @@ test('WHAT[knowledge-reuse-011] two required owners on one workspace store share
     }))
     assert.notEqual(cold.pid, process.pid)
     const expected = { ...before, q: original.payload.q, a: original.payload.a, maintenanceFileState,
-      accessOrder: 1n, lastAccessOrder: 1n }
+      accessOrder: reenter ? 2n : 1n, lastAccessOrder: reenter ? 2n : 1n }
     assert.deepEqual({ ...cold.current, accessOrder: BigInt(cold.current.accessOrder), lastAccessOrder: BigInt(cold.current.lastAccessOrder) }, expected)
     assert.deepEqual(readFileSync(setupFile), setupBytes)
     assert.deepEqual(readFileSync(operationFile), operationBytes)
@@ -772,6 +814,12 @@ test('WHAT[knowledge-reuse-011] two required owners on one workspace store share
     if (completed) rmSync(directory, { recursive: true, force: true })
     else t.diagnostic('SHARED_UNKNOWN_WITHOUT_CUTS_EVIDENCE: retained ' + directory)
   }
-})
+}
+
+test('WHAT[knowledge-reuse-011] two required owners on one workspace store share one actual CurrentCommitUnknown without cuts and retain the stale response',
+  t => assertSharedUnknownWithoutCuts(t))
+
+test('WHAT[knowledge-reuse-011] the same key and actual Store execute a new Access after empty-cut Unknown when files return to the prior baseline; cold replay retains both facts',
+  t => assertSharedUnknownWithoutCuts(t, true))
 
 test.todo('WHAT[knowledge-reuse-011] GAP-160: real replica branches become DomainConflict and converge through explicit resolution without LWW')

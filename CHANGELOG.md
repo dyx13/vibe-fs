@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — K1 剩余并发叶补证
+
+- 正式补齐committed/Unknown cut的双waiter throwing callback，以及文件恢复原基线后空Cuts Unknown同key/同Store真正追加Access和双事实冷重放。产品实现保持，跨副本和持续stale再入仍开放。
+
 ## Unreleased — S1c 用户通知接纳
 
 - publish(user)等待实际SDK明确成功；缺方法、失败或畸形响应不再假成功。已落root副本保留，同occurrence原材料可重试，冲突/写入拒绝不通知。25项正式公开回归含真实SDK与HTTP。Pair Hint、代次退休和冷通知去重仍开放。
