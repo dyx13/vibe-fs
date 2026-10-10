@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — S1b2 已知自然消费缺口
+
+- 真实Engineer自然终点反例证明：SDK呈现尚未返回、未物理接纳时已经消费待办。强化exact key/正文/原两occurrence前提后以显式TODO保留；批次持久绑定及冷恢复修复仍开放。
+
 ## Unreleased — S2b 诊断时刻证明
 
 - 006用真实判决gate固定诊断后、冻结前的新进展，分别严格验证两个时刻，避免拿终止前末输出倒逼较早IPC诊断。预算与清理断言保持；相邻113/0、1integration skip。300s发布吞吐仍开放。

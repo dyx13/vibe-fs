@@ -9,8 +9,76 @@ import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import * as journal from '../../../dist/Persistence/Journal/Surface.js'
 import { withAppendRefusal } from '../../../dist/Verification/JournalPortObservationSurface.js'
+import { withExecutablePlugin, acceptAuthorityRoot } from '../../verification-system/tests/support/plugin-fixture.mjs'
 
 const pendingOf = (fixture, session) => attention.pending(session, fixture.state)
+
+test('WHAT[attention-regulation-005] natural Engineer completion preserves its exact deferred batch while the presentation transport is paused', {
+  timeout: 5000,
+  todo: 'GAP-118: Detached preparation consumes before physical acceptance; exact batch binding and cold receipt recovery remain open',
+}, async () => {
+  await withExecutablePlugin(async (hooks, directory, _created, runtime) => {
+    const session = 'deferred-engineer-terminal'
+    const root = { id: 'deferred-root', sessionID: session, role: 'user', agent: 'engineer', model: {} }
+    const parts = [{ type: 'text', text: 'Finish the current investigation.' }]
+    await acceptAuthorityRoot(runtime, session, 'engineer', root.id)
+    runtime.pushHostMessage(session, { info: root, parts })
+    await hooks['chat.message']({ sessionID: session, messageID: root.id, agent: 'engineer' }, { message: root, parts })
+    const assistant = { info: {
+      id: 'deferred-terminal', sessionID: session, parentID: root.id,
+      role: 'assistant', agent: 'engineer', providerID: 'provider', modelID: 'engineer-model', time: { created: 2 },
+    }, parts: [] }
+    runtime.pushHostMessage(session, assistant)
+    await hooks['experimental.chat.messages.transform']({ sessionID: session }, { messages: [{ info: root, parts }] })
+    for (const [call, text] of [['terminal-first', 'Inspect the next source change'], ['terminal-second', 'Document the next boundary']]) {
+      await hooks.tool.defer.execute({ new_work: text }, { sessionID: session, callID: call, messageID: assistant.info.id, agent: 'engineer' })
+    }
+    assert.deepEqual(journal.JournalSurface_pendingDeferredWork(runtime.journal, session).map(item => item.occurrence).sort(), ['terminal-first', 'terminal-second'])
+    assert.deepEqual(factPayloads(directory, 'DeferredWorkConsumed'), [])
+    const captured = []
+    let notifyPresentation
+    const presentation = new Promise(resolve => { notifyPresentation = resolve })
+    let release
+    const paused = new Promise(resolve => { release = resolve })
+    const original = runtime.client.session.promptAsync
+    runtime.client.session.promptAsync = async function (args) {
+      if (args.path?.id === session) {
+        captured.push(args)
+        notifyPresentation()
+        await paused
+        return {}
+      }
+      return Reflect.apply(original, this, [args])
+    }
+    try {
+      assistant.parts.push({ id: 'deferred-answer', type: 'text', text: 'The current investigation is complete.' })
+      assistant.info.time.completed = 3
+      assistant.info.finish = 'stop'
+      await hooks.event({ event: { type: 'message.updated', properties: { info: assistant.info } } })
+      await hooks.event({ event: { type: 'session.idle', properties: { sessionID: session } } })
+      let timeout
+      try {
+        await Promise.race([presentation, new Promise((_, reject) => {
+          timeout = setTimeout(() => reject(new Error(`natural presentation was not reached: ${JSON.stringify(runtime.prompts)}`)), 1500)
+        })])
+      } finally {
+        clearTimeout(timeout)
+      }
+      assert.equal(captured.length, 1, `the real natural terminal prepares one presentation: ${JSON.stringify(runtime.prompts)}`)
+      assert.equal(captured[0].body.metadata.wanxiangshu_origin, 'DeferredWorkPresentation')
+      assert.match(captured[0].body.metadata.wanxiangshu_prompt_key, /^[0-9a-f]{64}$/)
+      assert.equal(captured[0].body.parts[0].text, '- Inspect the next source change\n- Document the next boundary')
+      await new Promise(resolve => setTimeout(resolve, 100))
+      assert.deepEqual(factPayloads(directory, 'PluginPromptPhysicalAccepted')
+        .filter(fact => fact.PromptKey[1] === captured[0].body.metadata.wanxiangshu_prompt_key), [])
+      assert.deepEqual(factPayloads(directory, 'DeferredWorkConsumed'), [])
+      assert.deepEqual(journal.JournalSurface_pendingDeferredWork(runtime.journal, session).map(item => item.occurrence).sort(), ['terminal-first', 'terminal-second'])
+    } finally {
+      release()
+      runtime.client.session.promptAsync = original
+    }
+  })
+})
 
 test('WHAT[attention-regulation-005] the consumption projection suppresses replayed Manager work', async () => {
   const fixture = recordingPort()
