@@ -8,6 +8,10 @@
 
 单次调度的持久化事实严格遵循四态流转：`Claimed → Submitted → PhysicalAccepted` 或 `Claimed (→ Submitted) → Abandoned`。`Submitted` 记录传输回执但保持 Claim 处于待决状态；`PhysicalAccepted` 证明物理落地并完成 Claim；`Abandoned` 代表调度放弃且不再重发。在物理发送前若因状态变更失效，必须显式记录为放弃，禁止伪装成传输失败或成功。
 
+DeferredWorkPresentation continuation 的 claim 在 Host 调用前携带非空、无重复、原字节保持的 occurrence 集合；该集合只绑定本次呈现，不增加 execution 或用户权威。真实 PhysicalAccepted 与 attention-regulation[005] 的精确消费在同一次持久事实中折叠。历史缺集合的 claim 保持只读 dispatch 恢复，不反推或补造集合；新发送不得缺集合。其他 origin 不得携带此集合。
+
+该 claim 使用 JournalEnvelope 内新的 owner fact case `DeferredWorkPresentationClaimed`，原 `PluginPromptClaimed` 载荷永久保持。新 claim 的任期、root 与 identity seed 必须匹配该 session 的 active authority。待决或已落地 PromptKey 的已绑定集合不得被另一集合或另一 claim 覆盖。明确 Abandoned 后的新调度必须按[006]取得新的 sequence 与 PromptKey，不新增永久失效 Key 注册表。历史无集合的待决或已接纳 presentation 保持消费范围未知，阻止该任可能重复的自然呈现。
+
 ## [003] transport receipt 不等于物理消息身份
 
 宿主返回的 `accepted-*` 仅表示传输层已接纳该请求，不是物理消息标识符，亦不是权限生效的证明。系统不能仅凭传输收据推断消息已被实际处理。
@@ -19,6 +23,8 @@
 ## [005] PromptKey 是确定性幂等身份
 
 `PromptKey` 是由 SessionId、LogicalRunId、AuthorityRootId、Origin、载荷摘要（PayloadDigest）及 ClaimSequence 派生的确定性哈希，禁止使用随机数生成，亦不哈入任何 agent、peer 或 model。相同逻辑交互在任何进程中派生完全一致的 Key，任意要素变动均会导致 Key 发生迁移。对包含 EffectiveAgent 的 PromptKey 提供只读解码兼容，绝对禁止向新调度双写或派生。
+
+新 DeferredWorkPresentation 的 Origin 身份包含原顺序的精确 occurrence 集合，按每项字符长度与原字符串拼接定界；改变集合必须改变 claim scope 与 PromptKey。Host 元数据中的来源标签仍为 `DeferredWorkPresentation`。其他 origin 及历史无集合来源的派生字节保持。
 
 ## [006] 同 payload 的两个独立 logical act 仍可区分
 

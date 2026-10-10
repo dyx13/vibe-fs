@@ -12,3 +12,4 @@
 
 - `participant-identity`
 - `durable-events`
+- `dispatch-protocol`

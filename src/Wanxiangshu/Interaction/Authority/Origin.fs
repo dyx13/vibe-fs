@@ -28,7 +28,7 @@ type PromptContinuationKind =
     | FissionHandoff
     /// ATTENTION-005: a natural terminal with pending DeferredWork presents
     /// that work once through a same-run continuation, then consumes it.
-    | DeferredWorkPresentation
+    | DeferredWorkPresentation of occurrenceIds: string list
 
 type PromptOrigin =
     | AuthorityRoot of PromptRootAuthorityKind

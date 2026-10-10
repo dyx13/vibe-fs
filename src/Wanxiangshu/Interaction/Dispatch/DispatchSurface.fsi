@@ -209,6 +209,18 @@ module DispatchSurface =
         handle: JournalHandle -> session: string -> physicalMessageId: string -> agent: string -> Task<obj>
 
     val projectionObservation: handle: JournalHandle -> session: string -> obj
+    val appendDeferredPresentationClaim: handle: JournalHandle -> value: obj -> Task<obj>
+    val appendHistoricalPromptClaim: handle: JournalHandle -> value: obj -> Task<obj>
+
+    val sendDeferredPresentation:
+        port: obj ->
+        handle: JournalHandle ->
+        session: string ->
+        text: string ->
+        occurrenceIds: string array ->
+        profile: obj ->
+        awaitMode: string ->
+            Task<obj>
 
     val foldRuntimeStartWatermark: events: obj array -> obj
 

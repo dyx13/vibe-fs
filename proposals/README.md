@@ -1,5 +1,7 @@
 # 计划与提案入口
 
+2026-10-10接续施工见[一小时半记录](Upstream接续一小时半施工-2026-10-10.md)。S1b2已局部证明发送前exact batch绑定、真实PhysicalAccepted原子消费、三角色自然终点与新OS入口；启动自动检索Host历史、Manager双append恢复、完整life与发布吞吐继续开放。
+
 最新全仓CI以[4f0原始收据](archive/2026-10-06/baselines/4f0-ci/vibe-fs-4f0-ci-receipt.txt)为准：format/check/build通过，原300秒截断791/821、006/008活动、28queued、无summary；ps终止查询超时及GitHub两个orphan清理单列，外组accepted不证明全部detached资源排空。M1实际worker pre-import已收，缺exit仍明确missing；下一N00先正式复现查询失败的清理边界，再按真实成本确定因果实验，不改预算/worker。下方1eb为前一输入证书。
 
 2026-10-06 当前接手从[总计划当前状态](TODO施工总计划-2026-10-03.md)开始。本轮A2-R0/R1/R2已落实真实恢复夹具、effect前lease/source交接和三producer20场景，旧宽匹配删除；相邻Unknown Root清理另按正式反例验收。[本轮记录](archive/2026-10-06/Sphinx真实恢复与资源前置-2026-10-06.md)保留红绿及最终证书。下一产品入口是[08真实Host接手卡](TODO施工分册-2026-10-03/08-Sphinx真实Host接手.md)，不重复装配或重做D0/D1；Sphinx实际Host/profile/结果/答案仍未闭合。

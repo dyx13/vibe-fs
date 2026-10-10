@@ -692,14 +692,25 @@ module PromptDispatcherSend =
                         PromptAuthorityRun.claimContinuation key sessionId continuation profile payloadDigest
 
                     let claimed =
-                        PromptSessionFact.PromptClaimed
-                            {| PromptKey = key
-                               SessionId = sessionId
-                               ContinuationKind = originLabel
-                               LogicalRunId = claim.LogicalRunId
-                               AuthorityRootUserMessageId = claim.AuthorityRootUserMessageId
-                               IdentitySeed = claim.IdentitySeed
-                               PayloadDigest = payloadDigest |}
+                        match continuation with
+                        | PromptAuthority.ContinuationKind.DeferredWorkPresentation ids ->
+                            PromptSessionFact.DeferredWorkPresentationClaimed
+                                {| PromptKey = key
+                                   SessionId = sessionId
+                                   LogicalRunId = profile.LogicalRunId
+                                   AuthorityRootUserMessageId = profile.AuthorityRootUserMessageId
+                                   IdentitySeed = claim.IdentitySeed
+                                   PayloadDigest = payloadDigest
+                                   OccurrenceIds = ids |}
+                        | _ ->
+                            PromptSessionFact.PromptClaimed
+                                {| PromptKey = key
+                                   SessionId = sessionId
+                                   ContinuationKind = originLabel
+                                   LogicalRunId = claim.LogicalRunId
+                                   AuthorityRootUserMessageId = claim.AuthorityRootUserMessageId
+                                   IdentitySeed = claim.IdentitySeed
+                                   PayloadDigest = payloadDigest |}
 
                     match! this.Persist sessionId None claimed with
                     | Error error -> return PromptDispatcher.SendAttemptOutcome.Failed error
@@ -720,7 +731,16 @@ module PromptDispatcherSend =
                                 key
                 }
 
-            match this.RequireActiveProfile sessionId profile with
+            let batchAdmission =
+                match continuation with
+                | PromptAuthority.ContinuationKind.DeferredWorkPresentation ids ->
+                    PromptAuthority.validateDeferredWorkOccurrences ids
+                | _ -> Ok()
+
+            match
+                this.RequireActiveProfile sessionId profile
+                |> Result.bind (fun () -> batchAdmission)
+            with
             | Error error -> Task.FromResult(PromptDispatcher.SendAttemptOutcome.Failed error)
             | Ok() -> claimAndSend ()
 

@@ -19,6 +19,25 @@ module PromptAuthorityProjectionBridge =
         Map.tryFind sessionId projection.Sessions
         |> Option.bind (fun session -> session.PromptAuthority)
 
+    let private deferredWorkConsumption projection fact =
+        match fact with
+        | PromptFactCases.PluginPromptPhysicalAccepted payload ->
+            authorityOf projection payload.SessionId
+            |> Option.bind (fun authority -> Map.tryFind payload.PhysicalUserMessageId authority.PhysicalLandings)
+            |> Option.filter (fun landing ->
+                landing.SessionId = payload.SessionId && landing.PromptKey = payload.PromptKey)
+            |> Option.bind (fun landing -> PromptAuthority.deferredWorkOccurrences landing.Origin)
+            |> Option.map (fun ids -> payload.SessionId, ids)
+        | _ -> None
+
+    let private settleDeferredWork fact (updated: AgentProjectionSet) =
+        match deferredWorkConsumption updated fact with
+        | None -> updated
+        | Some(sessionId, ids) ->
+            { updated with
+                Attention =
+                    Wanxiangshu.Interaction.Attention.AttentionProjection.consume sessionId ids updated.Attention }
+
     let private applyChange (projection: AgentProjectionSet) (change: PromptAuthorityProjectionChange) =
         match change with
         | PromptAuthorityProjectionChange.PromptAuthoritySet(sessionId, authority) ->
@@ -38,7 +57,9 @@ module PromptAuthorityProjectionBridge =
 
     let fold (projection: AgentProjectionSet) (fact: PromptFactCases) : Result<AgentProjectionSet, FoldRejection> =
         match PromptFactFold.fold (authorityOf projection) projection.RuntimeStartCount fact with
-        | Ok changes -> DelegationProjectionBridge.admitAuthority (List.fold applyChange projection changes) fact
+        | Ok changes ->
+            DelegationProjectionBridge.admitAuthority (List.fold applyChange projection changes) fact
+            |> Result.map (settleDeferredWork fact)
         | Error rejection ->
             FoldRejection.reject
                 (PromptAuthorityFoldRejection.fact rejection)

@@ -28,8 +28,18 @@ open Fable.Core.JsInterop
 module JournalPortObservationSurface =
 
     let withAppendRefusal (handle: JournalHandle) target (action: unit -> Task<obj>) : Task<obj> =
-        if target <> "consumption" && target <> "retirement" && target <> "publication" then
-            invalidArg "target" "expected consumption, retirement or publication"
+        if
+            not (
+                List.contains
+                    target
+                    [ "consumption"
+                      "retirement"
+                      "publication"
+                      "presentation-claim"
+                      "physical-acceptance" ]
+            )
+        then
+            invalidArg "target" "unknown append refusal target"
 
         let writer = handle.Journal.Writer
         let originalMethod: obj = emitJsExpr writer "$0.Append"
@@ -43,6 +53,9 @@ module JournalPortObservationSurface =
         let matches =
             function
             | Agent(AgentFact.Attention(AttentionFactCases.DeferredWorkConsumed _)) -> target = "consumption"
+            | Agent(AgentFact.Prompt(PromptFactCases.DeferredWorkPresentationClaimed _)) ->
+                target = "presentation-claim"
+            | Agent(AgentFact.Prompt(PromptFactCases.PluginPromptPhysicalAccepted _)) -> target = "physical-acceptance"
             | Agent(AgentFact.Concern(Wanxiangshu.Interaction.Concern.ConcernFactCases.MessagePublished _)) ->
                 target = "publication"
             | Agent(AgentFact.Relay(Wanxiangshu.Mission.Relay.RelayFactCases.TransactionCommitted payload)) when

@@ -12,6 +12,8 @@ type PromptAuthorityProjectionChange =
 [<RequireQualifiedAccess>]
 type PromptAuthorityFoldRejection =
     | ClaimOriginRejected of PromptAuthority.IdentitySeedValidationError
+    | ClaimBatchRejected of string
+    | ClaimOverwriteRejected of string
     | AuthorityRootSchemaRejected of string
     | AuthorityRootSeedRejected of PromptAuthority.IdentitySeedValidationError
     | AuthorityRootLedgerRejected of string

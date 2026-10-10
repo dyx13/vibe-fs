@@ -8,6 +8,8 @@
 
 事件信封采用无版本的统一结构（包含 `event_id`、`stream_id`、`event_type`、`parents`、`payload`、`payload_refs` 与内嵌 `payloads`）。信封与存储层严禁携带任何形式的 format/schema version 字段。已提交的 `event_type` 载荷结构一经发布即永久冻结；引入新业务语义必须声明全新的 `event_type`（追加词汇表原则）。
 
+既有 `JournalEnvelope` 的业务词汇位于其 owner fact case；信封与已有 case 载荷同样冻结，新业务只能追加新的 case，不能给旧 case 加字段或改变其解释。新增 case 不改变物理 `JournalEnvelope` event_type。
+
 ## [003] canonical JSON 是 identity 协议
 
 事件必须按规范化 JSON 序列化：UTF-8 编码、无 BOM、以单个换行符（LF）结尾；JSON 对象键必须按 Unicode 代码点升序递归排序；`parents` 与 `payload_refs` 数组必须先去重再按字符序排序，内嵌 `payloads` 对象的键同样按字符序排序。相同 `event_id` 产生不同字节流属于致命的标识碰撞（Identity Collision），必须 fail-closed；相同 `event_id` 且相同字节流则幂等去重。

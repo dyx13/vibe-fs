@@ -48,6 +48,8 @@ module PromptJournalAdapter =
                         match fact with
                         | PromptSessionFact.AuthorityRootAccepted payload -> PromptFact.AuthorityRootAccepted payload
                         | PromptSessionFact.PromptClaimed payload -> PromptFact.PluginPromptClaimed payload
+                        | PromptSessionFact.DeferredWorkPresentationClaimed payload ->
+                            AgentFact.Prompt(PromptFactCases.DeferredWorkPresentationClaimed payload)
                         | PromptSessionFact.PromptSubmitted payload -> PromptFact.PluginPromptSubmitted payload
                         | PromptSessionFact.PromptPhysicalAccepted payload ->
                             PromptFact.PluginPromptPhysicalAccepted payload

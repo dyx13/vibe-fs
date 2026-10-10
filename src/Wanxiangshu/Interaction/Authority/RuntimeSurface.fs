@@ -191,9 +191,25 @@ module RuntimeSurface =
         | PromptAuthority.PromptOrigin.HostInternal -> "HostInternal"
         | PromptAuthority.PromptOrigin.UnknownOrigin -> "UnknownOrigin"
 
-    let private originOf (kind: string) (label: string) : PromptAuthority.PromptOrigin =
+    let private continuationWithOccurrences label (occurrences: obj) =
+        match continuationKindOf label, occurrences with
+        | PromptAuthority.ContinuationKind.DeferredWorkPresentation _, value when not (isNull value) ->
+            let ids = unbox<string array> value |> Array.toList
+
+            match PromptAuthority.validateDeferredWorkOccurrences ids with
+            | Ok() -> PromptAuthority.ContinuationKind.DeferredWorkPresentation ids
+            | Error error -> invalidArg "occurrenceIds" error
+        | kind, _ -> kind
+
+    let private withOccurrences origin (value: obj) =
+        PromptAuthority.deferredWorkOccurrences origin
+        |> Option.iter (fun ids -> value?occurrenceIds <- List.toArray ids)
+
+        value
+
+    let private originOf (kind: string) (label: string) (occurrences: obj) : PromptAuthority.PromptOrigin =
         match kind with
-        | "Continuation" -> PromptAuthority.PromptOrigin.Continuation(continuationKindOf label)
+        | "Continuation" -> PromptAuthority.PromptOrigin.Continuation(continuationWithOccurrences label occurrences)
         | "AuthorityRoot" -> PromptAuthority.PromptOrigin.AuthorityRoot(rootKindOf (box label))
         | "HostInternal" -> PromptAuthority.PromptOrigin.HostInternal
         | _ -> PromptAuthority.PromptOrigin.UnknownOrigin
@@ -213,6 +229,7 @@ module RuntimeSurface =
                payloadDigest = claim.PayloadDigest
                receipt = claim.Receipt |> Option.map TransportReceipt.value |> Option.defaultValue null
                claimedAtRuntimeStartCount = claim.ClaimedAtRuntimeStartCount |}
+        |> withOccurrences claim.Origin
 
     let private claimOf (value: obj) : PromptAuthority.PromptClaim =
         let kind = text value?origin
@@ -225,7 +242,7 @@ module RuntimeSurface =
 
         { PromptKey = PromptKey.create (text value?promptKey)
           SessionId = SessionId.create (text value?session)
-          Origin = originOf kind label
+          Origin = originOf kind label value?occurrenceIds
           LogicalRunId = optionalString value?logicalRun |> Option.map LogicalRunId.create
           AuthorityRootUserMessageId =
             optionalString value?authorityRoot
@@ -244,6 +261,7 @@ module RuntimeSurface =
                identitySeed = identitySeedToJs dispatch.IdentitySeed
                payloadDigest = dispatch.PayloadDigest
                physical = PhysicalUserMessageId.value dispatch.PhysicalUserMessageId |}
+        |> withOccurrences dispatch.Origin
 
     let private acceptedDispatchOf (value: obj) : PromptAuthority.AcceptedDispatch =
         let identitySeed =
@@ -253,7 +271,7 @@ module RuntimeSurface =
 
         { PromptKey = PromptKey.create (text value?promptKey)
           SessionId = SessionId.create (text value?session)
-          Origin = originOf (text value?origin) (text value?originLabel)
+          Origin = originOf (text value?origin) (text value?originLabel) value?occurrenceIds
           IdentitySeed = identitySeed
           PayloadDigest = text value?payloadDigest
           PhysicalUserMessageId = PhysicalUserMessageId.create (text value?physical) }
@@ -294,7 +312,7 @@ module RuntimeSurface =
                     (fun current item ->
                         Map.add
                             (PhysicalUserMessageId.create (text item?physical))
-                            (continuationKindOf (text item?kind))
+                            (continuationWithOccurrences (text item?kind) item?occurrenceIds)
                             current)
                     Map.empty
 
@@ -373,7 +391,8 @@ module RuntimeSurface =
                 |> List.map (fun (physical, kind) ->
                     box
                         {| physical = PhysicalUserMessageId.value physical
-                           kind = PromptAuthority.originLabel (PromptAuthority.PromptOrigin.Continuation kind) |})
+                           kind = PromptAuthority.originLabel (PromptAuthority.PromptOrigin.Continuation kind) |}
+                    |> withOccurrences (PromptAuthority.PromptOrigin.Continuation kind))
                 |> List.toArray
                claimSequences =
                 projection.ClaimSequences
@@ -727,7 +746,7 @@ module RuntimeSurface =
         PromptAuthority.claimScopeDigest
             (SessionId.create session)
             (optionalString logicalRun |> Option.map LogicalRunId.create)
-            (originOf (text origin?kind) (text origin?label))
+            (originOf (text origin?kind) (text origin?label) origin?occurrenceIds)
             payloadDigest
 
     let derivePromptKey
@@ -744,7 +763,7 @@ module RuntimeSurface =
             (SessionId.create session)
             (optionalString logicalRun |> Option.map LogicalRunId.create)
             (optionalString authorityRoot |> Option.map AuthorityRootUserMessageId.create)
-            (originOf (text origin?kind) (text origin?label))
+            (originOf (text origin?kind) (text origin?label) origin?occurrenceIds)
             payloadDigest
             claimSequence
         |> PromptKey.value

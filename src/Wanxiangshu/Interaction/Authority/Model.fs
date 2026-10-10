@@ -267,7 +267,7 @@ module PromptAuthority =
         | Continuation ProviderRetryAttempt -> "ProviderRetryAttempt"
         | Continuation DegenerationGuard -> "DegenerationGuard"
         | Continuation FissionHandoff -> "FissionHandoff"
-        | Continuation DeferredWorkPresentation -> "DeferredWorkPresentation"
+        | Continuation(DeferredWorkPresentation _) -> "DeferredWorkPresentation"
         | HostInternal -> "HostInternal"
         | UnknownOrigin -> "UnknownOrigin"
 
@@ -282,8 +282,31 @@ module PromptAuthority =
         | "ProviderRetryAttempt" -> Some ProviderRetryAttempt
         | "DegenerationGuard" -> Some DegenerationGuard
         | "FissionHandoff" -> Some FissionHandoff
-        | "DeferredWorkPresentation" -> Some DeferredWorkPresentation
+        | "DeferredWorkPresentation" -> Some(DeferredWorkPresentation [])
         | _ -> None
+
+    let deferredWorkOccurrences origin =
+        match origin with
+        | Continuation(DeferredWorkPresentation ids) when not ids.IsEmpty -> Some ids
+        | _ -> None
+
+    let validateDeferredWorkOccurrences (ids: string list) =
+        if
+            ids.IsEmpty
+            || List.exists String.IsNullOrWhiteSpace ids
+            || Set.count (Set.ofList ids) <> ids.Length
+        then
+            Error "DeferredWorkPresentation requires nonempty unique occurrence IDs"
+        else
+            Ok()
+
+    let private originIdentity origin =
+        match deferredWorkOccurrences origin with
+        | None -> originLabel origin
+        | Some ids ->
+            originLabel origin
+            + ":"
+            + (ids |> List.map (fun id -> string id.Length + ":" + id) |> String.concat "")
 
     /// Why a managed agent name was refused.
     ///
@@ -392,7 +415,7 @@ module PromptAuthority =
             "\u001f",
             [| SessionId.value sessionId
                digestField (logicalRunId |> Option.map LogicalRunId.value)
-               originLabel origin
+               originIdentity origin
                payloadDigest |]
         )
 
@@ -427,7 +450,7 @@ module PromptAuthority =
                     [| SessionId.value sessionId
                        digestField (logicalRunId |> Option.map LogicalRunId.value)
                        digestField (authorityRoot |> Option.map AuthorityRootUserMessageId.value)
-                       originLabel origin
+                       originIdentity origin
                        payloadDigest
                        string claimSequence |]
                 )

@@ -191,8 +191,7 @@ module OrdinaryTurnWorkflow =
     /// ATTENTION-005: after an Engineer, DevOps or Orchestrator run reaches
     /// its natural terminal, pending deferred work is presented once through a
     /// same-run continuation and then consumed durably. Presentation and
-    /// receipt are idempotent: a replayed terminal finds nothing pending, and a
-    /// failed send leaves the entries for the next terminal.
+    /// receipt are bound to the durable claim; only physical acceptance consumes.
     let private presentPendingDeferredWork
         (sessionPort: ISessionHostPort)
         (rootWorkspace: IRootWorkspaceReader)
@@ -201,30 +200,21 @@ module OrdinaryTurnWorkflow =
         (items: DeferredWorkItem list)
         =
         task {
-            let attention = AttentionConcernJournalAdapter.forAttention journal
-
             let prompt = items |> List.map (fun item -> "- " + item.Text) |> String.concat "\n"
 
-            let! sent =
+            let! _ =
                 HostSessionNudge.sendContinuation
                     sessionPort
                     rootWorkspace
                     turn.SessionId
                     prompt
-                    PromptAuthority.ContinuationKind.DeferredWorkPresentation
+                    (PromptAuthority.ContinuationKind.DeferredWorkPresentation(
+                        items |> List.map (fun item -> item.OccurrenceId)
+                    ))
                     turn.Directory
                     (Some journal)
 
-            match sent with
-            | Error _ -> return ()
-            | Ok _ ->
-                let fact =
-                    AttentionFactCases.DeferredWorkConsumed
-                        {| SessionId = turn.SessionId
-                           OccurrenceIds = (items |> List.map (fun item -> item.OccurrenceId)) |}
-
-                let! _ = attention.Append turn.SessionId (Some turn.ProviderRun) fact
-                return ()
+            return ()
         }
 
     let private presentDeferredWork
@@ -235,11 +225,39 @@ module OrdinaryTurnWorkflow =
         =
         task {
             let attention = AttentionConcernJournalAdapter.forAttention journal
-            let pending = AttentionProjection.pending turn.SessionId (attention.Read())
 
-            match pending with
-            | [] -> return ()
-            | items -> return! presentPendingDeferredWork sessionPort rootWorkspace journal turn items
+            let authority =
+                PromptAuthorityProjectionQueries.projectionFor
+                    turn.SessionId
+                    (AgentJournal.snapshot journal).AgentProjections
+
+            let unknownLegacyPresentation =
+                authority
+                |> Option.exists (fun value ->
+                    value.PendingClaims
+                    |> Map.exists (fun _ claim ->
+                        claim.Origin = PromptAuthority.PromptOrigin.Continuation(DeferredWorkPresentation []))
+                    || (value.AcceptedContinuationIds
+                        |> Map.exists (fun _ kind -> kind = DeferredWorkPresentation [])))
+
+            let claimed =
+                authority
+                |> Option.map (fun authority ->
+                    authority.PendingClaims
+                    |> Map.toList
+                    |> List.collect (fun (_, claim) ->
+                        PromptAuthority.deferredWorkOccurrences claim.Origin |> Option.defaultValue [])
+                    |> Set.ofList)
+                |> Option.defaultValue Set.empty
+
+            let pending =
+                AttentionProjection.pending turn.SessionId (attention.Read())
+                |> List.filter (fun item -> not (Set.contains item.OccurrenceId claimed))
+
+            match unknownLegacyPresentation, pending with
+            | true, _ -> return ()
+            | false, [] -> return ()
+            | false, items -> return! presentPendingDeferredWork sessionPort rootWorkspace journal turn items
         }
 
     let private presentDeferredWorkForRole

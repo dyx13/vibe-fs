@@ -148,7 +148,7 @@
 | 15 | `participant-horizon` | 15 | participant-horizon-001 ~ 014、participant-horizon-015（Manager 并行来自派出多名 Engineer 而非自身分身） |
 | 16 | `cognitive-environment` | 15 | cognitive-environment-001 ~ 013、015 ~ 016 |
 | 57 | `cognitive-workspace` | 10 | cognitive-workspace-001 ~ 010 |
-| 17 | `attention-regulation` | 6 | attention-regulation-001 ~ 006 |
+| 17 | `attention-regulation` | 6 | attention-regulation-001 ~ 006；005/006自然呈现消费绑定dispatch-protocol-002/005的精确批次与真实物理接纳 |
 | 18 | `action-affordance` | 14 | action-affordance-001 ~ 014 |
 | 19 | `provider-language` | 13 | provider-language-001 ~ 013 |
 | 20 | `provider-projection` | 14 | provider-projection-001 ~ 014 |
@@ -209,7 +209,7 @@ office-capability        → participant-identity
 capability-enforcement   → office-capability, participant-identity, attention-regulation, concern-routing
 participant-horizon      → 无
 cognitive-environment    → participant-identity, office-capability, attention-regulation, concern-routing
-attention-regulation     → participant-identity, durable-events
+attention-regulation     → participant-identity, durable-events, dispatch-protocol
 action-affordance        → office-capability, participant-horizon, cognitive-workspace, obligation-ledger
 provider-language        → session-ontology
 provider-projection      → participant-horizon, provider-language

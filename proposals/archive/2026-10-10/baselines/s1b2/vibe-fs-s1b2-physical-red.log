@@ -1,0 +1,43 @@
+✖ WHAT[attention-regulation-005] natural Engineer completion preserves its exact deferred batch while the presentation transport is paused (1306.635416ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1601.031417
+
+✖ failing tests:
+
+test at requirements/attention-regulation/tests/005.test.mjs:16:1
+✖ WHAT[attention-regulation-005] natural Engineer completion preserves its exact deferred batch while the presentation transport is paused (1306.635416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     OccurrenceIds: [
+  +       'terminal-first',
+  +       'terminal-second'
+  +     ],
+  +     SessionId: [
+  +       'SessionId',
+  +       'deferred-engineer-terminal'
+  +     ]
+  +   }
+  + ]
+  - []
+  
+      at file:///Users/yuanxi/Workwork/vibe-fs/requirements/attention-regulation/tests/005.test.mjs:73:14
+      at async withExecutablePlugin (file:///Users/yuanxi/Workwork/vibe-fs/requirements/verification-system/tests/support/plugin-fixture.mjs:276:7)
+      at async TestContext.<anonymous> (file:///Users/yuanxi/Workwork/vibe-fs/requirements/attention-regulation/tests/005.test.mjs:19:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { OccurrenceIds: [Array], SessionId: [Array] } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

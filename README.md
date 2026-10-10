@@ -145,6 +145,8 @@ Blogger、Bookkeeper、Predictor 等内部角色由编排路径调用，不作�
 
 ### 智能体角色
 
+非阻塞的新工作可用 `defer(new_work)` 暂存。Manager正常退休后清除已核对的待办；Engineer、DevOps与Orchestrator在自然收尾时呈现待办，确实收到呈现消息后才清除本批条目。发送结果未知时保留待办，不重复发送；之后登记的新条目不被本次呈现带走。
+
 核心活跃角色与 `requirements/office-capability`、`requirements/capability-enforcement` 一致。工具面由 `OfficeCapability.permissions` 定义（`src/Wanxiangshu/Foundation/OfficeCapability.fs`；`Roles.fs` 只承载 Role 词汇）：
 
 | 角色 | 典型工具面 | 说明 |

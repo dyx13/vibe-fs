@@ -24,8 +24,12 @@ DeferredWork 只在下列真实终点被消费；消费即消灭，不激活义�
 2. Engineer 与 DevOps：participant 自然终止且仍有未消费条目时，系统以一次 user prompt 回合呈现这些条目，呈现后消灭。
 3. Orchestrator：按上述精神，在其交接或收尾时呈现并消灭。当前落点为其 run 自然终止（收尾），与 Engineer、DevOps 共用同一呈现入口；三者的呈现都恰好一次，由消费凭据保证。
 
-消费只记录消费凭据，不产生新义务，不改变 office 权限，也不伪造用户交互权威。消费凭据是独立 durable 事实（`DeferredWorkConsumed`，携带被消费的 occurrence 标识集合）：进程重启、journal 重放与乱序合并都不得让已消费条目复活；同一凭据重复折叠幂等。
+消费只记录消费凭据，不产生新义务，不改变 office 权限，也不伪造用户交互权威。Manager 的消费凭据是独立 durable 事实 `DeferredWorkConsumed`，携带被消费的 occurrence 标识集合。
+
+自然呈现的 dispatch claim 必须在发送前持久绑定当时选取的精确 occurrence 集合。Detached 返回、传输回执或尚未知的发送结果均不得消费。只有该 claim 的真实 `PluginPromptPhysicalAccepted` 才是呈现消费凭据；其持久折叠在同一次事实中消灭原集合，不另开消费追加窗口，不消费发送后新登记的条目。未落地的 claim 保持原集合待决，后续终点不得重发其条目；确定放弃的 claim 不消费，后续真实终点可重新呈现。旧 claim 若没有可证明的集合，只读恢复其 dispatch 状态，不猜测消费对象。
+
+进程重启、journal 重放与乱序合并都不得让已消费条目复活；同一凭据重复折叠幂等。
 
 ## [006] 最小持久状态
 
-本包只持久化 DeferredWork 的追加投影与消费凭据：`DeferredWorkRecorded` 追加条目，`DeferredWorkConsumed` 落消费凭据；life 结束时其剩余条目同样转化为消费凭据。不引入阶段、优先级、截止期、依赖图、自动恢复、后台执行器或通用认知状态机。
+本包只持久化 DeferredWork 的追加投影与消费凭据：`DeferredWorkRecorded` 追加条目，`DeferredWorkConsumed` 记录显式消费；自然呈现的精确集合属于 dispatch claim，真实 PhysicalAccepted 同步折叠消费；life 结束时其剩余条目同样转化为消费凭据。不引入阶段、优先级、截止期、依赖图、自动恢复、后台执行器或通用认知状态机。

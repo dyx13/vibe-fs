@@ -1,0 +1,124 @@
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 26e8138e0d57417cabc2596a1b007a7c: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: DeferredWorkPresentation requires nonempty unique occurrence IDs"}
+✔ WHAT[attention-regulation-005] exact presentation binding is idempotent without another claim sequence (3837.001ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 38ec6e06e7e94612a4cb7885d2509289: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: DeferredWorkPresentation requires nonempty unique occurrence IDs"}
+✖ WHAT[attention-regulation-005] presentation rejects empty batch without changing durable work or the original claim (6866.248417ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at c8089a455677453d9d20168d76ca8ca7: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: DeferredWorkPresentation requires nonempty unique occurrence IDs"}
+✔ WHAT[attention-regulation-005] presentation rejects blank occurrence without changing durable work or the original claim (6971.155792ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 25c6673ac4dc4e9f98bfdfa4dc108231: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: PromptKey is already bound to a different claim"}
+✖ WHAT[attention-regulation-005] presentation rejects duplicate occurrence without changing durable work or the original claim (6728.409791ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 86d13f00ee134d2fb279c881520b56ee: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: Deferred presentation does not match the active authority"}
+✔ WHAT[attention-regulation-005] presentation rejects different batch under the same key without changing durable work or the original claim (5808.826625ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 473c0e6f09c9402da969fcf0b1d06a52: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: Deferred presentation does not match the active authority"}
+✔ WHAT[attention-regulation-005] presentation rejects different active run without changing durable work or the original claim (4837.580458ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at b7d382b808c642e7ab094fe8a9064ef5: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: Deferred presentation does not match the active authority"}
+✖ WHAT[attention-regulation-005] presentation rejects different authority root without changing durable work or the original claim (6646.419625ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 7d372ec116dd483eaa0cd65061ff3b0a: fact 'semantic-cut' rejected: Journal fact 'PluginPromptClaimed' rejected: PromptKey is already bound to a deferred presentation"}
+✔ WHAT[attention-regulation-005] presentation rejects different identity seed without changing durable work or the original claim (6469.610917ms)
+✔ WHAT[attention-regulation-005] presentation rejects historical claim replacing the bound batch without changing durable work or the original claim (4954.183417ms)
+✔ WHAT[attention-regulation-005] physical acceptance append refusal keeps the batch until the exact original message is accepted (1698.090541ms)
+✔ WHAT[attention-regulation-005] a refused presentation claim does not call Host or consume work (1268.4565ms)
+✔ WHAT[attention-regulation-005] unknown preserves the exact batch without consumption (1221.608416ms)
+✔ WHAT[attention-regulation-005] receipt without physical acceptance preserves the exact batch without consumption (1238.833958ms)
+✔ WHAT[attention-regulation-005] an explicitly refused send preserves work and its retry derives a new key (1351.529667ms)
+✔ WHAT[attention-regulation-005] occurrence boundaries participate in key identity with original bytes (2.514333ms)
+✔ WHAT[attention-regulation-005] claim, receipt and exact physical projection round trips preserve the occurrence batch (1392.565708ms)
+✔ WHAT[attention-regulation-005] a historical pending presentation with no batch keeps work and suppresses another real natural presentation (2415.238708ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at e127e311360b463ab27887f7a651b4d2: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: PromptKey has already physically landed"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at fea5757b67cc4261a960962e53e36e90: fact 'semantic-cut' rejected: Journal fact 'PluginPromptClaimed' rejected: PromptKey is already bound to a deferred presentation"}
+✔ WHAT[attention-regulation-005] a historical accepted presentation with no batch keeps work and suppresses another real natural presentation (2453.788792ms)
+✔ WHAT[attention-regulation-005] new claims cannot overwrite the batch after its physical landing (1668.283083ms)
+✔ WHAT[attention-regulation-005] historical claims cannot overwrite the batch after its physical landing (1409.50325ms)
+✖ WHAT[attention-regulation-005] natural engineer completion preserves and consumes its exact deferred batch through live physical ingress (5005.428ms)
+✖ WHAT[attention-regulation-005] natural devops completion preserves and consumes its exact deferred batch through live physical ingress (5002.358417ms)
+✖ WHAT[attention-regulation-005] natural orchestrator completion preserves and consumes its exact deferred batch through live physical ingress (5010.192041ms)
+✖ WHAT[attention-regulation-005] natural engineer completion preserves and consumes its exact deferred batch through cold physical ingress (5023.854042ms)
+✔ WHAT[attention-regulation-005] the consumption projection suppresses replayed Manager work (9.015458ms)
+✔ WHAT[attention-regulation-005] the consumption projection suppresses replayed Engineer work (3.3295ms)
+✔ WHAT[attention-regulation-005] the consumption projection suppresses replayed Orchestrator work (2.777042ms)
+✔ WHAT[attention-regulation-005] a receipt recorded before its work stays order-independent across replay (0.495958ms)
+✔ WHAT[attention-regulation-005] closing a life consumes its remaining work without leaking into a reused session (6.235542ms)
+✔ WHAT[attention-regulation-005] registered Manager suicide persists the exact consumption receipt after PERFECT retirement (5372.329875ms)
+✔ WHAT[attention-regulation-005] registered Manager suicide persists the exact consumption receipt after REVISE retirement (3978.913209ms)
+✔ WHAT[attention-regulation-005] registered Manager suicide reports an unavailable consumption append after PERFECT retirement (2874.1705ms)
+✔ WHAT[attention-regulation-005] registered Manager suicide reports an unavailable consumption append after REVISE retirement (2303.304708ms)
+✔ WHAT[attention-regulation-005] a refused retirement append preserves work without appending a consumption receipt (3565.3725ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 27
+ℹ fail 3
+ℹ cancelled 4
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114224.765875
+
+✖ failing tests:
+
+test at requirements/attention-regulation/tests/005.test.mjs:63:3
+✖ WHAT[attention-regulation-005] presentation rejects empty batch without changing durable work or the original claim (6866.248417ms)
+  Error: Command failed: /Users/yuanxi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/yuanxi/Workwork/vibe-fs/requirements/attention-regulation/tests/support/presentation-rejected-child.mjs /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-plugin-exec-uq19Vd presentation-contract {"activeLogicalRun":{"authorityKind":"HumanRoot","authorityRoot":"presentation-root","identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"72da38b07921f805348fda35f07494421b44a58085f85069abfad827fa8c07b3","participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"},"session":"presentation-contract"},"claimSequences":[{"count":1,"logicalRun":"72da38b07921f805348fda35f07494421b44a58085f85069abfad827fa8c07b3","scope":"presentation-contract\u001f72da38b07921f805348fda35f07494421b44a58085f85069abfad827fa8c07b3\u001fDeferredWorkPresentation:5:first6:second\u001fpresentation-payload","session":"presentation-contract"}],"pendingClaims":[{"authorityRoot":"presentation-root","claimedAtRuntimeStartCount":1,"identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"72da38b07921f805348fda35f07494421b44a58085f85069abfad827fa8c07b3","origin":"DeferredWorkPresentation","participant":"engineer","payloadDigest":"presentation-payload","promptKey":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","receipt":null,"role":"engineer","session":"presentation-contract"}],"runtimeStartCount":1} 34024
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at ChildProcess.exithandler (node:child_process:417:12)
+      at ChildProcess.emit (node:events:509:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+    code: 1,
+    killed: true,
+    signal: null,
+    cmd: '/Users/yuanxi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/yuanxi/Workwork/vibe-fs/requirements/attention-regulation/tests/support/presentation-rejected-child.mjs /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-plugin-exec-uq19Vd presentation-contract {"activeLogicalRun":{"authorityKind":"HumanRoot","authorityRoot":"presentation-root","identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"72da38b07921f805348fda35f07494421b44a58085f85069abfad827fa8c07b3","participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"},"session":"presentation-contract"},"claimSequences":[{"count":1,"logicalRun":"72da38b07921f805348fda35f07494421b44a58085f85069abfad827fa8c07b3","scope":"presentation-contract\\u001f72da38b07921f805348fda35f07494421b44a58085f85069abfad827fa8c07b3\\u001fDeferredWorkPresentation:5:first6:second\\u001fpresentation-payload","session":"presentation-contract"}],"pendingClaims":[{"authorityRoot":"presentation-root","claimedAtRuntimeStartCount":1,"identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"72da38b07921f805348fda35f07494421b44a58085f85069abfad827fa8c07b3","origin":"DeferredWorkPresentation","participant":"engineer","payloadDigest":"presentation-payload","promptKey":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","receipt":null,"role":"engineer","session":"presentation-contract"}],"runtimeStartCount":1} 34024',
+    stdout: '',
+    stderr: ''
+  }
+
+test at requirements/attention-regulation/tests/005.test.mjs:63:3
+✖ WHAT[attention-regulation-005] presentation rejects duplicate occurrence without changing durable work or the original claim (6728.409791ms)
+  Error: Command failed: /Users/yuanxi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/yuanxi/Workwork/vibe-fs/requirements/attention-regulation/tests/support/presentation-rejected-child.mjs /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-plugin-exec-pWhOvv presentation-contract {"activeLogicalRun":{"authorityKind":"HumanRoot","authorityRoot":"presentation-root","identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"9ea11c02cc29b5f71e1d0a38fb53fb9598a5aec246875ff6e5c0b06a19db0131","participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"},"session":"presentation-contract"},"claimSequences":[{"count":1,"logicalRun":"9ea11c02cc29b5f71e1d0a38fb53fb9598a5aec246875ff6e5c0b06a19db0131","scope":"presentation-contract\u001f9ea11c02cc29b5f71e1d0a38fb53fb9598a5aec246875ff6e5c0b06a19db0131\u001fDeferredWorkPresentation:5:first6:second\u001fpresentation-payload","session":"presentation-contract"}],"pendingClaims":[{"authorityRoot":"presentation-root","claimedAtRuntimeStartCount":1,"identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"9ea11c02cc29b5f71e1d0a38fb53fb9598a5aec246875ff6e5c0b06a19db0131","origin":"DeferredWorkPresentation","participant":"engineer","payloadDigest":"presentation-payload","promptKey":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","receipt":null,"role":"engineer","session":"presentation-contract"}],"runtimeStartCount":1} 34024
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at ChildProcess.exithandler (node:child_process:417:12)
+      at ChildProcess.emit (node:events:509:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+    code: 1,
+    killed: true,
+    signal: null,
+    cmd: '/Users/yuanxi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/yuanxi/Workwork/vibe-fs/requirements/attention-regulation/tests/support/presentation-rejected-child.mjs /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-plugin-exec-pWhOvv presentation-contract {"activeLogicalRun":{"authorityKind":"HumanRoot","authorityRoot":"presentation-root","identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"9ea11c02cc29b5f71e1d0a38fb53fb9598a5aec246875ff6e5c0b06a19db0131","participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"},"session":"presentation-contract"},"claimSequences":[{"count":1,"logicalRun":"9ea11c02cc29b5f71e1d0a38fb53fb9598a5aec246875ff6e5c0b06a19db0131","scope":"presentation-contract\\u001f9ea11c02cc29b5f71e1d0a38fb53fb9598a5aec246875ff6e5c0b06a19db0131\\u001fDeferredWorkPresentation:5:first6:second\\u001fpresentation-payload","session":"presentation-contract"}],"pendingClaims":[{"authorityRoot":"presentation-root","claimedAtRuntimeStartCount":1,"identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"9ea11c02cc29b5f71e1d0a38fb53fb9598a5aec246875ff6e5c0b06a19db0131","origin":"DeferredWorkPresentation","participant":"engineer","payloadDigest":"presentation-payload","promptKey":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","receipt":null,"role":"engineer","session":"presentation-contract"}],"runtimeStartCount":1} 34024',
+    stdout: '',
+    stderr: ''
+  }
+
+test at requirements/attention-regulation/tests/005.test.mjs:63:3
+✖ WHAT[attention-regulation-005] presentation rejects different authority root without changing durable work or the original claim (6646.419625ms)
+  Error: Command failed: /Users/yuanxi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/yuanxi/Workwork/vibe-fs/requirements/attention-regulation/tests/support/presentation-rejected-child.mjs /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-plugin-exec-LBE556 presentation-contract {"activeLogicalRun":{"authorityKind":"HumanRoot","authorityRoot":"presentation-root","identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"6ff8d5e65257b9bdc37841e5e891b3e78411fb55e20110b9521412402f932557","participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"},"session":"presentation-contract"},"claimSequences":[{"count":1,"logicalRun":"6ff8d5e65257b9bdc37841e5e891b3e78411fb55e20110b9521412402f932557","scope":"presentation-contract\u001f6ff8d5e65257b9bdc37841e5e891b3e78411fb55e20110b9521412402f932557\u001fDeferredWorkPresentation:5:first6:second\u001fpresentation-payload","session":"presentation-contract"}],"pendingClaims":[{"authorityRoot":"presentation-root","claimedAtRuntimeStartCount":1,"identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"6ff8d5e65257b9bdc37841e5e891b3e78411fb55e20110b9521412402f932557","origin":"DeferredWorkPresentation","participant":"engineer","payloadDigest":"presentation-payload","promptKey":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","receipt":null,"role":"engineer","session":"presentation-contract"}],"runtimeStartCount":1} 34024
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at ChildProcess.exithandler (node:child_process:417:12)
+      at ChildProcess.emit (node:events:509:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+    code: 1,
+    killed: true,
+    signal: null,
+    cmd: '/Users/yuanxi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/yuanxi/Workwork/vibe-fs/requirements/attention-regulation/tests/support/presentation-rejected-child.mjs /var/folders/g_/3ydzn7kx5lg9ylq8fd9p_13r0000gn/T/wxs-plugin-exec-LBE556 presentation-contract {"activeLogicalRun":{"authorityKind":"HumanRoot","authorityRoot":"presentation-root","identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"6ff8d5e65257b9bdc37841e5e891b3e78411fb55e20110b9521412402f932557","participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"},"session":"presentation-contract"},"claimSequences":[{"count":1,"logicalRun":"6ff8d5e65257b9bdc37841e5e891b3e78411fb55e20110b9521412402f932557","scope":"presentation-contract\\u001f6ff8d5e65257b9bdc37841e5e891b3e78411fb55e20110b9521412402f932557\\u001fDeferredWorkPresentation:5:first6:second\\u001fpresentation-payload","session":"presentation-contract"}],"pendingClaims":[{"authorityRoot":"presentation-root","claimedAtRuntimeStartCount":1,"identitySeed":{"kind":"RootSelection","ownerAuthorityRoot":null,"ownerLogicalRun":null,"ownerSession":null,"participantIdentity":{"origin":"ResolvedAtRoot","participant":"engineer","persona":"Engineer","personaCatalogVersion":1,"role":"engineer"}},"logicalRun":"6ff8d5e65257b9bdc37841e5e891b3e78411fb55e20110b9521412402f932557","origin":"DeferredWorkPresentation","participant":"engineer","payloadDigest":"presentation-payload","promptKey":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","receipt":null,"role":"engineer","session":"presentation-contract"}],"runtimeStartCount":1} 34024',
+    stdout: '',
+    stderr: ''
+  }
+
+test at requirements/attention-regulation/tests/005.test.mjs:247:1
+✖ WHAT[attention-regulation-005] natural engineer completion preserves and consumes its exact deferred batch through live physical ingress (5005.428ms)
+  'test timed out after 5000ms'
+
+test at requirements/attention-regulation/tests/005.test.mjs:247:1
+✖ WHAT[attention-regulation-005] natural devops completion preserves and consumes its exact deferred batch through live physical ingress (5002.358417ms)
+  'test timed out after 5000ms'
+
+test at requirements/attention-regulation/tests/005.test.mjs:247:1
+✖ WHAT[attention-regulation-005] natural orchestrator completion preserves and consumes its exact deferred batch through live physical ingress (5010.192041ms)
+  'test timed out after 5000ms'
+
+test at requirements/attention-regulation/tests/005.test.mjs:247:1
+✖ WHAT[attention-regulation-005] natural engineer completion preserves and consumes its exact deferred batch through cold physical ingress (5023.854042ms)
+  'test timed out after 5000ms'

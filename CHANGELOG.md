@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — S1b2 自然呈现的精确消费
+
+- 自然终点的defer呈现先持久绑定本次occurrence集合；Detached或传输回执不再提前消费。真实物理接纳在同一事实中消费原集合，后登记项与其他参与者同名项保留。新claim核对当前任期、root和身份，旧claim载荷保持；无批次的历史状态不猜消费、不重发。三角色真实终点、新OS入口与失败边界正式005为34/0。启动后自动检索Host历史、Manager双append恢复与完整life代次仍开放。
+
 ## Unreleased — Pair Hint 与 Accepted 邮箱闭合
 
 - Accepted退休随原持久事实关闭owner邮箱，Continue和首次确认保留邮箱；删除遗漏实际工具的Surface多append路径。正式补证旧Pair Hint冻结、新occurrence投递、双参与者信息不改权威，以及合法Accepted链新进程恢复。完整代次复用和异常终态仍开放。

@@ -1637,8 +1637,8 @@ export const SURFACE_MANIFEST = [
   {
     module: 'Interaction/Dispatch/DispatchSurface.js',
     owner: 'dispatch-protocol',
-    laws: ['DISPATCH-PROTOCOL-002', 'DISPATCH-PROTOCOL-004', 'DISPATCH-PROTOCOL-005', 'DISPATCH-PROTOCOL-007', 'DISPATCH-PROTOCOL-009', 'DISPATCH-PROTOCOL-015', 'EFFECT-ACCOUNTING-008'],
-    lawOwners: { 'EFFECT-ACCOUNTING-008': 'effect-accounting' },
+    laws: ['DISPATCH-PROTOCOL-002', 'DISPATCH-PROTOCOL-004', 'DISPATCH-PROTOCOL-005', 'DISPATCH-PROTOCOL-007', 'DISPATCH-PROTOCOL-009', 'DISPATCH-PROTOCOL-015', 'EFFECT-ACCOUNTING-008', 'ATTENTION-REGULATION-005'],
+    lawOwners: { 'EFFECT-ACCOUNTING-008': 'effect-accounting', 'ATTENTION-REGULATION-005': 'attention-regulation' },
     source: 'src/Wanxiangshu/Interaction/Dispatch/DispatchSurface.fs',
     representation: 'opaque-capability',
     kind: 'resource',

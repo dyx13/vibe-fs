@@ -12,6 +12,8 @@ type PromptAuthorityProjectionChange =
 [<RequireQualifiedAccess>]
 type PromptAuthorityFoldRejection =
     | ClaimOriginRejected of PromptAuthority.IdentitySeedValidationError
+    | ClaimBatchRejected of string
+    | ClaimOverwriteRejected of string
     | AuthorityRootSchemaRejected of string
     | AuthorityRootSeedRejected of PromptAuthority.IdentitySeedValidationError
     | AuthorityRootLedgerRejected of string
@@ -21,6 +23,8 @@ module PromptAuthorityFoldRejection =
     let fact (rejection: PromptAuthorityFoldRejection) : string =
         match rejection with
         | PromptAuthorityFoldRejection.ClaimOriginRejected _ -> "PluginPromptClaimed"
+        | PromptAuthorityFoldRejection.ClaimOverwriteRejected _ -> "PluginPromptClaimed"
+        | PromptAuthorityFoldRejection.ClaimBatchRejected _ -> "DeferredWorkPresentationClaimed"
         | PromptAuthorityFoldRejection.AuthorityRootSchemaRejected _
         | PromptAuthorityFoldRejection.AuthorityRootSeedRejected _
         | PromptAuthorityFoldRejection.AuthorityRootLedgerRejected _ -> "AuthorityRootAccepted"
@@ -28,11 +32,50 @@ module PromptAuthorityFoldRejection =
     let message (rejection: PromptAuthorityFoldRejection) : string =
         match rejection with
         | PromptAuthorityFoldRejection.ClaimOriginRejected error -> sprintf "%A" error
+        | PromptAuthorityFoldRejection.ClaimBatchRejected reason -> reason
+        | PromptAuthorityFoldRejection.ClaimOverwriteRejected reason -> reason
         | PromptAuthorityFoldRejection.AuthorityRootSchemaRejected reason -> reason
         | PromptAuthorityFoldRejection.AuthorityRootSeedRejected error -> sprintf "%A" error
         | PromptAuthorityFoldRejection.AuthorityRootLedgerRejected reason -> reason
 
 module PromptFactFold =
+
+    let private isDeferredKey key (current: PromptAuthority.PromptAuthorityProjection) =
+        let isDeferred origin =
+            PromptAuthority.deferredWorkOccurrences origin |> Option.isSome
+
+        (Map.tryFind key current.PendingClaims
+         |> Option.exists (fun claim -> isDeferred claim.Origin))
+        || (current.PhysicalLandings
+            |> Map.exists (fun _ landing -> landing.PromptKey = key && isDeferred landing.Origin))
+
+    let private registerHistoricalClaim (claim: PromptAuthority.PromptClaim) current =
+        if isDeferredKey claim.PromptKey current then
+            Error(
+                PromptAuthorityFoldRejection.ClaimOverwriteRejected
+                    "PromptKey is already bound to a deferred presentation"
+            )
+        else
+            Ok(PromptAuthorityRun.registerClaim claim current)
+
+    let private registerDeferredPresentation
+        (claim: PromptAuthority.PromptClaim)
+        (current: PromptAuthority.PromptAuthorityProjection)
+        =
+        let immutableClaim (value: PromptAuthority.PromptClaim) =
+            { value with
+                Receipt = None
+                ClaimedAtRuntimeStartCount = 0 }
+
+        match Map.tryFind claim.PromptKey current.PendingClaims with
+        | Some existing when immutableClaim existing = immutableClaim claim -> Ok current
+        | Some _ -> Error "PromptKey is already bound to a different claim"
+        | None when
+            current.PhysicalLandings
+            |> Map.exists (fun _ landing -> landing.PromptKey = claim.PromptKey)
+            ->
+            Error "PromptKey has already physically landed"
+        | None -> Ok(PromptAuthorityRun.registerClaim claim current)
 
     let private parseAuthorityKind value =
         match value with
@@ -132,12 +175,44 @@ module PromptFactFold =
                 let currentAuthority =
                     authorityOf payload.SessionId |> Option.defaultValue PromptAuthorityLedger.empty
 
-                let registered = PromptAuthorityRun.registerClaim claim currentAuthority
-                Ok [ PromptAuthorityProjectionChange.PromptAuthoritySet(payload.SessionId, registered) ]
+                registerHistoricalClaim claim currentAuthority
+                |> Result.map (fun registered ->
+                    [ PromptAuthorityProjectionChange.PromptAuthoritySet(payload.SessionId, registered) ])
 
             classifyClaimOrigin payload.ContinuationKind
             |> validateClaimOrigin authorityOf payload.IdentitySeed
             |> applyValidatedClaimOrigin register
+
+        | PromptFactCases.DeferredWorkPresentationClaimed payload ->
+            let claim: PromptAuthority.PromptClaim =
+                { PromptKey = payload.PromptKey
+                  SessionId = payload.SessionId
+                  Origin = PromptAuthority.PromptOrigin.Continuation(DeferredWorkPresentation payload.OccurrenceIds)
+                  LogicalRunId = Some payload.LogicalRunId
+                  AuthorityRootUserMessageId = Some payload.AuthorityRootUserMessageId
+                  IdentitySeed = payload.IdentitySeed
+                  PayloadDigest = payload.PayloadDigest
+                  Receipt = None
+                  ClaimedAtRuntimeStartCount = runtimeStartCount }
+
+            let current =
+                authorityOf payload.SessionId |> Option.defaultValue PromptAuthorityLedger.empty
+
+            let activeMatches =
+                current.ActiveLogicalRun
+                |> Option.exists (fun profile ->
+                    profile.LogicalRunId = payload.LogicalRunId
+                    && profile.AuthorityRootUserMessageId = payload.AuthorityRootUserMessageId
+                    && profile.IdentitySeed = payload.IdentitySeed)
+
+            (if activeMatches then
+                 PromptAuthority.validateDeferredWorkOccurrences payload.OccurrenceIds
+             else
+                 Error "Deferred presentation does not match the active authority")
+            |> Result.bind (fun () -> registerDeferredPresentation claim current)
+            |> Result.mapError PromptAuthorityFoldRejection.ClaimBatchRejected
+            |> Result.map (fun registered ->
+                [ PromptAuthorityProjectionChange.PromptAuthoritySet(payload.SessionId, registered) ])
 
         | PromptFactCases.PluginPromptSubmitted payload ->
             let currentAuthority =

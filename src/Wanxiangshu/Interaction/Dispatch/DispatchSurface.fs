@@ -462,10 +462,16 @@ module DispatchSurface =
         (profile: obj)
         (awaitMode: string)
         (onAccepted: ContinuationAcceptanceObserver option)
+        (occurrenceIds: string list option)
         : Task<obj> =
         task {
             match PromptAuthority.tryParseContinuationKind continuation, profileOf profile with
             | Some kind, Ok authorityProfile ->
+                let kind =
+                    match kind, occurrenceIds with
+                    | DeferredWorkPresentation _, Some ids -> DeferredWorkPresentation ids
+                    | _ -> kind
+
                 let runtime = PromptDispatcher.forPrompts journal
                 let adapter = PlainSessionPort(port)
 
@@ -528,6 +534,27 @@ module DispatchSurface =
             profile
             awaitMode
             None
+            None
+
+    let sendDeferredPresentation
+        (port: obj)
+        (handle: JournalHandle)
+        (session: string)
+        (text: string)
+        (occurrenceIds: string array)
+        (profile: obj)
+        (awaitMode: string)
+        : Task<obj> =
+        sendContinuationWithObserver
+            port
+            (PromptJournalAdapter.create handle.Journal)
+            session
+            text
+            "DeferredWorkPresentation"
+            profile
+            awaitMode
+            None
+            (Some(Array.toList occurrenceIds))
 
     let private afterAppendJournal (journal: IPromptJournal) (afterAppend: PromptSessionFact -> Task) : IPromptJournal =
         { new IPromptJournal with
@@ -562,7 +589,7 @@ module DispatchSurface =
                 | PromptSessionFact.PromptClaimed claim -> afterClaim (PromptKey.value claim.PromptKey)
                 | _ -> Task.FromResult(()) :> Task)
 
-        sendContinuationWithObserver port journal session text continuation profile awaitMode None
+        sendContinuationWithObserver port journal session text continuation profile awaitMode None None
 
     let sendContinuationWithAcceptance
         (port: obj)
@@ -588,6 +615,7 @@ module DispatchSurface =
             profile
             awaitMode
             (Some observer)
+            None
 
     let sendContinuationWithAcceptanceRegistration
         (port: obj)
@@ -1110,6 +1138,61 @@ module DispatchSurface =
                             |> Option.map LogicalRunId.value
                             |> Option.defaultValue null
                            count = counter.Count |}) |}
+
+    let appendDeferredPresentationClaim (handle: JournalHandle) (value: obj) : Task<obj> =
+        task {
+            match identitySeedOf value?identitySeed with
+            | Error error -> return box {| ok = false; error = error |}
+            | Ok seed ->
+                let sessionId = SessionId.create (text value?session)
+
+                let claim =
+                    {| PromptKey = PromptKey.create (text value?promptKey)
+                       SessionId = sessionId
+                       LogicalRunId = LogicalRunId.create (text value?logicalRun)
+                       AuthorityRootUserMessageId = AuthorityRootUserMessageId.create (text value?authorityRoot)
+                       IdentitySeed = seed
+                       PayloadDigest = text value?payloadDigest
+                       OccurrenceIds = unbox<string array> value?occurrenceIds |> Array.toList |}
+
+                let! result =
+                    AgentJournal.appendAgent
+                        (StreamId.Session sessionId)
+                        None
+                        (AgentFact.Prompt(PromptFactCases.DeferredWorkPresentationClaimed claim))
+                        handle.Journal
+
+                return appendResult result
+        }
+
+    let appendHistoricalPromptClaim (handle: JournalHandle) (value: obj) : Task<obj> =
+        task {
+            match identitySeedOf value?identitySeed with
+            | Error error -> return box {| ok = false; error = error |}
+            | Ok seed ->
+                let sessionId = SessionId.create (text value?session)
+
+                let claim =
+                    {| PromptKey = PromptKey.create (text value?promptKey)
+                       SessionId = sessionId
+                       ContinuationKind = text value?origin
+                       LogicalRunId = value?logicalRun |> Option.ofObj |> Option.map (text >> LogicalRunId.create)
+                       AuthorityRootUserMessageId =
+                        value?authorityRoot
+                        |> Option.ofObj
+                        |> Option.map (text >> AuthorityRootUserMessageId.create)
+                       IdentitySeed = seed
+                       PayloadDigest = text value?payloadDigest |}
+
+                let! result =
+                    AgentJournal.appendAgent
+                        (StreamId.Session sessionId)
+                        None
+                        (AgentFact.Prompt(PromptFactCases.PluginPromptClaimed claim))
+                        handle.Journal
+
+                return appendResult result
+        }
 
     let closeCompletedHumanRootManager (projection: obj) : obj =
         projection

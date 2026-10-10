@@ -1,0 +1,52 @@
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 4732c565a3dd4451a2a92b50352426de: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: DeferredWorkPresentation requires nonempty unique occurrence IDs"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 4b28c8b3c20c4c8cb7b8212efb0aff12: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: DeferredWorkPresentation requires nonempty unique occurrence IDs"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 057c9b2833cd42bcaf191f8f227df9db: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: DeferredWorkPresentation requires nonempty unique occurrence IDs"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 9585971c12ff4bda93b117703bf115f0: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: PromptKey is already bound to a different claim"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 75cfc4e2284343e9a7d4b43209b21b17: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: Deferred presentation does not match the active authority"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at a630dec1bffc468a91e74a77d6ed4fde: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: Deferred presentation does not match the active authority"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at c3a34d7e017f4055ab88fb55016d4a08: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: Deferred presentation does not match the active authority"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 135de0f2ccca42a3a043862045a62478: fact 'semantic-cut' rejected: Journal fact 'PluginPromptClaimed' rejected: PromptKey is already bound to a deferred presentation"}
+✔ WHAT[attention-regulation-005] exact presentation binding is idempotent without another claim sequence (891.385ms)
+✔ WHAT[attention-regulation-005] presentation rejects empty batch without changing durable work or the original claim (885.0485ms)
+✔ WHAT[attention-regulation-005] presentation rejects blank occurrence without changing durable work or the original claim (950.674125ms)
+✔ WHAT[attention-regulation-005] presentation rejects duplicate occurrence without changing durable work or the original claim (914.684084ms)
+✔ WHAT[attention-regulation-005] presentation rejects different batch under the same key without changing durable work or the original claim (841.372375ms)
+✔ WHAT[attention-regulation-005] presentation rejects different active run without changing durable work or the original claim (875.387916ms)
+✔ WHAT[attention-regulation-005] presentation rejects different authority root without changing durable work or the original claim (856.391292ms)
+✔ WHAT[attention-regulation-005] presentation rejects different identity seed without changing durable work or the original claim (859.567292ms)
+✔ WHAT[attention-regulation-005] presentation rejects historical claim replacing the bound batch without changing durable work or the original claim (856.3715ms)
+✔ WHAT[attention-regulation-005] physical acceptance append refusal keeps the batch until the exact original message is accepted (326.777ms)
+✔ WHAT[attention-regulation-005] a refused presentation claim does not call Host or consume work (235.629625ms)
+✔ WHAT[attention-regulation-005] unknown preserves the exact batch without consumption (233.105791ms)
+✔ WHAT[attention-regulation-005] receipt without physical acceptance preserves the exact batch without consumption (242.691ms)
+✔ WHAT[attention-regulation-005] an explicitly refused send preserves work and its retry derives a new key (276.701875ms)
+✔ WHAT[attention-regulation-005] occurrence boundaries participate in key identity with original bytes (0.363667ms)
+✔ WHAT[attention-regulation-005] claim, receipt and exact physical projection round trips preserve the occurrence batch (218.244833ms)
+✔ WHAT[attention-regulation-005] a historical pending presentation with no batch keeps work and suppresses another real natural presentation (552.183916ms)
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 6e9a363378a04b94ad929dcfb125fa8c: fact 'semantic-cut' rejected: Journal fact 'DeferredWorkPresentationClaimed' rejected: PromptKey has already physically landed"}
+{"operation":"journal-semantic-cut","result":"journal semantic cut at 29e72b21e2db4dd4bec658ef48144c8c: fact 'semantic-cut' rejected: Journal fact 'PluginPromptClaimed' rejected: PromptKey is already bound to a deferred presentation"}
+✔ WHAT[attention-regulation-005] a historical accepted presentation with no batch keeps work and suppresses another real natural presentation (529.593875ms)
+✔ WHAT[attention-regulation-005] new claims cannot overwrite the batch after its physical landing (242.034042ms)
+✔ WHAT[attention-regulation-005] historical claims cannot overwrite the batch after its physical landing (240.640625ms)
+✔ WHAT[attention-regulation-005] natural engineer completion preserves and consumes its exact deferred batch through live physical ingress (1249.730459ms)
+✔ WHAT[attention-regulation-005] natural devops completion preserves and consumes its exact deferred batch through live physical ingress (1416.8865ms)
+✔ WHAT[attention-regulation-005] natural orchestrator completion preserves and consumes its exact deferred batch through live physical ingress (1246.223666ms)
+✔ WHAT[attention-regulation-005] natural engineer completion preserves and consumes its exact deferred batch through cold physical ingress (1324.464833ms)
+✔ WHAT[attention-regulation-005] the consumption projection suppresses replayed Manager work (1.123125ms)
+✔ WHAT[attention-regulation-005] the consumption projection suppresses replayed Engineer work (0.28475ms)
+✔ WHAT[attention-regulation-005] the consumption projection suppresses replayed Orchestrator work (0.22425ms)
+✔ WHAT[attention-regulation-005] a receipt recorded before its work stays order-independent across replay (0.060542ms)
+✔ WHAT[attention-regulation-005] closing a life consumes its remaining work without leaking into a reused session (0.258041ms)
+✔ WHAT[attention-regulation-005] registered Manager suicide persists the exact consumption receipt after PERFECT retirement (751.779042ms)
+✔ WHAT[attention-regulation-005] registered Manager suicide persists the exact consumption receipt after REVISE retirement (734.13325ms)
+✔ WHAT[attention-regulation-005] registered Manager suicide reports an unavailable consumption append after PERFECT retirement (534.663625ms)
+✔ WHAT[attention-regulation-005] registered Manager suicide reports an unavailable consumption append after REVISE retirement (554.308291ms)
+✔ WHAT[attention-regulation-005] a refused retirement append preserves work without appending a consumption receipt (597.663125ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19728.007375
