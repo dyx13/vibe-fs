@@ -1,0 +1,140 @@
+✔ WHAT[verification-system-014] the Long Stroke entry satisfies the watchdog-feed guard (7.637375ms)
+✔ WHAT[verification-system-014] matchInvestigationOutlookMarker correctly identifies outlook markers and never falls back to raw description (3.236959ms)
+✔ WHAT[verification-system-014] the compiled Long Stroke scenario preserves its Manager and consecutive-failure cases (36.140292ms)
+✔ WHAT[verification-system-014] Long Stroke strictly consumes current production Blogger instructions across sessions (34.255ms)
+✔ WHAT[verification-system-014] Long Stroke strictly consumes current production internal resources and readonly capabilities (25.792ms)
+✔ WHAT[verification-system-014] readonly replica finish requires its actual completed probe exchange, independently of deliveries (72.382833ms)
+✔ WHAT[verification-system-014] owner continuations retain the real promoted Replica assistant steps and the recovery fault (12.913083ms)
+✔ WHAT[verification-system-014] another Road cannot supply the HumanRoot canary missing assessment or retirement (241.150167ms)
+✔ WHAT[verification-system-014] the original HumanRoot loop oracle keeps exact Road facts and physical deliveries amid other owners (259.925375ms)
+✔ WHAT[verification-system-014] the HumanRoot oracle rejects a confirmation with no causal assessment ancestor (137.266375ms)
+✔ WHAT[verification-system-014] Manager loop response binding isolates each other Road from the main five-iteration spine (28.663ms)
+✔ WHAT[verification-system-014] all main relay barriers count the bound Road independently of preflow owners (7.012875ms)
+✔ WHAT[verification-system-014] the original Engineer barrier and Join oracle require the same admitted Work (1215.941708ms)
+✔ WHAT[verification-system-014] Long Stroke observes actual durable Strength envelopes before and after cold replay (265.493625ms)
+[delegation] bound replicas=["ses_model_replica_two","ses_model_replica_one"] chatCounts=[1,2] model=test/test-model-b
+[delegation] bound replicas=["ses_model_replica_two","ses_model_replica_one"] chatCounts=[1,2] model=test/test-model-b
+✔ WHAT[verification-system-014] delegation target keeps the physically observed provider with the bare OpenAI model (341.067833ms)
+✔ WHAT[verification-system-014] both preflow Strength decisions share a real routing window without reviving a failed provider (23.109ms)
+[delegation] capacity-1 parent-waits-child proven for 2 decisions
+✔ WHAT[verification-system-014] Strength capacity follows each exact decision instead of crossing two sequential owners (197.370542ms)
+[delegation] material returned to owners=2 chatCounts=[3,4]
+✔ WHAT[verification-system-014] Strength delivery counts stay exactly three and four within the original physical roots (176.990542ms)
+[delegation] protocol surface ok: 40 tools across 10 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+[delegation] same-model legality ok: model=test/test-model-b companions=2
+✔ WHAT[verification-system-014] same-model legality pins each original Root and ignores later Manager tasks (172.866958ms)
+✔ WHAT[verification-system-014] declared participating tool arguments satisfy the production estimate contract (12.919375ms)
+[delegation] protocol surface ok: 32 tools across 8 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol oracle accepts the real advisory contract: positive without note (167.063875ms)
+[delegation] protocol surface ok: 32 tools across 8 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol oracle accepts the real advisory contract: positive with blank note (186.978208ms)
+[delegation] protocol surface ok: 32 tools across 8 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol oracle accepts the real advisory contract: positive with non-string note (159.480584ms)
+[delegation] protocol surface ok: 32 tools across 8 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol oracle accepts the real advisory contract: zero with string note (173.386625ms)
+[delegation] protocol surface ok: 32 tools across 8 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol oracle accepts the real advisory contract: zero with blank note (185.142875ms)
+[delegation] protocol surface ok: 32 tools across 8 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol oracle accepts the real advisory contract: zero with non-string note (178.210791ms)
+[delegation] protocol surface ok: 32 tools across 8 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol oracle preserves NoEstimate and Unreviewed same-name business fields (128.815833ms)
+✔ WHAT[verification-system-014] protocol oracle still rejects invalid participating schema and arguments (1515.701166ms)
+✔ WHAT[verification-system-014] protocol retention compares the completed original SSE batch, session and exact values (1062.295125ms)
+[delegation] protocol surface ok: 32 tools across 8 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol observation accepts the absence of a permission-denied MCP tool (704.404042ms)
+✔ WHAT[verification-system-014] actual Host hooks leave Unreviewed MCP business fields outside the estimate protocol (2005.200417ms)
+[mcp] wanxiang_fixture connected; its unknown tool remains denied for 4 Owner/Replica sessions
+✔ WHAT[verification-system-014] MCP observation requires connection and rejects fixture tools on Owner or Replica wire (1297.551458ms)
+[delegation] protocol surface ok: 36 tools across 9 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+✔ WHAT[verification-system-014] protocol retention accepts a real Replica exchange projected under the owner tool name (183.813417ms)
+✔ WHAT[verification-system-014] completed SSE source evidence excludes a response cancelled at its real completion barrier (1.129625ms)
+✔ WHAT[verification-system-014] the actual mock output records immutable completed SSE tool-call batches (115.509625ms)
+[setupScenario] ready
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[mock-req] POST /v1/chat/completions
+[read-probe] session=ses_ed9b0ec2effemrk7ivd3msPUib call=call_46 part=prt_1264f1f64001vsutTpytGrEp5P timeline=[{"dtMs":0,"seq":1577,"status":"pending","error":null,"interrupted":null},{"dtMs":0,"seq":1579,"status":"running","error":null,"interrupted":null},{"dtMs":385,"seq":1608,"status":"completed","error":null,"interrupted":null}] nativeTerminals=[{"seq":1608,"sessionID":"ses_ed9b0ec2effemrk7ivd3msPUib","tool":"read","callID":"call_46","status":"completed","error":null,"interrupted":null}]
+[mock-req] POST /v1/chat/completions
+[manager-surface] ok tools=assume,defer,fork,horizon,join,js-manager,js-predictor,publish,resume,review,skill,suicide,todowrite requests=26
+[delegation] bound replicas=["ses_ed9b14ea8ffeck6YGQUfVkoqbT","ses_ed9b160b8ffeyYd7hwNPzVjgVw"] chatCounts=[1,2] model=test/test-model-b
+[delegation] material returned to owners=2 chatCounts=[3,4]
+[delegation] protocol surface ok: 156 tools across 13 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+[mcp] wanxiang_fixture connected; its unknown tool remains denied for 4 Owner/Replica sessions
+[delegation] protocol surface ok: 156 tools across 13 owner requests; estimated_readonly_rounds required on participating tools, self_note advisory, outlook prose present, exact source batches retained
+[delegation] same-model legality ok: model=test/test-model-b companions=2
+[delegation] purpose witness ok: 2 readonly-delegate decisions of 43 total
+[delegation] capacity-1 parent-waits-child proven for 2 decisions
+[flow-profile] long-stroke: 62 steps in 45.7s; slowest: waitFact,timeoutMs 5.4s, wait=manager-loop.0 4.9s, waitFact,timeoutMs 3.8s
+[event-ceiling] long-stroke: journal=482/699 sse=2689/3351 (heartbeats excluded)
+Long Stroke orch-shell: join-wake+interrupted/user_message, provider-fallback, audit-low-score→Continue→IncumbencyOpened→Accepted, gitConflictProof→ConflictDetected→RebasedCandidate→Published (no restart).
