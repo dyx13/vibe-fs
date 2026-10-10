@@ -1,4 +1,17 @@
 import test from 'node:test'
+import assert from 'node:assert/strict'
+import { convergeExpiredAt } from '../../../dist/Git/Hook/Surface.js'
+
+test('WHAT[time-capability-003] with an observed remote snapshot the Git gateway spends no transport or local stage at the injected deadline', async () => {
+  for (const origin of [0, Date.UTC(2099, 0, 1)]) {
+    assert.deepEqual(await convergeExpiredAt(origin, 600000, origin + 600000), {
+      budgetExhausted: true, commands: 0, localStages: 0,
+    })
+    assert.deepEqual(await convergeExpiredAt(origin, 600000, origin + 600001), {
+      budgetExhausted: true, commands: 0, localStages: 0,
+    })
+  }
+})
 
 {
 const { default: assert } = await import("node:assert/strict");

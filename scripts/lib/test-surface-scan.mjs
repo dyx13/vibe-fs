@@ -1165,7 +1165,8 @@ export const SURFACE_MANIFEST = [
   {
     module: 'Git/Hook/Surface.js',
     owner: 'durable-events',
-    laws: ['DURABLE-EVENTS-018'],
+    laws: ['DURABLE-EVENTS-018', 'TIME-CAPABILITY-003'],
+    lawOwners: { 'TIME-CAPABILITY-003': 'time-capability' },
     source: 'src/Wanxiangshu/Git/Hook/Surface.fs',
     representation: 'json',
     kind: 'resource',

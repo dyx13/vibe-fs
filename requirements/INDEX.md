@@ -1,6 +1,6 @@
 # Package index
 
-当前索引包含 **55 个活跃规范包**与 **2 个历史包**（epistemic-reasoning、institutional-learning）。包数不是目标，也不是稳定 API；后续按独立 WHY、失败含义与独立变更边界继续核对拆并。
+当前索引包含 **55 个活跃规范包**与 **1 个历史包**（epistemic-reasoning）。包数不是目标，也不是稳定 API；后续按独立 WHY、失败含义与独立变更边界继续核对拆并。
 
 ## 1. Requirement system
 
@@ -101,7 +101,6 @@
 |---|---|
 | `behavior-diagnosis` | 工程病理只能在满足明确 trigger / negative / distinction 的证据上成立。 |
 | `guidance-delivery` | diagnosis 成立不等于必须立刻重复告知；反馈需要独立的 occurrence、coverage、dedupe 与 horizon-relative delivery 语义。 |
-| `institutional-learning` | 已随 WP-036 退役的历史包；celebrate/regret 不再注册，保留设计沿革，不参与当前验收。 |
 
 ## 11. Repository knowledge / programming
 
@@ -176,11 +175,10 @@
 | 41 | `obligation-ledger` | 7 | obligation-ledger-001 ~ 007 |
 | 42 | `relay-incumbency` | 12 | relay-incumbency-001 ~ 006、008 ~ 013 |
 | 43 | `relay-assessment` | 10 | relay-assessment-001 ~ 008、relay-assessment-009（独立评估由只读 Engineer 支持且实现者不自定答案）、relay-assessment-010（DevOps 自修改变快照使旧评估与证书失效且不可冒充新改动验证） |
-| 44 | `relay-retirement` | 7 | relay-retirement-001 ~ 004、007 ~ 008、relay-retirement-009（固定 DevOps 与跨任期资源在退休中的交接与收束边界） |
+| 44 | `relay-retirement` | 8 | relay-retirement-001 ~ 005、007 ~ 008、relay-retirement-009（固定 DevOps 与跨任期资源在退休中的交接与收束边界） |
 | 45 | `relay-context-projection` | 9 | relay-context-projection-001 ~ 008、relay-context-projection-009（前任工作与交互对继任可见，固定 DevOps 执行事实如实呈现） |
 | 46 | `behavior-diagnosis` | 20 | behavior-diagnosis-001 ~ 020 |
 | 47 | `guidance-delivery` | 11 | guidance-delivery-001 ~ 009、011 ~ 012 |
-| 48 | `institutional-learning` | 0 | 已随 WP-036 整包退役，目录与条款已删除 |
 | 49 | `repository-investigation` | 9 | repository-investigation-001 ~ 009 |
 | 50 | `knowledge-reuse` | 16 | knowledge-reuse-001 ~ 016 |
 | 51 | `repository-programming` | 27 | repository-programming-001 ~ 025、repository-programming-026（事务 ReadSnapshots 与案例实质访问严格分离）、repository-programming-027（Engineer 与 DevOps 统一文件工具与编程面生成） |
@@ -242,7 +240,6 @@ relay-retirement         → relay-incumbency, relay-assessment, relay-context-p
 relay-context-projection → relay-incumbency, participant-identity, provider-projection, host-boundary
 behavior-diagnosis       → semantic-trace, durable-events, prefix-stability, managed-session-lifecycle
 guidance-delivery        → behavior-diagnosis, participant-horizon, durable-events, concern-routing
-institutional-learning   → 已退役，不再定义当前依赖
 repository-investigation → office-capability, participant-horizon
 knowledge-reuse          → repository-investigation, durable-events, durable-convergence
 repository-programming   → office-capability, capability-enforcement, effect-accounting, durable-events, participant-horizon

@@ -13,6 +13,7 @@
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.eventstore-git-contract.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.eventstore-git-runtime.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.runtime-platform.digest.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.time-capability.process-node-timing-adapter.fsproj"/>
     <Compile Include="Git/Hook/Sync.fsi"/>
     <Compile Include="Git/Hook/Sync.fs"/>
     <Compile Include="Git/Hook/Dispatcher.fsi"/>

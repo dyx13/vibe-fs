@@ -1,6 +1,12 @@
 namespace Wanxiangshu.Git.Hook
 
+open System
+open System.Threading.Tasks
 open Fable.Core.JsInterop
+open Wanxiangshu.Foundation
+open Wanxiangshu.Git
+open Wanxiangshu.Persistence.EventStore
+open Wanxiangshu.Process
 
 /// Plain-data hook installation surface. HookDispatcher owns the physical
 /// membrane; this module prevents its DU and path types crossing into tests.
@@ -38,3 +44,51 @@ module HookSurface =
 
     let ensure (workspace: string) : bool =
         HookDispatcher.ensure workspace |> Result.isOk
+
+    let convergeExpiredAt (originMs: float) (budgetMs: float) (observedMs: float) : Task<obj> =
+        task {
+            let commands = ResizeArray<string list>()
+            let localStages = ResizeArray<unit>()
+
+            let clock =
+                { new IClockPort with
+                    member _.UtcNow() =
+                        DateTimeOffset.FromUnixTimeMilliseconds(int64 observedMs) }
+
+            let run args =
+                commands.Add args
+                Task.FromResult(1, "", "unexpected transport")
+
+            let raw =
+                ProcessGitRawStore.createWithRunner "." (fun (args, _) ->
+                    commands.Add args
+                    Task.FromResult(1, [||], "unexpected raw transport"))
+
+            let deadline =
+                Deadline.ofBudget
+                    (DateTimeOffset.FromUnixTimeMilliseconds(int64 originMs))
+                    (TimeSpan.FromMilliseconds budgetMs)
+
+            let snapshot =
+                { RootOid = RootOid.create (GitObjectId.create (String.replicate 40 "1")) }
+
+            let! result =
+                GitGateway.converge
+                    raw
+                    "."
+                    run
+                    3
+                    "origin"
+                    (Some snapshot)
+                    (fun _ ->
+                        localStages.Add()
+                        Task.FromResult(Error ConvergeError.ConvergeCasRejected))
+                    clock
+                    deadline
+
+            return
+                box
+                    {| budgetExhausted = (result = Error ConvergeError.ConvergeBudgetExhausted)
+                       commands = commands.Count
+                       localStages = localStages.Count |}
+        }

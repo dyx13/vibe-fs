@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — S2a CI门禁对齐
+
+- Git hook同步显式注入时钟，同一实例负责deadline与缓存采样，预算与扫描保持。退休测试归005，删已有008更强覆盖的评审指令重复测试，清理已删除包的索引登记。默认30文件83/0、4skip/18TODO；真实hook6/0、2TODO。发布吞吐未闭合。
+
 ## Unreleased — S1b1 Manager 退休消费凭据
 
 - 退休前取得待办 occurrence IDs，Continue/Accepted 正常退休后都追加独立 DeferredWorkConsumed。消费追加拒绝向上传递，已退休任保持冻结；退休追加拒绝不提前消费。正式注册工具、新 OS 重放与 foreign 同名隔离有证明，测试通过正式 Surface 接线。双追加崩溃恢复、CommitUnknown 与三角色自然终点消费仍开放。

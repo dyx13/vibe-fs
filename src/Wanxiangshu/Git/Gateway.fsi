@@ -1,6 +1,7 @@
 namespace Wanxiangshu.Git
 
 open System.Threading.Tasks
+open Wanxiangshu.Foundation
 open Wanxiangshu.Persistence.EventStore
 open Wanxiangshu.Process
 
@@ -20,6 +21,7 @@ module GitGateway =
         remote: string ->
         observedRemote: StoreSnapshot option ->
         withLocalLock: (GitGatewayLocalStage -> Task<Result<StoreSnapshot, ConvergeError>>) ->
+        clock: IClockPort ->
         deadline: Deadline ->
             Task<Result<StoreSnapshot, ConvergeError>>
 

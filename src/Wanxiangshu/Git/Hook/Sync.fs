@@ -50,7 +50,7 @@ module HookSync =
         | Ok _ -> None
         | Error error -> Some(formatError remote error)
 
-    let private converge remote observed =
+    let private converge (clock: IClockPort) remote observed =
         task {
             try
                 markSyncActive ()
@@ -60,7 +60,7 @@ module HookSync =
                 let run = GitGateway.createDefaultRunner repo
 
                 let deadline =
-                    Deadline.ofBudget (DateTimeOffset.UtcNow) (TimeSpan.FromSeconds ConvergeBudgetSeconds)
+                    Deadline.ofBudget (clock.UtcNow()) (TimeSpan.FromSeconds ConvergeBudgetSeconds)
 
                 let! result =
                     GitGateway.converge
@@ -71,6 +71,7 @@ module HookSync =
                         remote
                         observed
                         (fun stage -> ProcessEventLog.withStoreLock gitCommonDir stage)
+                        clock
                         deadline
 
                 return failureMessage remote result
@@ -84,7 +85,7 @@ module HookSync =
         if String.IsNullOrWhiteSpace remote then
             Task.FromResult(Some "Wanxiang pre-push sync requires the Git remote name")
         else
-            converge remote None
+            converge (NodeTiming.nodeClockPort ()) remote None
 
     let private tryTrackingUpdate (line: string) =
         let fields = line.Split([| ' '; '\t' |], StringSplitOptions.RemoveEmptyEntries)
@@ -98,18 +99,18 @@ module HookSync =
             StoreRef.tryRemoteFromTracking refName
             |> Option.map (fun remote -> remote, snapshot newOid)
 
-    let rec private convergeRemaining remaining =
+    let rec private convergeRemaining clock remaining =
         task {
             match remaining with
             | [] -> return None
-            | (remote, observed) :: tail -> return! stepRemoteConverge remote observed tail
+            | (remote, observed) :: tail -> return! stepRemoteConverge clock remote observed tail
         }
 
-    and private stepRemoteConverge remote observed tail =
+    and private stepRemoteConverge clock remote observed tail =
         task {
-            match! converge remote observed with
+            match! converge clock remote observed with
             | Some error -> return Some error
-            | None -> return! convergeRemaining tail
+            | None -> return! convergeRemaining clock tail
         }
 
     /// reference-transaction `committed` is also FULL bidirectional convergence.
@@ -125,5 +126,5 @@ module HookSync =
                     |> Array.fold (fun acc (remote, observed) -> Map.add remote observed acc) Map.empty
                     |> Map.toList
 
-                return! convergeRemaining updates
+                return! convergeRemaining (NodeTiming.nodeClockPort ()) updates
         }

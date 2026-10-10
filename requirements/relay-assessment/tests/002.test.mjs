@@ -5,7 +5,7 @@ import test from 'node:test'
 import * as relay from '../../../dist/Mission/Relay/Surface.js'
 import { JournalSurface_snapshot } from '../../../dist/Persistence/Journal/Surface.js'
 
-// 语言锚定：下面两条断言比较英文指令资源的渲染结果；显式设为英文使断言不随宿主环境语言漂移。
+// 工具结果的英文断言固定语言，避免随宿主环境漂移。
 process.env.WANXIANGSHU_PROVIDER_LANGUAGE = 'en'
 
 const gap = [{ acceptance_criteria: 'the delivery still misses part of the target state', work_plan: 'close the remaining gap' }]
@@ -84,7 +84,6 @@ test('WHAT[relay-assessment-002] actual tool exact replay returns the accepted r
     assert.equal(replay, first)
   })
 })
-
 test('WHAT[relay-assessment-002] changed public narrative binding rejects replay without changing the accepted facts', async () => {
   await withReview(async ({execute, hooks, directory, runtime, session}) => {
     const input = reviewScores('REVISE')
@@ -163,21 +162,5 @@ test('WHAT[relay-assessment-002] cross-incumbency replay of a retired review cal
     // replay: it never becomes an idempotent hit on the successor's result.
     const replayed = await hooks.tool.review.execute(input, {sessionID: session, callID: 'review-call', messageID: 'review-run', agent: 'manager'})
     assert.match(replayed, /recorded = false/)
-  })
-})
-
-const renderedInstruction = name => readFileSync(new URL(`../../../resources/provider/runtime/${name}/en.md`, import.meta.url), 'utf8').trim().split('\n').map(line => '# ' + line).join('\n')
-
-test('WHAT[relay-assessment-001] empty findings terminate the assessment with the finish instruction', async () => {
-  await withReview(async ({execute}) => {
-    const result = await execute({ findings: [] })
-    assert.equal(result, renderedInstruction('manager-finish') + '\n\nrecorded = true\n')
-  })
-})
-
-test('WHAT[relay-assessment-001] non-empty findings own repair work and select the work instruction', async () => {
-  await withReview(async ({execute}) => {
-    const result = await execute(reviewScores('REVISE'))
-    assert.equal(result, renderedInstruction('manager-work') + '\n\nrecorded = true\n')
   })
 })

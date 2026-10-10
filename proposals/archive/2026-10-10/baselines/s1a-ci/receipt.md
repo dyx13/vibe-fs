@@ -4,7 +4,7 @@
 
 - Prepare、format、check、clean build 成功，gen1。包络交付修复再次越过干净构建。
 - unit 817/817 文件排空，271.45s wall，4974 pass/2 fail/131 skip/381 TODO；group3506 回收 accepted=true/7.944ms。
-- 两个失败：requirement-system017 检出 relay-assessment002 两项标题错写001；time-capability004 检出 Git/Gateway141/160、Git/Hook/Sync63 直接读 DateTimeOffset.UtcNow。前者是需求映射错位，后者需注入时钟，不放宽门禁。
+- 两个失败测试：requirement-system017的完整诊断有11项：relay-assessment002两项标题错写001；relay-retirement010所属条款不存在且5项标题实属005；已删除institutional-learning仍登记于INDEX，缺WHY/WHAT/tests三项。time-capability004检出Git/Gateway141/160、Git/Hook/Sync63直接读DateTimeOffset.UtcNow。前者需对齐所有权和索引，后者需注入时钟，不放宽门禁。初次摘要只列017首两项，现按原日志补全。
 - 本次006未重现12/11，且未触发300s；只证明该输入此次完整排空，不能覆盖前一CI的失败或称吞吐已稳定修复。
 - integration/harness/E2E/package 未进入，计数 unknown。131 skip、381 TODO 不计入通过。
 
