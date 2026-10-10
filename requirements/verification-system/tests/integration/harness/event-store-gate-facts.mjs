@@ -1,6 +1,6 @@
 /**
  * Append named verification-system-004 gate facts into the local process EventStore.
- * Shock-cut model: `.git/wanxiang/events/<WriterId>.ndjson`; no Git ODB/ref append.
+ * Shock-cut model: `.git/wanxiangshu/events/<WriterId>.ndjson`; no Git ODB/ref append.
  */
 
 import { join } from 'node:path'

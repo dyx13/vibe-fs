@@ -34,13 +34,13 @@ module ReviewTool =
         let MissingRequest = "tool/review/missing-request"
 
         [<Literal>]
-        let InvalidScores = "tool/review/invalid-scores"
+        let InvalidFindings = "tool/review/invalid-findings"
 
         [<Literal>]
         let RecordFailed = "tool/review/record-failed"
 
         [<Literal>]
-        let ScoreArgument = "tool/review/score-argument"
+        let FindingsArgument = "tool/review/findings-argument"
 
         [<Literal>]
         let ReplayConflict = "tool/review/replay-conflict"
@@ -51,7 +51,7 @@ module ReviewTool =
     type private ReviewFailure =
         | BindingUnavailable
         | MissingRequest
-        | InvalidScores
+        | InvalidFindings
         | RecordFailed
         | ReplayConflict
         | AlreadySubmitted
@@ -60,7 +60,7 @@ module ReviewTool =
         function
         | BindingUnavailable -> Path.BindingUnavailable
         | MissingRequest -> Path.MissingRequest
-        | InvalidScores -> Path.InvalidScores
+        | InvalidFindings -> Path.InvalidFindings
         | RecordFailed -> Path.RecordFailed
         | ReplayConflict -> Path.ReplayConflict
         | AlreadySubmitted -> Path.AlreadySubmitted
@@ -72,8 +72,6 @@ module ReviewTool =
           HashObjectNoFilters = GitSubject.hashObjectNoFilters
           StatusPorcelainV2Z = GitSubject.statusPorcelainV2Z
           LsFilesStageZ = GitSubject.lsFilesStageZ }
-
-    let private fields = ScoreDimension.all |> List.map ScoreDimension.fieldName
 
     let private providerText (path: string) substitutions =
         ProviderProse.render (ProviderLanguageBinding.readGlobalPreference ()) path substitutions
@@ -217,10 +215,10 @@ module ReviewTool =
         (binding: AssessmentBinding)
         (snapshotId: WorkspaceSnapshotId)
         (authorityRevision: AuthorityRevision)
-        (scores: ScoreVector)
+        (findings: AssessmentFindings)
         =
         let assessment =
-            RelayEvent.AssessmentCommitted(assessmentId, incumbencyId, binding, snapshotId, authorityRevision, scores)
+            RelayEvent.AssessmentCommitted(assessmentId, incumbencyId, binding, snapshotId, authorityRevision, findings)
 
         match view.ActiveIncumbency, view.ActiveSnapshotId, view.ActiveAuthorityRevision with
         | None, _, _ -> Error BindingUnavailable
@@ -231,7 +229,7 @@ module ReviewTool =
             |> Result.mapError (fun _ -> RecordFailed)
 
     type private BoundReviewInvocation =
-        { Scores: ScoreVector
+        { Findings: AssessmentFindings
           ToolCallId: ToolCallId
           ProviderRun: ProviderRunIdentity
           PhysicalUserMessageId: string
@@ -251,8 +249,8 @@ module ReviewTool =
 
     let private boundInvocation (scope: ToolRuntimeScope) (args: HostToolArguments) (context: HostToolContext) =
         Model.tryParse args.Raw
-        |> Result.mapError (fun _ -> InvalidScores)
-        |> Result.bind (fun scores ->
+        |> Result.mapError (fun _ -> InvalidFindings)
+        |> Result.bind (fun findings ->
             match
                 context.ToolCallId,
                 context.ProviderRunId,
@@ -267,7 +265,7 @@ module ReviewTool =
             | _, _, _, _, None -> Error BindingUnavailable
             | Some toolCallId, Some providerRun, Some physicalUserMessageId, Some directory, Some journal ->
                 Ok
-                    { Scores = scores
+                    { Findings = findings
                       ToolCallId = toolCallId
                       ProviderRun = providerRun
                       PhysicalUserMessageId = physicalUserMessageId
@@ -355,9 +353,9 @@ module ReviewTool =
         with _ ->
             Error BindingUnavailable
 
-    let private acceptedResult (scores: ScoreVector) =
+    let private acceptedResult (findings: AssessmentFindings) =
         let instructionPath =
-            if ScoreVector.allPerfect scores then
+            if AssessmentFindings.isEmpty findings then
                 Path.Finish
             else
                 Path.Work
@@ -407,7 +405,7 @@ module ReviewTool =
                 let roadId = RoadId.create context.SessionId
                 let! state = currentRelayState bound.Journal sessionId |> requireSome ReplayConflict
 
-                let! acceptedScores =
+                let! acceptedFindings =
                     Fold.tryReplayAssessment
                         state
                         roadId
@@ -415,10 +413,10 @@ module ReviewTool =
                         binding
                         replay.SnapshotId
                         replay.AuthorityRevision
-                        bound.Scores
+                        bound.Findings
                     |> Result.mapError (fun _ -> ReplayConflict)
 
-                return acceptedResult acceptedScores
+                return acceptedResult acceptedFindings
             }
         | FreshAssessment prepared ->
             taskResult {
@@ -439,10 +437,10 @@ module ReviewTool =
                         binding
                         prepared.SnapshotId
                         prepared.AuthorityRevision
-                        prepared.Bound.Scores
+                        prepared.Bound.Findings
 
                 let! _ = appendAssessment prepared transaction
-                return acceptedResult prepared.Bound.Scores
+                return acceptedResult prepared.Bound.Findings
             }
 
     let private renderExecution =
@@ -466,17 +464,19 @@ module ReviewTool =
         ToolAdmission.OfficeRole(fun _ role -> OfficeCapability.isAllowed role ToolPermission.ReviewAssessment)
 
     let spec (factory: HostToolFactory) (scope: ToolRuntimeScope) : ToolSpec =
-        let score field =
-            ToolHostCodec.enumSchemaDescribed
-                [ "PERFECT"; "REVISE"; "N/A" ]
-                (providerText Path.ScoreArgument (Map [ "field", field ]))
+        let findingSchema =
+            ToolHostCodec.objectSchemaOf
+                [ "acceptance_criteria", ToolHostCodec.stringSchema factory
+                  "work_plan", ToolHostCodec.stringSchema factory ]
                 factory
 
-        let scoreArguments = fields |> List.map (fun field -> field, score field)
+        let findingsSchema =
+            ToolHostCodec.arraySchemaOf findingSchema (providerText Path.FindingsArgument Map.empty) factory
+
         let noteArgument = "note", ToolHostCodec.optionalStringSchema factory
 
         { Name = "review"
           Description = providerText Path.Description Map.empty
-          Arguments = scoreArguments @ [ noteArgument ]
+          Arguments = [ "findings", findingsSchema; noteArgument ]
           Admission = admission
           Execute = execute scope }

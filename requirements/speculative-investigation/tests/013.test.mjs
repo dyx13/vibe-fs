@@ -187,7 +187,7 @@ const toolMessage = (id, sessionId, parts) => ({ info: { id, role: 'tool', sessi
 // event_type names the fact. Reading the durable line is the observation:
 // the capture phase must have appended exactly the authorization it admitted.
 const durableEventsOfType = (directory, eventType) => {
-  const eventsDir = join(directory, '.git', 'wanxiang', 'events')
+  const eventsDir = join(directory, '.git', 'wanxiangshu', 'events')
   if (!existsSync(eventsDir)) return []
   const events = []
   for (const name of readdirSync(eventsDir)) {
@@ -219,7 +219,7 @@ const withTimeout = async (promise, message) => {
 }
 
 const durableFactLineCount = (directory) => {
-  const eventsDir = join(directory, '.git', 'wanxiang', 'events')
+  const eventsDir = join(directory, '.git', 'wanxiangshu', 'events')
   if (!existsSync(eventsDir)) return 0
   let lines = 0
   for (const name of readdirSync(eventsDir)) {
@@ -664,7 +664,10 @@ test('WHAT[speculative-investigation-013] shared common-dir instances prepare on
         const prepared = durableEventsOfType(directory, 'StrengthCandidatePrepared')
         assert.equal(prepared.length, 1, 'shared consumers publish one exact material fact')
         assert.equal(prepared[0].payload_refs.length, 1)
-        const bundle = JSON.parse(readFileSync(join(directory, '.git', 'wanxiang', 'payloads', prepared[0].payload_refs[0]), 'utf8'))
+        // durable-events-012: payloads are inline in the ndjson event line.
+        const inlinePayload = prepared[0].payloads[prepared[0].payload_refs[0]]
+        assert.ok(inlinePayload, 'Prepared frame bundle is inline in the event line')
+        const bundle = JSON.parse(Buffer.from(inlinePayload, 'base64').toString('utf8'))
         assert.deepEqual(bundle.batches.map(batch => ({ text: batch.assistant_text, exchanges: batch.exchanges })), [{ text: ['finished'], exchanges: [] }])
         assert.doesNotMatch(JSON.stringify(bundle), /private predictor thinking/)
         for (const output of outputs) {

@@ -11,8 +11,8 @@ const request = JSON.parse(requestJson)
 const store = await import('../../../../dist/Persistence/EventStore/Surface.js')
 const persistence = await import('../../../../dist/Sphinx/V2/Persistence/Surface.js')
 const digest = value => createHash('sha256').update(value).digest('hex')
-const file = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
-const lock = path.join(commonDir, 'wanxiang.lock')
+const file = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+const lock = path.join(commonDir, 'wanxiangshu.lock')
 const handle = store.create(commonDir, writerId)
 const handles = [handle]
 const originals = {
@@ -28,7 +28,7 @@ const dto = event => ({ id: event.event_id, stream: event.stream_id, type: event
 try {
   if (mode === 'cold') {
     assert.notEqual(writerId, request.sourceWriter)
-    const source = path.join(commonDir, 'wanxiang', 'events', `${request.sourceWriter}.ndjson`)
+    const source = path.join(commonDir, 'wanxiangshu', 'events', `${request.sourceWriter}.ndjson`)
     assert.equal(fs.readFileSync(source, 'base64'), request.bytes)
     for (const fact of request.facts) {
       assert.deepEqual(store.read(handle, fact.id), fact)

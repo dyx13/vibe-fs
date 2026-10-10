@@ -22,7 +22,8 @@ type EventEnvelope =
       EventType: string
       Parents: EventId list
       Payload: JsonValue
-      PayloadRefs: PayloadRef list }
+      PayloadRefs: PayloadRef list
+      Payloads: Map<PayloadRef, byte[]> }
 
 module EventParents =
     val canonicalize: parents: EventId list -> EventId list

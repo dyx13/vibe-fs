@@ -37,9 +37,13 @@ module IntegratorEngine =
         { FailedEventId: EventId
           Reason: string }
 
+    /// PayloadIndex (durable-events-012) maps inline payload content addresses to
+    /// their bytes, folded from every accepted envelope. It is part of the same
+    /// replay that derives Current, never a second pass over durable history.
     type private IntegratorState =
         { Currents: Map<string, obj>
           Events: Map<string, EventEnvelope>
+          PayloadIndex: Map<PayloadRef, byte[]>
           Faults: Map<RuleFaultKey, RuleFault> }
 
     type private IntegrationStep =
@@ -60,6 +64,7 @@ module IntegratorEngine =
     let private initialState (program: IntegrationRule list) =
         { Currents = program |> List.map (fun rule -> rule.Name, rule.Initial) |> Map.ofList
           Events = Map.empty
+          PayloadIndex = Map.empty
           Faults = Map.empty }
 
     let private eventKey (eventId: EventId) = EventId.value eventId
@@ -192,10 +197,15 @@ module IntegratorEngine =
         | None -> integrateBusiness program state normalized
 
     let private addIntegratedEvent key normalized (semantic: IntegrationStep) =
+        let payloadIndex =
+            normalized.Payloads
+            |> Map.fold (fun acc payloadRef bytes -> Map.add payloadRef bytes acc) semantic.State.PayloadIndex
+
         { semantic with
             State =
                 { semantic.State with
-                    Events = Map.add key normalized semantic.State.Events } }
+                    Events = Map.add key normalized semantic.State.Events
+                    PayloadIndex = payloadIndex } }
 
     let private integrateNew
         (program: IntegrationRule list)
@@ -299,11 +309,28 @@ module IntegratorEngine =
 
             do!
                 events
-                |> List.collect (fun envelope -> envelope.PayloadRefs)
-                |> PayloadRefs.canonicalize
-                |> List.tryFind (ProcessEventLog.payloadExists commonDir >> not)
-                |> Option.map (fun payloadRef ->
-                    Error(sprintf "missing durable payload during replay: %s" (PayloadRef.value payloadRef)))
+                |> List.tryPick (fun envelope ->
+                    // durable-events-012: inline payloads are self-contained; a
+                    // PayloadRef is satisfied exactly when the event line embeds it
+                    // with a matching content address. Absence and digest mismatch are
+                    // distinct physical faults and stay distinguishable in the message.
+                    envelope.PayloadRefs
+                    |> List.tryPick (fun payloadRef ->
+                        match envelope.Payloads |> Map.tryFind payloadRef with
+                        | None ->
+                            Some(
+                                sprintf
+                                    "missing durable inline payload during replay: %s"
+                                    (PayloadRef.value payloadRef)
+                            )
+                        | Some content when ProcessEventLog.payloadDigest content <> PayloadRef.value payloadRef ->
+                            Some(
+                                sprintf
+                                    "durable inline payload digest mismatch during replay: %s"
+                                    (PayloadRef.value payloadRef)
+                            )
+                        | Some _ -> None))
+                |> Option.map Error
                 |> Option.defaultValue (Ok())
         }
 
@@ -400,7 +427,8 @@ module IntegratorEngine =
               EventType = ProjectionCutTailEvent.EventType
               Parents = fault.FailedEventId :: existingHeads
               Payload = encodeCutPayload payload
-              PayloadRefs = [] }
+              PayloadRefs = []
+              Payloads = Map.empty }
             |> EventEnvelope.normalize
 
         let ensureRuleReset (currentState: IntegratorState) (rule: IntegrationRule) (key: RuleFaultKey) =
@@ -514,6 +542,9 @@ module IntegratorEngine =
 
             member _.TryEvent(eventId) =
                 lock gate (fun () -> Map.tryFind (eventKey eventId) state.Events)
+
+            member _.TryPayload(payloadRef) =
+                lock gate (fun () -> Map.tryFind payloadRef state.PayloadIndex)
 
             member _.TryHeads(streamId) =
                 lock gate (fun () ->

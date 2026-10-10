@@ -15,6 +15,8 @@ import { withChangeInterrupt } from './support/change-interrupt.mjs'
 test('WHAT[relay-retirement-008] actual Accepted suicide returns without abort and the next transform stops the retired attempt', async () => {
   await withReview(async ({execute, hooks, directory, runtime, session}) => {
     assert.match(await execute(scores('PERFECT')), /recorded = true/)
+    const confirmation = await hooks.tool.suicide.execute({}, {sessionID: session, callID: 'suicide-confirm', messageID: 'retirement-confirm', agent: 'manager'})
+    assert.match(confirmation, /confirmation_required = true/)
     runtime.pushHostMessage(session, {
       info: { id: 'retirement-run', role: 'assistant', sessionID: session, parentID: 'user-root', time: { created: 3 } },
       parts: [{ type: 'tool', tool: 'suicide', callID: 'suicide-call',
@@ -27,7 +29,7 @@ test('WHAT[relay-retirement-008] actual Accepted suicide returns without abort a
     const acceptedRoad = structuredClone(road(runtime.journal))
     assert.equal(acceptedRoad.roads[0].certificatePresent, true)
     assert.equal(acceptedRoad.roads[0].activeIncumbencyPresent, false)
-    const eventDirectory = join(directory, '.git', 'wanxiang', 'events')
+    const eventDirectory = join(directory, '.git', 'wanxiangshu', 'events')
     const relayFacts = () => readdirSync(eventDirectory).filter(name => name.endsWith('.ndjson')).sort()
       .flatMap(name => readFileSync(join(eventDirectory, name), 'utf8').trim().split('\n'))
       .filter(line => line.includes('"TransactionCommitted"'))
@@ -47,7 +49,7 @@ test('WHAT[relay-retirement-008] actual Accepted suicide returns without abort a
     assert.deepEqual(relayFacts(), acceptedFacts,
       'interrupting the old cut must not commit certificate invalidation or a successor opening')
     const coldDirectory = join(directory, 'cold-accepted-road')
-    cpSync(join(directory, '.git', 'wanxiang'), join(coldDirectory, 'wanxiang'), { recursive: true })
+    cpSync(join(directory, '.git', 'wanxiangshu'), join(coldDirectory, 'wanxiangshu'), { recursive: true })
     const reopened = await journal.JournalSurface_bootWithWriterId(coldDirectory, 'accepted-cold',
       'rt_accepted_cold', process.pid, '2026-10-08T00:00:00Z')
     assert.equal(reopened.ok, true, JSON.stringify(reopened.error))
@@ -97,20 +99,17 @@ test('WHAT[relay-retirement-008] physical prompt after Accepted suicide invalida
     await hooks['experimental.chat.messages.transform']({ sessionID }, { messages: [user] })
 
     // Step 1: Submit PERFECT review
-    const scores = Object.fromEntries([
-      'language_algorithms', 'simplicity', 'structure', 'granularity',
-      'tests_evidence', 'logic_reliability_boundaries', 'caller_ergonomics', 'completeness',
-    ].map((name) => [name, 'PERFECT']))
+    const findings = { findings: [] }
     const review = {
       id: 'run-review', role: 'assistant', parentID: rootID, time: { created: 2 },
       parts: [
         { type: 'text', text: 'All criteria perfect.' },
-        { type: 'tool', tool: 'review', callID: 'call-review', state: { status: 'pending', input: scores } },
+        { type: 'tool', tool: 'review', callID: 'call-review', state: { status: 'pending', input: findings } },
       ],
     }
     runtime.pushHostMessage(sessionID, review)
     const context = (callID, messageID) => ({ sessionID, agent: 'manager', callID, messageID })
-    const reviewResult = await hooks.tool.review.execute(scores, context('call-review', review.id))
+    const reviewResult = await hooks.tool.review.execute(findings, context('call-review', review.id))
     assert.match(reviewResult, /recorded = true/)
 
     // Step 2: Suicide commits Accepted retirement
@@ -119,6 +118,8 @@ test('WHAT[relay-retirement-008] physical prompt after Accepted suicide invalida
       parts: [{ type: 'tool', tool: 'suicide', callID: 'call-suicide', state: { status: 'pending', input: {} } }],
     }
     runtime.pushHostMessage(sessionID, retiredRun)
+    const confirmation = await hooks.tool.suicide.execute({}, context('call-suicide-confirm', 'confirm-run'))
+    assert.match(confirmation, /confirmation_required = true/)
     const suicideResult = await hooks.tool.suicide.execute({}, context('call-suicide', retiredRun.id))
     assert.match(suicideResult, /finished = true/)
 

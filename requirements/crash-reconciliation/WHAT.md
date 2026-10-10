@@ -76,7 +76,8 @@ Blogger 的 nudge/AABB 修复 episode、等待者与 flight lease 均为当前�
 - 父子会话的执行绑定与 fission lane 归属按 durable 投影**按需解析**（取 handle 的 `TargetAgent`，不取逻辑 `Byname`），进程本地表只是缓存，装载阶段不做任何预登记扫描；
 - 复用仍由 manager 显式发起；复用门禁、placement、await 一律以 durable handle 为存在性依据。
 
-被中断的工具调用保持失败并原样留在可见历史中，不得推断其完成、隐藏它或伪造终态。没有独立的续传材料通道，也没有 disclosure-only 的 provider 轮次。
+被中断的工具调用保持失败并原样留在可见历史中，不得推断其完成、隐藏它或伪造终态。
+本进程完成加载归位后，会在下一次真实用户指令之前 prepend 一次只读的状态指导，向模型说明万象术已被重启及其含义。状态指导只出现一次；它不改写用户原文、不创建或延续 Interaction Authority、不改变角色、权限或主体，并按 guidance-delivery-011 冻结已交付的 provider wire 字节。除此之外，不存在独立的续传材料通道，也没有 disclosure-only 的 provider 轮次。
 
 ## [019] 外部 effect 必须逐项闭合 crash reconciliation 合同
 

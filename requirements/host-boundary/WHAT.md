@@ -115,7 +115,7 @@ Host subsystem 的公开 Contract、Runtime 与物理 Adapter 必须保持编译
 - `Host.Signal.Adapter`（`host-signal-adapter`）：宿主信号词汇 `HostSignal`、完整 provider failure/terminal `HostEventCodec`、信号路由（`HostSignalAdapter`）、物理订阅与事件总线适配器（`SharedTerminalBus`/`Events`）；按实际知识消费窄 codec contract，不向 message/loop consumer 输出自身完整闭包，也不编入工具注册实现。
 - `Host.Tool.Adapter`（`host-tool-adapter`）：独立拥有 `ToolHostCodec` 与 `ToolHostSurface` 的参数解码、上下文身份配对、SDK schema、工具注册、abort listener 与有界输出接线；它是物理适配器，不是纯合同。工具注册闭包不得取得信号路由或终端总线实现；同时需要两侧的 composition 显式装配，不恢复宽 adapter 或复制物理实现。
 - `Host.Session.Runtime`（`host-session-runtime`）：SDK/HTTP 快照投影、进程级静止门禁状态机（`SessionQuiescenceGate`、`QuiescenceSurface`）、消息就地变更与宿主上下文投影，禁止被普通业务契约直接引用。
-- `Sphinx.Host.Adapter`（`sphinx-host-adapter`）：原生 `/sphinx question` 命令配置适配器，隔离于核心契约之外；不启动或注入 Sphinx MCP。
+- `Sphinx.Host.Adapter`（`sphinx-host-adapter`）：`Hosts/OpenCode` 的 dispatch 借道端口（`OpenCodeHostPort`，Capabilities 仅 `dispatch`），隔离于核心契约之外；不注册原生工具，不启动或注入 Sphinx MCP。
 
 `HostDigest` 属于 `runtime-platform/digest` 的无领域摘要原语，不属于 `Host.Signal.Contract`；摘要计算不应使 consumer 获得 Host 消息、SDK、终端或物理适配能力。物理启动配置留在对应适配器，不回填共享终端合同。
 
@@ -149,6 +149,6 @@ Root workspace 是process-local Host资源定位结果，不是公开可变状�
 
 ## [033] 读取端 hook 的 exact 只读租约校验
 
-`chat.params`、provider step 门禁与 provider attempt 生命周期一律以 exact `(SessionId, PhysicalUserMessageId)` 读取容量所有者已提交的租约完成校验：查询不得调用 scheduler、不得发放 fence、不得建立或回填第二份绑定状态。同一物理消息的重复观察幂等，拒绝原因保持一致；A/B 交错消息各自校验自身物理 id，互不串读。受管输入缺少已提交租约时 fail-closed 拒绝且 Host 输出不被改写，不得回退到 session-current 绑定副本，也不得把观察升级为受管租约；未绑定 Host 辅助会话保持豁免。Host 自有 `title` 请求即使复用已接纳的受管 user message，也不执行该工作的 provider step：`chat.params` 保留其独立模型和参数，不消费原 execution 租约、不发放新 lease、不修改受管 target；普通受管请求的模型、participant 或未知 agent 漂移仍须拒绝。attempt plan 冻结与 `ProviderStarted` 持久化按 exact key 查验 durable Accepted 执行，缺失即明确拒绝，不得兜底重建准入；terminal 后的迟到事件不得复活准入。
+`chat.params`、provider step 门禁与 provider attempt 生命周期一律以 exact `(SessionId, PhysicalUserMessageId)` 读取容量所有者已提交的租约完成校验：查询不得调用 scheduler、不得发放 fence、不得建立或回填第二份绑定状态。同一物理消息的重复观察幂等，拒绝原因保持一致；A/B 交错消息各自校验自身物理 id，互不串读。受管输入缺少已提交租约时 fail-closed 拒绝且 Host 输出不被改写，不得回退到 session-current 绑定副本，也不得把观察升级为受管租约；未绑定 Host 辅助会话保持豁免。Host 自有 `title` 请求即使复用已接纳的受管 user message，也不执行该工作的 provider step：`chat.params` 保留其独立模型和参数，不消费原 execution 租约、不发放新 lease、不修改受管 target。普通受管请求只读查验 exact lease 并投影温度；agent 与 model/reasoning 不漂移由 execution-model-routing-009 的测试期性质保证，运行时不再因漂移拒绝。attempt plan 冻结与 `ProviderStarted` 持久化按 exact key 查验 durable Accepted 执行，缺失即明确拒绝，不得兜底重建准入；terminal 后的迟到事件不得复活准入。
 
 活跃 run 的 `HumanMessage` / `BusyAgentNudge` 在 Host 保存前不得撤销旧 committed lease。provider transform 选择可见新输入时，先经 managed-chat-execution-003 的独立准入操作验证 exact Accepted、同 run 与旧 opaque lease，交接原容量并提交新 exact lease，然后执行只读门禁。不得把任意缺失租约视为追加材料或从 session-current 猜造身份。Join 的输入唤醒只消费已保存消息的 exact 可见回执，不在 `chat.message` 保存前唤醒。

@@ -9,5 +9,5 @@ module DualWriteBridge =
     let writeBoth (store: IEventStore) (journal: AgentJournal) events fact =
         store.Append events |> ignore
         journal.AppendAgent fact |> ignore
-        let legacyPath = "wanxiangshu-next/runtimes/x.ndjson"
+        let legacyPath = "wanxiangshu/runtimes/x.ndjson"
         ignore legacyPath

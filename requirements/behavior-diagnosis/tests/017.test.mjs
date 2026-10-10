@@ -130,7 +130,7 @@ const setupOwner = async (t) => {
     ports,
     calls,
     dir,
-    writerFile: join(dir, 'wanxiang', 'events', `writer-blog-${n}.ndjson`),
+    writerFile: join(dir, 'wanxiangshu', 'events', `writer-blog-${n}.ndjson`),
   }
 }
 const idleObservation = (ports, ids, run, { quiescent = true } = {}) => ({

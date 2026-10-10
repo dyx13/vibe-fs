@@ -41,13 +41,13 @@ Continue it for an integration consequence that belongs to that road's
 destination.
 Continue it for recovery after a setback on that road.
 Continue it for retry of the same delivery goal.
-Continue it when the delivery goal remains the same under changed evidence.
+Continue it when the delivery goal remains the same under changed facts.
 
 A change in stage, a retry, a correction, a recovery, or a difficult passage
 does not by itself create a new road.
-Changed evidence that still serves the same delivery goal does not create a
+Changed facts that still serve the same delivery goal does not create a
 new road either.
-Evidence may rewrite what the road still owes.
+Facts may rewrite what the road still owes.
 It does not, by itself, rename the destination.
 
 Open a new road only for an independently coherent destination.
@@ -69,7 +69,7 @@ wait for another road's private maturity.
 Do not treat a shared destination as a reason to braid independent purposes
 into a single chain of causation.
 
-A returned work record is evidence.
+A returned work record is a fact.
 It tells you what a road claims to have established, attempted, or left
 unresolved.
 It does not automatically tell you what the whole request should become next.
@@ -129,7 +129,7 @@ A shared gate is not that claim.
 When the request can be served by one road, use one road.
 When it requires several independently coherent destinations, open several.
 When later work still serves a destination already named, continue that road.
-When a return is only evidence, treat it as evidence.
+When a return is only facts, treat it as facts.
 When Host must reconcile states, leave that reconciliation to Host.
 
 Your success is not the number of roads you open.

@@ -15,7 +15,7 @@ import test from 'node:test'
       const root = realpathSync(mkdtempSync(path.join(tmpdir(), 'append-lock-acquire-')))
       const commonDir = path.join(root, '.git')
       const sourceWriterId = randomUUID()
-      const sourceFile = path.join(commonDir, 'wanxiang', 'events', `${sourceWriterId}.ndjson`)
+      const sourceFile = path.join(commonDir, 'wanxiangshu', 'events', `${sourceWriterId}.ndjson`)
       const seed = { id: 'e'.repeat(40), stream: 'proof/lock-acquire/old', type: 'JobRequested',
         parents: [], payload: { text: '原有事实' }, payloadRefs: [] }
       const incoming = { id: 'f'.repeat(40), stream: 'proof/lock-acquire/new', type: 'JobRequested',
@@ -47,7 +47,7 @@ import test from 'node:test'
           ok: false, error: {
             code: 'AppendNotAttempted', phase: 'GateAcquire', causeIsInjected: true,
             causeCode: scenario === 'mkdir-eio' ? 'EIO' : 'EACCES', causeSyscall: 'mkdir',
-            causePath: path.join(commonDir, 'wanxiang.lock'),
+            causePath: path.join(commonDir, 'wanxiangshu.lock'),
             requested: [incoming], prepared: null, cleanupFailures: [], priorRejection: null,
           },
         })
@@ -109,7 +109,7 @@ import test from 'node:test'
       const root = realpathSync(mkdtempSync(path.join(tmpdir(), 'append-boundary-')))
       const commonDir = path.join(root, '.git')
       const writerId = randomUUID()
-      const sourceFile = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
+      const sourceFile = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
       const cut = scenario === 'cut-release'
       const validation = scenario === 'validation-release'
       const preparation = scenario === 'preparation-random'
@@ -218,7 +218,7 @@ import test from 'node:test'
       const root = realpathSync(mkdtempSync(path.join(tmpdir(), 'journal-settlement-')))
       const commonDir = path.join(root, '.git')
       const writerId = randomUUID()
-      const sourceFile = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
+      const sourceFile = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
       const env = { ...process.env }
       delete env.NODE_TEST_CONTEXT
       const probe = async (mode, writer, request) => JSON.parse(await runVerificationToolProbe(process.execPath,
@@ -340,7 +340,7 @@ const withRepo = (writerId, fn) => {
 test('WHAT[durable-events-006] append_adds_one_local_line_and_Current_is_already_integrated', async () => {
   await withRepo('journal-append-proof', async (commonDir) => {
     const booted = mustOk(await journal.JournalSurface_bootWithWriterId(commonDir, 'journal-append-proof', 'rt_es_append', 4242, '2026-04-01T00:00:00Z'), 'boot')
-    const file = join(commonDir, 'wanxiang', 'events', 'journal-append-proof.ndjson')
+    const file = join(commonDir, 'wanxiangshu', 'events', 'journal-append-proof.ndjson')
 
     assert.equal(existsSync(file), false)
     const appended = mustOk(
@@ -398,7 +398,7 @@ for (const scenario of ['normal', 'fresh-release', 'duplicate-release', 'empty-r
     const root = realpathSync(mkdtempSync(path.join(tmpdir(), 'append-settlement-')))
     const commonDir = path.join(root, '.git')
     const writerId = randomUUID()
-    const writerFile = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
+    const writerFile = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
     const request = { incoming, canonicalLine, sourceWriterId: writerId }
     const expectedBytes = Buffer.from(canonicalLine, 'utf8')
     const noNewWrite = scenario === 'duplicate-release' || scenario === 'empty-release'

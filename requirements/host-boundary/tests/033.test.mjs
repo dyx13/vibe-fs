@@ -61,7 +61,7 @@ test('WHAT[host-boundary-033] Host title observes an admitted user without consu
   })
 })
 
-test('WHAT[host-boundary-033] title exemption does not admit managed model, participant or unknown-agent drift', async () => {
+test('WHAT[host-boundary-033] ordinary observations read the exact lease and project only temperature despite target drift', async () => {
   const journal = await import('../../../dist/Persistence/Journal/Surface.js')
   await withExecutablePlugin(async (hooks, _directory, _created, runtime) => {
     const sessionID = 'ses-title-drift-controls'
@@ -71,12 +71,12 @@ test('WHAT[host-boundary-033] title exemption does not admit managed model, part
     await hooks['chat.message']({ sessionID, messageID: message.id, agent: 'engineer' }, {
       message, parts: [{ type: 'text', text: 'Keep this managed execution exact.' }],
     })
-    for (const [agent, id, error] of [
-      ['engineer', 'drifted-model', /provider model\/reasoning drift/],
-      ['devops', message.model.modelID, /provider agent drift/],
-      ['unexpected-host-agent', message.model.modelID, /provider agent drift/],
-      ['Title', message.model.modelID, /provider agent drift/],
-      ['title-other', message.model.modelID, /provider agent drift/],
+    for (const [agent, id] of [
+      ['engineer', 'drifted-model'],
+      ['devops', message.model.modelID],
+      ['unexpected-host-agent', message.model.modelID],
+      ['Title', message.model.modelID],
+      ['title-other', message.model.modelID],
     ]) {
       const input = { sessionID, message, agent, model: {
         providerID: message.model.providerID, id, capabilities: { temperature: true },
@@ -87,12 +87,17 @@ test('WHAT[host-boundary-033] title exemption does not admit managed model, part
         messageModel: message.model, providerModel: input.model,
         capacity: routing.sharedCapacitySnapshot(), journal: journal.JournalSurface_snapshot(runtime.journal),
       }
-      assert.throws(() => hooks['chat.params'](input, output), error)
-      assert.deepEqual(structuredClone(input), before.input)
+      assert.doesNotThrow(() => hooks['chat.params'](input, output))
+      assert.deepEqual(structuredClone(input), {
+        ...before.input,
+        model: { ...before.input.model, options: { temperature: 1 },
+          variants: { [message.model.variant]: { temperature: 1 } } },
+      })
       assert.equal(input.message, message)
       assert.equal(message.model, before.messageModel)
       assert.equal(input.model, before.providerModel)
-      assert.deepEqual(output, before.output)
+      assert.deepEqual(output, { ...before.output, temperature: 1,
+        options: { ...before.output.options, temperature: 1 } })
       assert.deepEqual(routing.sharedCapacitySnapshot(), before.capacity)
       assert.deepEqual(journal.JournalSurface_snapshot(runtime.journal), before.journal)
     }

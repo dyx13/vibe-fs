@@ -16,7 +16,6 @@ module ExecutorToolSurface =
 
     /// Provider-visible execution verb.
     let runToolName: string = ExecutorTool.RunToolName
-    let queryShellToolName: string = "query-shell"
 
     type private SurfaceScope(scope: ToolRuntimeScope) =
         member _.Value = scope
@@ -68,16 +67,6 @@ module ExecutorToolSurface =
                description = spec.Description
                arguments = spec.Arguments |> List.map fst |> List.toArray |}
 
-    /// Plain metadata for the provider-visible query-shell contract.
-    let describeQueryShell (toolModule: obj) : obj =
-        let factory = ToolHostCodec.factory toolModule
-        let spec = ExecutorTool.queryShellSpec factory (createScope null None |> scopeOf)
-
-        box
-            {| name = spec.Name
-               description = spec.Description
-               arguments = spec.Arguments |> List.map fst |> List.toArray |}
-
     /// Execute the provider-visible run contract. `toolModule` is the Host's
     /// schema module, `sessions` is an opaque Host session capability, `args`
     /// and `context` are plain Host objects, and `recovery` is the owner-owned
@@ -91,20 +80,6 @@ module ExecutorToolSurface =
             attachRecovery scope recovery
 
         let spec = ExecutorTool.runSpec factory scope
-        let hostArgs = HostToolArguments args
-        let hostContext = ToolHostCodec.decodeContext context
-        spec.Execute hostArgs hostContext
-
-    /// Execute the provider-visible query-shell contract.
-    let queryShell (toolModule: obj) (sessions: obj) (args: obj) (context: obj) (recovery: string) : Task<string> =
-        let factory = ToolHostCodec.factory toolModule
-        let scopeHandle = createScope sessions (rawString context "workspaceDirectory")
-        let scope = scopeOf scopeHandle
-
-        if not (String.IsNullOrWhiteSpace recovery) then
-            attachRecovery scope recovery
-
-        let spec = ExecutorTool.queryShellSpec factory scope
         let hostArgs = HostToolArguments args
         let hostContext = ToolHostCodec.decodeContext context
         spec.Execute hostArgs hostContext

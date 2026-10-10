@@ -27,7 +27,7 @@ try {
     await hooks['chat.message']({ sessionID: sessionId, messageID: physical, agent: 'engineer' }, { message: user, parts: user.parts })
     runtime.pushHostMessage(sessionId, user)
     runtime.pushHostMessage(sessionId, assistant)
-    const key = join(realpathSync(join(directory, '.git')), 'wanxiangshu-next', 'runtimes')
+    const key = join(realpathSync(join(directory, '.git')), 'wanxiangshu', 'runtimes')
     scope = Strength.scopeAcquireShared(key)
     assert.equal(Strength.scopeFuseReason(scope), null)
     Strength.scopeTripFuse(scope, firstReason)

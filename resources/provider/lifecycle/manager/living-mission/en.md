@@ -1,6 +1,6 @@
 Keep the mission's living obligations truthful with todowrite. Truth keeps the account from lying; only accomplished outcomes discharge the debt.
 
-Change the account when the work, evidence, or genuine decomposition has changed.
+Change the account when the work, facts, or genuine decomposition has changed.
 
 Do not remove an obligation merely because you want the road to look shorter, the session to look complete, or the remainder to become someone else's future problem.
 

@@ -7,6 +7,7 @@ test('WHAT[relay-retirement-004] actual cleanup-blocked retirement keeps new wor
     assert.match(await execute(scores('REVISE')), /recorded = true/)
     const context = callID => ({sessionID: session, callID, messageID: 'work-run', agent: 'manager'})
     assert.match(await hooks.tool.fork.execute({calling: 'engineer', name: 'Ada', charge: 'Implement current work.'}, context('first-child')), /Ada/)
+    assert.match(await hooks.tool.suicide.execute({}, context('confirm')), /confirmation_required = true/)
     assert.match(await hooks.tool.suicide.execute({}, context('retire')), /finished = false/)
     const count = runtime.prompts.length
     const children = created.length

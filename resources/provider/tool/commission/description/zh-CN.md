@@ -12,7 +12,7 @@
 成功返回只证明被命名的道路已经接下 charge。
 它不证明目的地已经到达。
 
-新道路须同时给出 calling + name + charge。
+新道路给出 name + charge，calling 可选（省略时推导为 lead）。
 继续已知道路时，省略 calling，并使用同一个 name。
 
 calling 接受 lead：负责确定道路的推进方向、协调工作并判断完成的 Manager。

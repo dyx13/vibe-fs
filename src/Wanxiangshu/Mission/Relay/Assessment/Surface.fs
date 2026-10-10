@@ -6,23 +6,18 @@ open Wanxiangshu.Mission.Relay
 module Surface =
     let schemaJson = Model.schemaJson
 
-    let private scoreObject scores =
-        ScoreDimension.all
-        |> List.map (fun dimension ->
-            ScoreDimension.fieldName dimension
-            ==> ScoreGrade.format (ScoreVector.score dimension scores))
-        |> createObj
+    let private findingObject (finding: AssessmentFinding) =
+        box
+            {| acceptance_criteria = finding.AcceptanceCriteria
+               work_plan = finding.WorkPlan |}
 
     let parse (value: obj) =
         match Model.tryParse value with
         | Error error -> box {| ok = false; error = error |}
-        | Ok scores ->
+        | Ok findings ->
+            let values = AssessmentFindings.values findings
+
             box
                 {| ok = true
-                   scores = scoreObject scores
-                   allPerfect = ScoreVector.allPerfect scores
-                   lowDimensions =
-                    scores
-                    |> ScoreVector.lowDimensions
-                    |> List.map ScoreDimension.fieldName
-                    |> List.toArray |}
+                   findings = values |> List.map findingObject |> List.toArray
+                   passed = AssessmentFindings.isEmpty findings |}

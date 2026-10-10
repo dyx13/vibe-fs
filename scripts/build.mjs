@@ -9,9 +9,6 @@ import { execFileSync } from 'node:child_process'
 import { run as runSurfaceManifest } from './checks/js-surface-manifest.mjs'
 import { run as runModuleLinkage } from './checks/js-module-linkage.mjs'
 import {
-  writeLoopDetectorEnvelopeArtifact,
-} from './lib/derive-loop-detector-envelope.mjs'
-import {
   compileIncremental,
   resetOutputDirectory,
   planImpactCompile,
@@ -129,12 +126,27 @@ export class CrossProcessMutex {
 // ── Resource & Artifact Verification ─────────────────────────────────────────
 
 async function verifyArtifacts(targetRoot = root) {
-  // degeneration-guard-004: repository is the SSOT. Derive the current envelope on every build;
-  // materialize it only as an ephemeral runtime import.
-  try {
-    await writeLoopDetectorEnvelopeArtifact(targetRoot)
-  } catch (err) {
-    throw new Error(`Failed to derive loop detector repository envelope: ${err.message}`)
+  // degeneration-guard-004: repository is the SSOT, but the envelope is derived manually.
+  // Build never auto-derives it and never checks whether it changed; a missing artifact
+  // fails the build and points at the explicit derivation command.
+  const envelopeArtifact = path.join(targetRoot, 'dist/Execution/Session/LoopDetectorEnvelope.js')
+  if (!fs.existsSync(envelopeArtifact)) {
+    // A full rebuild stages the prior dist aside before compiling into a blank
+    // dist. The manually derived envelope is not an F# compile output, so it
+    // would otherwise be lost on every full rebuild. Preserve the existing
+    // manual artifact from the staged backup; this is not auto-derivation.
+    // Only when neither the current dist nor the staged backup carries the
+    // artifact do we fail and point at the explicit derivation command.
+    const stagedEnvelope = path.join(stagedBackupDirFor(path.join(targetRoot, 'dist')), 'Execution/Session/LoopDetectorEnvelope.js')
+    if (fs.existsSync(stagedEnvelope)) {
+      fs.mkdirSync(path.dirname(envelopeArtifact), { recursive: true })
+      fs.copyFileSync(stagedEnvelope, envelopeArtifact)
+    } else {
+      throw new Error(
+        `missing loop detector envelope artifact: ${envelopeArtifact}\n` +
+          'Run `node scripts/derive-envelope.mjs` to derive it from the repository corpus.',
+      )
+    }
   }
 
   const entry = path.join(targetRoot, 'dist/OpenCode/Plugin/Plugin.js')

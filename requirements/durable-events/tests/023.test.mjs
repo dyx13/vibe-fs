@@ -86,7 +86,6 @@ test('WHAT[durable-events-023] single-field family folds own their slice and dec
     'Execution/Fission/Fold.fs',
     'Interaction/Concern/Fold.fs',
     'Interaction/Attention/Fold.fs',
-    'Enforcer/InstitutionalLearning/Fold.fs',
   ])
     assert.equal(
       existsSync(join(SOURCE_ROOT, source)),

@@ -17,7 +17,6 @@
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.foundation-outcome.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.cognitive-environment.resources-runtimeresources.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.composition-durable-fact.fsproj"/><ProjectReference Include="Wanxiangshu.Owner.durable-composition.durable-adapter-attention-concern.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.durable-composition.durable-adapter-institutional-learning.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.composition-durable-projection.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.persistence-journal-surface.fsproj"/>

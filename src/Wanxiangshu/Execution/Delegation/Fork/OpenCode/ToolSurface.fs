@@ -41,7 +41,7 @@ module ForkToolSurface =
           Text: string
           Options: SessionPromptOptions }
 
-    type private ForkSessionPort(abortSession: SessionId -> Task<Result<unit, string>>) =
+    type private ForkSessionPort(abortSession: SessionId -> Task<Result<unit, string>>, existingChildIds: Set<string>) =
         let children = ResizeArray<OpenCodeChildInfo>()
         // DSL-MUTABLE: algorithm-scratch — latest prompted session in the harness
         let mutable latestPromptedSession: SessionId option = None
@@ -328,8 +328,18 @@ module ForkToolSurface =
                 |> Task.FromResult
 
             member _.CreateChildSession(parent, options) =
-                let childId =
-                    SessionId.create (sprintf "%s-fork-child-%d" (SessionId.value parent) (children.Count + 1))
+                let prefix = sprintf "%s-fork-child-" (SessionId.value parent)
+
+                let isTaken (candidate: SessionId) =
+                    (children |> Seq.exists (fun child -> child.SessionId = candidate))
+                    || Set.contains (SessionId.value candidate) existingChildIds
+
+                let rec pick index =
+                    let candidate = SessionId.create (sprintf "%s%d" prefix index)
+
+                    if isTaken candidate then pick (index + 1) else candidate
+
+                let childId = pick (children.Count + 1)
 
                 children.Add
                     { SessionId = childId
@@ -503,7 +513,13 @@ module ForkToolSurface =
             for (sessionId, _, _, agent) in admissions do
                 ownerAgents.Add(SessionId.value sessionId, agent)
 
-            let sessionPort = ForkSessionPort(abortSession)
+            let existingChildIds =
+                (AgentJournal.snapshot journal).AgentProjections.HandleByChildSession
+                |> Map.toSeq
+                |> Seq.map (fun (childId, _) -> SessionId.value childId)
+                |> Set.ofSeq
+
+            let sessionPort = ForkSessionPort(abortSession, existingChildIds)
             let sessions = sessionPort :> ISessionHostPort
 
             let childWorkRecordForRun sessionId range providerRun =
@@ -741,6 +757,34 @@ module ForkToolSurface =
 
         spec.Execute args (managerContext harness owner)
 
+    let executeCommission
+        (value: obj)
+        (toolModule: obj)
+        (owner: string)
+        (calling: string)
+        (byname: string)
+        (charge: string)
+        : Task<string> =
+        task {
+            let harness = unbox<ForkHarness> value
+
+            let spec =
+                ForkTool.orchestratorSpec (ToolHostCodec.factory toolModule) harness.Scope
+
+            let args =
+                HostToolArguments(
+                    box
+                        {| calling = if String.IsNullOrWhiteSpace calling then null else calling
+                           name = byname
+                           charge = charge
+                           expected_tool_calls = null |}
+                )
+
+            let orchestratorContext = managerContext harness owner
+
+            return! spec.Execute args orchestratorContext
+        }
+
     let captureOwnerOpening (value: obj) (owner: string) (text: string) : Task =
         task {
             let harness = unbox<ForkHarness> value
@@ -931,6 +975,12 @@ module ForkToolSurface =
         let harness = unbox<ForkHarness> value
         harness.Sessions.SetNextSendOutcome(SendOutcome.AdmittedWithReceipt(TransportReceipt.create receipt))
 
+    /// Parent cancellation runs the production cancel chain: Scope.CancelSessionChildren
+    /// -> HostForkRuntime.CancelAndDrain -> HostForkChildDispatch.cancelParent. That
+    /// chain commits durable HandleAbandoned (filtered by its process-owned active-work
+    /// rule) before its teardown abort, so the harness must not repeat the durable
+    /// abandon itself: an early abandon would leave the chain nothing to cancel and the
+    /// physical AbortSession would never run.
     let cancelOwnerChildren (value: obj) (owner: string) : Task =
         let harness = unbox<ForkHarness> value
         harness.Scope.CancelSessionChildren(SessionId.value (harness.OwnerSession owner))
@@ -1413,25 +1463,19 @@ module ForkToolSurface =
                       RequirementSetDigest = sprintf "req:%s" sessionStr
                       EvidenceFrontierDigest = sprintf "evidence:%s" sessionStr }
 
-                let scores =
-                    ScoreVector.tryCreate
-                        [ ScoreGrade.Perfect
-                          ScoreGrade.Perfect
-                          ScoreGrade.Perfect
-                          ScoreGrade.Perfect
-                          ScoreGrade.Perfect
-                          ScoreGrade.Perfect
-                          ScoreGrade.Perfect
-                          ScoreGrade.Revise ]
+                let findings =
+                    AssessmentFindings.tryCreate
+                        [ { AcceptanceCriteria = "the delivery reaches the requested target state"
+                            WorkPlan = "close the remaining gap before the next review" } ]
                     |> Result.defaultWith (fun _ ->
-                        failwith "injectAcceptedAssessment: failed to construct score vector")
+                        failwith "injectAcceptedAssessment: failed to construct assessment findings")
 
                 let events =
                     match existingRoad with
                     | None ->
                         [ RelayEvent.RoadOpened(roadId, authRev, physUser)
                           RelayEvent.IncumbencyOpened(incId, snapId)
-                          RelayEvent.AssessmentCommitted(assessId, incId, binding, snapId, authRev, scores) ]
+                          RelayEvent.AssessmentCommitted(assessId, incId, binding, snapId, authRev, findings) ]
                     | Some road ->
                         match road.ActiveIncumbency, road.ActiveSnapshotId, road.ActiveAuthorityRevision with
                         | Some activeInc, Some activeSnap, Some activeRev ->
@@ -1441,7 +1485,7 @@ module ForkToolSurface =
                                   binding,
                                   activeSnap,
                                   activeRev,
-                                  scores
+                                  findings
                               ) ]
                         | _ ->
                             let currentRev =
@@ -1458,7 +1502,7 @@ module ForkToolSurface =
 
                             roadOpened
                             @ [ RelayEvent.IncumbencyOpened(incId, snapId)
-                                RelayEvent.AssessmentCommitted(assessId, incId, binding, snapId, currentRev, scores) ]
+                                RelayEvent.AssessmentCommitted(assessId, incId, binding, snapId, currentRev, findings) ]
 
                 match RelayTransaction.create events with
                 | Error error ->

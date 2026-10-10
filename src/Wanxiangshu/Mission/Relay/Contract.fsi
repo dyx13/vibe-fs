@@ -46,40 +46,16 @@ module RetirementId =
 module ManagerLoopGate =
     val gateKind: retirementId: RetirementId -> string
 
-[<RequireQualifiedAccess>]
-type ScoreDimension =
-    | LanguageAlgorithms
-    | Simplicity
-    | Structure
-    | Granularity
-    | TestsEvidence
-    | LogicReliabilityBoundaries
-    | CallerErgonomics
-    | Completeness
+type AssessmentFinding =
+    { AcceptanceCriteria: string
+      WorkPlan: string }
 
-module ScoreDimension =
-    val all: ScoreDimension list
-    val fieldName: ScoreDimension -> string
+type AssessmentFindings
 
-type ScoreGrade =
-    | Perfect
-    | Revise
-    | NotApplicable
-
-module ScoreGrade =
-    val all: ScoreGrade list
-    val format: ScoreGrade -> string
-    val tryParse: string -> Result<ScoreGrade, string>
-
-type ScoreVector
-
-module ScoreVector =
-    val tryCreate: ScoreGrade list -> Result<ScoreVector, string>
-    val tryCreateStrings: string list -> Result<ScoreVector, string>
-    val values: ScoreVector -> ScoreGrade list
-    val allPerfect: ScoreVector -> bool
-    val lowDimensions: ScoreVector -> ScoreDimension list
-    val score: ScoreDimension -> ScoreVector -> ScoreGrade
+module AssessmentFindings =
+    val tryCreate: AssessmentFinding list -> Result<AssessmentFindings, string>
+    val values: AssessmentFindings -> AssessmentFinding list
+    val isEmpty: AssessmentFindings -> bool
 
 type AssessmentBinding =
     { PhysicalUserMessageId: string

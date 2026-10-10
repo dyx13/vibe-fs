@@ -241,7 +241,7 @@ module HookDispatcher =
         joinPath (managedSocketDirectory commonDir) "ssh-%C"
 
     let private managedSshWrapperPath commonDir =
-        joinPath (joinPath commonDir "wanxiang") "ssh-command"
+        joinPath (joinPath commonDir "wanxiangshu") "ssh-command"
 
     let private managedSshWrapperCommand commonDir =
         shellQuote (managedSshWrapperPath commonDir)

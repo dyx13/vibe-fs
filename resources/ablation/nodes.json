@@ -342,13 +342,6 @@
       "borrowed_surface": []
     },
     {
-      "id": "institutional-learning",
-      "package": "institutional-learning",
-      "station": 49,
-      "kind": "package",
-      "borrowed_surface": []
-    },
-    {
       "id": "obligation-ledger",
       "package": "obligation-ledger",
       "station": 50,
@@ -657,11 +650,6 @@
     },
     {
       "from": "requirement-system",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "requirement-system",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -917,11 +905,6 @@
     },
     {
       "from": "verification-system",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "verification-system",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -1172,11 +1155,6 @@
     },
     {
       "from": "js-semantic-surface",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "js-semantic-surface",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -1422,11 +1400,6 @@
     },
     {
       "from": "structured-workflow",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "structured-workflow",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -1667,11 +1640,6 @@
     },
     {
       "from": "host-boundary",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "host-boundary",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -1907,11 +1875,6 @@
     },
     {
       "from": "session-ontology",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "session-ontology",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -2142,11 +2105,6 @@
     },
     {
       "from": "participant-identity",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "participant-identity",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -2372,11 +2330,6 @@
     },
     {
       "from": "provider-language",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "provider-language",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -2597,11 +2550,6 @@
     },
     {
       "from": "office-capability",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "office-capability",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -2817,11 +2765,6 @@
     },
     {
       "from": "capability-enforcement",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "capability-enforcement",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -3032,11 +2975,6 @@
     },
     {
       "from": "cognitive-environment",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "cognitive-environment",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -3242,11 +3180,6 @@
     },
     {
       "from": "action-affordance",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "action-affordance",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -3447,11 +3380,6 @@
     },
     {
       "from": "participant-horizon",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "participant-horizon",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -3647,11 +3575,6 @@
     },
     {
       "from": "provider-projection",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "provider-projection",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -3842,11 +3765,6 @@
     },
     {
       "from": "repository-investigation",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "repository-investigation",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -4032,11 +3950,6 @@
     },
     {
       "from": "requirement-grounding",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "requirement-grounding",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -4217,11 +4130,6 @@
     },
     {
       "from": "repository-programming",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "repository-programming",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -4397,11 +4305,6 @@
     },
     {
       "from": "time-capability",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "time-capability",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -4572,11 +4475,6 @@
     },
     {
       "from": "process-execution",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "process-execution",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -4742,11 +4640,6 @@
     },
     {
       "from": "causal-wait",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "causal-wait",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -4907,11 +4800,6 @@
     },
     {
       "from": "durable-events",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "durable-events",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -5067,11 +4955,6 @@
     },
     {
       "from": "effect-accounting",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "effect-accounting",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -5222,11 +5105,6 @@
     },
     {
       "from": "semantic-trace",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "semantic-trace",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -5372,11 +5250,6 @@
     },
     {
       "from": "context-compression",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "context-compression",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -5517,11 +5390,6 @@
     },
     {
       "from": "prefix-stability",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "prefix-stability",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -5657,11 +5525,6 @@
     },
     {
       "from": "work-record",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "work-record",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -5792,11 +5655,6 @@
     },
     {
       "from": "behavior-diagnosis",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "behavior-diagnosis",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -5922,11 +5780,6 @@
     },
     {
       "from": "guidance-delivery",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "guidance-delivery",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6047,11 +5900,6 @@
     },
     {
       "from": "attention-regulation",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "attention-regulation",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6167,11 +6015,6 @@
     },
     {
       "from": "execution-failure-policy",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "execution-failure-policy",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6282,11 +6125,6 @@
     },
     {
       "from": "interaction-authority",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "interaction-authority",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6392,11 +6230,6 @@
     },
     {
       "from": "managed-chat-execution",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "managed-chat-execution",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6497,11 +6330,6 @@
     },
     {
       "from": "execution-model-routing",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "execution-model-routing",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6597,11 +6425,6 @@
     },
     {
       "from": "managed-session-lifecycle",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "managed-session-lifecycle",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6692,11 +6515,6 @@
     },
     {
       "from": "dispatch-protocol",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "dispatch-protocol",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6782,11 +6600,6 @@
     },
     {
       "from": "provider-attempt-recovery",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "provider-attempt-recovery",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6867,11 +6680,6 @@
     },
     {
       "from": "host-provider-failure-ownership",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "host-provider-failure-ownership",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -6947,11 +6755,6 @@
     },
     {
       "from": "degeneration-guard",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "degeneration-guard",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7022,11 +6825,6 @@
     },
     {
       "from": "crash-reconciliation",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "crash-reconciliation",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7092,11 +6890,6 @@
     },
     {
       "from": "durable-convergence",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "durable-convergence",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7157,11 +6950,6 @@
     },
     {
       "from": "delegation",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "delegation",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7217,11 +7005,6 @@
     },
     {
       "from": "concern-routing",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "concern-routing",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7272,11 +7055,6 @@
     },
     {
       "from": "intra-participant-parallelism",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "intra-participant-parallelism",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7322,11 +7100,6 @@
     },
     {
       "from": "knowledge-reuse",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "knowledge-reuse",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7367,11 +7140,6 @@
     },
     {
       "from": "epistemic-reasoning",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "epistemic-reasoning",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7407,11 +7175,6 @@
     },
     {
       "from": "speculative-investigation",
-      "to": "institutional-learning",
-      "kind": "station-order"
-    },
-    {
-      "from": "speculative-investigation",
       "to": "obligation-ledger",
       "kind": "station-order"
     },
@@ -7442,41 +7205,6 @@
     },
     {
       "from": "speculative-investigation",
-      "to": "distribution",
-      "kind": "station-order"
-    },
-    {
-      "from": "institutional-learning",
-      "to": "obligation-ledger",
-      "kind": "station-order"
-    },
-    {
-      "from": "institutional-learning",
-      "to": "relay-incumbency",
-      "kind": "station-order"
-    },
-    {
-      "from": "institutional-learning",
-      "to": "relay-assessment",
-      "kind": "station-order"
-    },
-    {
-      "from": "institutional-learning",
-      "to": "relay-context-projection",
-      "kind": "station-order"
-    },
-    {
-      "from": "institutional-learning",
-      "to": "relay-retirement",
-      "kind": "station-order"
-    },
-    {
-      "from": "institutional-learning",
-      "to": "change-integration",
-      "kind": "station-order"
-    },
-    {
-      "from": "institutional-learning",
       "to": "distribution",
       "kind": "station-order"
     },

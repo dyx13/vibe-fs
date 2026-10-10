@@ -29,7 +29,6 @@ import {
   journalEventLines,
   factPayloads,
   getOrCreateSharedObserver,
-  readBlobRef,
 } from './journal-observer.js';
 import { WAIT_FACT_WINDOW_MS } from './time-budget.js';
 import { isAppendOnlyPrefix, sealHolds, wireOf } from './provider-wire.js';
@@ -256,7 +255,14 @@ export function assertJoinWakePath(scenario, owner, label = 'long-stroke') {
   assert.deepEqual(consumed[0].CompletionRef, completed[0].CompletionRef);
   assert.deepEqual(consumed[0].CompletionDigest, completed[0].CompletionDigest);
   assert.ok(typeof consumed[0].ConsumptionId === 'string' && consumed[0].ConsumptionId.length > 0);
-  const bytes = readBlobRef(workDir, completed[0].CompletionRef);
+  const completionRef = completed[0].CompletionRef;
+  const token = Array.isArray(completionRef) ? completionRef.at(-1) : completionRef;
+  const digest = /^blobs\/([0-9a-f]{64})$/.exec(token)?.[1];
+  assert.ok(digest, `${label}: original Work completion must name a content-addressed payload`);
+  const encoded = lines.map((line) => JSON.parse(line))
+    .map((event) => event.payloads?.[digest]).find((value) => value !== undefined);
+  assert.equal(typeof encoded, 'string', `${label}: original Work completion must be embedded in a durable event`);
+  const bytes = Buffer.from(encoded, 'base64');
   assert.equal(createHash('sha256').update(bytes).digest('hex'), completed[0].CompletionDigest?.[1],
     `${label}: original Work completion bytes must match their durable digest`);
   const body = JSON.parse(bytes);
@@ -438,33 +444,26 @@ export async function bindManagerLoopSequence(scenario) {
   assert.ok(humanAudit, 'long-stroke: humanroot-loop audit entry is required');
   const initialHumanAudit = humanAudit.respond;
 
-  const scores = (completeness) => ({
-    language_algorithms: 'PERFECT',
-    simplicity: 'PERFECT',
-    structure: 'PERFECT',
-    granularity: 'PERFECT',
-    tests_evidence: 'PERFECT',
-    logic_reliability_boundaries: 'PERFECT',
-    caller_ergonomics: 'PERFECT',
-    completeness,
-  });
+  const scores = (grade) => grade === 'REVISE'
+    ? [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }]
+    : [];
   const candidatePerfect = () => ({
     type: 'tool-call',
     tool: 'review',
     prefixText: 'Independent audit of this iteration snapshot finds every required quality dimension complete and supported by the current workspace evidence.',
-    args: scores('PERFECT'),
+    args: { findings: scores('PERFECT') },
   });
   const repairAudit = () => ({
     type: 'tool-call',
     tool: 'review',
     prefixText: 'Independent audit finds the rebase conflict still requires owned repair work, so completeness remains open on this snapshot.',
-    args: scores('REVISE'),
+    args: { findings: scores('REVISE') },
   });
   const humanPerfect = () => ({
     type: 'tool-call',
     tool: 'review',
     prefixText: 'HumanRoot loop next iteration independently audits the current snapshot as complete.',
-    args: scores('PERFECT'),
+    args: { findings: scores('PERFECT') },
   });
   const retire = () => ({ type: 'tool-call', tool: 'suicide', args: {} });
   const joinOwnedWork = () => ({ type: 'tool-call', tool: 'join', args: {} });

@@ -272,7 +272,7 @@ const assistantMessage = (sessionID, parentID, id) => ({
   parts: [],
 })
 const providerStartFacts = (directory) => {
-  const events = join(directory, '.git', 'wanxiang', 'events')
+  const events = join(directory, '.git', 'wanxiangshu', 'events')
   return readdirSync(events)
     .filter(name => name.endsWith('.ndjson'))
     .flatMap(name => readFileSync(join(events, name), 'utf8').trim().split('\n'))

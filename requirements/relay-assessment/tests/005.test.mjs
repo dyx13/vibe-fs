@@ -13,7 +13,7 @@ test('WHAT[relay-assessment-005] no-revise assessment projects assessment snapsh
     'assessment-1',
     'snapshot-1',
     'authority-1',
-    ...Array(8).fill('PERFECT'),
+    [],
   )
   assert.equal(assessed.ok, true)
   assert.equal(relay.view(assessed.state, 'road-1').phase, 'PerfectAwaitingRetirement')

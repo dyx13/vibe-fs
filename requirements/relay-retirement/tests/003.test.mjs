@@ -8,6 +8,7 @@ test('WHAT[relay-retirement-003] an actual accepted unfinished Engineer child bl
     const forked = await hooks.tool.fork.execute({calling: 'engineer', name: 'Ada', charge: 'Implement the requested behavior.'}, {sessionID: session, callID: 'fork-child', messageID: 'work-run', agent: 'manager'})
     assert.match(forked, /Ada/)
     assert.equal(runtime.prompts.length, 1)
+    assert.match(await hooks.tool.suicide.execute({}, {sessionID: session, callID: 'confirm-retire', messageID: 'work-run', agent: 'manager'}), /confirmation_required = true/)
     const result = await hooks.tool.suicide.execute({}, {sessionID: session, callID: 'retire-with-child', messageID: 'work-run', agent: 'manager'})
     assert.match(result, /finished = false/)
     assert.match(result, /blocker_count = [1-9]/)

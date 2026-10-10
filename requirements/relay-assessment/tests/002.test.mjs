@@ -5,14 +5,17 @@ import test from 'node:test'
 import * as relay from '../../../dist/Mission/Relay/Surface.js'
 import { JournalSurface_snapshot } from '../../../dist/Persistence/Journal/Surface.js'
 
-const scores = ['PERFECT', 'REVISE', 'PERFECT', 'REVISE', 'PERFECT', 'PERFECT', 'REVISE', 'PERFECT']
+// 语言锚定：下面两条断言比较英文指令资源的渲染结果；显式设为英文使断言不随宿主环境语言漂移。
+process.env.WANXIANGSHU_PROVIDER_LANGUAGE = 'en'
+
+const gap = [{ acceptance_criteria: 'the delivery still misses part of the target state', work_plan: 'close the remaining gap' }]
 
 const open = (state, snapshot = 'snapshot-1') =>
   relay.openIncumbency(state, 'road-1', 'inc-1', snapshot, 'authority-1')
 
 test('WHAT[relay-assessment-002] second assessment in one iteration is rejected without overwriting the first', () => {
   const opened = open(relay.empty())
-  const assessed = relay.assess(opened.state, 'road-1', 'inc-1', 'assessment-1', 'snapshot-1', 'authority-1', ...scores)
+  const assessed = relay.assess(opened.state, 'road-1', 'inc-1', 'assessment-1', 'snapshot-1', 'authority-1', gap)
   assert.equal(assessed.ok, true)
 
   const replayed = relay.assess(
@@ -22,7 +25,7 @@ test('WHAT[relay-assessment-002] second assessment in one iteration is rejected 
     'assessment-1',
     'snapshot-1',
     'authority-1',
-    ...scores,
+    gap,
   )
   assert.equal(replayed.ok, true)
 
@@ -33,7 +36,7 @@ test('WHAT[relay-assessment-002] second assessment in one iteration is rejected 
     'assessment-1',
     'snapshot-1',
     'authority-1',
-    ...Array(8).fill('PERFECT'),
+    [],
   )
   assert.deepEqual(conflicted, { ok: false, error: 'AssessmentReplayConflict' })
 
@@ -44,14 +47,14 @@ test('WHAT[relay-assessment-002] second assessment in one iteration is rejected 
     'assessment-2',
     'snapshot-1',
     'authority-1',
-    ...Array(8).fill('PERFECT'),
+    [],
   )
   assert.deepEqual(second, { ok: false, error: 'AssessmentAlreadySubmitted' })
 })
 
 test('WHAT[relay-assessment-002] cross-iteration replay of another iteration assessment is rejected', () => {
   const opened = open(relay.empty())
-  const assessed = relay.assess(opened.state, 'road-1', 'inc-1', 'assessment-1', 'snapshot-1', 'authority-1', ...scores)
+  const assessed = relay.assess(opened.state, 'road-1', 'inc-1', 'assessment-1', 'snapshot-1', 'authority-1', gap)
   assert.equal(assessed.ok, true)
   const retired = relay.retireContinue(assessed.state, 'road-1', 'inc-1', 'ret-1', 'run-1', 'tool-1', 'snapshot-1')
   assert.equal(retired.ok, true)
@@ -64,7 +67,7 @@ test('WHAT[relay-assessment-002] cross-iteration replay of another iteration ass
     'assessment-1',
     'snapshot-2',
     'authority-1',
-    ...scores,
+    gap,
   )
   assert.deepEqual(replayed, { ok: false, error: 'AssessmentReplayConflict' })
 })
@@ -97,7 +100,7 @@ test('WHAT[relay-assessment-002] changed public narrative binding rejects replay
     assert.ok(narrative)
     const original = narrative.text
     const accepted = structuredClone(JournalSurface_snapshot(runtime.journal))
-    const eventDirectory = join(directory, '.git', 'wanxiang', 'events')
+    const eventDirectory = join(directory, '.git', 'wanxiangshu', 'events')
     const facts = () => readdirSync(eventDirectory).filter(name => name.endsWith('.ndjson')).sort()
       .map(name => ({ name, bytes: readFileSync(join(eventDirectory, name)) }))
     const acceptedFacts = facts()
@@ -160,5 +163,21 @@ test('WHAT[relay-assessment-002] cross-incumbency replay of a retired review cal
     // replay: it never becomes an idempotent hit on the successor's result.
     const replayed = await hooks.tool.review.execute(input, {sessionID: session, callID: 'review-call', messageID: 'review-run', agent: 'manager'})
     assert.match(replayed, /recorded = false/)
+  })
+})
+
+const renderedInstruction = name => readFileSync(new URL(`../../../resources/provider/runtime/${name}/en.md`, import.meta.url), 'utf8').trim().split('\n').map(line => '# ' + line).join('\n')
+
+test('WHAT[relay-assessment-001] empty findings terminate the assessment with the finish instruction', async () => {
+  await withReview(async ({execute}) => {
+    const result = await execute({ findings: [] })
+    assert.equal(result, renderedInstruction('manager-finish') + '\n\nrecorded = true\n')
+  })
+})
+
+test('WHAT[relay-assessment-001] non-empty findings own repair work and select the work instruction', async () => {
+  await withReview(async ({execute}) => {
+    const result = await execute(reviewScores('REVISE'))
+    assert.equal(result, renderedInstruction('manager-work') + '\n\nrecorded = true\n')
   })
 })

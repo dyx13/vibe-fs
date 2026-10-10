@@ -84,7 +84,7 @@
 - **约束**：系统必须对所有当前暴露给 Provider 的工具完成完备的分类覆盖，差集门禁必须能严格拦截任何未判定工具。
 - **选择**：`query-shell` 不进入 `classifyTool` 分类，也不发任何协议定义；同时，差集门禁以 `StaticTools.knownToolNames` 为唯一权威输入源，不包含 `ExecutorTool.fs` 中的历史定义。
 - **替代方案及其反驳**：
-  1. *为 `query-shell` 发送 `NoEstimate` 分类*：三源交叉核验表明，`query-shell` 虽在 `ExecutorTool.fs` 和 `ExecutorToolSurface.fs` 尚存历史 AST 导出，但早已从静态工具清单 `StaticTools.knownToolNames` 中剔除；且其准入权限绑定在已退役的 `query-shell-worker` 角色上。该角色早在 GAP-091/078 中正式退役，当前 Provider 根本不可见该工具。为不可见的已退役工具添加协议分类，是给死代码发门禁通行证。
+  1. *为 `query-shell` 发送 `NoEstimate` 分类*：`query-shell` 已从 `ExecutorTool.fs` 与 `ExecutorToolSurface.fs` 彻底移除，也早已从静态工具清单 `StaticTools.knownToolNames` 中剔除；其准入权限曾绑定在已退役的 `query-shell-worker` 角色上，当前 Provider 根本不可见该工具。为不存在的工具添加协议分类，是给死代码发门禁通行证。
   2. *将 `query-shell` 加入 `knownToolNames` 以平息全仓字面量扫描*：这是本末倒置。差集门禁的职责是防腐烂——防止“新增工具进入系统名册却遗漏分类”，它的权威边界是“当前可暴露的已知工具名册”，而不是去穷举全仓所有历史遗留字符串。把已退役符号重新塞入名册会严重污染当前系统的权限与能力底账。
 - **重新考虑的条件**：若未来业务需要重新启用轻量级只读查询工具，且将其正式注册回 `StaticTools.knownToolNames` 时，必须在第一优先级同步为其定义明确的只读估计分类。
 

@@ -2,6 +2,14 @@ namespace Wanxiangshu.Interaction.Concern
 
 open Wanxiangshu.Foundation.Identity
 
+/// Reserved semantic addresses that do not belong to any session mailbox.
+[<RequireQualifiedAccess>]
+module ReservedAddress =
+    /// The human user. Publishing here raises a user-visible notification.
+    let User = "user"
+    /// The user-facing session without an assigned name.
+    let Root = "root"
+
 type ConcernMailbox =
     { Id: string
       Concern: string

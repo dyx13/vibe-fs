@@ -8,7 +8,6 @@ open Fable.Core.JsInterop
 open Thoth.Json
 open Wanxiangshu.Change
 open Wanxiangshu.Context.Companion
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Execution.Delegation
 open Wanxiangshu.Execution.Fission
 open Wanxiangshu.Execution.Session.ChatExecution
@@ -295,9 +294,6 @@ module Envelope =
     let private concernFactDecoder =
         Decode.Auto.generateDecoderCached<ConcernFactCases> (extra = extra)
 
-    let private institutionalLearningFactDecoder =
-        Decode.Auto.generateDecoderCached<InstitutionalLearningFactCases> (extra = extra)
-
     let private cognitionFactDecoder =
         Decode.Auto.generateDecoderCached<LegacyCognitionFact> (extra = extra)
 
@@ -321,7 +317,6 @@ module Envelope =
             | "ChatExecution" -> familyCase chatExecutionFactDecoder AgentFact.ChatExecution
             | "Attention" -> familyCase attentionFactDecoder AgentFact.Attention
             | "Concern" -> familyCase concernFactDecoder AgentFact.Concern
-            | "InstitutionalLearning" -> familyCase institutionalLearningFactDecoder AgentFact.InstitutionalLearning
             | "Cognition" -> familyCase cognitionFactDecoder AgentFact.Cognition
             | name -> Decode.fail ("Cannot find AgentFact case " + name))
 

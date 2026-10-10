@@ -1,1 +1,0 @@
-{{field}} 质量评分；PERFECT、REVISE 或 N/A

@@ -37,7 +37,7 @@ export const observeFact = async (directory, name, action) => {
   const observed = Promise.withResolvers()
   const before = facts(directory, name).length
   const append = fs.appendFileSync
-  const eventRoot = realpathSync(join(directory, '.git', 'wanxiang', 'events')) + sep
+  const eventRoot = realpathSync(join(directory, '.git', 'wanxiangshu', 'events')) + sep
   fs.appendFileSync = (path, content, ...options) => {
     append(path, content, ...options)
     if (typeof path === 'string' && path.startsWith(eventRoot) && String(content).includes(`"${name}"`)) {

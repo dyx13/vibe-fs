@@ -1,7 +1,6 @@
 namespace Wanxiangshu.Composition.Durable
 
 open Wanxiangshu.Context.Prefix
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Execution.Fission
 open Wanxiangshu.Interaction.Attention
 open Wanxiangshu.Interaction.Concern
@@ -78,33 +77,9 @@ module ProjectionUpdate =
                     Attention =
                         projection.Attention
                         |> AttentionProjection.record payload.SessionId payload.OccurrenceId payload.Text }
-
-    let applyAttentionLearning
-        (projection: AgentProjectionSet)
-        (fact: InstitutionalLearningFactCases)
-        : Result<AgentProjectionSet, FoldRejection> =
-        match fact with
-        | InstitutionalLearningFactCases.LearningDispositionCommitted payload ->
+        | AttentionFactCases.DeferredWorkConsumed payload ->
             Ok
                 { projection with
                     Attention =
                         projection.Attention
-                        |> AttentionProjection.resurface
-                            payload.SessionId
-                            payload.OccurrenceId
-                            payload.ResurfacedDeferredWorkIds }
-        | InstitutionalLearningFactCases.InstitutionalRuleBorn _ ->
-            // Rule birth does not resurface deferred work.
-            Ok projection
-
-    let applyInstitutionalLearning
-        (projection: AgentProjectionSet)
-        (fact: InstitutionalLearningFactCases)
-        : Result<AgentProjectionSet, FoldRejection> =
-        InstitutionalLearningProjection.apply fact projection.InstitutionalLearning
-        |> Result.map (fun updated ->
-            { projection with
-                InstitutionalLearning = updated })
-        |> Result.mapError (fun reason ->
-            { Fact = "InstitutionalLearning"
-              Reason = reason })
+                        |> AttentionProjection.consume payload.SessionId payload.OccurrenceIds }

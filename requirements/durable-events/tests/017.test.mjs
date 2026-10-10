@@ -62,7 +62,7 @@ test('WHAT[durable-events-017] DURABLE_EVENTS_004_017_local_append_has_zero_Git_
 
     // 1. Two appends preserve all previous bytes exactly
     assert.equal((await eventStore.append(store1, [e1])).ok, true)
-    const file = path.join(gitCommonDir, 'wanxiang', 'events', 'writer-bytes-1.ndjson')
+    const file = path.join(gitCommonDir, 'wanxiangshu', 'events', 'writer-bytes-1.ndjson')
     const bytesAfterFirst = await readFile(file)
 
     assert.equal((await eventStore.append(store1, [e2])).ok, true)
@@ -130,7 +130,7 @@ for (const historyLength of [8, 128]) {
   test(`WHAT[durable-events-017] activated_append_records_no_historical_content_IO_with_${historyLength}_facts_and_cold_replay`, async t => {
     const root = await mkdtemp(path.join(tmpdir(), 'wanxiang-append-io-'))
     const commonDir = path.join(root, '.git')
-    const eventsDir = path.join(commonDir, 'wanxiang', 'events')
+    const eventsDir = path.join(commonDir, 'wanxiangshu', 'events')
     const historicalFile = path.join(eventsDir, 'historical-writer.ndjson')
     const writerFile = path.join(eventsDir, 'meter-writer.ndjson')
     const history = []

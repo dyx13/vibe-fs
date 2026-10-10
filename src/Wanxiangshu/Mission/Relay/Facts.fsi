@@ -11,7 +11,7 @@ type RelayEvent =
         AssessmentBinding *
         WorkspaceSnapshotId *
         AuthorityRevision *
-        ScoreVector
+        AssessmentFindings
     | AuthorityRevisionAdvanced of
         IncumbencyId *
         expected: AuthorityRevision *
@@ -20,6 +20,7 @@ type RelayEvent =
         WorkspaceSnapshotId
     | QualityCertificateInvalidated of QualityCertificateId * reason: string
     | RetirementCleanupBlocked of IncumbencyId * blockerDigest: string
+    | RetirementConfirmationCommitted of IncumbencyId * providerRunId: string * toolCallId: string
     | RetirementCommitted of RetirementSummary
 
 type RelayTransaction

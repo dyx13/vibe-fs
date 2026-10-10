@@ -35,22 +35,24 @@ const deferred = () => {
   return { promise, resolve }
 }
 
-test('WHAT[delegation-003] FORK_TOOL_requires_calling_and_resume_rejects_calling', async () => {
+test('WHAT[delegation-003] FORK_TOOL_defaults_blank_calling_from_name_and_resume_rejects_calling', async () => {
   const directory = mkdtempSync(join(tmpdir(), 'wxs-fork-split-'))
   const owner = 'manager-fork-split'
   const runtime = await forkTool.createRuntime(directory, ownerDescriptor(owner))
 
   try {
-    const blankCalling = await forkTool.executeManagerFork(
+    const derived = forkTool.executeManagerFork(
       runtime,
       toolModule,
       owner,
       '',
       'Ada',
-      'FORK-NEEDS-CALLING',
+      'FORK-DERIVED-CALLING',
     )
-    assert.match(blankCalling, /calling is required|必须携带 calling/i)
-    assert.equal(forkTool.childCount(runtime), 0, 'blank calling must not place any child')
+    await waitForPromptCount(runtime, 1)
+    assert.equal(forkTool.acceptPrompt(runtime, 0), true)
+    assert.match(await derived, /carries this charge now|现已接下这项托付/i)
+    assert.equal(forkTool.childCount(runtime), 1, 'a blank calling derives to engineer and places the child')
 
     const rejectedCalling = await forkTool.executeManagerResume(
       runtime,
@@ -62,7 +64,62 @@ test('WHAT[delegation-003] FORK_TOOL_requires_calling_and_resume_rejects_calling
     )
     assert.match(rejectedCalling, /never calls a new one|从不叫起新人/i)
     assert.match(rejectedCalling, /use fork|用 fork/i)
-    assert.equal(forkTool.childCount(runtime), 0, 'resume must not place any child')
+    assert.equal(forkTool.childCount(runtime), 1, 'resume must not place a second child')
+  } finally {
+    forkTool.disposeRuntime(runtime)
+    rmSync(directory, { recursive: true, force: true })
+  }
+})
+
+test('WHAT[delegation-003] FORK_TOOL_derives_devops_from_a_devops_name_and_refuses_to_fork_it', async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'wxs-fork-derive-devops-'))
+  const owner = 'manager-fork-derive-devops'
+  const runtime = await forkTool.createRuntime(directory, ownerDescriptor(owner))
+
+  try {
+    const derived = await forkTool.executeManagerFork(
+      runtime,
+      toolModule,
+      owner,
+      '',
+      'devops',
+      'FORK-DERIVES-DEVOPS',
+    )
+    assert.match(derived, /unknown-calling|only targets Engineer|只能 fork Engineer|未结识的 calling/i)
+    assert.equal(forkTool.childCount(runtime), 0, 'a devops name derives devops and cannot be forked')
+  } finally {
+    forkTool.disposeRuntime(runtime)
+    rmSync(directory, { recursive: true, force: true })
+  }
+})
+
+test('WHAT[delegation-003] FORK_TOOL_rejects_an_explicit_calling_that_conflicts_with_the_derived_one', async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'wxs-fork-conflict-'))
+  const owner = 'manager-fork-conflict'
+  const runtime = await forkTool.createRuntime(directory, ownerDescriptor(owner))
+
+  try {
+    const conflict = await forkTool.executeManagerFork(
+      runtime,
+      toolModule,
+      owner,
+      'devops',
+      'Ada',
+      'FORK-CALLING-CONFLICT',
+    )
+    assert.match(conflict, /conflicts|不一致|只能 fork Engineer/i)
+    assert.equal(forkTool.childCount(runtime), 0, 'a conflicting calling must not place any child')
+
+    const reverse = await forkTool.executeManagerFork(
+      runtime,
+      toolModule,
+      owner,
+      'engineer',
+      'devops',
+      'FORK-NAME-CONFLICT',
+    )
+    assert.match(reverse, /conflicts|不一致|只能 fork Engineer/i)
+    assert.equal(forkTool.childCount(runtime), 0, 'an engineer calling for a devops name must not place any child')
   } finally {
     forkTool.disposeRuntime(runtime)
     rmSync(directory, { recursive: true, force: true })

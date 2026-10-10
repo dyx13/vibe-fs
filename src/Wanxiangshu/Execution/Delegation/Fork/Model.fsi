@@ -18,8 +18,6 @@ type ForkResult =
     | DispatchUncertain of agentId: string
     | NotFound of agentId: string
 
-    member AgentId: string
-
 [<RequireQualifiedAccess>]
 type ForkError =
     | Empty
@@ -33,7 +31,6 @@ type ForkError =
 
 type PtyRecord =
     { PtyId: string
-      AgentId: string
       Command: string
       StartedAt: DateTimeOffset }
 

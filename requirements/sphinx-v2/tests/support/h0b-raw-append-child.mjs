@@ -42,10 +42,10 @@ async function contender() {
     assert.deepEqual(current(handle, input.inquiry), before, 'Each contender independently seals without publishing')
     await waitForGo({ phase: 'sealed', writerId: input.writerId, pid: process.pid,
       event, before, heads: store.heads(handle, event.stream),
-      writerFileExists: existsSync(join(input.commonDir, 'wanxiang', 'events', `${input.writerId}.ndjson`)) })
+      writerFileExists: existsSync(join(input.commonDir, 'wanxiangshu', 'events', `${input.writerId}.ndjson`)) })
     const receipt = await store.append(handle, [event])
     await send({ phase: 'appended', writerId: input.writerId, pid: process.pid, event, receipt,
-      writerBytes: readFileSync(join(input.commonDir, 'wanxiang', 'events', `${input.writerId}.ndjson`)).toString('base64'),
+      writerBytes: readFileSync(join(input.commonDir, 'wanxiangshu', 'events', `${input.writerId}.ndjson`)).toString('base64'),
       current: current(handle, input.inquiry), heads: store.heads(handle, event.stream) })
   } finally {
     store.dispose(handle)
@@ -175,7 +175,7 @@ function cold() {
       events: input.ids.map(id => store.read(handle, id)),
       heads: store.heads(handle, input.stream), head: store.head(handle, input.stream),
       current: current(handle, input.inquiry),
-      writerFileExists: existsSync(join(input.commonDir, 'wanxiang', 'events', `${input.writerId}.ndjson`)),
+      writerFileExists: existsSync(join(input.commonDir, 'wanxiangshu', 'events', `${input.writerId}.ndjson`)),
     }) + '\n')
   } finally {
     store.dispose(handle)

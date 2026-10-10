@@ -4,6 +4,8 @@ import { join } from 'node:path'
 import test from 'node:test'
 import * as relay from '../../../dist/Mission/Relay/Surface.js'
 
+const gap = [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }]
+
 const ROOT = new URL('../../..', import.meta.url).pathname
 const read = (rel) => readFileSync(join(ROOT, rel), 'utf8')
 
@@ -18,7 +20,7 @@ const assessAndContinue = (state, incumbent, snapshot = 'snapshot-1') => {
     `assessment-${incumbent}`,
     snapshot,
     'authority-1',
-    ...Array(8).fill('REVISE'),
+    gap,
   )
   assert.equal(assessed.ok, true)
   return relay.retireContinue(

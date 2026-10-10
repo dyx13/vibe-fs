@@ -1,6 +1,7 @@
 namespace Wanxiangshu.Mission.Relay
 
 open Fable.Core.JsInterop
+open FsToolkit.ErrorHandling
 
 module Surface =
     let empty () = Fold.empty
@@ -37,37 +38,39 @@ module Surface =
             (AuthorityRevision.create authority)
         |> result
 
-    let assess
-        state
-        road
-        incumbent
-        assessment
-        snapshot
-        authority
-        languageAlgorithms
-        simplicity
-        structure
-        granularity
-        testsEvidence
-        logicReliabilityBoundaries
-        callerErgonomics
-        completeness
-        =
-        match
-            ScoreVector.tryCreateStrings
-                [ languageAlgorithms
-                  simplicity
-                  structure
-                  granularity
-                  testsEvidence
-                  logicReliabilityBoundaries
-                  callerErgonomics
-                  completeness ]
-        with
+    let private findingOf (value: obj) =
+        let acceptance = emitJsExpr (value, "acceptance_criteria") "$0[$1]"
+        let workPlan = emitJsExpr (value, "work_plan") "$0[$1]"
+
+        if
+            emitJsExpr acceptance "typeof $0 === 'string'"
+            && emitJsExpr workPlan "typeof $0 === 'string'"
+        then
+            Ok
+                { AcceptanceCriteria = unbox<string> acceptance
+                  WorkPlan = unbox<string> workPlan }
+        else
+            Error "surface finding requires string acceptance_criteria and work_plan"
+
+    let private findingsOf (value: obj) =
+        if not (emitJsExpr value "Array.isArray($0)") then
+            Error "surface findings must be an array"
+        else
+            let length: int = emitJsExpr value "$0.length"
+
+            [ 0 .. length - 1 ]
+            |> List.traverseResultM (fun index -> emitJsExpr (value, index) "$0[$1]" |> findingOf)
+            |> Result.bind AssessmentFindings.tryCreate
+
+    let assess state road incumbent assessment snapshot authority (findings: obj) =
+        match findingsOf findings with
         | Error error -> box {| ok = false; error = error |}
-        | Ok scores ->
+        | Ok findings ->
             let payloadDigest =
-                scores |> ScoreVector.values |> List.map ScoreGrade.format |> String.concat ","
+                findings
+                |> AssessmentFindings.values
+                |> List.map (fun finding -> finding.AcceptanceCriteria + "\u0000" + finding.WorkPlan)
+                |> String.concat "\n"
 
             let binding =
                 { PhysicalUserMessageId = authority
@@ -87,7 +90,7 @@ module Surface =
                 binding
                 (WorkspaceSnapshotId.create snapshot)
                 (AuthorityRevision.create authority)
-                scores
+                findings
             |> result
 
     let invalidateCertificate state road reason =
@@ -106,6 +109,10 @@ module Surface =
 
     let blockCleanup state road incumbent blockerDigest =
         Decision.blockCleanup state (RoadId.create road) (IncumbencyId.create incumbent) blockerDigest
+        |> result
+
+    let confirmRetirement state road incumbent providerRunId toolCallId =
+        Decision.confirmRetirement state (RoadId.create road) (IncumbencyId.create incumbent) providerRunId toolCallId
         |> result
 
     let private normalize (value: string) = if isNull value then "" else value
@@ -189,6 +196,7 @@ module Surface =
                 {| activeIncumbency = roadView.ActiveIncumbency |> Option.map IncumbencyId.value |> nullableString
                    iterationOrdinal = roadView.IterationOrdinal
                    phase = roadView.ActivePhase |> Option.map phaseName |> nullableString
+                   retirementConfirmed = Option.isSome roadView.RetirementConfirmation
                    retired = roadView.RetiredIncumbencies |> List.map IncumbencyId.value |> List.toArray |}
 
     let authority state road =

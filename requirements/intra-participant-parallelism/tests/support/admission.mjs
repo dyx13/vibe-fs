@@ -1,4 +1,3 @@
-import { parse as parseToml } from 'smol-toml'
 import * as fission from '../../../../dist/Execution/Fission/Surface.js'
 
 export { fission }
@@ -11,6 +10,7 @@ export const deferred = () => {
 export const harness = ({ failCreateAt, failStartAt, failInterrupt = false, parent = 'old-parent', beforeStart = async () => {} } = {}) => {
   const events = []
   let serial = 0
+  let startCursor = -1
   const runtime = fission.createAdmission({
     parentOf: async owner => {
       events.push(['parent', owner])
@@ -28,7 +28,8 @@ export const harness = ({ failCreateAt, failStartAt, failInterrupt = false, pare
       return session
     },
     startLane: async (session, startup) => {
-      const index = parseToml(startup).lane_index
+      startCursor += 1
+      const index = startCursor
       events.push(['start', index, session, startup])
       await beforeStart(index)
       if (index === failStartAt) throw new Error(`start-${index}`)

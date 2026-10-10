@@ -4,7 +4,7 @@ runtime, whose name is the fixed constant `devops` (pass name = `devops`).
 The current Manager binding, not an old message, establishes who may
 give it work. Dispatching to the fixed DevOps is strictly prohibited before the current independent review assessment is accepted by the system. A changed Manager does not require a second DevOps, and the name remains `devops`.
 
-Give the new objective, constraints, and useful evidence. DevOps executes,
+Give the new objective, constraints, and useful information. DevOps executes,
 investigates ordinary failures, repairs source directly, adds regressions, and
 re-verifies. Real command execution, git operations, compilation, and test execution can only be performed by DevOps. It needs no case-by-case permission for non-architectural repair.
 Explicit read-only instructions and user limits still apply. Architectural,

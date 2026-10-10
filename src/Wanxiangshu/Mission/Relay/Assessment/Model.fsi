@@ -4,4 +4,4 @@ open Wanxiangshu.Mission.Relay
 
 module Model =
     val schemaJson: string
-    val tryParse: obj -> Result<ScoreVector, string>
+    val tryParse: obj -> Result<AssessmentFindings, string>

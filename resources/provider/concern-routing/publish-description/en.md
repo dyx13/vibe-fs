@@ -1,1 +1,1 @@
-Publish information to a live semantic concern address without naming or interrupting its recipient.
+Publish information to a live semantic concern address without naming or interrupting its recipient. Publishing to the reserved `user` address raises a user-visible notification and copies the message to the reserved `root` address when that mailbox is live; publishing to an agent address is fire-and-forget.

@@ -12,7 +12,7 @@ open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Process
 
-/// Bounded command execution. Provider verbs: `run` (DevOps) and `query-shell` (Inspector).
+/// Bounded command execution. Provider verb: `run` (DevOps).
 module ExecutorTool =
 
     [<RequireQualifiedAccess>]
@@ -70,26 +70,6 @@ module ExecutorTool =
             [<Literal>]
             let LargeOutputRecoveryBlocked = "tool/run/large-output-recovery-blocked"
 
-        [<RequireQualifiedAccess>]
-        module QueryShell =
-            [<Literal>]
-            let Description = "tool/query-shell/description"
-
-            [<Literal>]
-            let ArgCommand = "tool/query-shell/arg-command"
-
-            [<Literal>]
-            let MissingCommand = "tool/query-shell/missing-command"
-
-            [<Literal>]
-            let ArgDeadlineSeconds = "tool/query-shell/arg-deadline_seconds"
-
-            [<Literal>]
-            let ArgOutputBudgetBytes = "tool/query-shell/arg-output_budget_bytes"
-
-            [<Literal>]
-            let ArgWorldLock = "tool/query-shell/arg-world_lock"
-
     /// Provider-visible execution verb. Distillation is invoked inside this
     /// tool and is never a separate provider verb (process-execution-011 / DISTILL-010).
     [<Literal>]
@@ -143,36 +123,6 @@ module ExecutorTool =
 
         if String.IsNullOrWhiteSpace command then
             Error(prose language Path.Run.MissingCommand)
-        else
-            match
-                finitePositive language "deadline_seconds" deadline,
-                finiteOutput language "output_budget_bytes" budget,
-                worldLock
-            with
-            | Ok deadlineSeconds, Ok outputBytes, Ok lock ->
-                Ok
-                    { Command = command
-                      DeadlineSeconds = deadlineSeconds
-                      OutputBudgetBytes = outputBytes
-                      WorldLock = lock }
-            | Error error, _, _
-            | _, Error error, _
-            | _, _, Error error -> Error error
-
-    let private decodeQueryShell (language: ProviderLanguage) (args: HostToolArguments) =
-        let command = args.Text "command"
-        let deadline = args.OptionalNumber "deadline_seconds" |> Option.defaultValue 30.0
-
-        let budget =
-            args.OptionalNumber "output_budget_bytes" |> Option.defaultValue 65536.0
-
-        let worldLock =
-            match args.OptionalBool "world_lock" with
-            | Some value -> Ok value
-            | None -> Ok false
-
-        if String.IsNullOrWhiteSpace command then
-            Error(prose language Path.QueryShell.MissingCommand)
         else
             match
                 finitePositive language "deadline_seconds" deadline,
@@ -359,7 +309,6 @@ module ExecutorTool =
                   WorkingDirectory = directory
                   Environment = None
                   Stdin = None
-                  Deadline = None
                   PtyOptions = None }
 
             use cancellation = new CancellationTokenSource()
@@ -390,9 +339,6 @@ module ExecutorTool =
     let runAdmission: ToolAdmission =
         ToolAdmission.OfficeRole(fun _ r -> r = Role.DevOps)
 
-    let queryShellAdmission: ToolAdmission =
-        ToolAdmission.OfficeRole(fun _ r -> r = Role.Inspector)
-
     let runSpec (factory: HostToolFactory) (scope: ToolRuntimeScope) : ToolSpec =
         let language = ProviderLanguageBinding.readGlobalPreference ()
 
@@ -409,24 +355,5 @@ module ExecutorTool =
           Execute =
             fun args context ->
                 match decodeRun (lang context) args with
-                | Ok request -> execute scope request context
-                | Error decodeError -> task { return consequence decodeError } }
-
-    let queryShellSpec (factory: HostToolFactory) (scope: ToolRuntimeScope) : ToolSpec =
-        let language = ProviderLanguageBinding.readGlobalPreference ()
-
-        { Name = "query-shell"
-          Description = prose language Path.QueryShell.Description
-          Arguments =
-            [ "command", ToolHostCodec.stringSchemaDescribed (prose language Path.QueryShell.ArgCommand) factory
-              "deadline_seconds",
-              ToolHostCodec.numberSchemaDescribed (prose language Path.QueryShell.ArgDeadlineSeconds) factory
-              "output_budget_bytes",
-              ToolHostCodec.numberSchemaDescribed (prose language Path.QueryShell.ArgOutputBudgetBytes) factory
-              "world_lock", ToolHostCodec.boolSchemaDescribed (prose language Path.QueryShell.ArgWorldLock) factory ]
-          Admission = queryShellAdmission
-          Execute =
-            fun args context ->
-                match decodeQueryShell (lang context) args with
                 | Ok request -> execute scope request context
                 | Error decodeError -> task { return consequence decodeError } }

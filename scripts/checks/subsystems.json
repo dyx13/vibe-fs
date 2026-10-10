@@ -9,7 +9,7 @@
     { "id": "dispatch", "legacy_owners": ["dispatch-protocol"] },
     { "id": "application-composition", "legacy_owners": [] },
     { "id": "durable-composition", "legacy_owners": [] },
-    { "id": "enforcer", "legacy_owners": ["behavior-diagnosis", "degeneration-guard", "institutional-learning"] },
+    { "id": "enforcer", "legacy_owners": ["behavior-diagnosis", "degeneration-guard"] },
     { "id": "host", "legacy_owners": ["host-boundary"] },
     { "id": "interaction", "legacy_owners": ["action-affordance", "attention-regulation", "capability-enforcement", "concern-routing", "guidance-delivery"] },
     { "id": "knowledge", "legacy_owners": ["knowledge-reuse"] },

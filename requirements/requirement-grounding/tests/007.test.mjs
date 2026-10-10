@@ -10,6 +10,10 @@ import * as trace from '../../../dist/Context/Trace/SemanticTraceSurface.js'
 import { acceptAuthorityRoot, openIncumbency, withExecutablePlugin } from '../../verification-system/tests/support/plugin-fixture.mjs'
 import './support/007-provider-serialization.integration.mjs'
 
+// 语言阶梯最高优先级显式设为英文：本文件的注册组合证明逐字节断言 marker 文本与
+// grounding 的顺序，不能随调用者 shell 的语言设置漂移。插件实例化时才解析该值。
+process.env.WANXIANGSHU_PROVIDER_LANGUAGE = 'en'
+
 const sandbox = () => {
   const dir = mkdtempSync(join(tmpdir(), 'wanxiang-grounding-opencode-'))
   mkdirSync(join(dir, 'requirements', 'alpha'), { recursive: true })
@@ -111,7 +115,7 @@ const originalMaterials = [
 const originalMaterialCarrier = body => `${body}\n\nrequirement_source_path = "requirements/alpha/WHAT.md"\n`
 
 const sessionHostFacts = (directory, sessionID) => {
-  const events = join(directory, '.git', 'wanxiang', 'events')
+  const events = join(directory, '.git', 'wanxiangshu', 'events')
   return readdirSync(events).flatMap(name => readFileSync(join(events, name), 'utf8').split('\n').filter(Boolean).map(JSON.parse))
     .flatMap(event => {
       const fact = event.payload?.Fact
@@ -406,21 +410,45 @@ for (const damage of ['missing', 'changed']) {
       await hooks['experimental.chat.messages.transform']({}, projected)
       const captured = trace.orderedSemanticParts(trace.snapshot(runtime.journal, sessionID)).find(part => part.kind === 'tool_result')
       assert.equal(captured.hostToolPartId, `part-${damage}`)
-      const payloadPath = join(directory, '.git', 'wanxiang', 'payloads', captured.textRef.slice('blobs/'.length))
-      assert.equal(readFileSync(payloadPath, 'utf8'), output, 'the fixture damages the actual captured result payload')
-      await withPresentationJournals(directory, async (pairJournal, groundingJournal) => {
-        if (damage === 'missing') rmSync(payloadPath)
-        else writeFileSync(payloadPath, 'changed payload\r\n')
-        const paired = await pair.tryInjectWithJournal(pairJournal, sessionID, pair.text, projected.messages)
-        assert.equal(paired.ok, false, 'Pair must reject failed original evidence instead of guessing a suffix boundary')
-        assert.match(paired.error, damage === 'missing' ? /payload missing/ : /digest does not match/)
-        const grounded = await grounding.projectWithJournal(groundingJournal, sessionID, projected.messages)
-        assert.equal(grounded.ok, false, 'Grounding must reject the same damaged evidence')
-        assert.match(grounded.error, damage === 'missing' ? /payload missing/ : /digest does not match/)
+      // durable-events-012: the ndjson line is the only payload carrier. Damage
+      // means: the content address no longer matches the bytes it names.
+      const eventsDir = join(directory, '.git', 'wanxiangshu', 'events')
+      const writerFile = readdirSync(eventsDir).find((name) => name.endsWith('.ndjson'))
+      const writerPath = join(eventsDir, writerFile)
+      const lines = readFileSync(writerPath, 'utf8').trimEnd().split('\n')
+      const handle = captured.textRef.slice('blobs/'.length)
+      const index = lines.findIndex((line) => {
+        const row = JSON.parse(line)
+        return row.payload_refs?.includes(handle)
       })
+      assert.ok(index >= 0, 'the captured result payload is embedded in an event line')
+      const damaged = JSON.parse(lines[index])
+      assert.equal(Buffer.from(damaged.payloads[handle], 'base64').toString('utf8'), output,
+        'the fixture damages the actual captured result payload')
       if (damage === 'missing') {
-        await assert.rejects(pair.createJournal(join(directory, '.git')), error => /missing durable payload/.test(error.message),
-          'a cold boot also refuses the missing durable payload')
+        // No bytes remain under the reference: the line is no longer self-contained.
+        delete damaged.payloads[handle]
+      } else {
+        // Bytes remain but contradict the address they are stored under.
+        damaged.payloads[handle] = Buffer.from('changed payload\r\n', 'utf8').toString('base64')
+      }
+      lines[index] = JSON.stringify(damaged)
+      writeFileSync(writerPath, lines.join('\n') + '\n')
+      // Under the inline carrier the damaged line is not self-contained, so it is
+      // a physical storage fault the canonical Integrator refuses while opening
+      // history. Neither presentation owner can therefore be handed the evidence,
+      // and no boot can smuggle the damaged line into a fold.
+      const expected =
+        damage === 'missing' ? /missing durable inline payload/ : /durable inline payload digest mismatch/
+      for (const [owner, open] of [
+        ['pair', () => pair.createJournal(join(directory, '.git'))],
+        ['grounding', () => grounding.createJournal(join(directory, '.git'))],
+      ]) {
+        await assert.rejects(
+          open,
+          error => expected.test(error.message),
+          `${owner} must refuse the ${damage} durable inline payload instead of presenting it`,
+        )
       }
     })
   })
@@ -477,14 +505,16 @@ for (const providerID of ['anthropic', 'cursor', 'openai']) {
   })
 }
 
-const assertRegisteredComposition = (messages, original, resultId) => {
+const assertRegisteredComposition = (messages, original, resultId, facts) => {
   assert.equal(messages.length, original.length, 'registered composition preserves message count')
   assert.deepEqual(messages.map(message => message.info), original.map(message => message.info))
   assert.deepEqual(messages[0], original[0], 'pending tool call and arguments are untouched')
   const output = messages.find(message => message.info.id === resultId).parts[0].state.output
   const originalOutput = original.find(message => message.info.id === resultId).parts[0].state.output
   assert.ok(output.startsWith(originalOutput), 'existing result and suffix bytes remain intact')
-  const guidance = 'Pair Programming: Language Anchor'
+  const anchored = facts.find(fact => fact[0] === 'PairProgrammingGuidelineAnchored')
+  assert.ok(anchored, 'registered guidance is present exactly once')
+  const guidance = anchored[1].MarkerText
   const requirementSource = 'requirement_source_path = "requirements/alpha/WHAT.md"'
   assert.equal(output.split(guidance).length - 1, 1, 'registered guidance is present exactly once')
   assert.equal(output.split(requirementSource).length - 1, 1, 'registered grounding is present exactly once')
@@ -534,7 +564,8 @@ const exerciseRegisteredComposition = async (providerID) => {
       }]
       const transformed = { messages: structuredClone(original) }
       await hooks['experimental.chat.messages.transform']({}, transformed)
-      assertRegisteredComposition(transformed.messages, original, original.at(-1).info.id)
+      const facts = sessionHostFacts(directory, sessionID)
+      assertRegisteredComposition(transformed.messages, original, original.at(-1).info.id, facts)
       assert.deepEqual(original.at(-1).parts[0].state.output, rawOutput)
       const canonical = await trace.currentProjection(runtime.journal, sessionID)
       assert.deepEqual(canonical.messages.flatMap(message => message.parts).filter(part => part.kind === 'tool-result'),
@@ -559,7 +590,10 @@ const runCompositionMutation = mutation => {
   delete env.NODE_TEST_CONTEXT
   return spawnSync(process.execPath, [
     '--loader', new URL('./support/007-composition-loader.mjs', import.meta.url).href,
-    '--test', '--test-name-pattern=registered composition preserves result suffixes.*anthropic',
+    // The child's summary counters are read as TAP lines (`# pass 1`). Pin the
+    // reporter: the default reporter is not TAP on every supported Node version.
+    '--test-reporter=tap', '--test',
+    '--test-name-pattern=registered composition preserves result suffixes.*anthropic',
     new URL(import.meta.url).pathname,
   ], {
     encoding: 'utf8', timeout: 30000,

@@ -91,6 +91,8 @@ module PairProgrammingThoughtTransform =
         clock: IClockPort ->
         terminateSession: (SessionId -> string -> Task<Result<unit, string>>) ->
         language: ProviderLanguage ->
+        restartGuidance: string option ->
+        markRestartGuidanceDelivered: (unit -> unit) ->
         outObj: obj ->
             Task
 

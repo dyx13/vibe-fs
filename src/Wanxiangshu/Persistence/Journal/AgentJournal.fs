@@ -88,7 +88,6 @@ module private AgentJournalInternals =
         | AgentFact.Delegation _ -> "AgentFact.Delegation"
         | AgentFact.Attention _ -> "AgentFact.Attention"
         | AgentFact.Concern _ -> "AgentFact.Concern"
-        | AgentFact.InstitutionalLearning _ -> "AgentFact.InstitutionalLearning"
         | AgentFact.ChatExecution _ -> "AgentFact.ChatExecution"
         | AgentFact.Cognition _ -> "AgentFact.Cognition"
 

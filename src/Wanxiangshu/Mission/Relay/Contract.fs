@@ -49,83 +49,27 @@ module ManagerLoopGate =
     let gateKind (retirementId: RetirementId) =
         "manager-loop:" + RetirementId.value retirementId
 
-[<RequireQualifiedAccess>]
-type ScoreDimension =
-    | LanguageAlgorithms
-    | Simplicity
-    | Structure
-    | Granularity
-    | TestsEvidence
-    | LogicReliabilityBoundaries
-    | CallerErgonomics
-    | Completeness
+type AssessmentFinding =
+    { AcceptanceCriteria: string
+      WorkPlan: string }
 
-module ScoreDimension =
-    let all =
-        [ ScoreDimension.LanguageAlgorithms
-          ScoreDimension.Simplicity
-          ScoreDimension.Structure
-          ScoreDimension.Granularity
-          ScoreDimension.TestsEvidence
-          ScoreDimension.LogicReliabilityBoundaries
-          ScoreDimension.CallerErgonomics
-          ScoreDimension.Completeness ]
+type AssessmentFindings = private AssessmentFindings of AssessmentFinding list
 
-    let fieldName dimension =
-        match dimension with
-        | ScoreDimension.LanguageAlgorithms -> "language_algorithms"
-        | ScoreDimension.Simplicity -> "simplicity"
-        | ScoreDimension.Structure -> "structure"
-        | ScoreDimension.Granularity -> "granularity"
-        | ScoreDimension.TestsEvidence -> "tests_evidence"
-        | ScoreDimension.LogicReliabilityBoundaries -> "logic_reliability_boundaries"
-        | ScoreDimension.CallerErgonomics -> "caller_ergonomics"
-        | ScoreDimension.Completeness -> "completeness"
-
-type ScoreGrade =
-    | Perfect
-    | Revise
-    | NotApplicable
-
-module ScoreGrade =
-    let all = [ ScoreGrade.Perfect; ScoreGrade.Revise; ScoreGrade.NotApplicable ]
-
-    let format =
-        function
-        | ScoreGrade.Perfect -> "PERFECT"
-        | ScoreGrade.Revise -> "REVISE"
-        | ScoreGrade.NotApplicable -> "N/A"
-
-    let tryParse (value: string) =
-        match value with
-        | "PERFECT" -> Ok ScoreGrade.Perfect
-        | "REVISE" -> Ok ScoreGrade.Revise
-        | "N/A" -> Ok ScoreGrade.NotApplicable
-        | other -> Error("invalid score grade: " + other)
-
-type ScoreVector = private ScoreVector of Map<ScoreDimension, ScoreGrade>
-
-module ScoreVector =
-    let tryCreate scores =
-        if List.length scores <> List.length ScoreDimension.all then
-            Error "ScoreVector requires exactly eight scores."
+module AssessmentFindings =
+    let tryCreate (findings: AssessmentFinding list) =
+        if
+            findings
+            |> List.forall (fun finding ->
+                not (System.String.IsNullOrWhiteSpace finding.AcceptanceCriteria)
+                && not (System.String.IsNullOrWhiteSpace finding.WorkPlan))
+        then
+            Ok(AssessmentFindings findings)
         else
-            List.zip ScoreDimension.all scores |> Map.ofList |> ScoreVector |> Ok
+            Error "AssessmentFinding requires non-empty acceptance criteria and work plan"
 
-    let tryCreateStrings (scores: string list) =
-        scores |> List.traverseResultM ScoreGrade.tryParse |> Result.bind tryCreate
+    let values (AssessmentFindings findings) = findings
 
-    let values (ScoreVector scores) =
-        ScoreDimension.all |> List.map (fun dimension -> scores.[dimension])
-
-    let score dimension (ScoreVector scores) = scores.[dimension]
-
-    let allPerfect vector =
-        values vector |> List.forall (fun grade -> grade <> ScoreGrade.Revise)
-
-    let lowDimensions vector =
-        ScoreDimension.all
-        |> List.filter (fun dimension -> score dimension vector = ScoreGrade.Revise)
+    let isEmpty (AssessmentFindings findings) = List.isEmpty findings
 
 type AssessmentBinding =
     { PhysicalUserMessageId: string

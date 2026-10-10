@@ -11,6 +11,7 @@ const parsed = () => fission.parsePrompt([' lane A  ', 'lane B'])
 const harness = ({ failCreateAt, failStartAt, failInterrupt = false, parent = 'old-parent' } = {}) => {
   const events = []
   let serial = 0
+  let startCursor = -1
   const runtime = fission.createAdmission({
     parentOf: async (owner) => {
       events.push(['parent', owner])
@@ -27,7 +28,8 @@ const harness = ({ failCreateAt, failStartAt, failInterrupt = false, parent = 'o
       return `lane-${serial}`
     },
     startLane: async (laneSession, startup) => {
-      const index = Number(/lane_index = (\d+)/.exec(startup)?.[1])
+      startCursor += 1
+      const index = startCursor
       events.push(['start', index, laneSession, startup])
       if (index === failStartAt) throw new Error(`start-${index}`)
     },

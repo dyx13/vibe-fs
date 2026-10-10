@@ -8,7 +8,7 @@ const [mode, commonDir, writerId, scenario, requestJson] = process.argv.slice(2)
 const request = JSON.parse(requestJson)
 assert.ok(['measure', 'cold'].includes(mode))
 assert.ok(['mkdir-eacces', 'mkdir-eio', 'busy-success', 'busy-eacces'].includes(scenario))
-const target = path.join(commonDir, 'wanxiang')
+const target = path.join(commonDir, 'wanxiangshu')
 const lockPath = `${target}.lock`
 const sourceFile = path.join(target, 'events', `${request.sourceWriterId}.ndjson`)
 const writerFile = path.join(target, 'events', `${writerId}.ndjson`)

@@ -386,7 +386,7 @@ tools = ["review", "suicide"]
 
   [[turn.step]]
   runtimeStep = 0
-  respond = { type = "tool-call", tool = "review", prefixText = "HumanRoot canary first audit finds one material issue remains.", args = { language_algorithms = "PERFECT", simplicity = "PERFECT", structure = "PERFECT", granularity = "PERFECT", tests_evidence = "PERFECT", logic_reliability_boundaries = "PERFECT", caller_ergonomics = "PERFECT", completeness = "REVISE" } }
+  respond = { type = "tool-call", tool = "review", prefixText = "HumanRoot canary first audit finds one material issue remains.", args = { findings = [{ acceptance_criteria = "the target state is not yet reached", work_plan = "close the remaining gap" }] } }
 
   [[turn.step]]
   runtimeStep = 1
@@ -457,7 +457,7 @@ tools = ["fork", "resume", "join", "horizon", "review", "suicide"]
 
   [[turn.step]]
   runtimeStep = 0
-  respond = { type = "tool-call", tool = "review", prefixText = "The workspace needs implementation work before it can publish: completeness is not yet full because publish_proof.txt has not been established in the current delivery.", args = { language_algorithms = "PERFECT", simplicity = "PERFECT", structure = "PERFECT", granularity = "PERFECT", tests_evidence = "PERFECT", logic_reliability_boundaries = "PERFECT", caller_ergonomics = "PERFECT", completeness = "REVISE" } }
+  respond = { type = "tool-call", tool = "review", prefixText = "The workspace needs implementation work before it can publish: completeness is not yet full because publish_proof.txt has not been established in the current delivery.", args = { findings = [{ acceptance_criteria = "the target state is not yet reached", work_plan = "close the remaining gap" }] } }
 
   [[turn.step]]
   runtimeStep = 1
@@ -483,7 +483,7 @@ tools = ["fork", "resume", "join", "horizon", "review", "suicide"]
   [[turn.step]]
   runtimeStep = 0
   optional = true
-  respond = { type = "tool-call", tool = "review", prefixText = "Independent audit of this iteration snapshot finds every required quality dimension complete and supported by the current workspace evidence.", args = { language_algorithms = "PERFECT", simplicity = "PERFECT", structure = "PERFECT", granularity = "PERFECT", tests_evidence = "PERFECT", logic_reliability_boundaries = "PERFECT", caller_ergonomics = "PERFECT", completeness = "PERFECT" } }
+  respond = { type = "tool-call", tool = "review", prefixText = "Independent audit of this iteration snapshot finds every required quality dimension complete and supported by the current workspace evidence.", args = { findings = [] } }
 
   [[turn.step]]
   runtimeStep = 1
@@ -582,7 +582,7 @@ user = "Interrupt the active join."
 [[turn]]
 id = "manager-current-action"
 internal = true
-user = "# The reviewed defects are now entrusted to you."
+user = "# The gaps confirmed by review are now entrusted to you."
 tools = ["join", "assume", "suicide"]
 
   # Host tips and owner nudges can place this exact resource at any bounded runtime
@@ -1242,7 +1242,7 @@ tools = ["js-manager"]
 [[turn]]
 id = "strength-readonly-replica"
 internal = true
-user = "Continue the current task's read-only investigation using only the available, permitted tools. Stop when the evidence is sufficient or the next step requires a change, a command, user clarification, a conclusion, or a consequential judgment. Do not invent work to keep calling tools. A self_note in the conversation is an earlier outlook for investigation, not a verified conclusion or permission to do more."
+user = "Continue the current task's read-only investigation using only the available, permitted tools. Stop when the information is sufficient or the next step requires a change, a command, user clarification, a conclusion, or a consequential judgment. Do not invent work to keep calling tools. A self_note in the conversation is an earlier outlook for investigation, not a verified conclusion or permission to do more."
 tools = ["js-predictor"]
 forbiddenTools = ["read", "glob", "grep", "js-manager", "js-engineer", "js-devops", "write", "edit", "run", "fork", "join", "mv", "rm", "bash"]
 

@@ -570,7 +570,7 @@ const createRawManagerTools = () => [
         attach: { type: 'string' },
         expected_tool_calls: { type: 'integer' },
       },
-      required: ['calling', 'name', 'charge'],
+      required: ['name', 'charge'],
     },
   },
   {
@@ -747,7 +747,7 @@ test('WHAT[prefix-stability-001] manager_life_review_acceptance_provider_wire_is
     'assess-life-001',
     snapshotId,
     authorityRev,
-    'REVISE', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT',
+    [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }],
   )
   assert.equal(assessed.ok, true)
   const assessedView = relay.view(assessed.state, roadId)
@@ -762,14 +762,7 @@ test('WHAT[prefix-stability-001] manager_life_review_acceptance_provider_wire_is
         callId: 'call-review-01',
         name: 'review',
         args: JSON.stringify({
-          language_algorithms: 'REVISE',
-          simplicity: 'PERFECT',
-          structure: 'PERFECT',
-          granularity: 'PERFECT',
-          tests_evidence: 'PERFECT',
-          logic_reliability_boundaries: 'PERFECT',
-          caller_ergonomics: 'PERFECT',
-          completeness: 'PERFECT',
+          findings: [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }],
           note: 'Need to address algorithmic defect.',
         }),
       },

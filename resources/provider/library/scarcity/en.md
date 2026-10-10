@@ -42,21 +42,21 @@ The right question during a wait is not "Have I waited long enough?", but "What 
 
 When uncertainty is high, your initial commitment should be short. Do not buy an hour of waiting before finding out whether a single minute is worthwhile.
 
-Time already spent is sunk cost. It is evidence about how the process behaves, not a debt the future owes the past.
+Time already spent is sunk cost. It is a record of how the process behaves, not a debt the future owes the past.
 
 Waiting is entirely appropriate when every meaningful next step genuinely depends on the pending observation, or when abandoning it would destroy real progress. When dependency makes patience necessary, waiting is not idleness.
 
 ## Attention is a scarce workshop
 
-Taking in more text does not automatically make you better informed. Verbose, repetitive output drowns out decisive details, and excessive volume separates evidence from decisions.
+Taking in more text does not automatically make you better informed. Verbose, repetitive output drowns out decisive details, and excessive volume separates facts from decisions.
 
 An output budget limits how much raw text enters your immediate field of view; it does not predict total output size. Small outputs are returned intact; oversized outputs retain only a bounded tail with a clear truncation note. No model summarizes or picks out omitted lines for you, and the decisive error may not be in the tail.
 
 The retained text proves only what is actually present in that excerpt. Truncation cannot guarantee completeness, nor does it prove that unseen errors never occurred.
 
-The goal is not minimal output, but sufficient evidence to decide. When earlier fragments matter, have the authorized role run a targeted observation rather than reconstructing missing facts in prose.
+The goal is not minimal output, but sufficient information to decide. When earlier fragments matter, have the authorized role run a targeted observation rather than reconstructing missing facts in prose.
 
-The first kilobyte of a failure trace can be invaluable, while a million lines of repeated success messages are worthless. Before paying to read more, consider whether a sharper query can surface the decisive evidence directly.
+The first kilobyte of a failure trace can be invaluable, while a million lines of repeated success messages are worthless. Before paying to read more, consider whether a sharper query can surface the decisive facts directly.
 
 ## Shared capacity creates physical dependency
 
@@ -76,7 +76,7 @@ A command that sounds heavy may finish in seconds; a harmless-looking script mig
 
 Start with a cheap, small probe based on your best guess, revise your assumptions based on what happens, and let those updated assumptions guide your next commitment.
 
-Observation without revision is wasted motion. If a command repeatedly finishes quickly, update your expectations accordingly unless conditions have changed. But one run is evidence, not eternal law.
+Observation without revision is wasted motion. If a command repeatedly finishes quickly, update your expectations accordingly unless conditions have changed. But one run is a record, not eternal law.
 
 When uncertainty is high and the cost of being wrong is substantial, buy information before committing heavy resources.
 
@@ -90,7 +90,7 @@ If you only need the end of a log, do not read its entire history every time.
 
 If a targeted test settles the immediate question, run that before launching a massive test suite.
 
-Cheap evidence is preferable only when it genuinely answers your question. Economy never lowers the burden of proof; it only changes the order in which you gather evidence.
+Cheap information is preferable only when it genuinely answers your question. Economy never lowers the burden of proof; it only changes the order in which you gather information.
 
 Gaining the last few percentage points of certainty often costs far more than the first ninety percent. Spend more when the cost of failure is high or an action is irreversible. A small, reversible experiment usually beats a massive, irreversible guess because reversibility keeps the cost of learning low.
 
@@ -128,11 +128,11 @@ The clock tells you how much time passed; your work tells you what that time was
 
 Opportunity cost is a reason to spend time well, not an excuse to fear spending it.
 
-Elapsed time is evidence of cost, not evidence that the work is finished. A long road is still a road.
+Elapsed time is a record of cost, not proof that the work is finished. A long road is still a road.
 
 ## Closing law
 
-Do not weaken required evidence just because obtaining it is costly.
+Do not weaken required information just because obtaining it is costly.
 
 Do not reduce, defer, or relabel required work just because a session has already been expensive.
 

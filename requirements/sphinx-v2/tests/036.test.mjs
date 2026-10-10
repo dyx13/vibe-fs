@@ -773,7 +773,7 @@ for (const operation of ['start', 'cancel']) {
         assert.equal(evidence.releaseCalls, 1)
         assert.equal(evidence.lockReleased, true)
         assert.notEqual(evidence.pid, process.pid)
-        assert.equal(existsSync(join(commonDir, 'wanxiang.lock')), false)
+        assert.equal(existsSync(join(commonDir, 'wanxiangshu.lock')), false)
         assert.equal(readFileSync(evidence.sourceFile, 'base64'), evidence.bytes)
         const lines = Buffer.from(evidence.bytes, 'base64').toString('utf8').trimEnd().split('\n').map(JSON.parse)
         assert.equal(lines.length, 2, 'Only the positive control and one failed invocation append; no automatic retry')
@@ -789,7 +789,7 @@ for (const operation of ['start', 'cancel']) {
       const cold = Wire.create(commonDir, coldWriter, null)
       try {
         assert.deepEqual(Wire.exportInquiry(cold, {inquiryId: last.payload.inquiry, mode: 'full'}), exported)
-        assert.equal(existsSync(join(commonDir, 'wanxiang', 'events', `${coldWriter}.ndjson`)), false)
+        assert.equal(existsSync(join(commonDir, 'wanxiangshu', 'events', `${coldWriter}.ndjson`)), false)
         assert.equal(readFileSync(evidence.sourceFile, 'base64'), evidence.bytes)
       } finally { Wire.dispose(cold) }
       t.diagnostic(JSON.stringify({operation, physicalAndCold: true, sourcePid: evidence.pid, coldPid: process.pid}))

@@ -7,11 +7,11 @@ module OfficeCapabilitySurface =
     val isAllowed: roleLabel: string -> permissionLabel: string -> bool
 
     /// Manager gate facts as a plain JS object: hasActiveIncumbency, hasAssessment,
-    /// hasValidCertificate, cleanupBlockerDigest.
+    /// isFinalIncumbent, cleanupBlockerDigest.
     val managerFacts:
         hasActiveIncumbency: bool ->
         hasAssessment: bool ->
-        hasValidCertificate: bool ->
+        isFinalIncumbent: bool ->
         cleanupBlockerDigest: string ->
             obj
 

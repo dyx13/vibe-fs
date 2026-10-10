@@ -2,92 +2,65 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import * as assessment from '../../../dist/Mission/Relay/Assessment/Surface.js'
 
-const perfect = {
-  language_algorithms: 'PERFECT',
-  simplicity: 'PERFECT',
-  structure: 'PERFECT',
-  granularity: 'PERFECT',
-  tests_evidence: 'PERFECT',
-  logic_reliability_boundaries: 'PERFECT',
-  caller_ergonomics: 'PERFECT',
-  completeness: 'PERFECT',
-}
-
-test('WHAT[relay-assessment-001] review schema is eight required PERFECT/REVISE/N/A scores with optional note', () => {
+test('WHAT[relay-assessment-001] review schema requires a findings array of acceptance criteria and work plans with optional note', () => {
   const schema = JSON.parse(assessment.schemaJson)
   assert.equal(schema.type, 'object')
   assert.equal(schema.additionalProperties, false)
-  const expectedDimensions = Object.keys(perfect).sort()
-  assert.deepEqual(schema.required.slice().sort(), expectedDimensions)
-  assert.deepEqual(Object.keys(schema.properties).sort(), [...expectedDimensions, 'note'].sort())
-  for (const field of expectedDimensions) {
-    assert.deepEqual(schema.properties[field], { type: 'string', enum: ['PERFECT', 'REVISE', 'N/A'] })
-  }
+  assert.deepEqual(schema.required, ['findings'])
+  assert.deepEqual(Object.keys(schema.properties).sort(), ['findings', 'note'])
+  assert.equal(schema.properties.findings.type, 'array')
+  assert.equal(schema.properties.findings.items.type, 'object')
+  assert.equal(schema.properties.findings.items.additionalProperties, false)
+  assert.deepEqual(schema.properties.findings.items.required.slice().sort(), ['acceptance_criteria', 'work_plan'])
+  assert.deepEqual(Object.keys(schema.properties.findings.items.properties).sort(), ['acceptance_criteria', 'work_plan'])
+  assert.deepEqual(schema.properties.findings.items.properties.acceptance_criteria, { type: 'string' })
+  assert.deepEqual(schema.properties.findings.items.properties.work_plan, { type: 'string' })
   assert.deepEqual(schema.properties.note, { type: 'string' })
 })
 
-test('WHAT[relay-assessment-001] malformed scores are rejected without coercion', () => {
-  for (const field of Object.keys(perfect)) {
-    for (const value of [10, 9.5, 'perfect', 'GOOD', null, undefined, false, [], {}]) {
-      assert.equal(assessment.parse({...perfect, [field]: value}).ok, false, field)
-    }
-    assert.equal(assessment.parse(Object.fromEntries(Object.entries(perfect).filter(([key]) => key !== field))).ok, false, field)
-    const parsed = assessment.parse({...perfect, [field]: 'REVISE'})
-    assert.deepEqual(parsed.lowDimensions, [field])
+test('WHAT[relay-assessment-001] malformed findings are rejected without coercion', () => {
+  for (const value of [10, 9.5, 'gap', null, undefined, false, {}, 'not-an-array']) {
+    assert.equal(assessment.parse({ findings: value }).ok, false, String(value))
+  }
+  for (const payload of [
+    {},
+    { findings: [{ acceptance_criteria: 'target', work_plan: 'plan' }], verdict: 'PERFECT' },
+    { findings: [{ acceptance_criteria: 'target' }] },
+    { findings: [{ work_plan: 'plan' }] },
+    { findings: [{ acceptance_criteria: 10, work_plan: 'plan' }] },
+    { findings: [{ acceptance_criteria: 'target', work_plan: 10 }] },
+    { findings: [{ acceptance_criteria: '', work_plan: 'plan' }] },
+    { findings: [{ acceptance_criteria: 'target', work_plan: '   ' }] },
+    { findings: 'not-an-array' },
+    { findings: [], note: 123 },
+    { findings: [], note: null },
+  ]) {
+    assert.equal(assessment.parse(payload).ok, false, JSON.stringify(payload))
   }
   for (const payload of [null, 10, 'PERFECT', [], false]) assert.equal(assessment.parse(payload).ok, false)
-  for (const payload of [
-    { ...perfect, simplicity: 10 },
-    { ...perfect, simplicity: 9.5 },
-    { ...perfect, simplicity: 'perfect' },
-    { ...perfect, simplicity: 'GOOD' },
-    { ...perfect, simplicity: null },
-    { ...perfect, note: 123 },
-    { ...perfect, note: null },
-    Object.fromEntries(Object.entries(perfect).filter(([key]) => key !== 'simplicity')),
-    { ...perfect, verdict: 'PERFECT' },
-  ]) {
-    assert.equal(assessment.parse(payload).ok, false)
-  }
 })
 
-test('WHAT[relay-assessment-001] valid payload preserves exact ratings and rejects only on REVISE', () => {
-  // Any dimension with REVISE causes overall rejection (allPerfect: false) and populates lowDimensions
-  const withRevise = assessment.parse({ ...perfect, structure: 'REVISE', completeness: 'REVISE' })
-  assert.deepEqual(withRevise, {
+test('WHAT[relay-assessment-001] empty findings pass and non-empty findings preserve each gap', () => {
+  const passed = assessment.parse({ findings: [] })
+  assert.deepEqual(passed, { ok: true, findings: [], passed: true })
+
+  const withGaps = assessment.parse({
+    findings: [
+      { acceptance_criteria: 'target A', work_plan: 'plan A' },
+      { acceptance_criteria: 'target B', work_plan: 'plan B' },
+    ],
+  })
+  assert.deepEqual(withGaps, {
     ok: true,
-    scores: { ...perfect, structure: 'REVISE', completeness: 'REVISE' },
-    allPerfect: false,
-    lowDimensions: ['structure', 'completeness'],
+    findings: [
+      { acceptance_criteria: 'target A', work_plan: 'plan A' },
+      { acceptance_criteria: 'target B', work_plan: 'plan B' },
+    ],
+    passed: false,
   })
 
-  // Dimensions with N/A and PERFECT pass (allPerfect: true, lowDimensions: [])
-  const withNa = assessment.parse({ ...perfect, structure: 'N/A', completeness: 'N/A' })
-  assert.deepEqual(withNa, {
-    ok: true,
-    scores: { ...perfect, structure: 'N/A', completeness: 'N/A' },
-    allPerfect: true,
-    lowDimensions: [],
-  })
-
-  // All N/A also passes because there is no REVISE
-  const allNa = Object.fromEntries(Object.keys(perfect).map((k) => [k, 'N/A']))
-  const parsedAllNa = assessment.parse(allNa)
-  assert.deepEqual(parsedAllNa, {
-    ok: true,
-    scores: allNa,
-    allPerfect: true,
-    lowDimensions: [],
-  })
-
-  // Note parameter is accepted for writing, but never returned in parsed result
-  const withNote = assessment.parse({ ...perfect, note: 'thorough inspection completed; no defects observed.' })
-  assert.deepEqual(withNote, {
-    ok: true,
-    scores: perfect,
-    allPerfect: true,
-    lowDimensions: [],
-  })
+  // note is accepted for writing, never returned in the parsed result
+  const withNote = assessment.parse({ findings: [], note: 'thorough inspection completed; no gaps observed.' })
+  assert.deepEqual(withNote, { ok: true, findings: [], passed: true })
   assert.equal('note' in withNote, false)
-  assert.equal('note' in withNote.scores, false)
 })

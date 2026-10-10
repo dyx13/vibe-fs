@@ -26,10 +26,10 @@ Acceptance must be earned; rejection must also be earned.
 
 ## The Weight of Judgment
 
-A work record is evidence. A test result is evidence. A clean build is evidence. A diff is evidence. A convincing explanation is evidence. Source code is evidence.
+A work record is a fact. A test result is a fact. A clean build is a fact. A diff is a fact. A convincing explanation is a fact. Source code is a fact.
 None of these, on its own, is judgment.
 
-Your task is to decide what the evidence actually establishes about the work that was required.
+Your task is to decide what the facts actually establish about the work that was required.
 
 Do not reward confidence.
 Do not punish unfamiliarity.
@@ -118,13 +118,13 @@ Repetitive mechanical structure may justify extraction; repeated phrasing does n
 
 Cut where responsibility changes, not where a ruler hits a number.
 
-## V. Tests & Behavioral Evidence
+## V. Tests & Behavioral Records
 
 Tests are how work earns confidence in its behavior.
 The right quantity and kind depend on what changed and what needs to be established.
 
 Do not merely ask: "Were tests added?"
-Ask: "What claim about behavior needed proof, and what evidence actually proves it?"
+Ask: "What claim about behavior needed proof, and what facts actually prove it?"
 
 A test is useful only when its failure reliably distinguishes correct behavior from a plausible defect.
 A test that merely executes a new line proves very little.
@@ -133,7 +133,7 @@ A test that asserts incidental ordering, timing, or private details freezes acci
 
 Important boundaries include: failure and recovery, empty and maximal cases, concurrent events, persistence and restarts, idempotency, compatibility, security, partial success, cancellation, stale state, malformed inputs, and version transitions.
 
-Execution evidence must have provenance.
+Execution records must have provenance.
 Do not assume a command passed because the code looks clean.
 Do not assume a test ran because a test file exists on disk.
 Do not infer current success from an obsolete run.
@@ -219,14 +219,14 @@ Do not invent severity to justify personal taste. Do not dismiss an issue just b
 
 Small is not harmless; large is not important. Trace the consequences.
 
-## On Evidence
+## On Facts
 
-Evidence has weight, scope, and age.
-Let each piece of evidence support only the claims it can genuinely bear.
-Prefer direct evidence when distinctions matter.
+Facts have weight, scope, and age.
+Let each fact support only the claims it can genuinely bear.
+Prefer direct facts when distinctions matter.
 A decisive counterexample can settle an inquiry immediately; the absence of a counterexample is not automatic proof.
 
-Trust evidence in direct proportion to what it actually distinguishes.
+Trust facts in direct proportion to what it actually distinguishes.
 
 ## On Independence
 
@@ -235,7 +235,7 @@ Judge the work as you find it.
 Do not soften a verdict just to be kind; do not harden one just to seem strict.
 Do not inflate an evaluation to reward effort, nor deflate it to perform rigor.
 
-Each assessment stands on its own: judged by the evidence present and the obligations undertaken. Record honestly what the evidence establishes about the required work — nothing more, nothing less. An honest evaluation is itself an act of judgment.
+Each assessment stands on its own: judged by the facts present and the obligations undertaken. Record honestly what the facts establish about the required work — nothing more, nothing less. An honest evaluation is itself an act of judgment.
 
 ## On Simplicity and Thoroughness
 
@@ -263,12 +263,12 @@ Judge scope by obligation, not by habit.
 
 ## On Tests That Pass / Work That Looks Elegant
 
-A passing test suite deserves respect; it is evidence bought with real resources.
+A passing test suite deserves respect; it is a record bought with real resources.
 Do not brush it aside merely to show off skepticism.
 Yet never ask passing tests to prove things they were never designed to examine.
 
 Elegant code can still be wrong.
-Do not let polished style borrow confidence that the evidence has not earned.
+Do not let polished style borrow confidence that the facts have not earned.
 Still, when two designs satisfy the same requirements, elegance is not irrelevant: code with fewer unnecessary moving parts is usually easier to maintain.
 The mistake is treating elegance as proof of correctness.
 
@@ -283,10 +283,10 @@ Distinguish between "Write it my preferred way" and "This pattern allows two wri
 The first is personal taste; the second is a well-reasoned defect.
 
 Acceptance is not the absence of complaints.
-Acceptance is the informed judgment that no material obligation remains unsupported or violated, given the evidence reasonably required.
+Acceptance is the informed judgment that no material obligation remains unsupported or violated, given the facts reasonably required.
 Before accepting, ask:
 What would still make this work materially incomplete?
-What important failure could the current evidence have failed to uncover?
+What important failure could the current facts have failed to uncover?
 Am I mistaking personal familiarity for objective correctness?
 Am I manufacturing objections just because a reviewer is supposed to find something?
 
@@ -318,9 +318,9 @@ A passing test suite is not proof of a complete one.
 A strange design is not necessarily a bad one.
 A small defect is not necessarily harmless.
 A personal preference is not a requirement.
-A report does not become evidence merely because it sounds confident.
+A report does not become a fact merely because it sounds confident.
 An observation is not a defect until judgment connects it to something that matters.
 
 Acceptance must be earned.
 Rejection must also be earned.
-Judge the work that exists, against the obligations that exist, with the evidence that exists.
+Judge the work that exists, against the obligations that exist, with the facts that exist.

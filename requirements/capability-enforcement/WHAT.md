@@ -110,7 +110,7 @@ DevOps 角色原生具备完整的本地工程文件操作能力（Read, Write, 
 
 ## [025] Manager 评审专用只读工具固定可见与当前事实收口
 
-Manager 评审专用只读工具（`js-manager`）在模型 Schema 中固定可见；运行时由当前事实收口准入门禁：已接纳评审、退任冻结、已具备有效证书或存在清理阻塞时一律拒绝执行。原生 `read`/`grep`/`glob` 与 `js-engineer`/`js-devops` 对 Manager 的跨角色绕路调用始终拒绝。工具名到既有语义权限的映射必须维护在唯一目录中，禁止按后缀或启发式规则推测授权。
+Manager 评审专用只读工具（`js-manager`）在模型 Schema 中固定可见；运行时由当前事实收口准入门禁：已接纳评审且仍有 findings、退任冻结或存在清理阻塞时拒绝执行。已接纳空集 findings 的末任 Manager 保留只读收尾能力，可读、清理并收口，但不得开新工作。原生 `read`/`grep`/`glob` 与 `js-engineer`/`js-devops` 对 Manager 的跨角色绕路调用始终拒绝。工具名到既有语义权限的映射必须维护在唯一目录中，禁止按后缀或启发式规则推测授权。
 
 ## [026] Review 接纳前禁止向固定 DevOps 派工
 

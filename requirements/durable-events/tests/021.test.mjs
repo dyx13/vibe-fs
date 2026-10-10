@@ -45,7 +45,7 @@ test('WHAT[durable-events-021] low-level append persists bad fact and cut togeth
     assert.equal(first.cuts[0].failedEventId, id(10))
     assert.equal(first.cuts[0].rule, 'Casebook')
 
-    const file = path.join(dir, 'wanxiang', 'events', 'semantic-cut-proof.ndjson')
+    const file = path.join(dir, 'wanxiangshu', 'events', 'semantic-cut-proof.ndjson')
     const afterBad = (await readFile(file, 'utf8')).trim().split('\n').map(JSON.parse)
     assert.equal(afterBad.length, 2, 'bad fact and reset fact are one durable append')
     assert.equal(afterBad[0].event_type, 'InspectorCaseCaptured')
@@ -76,7 +76,7 @@ test.todo('WHAT[durable-events-021] the actual producing process exits after sem
 
 test('WHAT[durable-events-021] an uncut historical Journal fault suppresses only its own journal stream', async () => {
   const dir = withTemp((base) => base)
-  const eventsDir = path.join(dir, 'wanxiang', 'events')
+  const eventsDir = path.join(dir, 'wanxiangshu', 'events')
   mkdirSync(eventsDir, { recursive: true })
 
   const incumbencyOpened = ({ session, inc, seq, id }) =>

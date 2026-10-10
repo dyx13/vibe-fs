@@ -220,8 +220,9 @@ test('WHAT[interaction-authority-011] CHAT_PARAMS_uses_the_resolved_provider_mod
     const messageID = 'msg-chat-params-resolved'
     const leaseModel = await admitExecution(hooks, sessionID, messageID)
 
-    // The resolved catalog model (input.model.id) is the validation subject;
-    // the persisted user-message model reference never supplies identity.
+    // The resolved catalog model differs from the committed lease target.
+    // Runtime observation is read-only: drift is a test-time fast-check
+    // property, so this observation passes and only projects temperature.
     const output = {}
     const observed = chatParams.apply(
       {
@@ -233,8 +234,9 @@ test('WHAT[interaction-authority-011] CHAT_PARAMS_uses_the_resolved_provider_mod
       },
       output,
     )
-    assert.equal(observed.ok, false)
-    assert.match(observed.error, /model\/reasoning drift/i)
+    assert.equal(observed.ok, true, observed.error)
+    assert.equal(observed.temperature, 1)
+    assert.equal(output.temperature, 1)
   } finally {
     if (hooks) await hooks.dispose()
     process.env.HOME = previousHome

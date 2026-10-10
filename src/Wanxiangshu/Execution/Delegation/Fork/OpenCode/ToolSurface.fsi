@@ -32,6 +32,15 @@ module ForkToolSurface =
         charge: string ->
             Task<string>
 
+    val executeCommission:
+        value: obj ->
+        toolModule: obj ->
+        owner: string ->
+        calling: string ->
+        byname: string ->
+        charge: string ->
+            Task<string>
+
     val captureOwnerOpening: value: obj -> owner: string -> text: string -> Task
 
     val executeManagerResumeWithAttachment:

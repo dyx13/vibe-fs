@@ -16,4 +16,3 @@
 - `participant-identity`
 - `attention-regulation`
 - `concern-routing`
-- `institutional-learning`

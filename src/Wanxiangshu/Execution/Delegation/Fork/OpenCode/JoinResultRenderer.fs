@@ -81,6 +81,9 @@ module JoinResultRenderer =
         [<Literal>]
         let RemainingCompletions = "tool/join/remaining-completions"
 
+        [<Literal>]
+        let Someone = "tool/join/someone"
+
     let private prose lang path subs = ProviderProse.render lang path subs
 
     let private bynameLine lang path name =
@@ -97,7 +100,12 @@ module JoinResultRenderer =
         | Some agent -> agent.Name
         | None -> agentNameRaw
 
-    let private byname (resolveAgentName: string -> string) (agentId: string) (agentNameRaw: string) : string =
+    let private byname
+        (lang: ProviderLanguage)
+        (resolveAgentName: string -> string)
+        (agentId: string)
+        (agentNameRaw: string)
+        : string =
         let presented = resolveAgentName agentId
 
         if not (String.IsNullOrWhiteSpace presented) then
@@ -105,7 +113,7 @@ module JoinResultRenderer =
         elif not (String.IsNullOrWhiteSpace agentNameRaw) then
             fallbackByname agentId agentNameRaw
         else
-            agentId
+            prose lang Path.Someone Map.empty
 
     let private tryParseInt (value: string) : int option =
         match Int32.TryParse value with
@@ -168,7 +176,7 @@ module JoinResultRenderer =
         (payload: AgentCompletionPayload)
         : LlmFacing.Document =
         let name =
-            byname resolveAgentName (AgentCompletion.agentId completion.Outcome) completion.AgentName
+            byname lang resolveAgentName (AgentCompletion.agentId completion.Outcome) completion.AgentName
 
         let instructions =
             if String.IsNullOrWhiteSpace payload.WorkRecord then
@@ -185,7 +193,7 @@ module JoinResultRenderer =
         (payload: AgentFailurePayload)
         : LlmFacing.Document =
         let name =
-            byname resolveAgentName (AgentCompletion.agentId completion.Outcome) completion.AgentName
+            byname lang resolveAgentName (AgentCompletion.agentId completion.Outcome) completion.AgentName
 
         let instructions =
             if String.IsNullOrWhiteSpace payload.Message then
@@ -201,7 +209,7 @@ module JoinResultRenderer =
         (agentId: string)
         (agentNameRaw: string)
         : LlmFacing.Document =
-        let name = byname resolveAgentName agentId agentNameRaw
+        let name = byname lang resolveAgentName agentId agentNameRaw
         entry [ bynameLine lang Path.AgentDidNotReturn name ] []
 
     let private renderPtyEnded
@@ -410,7 +418,7 @@ module JoinResultRenderer =
             | ForkError.Cancelled -> prose lang Path.ForkCancelled Map.empty
             | ForkError.JoinInProgress -> prose lang Path.ForkJoinInProgress Map.empty
             | ForkError.Abandoned(id, _) ->
-                let name = byname resolveAgentName id ""
+                let name = byname lang resolveAgentName id ""
                 bynameLine lang Path.AgentDidNotReturn name
             | ForkError.NotFound _ -> prose lang Path.ForkNotFound Map.empty
             | ForkError.TimedOut -> prose lang Path.ForkTimedOut Map.empty

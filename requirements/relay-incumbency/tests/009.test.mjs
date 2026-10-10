@@ -4,6 +4,8 @@ import * as relay from '../../../dist/Mission/Relay/Surface.js'
 
 const open = (state) => relay.openIncumbency(state, 'road-1', 'inc-1', 'snapshot-1', 'authority-1')
 
+const gap = [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }]
+
 test('WHAT[relay-incumbency-009] active authority update advances revision and snapshot exactly once', () => {
   const first = open(relay.empty())
   const workOwned = relay.assess(
@@ -13,7 +15,7 @@ test('WHAT[relay-incumbency-009] active authority update advances revision and s
     'assessment-1',
     'snapshot-1',
     'authority-1',
-    'REVISE', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT',
+    gap,
   )
   assert.equal(workOwned.ok, true)
 

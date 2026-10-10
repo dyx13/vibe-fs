@@ -2,7 +2,7 @@
 
 Class: Handbook
 
-Purpose: practical engineering judgment about representation, boundaries, change, evidence, and verification.
+Purpose: practical engineering judgment about representation, boundaries, change, facts, and verification.
 
 Authority Boundary: this book teaches craft within the authority already entrusted to you. It does not enlarge your scope, grant execution rights, or turn personal preferences into product requirements.
 
@@ -76,7 +76,7 @@ When replacing an old design with a clean break, remove the old interface instea
 
 ## Investigate causes, not just symptoms
 
-A failing test, exception, timeout, or unexpected output is evidence; it is not yet the root cause.
+A failing test, exception, timeout, or unexpected output is a clue; it is not yet the root cause.
 
 Trace through ownership and data flow until changing the proposed cause fully explains and resolves the observed defect.
 

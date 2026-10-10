@@ -472,7 +472,7 @@ for (const newPhysicalInput of [false, true]) {
       })
       if (newPhysicalInput) {
         assert.equal(projection.pendingClaims.length, 0, 'the rejected dispatch must leave no pending claim')
-        const facts = readFileSync(join(base, 'wanxiang', 'events', `${writer}.ndjson`), 'utf8')
+        const facts = readFileSync(join(base, 'wanxiangshu', 'events', `${writer}.ndjson`), 'utf8')
           .trim().split('\n').map(line => JSON.parse(line).payload.Fact)
           .filter(fact => fact[0] === 'Agent' && fact[1][0] === 'Prompt')
           .map(fact => fact[1][1])

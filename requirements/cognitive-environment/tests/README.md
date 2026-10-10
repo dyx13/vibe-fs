@@ -7,7 +7,7 @@
 - 012 检查 Manager 的完整 Role Law 与 Quality Ledger 资源确实进入生成提示；不能据此断言评审独立、诚实或双语语义一致。
 - 原 002 的异地工作目录加载测试迁到 provider-language 009，并比较完整加载结果。原 006 的成对资源扫描由 provider-language 006 的实际门禁承担；汉字比例不是翻译质量门槛。
 - 001/002/004/006—011/013/016 涉及权威归属、语义分工或实际 Agent 行为，当前没有可区分的执行证据。原单词禁令会误伤“不要越权”的合规表达，固定长句也会阻止合规改写，因此不再用它们宣称满足。
-- 015 的直接 Surface 五例调用真实 `maybeInject`，读取 committed exact lease 和 EventStore companion 投影，证明白名单命中/未命中、同一转换输出去重、journal 字节不变及英文绑定。另有独立 durable marker oracle 正反例：读取真正的 Git-private `.git/wanxiang/events`，插入提示文本必须被检出，不能跳过 `.git` 把“没有持久化”测成假绿。五项静态检查只证明资源文字与源码形状，不计作执行注入的证明。
+- 015 的直接 Surface 五例调用真实 `maybeInject`，读取 committed exact lease 和 EventStore companion 投影，证明白名单命中/未命中、同一转换输出去重、journal 字节不变及英文绑定。另有独立 durable marker oracle 正反例：读取真正的 Git-private `.git/wanxiangshu/events`，插入提示文本必须被检出，不能跳过 `.git` 把“没有持久化”测成假绿。五项静态检查只证明资源文字与源码形状，不计作执行注入的证明。
 
 2026-10-05：015 的 registered Host R1—R6 **已完成对应投递证明**。真实normalTransform在canonical投影前捕获原PhysicalUserMessageId，以它读取exact committed lease并构造marker身份；正文与位置仍来自最终投影。R1/R3/R4核对恰一次注入、稳定身份与后续原始Host历史隔离；R2/R6有已满足其余前提的companion/model门禁对照；R5在缺committed lease时得到明确EMR-010拒绝及零注入。另覆盖缺physical时不借session模型、canonical投影保持原physical及另一session隔离，不扩大为任意错误physical key都已独立验收；旧“session-only admission无法绑定”推断不再作为根因。
 

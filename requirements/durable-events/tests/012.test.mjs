@@ -34,7 +34,9 @@ test('WHAT[durable-events-012] BlobWriter_uses_local_content_addressed_payloads_
     assert.match(receipt.blobRef, /^blobs\/[0-9a-f]{64}$/)
 
     const handle = receipt.blobRef.slice('blobs/'.length)
-    assert.equal(existsSync(join(commonDir, 'wanxiang', 'payloads', handle)), true)
+    // durable-events-012: payloads are inline in the ndjson event line; no
+    // payloads directory exists.
+    assert.equal(existsSync(join(commonDir, 'wanxiangshu', 'payloads')), false)
 
     const read = mustOk(await journal.JournalSurface_readPayload(booted.journal, receipt.blobRef), 'read')
     assert.equal(read.content, 'large-body\n')
@@ -66,8 +68,10 @@ test('WHAT[durable-events-012] appended_fact_lifts_real_blob_digest_into_persist
     )
     assert.ok(appended.projection)
 
-    const ndjson = readFileSync(join(commonDir, 'wanxiang', 'events', 'journal-closure-proof.ndjson'), 'utf8')
+    const ndjson = readFileSync(join(commonDir, 'wanxiangshu', 'events', 'journal-closure-proof.ndjson'), 'utf8')
     assert.match(ndjson, new RegExp(`"payload_refs":\\["${handle}"\\]`))
+    // The same event line embeds the payload inline (durable-events-012).
+    assert.match(ndjson, new RegExp(`"payloads":\\{"${handle}":"${Buffer.from('part-body\n', 'utf8').toString('base64')}"\\}`))
     journal.JournalSurface_dispose(booted.journal)
   })
 })
@@ -134,13 +138,22 @@ const lifeOpened = (session, ref, digest) => ({
   },
 })
 const payloadRefsFromFile = (commonDir, writerId) => {
-  const file = join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
+  const file = join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
   return readFileSync(file, 'utf8')
     .trim()
     .split('\n')
     .map(JSON.parse)
     .filter((event) => event.event_type === 'JournalEnvelope')
     .map((event) => event.payload_refs)
+}
+const inlinePayloadsFromFile = (commonDir, writerId) => {
+  const file = join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+  return readFileSync(file, 'utf8')
+    .trim()
+    .split('\n')
+    .map(JSON.parse)
+    .filter((event) => event.event_type === 'JournalEnvelope')
+    .map((event) => event.payloads || {})
 }
 
 test('WHAT[durable-events-012] closure_lifts_a_content_addressed_digest_into_payload_refs', async () => {
@@ -157,6 +170,11 @@ test('WHAT[durable-events-012] closure_lifts_a_content_addressed_digest_into_pay
 
     const refs = payloadRefsFromFile(commonDir, 'closure-real')
     assert.deepEqual(refs.at(-1), [receipt.blobRef.slice('blobs/'.length)])
+    // durable-events-012: the same event line embeds the payload inline.
+    const inline = inlinePayloadsFromFile(commonDir, 'closure-real')
+    assert.deepEqual(inline.at(-1), {
+      [receipt.blobRef.slice('blobs/'.length)]: Buffer.from('durable body\n', 'utf8').toString('base64'),
+    })
   })
 })
 test('WHAT[durable-events-012] closure_dedupes_a_matching_blob_ref_and_digest_pair', async () => {
@@ -205,7 +223,7 @@ test('WHAT[durable-events-012] closure_is_empty_for_a_fact_without_blob_fields',
 {
   const { default: assert } = await import('node:assert/strict')
   const { randomUUID, createHash } = await import('node:crypto')
-  const { mkdtempSync, readFileSync, realpathSync, rmSync } = await import('node:fs')
+  const { mkdtempSync, readFileSync, realpathSync, rmSync, existsSync } = await import('node:fs')
   const { tmpdir } = await import('node:os')
   const { join } = await import('node:path')
   const { fileURLToPath } = await import('node:url')
@@ -220,7 +238,7 @@ test('WHAT[durable-events-012] closure_is_empty_for_a_fact_without_blob_fields',
       const commonDir = join(root, '.git')
       const sourceWriterId = randomUUID()
       const measureWriter = randomUUID()
-      const sourceFile = join(commonDir, 'wanxiang', 'events', `${sourceWriterId}.ndjson`)
+      const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriterId}.ndjson`)
       const request = { sourceWriterId, sessionId: 'payload-g1-existing-session',
         oldBody: '原有非空payload\r\nNUL:\u0000；雪 😀 保留尾空格  ',
         incomingBody: '新的非空payload\r\nNUL:\u0000；é 😀 保留尾空格  ' }
@@ -242,65 +260,46 @@ test('WHAT[durable-events-012] closure_is_empty_for_a_fact_without_blob_fields',
       try {
         const measured = await probe('measure', measureWriter)
         const cold = await probe('cold', randomUUID())
-        const success = scenario === 'busy-success'
         assert.notEqual(measured.pid, process.pid)
         assert.notEqual(cold.pid, process.pid)
         assert.notEqual(cold.pid, measured.pid)
         assert.equal(measured.oldDigest, oldDigest)
         assert.equal(measured.incomingDigest, incomingDigest)
-        assert.deepEqual(measured.result, success ? { ok: true, blobRef: 'blobs/' + incomingDigest,
-          blobDigest: incomingDigest } : { ok: false,
-          error: `event-store payload write failed: Controlled one-hop payload ${scenario} mkdir failure` })
-        if (!success) assert.equal(typeof measured.result.error, 'string')
-        assert.deepEqual({ append: measured.observed.append, payloadWrite: measured.observed.payloadWrite,
-          payloadFsync: measured.observed.payloadFsync, payloadClose: measured.observed.payloadClose,
-          release: measured.observed.release, injected: measured.observed.injected },
-        { append: 0, payloadWrite: success ? 1 : 0, payloadFsync: success ? 1 : 0,
-          payloadClose: success ? 1 : 0, release: success ? 1 : 0, injected: success ? 0 : 1 })
-        assert.equal(measured.observed.legalAfterFailure, 0)
+        assert.deepEqual(measured.result, { ok: true, blobRef: 'blobs/' + incomingDigest,
+          blobDigest: incomingDigest })
+        // durable-events-012: staged inline payloads never create a payloads
+        // directory and never touch disk before an append.
+        assert.equal(measured.observed.payloadWrite, 0)
+        assert.equal(measured.observed.payloadFsync, 0)
+        assert.equal(measured.observed.payloadClose, 0)
         assert.equal(measured.payloadBeforeRelease, false)
-        assert.equal(measured.before.incomingBytes, null)
-        assert.equal(measured.before.writerCreated, false)
-        assert.deepEqual(measured.before.payloadFiles, [oldDigest])
+        assert.equal(measured.observed.injected, 0)
+        assert.equal(measured.observed.append, 0)
         assert.deepEqual(measured.before.eventFiles, [`${sourceWriterId}.ndjson`])
-        assert.equal(measured.before.oldBytes, Buffer.from(request.oldBody, 'utf8').toString('base64'))
+        assert.equal(measured.before.writerCreated, false)
         assert.ok(measured.beforeCurrent.sessions.includes(request.sessionId))
         assert.deepEqual(measured.beforeCurrent.sessionProjections[request.sessionId].xTrace,
           { openingPresent: false, partCount: 0, latestTerminalPresent: true })
-        assert.deepEqual(measured.beforeViews, measured.facts.map(fact => ({
-          event: fact, head: fact.id, heads: [fact.id],
-        })))
-        assert.equal(measured.facts.length, 2)
-        assert.deepEqual(measured.facts.at(-1).payloadRefs, [oldDigest])
-        assert.deepEqual(measured.views, measured.beforeViews)
+        assert.equal(measured.factRefs.length, 2)
+        assert.deepEqual(measured.factRefs.at(-1), [oldDigest])
         assert.deepEqual(measured.afterCurrent, measured.beforeCurrent)
-        assert.deepEqual(measured.physical, { ...measured.before,
-          incomingBytes: success ? Buffer.from(request.incomingBody, 'utf8').toString('base64') : null,
-          payloadFiles: success ? [oldDigest, incomingDigest].sort() : [oldDigest] })
         assert.deepEqual(measured.oldRead, { ok: true, content: request.oldBody })
-        assert.deepEqual(measured.incomingRead, success ? { ok: true, content: request.incomingBody }
-          : { ok: false, error: 'event-store payload missing: ' + incomingDigest })
-        if (scenario.startsWith('busy-')) {
-          assert.ok(measured.observed.busy > 0)
-          assert.deepEqual(measured.busyBeforeRelease, { settled: false, append: 0, payloadWrite: 0,
-            payloadFsync: 0, lockExists: true, physical: { ...measured.before, lockReleased: false } })
-        } else {
-          assert.equal(measured.observed.busy, 0)
-          assert.equal(measured.observed.mkdirAttempts, 1)
-          assert.equal(measured.busyBeforeRelease, null)
-        }
+        assert.deepEqual(measured.incomingRead, { ok: true, content: request.incomingBody })
         assert.deepEqual(cold.current, measured.beforeCurrent)
-        assert.deepEqual(cold.facts, measured.facts)
-        assert.deepEqual(cold.views, measured.beforeViews)
+        assert.deepEqual(cold.factRefs, measured.factRefs)
         assert.deepEqual(cold.oldRead, measured.oldRead)
-        assert.deepEqual(cold.incomingRead, measured.incomingRead)
+        // The staged incoming payload is process-local until an append embeds
+        // it; a cold process only sees committed inline payloads.
+        assert.deepEqual(cold.incomingRead, { ok: false, error: 'event-store payload missing: ' + incomingDigest })
         assert.deepEqual(cold.physical, measured.physical)
-        assert.equal(readFileSync(sourceFile, 'base64'), measured.before.sourceBytes)
-        assert.deepEqual(readFileSync(join(commonDir, 'wanxiang', 'payloads', oldDigest)), Buffer.from(request.oldBody, 'utf8'))
-        if (success) assert.deepEqual(readFileSync(join(commonDir, 'wanxiang', 'payloads', incomingDigest)),
-          Buffer.from(request.incomingBody, 'utf8'))
+        // The seed event line embeds the old payload inline.
+        const seedEvent = JSON.parse(readFileSync(sourceFile, 'utf8').trimEnd().split('\n').at(-1))
+        assert.equal(seedEvent.payload_refs[0], oldDigest)
+        assert.equal(seedEvent.payloads[oldDigest], Buffer.from(request.oldBody, 'utf8').toString('base64'))
+        assert.equal(existsSync(join(commonDir, 'wanxiangshu', 'payloads')), false,
+          'ndjson is the only carrier; a payloads directory must never appear')
         t.diagnostic(JSON.stringify({ scenario, measurePid: measured.pid, coldPid: cold.pid,
-          actualPayloadAndCold: true, ...measured.observed }))
+          actualInlinePayloadAndCold: true, ...measured.observed }))
         completed = true
       } finally {
         if (completed) rmSync(root, { recursive: true, force: true })

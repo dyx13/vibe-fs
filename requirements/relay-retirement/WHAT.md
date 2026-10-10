@@ -6,7 +6,7 @@
 
 ## [002] 评级前提
 
-Suicide 前须提交八维 assessment；尚未提交时返回先调用 review 的明确提示。提交后，REVISE、测试失败、未结义务、dirty 或 unmerged 工作区均不得成为退场阻塞项。
+Suicide 前须提交 assessment；尚未提交时返回先调用 review 的明确提示。提交后，REVISE、测试失败、未结义务、dirty 或 unmerged 工作区均不得成为退场阻塞项。
 
 ## [003] 资源阻塞
 
@@ -15,6 +15,10 @@ Suicide 前须提交八维 assessment；尚未提交时返回先调用 review �
 ## [004] Freeze-before-check
 
 先冻结本任新工作准入，再读取精确递归 ownership。冻结前已接受资源须纳入检查，冻结后创建须被 fence 拒绝。Fence 绑定 IncumbencyId，不随复用 SessionId 传给后继；阻塞时只恢复本任清理能力，不恢复新工作准入。
+
+## [005] 两段式结束确认
+
+正常退休须经两次 `suicide` 调用。已提交 assessment 后，第一次调用不退休：它返回本任评审承诺（`findings` 的 `(acceptance_criteria, work_plan)` 对）与尚未消费的 `DeferredWork` 待办，供调用方核对，并追加 durable `RetirementConfirmationCommitted`。同一精确 `(providerRun, toolCall)` 的重放幂等返回同一确认；同一 `toolCall` 的异 `providerRun` 拒绝。第二次以不同 `toolCall` 调用才进入正常退休流程，资源阻塞检查在此时进行。确认不解除义务、不改变 office 权限，也不构成退休。
 
 ## [007] 原子退休
 

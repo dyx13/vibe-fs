@@ -1,6 +1,6 @@
 namespace Wanxiangshu.OpenCode
 
-/// Bounded command execution. Provider verbs: `run` (DevOps) and `query-shell` (Inspector).
+/// Bounded command execution. Provider verb: `run` (DevOps).
 module ExecutorTool =
 
     [<RequireQualifiedAccess>]
@@ -58,26 +58,6 @@ module ExecutorTool =
             [<Literal>]
             val LargeOutputRecoveryBlocked: string = "tool/run/large-output-recovery-blocked"
 
-        [<RequireQualifiedAccess>]
-        module QueryShell =
-            [<Literal>]
-            val Description: string = "tool/query-shell/description"
-
-            [<Literal>]
-            val ArgCommand: string = "tool/query-shell/arg-command"
-
-            [<Literal>]
-            val MissingCommand: string = "tool/query-shell/missing-command"
-
-            [<Literal>]
-            val ArgDeadlineSeconds: string = "tool/query-shell/arg-deadline_seconds"
-
-            [<Literal>]
-            val ArgOutputBudgetBytes: string = "tool/query-shell/arg-output_budget_bytes"
-
-            [<Literal>]
-            val ArgWorldLock: string = "tool/query-shell/arg-world_lock"
-
     /// Provider-visible bounded execution with raw, explicitly truncated output.
     [<Literal>]
     val RunToolName: string = "run"
@@ -89,8 +69,6 @@ module ExecutorTool =
           WorldLock: bool }
 
     val runAdmission: ToolAdmission
-    val queryShellAdmission: ToolAdmission
     val runSpec: factory: HostToolFactory -> scope: ToolRuntimeScope -> ToolSpec
-    val queryShellSpec: factory: HostToolFactory -> scope: ToolRuntimeScope -> ToolSpec
 
     val internal formatSpooledOutcome: exitCode: int -> output: string -> string

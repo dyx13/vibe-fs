@@ -1,0 +1,1 @@
+Gap list. Each element describes one unclosed gap: acceptance_criteria formalizes the target state, work_plan states the work to close that gap; both must be non-empty strings. An empty array means the target is reached and the gap set is empty.

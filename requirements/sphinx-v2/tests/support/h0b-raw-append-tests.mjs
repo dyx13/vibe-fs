@@ -18,7 +18,7 @@ const environment = () => {
   return env
 }
 const filesAt = commonDir => {
-  const directory = join(commonDir, 'wanxiang', 'events')
+  const directory = join(commonDir, 'wanxiangshu', 'events')
   return Object.fromEntries(readdirSync(directory).sort().map(name => [name, readFileSync(join(directory, name)).toString('base64')]))
 }
 const expectFacts = (commonDir, facts) => {

@@ -12,8 +12,8 @@ try {
   for (const [path, entry] of Object.entries(JSON.parse(current.maintenanceFileState))) {
     if (entry.kind === 'Present') payloads[path] = Buffer.from(await eventStore.readPayload(handle, entry.payloadRef)).toString('base64')
   }
-  assert.equal(readdirSync(join(directory, 'wanxiang', 'events')).includes('fetch-independent-cold.ndjson'), false)
-  assert.equal(existsSync(join(directory, 'wanxiang.lock')), false)
+  assert.equal(readdirSync(join(directory, 'wanxiangshu', 'events')).includes('fetch-independent-cold.ndjson'), false)
+  assert.equal(existsSync(join(directory, 'wanxiangshu.lock')), false)
   process.stdout.write(JSON.stringify({ pid: process.pid, payloads,
     current: { ...current, accessOrder: current.accessOrder.toString(), lastAccessOrder: current.lastAccessOrder.toString() } }))
 } finally { eventStore.dispose(handle) }

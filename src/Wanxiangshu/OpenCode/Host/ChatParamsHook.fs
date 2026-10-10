@@ -7,8 +7,9 @@ open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Persistence.Journal
 
 /// PROMPT-006 / execution-model-routing-009: chat.params is an observation barrier, not a routing
-/// authority. chat.message / internal SendPrompt must already have established the
-/// lease and projected model+variant before the provider reaches this hook.
+/// authority and not a drift checker. chat.message / internal SendPrompt must already have
+/// established the lease and projected model+variant before the provider reaches this hook;
+/// the hook reads the exact committed lease and only fails closed when a managed run has none.
 module ChatParamsHook =
 
     let private normalizeText text =
@@ -25,36 +26,6 @@ module ChatParamsHook =
 
     let private childObject (value: obj) (name: string) : obj =
         if isNull value then null else value?(name)
-
-    let private extractModel (input: obj) =
-        let rawModel: obj = input?model
-        let message: obj = input?message
-        let messageModel: obj = if isNull message then null else message?model
-
-        let provider = textField rawModel "providerID"
-
-        let modelId =
-            // chat.params receives the resolved provider catalog Model. Its
-            // canonical model identifier is 'id'; 'modelID' belongs to the
-            // persisted UserMessage model reference. The compatibility fallback
-            // is raw-model-local; message.model never supplies provider identity.
-            textField rawModel "id"
-            |> Option.orElseWith (fun () -> textField rawModel "modelID")
-
-        let variant =
-            textField messageModel "variant"
-            |> Option.orElseWith (fun () -> textField rawModel "variant")
-
-        match provider, modelId with
-        | Some providerID, Some modelID ->
-            Some
-                { providerID = providerID
-                  modelID = modelID
-                  variant = variant }
-        | _ -> None
-
-    let private currentModel (input: obj) =
-        if isNull input then None else extractModel input
 
     let private trySessionId (input: obj) =
         if isNull input then
@@ -89,43 +60,10 @@ module ChatParamsHook =
         else
             None
 
-    /// What the exact committed execution for one physical user message says
-    /// this provider run must be. Read-only projection of owner truth: the hook
-    /// never writes identity, never re-routes, never allocates a lease.
+    /// What the exact committed execution for one physical user message holds.
+    /// Read-only projection of owner truth: the hook never writes identity,
+    /// never re-routes, never allocates a lease, never checks drift.
     let private readAdmission (key: ChatExecutionKey) = ModelRouting.readExecutionAdmission key
-
-    /// host-boundary-008 / execution-model-routing-009: compare the Host's real
-    /// observation against the exact execution. A managed input without exact
-    /// lease evidence fails closed; nothing is inferred from a session cache.
-    let private validateObservedProvider (key: ChatExecutionKey) expectedParticipant target agent model =
-        if not (String.Equals(expectedParticipant, agent, StringComparison.Ordinal)) then
-            invalidOp (
-                sprintf
-                    "PROMPT-006: provider agent drift for physical user message '%s' (%s -> %s)"
-                    (PhysicalUserMessageId.value key.PhysicalUserMessageId)
-                    expectedParticipant
-                    agent
-            )
-        elif not (ModelRouting.sameTarget target model) then
-            let expected = ModelRouting.toOpenCodeModel target
-
-            invalidOp (
-                sprintf
-                    "PROMPT-006: provider model/reasoning drift for physical user message '%s' (%s/%s[%s] -> %s/%s[%s])"
-                    (PhysicalUserMessageId.value key.PhysicalUserMessageId)
-                    expected.providerID
-                    expected.modelID
-                    (expected.variant |> Option.defaultValue "<missing>")
-                    model.providerID
-                    model.modelID
-                    (model.variant |> Option.defaultValue "<missing>")
-            )
-
-    let private validateModel (key: ChatExecutionKey) expectedParticipant target agent (input: obj) =
-        match currentModel input with
-        | None ->
-            invalidOp (sprintf "PROMPT-006: managed provider run '%s' has no observable provider/model binding" agent)
-        | Some model -> validateObservedProvider key expectedParticipant target agent model
 
     let private tryAgent (input: obj) =
         [ input; childObject input "info"; childObject input "message" ]
@@ -194,14 +132,9 @@ module ChatParamsHook =
     /// committed lease for its own physical message, or the observation fails
     /// closed. A message nobody accepted is entirely the Host's — never rejected
     /// for a binding this hook does not own.
-    let private validateManagedObservation
-        (journal: AgentJournal option)
-        (agent: string)
-        (key: ChatExecutionKey)
-        input
-        =
+    let private validateManagedObservation (journal: AgentJournal option) (agent: string) (key: ChatExecutionKey) =
         match readAdmission key with
-        | Some(participant, target) -> validateModel key participant target agent input
+        | Some _ -> ()
         | None when not (SessionExecutionBinding.isManagedExecution journal key) -> ()
         | None ->
             invalidOp (
@@ -212,10 +145,10 @@ module ChatParamsHook =
                     (PhysicalUserMessageId.value key.PhysicalUserMessageId)
             )
 
-    /// The observation barrier's whole policy: validate the Host's real
-    /// observation against the exact execution, then project only the approved
-    /// temperature. A message nobody durably accepted is left untouched.
-    /// Project only the approved temperature onto a validated observation.
+    /// The observation barrier's whole policy: read the exact committed lease,
+    /// fail closed only when a managed run has none, and project only the
+    /// approved temperature. A message nobody durably accepted is left
+    /// untouched.
     let private projectManagedTemperature (input: obj) (output: obj) =
         if supportsTemperature input then
             applyManagedTemperature input output
@@ -223,9 +156,9 @@ module ChatParamsHook =
     let private applyManagedPolicy (journal: AgentJournal option) input output =
         match tryAgent input, tryExecutionKey input with
         | Some agent, Some key when readAdmission key |> Option.isSome ->
-            validateManagedObservation journal agent key input
+            validateManagedObservation journal agent key
             projectManagedTemperature input output
-        | Some agent, Some key -> validateManagedObservation journal agent key input
+        | Some agent, Some key -> validateManagedObservation journal agent key
         | _ -> ()
 
     let private handleInput (journal: AgentJournal option) (input: obj) (output: obj) =

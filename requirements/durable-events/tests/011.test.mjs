@@ -51,7 +51,7 @@ test('WHAT[durable-events-011] runtime append creates zero Git objects and remot
     assert.equal(ensured, true, 'Hook.ensure must configure git hooks')
 
     // When remote sync runs, each retained writer NDJSON file encodes to exactly one Git blob
-    const writerFiles = readdirSync(join(gitDir, 'wanxiang/events')).filter(f => f.endsWith('.ndjson'))
+    const writerFiles = readdirSync(join(gitDir, 'wanxiangshu/events')).filter(f => f.endsWith('.ndjson'))
     assert.equal(writerFiles.length, 1, 'exactly one writer NDJSON file must exist for this runtime')
   })
 })

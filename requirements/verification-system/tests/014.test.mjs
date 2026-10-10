@@ -517,30 +517,36 @@ test('WHAT[verification-system-014] Manager loop response binding isolates each 
     { ordinal: String(ordinal) }).trim().replace(/\n/g, '\n# ')
   const work = '# ' + language.readText('en', 'runtime/manager-work').trim().replace(/\n/g, '\n# ')
   await CUSTOMS.bindManagerLoopSequence({ provider: { _scenario: runtime } })
-  assert.equal(dispatch('ses_strength', successor(2), 'manager-reopened-loop.0').args.completeness, 'PERFECT')
+  assert.deepEqual(dispatch('ses_strength', successor(2), 'manager-reopened-loop.0').args, { findings: [] })
   assert.equal(dispatch('ses_strength', null, 'manager-reopened-loop.1').tool, 'suicide')
-  assert.equal(dispatch('ses_human', HUMANROOT_MANAGER_LOOP_CANARY_PROMPT, 'humanroot-loop.0').args.completeness, 'REVISE')
+  assert.deepEqual(dispatch('ses_human', HUMANROOT_MANAGER_LOOP_CANARY_PROMPT, 'humanroot-loop.0').args, {
+    findings: [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }],
+  })
   assert.equal(dispatch('ses_human', null, 'humanroot-loop.1').tool, 'suicide')
-  assert.equal(dispatch('ses_human', successor(2), 'manager-reopened-loop.0').args.completeness, 'PERFECT')
+  assert.deepEqual(dispatch('ses_human', successor(2), 'manager-reopened-loop.0').args, { findings: [] })
   assert.equal(dispatch('ses_human', null, 'manager-reopened-loop.1').tool, 'suicide')
   assert.equal(dispatch('ses_strength', work, 'manager-current-action.0').tool, 'assume')
   const initial = compiled.scenario.entries.find((entry) => entry.id === 'manager-loop.0').turn
-  assert.equal(dispatch('ses_main', initial, 'manager-loop.0').args.completeness, 'REVISE')
+  assert.deepEqual(dispatch('ses_main', initial, 'manager-loop.0').args, {
+    findings: [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }],
+  })
   assert.equal(dispatch('ses_main', null, 'manager-loop.1').args.name, 'Proof Writer')
   assert.equal(dispatch('ses_main', work, 'manager-current-action.0').tool, 'assume')
   assert.equal(dispatch('ses_main', null, 'manager-current-action.1').tool, 'join')
   assert.equal(dispatch('ses_strength', work, 'manager-current-action.0').tool, 'assume')
   assert.equal(dispatch('ses_strength', null, 'manager-current-action.1').tool, 'suicide')
-  assert.equal(dispatch('ses_main', successor(2), 'manager-reopened-loop.0').args.completeness, 'PERFECT')
+  assert.deepEqual(dispatch('ses_main', successor(2), 'manager-reopened-loop.0').args, { findings: [] })
   assert.equal(dispatch('ses_main', null, 'manager-reopened-loop.1').tool, 'suicide')
-  assert.equal(dispatch('ses_main', successor(3), 'manager-reopened-loop.0').args.completeness, 'REVISE')
-  assert.equal(dispatch('ses_strength', successor(3), 'manager-reopened-loop.0').args.completeness, 'PERFECT',
+  assert.deepEqual(dispatch('ses_main', successor(3), 'manager-reopened-loop.0').args, {
+    findings: [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }],
+  })
+  assert.deepEqual(dispatch('ses_strength', successor(3), 'manager-reopened-loop.0').args, { findings: [] },
     'the shared audit entry must reset after the main Road repair response')
   assert.equal(dispatch('ses_main', null, 'manager-reopened-loop.1').args.name, 'Conflict Resolver')
   assert.equal(dispatch('ses_strength', null, 'manager-reopened-loop.1').tool, 'suicide',
     'the shared action entry must reset after the main Road fork response')
   for (const ordinal of [4, 5]) {
-    assert.equal(dispatch('ses_main', successor(ordinal), 'manager-reopened-loop.0').args.completeness, 'PERFECT')
+    assert.deepEqual(dispatch('ses_main', successor(ordinal), 'manager-reopened-loop.0').args, { findings: [] })
     assert.equal(dispatch('ses_main', null, 'manager-reopened-loop.1').tool, 'suicide')
   }
   assert.throws(() => dispatch('ses_strength', initial, 'manager-loop.0'), /main Manager Road cannot change/)

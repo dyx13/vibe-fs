@@ -8,7 +8,7 @@ const [directory, requestJson] = process.argv.slice(2)
 const request = JSON.parse(requestJson)
 const before = { ...request.before, accessOrder: BigInt(request.before.accessOrder), lastAccessOrder: BigInt(request.before.lastAccessOrder) }
 const writerId = 'independent-cold-reader'
-const eventsDirectory = join(directory, 'wanxiang', 'events')
+const eventsDirectory = join(directory, 'wanxiangshu', 'events')
 const handle = eventStore.create(directory, writerId)
 try {
   assert.deepEqual(readFileSync(join(eventsDirectory, 'setup.ndjson')).toString('base64'), request.setupBytes)
@@ -51,7 +51,7 @@ try {
   assert.equal(Buffer.from(await eventStore.readPayload(handle, request.payloadRef)).toString('base64'), request.payloadBytes)
   assert.deepEqual(readdirSync(eventsDirectory).sort(), ['setup.ndjson', `${request.writer}.ndjson`].sort())
   assert.equal(existsSync(join(eventsDirectory, `${writerId}.ndjson`)), false)
-  assert.equal(existsSync(join(directory, 'wanxiang.lock')), false)
+  assert.equal(existsSync(join(directory, 'wanxiangshu.lock')), false)
   process.stdout.write(JSON.stringify({ pid: process.pid,
     current: { ...current, accessOrder: current.accessOrder.toString(), lastAccessOrder: current.lastAccessOrder.toString() },
     writerId, missingIdentity: request.missingIdentity }) + '\n')

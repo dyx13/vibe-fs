@@ -40,7 +40,7 @@ test('WHAT[durable-events-004] append_task_does_not_return_until_the_cross_proce
     const r = await eventStore.append(store, [event(1)])
     assert.equal(r.ok, true)
     assert.equal(
-      existsSync(path.join(dir, 'wanxiang.lock')),
+      existsSync(path.join(dir, 'wanxiangshu.lock')),
       false,
       'Append release must happen before lock file is removed',
     )
@@ -84,7 +84,7 @@ const assertIncompleteTailRejected = (read) => {
 const withWriter = (run) => {
   const root = mkdtempSync(join(tmpdir(), 'wanxiang-writer-tail-property-'))
   const commonDir = join(root, '.git')
-  const eventsDir = join(commonDir, 'wanxiang', 'events')
+  const eventsDir = join(commonDir, 'wanxiangshu', 'events')
   const writerPath = join(eventsDir, 'property-writer.ndjson')
   mkdirSync(eventsDir, { recursive: true })
   try {

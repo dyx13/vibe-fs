@@ -274,7 +274,7 @@ const d0Deferred = () => {
   return { promise, resolve }
 }
 const d0EventFiles = directory => {
-  const events = join(directory, '.git', 'wanxiang', 'events')
+  const events = join(directory, '.git', 'wanxiangshu', 'events')
   return Object.fromEntries(readdirSync(events).filter(name => name.endsWith('.ndjson'))
     .sort().map(name => [name, readFileSync(join(events, name), 'base64')]))
 }
@@ -367,7 +367,7 @@ test('WHAT[managed-session-lifecycle-022] original child and owner deletion arch
     let completedBookkeeper = false
     try {
       assert.deepEqual(dispatch.projectionObservation(runtime.journal, sent.child).activeLogicalRun, childProfile)
-      assert.deepEqual(readFileSync(join(directory, '.git', 'wanxiang', 'events', 'd0g-decoy.ndjson')), decoy.bytes)
+      assert.deepEqual(readFileSync(join(directory, '.git', 'wanxiangshu', 'events', 'd0g-decoy.ndjson')), decoy.bytes)
       await hooks.event({ event: { type: 'session.deleted',
         properties: { sessionID: sent.child, parentID: manager } } })
       assert.equal(pluginLifecycle.attachedEngineer(originalRuntime, manager), null)
@@ -468,7 +468,7 @@ test('WHAT[managed-session-lifecycle-022] original child and owner deletion arch
       assert.notEqual(observation.pid, process.pid)
       assert.equal(observation.verified, true)
       assert.deepEqual(d0EventFiles(directory), afterFiles)
-      assert.deepEqual(readFileSync(join(directory, '.git', 'wanxiang', 'events', 'd0g-decoy.ndjson')), decoy.bytes)
+      assert.deepEqual(readFileSync(join(directory, '.git', 'wanxiangshu', 'events', 'd0g-decoy.ndjson')), decoy.bytes)
       assert.ok(result.workRecord.includes(answer))
     } finally {
       release.resolve()
@@ -492,7 +492,7 @@ test('WHAT[managed-session-lifecycle-022] original child and owner deletion arch
       decoy = { current: await casebook.fetchCaseByIdentity(handle, decoyIdentity),
         fact: eventStore.read(handle, eventStore.head(handle, 'casebook')),
         payloadRef: JSON.parse(baseline)['d0g-decoy.txt'].payloadRef,
-        bytes: readFileSync(join(directory, '.git', 'wanxiang', 'events', 'd0g-decoy.ndjson')) }
+        bytes: readFileSync(join(directory, '.git', 'wanxiangshu', 'events', 'd0g-decoy.ndjson')) }
       assert.equal(Buffer.from(await eventStore.readPayload(handle, decoy.payloadRef)).toString('utf8'), decoyText)
     } finally {
       eventStore.dispose(handle)

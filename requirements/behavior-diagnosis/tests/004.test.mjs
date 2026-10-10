@@ -21,5 +21,3 @@ for (const locale of ['en', 'zh-CN']) {
     assert.notEqual(enforcer.composeBloggerSystemPrompt('DIFFERENT BASE', locale), composed)
   })
 }
-
-test.todo('WHAT[behavior-diagnosis-004] GAP-112 actual institutional live Rulebook projection remains memory-only')

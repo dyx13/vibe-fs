@@ -17,7 +17,7 @@ Public product contracts exercised here (formal docs win on conflict):
 - **Join user-message wake (EXEC-017)** — blocked Manager `join` exits with
   `status="interrupted"`, `reason="user_message"` (not `operator_abort`).
 - **Consecutive provider failure + fallback** — failure → failed recovery → one successful recovery, with distinct durable episode claims and no retry/return overlap.
-- **Manager loop assessment & retirement** — each iteration independently audits the same authority, low scores assign current repair, and retirement closes live resources before the system continues or accepts.
+- **Manager loop assessment & retirement** — each iteration independently audits the same authority, non-empty findings assign current repair, and retirement closes live resources before the system continues or accepts.
 - **Publish conflict / reconciliation** — stale target via `gitConflictProof` invalidates the certificate; another ordinary iteration resolves the conflict and retires, then the rebased candidate is Published.
 - **§21 adversity oracles** — see `support/long-stroke-oracles.mjs` (`oracleLongStroke`).
 

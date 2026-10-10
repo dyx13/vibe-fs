@@ -4,8 +4,8 @@ import path from 'node:path'
 import { syncBuiltinESMExports } from 'node:module'
 
 const [mode, commonDir, writerId, scenario, requestJson] = process.argv.slice(2)
-const file = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
-const lock = path.join(commonDir, 'wanxiang.lock')
+const file = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+const lock = path.join(commonDir, 'wanxiangshu.lock')
 const request = JSON.parse(requestJson)
 
 async function cold() {

@@ -51,13 +51,13 @@ export async function withManagerLoop(caseName, body) {
     const accepted = await dispatch.acceptAgentOwnerRoot(handle, session, root.key, rootPhysical)
     assert.equal(accepted.ok, true, JSON.stringify(accepted.error))
     const profile = accepted.profile
-    const rootFile = join(commonDir, 'wanxiang', 'events', 'manager-loop-1.ndjson')
+    const rootFile = join(commonDir, 'wanxiangshu', 'events', 'manager-loop-1.ndjson')
     const rootEnvelopes = readFileSync(rootFile, 'utf8').trim().split('\n').map(line => JSON.parse(line))
     let parent = rootEnvelopes.at(-1).event_id
     let sequence = 0
     journal.JournalSurface_dispose(handle)
     handle = null
-    const file = join(commonDir, 'wanxiang', 'events', 'manager-loop-fixture.ndjson')
+    const file = join(commonDir, 'wanxiangshu', 'events', 'manager-loop-fixture.ndjson')
     const append = cases => {
       sequence += 1
       const id = 'f' + sequence.toString(16).padStart(39, '0')
@@ -89,9 +89,9 @@ export async function withManagerLoop(caseName, body) {
         ToolCallId: `review:${round}`, NarrativeDigest: 'narrative', PayloadDigest: `payload:${grade}`,
         RootRequestDigest: 'root', RequirementSetDigest: 'requirements', EvidenceFrontierDigest: 'evidence',
       }, ['WorkspaceSnapshotId', 'snapshot'], ['AuthorityRevision', rootPhysical],
-      ['ScoreVector', ['LanguageAlgorithms', 'Simplicity', 'Structure', 'Granularity', 'TestsEvidence',
-        'LogicReliabilityBoundaries', 'CallerErgonomics', 'Completeness']
-        .map(dimension => [dimension, dimension === 'Completeness' ? grade : 'Perfect'])],
+      ['AssessmentFindings', grade === 'Perfect' ? [] : [
+        { AcceptanceCriteria: 'Complete the original charge.', WorkPlan: 'Finish the remaining work.' },
+      ]],
     ]])
     const retire = accepted => append([['RetirementCommitted', {
       Id: ['RetirementId', 'retirement:1'], IncumbencyId: ['IncumbencyId', incumbent(1)],

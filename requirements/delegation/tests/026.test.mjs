@@ -192,6 +192,36 @@ test('WHAT[delegation-026] RESTART_ADOPTED_IDLE_DEVOPS_does_not_block_join_with_
     rmSync(directory, { recursive: true, force: true })
   }
 })
+test('WHAT[delegation-026] RESTART_PENDING_CHILD_WORK_does_not_leak_into_horizon_or_join', async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'wxs-restart-pending-'))
+  const owner = 'manager-restart-pending'
+  const first = await forkTool.createRuntime(directory, ownerDescriptor(owner))
+
+  try {
+    const pending = forkTool.executeManagerFork(first, toolModule, owner, 'engineer', 'Ada', 'PENDING-CHARGE')
+    await waitForPromptCount(first, 1)
+    assert.equal(forkTool.acceptPrompt(first, 0), true)
+    await pending
+    assert.equal(forkTool.durableLifecycleByname(first, owner, 'Ada'), 'Active')
+  } finally {
+    forkTool.disposeRuntime(first)
+  }
+
+  const restarted = await forkTool.createRuntime(directory, ownerDescriptor(owner))
+
+  try {
+    const horizon = await forkTool.executeHorizon(restarted, owner)
+    assert.doesNotMatch(horizon, /Ada/)
+
+    const joinPromise = forkTool.executeJoin(restarted, owner)
+    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('JOIN_HANG_DETECTED')), 1500))
+    const joinResult = await Promise.race([joinPromise, timeout])
+    assert.match(joinResult, /NothingToJoin|无可等待|没有|nothing away to receive/i)
+  } finally {
+    forkTool.disposeRuntime(restarted)
+    rmSync(directory, { recursive: true, force: true })
+  }
+})
 }
 
 test.todo('WHAT[delegation-026] actual admission and checkpoint fault cuts preserve exact durable claim and effect truth without replay or durable program counters (GAP-153)')

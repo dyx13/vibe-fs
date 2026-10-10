@@ -5,8 +5,8 @@ import { syncBuiltinESMExports } from 'node:module'
 
 const [mode, commonDir, writerId, phase, scenario, requestJson] = process.argv.slice(2)
 const request = JSON.parse(requestJson)
-const file = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
-const lock = path.join(commonDir, 'wanxiang.lock')
+const file = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+const lock = path.join(commonDir, 'wanxiangshu.lock')
 const store = await import('../../../../dist/Persistence/EventStore/Surface.js')
 const transaction = await import('../../../../dist/Repository/Programming/Js/TransactionSurface.js')
 const handle = store.create(commonDir, writerId)
@@ -24,7 +24,7 @@ const ownsFile = value => typeof value === 'string' && path.resolve(value) === f
 
 try {
   if (mode === 'cold') {
-    const source = path.join(commonDir, 'wanxiang', 'events', `${request.sourceWriter}.ndjson`)
+    const source = path.join(commonDir, 'wanxiangshu', 'events', `${request.sourceWriter}.ndjson`)
     assert.notEqual(writerId, request.sourceWriter)
     assert.equal(fs.readFileSync(source, 'base64'), request.bytes)
     for (const fact of request.facts) {

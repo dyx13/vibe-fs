@@ -8,10 +8,10 @@ read smoothly when joined into one paragraph. Use occurrence for what materially
 is now established, and consequence for how the continuing road changed.
 Strip process wrappers such as “after analysis,” “we found,” “it is now clear,”
 and generic “follow-up work is needed.” Each sentence should land directly on a
-concrete entity, evidence chain, conclusion, or constraint and remain intelligible
+concrete entity, fact chain, conclusion, or constraint and remain intelligible
 when read outside the current transcript.
 Write a determination, not a diary: occurrence proves, settlement rules,
 consequence gates.
-If a literal raw excerpt materially strengthens the proof, put only the smallest
+If a literal raw excerpt materially strengthens the fact chain, put only the smallest
 decisive excerpt in optional evidence; otherwise omit it. Never paste a large block.
 Output no ordinary assistant prose.

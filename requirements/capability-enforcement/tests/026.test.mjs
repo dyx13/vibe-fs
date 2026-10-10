@@ -221,7 +221,7 @@ test('WHAT[capability-enforcement-026] D06_fork_devops_or_creating_alternative_d
   const runtime = await forkTool.createRuntime(directory, ownerDescriptor(owner))
 
   try {
-    // 1. Manager 试图通过 calling: 'devops' 进行 fork：同步拒绝 unknown-calling（只能 fork Engineer）
+    // 1. Manager 试图通过 calling: 'devops' 进行 fork：同步拒绝 calling-conflict（只能 fork Engineer）
     const resCalling = await forkTool.executeManagerFork(
       runtime,
       toolModule,

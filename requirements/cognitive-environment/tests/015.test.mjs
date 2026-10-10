@@ -37,6 +37,8 @@ integrationTest('WHAT[cognitive-environment-015] a late actual provider callback
   }, 'a malformed actual HTTP request after both Blogger responses must still reject the canary')
 })
 
+const transformsSource = readFileSync(join(root, 'src/Wanxiangshu/OpenCode/Plugin/PluginTransforms.fs'), 'utf8')
+
 const bloggerSource = readFileSync(join(root, 'src/Wanxiangshu/OpenCode/Host/BloggerChronicleText.fs'), 'utf8')
 
 const chronicleResourcePath = 'resources/provider/cognitive-environment/blogger-chronicle-text'
@@ -56,19 +58,19 @@ test('WHAT[cognitive-environment-015] BLOGGER_CHRONICLE_TEXT_has_exact_bilingual
   assert.doesNotMatch(bloggerSource, /Distill the material into/)
 })
 
-test('WHAT[cognitive-environment-015] Blogger prose discipline rejects status-report wrappers and demands self-contained evidence', () => {
+test('WHAT[cognitive-environment-015] Blogger prose discipline rejects status-report wrappers and demands a self-contained fact chain', () => {
   const zh = readFileSync(join(root, 'resources/provider/role/blogger/zh-CN.md'), 'utf8')
   const en = readFileSync(join(root, 'resources/provider/role/blogger/en.md'), 'utf8')
 
   assert.match(zh, /经过分析/)
-  assert.match(zh, /最短证据链/)
+  assert.match(zh, /最短事实链/)
   assert.match(zh, /自包含/)
   assert.match(zh, /技术判词|判词/)
   assert.match(zh, /可证伪/)
   assert.match(en, /after reviewing/)
-  assert.match(en, /shortest evidence chain/)
+  assert.match(en, /shortest fact chain/)
   assert.match(en, /self-contained/)
-  assert.match(en, /verdict backed by evidence/)
+  assert.match(en, /verdict backed by facts/)
   assert.match(en, /falsifiable/)
 })
 
@@ -405,7 +407,7 @@ const journalTreeContainsMarker = (directory) => {
     }
     return false
   }
-  return walk(join(directory, '.git', 'wanxiang', 'events'))
+  return walk(join(directory, '.git', 'wanxiangshu', 'events'))
 }
 
 test('WHAT[cognitive-environment-015] registered companion projection keeps the original execution model gate', async () => {
@@ -495,7 +497,7 @@ test('WHAT[cognitive-environment-015] registered companion projection keeps the 
 test('WHAT[cognitive-environment-015] durable marker oracle observes Git-private event bytes', () => {
   const directory = mkdtempSync(join(tmpdir(), 'chronicle-marker-oracle-'))
   try {
-    const events = join(directory, '.git', 'wanxiang', 'events')
+    const events = join(directory, '.git', 'wanxiangshu', 'events')
     mkdirSync(events, { recursive: true })
     const log = join(events, 'all.ndjson')
     writeFileSync(log, '{}\n')

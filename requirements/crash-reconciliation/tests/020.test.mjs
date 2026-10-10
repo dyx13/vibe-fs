@@ -53,6 +53,19 @@ test('WHAT[crash-reconciliation-020] production load decision voids active child
   }
 })
 
+test('WHAT[crash-reconciliation-020] an active child work run leaves the horizon projection only after load settlement voids it', () => {
+  for (const agent of ['engineer', 'devops']) {
+    const state = recovery.create()
+    link(state, { agent })
+    acceptRun(state, { agent })
+    assert.equal(recovery.childView(state, 'parent', 'child').horizonVisible, 1)
+    const settlements = recovery.childSettlements(state)
+    assert.equal(settlements.length, 1)
+    fold(state, settlements[0])
+    assert.equal(recovery.childView(state, 'parent', 'child').horizonVisible, 0)
+  }
+})
+
 test('WHAT[crash-reconciliation-020] human roots and child runs without a durable handle are not selected for load settlement', () => {
   const human = recovery.create()
   const manager = acceptRun(human, { child: 'parent', agent: 'manager', human: true })
@@ -143,7 +156,7 @@ const withDurableChildRuns = async (body) => {
 const durableEvents = async (commonDir) => {
   const { readdirSync, readFileSync } = await import('node:fs')
   const { join } = await import('node:path')
-  const events = join(commonDir, 'wanxiang', 'events')
+  const events = join(commonDir, 'wanxiangshu', 'events')
   return readdirSync(events).filter(name => name.endsWith('.ndjson')).sort().flatMap(name => {
     const content = readFileSync(join(events, name), 'utf8')
     assert.ok(content === '' || content.endsWith('\n'), 'every durable event must be a complete line')
@@ -196,10 +209,10 @@ const assertChildSettlementAppendFailure = async phase => {
   await withDurableChildRuns(async ({ handle, writerId, commonDir, reopen, dispatch }) => {
     const { mkdirSync, readFileSync, renameSync, writeFileSync, rmSync } = await import('node:fs')
     const { join } = await import('node:path')
-    const events = join(commonDir, 'wanxiang', 'events')
+    const events = join(commonDir, 'wanxiangshu', 'events')
     const writer = join(events, `${writerId}.ndjson`)
     const blocked = phase === 'PhysicalAppend' ? writer : events
-    const saved = join(commonDir, 'wanxiang', 'saved-append-target')
+    const saved = join(commonDir, 'wanxiangshu', 'saved-append-target')
     // Activate the fresh writer before the fault, so the failed physical append
     // is the child void itself rather than its preceding RuntimeStarted watermark.
     const admitted = await dispatch.acceptHumanRootSelection(handle, 'current-manager', 'root-current-manager', managerRootSelection)

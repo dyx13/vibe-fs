@@ -330,7 +330,7 @@ const TOOL_NAMES = [
   'fork', 'resume', 'commission', 'join', 'horizon', 'fission',
   'read', 'write', 'edit', 'glob', 'grep', 'mv', 'rm',
   'bash-honeypot', 'assume', 'todowrite',
-  'enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret',
+  'defer',  'publish',
   'run', 'open-terminal', 'send-terminal', 'read-terminal', 'signal-terminal',
   'review', 'chronicle', 'fetch', 'suicide',
 ]
@@ -338,13 +338,13 @@ const PLUGIN_TOOL_NAMES = [
   'fork', 'resume', 'commission', 'open-terminal', 'send-terminal', 'read-terminal', 'signal-terminal',
   'join', 'horizon', 'fission', 'review', 'suicide', 'run',
   'mv', 'rm', 'bash-honeypot', 'assume', 'chronicle',
-  'enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret',
+  'defer',  'publish',
   'js-engineer', 'js-devops', 'js-manager', 'js-predictor',
 ]
 const HOST_OWNED_TOOL_NAMES = [ 'read', 'write', 'edit', 'glob', 'grep', 'skill', 'todowrite',
 ]
 const ROLE_NAMES = ['orchestrator', 'manager', 'engineer', 'devops', 'blogger']
-const COGNITIVE_TOOLS = ['enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret']
+const COGNITIVE_TOOLS = ['defer',  'publish']
 const ALLOWED = {
   orchestrator: ['commission', 'join', 'horizon', 'assume', 'todowrite', ...COGNITIVE_TOOLS],
   manager: ['fork', 'resume', 'join', 'horizon', 'review', 'suicide', 'assume', 'todowrite', ...COGNITIVE_TOOLS],
@@ -397,13 +397,9 @@ integrationTest('WHAT[capability-enforcement-010] MANAGER_host_schemas_are_prese
       chronicle: ['charge', 'occurrence', 'settlement', 'consequence', 'evidence', 'tip'],
       'bash-honeypot': [],
       assume: ['assumption'],
-      enough: ['decision'],
-      abandon: ['commitment'],
       defer: ['new_work'],
       subscribe: ['id', 'concern'],
       publish: ['id', 'message'],
-      celebrate: ['experience'],
-      regret: ['experience'],
     }
     for (const toolName in expected) {
       for (const argument of expected[toolName]) {
@@ -419,12 +415,14 @@ integrationTest('WHAT[capability-enforcement-010] MANAGER_calling_enum_uses_pers
     for (const calling of managerPersonas) {
       assert.equal(hooks.tool.fork.args.calling.safeParse(calling).success, true, `fork.calling=${calling}`)
     }
+    assert.equal(hooks.tool.fork.args.calling.safeParse(undefined).success, true, 'fork.calling is optional and may be omitted')
     for (const calling of ['coder', 'investigator', 'operator', 'devops', 'researcher', 'analyst', 'coordinator', 'lead', 'director']) {
       assert.equal(hooks.tool.fork.args.calling.safeParse(calling).success, false, `fork rejects ${calling}`)
     }
     for (const calling of ['lead']) {
       assert.equal(hooks.tool.commission.args.calling.safeParse(calling).success, true, `commission.calling=${calling}`)
     }
+    assert.equal(hooks.tool.commission.args.calling.safeParse(undefined).success, true, 'commission.calling is optional and may be omitted')
     for (const calling of ['coordinator', 'director', 'coder', 'engineer', 'navigator']) {
       assert.equal(hooks.tool.commission.args.calling.safeParse(calling).success, false, `commission rejects ${calling}`)
     }

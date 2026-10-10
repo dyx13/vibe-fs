@@ -1,1 +1,1 @@
-Your review has been accepted. The review-only read tools are now disabled; do not read, search, or process repository code yourself anymore. The work is nearly complete, and you are the final closer. Finish the last batch of work found in review, then call suicide to finish.
+Your review has been accepted and findings is empty: you are the final Manager, with no successor. The review-only read tools are disabled, but you may still read, clean up, and close out your owned execution resources; do not start new work. Once owned resources are settled, call suicide to finish.

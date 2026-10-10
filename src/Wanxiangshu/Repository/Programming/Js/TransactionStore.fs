@@ -109,7 +109,8 @@ module JsToolsTransactionStore =
                       EventType = PreparedEventType
                       Parents = store.TryHead streamId |> Option.toList
                       Payload = payload (encodePrepared prepared)
-                      PayloadRefs = [] }
+                      PayloadRefs = []
+                      Payloads = Map.empty }
 
             match! store.Append [ envelope ] with
             | Ok receipt when AppendReceipt.cutFor eventId receipt |> Option.isSome ->
@@ -151,7 +152,8 @@ module JsToolsTransactionStore =
                       EventType = CommittedEventType
                       Parents = store.TryHead streamId |> Option.toList
                       Payload = payload (encodeCommitted { TransactionId = transactionId })
-                      PayloadRefs = [] }
+                      PayloadRefs = []
+                      Payloads = Map.empty }
 
             match! store.Append [ envelope ] with
             | Ok receipt when AppendReceipt.cutFor eventId receipt |> Option.isSome ->

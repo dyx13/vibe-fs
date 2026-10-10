@@ -12,7 +12,6 @@
     "AgentFact.Delegation": "delegation",
     "AgentFact.Attention": "attention-regulation",
     "AgentFact.Concern": "concern-routing",
-    "AgentFact.InstitutionalLearning": "institutional-learning",
     "AgentFact.ChatExecution": "managed-chat-execution",
     "AgentFact.Cognition": "cognitive-workspace"
   }

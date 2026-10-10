@@ -94,7 +94,7 @@ try {
     assert.equal(state.inquiryId, request.seed.inquiryId)
     assert.equal(state.revision, '0')
     assert.equal(state.status, 'active')
-    assert.equal(fs.existsSync(path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)), false)
+    assert.equal(fs.existsSync(path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)), false)
     assert.equal(fs.existsSync(path.join(root, 'settlement.json')), false)
     const command = { commandId: request.command.commandId, inquiryId: request.seed.inquiryId,
       reason: request.cancelReason }

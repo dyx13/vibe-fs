@@ -17,8 +17,8 @@ const canonical = value => Array.isArray(value) ? value.map(canonical)
     ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value
 const dto = event => ({ id: event.event_id, stream: event.stream_id, type: event.event_type,
   parents: event.parents, payload: event.payload, payloadRefs: event.payload_refs })
-const file = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
-const lock = path.join(commonDir, 'wanxiang.lock')
+const file = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+const lock = path.join(commonDir, 'wanxiangshu.lock')
 const handle = store.create(commonDir, writerId)
 const handles = [handle]
 let runtime
@@ -31,7 +31,7 @@ const originals = {
 try {
   if (mode === 'cold') {
     assert.notEqual(writerId, request.sourceWriter)
-    const source = path.join(commonDir, 'wanxiang', 'events', `${request.sourceWriter}.ndjson`)
+    const source = path.join(commonDir, 'wanxiangshu', 'events', `${request.sourceWriter}.ndjson`)
     assert.equal(fs.existsSync(source), request.writerCreated)
     const bytes = request.writerCreated ? fs.readFileSync(source, 'base64') : ''
     assert.equal(bytes, request.bytes)

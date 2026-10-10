@@ -71,6 +71,10 @@ type ICanonicalIntegrator =
     abstract IsEventTypeKnown: eventType: string -> bool
     abstract TryCurrent: key: string -> obj option
     abstract TryEvent: eventId: EventId -> EventEnvelope option
+    /// durable-events-012: committed inline payload content by content address.
+    /// The Integrator owns every accepted envelope, so it owns the payload index
+    /// too; no second reader over durable history may exist.
+    abstract TryPayload: payloadRef: PayloadRef -> byte[] option
     abstract TryHeads: streamId: EventStreamId -> EventId list
     abstract TryHead: streamId: EventStreamId -> EventId option
     abstract AllHeads: unit -> EventId list

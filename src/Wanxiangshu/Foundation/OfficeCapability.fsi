@@ -21,18 +21,23 @@ type ToolPermission =
     | Fetch
     | Finality
     | BashHoneypot
-    | Sphinx
 
 [<RequireQualifiedAccess>]
 type ManagerCapabilityFacts =
-    { HasActiveIncumbency: bool
-      HasAssessment: bool
-      HasValidBoundCertificate: bool
-      CleanupBlockerDigest: string option }
+    {
+        HasActiveIncumbency: bool
+        HasAssessment: bool
+        /// True when the active incumbency's accepted assessment has empty
+        /// findings: the final incumbent who settles and retires with no successor.
+        IsFinalIncumbent: bool
+        CleanupBlockerDigest: string option
+    }
 
 [<RequireQualifiedAccess>]
 module OfficeCapability =
     val managerReviewReadOnlyPermissions: ToolPermission Set
+    /// capability-enforcement-025: read/cleanup/close-out surface for the final incumbent.
+    val managerFinishPermissions: ToolPermission Set
     val permissions: role: Role -> ToolPermission Set
     val isAllowed: role: Role -> permission: ToolPermission -> bool
     val permissionsForManagerFacts: facts: ManagerCapabilityFacts -> ToolPermission Set

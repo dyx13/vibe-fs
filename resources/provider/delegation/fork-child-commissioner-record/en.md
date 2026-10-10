@@ -1,1 +1,1 @@
-`commissioner_record` belongs to your Commissioner. It is their history, not yours. Read it for context and evidence. Unfinished work in that record does not become yours merely because you can see it. Your charge tells you what is yours to carry.
+`commissioner_record` belongs to your Commissioner. It is their history, not yours. Read it for context and records. Unfinished work in that record does not become yours merely because you can see it. Your charge tells you what is yours to carry.

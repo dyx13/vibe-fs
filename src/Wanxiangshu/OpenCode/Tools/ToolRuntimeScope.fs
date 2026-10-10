@@ -221,13 +221,24 @@ type ToolRuntimeScope
             drainChildPtys = drainChildPtysFor
         )
 
+    let establishedAgentsOf ownerKey =
+        match runtimes.TryGetValue ownerKey with
+        | true, previous -> previous.EstablishedAgentIds
+        | false, _ -> []
+
     let getOrCreateRuntime ownerKey =
         lock gate (fun () ->
             match disposed, runtimes.TryGetValue ownerKey with
             | true, _ -> Error "Tool runtime scope is disposed"
             | false, (true, runtime) when not runtime.IsCancelled -> Ok runtime
             | false, _ ->
+                // participant-horizon-011 / WP-025: a replaced (cancelled) runtime must
+                // inherit the agents this process established; otherwise a cancelled child
+                // would vanish from its own process' horizon/join.
+                let inheritedEstablished = establishedAgentsOf ownerKey
+
                 let runtime = createRuntime ownerKey
+                runtime.RestoreEstablishedAgents inheritedEstablished
                 runtimes.[ownerKey] <- runtime
                 Ok runtime)
 
@@ -439,7 +450,7 @@ type ToolRuntimeScope
     let defaultEmptyManagerFacts: ManagerCapabilityFacts =
         { HasActiveIncumbency = false
           HasAssessment = false
-          HasValidBoundCertificate = false
+          IsFinalIncumbent = false
           CleanupBlockerDigest = None }
 
     let roadViewOfSession (sessionId: string) : RoadView option =
@@ -452,26 +463,17 @@ type ToolRuntimeScope
     let activeIncumbencyOfSession (sessionId: string) : IncumbencyId option =
         roadViewOfSession sessionId |> Option.bind (fun road -> road.ActiveIncumbency)
 
-    let certificateMatchesActiveIncumbency (active: IncumbencyId) (road: RoadView) =
-        match road.ActiveSnapshotId, road.ActiveAuthorityRevision, road.Certificate with
-        | Some snapshot, Some authority, Some certificate ->
-            certificate.Valid
-            && certificate.IncumbencyId = active
-            && certificate.SnapshotId = snapshot
-            && certificate.AuthorityRevision = authority
-        | _ -> false
-
     let managerFactsOfSession (sessionId: string) : ManagerCapabilityFacts =
         roadViewOfSession sessionId
         |> Option.bind (fun road ->
             match road.ActiveIncumbency with
             | None -> None
-            | Some active ->
+            | Some _ ->
 
                 let facts: ManagerCapabilityFacts =
                     { HasActiveIncumbency = true
                       HasAssessment = road.AcceptedAssessmentTransport.IsSome
-                      HasValidBoundCertificate = certificateMatchesActiveIncumbency active road
+                      IsFinalIncumbent = road.AcceptedAssessmentFindings |> Option.exists AssessmentFindings.isEmpty
                       CleanupBlockerDigest = road.ActiveCleanupBlockerDigest }
 
                 Some facts)
@@ -743,15 +745,14 @@ type ToolRuntimeScope
     member _.EnsureRoadDevOpsBound(parentSessionId: SessionId) = ensureRoadDevOpsBound parentSessionId
 
     /// Manager authorization facts for the capability gate, derived purely
-    /// from the objective RoadView. The certificate counts as valid only when
-    /// it is marked Valid and its incumbency, snapshot, and authority revision
-    /// exactly equal the active facts, so a mismatched or stale certificate
-    /// can never open the finish window. The cleanup blocker digest is the
-    /// stored objective evidence, passed through verbatim.
+    /// from the objective RoadView. The final incumbent is the one whose
+    /// accepted assessment has empty findings: it keeps the read/cleanup/
+    /// close-out surface and loses every new-work capability. The cleanup
+    /// blocker digest is the stored objective evidence, passed through verbatim.
     static member emptyManagerFacts: ManagerCapabilityFacts =
         { HasActiveIncumbency = false
           HasAssessment = false
-          HasValidBoundCertificate = false
+          IsFinalIncumbent = false
           CleanupBlockerDigest = None }
 
     member _.ManagerCapabilityFactsFor(sessionId: string) : ManagerCapabilityFacts = managerFactsOfSession sessionId

@@ -8,7 +8,7 @@ const named = (trace, ...names) => (trace.toolCalls ?? []).filter((call) => name
 
 export const evaluateEngineerLocalInvestigationAndMutation = (_c, trace) => {
   if (trace.role !== 'engineer') return { ok: false, reason: 'expected Engineer' }
-  const executes = named(trace, 'run', 'query-shell', 'open-terminal', 'send-terminal', 'exec')
+  const executes = named(trace, 'run', 'open-terminal', 'send-terminal', 'exec')
   if (executes.length > 0) return { ok: false, reason: 'Engineer must not execute real commands' }
   const reads = named(trace, 'read', 'glob', 'grep')
   const writes = named(trace, 'write', 'edit', 'mv', 'rm')

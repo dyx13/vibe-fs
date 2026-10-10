@@ -183,7 +183,7 @@ try {
     const delivered = toolResults(requests[index + 1].body).find(message => message.tool_call_id === callIDs[index])
     assert.equal(delivered.content, projected.state.output)
   }
-  const eventsDirectory = path.join(workspace, '.git/wanxiang/events')
+  const eventsDirectory = path.join(workspace, '.git/wanxiangshu/events')
   journalEvents = fs.readdirSync(eventsDirectory).flatMap(name => fs.readFileSync(path.join(eventsDirectory, name), 'utf8').split('\n').filter(Boolean).map(JSON.parse))
   const hostFacts = journalEvents.flatMap(event => {
     const fact = event.payload?.Fact
@@ -213,7 +213,7 @@ try {
     try { transcript = valueOf(await api(`/session/${sessionID}/message`)) } catch (error) { cleanupErrors.push(error) }
   }
   if (workspace && journalEvents === undefined) {
-    const eventsDirectory = path.join(workspace, '.git/wanxiang/events')
+    const eventsDirectory = path.join(workspace, '.git/wanxiangshu/events')
     if (fs.existsSync(eventsDirectory)) {
       try {
         journalEvents = fs.readdirSync(eventsDirectory).flatMap(name => fs.readFileSync(path.join(eventsDirectory, name), 'utf8').split('\n').filter(Boolean).map(JSON.parse))

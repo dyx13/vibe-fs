@@ -13,7 +13,7 @@ test('WHAT[relay-incumbency-008] authority update invalidates a perfect certific
     'assessment-perfect',
     'snapshot-1',
     'authority-1',
-    ...Array(8).fill('PERFECT'),
+    [],
   )
   assert.equal(perfect.ok, true)
   assert.equal(relay.certificate(perfect.state, 'road-1').valid, true)
@@ -41,7 +41,7 @@ test('WHAT[relay-incumbency-008] certificate invalidation is explicit and never 
     'assessment-1',
     'snapshot-1',
     'authority-1',
-    ...Array(8).fill('PERFECT'),
+    [],
   )
   const invalidated = relay.invalidateCertificate(assessed.state, 'road-1', 'WorkspaceChanged')
   assert.equal(invalidated.ok, true)

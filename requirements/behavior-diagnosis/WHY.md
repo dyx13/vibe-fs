@@ -6,7 +6,7 @@
 
 模型可能漏调、多调或填错工具参数。有界修复给协议一次收束机会，同时防止重复回调造成反复发送；精确请求身份和 durable settlement 则决定谁有权结束。life 内冻结规则版本，让新知识的加入不改写正在执行的协议。
 
-本包规定规则准入、tip 选择和 cycle 结算；交付给 Main 的时机归 guidance-delivery，经验是否值得制度化归 institutional-learning，工具权限归 capability-enforcement。tip 的确定性映射只解释选中了哪条规则，不单独证明模型诊断在语义上正确；语料的可区分性仍需要人类审阅。
+本包规定规则准入、tip 选择和 cycle 结算；交付给 Main 的时机归 guidance-delivery，工具权限归 capability-enforcement。tip 的确定性映射只解释选中了哪条规则，不单独证明模型诊断在语义上正确；语料的可区分性仍需要人类审阅。
 
 ## DEPENDS ON
 

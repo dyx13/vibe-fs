@@ -12,7 +12,6 @@ open Wanxiangshu.Execution.Session
 open Wanxiangshu.Execution.Session.ChatExecution
 open Wanxiangshu.Enforcer
 open Wanxiangshu.Enforcer.Guidance
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Interaction.Attention
 open Wanxiangshu.Interaction.Authority
@@ -102,7 +101,6 @@ type AgentProjectionSet =
 
         Attention: AttentionProjectionState
         Concern: ConcernProjectionState
-        InstitutionalLearning: InstitutionalLearningProjectionState
 
         /// Historical count of folded `RuntimeStarted` envelopes. Retained for
         /// audit/backward-compatible projections; it no longer drives recovery.
@@ -140,7 +138,6 @@ module AgentProjection =
           Attention = AttentionProjection.empty
           TodoCheckpoints = Map.empty
           Concern = ConcernProjection.empty
-          InstitutionalLearning = InstitutionalLearningProjection.empty
           RuntimeStartCount = 0 }
 
     let tryFind (sessionId: SessionId) (projection: AgentProjectionSet) =

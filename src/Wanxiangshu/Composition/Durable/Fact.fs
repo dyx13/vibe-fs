@@ -11,7 +11,6 @@ open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Interaction.Authority
 open Wanxiangshu.Interaction.Attention
 open Wanxiangshu.Interaction.Concern
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Mission.Relay
 open Wanxiangshu.Host
 open Wanxiangshu.Participant.Provider.Attempt.Fallback
@@ -60,7 +59,6 @@ module Fact =
         | Delegation of DelegationFactCases
         | Attention of AttentionFactCases
         | Concern of ConcernFactCases
-        | InstitutionalLearning of InstitutionalLearningFactCases
         | ChatExecution of ChatExecutionFactCases
         | Cognition of LegacyCognitionFact
 

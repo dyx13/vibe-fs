@@ -1,1 +1,0 @@
-Optional explicit ABSORB claim: the TipName of the live rule that already covers the mechanism this experience reveals. Provide it only when you judge the mechanism to be already represented by that rule. A name that is not in the live rulebook falls back to DISCARD. Without this claim, mentioning a rule name inside the experience text never decides the outcome.

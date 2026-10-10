@@ -1,1 +1,0 @@
-可选的 BIRTH 候选。仅当机制全新、可复用且未来可识别时提供。tipName 必须在 live rulebook 中唯一；enforcerTextEn/enforcerTextZh 与 mainTextEn/mainTextZh 必须双语完整；trigger 描述规则的适用时机；negative 或 distinction 用于防误诊。缺失或不合格的候选不会创建规则；此时结论取决于 absorbedRule（ABSORB）或回落 DISCARD。

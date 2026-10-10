@@ -7,9 +7,9 @@ const [mode, commonDir, writerId, scenario, requestJson] = process.argv.slice(2)
 assert.ok(mode === 'measure' || mode === 'cold')
 assert.ok(['normal', 'fresh-release', 'duplicate-release', 'empty-release', 'append', 'open', 'fsync', 'close', 'current-before', 'current-after', 'fsync-close-release'].includes(scenario))
 const { incoming, canonicalLine, sourceWriterId } = JSON.parse(requestJson)
-const writerFile = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
-const sourceFile = path.join(commonDir, 'wanxiang', 'events', `${sourceWriterId}.ndjson`)
-const lockPath = path.join(commonDir, 'wanxiang.lock')
+const writerFile = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+const sourceFile = path.join(commonDir, 'wanxiangshu', 'events', `${sourceWriterId}.ndjson`)
+const lockPath = path.join(commonDir, 'wanxiangshu.lock')
 const expectedBytes = Buffer.from(canonicalLine, 'utf8')
 
 async function cold() {

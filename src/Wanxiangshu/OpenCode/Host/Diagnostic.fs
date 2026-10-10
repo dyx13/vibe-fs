@@ -68,14 +68,12 @@ module Diagnostic =
     [<Emit("console.error($0)")>]
     let private error (message: string) : unit = jsNative
 
-    [<Emit("process.env.WANXIANGSHU_DIAG === '1'")>]
-    let private diagnosticsVisible () : bool = jsNative
-
     [<Emit("JSON.stringify($0)")>]
     let private stringify (value: obj) : string = jsNative
 
     let private shouldEmit operation =
-        ReliabilityDiagnostics.validateOperation operation && diagnosticsVisible ()
+        ReliabilityDiagnostics.validateOperation operation
+        && ReliabilityDiagnosticsSurface.diagnosticsVisible ()
 
     let private emitWhenVisible operation (project: unit -> obj) =
         if shouldEmit operation then

@@ -50,7 +50,7 @@ Gate 前重读或 CAS 发现 target 已推进时，旧 QualityCertificate 立即
 
 ## [015] 工作区变化后重新验证
 
-DevOps 修复或 Engineer 变更使快照推进时，旧快照的评估、测试证据与 QualityCertificate 立即失效；须在最新快照重新验证并独立 assessment，不得搬用旧结果。
+DevOps 修复或 Engineer 变更使快照推进时，旧快照的评估、测试证据与 QualityCertificate 不再支持发布资格；须在最新快照重新验证并独立 assessment，不得搬用旧结果。该失效只作用于发布资格，不阻断 Manager 的评审与收口。
 
 ## [017] 汇聚后验证
 

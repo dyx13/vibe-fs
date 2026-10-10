@@ -52,7 +52,7 @@ in the target file. Do not make "load everything, then keep deleting what looks
 wrong" your default plan. Raw string search is useful inside a known slice; it is
 not a reason to reimplement structural location.
 
-Do not let familiarity impersonate evidence. indexOf feels "simple" because you
+Do not let familiarity impersonate facts. indexOf feels "simple" because you
 have seen it thousands of times; that familiarity says nothing about whether it
 owns this file's structure. The primitive with the stronger contract gets the
 presumption. The lower-level technique carries the burden of proof.

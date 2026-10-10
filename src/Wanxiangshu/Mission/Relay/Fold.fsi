@@ -16,6 +16,8 @@ type RoadView =
         ActiveAuthorityRevision: AuthorityRevision option
         ActiveCleanupBlockerDigest: string option
         AcceptedAssessmentTransport: (string * string) option
+        RetirementConfirmation: (string * string) option
+        AcceptedAssessmentFindings: AssessmentFindings option
         RetiredIncumbencies: IncumbencyId list
         RetiredProviderRunIds: Set<string>
         Certificate: QualityCertificate option
@@ -36,8 +38,8 @@ module Fold =
         binding: AssessmentBinding ->
         snapshotId: WorkspaceSnapshotId ->
         authorityRevision: AuthorityRevision ->
-        scores: ScoreVector ->
-            Result<ScoreVector, string>
+        findings: AssessmentFindings ->
+            Result<AssessmentFindings, string>
 
     /// obligation-ledger-004: enumerate every durable road id for read-only
     /// projection forwarding (owner-provided accessor; no private state escapes).
@@ -67,7 +69,7 @@ module Decision =
         binding: AssessmentBinding ->
         snapshotId: WorkspaceSnapshotId ->
         authorityRevision: AuthorityRevision ->
-        scores: ScoreVector ->
+        findings: AssessmentFindings ->
             Result<RelayState, string>
 
     val advanceAuthority:
@@ -87,6 +89,14 @@ module Decision =
         roadId: RoadId ->
         incumbentId: IncumbencyId ->
         blockerDigest: string ->
+            Result<RelayState, string>
+
+    val confirmRetirement:
+        state: RelayState ->
+        roadId: RoadId ->
+        incumbentId: IncumbencyId ->
+        providerRunId: string ->
+        toolCallId: string ->
             Result<RelayState, string>
 
     val retire:

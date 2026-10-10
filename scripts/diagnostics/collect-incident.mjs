@@ -241,7 +241,7 @@ for (const ws of targetWorkspaces) {
   } catch {}
 
   if (wsCommonDir) {
-    const eventsDir = path.join(wsCommonDir, 'wanxiang', 'events')
+    const eventsDir = path.join(wsCommonDir, 'wanxiangshu', 'events')
     if (fs.existsSync(eventsDir)) {
       const ndjsons = fs.readdirSync(eventsDir)
         .filter(f => f.endsWith('.ndjson'))

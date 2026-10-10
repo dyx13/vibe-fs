@@ -13,21 +13,6 @@ module ConcernTools =
     [<RequireQualifiedAccess>]
     module Path =
         [<Literal>]
-        let SubscribeDescription = "concern-routing/subscribe-description"
-
-        [<Literal>]
-        let SubscribeId = "concern-routing/subscribe-id"
-
-        [<Literal>]
-        let SubscribeConcern = "concern-routing/subscribe-concern"
-
-        [<Literal>]
-        let SubscribeAccepted = "concern-routing/subscribe-accepted"
-
-        [<Literal>]
-        let SubscribeConflict = "concern-routing/subscribe-conflict"
-
-        [<Literal>]
         let PublishDescription = "concern-routing/publish-description"
 
         [<Literal>]
@@ -51,6 +36,9 @@ module ConcernTools =
         [<Literal>]
         let DurableUnavailable = "concern-routing/durable-unavailable"
 
+        [<Literal>]
+        let UserNotificationTitle = "concern-routing/user-notification-title"
+
     let private languageOf (ctx: HostToolContext) =
         ProviderLanguageBinding.forSessionText ctx.SessionId
 
@@ -64,43 +52,10 @@ module ConcernTools =
     let private occurrenceId (ctx: HostToolContext) =
         ctx.ToolCallId |> Option.map ToolCallId.value
 
-    type private SubscribeFailure =
-        | Conflict
-        | DurableUnavailable
-
     type private PublishFailure =
         | UnknownMailbox
         | OccurrenceConflict
         | DurableUnavailable
-
-    let private persistSubscription (durable: ConcernJournalPort) owner occurrence id concern providerRun =
-        taskResult {
-            let state = durable.ReadState owner
-
-            let! fact =
-                ConcernProjection.subscribe owner occurrence id concern state
-                |> Result.mapError (fun _ -> SubscribeFailure.Conflict)
-
-            match fact with
-            | None -> return ()
-            | Some value ->
-                let! _ =
-                    durable.Append owner providerRun value
-                    |> TaskResult.mapError (fun _ -> SubscribeFailure.DurableUnavailable)
-
-                return ()
-        }
-
-    let private subscribeForDurable durable occurrence id concern (ctx: HostToolContext) =
-        task {
-            let owner = SessionId.create ctx.SessionId
-            let! result = persistSubscription durable owner occurrence id concern ctx.ProviderRunId
-
-            match result with
-            | Ok() -> return render ctx Path.SubscribeAccepted (Map [ "id", id; "concern", concern ])
-            | Error SubscribeFailure.Conflict -> return render ctx Path.SubscribeConflict (Map [ "id", id ])
-            | Error SubscribeFailure.DurableUnavailable -> return render ctx Path.DurableUnavailable Map.empty
-        }
 
     let private persistPublication (durable: ConcernJournalPort) sender occurrence id message providerRun =
         taskResult {
@@ -138,19 +93,42 @@ module ConcernTools =
             | Error PublishFailure.DurableUnavailable -> return render ctx Path.DurableUnavailable Map.empty
         }
 
-    let private subscribeExecute (journal: ConcernJournalPort option) (args: HostToolArguments) (ctx: HostToolContext) =
+    /// concern-routing-003: the reserved user address is not a session mailbox.
+    /// Publishing to it raises a user-visible notification and copies the same
+    /// message to the reserved root address when that mailbox is live.
+    /// The durable copy settles first: the toast renders only after the copy
+    /// attempt settles, and never when the store itself is unavailable or the
+    /// occurrence conflicts. A missing live `root` mailbox only skips the copy.
+    let private publishToUser durable occurrence message toast (ctx: HostToolContext) =
         task {
-            let id = args.Text "id" |> trim
-            let concern = args.Text "concern" |> trim
+            let sender = SessionId.create ctx.SessionId
 
-            match journal, occurrenceId ctx with
-            | _, _ when id.Length = 0 || concern.Length = 0 -> return render ctx Path.Invalid Map.empty
-            | Some durable, Some occurrence when not (String.IsNullOrWhiteSpace ctx.SessionId) ->
-                return! subscribeForDurable durable occurrence id concern ctx
-            | _ -> return render ctx Path.DurableUnavailable Map.empty
+            let! copy =
+                persistPublication durable sender (occurrence + ":root") ReservedAddress.Root message ctx.ProviderRunId
+
+            match copy with
+            | Ok()
+            | Error PublishFailure.UnknownMailbox ->
+                toast
+                |> Option.iter (fun show -> show (render ctx Path.UserNotificationTitle Map.empty) message)
+
+                return render ctx Path.PublishAccepted (Map [ "id", ReservedAddress.User ])
+            | Error PublishFailure.OccurrenceConflict -> return render ctx Path.PublishConflict Map.empty
+            | Error PublishFailure.DurableUnavailable -> return render ctx Path.DurableUnavailable Map.empty
         }
 
-    let private publishExecute (journal: ConcernJournalPort option) (args: HostToolArguments) (ctx: HostToolContext) =
+    let private dispatchPublication durable occurrence id message toast ctx =
+        if id = ReservedAddress.User then
+            publishToUser durable occurrence message toast ctx
+        else
+            publishForDurable durable occurrence id message ctx
+
+    let private publishExecute
+        (journal: ConcernJournalPort option)
+        (toast: (string -> string -> unit) option)
+        (args: HostToolArguments)
+        (ctx: HostToolContext)
+        =
         task {
             let id = args.Text "id" |> trim
             let message = args.Text "message" |> trim
@@ -158,28 +136,17 @@ module ConcernTools =
             match journal, occurrenceId ctx with
             | _, _ when id.Length = 0 || message.Length = 0 -> return render ctx Path.Invalid Map.empty
             | Some durable, Some occurrence when not (String.IsNullOrWhiteSpace ctx.SessionId) ->
-                return! publishForDurable durable occurrence id message ctx
+                return! dispatchPublication durable occurrence id message toast ctx
             | _ -> return render ctx Path.DurableUnavailable Map.empty
         }
 
     let admission: ToolAdmission =
         ToolAdmission.OfficeRole(fun _ (r: Role) -> r <> Role.Blogger && r <> Role.Distiller)
 
-    let specs factory (journal: ConcernJournalPort option) =
+    let specs factory (journal: ConcernJournalPort option) (toast: (string -> string -> unit) option) =
         let language = ProviderLanguageBinding.readGlobalPreference ()
 
-        [ { Name = "subscribe"
-            Description = ProviderProse.render language Path.SubscribeDescription Map.empty
-            Arguments =
-              [ "id",
-                ToolHostCodec.stringSchemaDescribed (ProviderProse.render language Path.SubscribeId Map.empty) factory
-                "concern",
-                ToolHostCodec.stringSchemaDescribed
-                    (ProviderProse.render language Path.SubscribeConcern Map.empty)
-                    factory ]
-            Admission = admission
-            Execute = subscribeExecute journal }
-          { Name = "publish"
+        [ { Name = "publish"
             Description = ProviderProse.render language Path.PublishDescription Map.empty
             Arguments =
               [ "id",
@@ -189,4 +156,4 @@ module ConcernTools =
                     (ProviderProse.render language Path.PublishMessage Map.empty)
                     factory ]
             Admission = admission
-            Execute = publishExecute journal } ]
+            Execute = publishExecute journal toast } ]

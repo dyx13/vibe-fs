@@ -58,7 +58,7 @@ export const interpretationRecord = result => mustOk(result).interpretations.fin
   entry => entry.key === interpretationObservation,
 )?.value
 export const journalBytes = commonDir => {
-  const directory = join(commonDir, 'wanxiang', 'events')
+  const directory = join(commonDir, 'wanxiangshu', 'events')
   return readdirSync(directory).filter(name => name.endsWith('.ndjson')).sort().map(
     name => [name, readFileSync(join(directory, name)).toString('base64')],
   )

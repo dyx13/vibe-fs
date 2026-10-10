@@ -369,19 +369,11 @@ module PluginHostInterop =
 
         let decisionStillRequiresSettlement =
             match decision.CapacitySettlement, decision.Resolution with
-            | CapacitySettlement.NoCapacitySettlement, ExecutionFailureResolution.PreserveCurrentFact
-            | CapacitySettlement.NoCapacitySettlement, ExecutionFailureResolution.AwaitAcceptanceReconciliation _
-            | CapacitySettlement.RetainExactFence _, ExecutionFailureResolution.PreserveCurrentFact
-            | CapacitySettlement.RetainExactFence _, ExecutionFailureResolution.AwaitAcceptanceReconciliation _ -> false
-            | CapacitySettlement.NoCapacitySettlement, ExecutionFailureResolution.TerminalizeAcceptedPreProvider _
-            | CapacitySettlement.NoCapacitySettlement, ExecutionFailureResolution.TerminalizeProviderStarted _
-            | CapacitySettlement.RetainExactFence _, ExecutionFailureResolution.TerminalizeAcceptedPreProvider _
-            | CapacitySettlement.RetainExactFence _, ExecutionFailureResolution.TerminalizeProviderStarted _
-            | CapacitySettlement.ReleaseExactFence _, ExecutionFailureResolution.PreserveCurrentFact
-            | CapacitySettlement.ReleaseExactFence _, ExecutionFailureResolution.TerminalizeAcceptedPreProvider _
-            | CapacitySettlement.ReleaseExactFence _, ExecutionFailureResolution.TerminalizeProviderStarted _
-            | CapacitySettlement.ReleaseExactFence _, ExecutionFailureResolution.AwaitAcceptanceReconciliation _
             | _, ExecutionFailureResolution.RetryFreshAttempt _ -> true
+            | _, ExecutionFailureResolution.TerminalizeAcceptedPreProvider _
+            | _, ExecutionFailureResolution.TerminalizeProviderStarted _ -> true
+            | CapacitySettlement.ReleaseExactFence _, _ -> true
+            | _, _ -> false
 
         match decision.Fatality, outcome.Settlement, decisionStillRequiresSettlement with
         | FatalityDecision.NoFatality, _, _ -> HookFailurePolicy.RethrowUnchanged
@@ -469,6 +461,7 @@ module PluginHostInterop =
         (casebookToolSpecs: ToolSpec list)
         (continueManagerLoop: SessionId -> string -> Task<Result<unit, string>>)
         (captureWorktreeSnapshot: WorktreePath -> Result<WorkspaceSnapshotId, string>)
+        (userNotify: (string -> string -> unit) option)
         : ToolRegistration =
         let jsTransactionPersistence =
             workspaceDirectory
@@ -506,6 +499,7 @@ module PluginHostInterop =
                 captureWorktreeSnapshot
                 (Some childWorkRecordForRun)
                 (Some workRecordCapability)
+                userNotify
 
         // Process-local join admission: JoinTool RequireCurrentProcessJoin → PluginRuntimeScope.
         registration.Runtime.AttachCurrentProcessJoin(fun root -> scope.RequireCurrentProcessJoin root)

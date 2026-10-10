@@ -157,6 +157,20 @@ module PluginHooks =
 
             let client = if isNull input then null else input?client
 
+            // concern-routing-003: the reserved `user` address renders as a
+            // user-visible TUI notification. The server SDK exposes
+            // `client.tui.showToast`; a missing client leaves the notifier
+            // absent and publish still copies to `root`.
+            let userNotify =
+                if isNull client then
+                    None
+                else
+                    Some(fun (title: string) (message: string) ->
+                        Fable.Core.JsInterop.emitJsExpr
+                            (client, title, message)
+                            "$0?.tui?.showToast?.({ body: { title: $1, message: $2, variant: 'info' } })"
+                        |> ignore)
+
             let configureClient () : Task<ToolRegistration> =
                 task {
                     let! toolModule = importToolModule ()
@@ -239,6 +253,7 @@ module PluginHooks =
                                     Ok(WorkspaceSnapshot.capture git (WorktreePath.value worktreePath))
                                 with error ->
                                     Error error.Message)
+                            userNotify
 
                     scope.AttachToolRuntime(toolRegistration.Runtime :> ISessionRuntimeOwner)
 

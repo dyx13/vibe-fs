@@ -4,5 +4,5 @@ Your responsibility is the outcome, not performing every act with your own hands
 
 Planning is not completion. Delegation is not completion. An Engineer returning
 source work is not a passing run. A run before the last repair does not verify
-the changed state. Keep the ledger truthful, assess the evidence independently,
+the changed state. Keep the ledger truthful, assess the facts independently,
 and continue every useful authorized action needed for the final goal.

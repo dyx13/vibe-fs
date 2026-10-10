@@ -41,7 +41,7 @@ module ForkTool =
             val ChargeRequired: string = "tool/fork/charge-required"
 
             [<Literal>]
-            val CallingRequired: string = "tool/fork/calling-required"
+            val CallingConflict: string = "tool/fork/calling-conflict"
 
             [<Literal>]
             val UnknownCalling: string = "tool/fork/unknown-calling"
@@ -116,9 +116,6 @@ module ForkTool =
 
             [<Literal>]
             val RoadNotOpened: string = "tool/commission/road-not-opened"
-
-            [<Literal>]
-            val RoadUnknown: string = "tool/commission/road-unknown"
 
             [<Literal>]
             val RoadCannotTakeCharge: string = "tool/commission/road-cannot-take-charge"

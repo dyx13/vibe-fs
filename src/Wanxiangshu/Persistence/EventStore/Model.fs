@@ -31,10 +31,13 @@ type EventEnvelope =
         EventType: string
         /// Causal predecessors. Canonicalize via EventParents before persist.
         Parents: EventId list
-        /// Canonical JSON body; large material referenced only via PayloadRefs.
+        /// Canonical JSON body.
         Payload: JsonValue
-        /// Opaque payload handles; Persist maps these to GitObjectId (§7.1).
+        /// Opaque payload handles (durable-events-012).
         PayloadRefs: PayloadRef list
+        /// Inline payload contents keyed by PayloadRef; the ndjson line is
+        /// self-contained (durable-events-012). Empty for events without payloads.
+        Payloads: Map<PayloadRef, byte[]>
     }
 
 module EventParents =
@@ -60,4 +63,6 @@ module EventEnvelope =
     let normalize (envelope: EventEnvelope) : EventEnvelope =
         { envelope with
             Parents = EventParents.canonicalize envelope.Parents
-            PayloadRefs = PayloadRefs.canonicalize envelope.PayloadRefs }
+            PayloadRefs = PayloadRefs.canonicalize envelope.PayloadRefs
+            // Map<PayloadRef, _> is already ordered by PayloadRef.compare; keep it.
+            Payloads = envelope.Payloads }

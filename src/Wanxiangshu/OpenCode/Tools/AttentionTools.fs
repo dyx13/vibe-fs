@@ -14,24 +14,6 @@ module AttentionTools =
     [<RequireQualifiedAccess>]
     module Path =
         [<Literal>]
-        let EnoughDescription = "attention-regulation/enough-description"
-
-        [<Literal>]
-        let EnoughArgument = "attention-regulation/enough-argument"
-
-        [<Literal>]
-        let EnoughAccepted = "attention-regulation/enough-accepted"
-
-        [<Literal>]
-        let AbandonDescription = "attention-regulation/abandon-description"
-
-        [<Literal>]
-        let AbandonArgument = "attention-regulation/abandon-argument"
-
-        [<Literal>]
-        let AbandonAccepted = "attention-regulation/abandon-accepted"
-
-        [<Literal>]
         let DeferDescription = "attention-regulation/defer-description"
 
         [<Literal>]
@@ -56,16 +38,6 @@ module AttentionTools =
     let private nonBlank (value: string) =
         if isNull value then "" else value.Trim()
 
-    let private simpleExecute argument resultPath (args: HostToolArguments) ctx =
-        task {
-            let value = args.Text argument |> nonBlank
-
-            if value.Length = 0 then
-                return render ctx Path.Invalid Map.empty
-            else
-                return render ctx resultPath (Map [ "value", value ])
-        }
-
     let private occurrenceId (ctx: HostToolContext) =
         ctx.ToolCallId |> Option.map ToolCallId.value
 
@@ -75,6 +47,7 @@ module AttentionTools =
 
             match AttentionProjection.tryFind sessionId occurrence projection with
             | Some _ -> return ()
+            | None when AttentionProjection.wasConsumed sessionId occurrence projection -> return ()
             | None ->
                 let fact =
                     AttentionFactCases.DeferredWorkRecorded
@@ -116,17 +89,7 @@ module AttentionTools =
     let specs factory journal =
         let language = ProviderLanguageBinding.readGlobalPreference ()
 
-        [ { Name = "enough"
-            Description = ProviderProse.render language Path.EnoughDescription Map.empty
-            Arguments = [ "decision", argumentSchema factory language Path.EnoughArgument ]
-            Admission = admission
-            Execute = simpleExecute "decision" Path.EnoughAccepted }
-          { Name = "abandon"
-            Description = ProviderProse.render language Path.AbandonDescription Map.empty
-            Arguments = [ "commitment", argumentSchema factory language Path.AbandonArgument ]
-            Admission = admission
-            Execute = simpleExecute "commitment" Path.AbandonAccepted }
-          { Name = "defer"
+        [ { Name = "defer"
             Description = ProviderProse.render language Path.DeferDescription Map.empty
             Arguments = [ "new_work", argumentSchema factory language Path.DeferArgument ]
             Admission = admission

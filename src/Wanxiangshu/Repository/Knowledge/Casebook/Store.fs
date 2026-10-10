@@ -1,6 +1,9 @@
 namespace Wanxiangshu.Repository.Knowledge.Casebook
 
+open System
 open System.Threading.Tasks
+open Fable.Core
+open Fable.Core.JsInterop
 open Thoth.Json
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
@@ -188,12 +191,41 @@ module CasebookStore =
 
     // ---- append -----------------------------------------------------------
 
-    let private appendEvent
+    /// Extract inline PayloadRefs from a Case baseline JSON (durable-events-012):
+    /// the baseline's Present entries carry `payloadRef` content addresses that the
+    /// event line must embed so the payload survives process boundaries.
+    let private payloadRefsOfBaseline (baseline: string) : PayloadRef list =
+        let json =
+            if String.IsNullOrWhiteSpace baseline then
+                "{}"
+            else
+                baseline
+
+        try
+            emitJsExpr
+                (JS.JSON.parse json)
+                "(function (value) { var out = []; for (var key in value) { var entry = value[key]; if (entry && entry.kind === 'Present' && entry.payloadRef) out.push(entry.payloadRef); } return out; })($0)"
+            |> unbox<string array>
+            |> Array.toList
+            |> List.map PayloadRef.create
+        with _ ->
+            []
+
+    let private payloadRefsOfCase (case: Case) : PayloadRef list =
+        [ case.CompletionFileState; case.MaintenanceFileState ]
+        |> List.collect payloadRefsOfBaseline
+        |> PayloadRefs.canonicalize
+
+    let private payloadRefsOfRefresh (maintenanceFileState: string) : PayloadRef list =
+        payloadRefsOfBaseline maintenanceFileState
+
+    let private appendEventWithRefs
         (store: IEventStore)
         (operation: CasebookAppendOperation)
         (identity: string)
         (eventType: string)
         (payload: JsonValue)
+        (payloadRefs: PayloadRef list)
         : Task<Result<EventId, CasebookAppendFailure>> =
         task {
             let eventId = EventId.create (System.Guid.NewGuid().ToString("N"))
@@ -207,7 +239,8 @@ module CasebookStore =
                       EventType = eventType
                       Parents = parents
                       Payload = payload
-                      PayloadRefs = [] }
+                      PayloadRefs = payloadRefs
+                      Payloads = Map.empty }
 
             match! store.Append [ envelope ] with
             | Ok receipt when AppendReceipt.cutFor eventId receipt |> Option.isSome ->
@@ -229,8 +262,23 @@ module CasebookStore =
                           Error = err }
         }
 
+    let private appendEvent
+        (store: IEventStore)
+        (operation: CasebookAppendOperation)
+        (identity: string)
+        (eventType: string)
+        (payload: JsonValue)
+        : Task<Result<EventId, CasebookAppendFailure>> =
+        appendEventWithRefs store operation identity eventType payload []
+
     let appendCaptured (store: IEventStore) (case: Case) : Task<Result<EventId, CasebookAppendFailure>> =
-        appendEvent store CasebookAppendOperation.Capture case.Identity CapturedEventType (encodeCase case)
+        appendEventWithRefs
+            store
+            CasebookAppendOperation.Capture
+            case.Identity
+            CapturedEventType
+            (encodeCase case)
+            (payloadRefsOfCase case)
 
     let appendRefreshed
         (store: IEventStore)
@@ -251,7 +299,13 @@ module CasebookStore =
                   "related_paths", Encode.list (List.map Encode.string relatedPaths)
                   "observations", Encode.list (List.map encodeObservation observations) ]
 
-        appendEvent store CasebookAppendOperation.Refresh identity RefreshedEventType payload
+        appendEventWithRefs
+            store
+            CasebookAppendOperation.Refresh
+            identity
+            RefreshedEventType
+            payload
+            (payloadRefsOfRefresh maintenanceFileState)
 
     let appendAccessed (store: IEventStore) (identity: string) : Task<Result<EventId, CasebookAppendFailure>> =
         appendEvent

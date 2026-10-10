@@ -4,6 +4,8 @@ import * as relay from '../../../dist/Mission/Relay/Surface.js'
 
 const open = (state) => relay.openIncumbency(state, 'road-1', 'inc-1', 'snapshot-1', 'authority-1')
 
+const gap = [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }]
+
 test('WHAT[relay-assessment-006] perfect assessment fold rejects a second semantic assessment', () => {
   const opened = open(relay.empty())
   const assessed = relay.assess(
@@ -13,7 +15,7 @@ test('WHAT[relay-assessment-006] perfect assessment fold rejects a second semant
     'assessment-1',
     'snapshot-1',
     'authority-1',
-    ...Array(8).fill('PERFECT'),
+    [],
   )
   assert.equal(assessed.ok, true)
   assert.deepEqual(
@@ -24,7 +26,7 @@ test('WHAT[relay-assessment-006] perfect assessment fold rejects a second semant
       'assessment-2',
       'snapshot-1',
       'authority-1',
-      ...Array(8).fill('PERFECT'),
+      [],
     ),
     { ok: false, error: 'AssessmentAlreadySubmitted' },
   )
@@ -38,7 +40,7 @@ test('WHAT[relay-assessment-006] perfect assessment fold rejects a second semant
       'assessment-3',
       'snapshot-1',
       'authority-1',
-      ...Array(8).fill('REVISE'),
+      gap,
     ),
     { ok: false, error: 'AssessmentAlreadySubmitted' },
   )

@@ -11,7 +11,7 @@ import {
 async function withTempRepo(fn) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'wxs-obs-test-'));
   const gitDir = path.join(dir, '.git');
-  const eventsDir = path.join(gitDir, 'wanxiang', 'events');
+  const eventsDir = path.join(gitDir, 'wanxiangshu', 'events');
   fs.mkdirSync(eventsDir, { recursive: true });
   try {
     return await fn({ dir, gitDir, eventsDir });

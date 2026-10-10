@@ -16,4 +16,14 @@ test('WHAT[delegation-005] completed wire presents Byname and record without exp
   }
 })
 
+test('WHAT[delegation-005] abandoned wire without a display name falls back to generic prose, never the physical agent id', () => {
+  for (const language of ['english', 'zh-CN']) {
+    const wire = join.renderBatch(language, [{
+      kind: 'abandoned', agentId: 'PHYSICAL-AGENT-ID', reason: 'parent cancellation',
+    }])
+    assert.doesNotMatch(wire, /PHYSICAL-AGENT-ID/)
+    assert.match(wire, /someone|某人/)
+  }
+})
+
 test.todo('WHAT[delegation-005] all public schemas and success/failure returns exclude physical topology, including missing display-name paths (GAP-153)')

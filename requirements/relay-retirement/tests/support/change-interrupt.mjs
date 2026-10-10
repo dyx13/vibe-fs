@@ -108,6 +108,9 @@ export const withChangeInterrupt = async (body, { interruptError, splitInstance 
     ] }
     runtime.pushHostMessage(session, retirement)
     assert.match(await managerHooks.tool.suicide.execute({},
+      { sessionID: session, agent: 'manager', callID: 'retire-change-confirm', messageID: retirement.info.id }),
+    /confirmation_required = true/)
+    assert.match(await managerHooks.tool.suicide.execute({},
       { sessionID: session, agent: 'manager', callID: 'retire-change', messageID: retirement.info.id }), /finished = true/)
     assert.deepEqual(order, [], 'the suicide body must not interrupt or send another prompt')
     const profile = dispatch.projectionObservation(runtime.journal, session).activeLogicalRun
@@ -130,7 +133,7 @@ export const withChangeInterrupt = async (body, { interruptError, splitInstance 
       assert.equal(typeof result, 'string', 'actual commission settles only after Change publication starts')
     }
     const openingCount = () => {
-      const eventsDirectory = join(directory, '.git', 'wanxiang', 'events')
+      const eventsDirectory = join(directory, '.git', 'wanxiangshu', 'events')
       return readdirSync(eventsDirectory).filter(name => name.endsWith('.ndjson'))
         .flatMap(name => readFileSync(join(eventsDirectory, name), 'utf8').trim().split('\n'))
         .map(line => JSON.parse(line))

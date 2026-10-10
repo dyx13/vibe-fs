@@ -9,6 +9,8 @@ const { default: assert } = await import("node:assert/strict");
 const { default: test } = await import("node:test");
 const relay = await import("../../../dist/Mission/Relay/Surface.js");
 
+const gap = [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }]
+
 
 test('WHAT[relay-assessment-008] Road fold distinguishes repair and finish facts for subsequent instruction selection', () => {
   const opened = relay.openIncumbency(relay.empty(), 'road-1', 'inc-1', 'snapshot-1', 'authority-1')
@@ -24,7 +26,7 @@ test('WHAT[relay-assessment-008] Road fold distinguishes repair and finish facts
     'assessment-repair',
     'snapshot-1',
     'authority-1',
-    'REVISE', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT',
+    gap,
   )
   assert.equal(repaired.ok, true)
   assert.equal(relay.view(repaired.state, 'road-1').phase, 'WorkOwned')
@@ -44,7 +46,7 @@ test('WHAT[relay-assessment-008] Road fold distinguishes repair and finish facts
     'assessment-finish',
     'snapshot-1',
     'authority-1',
-    ...Array(8).fill('PERFECT'),
+    [],
   )
   assert.equal(finished.ok, true)
   assert.equal(relay.view(finished.state, 'road-1').phase, 'PerfectAwaitingRetirement')
@@ -64,8 +66,9 @@ test('WHAT[relay-assessment-008] Road fold distinguishes repair and finish facts
   assert.equal(relay.retirement(accepted.state, 'road-1').outcome, 'Accepted')
   assert.equal(relay.view(accepted.state, 'road-1').activeIncumbency, null)
 
-  const blocked = relay.openIncumbency(accepted.state, 'road-1', 'inc-2', 'snapshot-2', 'authority-1')
-  assert.equal(blocked.ok, false)
+  // relay-assessment-005: a valid certificate no longer blocks a successor.
+  const allowed = relay.openIncumbency(accepted.state, 'road-1', 'inc-2', 'snapshot-2', 'authority-1')
+  assert.equal(allowed.ok, true)
 
   const invalidated = relay.invalidateCertificate(accepted.state, 'road-1', 'WorkspaceChanged')
   assert.equal(invalidated.ok, true)

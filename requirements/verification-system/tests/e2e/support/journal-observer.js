@@ -21,21 +21,7 @@ export const gitCommonDir = (workDir) => {
   return resolved;
 };
 
-export const eventsDir = (workDir) => path.join(gitCommonDir(workDir), 'wanxiang', 'events');
-export const payloadsDir = (workDir) => path.join(gitCommonDir(workDir), 'wanxiang', 'payloads');
-
-/**
- * Read UTF-8 content for a journal BlobRef (`blobs/<PayloadRef>` or bare PayloadRef).
- * Runtime payload truth is local and content-addressed under `.git/wanxiang/payloads`;
- * Git OIDs only exist later at the independent remote-sync hook boundary.
- */
-export function readBlobRef(workDir, blobRef) {
-  const raw = Array.isArray(blobRef) ? blobRef.at(-1) : blobRef;
-  const token = String(raw ?? '');
-  const digest = /^(?:blobs\/)?([0-9a-f]{64})$/i.exec(token)?.[1];
-  if (!digest) throw new Error(`invalid local BlobRef payload digest: ${token}`);
-  return fs.readFileSync(path.join(payloadsDir(workDir), digest), 'utf8');
-}
+export const eventsDir = (workDir) => path.join(gitCommonDir(workDir), 'wanxiangshu', 'events');
 
 /** Journal Envelope object nested under EventStore `payload`, or null. */
 export function journalEnvelopeFromEventText(text) {
@@ -648,7 +634,7 @@ export function journalFactTail(workDir, limit) {
 }
 
 /**
- * Watch `.git/wanxiang/events` directly. The directory may not exist at watcher
+ * Watch `.git/wanxiangshu/events` directly. The directory may not exist at watcher
  * creation time, so attach upward and descend when runtime truth appears.
  */
 export function watchJournal(workDir, onChange) {
@@ -695,8 +681,8 @@ export function watchJournal(workDir, onChange) {
   attachEvents();
   if (eventsWatcher === null) {
     const common = gitCommonDir(workDir);
-    const wanxiang = path.join(common, 'wanxiang');
-    const watchRoot = fs.existsSync(wanxiang) ? wanxiang : common;
+    const wanxiangshu = path.join(common, 'wanxiangshu');
+    const watchRoot = fs.existsSync(wanxiangshu) ? wanxiangshu : common;
     try {
       parentWatcher = fs.watch(watchRoot, attachEvents);
       parentWatcher.unref?.();

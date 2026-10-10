@@ -1076,12 +1076,13 @@ module PairProgrammingThoughtTransform =
         (realMessages: obj list)
         (callGap: TranscriptGap)
         (resultGap: TranscriptGap)
-        : Task<Result<obj list, string>> =
+        : Task<Result<obj list * bool, string>> =
         taskResult {
             let existing = findPlacement visibleHistory callGap resultGap
 
             if Option.isSome existing || skipAutoInjectedRequested providerId then
-                return! replayMessages realMessages visibleHistory
+                let! replayed = replayMessages realMessages visibleHistory
+                return (replayed, false)
             else
                 let ordinal = nextGuidelineOrdinal history
 
@@ -1095,7 +1096,7 @@ module PairProgrammingThoughtTransform =
 
                 let! rendered = replayMessages realMessages (visibleHistory @ [ candidate ])
                 do! append candidate
-                return rendered
+                return (rendered, true)
         }
 
     let private sessionRole (journal: AgentJournal option) (sessionId: SessionId) : Role option =
@@ -1165,7 +1166,9 @@ module PairProgrammingThoughtTransform =
             let! placementOpt = decideCurrentPlacement realMessages
 
             match placementOpt with
-            | None -> return! replayMessages realMessages visibleHistory
+            | None ->
+                let! replayed = replayMessages realMessages visibleHistory
+                return (replayed, false)
             | Some(callGap, resultGap) ->
                 return!
                     commitPairInjection
@@ -1201,7 +1204,7 @@ module PairProgrammingThoughtTransform =
         (markerText: string)
         (concernPlacement: ConcernPlacementBatch option)
         (rawMessages: obj list)
-        : Task<Result<obj list, string>> =
+        : Task<Result<obj list * bool, string>> =
         taskResult {
             let key = transcriptKey sessionId
 
@@ -1266,7 +1269,8 @@ module PairProgrammingThoughtTransform =
                     (List.isEmpty orphaned)
 
             if isInternalSessionOrMessage journal sessionId rawMessages then
-                return! replayMessages realMessages visibleHistory
+                let! replayed = replayMessages realMessages visibleHistory
+                return (replayed, false)
             else
                 return!
                     commitCurrentPairPlacement
@@ -1308,21 +1312,38 @@ module PairProgrammingThoughtTransform =
             |> Option.map (PairProgrammingCalibration.renderToolEstimate language)
         | _ -> None
 
+    /// crash-reconciliation-018: the restart status guidance is one more
+    /// instruction of the same marker; it is never a second physical payload.
+    let private withRestartGuidance
+        (restartGuidance: string option)
+        (document: LlmFacing.Document)
+        : LlmFacing.Document =
+        match restartGuidance with
+        | Some text when not (String.IsNullOrWhiteSpace text) -> LlmFacing.withInstruction text document
+        | _ -> document
+
     let private composeMarkerDocument
         (journal: AgentJournal option)
         (projectionSessionIdOpt: string option)
         (elapsed: string option)
         (toolEstimate: string option)
         (guideline: string)
+        (restartGuidance: string option)
         : Task<LlmFacing.Document> =
         match journal, projectionSessionIdOpt with
         | Some durable, Some sessionId ->
             task {
                 let! guidance = EnforcerTipGuidance.latestTipGuidance durable (SessionId.create sessionId)
 
-                return PairProgrammingCalibration.documentWithElapsed guidance elapsed toolEstimate guideline
+                return
+                    PairProgrammingCalibration.documentWithElapsed guidance elapsed toolEstimate guideline
+                    |> withRestartGuidance restartGuidance
             }
-        | _ -> Task.FromResult(PairProgrammingCalibration.documentWithElapsed None elapsed toolEstimate guideline)
+        | _ ->
+            Task.FromResult(
+                PairProgrammingCalibration.documentWithElapsed None elapsed toolEstimate guideline
+                |> withRestartGuidance restartGuidance
+            )
 
     let private concernInstructions language (prepared: ConcernPreparedFragments) =
         let announcements =
@@ -1367,22 +1388,36 @@ module PairProgrammingThoughtTransform =
             }
         | None -> Task.FromResult()
 
-    let private applyPairInjectResult
-        (terminateSession: SessionTermination)
-        (projectionSessionIdOpt: string option)
-        (outObj: obj)
-        (injectResult: Result<obj list, string>)
-        : Task =
-        match injectResult with
-        | Ok newMessages ->
-            HostMessageProjection.replaceMessagesInPlace outObj newMessages
-            Task.FromResult()
-        | Error reason ->
+    let private markDeliveredIfAnchored restartGuidance markRestartGuidanceDelivered anchored =
+        // crash-reconciliation-018: the restart guidance is delivered
+        // exactly once; a replayed placement never consumes it.
+        if anchored && Option.isSome restartGuidance then
+            markRestartGuidanceDelivered ()
+
+    let private failClosedInject terminateSession projectionSessionIdOpt reason =
+        task {
             Diagnostic.emit
                 "host-013-fail-closed"
                 [ "session_id", (defaultArg projectionSessionIdOpt ""); "result", reason ]
 
-            terminateSessionIfPresent terminateSession projectionSessionIdOpt reason
+            do! terminateSessionIfPresent terminateSession projectionSessionIdOpt reason
+        }
+
+    let private applyInjectResult
+        outObj
+        projectionSessionIdOpt
+        restartGuidance
+        markRestartGuidanceDelivered
+        terminateSession
+        injectResult
+        =
+        task {
+            match injectResult with
+            | Ok(newMessages, anchored) ->
+                markDeliveredIfAnchored restartGuidance markRestartGuidanceDelivered anchored
+                HostMessageProjection.replaceMessagesInPlace outObj newMessages
+            | Error reason -> do! failClosedInject terminateSession projectionSessionIdOpt reason
+        }
 
     let private injectPairProgrammingGuideline
         (journal: AgentJournal option)
@@ -1391,6 +1426,8 @@ module PairProgrammingThoughtTransform =
         (clock: IClockPort)
         (terminateSession: SessionTermination)
         (language: ProviderLanguage)
+        (restartGuidance: string option)
+        (markRestartGuidanceDelivered: unit -> unit)
         (outObj: obj)
         : Task =
         task {
@@ -1406,7 +1443,8 @@ module PairProgrammingThoughtTransform =
 
             let toolEstimate = toolEstimateText journal projectionSessionIdOpt language
 
-            let! markerDocument = composeMarkerDocument journal projectionSessionIdOpt elapsed toolEstimate guideline
+            let! markerDocument =
+                composeMarkerDocument journal projectionSessionIdOpt elapsed toolEstimate guideline restartGuidance
 
             let concernInstructions, concernPlacement =
                 prepareConcernFragments journal projectionSessionIdOpt language
@@ -1418,7 +1456,14 @@ module PairProgrammingThoughtTransform =
 
             let! injectResult = tryInjectCore journal projectionSessionIdOpt markerText concernPlacement messages
 
-            do! applyPairInjectResult terminateSession projectionSessionIdOpt outObj injectResult
+            do!
+                applyInjectResult
+                    outObj
+                    projectionSessionIdOpt
+                    restartGuidance
+                    markRestartGuidanceDelivered
+                    terminateSession
+                    injectResult
         }
 
     let maybeInjectGuideline
@@ -1428,6 +1473,8 @@ module PairProgrammingThoughtTransform =
         (clock: IClockPort)
         (terminateSession: SessionTermination)
         (language: ProviderLanguage)
+        (restartGuidance: string option)
+        (markRestartGuidanceDelivered: unit -> unit)
         (outObj: obj)
         : Task =
         if skipPairGuideline journal projectionSessionIdOpt then
@@ -1440,6 +1487,8 @@ module PairProgrammingThoughtTransform =
                 clock
                 terminateSession
                 language
+                restartGuidance
+                markRestartGuidanceDelivered
                 outObj
 
     let tryInject
@@ -1448,4 +1497,7 @@ module PairProgrammingThoughtTransform =
         (markerText: string)
         (rawMessages: obj list)
         : Task<Result<obj list, string>> =
-        tryInjectCore journal sessionId markerText None rawMessages
+        task {
+            let! result = tryInjectCore journal sessionId markerText None rawMessages
+            return Result.map fst result
+        }

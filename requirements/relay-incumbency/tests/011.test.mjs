@@ -2,11 +2,13 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import * as relay from '../../../dist/Mission/Relay/Surface.js'
 
+const gap = [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }]
+
 test('WHAT[relay-incumbency-011] explicit DevOps binding survives retirement and a new incumbent in the Road fold', () => {
   const first = relay.openIncumbency(relay.empty(), 'road-1', 'inc-1', 'snapshot-1', 'authority-1')
   const bound = relay.bindRoadDevOps(first.state, 'road-1', 'devops-session-1', 'provider/model')
   assert.equal(bound.ok, true)
-  const assessed = relay.assess(bound.state, 'road-1', 'inc-1', 'assessment-1', 'snapshot-1', 'authority-1', ...Array(8).fill('REVISE'))
+  const assessed = relay.assess(bound.state, 'road-1', 'inc-1', 'assessment-1', 'snapshot-1', 'authority-1', gap)
   assert.equal(assessed.ok, true)
   const retired = relay.retireContinue(assessed.state, 'road-1', 'inc-1', 'ret-1', 'run-1', 'tool-1', 'snapshot-1')
   assert.equal(retired.ok, true)

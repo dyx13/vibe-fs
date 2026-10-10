@@ -59,7 +59,7 @@ test('WHAT[durable-events-010] SharedAgentJournal_boots_local_EventStore_and_lea
     ))
     assert.deepEqual(fingerprint(stale), before)
 
-    const files = readdirSync(join(commonDir, 'wanxiang', 'events'))
+    const files = readdirSync(join(commonDir, 'wanxiangshu', 'events'))
     assert.equal(files.length >= 1, true)
     assert.equal(files.every((name) => name.endsWith('.ndjson')), true)
     assert.equal(journalSurface.JournalSurface_hasSession(acquired.journal, 'ses_host_es'), true)

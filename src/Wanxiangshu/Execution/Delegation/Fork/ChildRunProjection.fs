@@ -2,6 +2,7 @@ namespace Wanxiangshu.Execution.Delegation.Fork
 
 open Wanxiangshu.Execution.Session
 open Wanxiangshu.Execution.Agent
+open Wanxiangshu.Foundation.Identity
 
 /// Pure view of one ChildRun's physical completion/cancellation state.
 module ChildRunProjection =

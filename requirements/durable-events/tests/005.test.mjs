@@ -33,7 +33,7 @@ test('WHAT[durable-events-005] one_writer_is_one_file_regardless_of_history_size
       await eventStore.append(store, [event(next, parent ? [parent] : [])])
       parent = next
     }
-    const files = await readdir(join(dir, 'wanxiang', 'events'))
+    const files = await readdir(join(dir, 'wanxiangshu', 'events'))
     assert.deepEqual(files, ['one-file-law.ndjson'])
   } finally {
     eventStore.dispose(store)
@@ -68,7 +68,7 @@ test('WHAT[durable-events-005] DURABLE_EVENTS_005_one_process_is_one_unbounded_w
   try {
     const first = Array.from({ length: 4 }, (_, i) => event(hexId(i + 1), i + 1))
     assert.equal((await eventStore.append(store, first)).ok, true)
-    const file = path.join(gitCommonDir, 'wanxiang', 'events', 'writer-proof-a.ndjson')
+    const file = path.join(gitCommonDir, 'wanxiangshu', 'events', 'writer-proof-a.ndjson')
     const prefix = await readFile(file)
 
     const many = Array.from({ length: 160 }, (_, i) => event(hexId(i + 100), i + 100))
@@ -78,7 +78,7 @@ test('WHAT[durable-events-005] DURABLE_EVENTS_005_one_process_is_one_unbounded_w
     assert.equal(after.subarray(0, prefix.length).equals(prefix), true, 'append must preserve every prior byte')
     assert.equal(path.basename(file), 'writer-proof-a.ndjson')
 
-    const files = await readdir(path.join(gitCommonDir, 'wanxiang', 'events'))
+    const files = await readdir(path.join(gitCommonDir, 'wanxiangshu', 'events'))
     assert.deepEqual(files, ['writer-proof-a.ndjson'], 'history size must not create 000000/segment/chunk files')
     assert.equal(files.some((name) => /^\d+\.ndjson$/.test(name)), false)
   } finally {
@@ -94,7 +94,7 @@ test('WHAT[durable-events-005] DURABLE_EVENTS_005_each_process_writer_id_names_a
     assert.equal((await eventStore.append(a, [event(hexId(0xa1), 1)])).ok, true)
     assert.equal((await eventStore.append(b, [event(hexId(0xb1), 2)])).ok, true)
 
-    const files = (await readdir(path.join(gitCommonDir, 'wanxiang', 'events'))).sort()
+    const files = (await readdir(path.join(gitCommonDir, 'wanxiangshu', 'events'))).sort()
     assert.deepEqual(files, ['writer-a.ndjson', 'writer-b.ndjson'])
   } finally {
     eventStore.dispose(a)

@@ -8,4 +8,4 @@ Decision ladder:
 4. For computed, reordered, or generated whole-file output, use rewrite(path, newText).
 
 Near matches are diagnostics, never write authority. edit() stages only after exact, unambiguous,
-non-overlapping evidence. A failed edit stages nothing and tells you what current text to quote next.
+non-overlapping hits. A failed edit stages nothing and tells you what current text to quote next.

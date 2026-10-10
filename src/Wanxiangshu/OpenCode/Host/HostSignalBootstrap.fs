@@ -18,6 +18,7 @@ open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Git.Hook
 open Wanxiangshu.Host
 open Wanxiangshu.Interaction.Authority
+open Wanxiangshu.Interaction.Concern
 open Wanxiangshu.Interaction.Dispatch
 open Wanxiangshu.Interaction.Dispatch.OpenCode
 open Wanxiangshu.Participant.Provider
@@ -545,19 +546,10 @@ module HostSignalBootstrap =
                     ChatAdmissionTransaction.production durable (fun managed ->
                         runtime.AcceptManagedChatIntent(ChatAdmissionIntent.ofManaged managed)))
 
-            // Operator kill switch: the git-hook integration (hook installation and
-            // the ref-triggered converge it launches) stays off while its hang is
-            // investigated. `WANXIANG_GIT_SYNC=1` re-enables installation.
-            let gitSyncEnabled =
-                match System.Environment.GetEnvironmentVariable "WANXIANG_GIT_SYNC" with
-                | null -> false
-                | value -> value = "1"
-
             let durabilityActivation =
                 lazy
                     (match workspaceDirectory with
                      | None -> Ok()
-                     | Some _ when not gitSyncEnabled -> Ok()
                      | Some workspace -> HookDispatcher.ensure workspace)
 
             let requireDurabilityActivation () =
@@ -1174,6 +1166,50 @@ module HostSignalBootstrap =
                     | _ -> ()
                 }
 
+            // concern-routing-001: a session owns a mailbox named by its
+            // stable Byname (or the reserved `root` when it has none). The
+            // reserved `user` address belongs to the human and is never a
+            // session's own name. The subscription is idempotent, so a repeated
+            // physical admission is a no-op once the live mailbox exists; a
+            // name already owned by another session is silently skipped.
+            let selfMailboxName (sessionId: SessionId) projections =
+                let raw =
+                    Map.tryFind sessionId projections.HandleByChildSession
+                    |> Option.map (fun record -> record.Byname)
+                    |> Option.defaultValue ""
+
+                let candidate = if isNull raw then "" else raw.Trim()
+
+                if candidate.Length = 0 || candidate = ReservedAddress.User then
+                    ReservedAddress.Root
+                else
+                    candidate
+
+            let subscribeSelfMailbox (durable: AgentJournal) (sessionId: SessionId) name state =
+                task {
+                    match ConcernProjection.subscribe sessionId (SessionId.value sessionId) name name state with
+                    | Ok(Some fact) ->
+                        let port = AgentJournalPortAdapter.forConcern durable
+                        let! _ = port.Append sessionId None fact
+                        return ()
+                    | _ -> return ()
+                }
+
+            let ensureSelfMailboxFor (durable: AgentJournal) (sessionId: SessionId) =
+                task {
+                    let projections = (AgentJournal.snapshot durable).AgentProjections
+                    let name = selfMailboxName sessionId projections
+                    let state = projections.Concern
+
+                    if (ConcernProjection.activeMailbox name state).IsNone then
+                        do! subscribeSelfMailbox durable sessionId name state
+                }
+
+            let ensureSelfMailbox (sessionId: SessionId) =
+                match journal with
+                | None -> Task.FromResult(())
+                | Some durable -> ensureSelfMailboxFor durable sessionId
+
             let chatMessageHook =
                 fun (input: obj) (output: obj) ->
                     task {
@@ -1196,6 +1232,10 @@ module HostSignalBootstrap =
 
                         match decoded.SessionId with
                         | Some sessionId -> do! ensurePhysicalParentDiscovered sessionId
+                        | None -> ()
+
+                        match decoded.SessionId with
+                        | Some sessionId -> do! ensureSelfMailbox sessionId
                         | None -> ()
 
                         // intra-participant-parallelism-013: request-local origin

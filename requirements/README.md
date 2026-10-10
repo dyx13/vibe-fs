@@ -106,7 +106,7 @@ grounding 由 `requirement-grounding` package 拥有。
 |---|---|
 | [obligation-ledger](obligation-ledger/WHAT.md) | mission 持续维护「仍欠世界什么」，不用 phase/status 伪装进度。 |
 | [relay-incumbency](relay-incumbency/WHAT.md) | 每一任从只读 audit 开始；低分即接责，退休永不恢复，单 active 任期。 |
-| [relay-assessment](relay-assessment/WHAT.md) | 每任期至多一次八维质量评级（PERFECT/REVISE/N/A 三态）；低分原子生成义务，全满分生成证书。 |
+| [relay-assessment](relay-assessment/WHAT.md) | 每任期至多一次三问评审，返回 (验收标准, 工作计划) pairs；非空 findings 原子生成修复义务，空集生成证书。 |
 | [relay-retirement](relay-retirement/WHAT.md) | suicide 是唯一正常出口；只有递归 live 资源阻塞退休。 |
 | [relay-context-projection](relay-context-projection/WHAT.md) | 审计与 provider 投影保留同一份完整历史；ProjectionCut 只做请求身份判定与 stale 拦截，继任者评审前任的工作。 |
 
@@ -117,7 +117,8 @@ grounding 由 `requirement-grounding` package 拥有。
 |---|---|
 | [behavior-diagnosis](behavior-diagnosis/WHAT.md) | pathology 只有满足 trigger/negative/distinction 的 evidence 才成立。 |
 | [guidance-delivery](guidance-delivery/WHAT.md) | diagnosis 与何时/如何再次告知分离。 |
-| [institutional-learning](institutional-learning/WHAT.md) | celebrate/regret 经 Enhancer 压成 ABSORB/BIRTH/DISCARD，让经验进入 canonical Enforcer 而不制造 scar tissue。 |
+
+`institutional-learning` 已随 WP-036 退役，不再是现行包。
 
 ### 11. Repository knowledge / programming
 | Package | 一句话 WHY |

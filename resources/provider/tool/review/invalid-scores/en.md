@@ -1,1 +1,0 @@
-Provide valid ratings (PERFECT, REVISE, or N/A) for all eight dimensions, then retry.

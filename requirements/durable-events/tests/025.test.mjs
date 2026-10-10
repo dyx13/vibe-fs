@@ -44,7 +44,7 @@ test('WHAT[durable-events-025] conflicting Prepared identity returns StorageInva
 
     const firstPublished = await Strength.durabilityPublishPrepared(durability, firstReq)
     assert.equal(firstPublished.kind, 'Published')
-    const eventsDirectory = join(local.commonDir, 'wanxiang/events')
+    const eventsDirectory = join(local.commonDir, 'wanxiangshu/events')
     const before = readdirSync(eventsDirectory).map((name) => [name, readFileSync(join(eventsDirectory, name), 'utf8')])
 
     // Conflicting request with different replica/parameters for the same decisionId

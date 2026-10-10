@@ -203,7 +203,7 @@ const REMOTE_TRACKING_STORE_REF_RE = /^refs\/wanxiang\/remotes\/[^/]+\/store$/
 const EVENT_STORE_WRITE_RE =
   /\b(?:IEventStore|AppendCandidate)\b|\bEventStore\.(?:append|create|createWithConverge|createWithRetries|commit)\b/
 const JOURNAL_NDJSON_WRITE_RE =
-  /\b(?:JournalWriter|AgentJournal|SharedAgentJournal)\b|\.ndjson\b|wanxiangshu-next/
+  /\b(?:JournalWriter|AgentJournal|SharedAgentJournal)\b|\.ndjson\b|wanxiangshu\/runtimes/
 
 /** History access/order is owner-sensitive; feature history APIs are always forbidden. */
 const HISTORY_OBSERVER_RES = [

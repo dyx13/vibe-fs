@@ -1,3 +1,3 @@
-No change was found in the evidence this answer depended on.
+No change was found in the facts this answer depended on.
 No difference was found in this case's related file state. This is not a new
 investigation, a runtime check, or proof that every dependency is covered.

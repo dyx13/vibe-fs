@@ -27,7 +27,7 @@ module RuntimePath =
     let private xdgStateHome () : string = jsNative
 
     let private runtimeDirectory root =
-        joinPath (joinPath root "wanxiangshu-next") "runtimes"
+        joinPath (joinPath root "wanxiangshu") "runtimes"
 
     let private canonicalPath path =
         try

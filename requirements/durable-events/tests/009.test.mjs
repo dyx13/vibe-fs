@@ -200,7 +200,7 @@ test('WHAT[durable-events-009] fixture unified-store-dual-write.fs is RED for du
 test('WHAT[durable-events-009] Journal-only or EventStore-only modules are not dual-write', () => {
   const journalOnly = [
     'module RuntimePath',
-    'let root = joinPath common "wanxiangshu-next"',
+    'let root = joinPath common "wanxiangshu"',
     'let file = sprintf "%s.ndjson" runtimeId',
     'type AgentJournal(writer: JournalWriter) =',
     '    member _.AppendAgent fact = writer.Append fact',

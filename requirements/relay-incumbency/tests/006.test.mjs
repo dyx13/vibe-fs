@@ -8,6 +8,8 @@ import { withManagerLoop } from './support/manager-loop.mjs'
 const open = (state, road = 'road-1', incumbent = 'inc-1', snapshot = 'snapshot-1') =>
   relay.openIncumbency(state, road, incumbent, snapshot, 'authority-1')
 
+const gap = [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }]
+
 test('WHAT[relay-incumbency-006] Continue keeps the road open for a next iteration', () => {
   const first = open(relay.empty())
   const assessed = relay.assess(
@@ -17,7 +19,7 @@ test('WHAT[relay-incumbency-006] Continue keeps the road open for a next iterati
     'assessment-1',
     'snapshot-1',
     'authority-1',
-    'REVISE', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT', 'PERFECT',
+    gap,
   )
   assert.equal(assessed.ok, true)
   const retired = relay.retireContinue(assessed.state, 'road-1', 'inc-1', 'ret-1', 'run-1', 'tool-1', 'snapshot-2')
@@ -40,7 +42,7 @@ test('WHAT[relay-incumbency-006] Continue keeps the road open for a next iterati
   assert.equal(relay.authority(next.state, 'road-1').activeSnapshot, 'snapshot-2')
 })
 
-test('WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalidation reopens it', () => {
+test('WHAT[relay-incumbency-006] Accepted closes the incumbent and a plain reopen starts the next iteration', () => {
   const first = open(relay.empty())
   const assessed = relay.assess(
     first.state,
@@ -49,7 +51,7 @@ test('WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalida
     'assessment-1',
     'snapshot-1',
     'authority-1',
-    ...Array(8).fill('PERFECT'),
+    [],
   )
   assert.equal(assessed.ok, true)
   const retired = relay.retireAccepted(
@@ -74,20 +76,16 @@ test('WHAT[relay-incumbency-006] Accepted blocks reopening while valid, invalida
     authorityRevision: 'authority-1',
   })
 
-  const blocked = relay.openIncumbency(retired.state, 'road-1', 'inc-2', 'snapshot-2', 'authority-1')
-  assert.deepEqual(blocked, { ok: false, error: 'RoadAlreadyAccepted' })
-
-  const invalidated = relay.invalidateCertificate(retired.state, 'road-1', 'WorkspaceChanged')
-  assert.equal(invalidated.ok, true)
-  assert.equal(relay.certificate(invalidated.state, 'road-1').valid, false)
-
-  const next = relay.openIncumbency(invalidated.state, 'road-1', 'inc-2', 'snapshot-2', 'authority-1')
+  // WP-019: a valid certificate is historical evidence; it no longer blocks the
+  // next iteration. A plain ContinueLoop reopen succeeds without invalidation.
+  const next = relay.openIncumbency(retired.state, 'road-1', 'inc-2', 'snapshot-2', 'authority-1')
   assert.equal(next.ok, true)
   assert.deepEqual(relay.view(next.state, 'road-1'), {
     activeIncumbency: 'inc-2',
     iterationOrdinal: 2,
     phase: 'AuditPending',
     retired: ['inc-1'],
+    retirementConfirmed: false,
   })
   assert.deepEqual(relay.retirement(next.state, 'road-1'), {
     retirementId: 'ret-1',

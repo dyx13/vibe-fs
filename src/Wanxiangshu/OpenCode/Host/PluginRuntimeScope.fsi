@@ -28,6 +28,14 @@ type PluginRuntimeScope =
 
     member ActivateDurability: unit -> unit
 
+    /// crash-reconciliation-018: load-phase normalization owes one restart
+    /// status guidance to the next real user instruction in this process.
+    member MarkRestartGuidancePending: unit -> unit
+
+    member RestartGuidancePending: bool
+
+    member MarkRestartGuidanceDelivered: unit -> unit
+
     member AttachSessionCleanup: cleanup: (string -> unit) -> unit
 
     member AttachScopeDispose: dispose: (unit -> unit) -> unit

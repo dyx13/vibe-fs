@@ -30,13 +30,27 @@ module EventCodecSurface =
         else
             unbox<string array> value |> Array.toList |> List.map PayloadRef.create
 
+    [<Emit("Buffer.from($0, 'base64')")>]
+    let private bytesOfBase64 (value: string) : byte[] = jsNative
+
+    let private payloadsOfJs (value: obj) : Map<PayloadRef, byte[]> =
+        if isNull value then
+            Map.empty
+        else
+            emitJsExpr value "Object.keys($0 || {}).map(function (key) { return [key, $0[key]]; })"
+            |> unbox<(string * string) array>
+            |> Array.fold
+                (fun acc (key, base64) -> Map.add (PayloadRef.create key) (bytesOfBase64 base64) acc)
+                Map.empty
+
     let private eventOfJs (value: obj) : EventEnvelope =
         { EventId = EventId.create (str (value?id))
           StreamId = EventStreamId.create (str (value?stream))
           EventType = str (value?``type``)
           Parents = ids (value?parents)
           Payload = unbox<JsonValue> (JS.JSON.parse (payloadJson (value?payload)))
-          PayloadRefs = refs (value?payloadRefs) }
+          PayloadRefs = refs (value?payloadRefs)
+          Payloads = payloadsOfJs (value?payloads) }
         |> EventEnvelope.normalize
 
     let private eventToJs (event: EventEnvelope) : obj =

@@ -46,7 +46,7 @@ test('WHAT[requirement-grounding-012] a legacy inline carrier is restored verbat
     })
     assert.equal(historicalEvents.length, 3)
     const writerId = randomUUID()
-    const writerFile = join(dir, 'wanxiang', 'events', writerId + '.ndjson')
+    const writerFile = join(dir, 'wanxiangshu', 'events', writerId + '.ndjson')
     assert.equal(existsSync(writerFile), false, 'this process creates a new physical fixture writer')
     const activity = { id: randomUUID(), stream: 'grounding-fixture/activity', type: 'JobRequested', parents: [], payload: {}, payloadRefs: [] }
     const writer = eventStore.create(dir, writerId)
@@ -185,7 +185,7 @@ test('WHAT[requirement-grounding-012] separate registered producer and restarted
       assert.deepEqual(replay.projected, receipts.append.projected)
       assert.deepEqual(replay.raw, receipts.append.raw)
     })
-    const eventsDirectory = join(dir, '.git', 'wanxiang', 'events')
+    const eventsDirectory = join(dir, '.git', 'wanxiangshu', 'events')
     const writer = readdirSync(eventsDirectory).map(name => join(eventsDirectory, name)).find(file => readFileSync(file, 'utf8').split('\n').some(line => line.includes('RequirementGroundingAnchored') && line.includes('what-v1')))
     assert.ok(writer, 'the actual producer wrote a typed grounding occurrence to its durable writer')
     const lines = readFileSync(writer, 'utf8').split('\n')

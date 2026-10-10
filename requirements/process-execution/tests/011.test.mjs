@@ -109,23 +109,10 @@ test('WHAT[process-execution-011] RUN_spooled_output_family_blocked_surfaces_rec
 })
 
 {
-  const { run, queryShell, describe, nodeCommand } = await import('./support/executor.mjs')
-  const { parse } = await import('smol-toml')
+  const { run, nodeCommand } = await import('./support/executor.mjs')
   const { mkdtempSync, existsSync, rmSync } = await import('node:fs')
   const { tmpdir } = await import('node:os')
   const { join } = await import('node:path')
-
-  test('WHAT[process-execution-011] run and query-shell expose equal parameters and actually execute bounded output', { todo: 'GAP-091: query-shell still exists in code but its provider resources and active office were retired' }, async () => {
-    const metadata = describe()
-    assert.equal(metadata.queryShell.name, 'query-shell')
-    assert.deepEqual(metadata.queryShell.arguments, metadata.run.arguments)
-    for (const execute of [run, queryShell]) {
-      const result = parse(await execute({ command: nodeCommand("process.stdout.write('same'); process.exitCode = 7"), deadline_seconds: 1, output_budget_bytes: 1024, world_lock: false }))
-      assert.equal(result.exit_code, 7)
-      assert.equal(result.stdout, 'same')
-      assert.equal(result.stderr, '')
-    }
-  })
 
   const rejectsBeforeSpawn = async execute => {
     const dir = mkdtempSync(join(tmpdir(), 'wxs-pre-spawn-'))
@@ -142,5 +129,4 @@ test('WHAT[process-execution-011] RUN_spooled_output_family_blocked_surfaces_rec
     }
   }
   test('WHAT[process-execution-011] run rejects invalid budgets before command side effects', () => rejectsBeforeSpawn(run))
-  test('WHAT[process-execution-011] query-shell rejects invalid budgets before command side effects', { todo: 'GAP-091: missing retired query-shell resources prevent reaching validation' }, () => rejectsBeforeSpawn(queryShell))
 }

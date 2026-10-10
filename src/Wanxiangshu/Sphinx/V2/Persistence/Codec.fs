@@ -189,7 +189,8 @@ module Codec =
                   Parents = parents
                   Payload = toWire batch |> unbox<JsonValue>
                   // ArtifactRef is not PayloadRef. No external blob DTO is defined here.
-                  PayloadRefs = [] }
+                  PayloadRefs = []
+                  Payloads = Map.empty }
 
     let private validateEnvelopeBinding
         (digest: string -> string)
@@ -223,6 +224,10 @@ module Codec =
             error
                 "UNSUPPORTED_PAYLOAD_DEPENDENCY"
                 "@2 has inline canonical payloads only; no artifact string is interpreted as an external blob hash"
+        elif not (Map.isEmpty envelope.Payloads) then
+            error
+                "UNSUPPORTED_PAYLOAD_DEPENDENCY"
+                "@2 carries no inline payload content; transition batches are self-contained in the payload field"
         else
             decodeInput (box envelope.Payload)
             |> Result.bind (validateEnvelopeBinding digest envelope)

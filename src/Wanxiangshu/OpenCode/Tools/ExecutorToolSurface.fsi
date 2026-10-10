@@ -11,9 +11,6 @@ module ExecutorToolSurface =
 
     /// Provider-visible execution verb. Distillation is not a provider tool.
     val runToolName: string
-    val queryShellToolName: string
-
-    val describeQueryShell: toolModule: obj -> obj
 
     /// Plain metadata for the provider-visible run contract.
     val describeRun: toolModule: obj -> obj
@@ -23,7 +20,5 @@ module ExecutorToolSurface =
     /// and `context` are plain Host objects, and `recovery` is the owner-owned
     /// recovery mode used by tests/canaries ("blocked", "waiting", or "ready").
     val run: toolModule: obj -> sessions: obj -> args: obj -> context: obj -> recovery: string -> Task<string>
-
-    val queryShell: toolModule: obj -> sessions: obj -> args: obj -> context: obj -> recovery: string -> Task<string>
 
     val formatSpooledOutcome: exitCode: int -> summary: string -> string

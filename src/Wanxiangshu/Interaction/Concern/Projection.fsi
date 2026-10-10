@@ -2,6 +2,11 @@ namespace Wanxiangshu.Interaction.Concern
 
 open Wanxiangshu.Foundation.Identity
 
+[<RequireQualifiedAccess>]
+module ReservedAddress =
+    val User: string
+    val Root: string
+
 type ConcernMailbox =
     { Id: string
       Concern: string

@@ -60,7 +60,7 @@ Office Library 遵循三轴分类：
 
 ## [012] 独立评审指引不灌输隐藏流程机制
 
-Manager assessment 的提示由 Role Law、Quality Ledger（八维准则）与上下文组成。评审只依据当前工作的事实独立、诚实打分，不为影响后续而调分；不得向模型透露双重确认、多 Reviewer 循环或隐藏 barrier 等内部编排。
+Manager assessment 的提示由 Role Law、Quality Ledger（八维观察抓手）与上下文组成。评审只依据当前工作的事实独立、诚实判断，不为影响后续而调 findings；不得向模型透露双重确认、多 Reviewer 循环或隐藏 barrier 等内部编排。
 
 ## [013] Pair Hint 是每回合语言锚定
 
@@ -74,6 +74,6 @@ Manager assessment 的提示由 Role Law、Quality Ledger（八维准则）与�
 
 仅对模型名前缀白名单（当前为 `step-3.5-flash`）中的 Blogger，每次 Provider 请求可注入一次直接记账的 assistant 文本提示。提示只要求把当前材料提炼为 `charge / occurrence / settlement / consequence` 后调用 `chronicle`，不教授额外领域知识；提示只作用于当次转换，不写入日志或历史。
 
-## [016] Pair Hint 不重复工具手册
+## [016] Pair Hint 只额外承载 defer 鼓励
 
-Pair Hint 不承载 `assume`、`todowrite` 等微原语的行为提醒；工具语义与参数归各工具自身的 provider 描述资源。不得重新注入 jq、画板 schema、Magic Todo 字段或已经退役的协作协议。
+Pair Hint 不承载 `assume`、`todowrite` 等微原语的行为提醒；工具语义与参数归各工具自身的 provider 描述资源。唯一例外是积极鼓励使用 `defer`：旁支工作一出现就记下、继续主线，是每回合都容易漂移的注意力纪律，因此随 Pair Hint 重申。不得重新注入 jq、画板 schema、Magic Todo 字段或已经退役的协作协议。

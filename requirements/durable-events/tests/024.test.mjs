@@ -26,7 +26,7 @@ for (const scenario of ['valid', 'malformed-release', 'valid-release', 'not-atte
     const root = realpathSync(mkdtempSync(join(tmpdir(), 'sphinx-command-settlement-')))
     const commonDir = join(root, '.git')
     const sourceWriter = randomUUID()
-    const sourceFile = join(commonDir, 'wanxiang', 'events', `${sourceWriter}.ndjson`)
+    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}.ndjson`)
     const command = { commandId: 'settlement-' + scenario, goalText: '实际目标\r\nNUL:\u0000；雪 😀 尾部  ',
       constraints: ['preserve the authorized text'], materialRefs: ['material:source'],
       authorizationRef: 'authorized-user', profileRef: configuration.profileRef }
@@ -58,7 +58,7 @@ for (const scenario of ['valid', 'malformed-release', 'valid-release', 'not-atte
       assert.equal(physical.lockReleased, true)
       assert.equal(physical.openDescriptors, 0)
       assert.equal(physical.syncedDescriptors, 0)
-      assert.equal(existsSync(join(commonDir, 'wanxiang.lock')), false)
+      assert.equal(existsSync(join(commonDir, 'wanxiangshu.lock')), false)
       assert.equal(controlled ? '' : readFileSync(sourceFile, 'base64'), physical.bytes)
       assert.equal(physical.facts.length, controlled ? 0 : malformed ? 2 : 1)
       assert.equal(original.payload.commandId, command.commandId)
@@ -76,7 +76,7 @@ for (const scenario of ['valid', 'malformed-release', 'valid-release', 'not-atte
       assert.equal(cold.preserved, true)
       assert.deepEqual(cold.current, physical.current)
       assert.equal(cold.bytes, physical.bytes)
-      assert.equal(existsSync(join(commonDir, 'wanxiang', 'events', `${coldWriter}.ndjson`)), false)
+      assert.equal(existsSync(join(commonDir, 'wanxiangshu', 'events', `${coldWriter}.ndjson`)), false)
       assert.equal(controlled ? '' : readFileSync(sourceFile, 'base64'), physical.bytes)
       t.diagnostic(JSON.stringify({ scenario, measuredPid: measured.pid, coldPid: cold.pid,
         physicalAndCold: true, counts: physical.counts, cutIds: measured.cuts.map(cut => cut.cutEventId) }))
@@ -203,8 +203,8 @@ for (const binding of ['wire', 'mcp']) {
         assert.equal(physical.lockReleased, true)
         assert.equal(physical.openDescriptors, 0)
         assert.equal(physical.syncedDescriptors, 0)
-        assert.equal(existsSync(join(commonDir, 'wanxiang.lock')), false)
-        const sourceFile = join(commonDir, 'wanxiang', 'events', `${sourceWriter}.ndjson`)
+        assert.equal(existsSync(join(commonDir, 'wanxiangshu.lock')), false)
+        const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}.ndjson`)
         assert.equal(readFileSync(sourceFile, 'base64'), physical.bytes)
         for (const head of physical.heads) {
           const fact = physical.facts.find(value => value.stream === head.stream)
@@ -263,9 +263,9 @@ for (const binding of ['wire', 'mcp']) {
         assert.equal(cold.preserved, true)
         assert.deepEqual(cold.current, physical.current)
         assert.equal(cold.bytes, physical.bytes)
-        assert.equal(existsSync(join(commonDir, 'wanxiang', 'events', `${coldWriter}.ndjson`)), false)
+        assert.equal(existsSync(join(commonDir, 'wanxiangshu', 'events', `${coldWriter}.ndjson`)), false)
         assert.equal(readFileSync(sourceFile, 'base64'), physical.bytes)
-        if (seed) assert.equal(readFileSync(join(commonDir, 'wanxiang', 'events', `${seed.writerId}.ndjson`), 'base64'), seed.bytes)
+        if (seed) assert.equal(readFileSync(join(commonDir, 'wanxiangshu', 'events', `${seed.writerId}.ndjson`), 'base64'), seed.bytes)
         t.diagnostic(JSON.stringify({ binding, scenario, nativePid: measured.pid, coldPid: cold.pid,
           terminal: measured.signal ?? measured.exitCode, physicalAndCold: true }))
         completed = true
@@ -287,7 +287,7 @@ for (const scenario of ['valid', 'valid-release', 'malformed', 'malformed-releas
     const root = realpathSync(mkdtempSync(join(tmpdir(), 'journal-physical-settlement-')))
     const commonDir = join(root, '.git')
     const sourceWriter = randomUUID()
-    const sourceFile = join(commonDir, 'wanxiang', 'events', `${sourceWriter}.ndjson`)
+    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}.ndjson`)
     const malformed = scenario.startsWith('malformed')
     const release = scenario.endsWith('-release')
     const env = { ...process.env }
@@ -329,7 +329,7 @@ for (const scenario of ['valid', 'valid-release', 'malformed', 'malformed-releas
       assert.equal(receipt.lockReleased, true)
       assert.equal(receipt.openDescriptors, 0)
       assert.equal(receipt.syncedDescriptors, 0)
-      assert.equal(existsSync(join(commonDir, 'wanxiang.lock')), false)
+      assert.equal(existsSync(join(commonDir, 'wanxiangshu.lock')), false)
       assert.equal(readFileSync(sourceFile, 'base64'), receipt.bytes)
       assert.equal(receipt.facts.length, malformed || scenario === 'valid' ? 2 : 1)
       for (const frontier of receipt.heads) {
@@ -402,8 +402,8 @@ for (const scenario of ['valid', 'valid-release', 'malformed', 'malformed-releas
       assert.deepEqual(cold.projection, projection)
       assert.equal(cold.bytes, receipt.bytes)
       assert.equal(readFileSync(sourceFile, 'base64'), receipt.bytes)
-      assert.equal(existsSync(join(commonDir, 'wanxiang', 'events', `${coldWriter}.ndjson`)), false)
-      assert.equal(existsSync(join(commonDir, 'wanxiang.lock')), false)
+      assert.equal(existsSync(join(commonDir, 'wanxiangshu', 'events', `${coldWriter}.ndjson`)), false)
+      assert.equal(existsSync(join(commonDir, 'wanxiangshu.lock')), false)
       t.diagnostic(JSON.stringify({ scenario, measuredPid: measured.pid, coldPid: cold.pid,
         physicalAndCold: true, counts: receipt.counts, cutIds: receipt.cuts.map(cut => cut.cutEventId) }))
       completed = true
@@ -421,7 +421,7 @@ for (const variant of ['valid', 'valid-release', 'malformed', 'malformed-release
     const root = realpathSync(mkdtempSync(join(tmpdir(), 'journal-business-settlement-')))
     const commonDir = join(root, '.git')
     const sourceWriter = randomUUID()
-    const sourceFile = join(commonDir, 'wanxiang', 'events', `${sourceWriter}.ndjson`)
+    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}.ndjson`)
     const malformed = variant.startsWith('malformed')
     const release = variant.endsWith('-release')
     const env = { ...process.env }
@@ -488,7 +488,7 @@ for (const variant of ['valid', 'valid-release', 'malformed', 'malformed-release
       const initialBytes = Buffer.from(initialization.bytes, 'base64')
       assert.deepEqual(Buffer.from(business.bytes, 'base64').subarray(0, initialBytes.length), initialBytes)
       assert.equal(readFileSync(sourceFile, 'base64'), business.bytes)
-      assert.equal(existsSync(join(commonDir, 'wanxiang.lock')), false)
+      assert.equal(existsSync(join(commonDir, 'wanxiangshu.lock')), false)
       for (const frontier of business.heads) {
         const finalFact = business.facts.filter(fact => fact.stream === frontier.stream).at(-1)
         assert.equal(frontier.head, finalFact.id)
@@ -512,8 +512,8 @@ for (const variant of ['valid', 'valid-release', 'malformed', 'malformed-release
       assert.deepEqual(cold.projection, projection)
       assert.equal(cold.bytes, business.bytes)
       assert.equal(readFileSync(sourceFile, 'base64'), business.bytes)
-      assert.equal(existsSync(join(commonDir, 'wanxiang', 'events', `${coldWriter}.ndjson`)), false)
-      assert.equal(existsSync(join(commonDir, 'wanxiang.lock')), false)
+      assert.equal(existsSync(join(commonDir, 'wanxiangshu', 'events', `${coldWriter}.ndjson`)), false)
+      assert.equal(existsSync(join(commonDir, 'wanxiangshu.lock')), false)
 
       assert.equal(business.cuts.length, malformed ? 1 : 0)
       if (release) {

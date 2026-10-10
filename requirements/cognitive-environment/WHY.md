@@ -6,11 +6,11 @@
 
 生命周期通知只需说明处境。重复灌输教程会挤占任务上下文；把内部评审编排告诉评审者，则可能诱使它为流程结果调分。独立判断需要当前事实和公开准则，不需要猜测后台如何组织下一轮。
 
-Pair Hint 每回合只重申最容易漂移的当前全局语言；其余工作纪律属于世界观，随共同法进入 system 前缀，不重复注入。完整操作手册留在需要它的工具入口。临时的 Blogger 记账提示也只服务当次调用；若进入持久历史，一次模型适配就会变成以后请求的额外负担。
+Pair Hint 每回合重申最容易漂移的当前全局语言，并按 [016] 积极鼓励 `defer`；其余工作纪律属于世界观，随共同法进入 system 前缀，不重复注入。完整操作手册留在需要它的工具入口。临时的 Blogger 记账提示也只服务当次调用；若进入持久历史，一次模型适配就会变成以后请求的额外负担。
 
 ## 边界与关系
 
-participant-identity 定义身份，office-capability 定义权能，本包组织两者面向模型的呈现。微原语的行为归 attention-regulation、concern-routing 和 institutional-learning；Pair Hint 只承载语言锚定。提示的承载与重放归 prefix-stability，语言资源归 provider-language。
+participant-identity 定义身份，office-capability 定义权能，本包组织两者面向模型的呈现。微原语的行为归 attention-regulation 和 concern-routing；Pair Hint 主要承载语言锚定，另按 [016] 重申 defer 这一注意力纪律。提示的承载与重放归 prefix-stability，语言资源归 provider-language。
 
 ## DEPENDS ON
 
@@ -18,4 +18,3 @@ participant-identity 定义身份，office-capability 定义权能，本包组�
 - `office-capability`
 - `attention-regulation`
 - `concern-routing`
-- `institutional-learning`

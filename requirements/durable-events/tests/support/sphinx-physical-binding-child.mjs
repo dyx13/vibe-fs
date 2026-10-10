@@ -14,14 +14,14 @@ const digest = value => createHash('sha256').update(value).digest('hex')
 const dto = event => ({ id: event.event_id, stream: event.stream_id, type: event.event_type,
   parents: event.parents, payload: event.payload, payloadRefs: event.payload_refs })
 const root = path.dirname(commonDir)
-const sourceFile = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
-const lock = path.join(commonDir, 'wanxiang.lock')
+const sourceFile = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+const lock = path.join(commonDir, 'wanxiangshu.lock')
 const handle = store.create(commonDir, writerId)
 
 if (binding === 'cold') {
   try {
     assert.notEqual(writerId, request.sourceWriter)
-    const file = path.join(commonDir, 'wanxiang', 'events', `${request.sourceWriter}.ndjson`)
+    const file = path.join(commonDir, 'wanxiangshu', 'events', `${request.sourceWriter}.ndjson`)
     assert.equal(fs.readFileSync(file, 'base64'), request.physical.bytes)
     for (const fact of request.physical.facts) assert.deepEqual(store.read(handle, fact.id), fact)
     for (const head of request.physical.heads) {
@@ -31,7 +31,7 @@ if (binding === 'cold') {
     const current = persistence.canonicalCurrent(handle, digest, request.inquiryId)
     assert.deepEqual(current, request.physical.current)
     if (request.seed) {
-      const seedFile = path.join(commonDir, 'wanxiang', 'events', `${request.seed.writerId}.ndjson`)
+      const seedFile = path.join(commonDir, 'wanxiangshu', 'events', `${request.seed.writerId}.ndjson`)
       assert.equal(fs.readFileSync(seedFile, 'base64'), request.seed.bytes)
       for (const fact of request.seed.facts) assert.deepEqual(store.read(handle, fact.id), fact)
     }

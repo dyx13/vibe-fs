@@ -6,20 +6,12 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
 import { ensure } from '../../../dist/Git/Hook/Surface.js'
-import { remotePayloadNeedsRead } from '../../../dist/Persistence/EventStore/RetentionSurface.js'
 import { createBareWorkspace, readRemoteStoreOid } from '../../verification-system/tests/support/dumb-remote.mjs'
 import { integrationTest } from '../../verification-system/tests/support/tier-gate.mjs'
 import { event } from './support/events.mjs'
 import { appendFact, assertFacts, runHook } from './support/hooks.mjs'
 
 const shellQuote = value => `'${value.replaceAll("'", "'\\''")}'`
-
-test('WHAT[durable-convergence-010] unchanged remote payload is not reread merely because payloads have no writer manifest', () => {
-  assert.equal(remotePayloadNeedsRead('stat-a', 'a'.repeat(40), 'stat-a', 'a'.repeat(40), true), false)
-  assert.equal(remotePayloadNeedsRead('stat-a', 'a'.repeat(40), 'stat-b', 'a'.repeat(40), true), true)
-  assert.equal(remotePayloadNeedsRead('stat-a', 'a'.repeat(40), 'stat-a', 'b'.repeat(40), true), true)
-  assert.equal(remotePayloadNeedsRead('stat-a', 'a'.repeat(40), 'stat-a', 'a'.repeat(40), false), true)
-})
 
 integrationTest('WHAT[durable-convergence-010] actual clean pre-push does no transport despite unseen remote progress and local change resumes convergence', async () => {
   const workspace = createBareWorkspace(['left', 'right'])
@@ -76,7 +68,7 @@ test('WHAT[durable-convergence-010] hook installer enables repo-local SSH multip
   try {
     execFileSync('git', ['init', '--quiet', repo])
     const commonDir = execFileSync('git', ['-C', repo, 'rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' }).trim()
-    const wrapper = join(commonDir, 'wanxiang', 'ssh-command')
+    const wrapper = join(commonDir, 'wanxiangshu', 'ssh-command')
     const base = 'ssh -F /dev/null -i /tmp/wxs-test-key'
     execFileSync('git', ['-C', repo, 'config', '--local', 'core.sshCommand', base])
 
@@ -84,7 +76,7 @@ test('WHAT[durable-convergence-010] hook installer enables repo-local SSH multip
     const configured = execFileSync('git', ['-C', repo, 'config', '--local', '--get', 'core.sshCommand'], { encoding: 'utf8' }).trim()
     const wrapperBody = readFileSync(wrapper, 'utf8')
 
-    assert.match(configured, /wanxiang\/ssh-command/)
+    assert.match(configured, /wanxiangshu\/ssh-command/)
     assert.doesNotMatch(configured, /ControlMaster|ControlPath/)
     assert.match(wrapperBody, /ssh -F \/dev\/null -i \/tmp\/wxs-test-key\b/)
     assert.match(wrapperBody, /ControlMaster=auto/)
@@ -112,9 +104,9 @@ test('WHAT[durable-convergence-010] hook installer migrates the obsolete long re
 
     assert.equal(ensure(repo), true, 'hook ensure failed')
     const configured = execFileSync('git', ['-C', repo, 'config', '--local', '--get', 'core.sshCommand'], { encoding: 'utf8' }).trim()
-    const wrapper = join(commonDir, 'wanxiang', 'ssh-command')
+    const wrapper = join(commonDir, 'wanxiangshu', 'ssh-command')
     const wrapperBody = readFileSync(wrapper, 'utf8')
-    assert.match(configured, /wanxiang\/ssh-command/)
+    assert.match(configured, /wanxiangshu\/ssh-command/)
     assert.match(wrapperBody, /^#!\/bin\/sh/m)
     assert.match(wrapperBody, /ssh -F \/dev\/null -i \/tmp\/wxs-test-key\b/)
     assert.match(wrapperBody, /ControlPath=.*wanxiang-ssh-[0-9a-f]{12}\/ssh-%C/)
@@ -143,8 +135,8 @@ test('WHAT[durable-convergence-010] hook installer migrates the ephemeral tmp-di
 
     assert.equal(ensure(repo), true, 'hook ensure failed')
     const configured = execFileSync('git', ['-C', repo, 'config', '--local', '--get', 'core.sshCommand'], { encoding: 'utf8' }).trim()
-    const wrapper = join(commonDir, 'wanxiang', 'ssh-command')
-    assert.match(configured, /wanxiang\/ssh-command/)
+    const wrapper = join(commonDir, 'wanxiangshu', 'ssh-command')
+    assert.match(configured, /wanxiangshu\/ssh-command/)
     assert.doesNotMatch(configured, /wanxiang-ssh-[0-9a-f]{12}\/ssh-%C/)
 
     rmSync(socketDir, { recursive: true, force: true })

@@ -80,12 +80,10 @@ module ManagerWorkflow =
         // from concrete immutable facts (active incumbency, assessment receipt, exact certificate binding),
         // never from an execution-position program counter or ActivePhase enum.
         let isBoundCertificate (active: IncumbencyId) (cert: QualityCertificate) =
-            // A stale certificate from a previous incumbency, snapshot, or authority
-            // revision must not select finish; only the exact bound certificate does.
-            cert.Valid
-            && cert.IncumbencyId = active
-            && road.ActiveSnapshotId = Some cert.SnapshotId
-            && road.ActiveAuthorityRevision = Some cert.AuthorityRevision
+            // The final incumbent's valid certificate selects the finish surface.
+            // Snapshot and authority revision are no longer part of this decision:
+            // the certificate is historical evidence, not a runtime binding.
+            cert.Valid && cert.IncumbencyId = active
 
         match road.ActiveIncumbency, road.AcceptedAssessmentTransport, road.Certificate with
         | Some _, None, _ -> Some assessPath

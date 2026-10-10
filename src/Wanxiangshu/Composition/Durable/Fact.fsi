@@ -3,7 +3,6 @@ namespace Wanxiangshu.Composition.Durable
 open System
 open Wanxiangshu.Change
 open Wanxiangshu.Context.Companion
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Execution.Delegation
 open Wanxiangshu.Execution.Fission
 open Wanxiangshu.Execution.Session.ChatExecution
@@ -51,7 +50,6 @@ module Fact =
         | Delegation of DelegationFactCases
         | Attention of AttentionFactCases
         | Concern of ConcernFactCases
-        | InstitutionalLearning of InstitutionalLearningFactCases
         | ChatExecution of ChatExecutionFactCases
         | Cognition of LegacyCognitionFact
 

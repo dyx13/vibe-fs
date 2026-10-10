@@ -189,8 +189,8 @@ try {
   assert.deepEqual(transcripts[0].prompts, [instruction, instruction, instruction])
   assert.doesNotMatch(currentHost.stderrLog, /ActiveRunIdentityConflict|prompt_async failed|failed ref=|fuse|bundle invalid/i)
 
-  const eventFiles = fs.readdirSync(path.join(workspace, '.git/wanxiang/events'))
-  const events = eventFiles.flatMap(file => fs.readFileSync(path.join(workspace, '.git/wanxiang/events', file), 'utf8').trim().split('\n').map(line => JSON.parse(line)))
+  const eventFiles = fs.readdirSync(path.join(workspace, '.git/wanxiangshu/events'))
+  const events = eventFiles.flatMap(file => fs.readFileSync(path.join(workspace, '.git/wanxiangshu/events', file), 'utf8').trim().split('\n').map(line => JSON.parse(line)))
   const bound = events.filter(event => event.event_type === 'DelegationBound')
   assert.equal(bound.length, 3, 'exactly 3 Bound decisions')
 
@@ -201,7 +201,6 @@ try {
   assert.equal(requested.length, 3, 'each real source batch authorizes one decision')
   const byDecision = new Map(requested.map(row => [row.payload.decision_id, row.payload]))
   const ownerMessages = await request(currentHost, 'GET', `/session/${session}/message`)
-  const payloadsDir = path.join(workspace, '.git/wanxiang/payloads')
   for (const row of prepared) {
     const authorization = byDecision.get(row.payload.decision_id)
     assert.ok(authorization, 'Prepared has durable authorization')
@@ -236,7 +235,10 @@ try {
     assert.equal(row.payload_refs.length, 1)
     const ref = row.payload_refs[0]
     assert.match(ref, /^[a-f0-9]{64}$/)
-    const bundle = JSON.parse(fs.readFileSync(path.join(payloadsDir, ref), 'utf8'))
+    // durable-events-012: the frame bundle is inline in the ndjson event line.
+    const inlinePayload = row.payloads[ref]
+    assert.ok(inlinePayload, 'Prepared frame bundle is inline in the event line')
+    const bundle = JSON.parse(Buffer.from(inlinePayload, 'base64').toString('utf8'))
     assert.doesNotMatch(JSON.stringify(bundle), /Predictor private/, 'native reasoning is never published')
     const toolBatches = bundle.batches.filter(batch => batch.exchanges.length > 0)
     const terminalStep = new Map([['owner-1', 3], ['owner-4', 7]]).get(sourceCallId)
@@ -272,8 +274,8 @@ try {
   const subResult = await promptOwner('msg_assignment_sub_owner', 'Review the fixture from this sub-session.', subOwner, 'engineer')
   assert.ok(subResult.info.time.completed)
   assert.ok(subResult.parts.some(part => part.text === 'Sub-owner smoke complete.'))
-  const finalEvents = fs.readdirSync(path.join(workspace, '.git/wanxiang/events')).flatMap(file =>
-    fs.readFileSync(path.join(workspace, '.git/wanxiang/events', file), 'utf8').trim().split('\n').map(line => JSON.parse(line)),
+  const finalEvents = fs.readdirSync(path.join(workspace, '.git/wanxiangshu/events')).flatMap(file =>
+    fs.readFileSync(path.join(workspace, '.git/wanxiangshu/events', file), 'utf8').trim().split('\n').map(line => JSON.parse(line)),
   )
   const subRequested = finalEvents.filter(row =>
     row.event_type === 'DelegationRequested' && row.payload.owner_session_id === subOwner,
@@ -309,7 +311,9 @@ try {
   )
   assert.equal(subPrepared.length, 1)
   assert.equal(subPrepared[0].payload_refs.length, 1)
-  const subBundle = JSON.parse(fs.readFileSync(path.join(payloadsDir, subPrepared[0].payload_refs[0]), 'utf8'))
+  const subInline = subPrepared[0].payloads[subPrepared[0].payload_refs[0]]
+  assert.ok(subInline, 'sub-owner Prepared frame bundle is inline in the event line')
+  const subBundle = JSON.parse(Buffer.from(subInline, 'base64').toString('utf8'))
   assert.deepEqual(subBundle.batches.flatMap(batch => batch.exchanges.map(exchange => exchange.result)), [subExchange.state.output])
   assert.deepEqual(subBundle.batches.flatMap(batch => batch.assistant_text ?? []), [predictorConclusion(9)])
   for (const body of replicaRequests.slice(7)) {

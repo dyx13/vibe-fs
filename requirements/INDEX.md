@@ -1,6 +1,6 @@
 # Package index
 
-当前索引包含 **56 个活跃规范包**与 **1 个历史包**（epistemic-reasoning）。包数不是目标，也不是稳定 API；后续按独立 WHY、失败含义与独立变更边界继续核对拆并。
+当前索引包含 **55 个活跃规范包**与 **2 个历史包**（epistemic-reasoning、institutional-learning）。包数不是目标，也不是稳定 API；后续按独立 WHY、失败含义与独立变更边界继续核对拆并。
 
 ## 1. Requirement system
 
@@ -89,7 +89,7 @@
 |---|---|
 | `obligation-ledger` | 宿主待办由 OpenCode 原生 todowrite 执行；插件不改写工具定义与参数，只按 Host 终态追加压缩 checkpoint，不维护第二份 todo 真相。 |
 | `relay-incumbency` | 每一轮都在共享工作区上从权威用户消息重新开始并独立评估；同一 Road 至多一个 active 迭代，退休永不恢复；固定 DevOps 跨任期连续。 |
-| `relay-assessment` | 每任至多一次八维质量评级；Manager 可亲自只读取证或委派只读 Engineer，低分原位接责，工作区变更使旧快照证书失效。 |
+| `relay-assessment` | 每任至多一次三问评审，findings 为 (验收标准, 工作计划) pairs；Manager 可亲自只读取证或委派只读 Engineer，非空 findings 原位接责，工作区变更使旧快照证书失效。 |
 | `relay-retirement` | 退出是唯一正常出口；只有递归 live 资源能阻塞退休，固定 DevOps 跨任期连续且在退休中受明确收束边界保护。 |
 | `relay-context-projection` | 物理历史、durable audit 与下一迭代 provider 投影保留同一份完整历史；ProjectionCut 只做请求身份判定与 stale 拦截，继任者据此看见并评审前任的工作。 |
 
@@ -101,7 +101,7 @@
 |---|---|
 | `behavior-diagnosis` | 工程病理只能在满足明确 trigger / negative / distinction 的证据上成立。 |
 | `guidance-delivery` | diagnosis 成立不等于必须立刻重复告知；反馈需要独立的 occurrence、coverage、dedupe 与 horizon-relative delivery 语义。 |
-| `institutional-learning` | celebrate/regret 必须把一次经历压成 ABSORB/BIRTH/DISCARD，使成功与教训能改变 canonical Enforcer 而不让规则库只增不减。 |
+| `institutional-learning` | 已随 WP-036 退役的历史包；celebrate/regret 不再注册，保留设计沿革，不参与当前验收。 |
 
 ## 11. Repository knowledge / programming
 
@@ -180,7 +180,7 @@
 | 45 | `relay-context-projection` | 9 | relay-context-projection-001 ~ 008、relay-context-projection-009（前任工作与交互对继任可见，固定 DevOps 执行事实如实呈现） |
 | 46 | `behavior-diagnosis` | 20 | behavior-diagnosis-001 ~ 020 |
 | 47 | `guidance-delivery` | 11 | guidance-delivery-001 ~ 009、011 ~ 012 |
-| 48 | `institutional-learning` | 8 | institutional-learning-001 ~ 008 |
+| 48 | `institutional-learning` | 0 | 已随 WP-036 整包退役，目录与条款已删除 |
 | 49 | `repository-investigation` | 9 | repository-investigation-001 ~ 009 |
 | 50 | `knowledge-reuse` | 16 | knowledge-reuse-001 ~ 016 |
 | 51 | `repository-programming` | 27 | repository-programming-001 ~ 025、repository-programming-026（事务 ReadSnapshots 与案例实质访问严格分离）、repository-programming-027（Engineer 与 DevOps 统一文件工具与编程面生成） |
@@ -208,9 +208,9 @@ host-boundary            → 无
 participant-identity     → session-ontology
 execution-model-routing  → participant-identity, managed-session-lifecycle, managed-chat-execution, execution-failure-policy, host-boundary
 office-capability        → participant-identity
-capability-enforcement   → office-capability, participant-identity, attention-regulation, concern-routing, institutional-learning
+capability-enforcement   → office-capability, participant-identity, attention-regulation, concern-routing
 participant-horizon      → 无
-cognitive-environment    → participant-identity, office-capability, attention-regulation, concern-routing, institutional-learning
+cognitive-environment    → participant-identity, office-capability, attention-regulation, concern-routing
 attention-regulation     → participant-identity, durable-events
 action-affordance        → office-capability, participant-horizon, cognitive-workspace, obligation-ledger
 provider-language        → session-ontology
@@ -242,7 +242,7 @@ relay-retirement         → relay-incumbency, relay-assessment, relay-context-p
 relay-context-projection → relay-incumbency, participant-identity, provider-projection, host-boundary
 behavior-diagnosis       → semantic-trace, durable-events, prefix-stability, managed-session-lifecycle
 guidance-delivery        → behavior-diagnosis, participant-horizon, durable-events, concern-routing
-institutional-learning   → attention-regulation, behavior-diagnosis, durable-events
+institutional-learning   → 已退役，不再定义当前依赖
 repository-investigation → office-capability, participant-horizon
 knowledge-reuse          → repository-investigation, durable-events, durable-convergence
 repository-programming   → office-capability, capability-enforcement, effect-accounting, durable-events, participant-horizon

@@ -222,8 +222,6 @@ Interaction/Attention/Facts.fsi
 Interaction/Attention/Facts.fs
 Interaction/Concern/Facts.fsi
 Interaction/Concern/Facts.fs
-Enforcer/InstitutionalLearning/Facts.fsi
-Enforcer/InstitutionalLearning/Facts.fs
 Participant/Provider/Attempt/Fallback/Facts.fsi
 Participant/Provider/Attempt/Fallback/Facts.fs
 Execution/Delegation/Facts.fsi
@@ -274,8 +272,6 @@ Participant/Provider/Attempt/TerminalValidity.fsi
 Participant/Provider/Attempt/TerminalValidity.fs
 Enforcer/Catalog.fsi
 Enforcer/Catalog.fs
-Enforcer/InstitutionalLearning/Enhancer.fsi
-Enforcer/InstitutionalLearning/Enhancer.fs
 Enforcer/Codec.fsi
 Enforcer/Codec.fs
 Enforcer/ChronicleExecution.fsi
@@ -544,16 +540,10 @@ Interaction/Concern/Projection.fsi
 Interaction/Concern/Projection.fs
 Interaction/Concern/JournalPort.fsi
 Interaction/Concern/JournalPort.fs
-Enforcer/InstitutionalLearning/Projection.fsi
-Enforcer/InstitutionalLearning/Projection.fs
-Enforcer/InstitutionalLearning/JournalPort.fsi
-Enforcer/InstitutionalLearning/JournalPort.fs
 Interaction/Attention/Surface.fsi
 Interaction/Attention/Surface.fs
 Interaction/Concern/Surface.fsi
 Interaction/Concern/Surface.fs
-Enforcer/InstitutionalLearning/Surface.fsi
-Enforcer/InstitutionalLearning/Surface.fs
 Execution/Session/ChatExecution/Projection.fsi
 Execution/Session/ChatExecution/Projection.fs
 Execution/Session/ChatExecution/Recovery.fsi
@@ -652,8 +642,6 @@ Composition/Durable/DelegationJournalAdapter.fsi
 Composition/Durable/DelegationJournalAdapter.fs
 Composition/Durable/AttentionConcernJournalAdapter.fsi
 Composition/Durable/AttentionConcernJournalAdapter.fs
-Composition/Durable/InstitutionalLearningJournalAdapter.fsi
-Composition/Durable/InstitutionalLearningJournalAdapter.fs
 Composition/Durable/SessionStartedAtJournalAdapter.fsi
 Composition/Durable/SessionStartedAtJournalAdapter.fs
 Composition/Durable/RequirementGroundingJournalAdapter.fsi
@@ -1252,8 +1240,6 @@ OpenCode/Tools/AttentionToolSurface.fsi
 OpenCode/Tools/AttentionToolSurface.fs
 OpenCode/Tools/ConcernTools.fsi
 OpenCode/Tools/ConcernTools.fs
-OpenCode/Tools/InstitutionalLearningTools.fsi
-OpenCode/Tools/InstitutionalLearningTools.fs
 OpenCode/Tools/ToolSurface.fsi
 OpenCode/Tools/ToolSurface.fs
 Execution/Fission/OpenCode/Tool.fsi

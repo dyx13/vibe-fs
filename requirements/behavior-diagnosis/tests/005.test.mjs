@@ -37,5 +37,3 @@ integrationTest('WHAT[behavior-diagnosis-005] missing or blank Chinese leaves ne
     assert.throws(() => surface.loadFor('zh-CN'), /enforcer.zh-CN.md/)
   })
 })
-
-test.todo('WHAT[behavior-diagnosis-005] GAP-112 institutional BIRTH rejects either missing locale before durable append')

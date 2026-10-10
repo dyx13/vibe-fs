@@ -1072,23 +1072,6 @@ export const SURFACE_MANIFEST = [
     kind: 'resource',
   },
   {
-    module: 'Enforcer/InstitutionalLearning/Surface.js',
-    owner: 'institutional-learning',
-    laws: [
-      'INSTITUTIONAL-LEARNING-001',
-      'INSTITUTIONAL-LEARNING-002',
-      'INSTITUTIONAL-LEARNING-003',
-      'INSTITUTIONAL-LEARNING-004',
-      'INSTITUTIONAL-LEARNING-005',
-      'INSTITUTIONAL-LEARNING-006',
-      'INSTITUTIONAL-LEARNING-007',
-      'INSTITUTIONAL-LEARNING-008',
-    ],
-    source: 'src/Wanxiangshu/Enforcer/InstitutionalLearning/Surface.fs',
-    representation: 'opaque-capability',
-    kind: 'resource',
-  },
-  {
     module: 'Interaction/Repair/CompletedTurnSurface.js',
     owner: 'interaction-authority',
     laws: ['INTERACTION-AUTHORITY-004', 'INTERACTION-AUTHORITY-019'],

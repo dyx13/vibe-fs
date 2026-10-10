@@ -41,7 +41,7 @@ for (const operation of ['Refresh', 'Access']) {
         assert.equal(baselineBytes.toString('utf8'), 'version-B')
         await index.refresh(handle, 256)
         const beforeIndex = index.tryGet()
-        const eventsDirectory = join(directory, 'wanxiang', 'events')
+        const eventsDirectory = join(directory, 'wanxiangshu', 'events')
         const setupFile = join(eventsDirectory, 'setup.ndjson')
         const setupBytes = readFileSync(setupFile)
         eventStore.dispose(handle)
@@ -214,7 +214,7 @@ for (const operation of ['Refresh', 'Access']) {
         const identity = `control-${operation}-${fate}`
         const { baseline, shelfmark } = await createCase({ dir: directory, store: handle }, identity)
         const before = await casebook.fetchCaseByIdentity(handle, identity)
-        const eventsDirectory = join(directory, 'wanxiang', 'events')
+        const eventsDirectory = join(directory, 'wanxiangshu', 'events')
         const setupBytes = readFileSync(join(eventsDirectory, 'setup.ndjson'))
         eventStore.dispose(handle)
         handle = fate === 'CurrentCommitUnknown'
@@ -352,7 +352,7 @@ for (const malformed of [false, true]) {
         assert.equal(payloadBytes.toString('utf8'), 'version-B')
         await index.refresh(handle, 256)
         const beforeIndex = index.tryGet()
-        const eventsDirectory = join(directory, 'wanxiang', 'events')
+        const eventsDirectory = join(directory, 'wanxiangshu', 'events')
         const setupFile = join(eventsDirectory, 'setup.ndjson')
         const setupBytes = readFileSync(setupFile)
         eventStore.dispose(handle)
@@ -522,7 +522,7 @@ for (const scenario of [
       const payloadBytes = Buffer.from(await eventStore.readPayload(handle, payloadRef))
       await index.refresh(handle, 256)
       const beforeIndex = index.tryGet()
-      const eventsDirectory = join(directory, 'wanxiang', 'events')
+      const eventsDirectory = join(directory, 'wanxiangshu', 'events')
       const setupFile = join(eventsDirectory, 'setup.ndjson')
       const setupBytes = readFileSync(setupFile)
       eventStore.dispose(handle)
@@ -666,7 +666,7 @@ for (const fate of ['success', 'CurrentCommitUnknown', 'observer-throws']) {
         assert.equal(result.persistenceFailure, null)
         assert.equal(append.error, null)
       }
-      const operationFile = join(directory, 'wanxiang', 'events', 'operation.ndjson')
+      const operationFile = join(directory, 'wanxiangshu', 'events', 'operation.ndjson')
       const bytes = readFileSync(operationFile)
       assert.equal(bytes.toString('utf8').trimEnd().split('\n').length, 1)
       eventStore.dispose(handle)
@@ -676,7 +676,7 @@ for (const fate of ['success', 'CurrentCommitUnknown', 'observer-throws']) {
       assert.equal(current.q, CANONICAL_Q)
       assert.equal(current.a, CANONICAL_A)
       assert.deepEqual(readFileSync(operationFile), bytes)
-      assert.deepEqual(readdirSync(join(directory, 'wanxiang', 'events')), ['operation.ndjson'])
+      assert.deepEqual(readdirSync(join(directory, 'wanxiangshu', 'events')), ['operation.ndjson'])
     } finally {
       lifecycle.cleanup(identity)
       bookkeeper.resetRuntime()
@@ -734,8 +734,8 @@ for (const scenario of ['valid', 'valid-unknown', 'malformed', 'malformed-unknow
       assert.deepEqual(physical.counts, { append: 1, fsync: 1, close: 1, release: 1 })
       assert.equal(physical.lockReleased, true)
       assert.equal(physical.openDescriptors, 0)
-      assert.equal(existsSync(join(directory, '.git', 'wanxiang.lock')), false)
-      const operationBytes = readFileSync(join(directory, '.git', 'wanxiang', 'events', 'operation.ndjson'), 'base64')
+      assert.equal(existsSync(join(directory, '.git', 'wanxiangshu.lock')), false)
+      const operationBytes = readFileSync(join(directory, '.git', 'wanxiangshu', 'events', 'operation.ndjson'), 'base64')
       assert.deepEqual(physical.files, { ...receipt.beforeFiles, 'operation.ndjson': operationBytes })
       assert.equal(receipt.bootJournalAvailable, true, 'the actual Boot owns its workspace journal')
       assert.ok(Object.hasOwn(receipt.beforeFiles, 'setup.ndjson'), 'the prior Case has original canonical bytes')
@@ -782,7 +782,7 @@ for (const scenario of ['valid', 'valid-unknown', 'malformed', 'malformed-unknow
       assert.equal(cold.preserved, true)
       assert.deepEqual(cold.before, receipt.before)
       assert.equal(cold.current === null, fatal)
-      assert.deepEqual(readdirSync(join(directory, '.git', 'wanxiang', 'events')).sort(), Object.keys(physical.files).sort())
+      assert.deepEqual(readdirSync(join(directory, '.git', 'wanxiangshu', 'events')).sort(), Object.keys(physical.files).sort())
       t.diagnostic(JSON.stringify({ scenario, nativePid: measured.pid, coldPid: cold.pid,
         terminal: measured.signal ?? measured.exitCode, originalBootPhysicalAndCold: true }))
       completed = true

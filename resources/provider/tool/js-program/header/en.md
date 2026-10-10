@@ -5,7 +5,7 @@ There are only two acceptable moves: use the primitive that owns it, or prove it
 job before dropping lower. "I know indexOf better" is not a third option.
 
 You do not need to feel certain before stopping. Suspicion is enough to trigger verification; only
-evidence earns permission to continue. When the cheap check and your intuition disagree, distrust
+facts earn permission to continue. When the cheap check and your intuition disagree, distrust
 the intuition first.
 
 If your next thought is "I'll just indexOf this marker", "grep the headings and piece it together",

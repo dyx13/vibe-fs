@@ -3,7 +3,6 @@ namespace Wanxiangshu.Composition.Durable
 open Wanxiangshu.Execution.Delegation
 open Wanxiangshu.Execution.Fission
 open Wanxiangshu.Execution.Session
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Interaction.Attention
 open Wanxiangshu.Interaction.Concern
 open Wanxiangshu.Participant.Provider.Attempt.Fallback
@@ -18,7 +17,6 @@ open Wanxiangshu.Execution.Delegation.Fork.OpenCode
 module AgentJournalPortAdapter =
     val forAttention: journal: AgentJournal -> AttentionJournalPort
     val forConcern: journal: AgentJournal -> ConcernJournalPort
-    val forInstitutionalLearning: journal: AgentJournal -> InstitutionalLearningJournalPort
     val forDelegatedToolEstimate: journal: AgentJournal -> DelegatedToolEstimatePort
     val forSessionStartedAt: journal: AgentJournal -> SessionStartedAtPort
     val forProviderFailure: journal: AgentJournal -> ProviderFailureJournalPort

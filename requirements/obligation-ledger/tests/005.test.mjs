@@ -13,7 +13,7 @@ const { countFactCase } = await import("../../verification-system/tests/e2e/supp
 // Count the durable TodoCheckpointCommitted facts in the plugin workspace's
 // event log — the projection deduping alone cannot prove append idempotence.
 const countCheckpointFacts = (directory) => {
-  const eventsDir = join(directory, '.git', 'wanxiang', 'events')
+  const eventsDir = join(directory, '.git', 'wanxiangshu', 'events')
   let count = 0
   for (const file of readdirSync(eventsDir).filter((file) => file.endsWith('.ndjson'))) {
     const content = readFileSync(join(eventsDir, file), 'utf8')
@@ -180,7 +180,7 @@ const { mkdirSync, renameSync } = await import("node:fs");
 
 // Keep the events directory valid so appendFileSync reaches the writer path.
 const withBlockedPhysicalAppend = async (directory, action) => {
-  const eventsDir = join(directory, '.git', 'wanxiang', 'events')
+  const eventsDir = join(directory, '.git', 'wanxiangshu', 'events')
   const writerFiles = readdirSync(eventsDir).filter((file) => file.endsWith('.ndjson'))
   assert.ok(writerFiles.length > 0, 'the accepted authority root has activated the fixture writer')
   const { mkdtempSync: mkStash, rmSync: rmStash } = await import("node:fs")

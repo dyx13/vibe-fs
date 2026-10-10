@@ -103,4 +103,8 @@ module PluginRecoveryWiring =
                     match boot.Journal with
                     | Some journal -> seedBoundDevOpsModelTargets journal
                     | None -> ()
+
+                    // crash-reconciliation-018: the load-phase normalization above owes
+                    // one restart status guidance to the next real user instruction.
+                    scope.MarkRestartGuidancePending()
                 }))

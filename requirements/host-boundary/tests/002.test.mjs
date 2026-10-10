@@ -31,7 +31,6 @@ const { default: test } = await import("node:test");
 const HostSignalSurface = await import("../../../dist/OpenCode/Host/HostSignalSurface.js");
 const HostSignalSubscribeSurface = await import("../../../dist/OpenCode/Host/HostSignalSubscribeSurface.js");
 
-process.env.WANXIANGSHU_NO_FATAL_EXIT = '1'
 const idleRaw = (sessionId) => ({ type: 'session.status', sessionID: sessionId, properties: { status: { type: 'idle' } } })
 const dedicatedIdleRaw = (sessionId) => ({ type: 'session.idle', properties: { sessionID: sessionId } })
 const retryRaw = (sessionId) => ({ type: 'session.status', sessionID: sessionId, properties: { status: { type: 'retry', attempt: '2', message: 'rate limited' } } })

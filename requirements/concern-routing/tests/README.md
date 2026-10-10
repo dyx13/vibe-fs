@@ -5,15 +5,17 @@
 | 文件 | 已执行的边界 | 尚缺的边界 |
 |---|---|---|
 | 001 | 生产 subscribe/fold 的空输入、owner/语义冲突、generation 身份、幂等 | 两个真实 workspace 隔离、持久并发 claim |
-| 002 | per-recipient coverage；实际插件中新加入的 Engineer 获公告一次，收不到 owner 私信 | 全部 eligible/ineligible 角色、重启后的公告 |
-| 003 | exact generation/occurrence 的生产fold；实际 publish 入口的重放/冲突 | 真实退休与 append 竞争、持久恢复 |
-| 004 | pure placement 全有或全无；实际插件冻结旧 Pair Hint、新 occurrence 收新消息、之后不再重复 | 同一持久提交的失败/放弃/进程崩溃与重开 |
-| 005 | 实际 subscribe/publish 不改变双方 PromptAuthority 观察、不创建/提示/abort Host 会话 | 完整 obligation 与 office 投影、交付后的模型证据判断 |
-| 006 | 手动退休后的拒绝、新代公告及旧材料不穿代；公开开任期保持已订阅邮箱；LifeCompleted Surface 成功追加 MailboxRetired 并保全 decoy，后继显式 subscribe 获新代的强断言保留 | 真实 Suicide、放弃/replacement 及持久退休失败恢复仍缺证。新增 Suicide 的 post-commit 邮箱调用已撤回：失败后旧任不再有重试准入，不能称幂等恢复；生产终结 TODO 与 GAP-157 PARTIAL 保留 |
+| 002 | per-recipient coverage（纯投影） | 自动订阅下实际插件的公告交付 |
+| 003 | exact generation/occurrence 的生产 fold | 实际 publish 入口对保留 `user` 地址的通知与 `root` 复制 |
+| 004 | pure placement 全有或全无 | 实际插件冻结旧 Pair Hint、新 occurrence 收新消息 |
+| 005 | 无 | 自动邮箱 subscribe/publish 不改变 PromptAuthority 观察 |
+| 006 | 手动退休后的拒绝、新代公告及旧材料不穿代 | 公开开任期与 LifeCompleted Surface 的邮箱退休 |
 | 007 | 待真实职责边界审计 | 禁词扫描不能证明没有工作流或新权威 |
 
-插件用例运行真正工具、共享 journal 和 messages transform，Host/provider 端口由正式 fixture 提供；没有真实 provider 调用。提示内容从正式 NUL+BOM 后缀观察，不能沿用已废止的 synthetic-message 假设。普通 transform 可能启动 Blogger；“publish 不打断 owner”观察 owner 的物理请求，而不是禁止所有合法旁路工作。
+## WP-033 / WP-034 / WP-035
 
-GAP-156 修复入口把任意同 occurrence 当作成功重放的问题，保留完整 sender/address/message 一致性。GAP-155 记录缺证，GAP-157 记录真实生命周期反例；两个发布节点改 TODO，不能从8项旧unit测试推断全包完成。
+合同已改：`subscribe` 工具退役；会话建立时自动订阅自身名字（无上级命名的 user-facing 会话用保留地址 `root`）；`publish` 保留，并在 `id = user` 时弹出用户可见通知并把消息复制给保留地址 `root`。保留地址由 `Interaction/Concern/Projection` 的 `ReservedAddress` 发布。
 
-新基线验证范围见[本批记录](../../../proposals/archive/2026-10-03/35模块PR施工记录-2026-09-28.md)。真实崩溃和普通安装场景仍需人工巡检后续证据。
+原依赖 `subscribe` 工具的集成用例（002/003/004/005/006）已改为 TODO，待新合同下的集成重写。本批未运行任何测试；红绿由 DevOps 执行。
+
+未决：自动订阅以会话的稳定 Byname 为地址；没有 Byname 的会话统一落到保留地址 `root`，因此同一 workspace 内至多一个无名字会话能拥有 `root` 邮箱。该命名规则需要设计裁决，见 WP-033 报告。

@@ -104,17 +104,13 @@ module ObligationJournalSurface =
                   RequirementSetDigest = "digest-req"
                   EvidenceFrontierDigest = "digest-evidence" }
 
-            let scores =
-                Wanxiangshu.Mission.Relay.ScoreVector.tryCreate
-                    [ Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-                      Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-                      Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-                      Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-                      Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-                      Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-                      Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-                      Wanxiangshu.Mission.Relay.ScoreGrade.Revise ]
-                |> Result.defaultWith (fun _ -> failwith "scores")
+            let findings =
+                Wanxiangshu.Mission.Relay.AssessmentFindings.tryCreate
+                    [ { Wanxiangshu.Mission.Relay.AssessmentFinding.AcceptanceCriteria =
+                          "the delivery reaches the requested target state"
+                        Wanxiangshu.Mission.Relay.AssessmentFinding.WorkPlan =
+                          "close the remaining gap before the next review" } ]
+                |> Result.defaultWith (fun _ -> failwith "findings")
 
             let assessment incumbent snapshot revision =
                 Wanxiangshu.Mission.Relay.RelayEvent.AssessmentCommitted(
@@ -123,7 +119,7 @@ module ObligationJournalSurface =
                     binding,
                     snapshot,
                     revision,
-                    scores
+                    findings
                 )
 
             let pending =
@@ -198,11 +194,9 @@ module ObligationJournalSurface =
                       RequirementSetDigest = "digest-req"
                       EvidenceFrontierDigest = "digest-evidence" }
 
-                let scores =
-                    Wanxiangshu.Mission.Relay.ScoreVector.tryCreate (
-                        List.replicate 8 Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-                    )
-                    |> Result.defaultWith (fun _ -> failwith "scores")
+                let findings =
+                    Wanxiangshu.Mission.Relay.AssessmentFindings.tryCreate []
+                    |> Result.defaultWith (fun _ -> failwith "findings")
 
                 let certificateId =
                     Wanxiangshu.Mission.Relay.QualityCertificateId.create (
@@ -228,7 +222,7 @@ module ObligationJournalSurface =
                           binding,
                           snapId,
                           authRev,
-                          scores
+                          findings
                       )
                       Wanxiangshu.Mission.Relay.RelayEvent.RetirementCommitted summary ]
 

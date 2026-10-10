@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { mkdtempSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import * as forkTool from '../../../dist/Execution/Delegation/Fork/OpenCode/ToolSurface.js'
 import { placeEngineer, withForkRuntime } from './support/fork-runtime.mjs'
 
@@ -19,6 +22,30 @@ test('WHAT[participant-horizon-011] real cancellation keeps an accepted child an
       assert.equal(forkTool.abortCount(runtime), 1)
     })
   })
+})
+
+test('WHAT[participant-horizon-011] a restarted process does not present the previous process abandoned child', async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'wxs-horizon-restart-abandoned-'))
+  const owner = 'manager-horizon-restart-abandoned'
+  const first = await forkTool.createRuntime(directory, [{ sessionId: owner, agent: 'manager' }])
+
+  try {
+    await placeEngineer(first, owner, 'Ada')
+    await forkTool.cancelOwnerChildren(first, owner)
+    assert.match(await forkTool.executeHorizon(first, owner), /Ada.*did not return/)
+  } finally {
+    forkTool.disposeRuntime(first)
+  }
+
+  const restarted = await forkTool.createRuntime(directory, [{ sessionId: owner, agent: 'manager' }])
+
+  try {
+    const horizon = await forkTool.executeHorizon(restarted, owner)
+    assert.doesNotMatch(horizon, /Ada/)
+  } finally {
+    forkTool.disposeRuntime(restarted)
+    rmSync(directory, { recursive: true, force: true })
+  }
 })
 
 test.todo('WHAT[participant-horizon-011] Join delivers the abandoned consequence and retires the handle; real scenario stalls at Join after successful cancellation, root cause still under investigation (GAP-080)')

@@ -414,7 +414,7 @@ user = "Review the current worktree"
 tools = ["review"]
 
   [[turn.step]]
-  respond = { type = "tool-call", tool = "review", args = { language_algorithms = "PERFECT", simplicity = "PERFECT", structure = "PERFECT", granularity = "PERFECT", tests_evidence = "PERFECT", logic_reliability_boundaries = "PERFECT", caller_ergonomics = "PERFECT", completeness = "PERFECT" } }
+  respond = { type = "tool-call", tool = "review", args = { findings = [] } }
 
 [[turn]]
 id = "assess-confirm"
@@ -423,7 +423,7 @@ user = "Nope, let's re-evaluate: does it really fully satisfy the original task 
 tools = ["review"]
 
   [[turn.step]]
-  respond = { type = "tool-call", tool = "review", args = { language_algorithms = "PERFECT", simplicity = "PERFECT", structure = "PERFECT", granularity = "PERFECT", tests_evidence = "PERFECT", logic_reliability_boundaries = "PERFECT", caller_ergonomics = "PERFECT", completeness = "REVISE" } }
+  respond = { type = "tool-call", tool = "review", args = { findings = [{ acceptance_criteria = "the target state is not yet reached", work_plan = "close the remaining gap" }] } }
 `, {
     manager: ['mgr-1', 'mgr-2'],
   });

@@ -1,16 +1,16 @@
 # behavior-diagnosis — WHAT
 
-## [001] live Rulebook 是唯一规则真相；built-in 与 institutional rule 共享同一身份空间
+## [001] live Rulebook 是唯一规则真相
 
-每条规则的唯一语义身份恒为 `TipName = RuleId = FieldName`。live Rulebook 仅由两种规范来源合成：shipped built-in 目录（basename 即 TipName）与经本包准入后进入统一 durable event substrate 的 `InstitutionalRuleBorn`。两者合流为单一 `EnforcerCatalog`，共享全局唯一的 TipName 命名空间、同一 Blogger system prompt 与 Main 处置手册索引。跨来源 TipName 冲突必须 fail closed。禁止设立 `catalog.json`、shadow learned catalog、运行时专用规则库或任何平行身份清单。
+每条规则的唯一语义身份恒为 `TipName = RuleId = FieldName`。live Rulebook 仅由 shipped built-in 目录（basename 即 TipName）合成，形成单一 `EnforcerCatalog`，共享全局唯一的 TipName 命名空间、同一 Blogger system prompt 与 Main 处置手册索引。禁止设立 `catalog.json`、shadow learned catalog、运行时专用规则库或任何平行身份清单。
 
 ## [002] 规则装载与准入校验 fail-fast，零 fallback
 
-启动时装载 built-in 规则失败（目录缺失、叶子缺失、文本为空、Domain 校验失败）必须立即进程级 fail-fast，不跳过、不警告降级、无代码内置 fallback 规则、无双副本备份。institutional candidate 在 durable append 前必须通过同一结构、身份与双语正文校验，非法 candidate 严禁写入事件。institutional 准入预检必须绑定精确的预期 `RulebookRevision`，原子提交前若 live revision 已漂移则判定为 `KnownNotCommitted`，整笔学习事务零提交并由上层重新评估。
+启动时装载 built-in 规则失败（目录缺失、叶子缺失、文本为空、Domain 校验失败）必须立即进程级 fail-fast，不跳过、不警告降级、无代码内置 fallback 规则、无双副本备份。
 
 ## [003] live union Domain 校验合同
 
-`EnforcerCatalog.validate` 对 built-in 与 institutional 的 live union 合流要求：`schemaVersion = 1`；至少存在一条规则；Name / RuleId / FieldName 各自唯一且三者两两恒等；LexicalOrder 连续 `1..N`；EnforcerText / MainText（及双语对应正文）经 trim 后非空。LexicalOrder 是合流集合的确定性派生序，非事件自带的可竞争序号。
+`EnforcerCatalog.validate` 对 built-in live Rulebook 的校验要求：`schemaVersion = 1`；至少存在一条规则；Name / RuleId / FieldName 各自唯一且三者两两恒等；LexicalOrder 连续 `1..N`；EnforcerText / MainText（及双语对应正文）经 trim 后非空。LexicalOrder 是集合的确定性派生序。
 
 ## [004] 检测语料全量、确定性进入 Blogger system prompt
 
@@ -18,7 +18,7 @@
 
 ## [005] 多语言本地化叶子完整性合同
 
-built-in 与 institutional rule 的本地化语言叶子遵循同一合同进入 live Rulebook：正文非空且 TipName / RuleId / FieldName 恒等。每条 institutional BIRTH 必须同时提供完整双语（English 与 zh-CN）的 EnforcerText 与 MainText；缺失任一语言则准入失败。投影层按 provider 语言选择对应正文，无跨语言 fallback。
+built-in rule 的本地化语言叶子遵循同一合同进入 live Rulebook：正文非空且 TipName / RuleId / FieldName 恒等。投影层按 provider 语言选择对应正文，无跨语言 fallback。
 
 ## [006] chronicle 结构化判词合同与 NoLiveCycle 协议结果
 

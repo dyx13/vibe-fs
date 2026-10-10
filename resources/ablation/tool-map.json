@@ -7,17 +7,12 @@
     "fission": "intra-participant-parallelism",
     "review": "relay-assessment",
     "suicide": "relay-retirement",
-    "subscribe": "concern-routing",
     "publish": "concern-routing",
-    "celebrate": "institutional-learning",
-    "regret": "institutional-learning",
     "chronicle": "knowledge-reuse",
     "fetch": "knowledge-reuse",
     "horizon": "participant-horizon",
     "assume": "cognitive-environment",
     "todowrite": "obligation-ledger",
-    "enough": "attention-regulation",
-    "abandon": "attention-regulation",
     "defer": "attention-regulation",
     "open-terminal": "process-execution",
     "send-terminal": "process-execution",
@@ -38,7 +33,6 @@
     "js-engineer": "repository-programming",
     "js-devops": "process-execution",
     "js-blogger": "context-compression",
-    "js-bookkeeper": "knowledge-reuse",
-    "sphinx": "epistemic-reasoning"
+    "js-bookkeeper": "knowledge-reuse"
   }
 }

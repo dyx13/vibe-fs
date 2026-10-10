@@ -25,7 +25,7 @@ const canonicalLine = (event) => JSON.stringify({
 }) + '\n'
 
 const writeCanonicalEvents = (commonDir, writerId, events) => {
-  const directory = join(commonDir, 'wanxiang', 'events')
+  const directory = join(commonDir, 'wanxiangshu', 'events')
   mkdirSync(directory, { recursive: true })
   const path = join(directory, `${writerId}.ndjson`)
   writeFileSync(path, events.map(canonicalLine).join(''))
@@ -51,7 +51,7 @@ const writeEvent = async (commonDir, writerId, event) => {
   } finally {
     eventStore.dispose(handle)
   }
-  return join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
+  return join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
 }
 
 test('WHAT[durable-convergence-011] reverse tail read is exact across block boundaries', () => {
@@ -67,20 +67,22 @@ test('WHAT[durable-convergence-011] reverse tail read is exact across block boun
   }
 })
 
-test('WHAT[durable-convergence-011] the exact TTL boundary materializes the complete writer and one millisecond later expires it', async () => {
-  const now = Date.parse('2026-09-26T00:00:00Z')
+test('WHAT[durable-convergence-011] the UTC day boundary materializes the complete writer at the last retained millisecond and expires it at the next midnight', async () => {
+  const lastActivity = Date.parse('2026-09-25T12:00:00Z')
+  const retainedAt = Date.parse('2026-09-26T23:59:59.999Z')
+  const expiredAt = Date.parse('2026-09-27T00:00:00Z')
   await withRepo(async (repo, commonDir) => {
-    const old = { ...make(A, 'retention/boundary'), type: 'JournalEnvelope', payload: { ObservedAt: new Date(now - 10 * DAY).toISOString() } }
-    const last = { ...make(B, 'retention/boundary', [A]), type: 'JournalEnvelope', payload: { ObservedAt: new Date(now - DAY).toISOString() } }
+    const old = { ...make(A, 'retention/boundary'), type: 'JournalEnvelope', payload: { ObservedAt: new Date(lastActivity - 9 * DAY).toISOString() } }
+    const last = { ...make(B, 'retention/boundary', [A]), type: 'JournalEnvelope', payload: { ObservedAt: new Date(lastActivity).toISOString() } }
     const path = writeCanonicalEvents(commonDir, 'boundary', [old, last])
     const original = readFileSync(path, 'utf8')
-    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, now), ['boundary'])
-    const snapshot = await retention.syncAt(repo, commonDir, null, now)
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, retainedAt), ['boundary'])
+    const snapshot = await retention.syncAt(repo, commonDir, null, retainedAt)
     assert.equal(snapshot.ok, true, JSON.stringify(snapshot.error))
     const blob = execFileSync('git', ['-C', repo, 'show', `${snapshot.root}:writers/boundary.ndjson`], { encoding: 'utf8' })
     assert.equal(blob, original)
     assert.equal(readFileSync(path, 'utf8'), original, 'the old fact inside the retained writer cannot be trimmed')
-    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, now + 1), [])
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, expiredAt), [])
   })
 })
 
@@ -163,7 +165,7 @@ test('WHAT[durable-convergence-011] durable Journal ObservedAt outranks refreshe
   }
 })
 
-test('WHAT[durable-convergence-011] 24h expiry removes local writer and remote materialization', async () => {
+test('WHAT[durable-convergence-011] UTC day-group expiry removes local writer and remote materialization', async () => {
   await withRepo(async (repo, commonDir) => {
     // EventStore boot deliberately applies retention against its physical current
     // time. Keep this proof relative to the same captured instant instead of
@@ -208,7 +210,7 @@ test('WHAT[durable-convergence-011] stale remote snapshot cannot revive writer a
     assert.equal(before.ok, true, before.ok ? '' : JSON.stringify(before.error))
     assert.equal(existsSync(writerPath), true)
 
-    const after = await retention.syncAt(repo, commonDir, before.root, born + DAY + 60_000)
+    const after = await retention.syncAt(repo, commonDir, before.root, born + 2 * DAY + 60_000)
     assert.equal(after.ok, true, after.ok ? '' : JSON.stringify(after.error))
     assert.equal(existsSync(writerPath), false, 'time-aware cache must not preserve an expired local writer')
     const writers = execFileSync('git', ['-C', repo, 'ls-tree', `${after.root}:writers`], { encoding: 'utf8' })
@@ -234,7 +236,7 @@ test('WHAT[durable-convergence-011] manifest-less legacy remote is ignored inste
       input: rootEntries,
     }).trim()
 
-    const after = await retention.syncAt(repo, commonDir, legacyRoot, born + DAY + 60_000)
+    const after = await retention.syncAt(repo, commonDir, legacyRoot, born + 2 * DAY + 60_000)
     assert.equal(after.ok, true, after.ok ? '' : JSON.stringify(after.error))
     assert.equal(existsSync(writerPath), false)
     const writers = execFileSync('git', ['-C', repo, 'ls-tree', `${after.root}:writers`], { encoding: 'utf8' })
@@ -271,7 +273,7 @@ test('WHAT[durable-convergence-011] v1 mtime manifest is legacy and cannot resur
       input: legacyRootEntries,
     }).trim()
 
-    const after = await retention.syncAt(repo, commonDir, legacyRoot, born + DAY + 60_000)
+    const after = await retention.syncAt(repo, commonDir, legacyRoot, born + 2 * DAY + 60_000)
     assert.equal(after.ok, true, after.ok ? '' : JSON.stringify(after.error))
     assert.equal(existsSync(writerPath), false)
     const writers = execFileSync('git', ['-C', repo, 'ls-tree', `${after.root}:writers`], { encoding: 'utf8' })
@@ -314,7 +316,7 @@ test('WHAT[durable-convergence-011] writer lifecycle observes active, expiry, an
   await withRepo(async (repo, commonDir) => {
     const HOUR = 60 * 60 * 1000
     const born = Date.parse('2026-08-20T00:00:00Z')
-    const eventsDir = join(commonDir, 'wanxiang', 'events')
+    const eventsDir = join(commonDir, 'wanxiangshu', 'events')
     const writerPath = join(eventsDir, 'writer-lifecycle.ndjson')
 
     const writeJournalLine = (event) => {
@@ -340,24 +342,80 @@ test('WHAT[durable-convergence-011] writer lifecycle observes active, expiry, an
     const writers1 = execFileSync('git', ['-C', repo, 'ls-tree', `${snap1.root}:writers`], { encoding: 'utf8' })
     assert.match(writers1, /writer-lifecycle\.ndjson/)
 
-    // Expired at born + 25h: even if file mtime is artificially touched to "now", durable ObservedAt governs
-    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, born + 25 * HOUR), [])
-    utimesSync(writerPath, (born + 25 * HOUR) / 1000, (born + 25 * HOUR) / 1000)
-    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, born + 25 * HOUR), [], 'refreshed mtime cannot revive expired journal writer')
+    // Expired at born + 49h: even if file mtime is artificially touched to "now", durable ObservedAt governs
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, born + 49 * HOUR), [])
+    utimesSync(writerPath, (born + 49 * HOUR) / 1000, (born + 49 * HOUR) / 1000)
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, born + 49 * HOUR), [], 'refreshed mtime cannot revive expired journal writer')
 
-    // Sync at born + 25h purges expired writer from local disk and new snapshot
-    const snap2 = await retention.syncAt(repo, commonDir, snap1.root, born + 25 * HOUR)
+    // Sync at born + 49h purges expired writer from local disk and new snapshot
+    const snap2 = await retention.syncAt(repo, commonDir, snap1.root, born + 49 * HOUR)
     assert.equal(snap2.ok, true, snap2.ok ? '' : JSON.stringify(snap2.error))
     assert.equal(existsSync(writerPath), false, 'expired writer removed from disk')
     const writers2 = execFileSync('git', ['-C', repo, 'ls-tree', `${snap2.root}:writers`], { encoding: 'utf8' })
     assert.equal(writers2.trim(), '', 'expired writer removed from remote tree')
 
-    // 2. Reactivation by writing a new event at born + 26h
-    writeJournalLine({ id: B, stream: 'retention/lifecycle', parents: [A], observedAt: born + 26 * HOUR })
-    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, born + 27 * HOUR), ['writer-lifecycle'], 'reactivated writer is retained')
-    const snap3 = await retention.syncAt(repo, commonDir, snap2.root, born + 27 * HOUR)
+    // 2. Reactivation by writing a new event at born + 50h
+    writeJournalLine({ id: B, stream: 'retention/lifecycle', parents: [A], observedAt: born + 50 * HOUR })
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, born + 51 * HOUR), ['writer-lifecycle'], 'reactivated writer is retained')
+    const snap3 = await retention.syncAt(repo, commonDir, snap2.root, born + 51 * HOUR)
     assert.equal(snap3.ok, true, snap3.ok ? '' : JSON.stringify(snap3.error))
     const writers3 = execFileSync('git', ['-C', repo, 'ls-tree', `${snap3.root}:writers`], { encoding: 'utf8' })
     assert.match(writers3, /writer-lifecycle\.ndjson/, 'reactivated writer rematerialized in snapshot')
+  })
+})
+
+test('WHAT[durable-convergence-011] today, yesterday, and the day before resolve as three distinct UTC day groups', async () => {
+  const now = Date.parse('2026-08-21T00:30:00Z')
+  await withRepo(async (repo, commonDir) => {
+    const journal = (id, stream, observedAt) => ({ ...make(id, stream), type: 'JournalEnvelope', payload: { ObservedAt: new Date(observedAt).toISOString() } })
+    const todayPath = writeCanonicalEvents(commonDir, 'writer-today', [journal(A, 'retention/day-groups/today', Date.parse('2026-08-21T00:10:00Z'))])
+    const yesterdayPath = writeCanonicalEvents(commonDir, 'writer-yesterday', [journal(B, 'retention/day-groups/yesterday', Date.parse('2026-08-20T00:10:00Z'))])
+    const beforePath = writeCanonicalEvents(commonDir, 'writer-before-yesterday', [journal('c'.repeat(40), 'retention/day-groups/before', Date.parse('2026-08-19T23:50:00Z'))])
+
+    assert.deepEqual(
+      retention.retainedWriterIdsAt(commonDir, now),
+      ['writer-today', 'writer-yesterday'],
+      'one UTC midnight boundary decides, not a rolling 24h window: yesterday is retained although its activity is over 24h old, the day before is collected although it is under 48h old',
+    )
+
+    const snapshot = await retention.syncAt(repo, commonDir, null, now)
+    assert.equal(snapshot.ok, true, JSON.stringify(snapshot.error))
+    assert.equal(existsSync(todayPath), true)
+    assert.equal(existsSync(yesterdayPath), true)
+    assert.equal(existsSync(beforePath), false, 'the day-before writer leaves local disk as a whole')
+    const writers = execFileSync('git', ['-C', repo, 'ls-tree', `${snapshot.root}:writers`], { encoding: 'utf8' })
+    assert.match(writers, /writer-today\.ndjson/)
+    assert.match(writers, /writer-yesterday\.ndjson/)
+    assert.doesNotMatch(writers, /writer-before-yesterday\.ndjson/)
+  })
+})
+
+test('WHAT[durable-convergence-011] advancing a writer activity from yesterday to today pushes its expiry one UTC day later', async () => {
+  const day0 = Date.parse('2026-08-21T00:00:00Z')
+  await withRepo(async (repo, commonDir) => {
+    const journal = (id, observedAt, parents = []) => ({ ...make(id, 'retention/moving', parents), type: 'JournalEnvelope', payload: { ObservedAt: new Date(observedAt).toISOString() } })
+    const writerPath = writeCanonicalEvents(commonDir, 'writer-moving', [journal(A, Date.parse('2026-08-20T12:00:00Z'))])
+
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, day0 + DAY), [],
+      'without movement, yesterday activity is collected once its UTC day is the day before yesterday')
+    assert.equal(existsSync(writerPath), true, 'retainedWriterIdsAt filters; it never deletes bytes')
+
+    writeFileSync(writerPath, canonicalLine(journal(B, Date.parse('2026-08-21T12:00:00Z'), [A])), { flag: 'a' })
+
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, day0 + DAY), ['writer-moving'],
+      'the same expiry instant retains the writer because its activity moved to the previous UTC day')
+    const retained = await retention.syncAt(repo, commonDir, null, day0 + DAY)
+    assert.equal(retained.ok, true, JSON.stringify(retained.error))
+    assert.equal(existsSync(writerPath), true, 'the moved writer survives the sync at its former expiry point')
+    const retainedWriters = execFileSync('git', ['-C', repo, 'ls-tree', `${retained.root}:writers`], { encoding: 'utf8' })
+    assert.match(retainedWriters, /writer-moving\.ndjson/)
+
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, day0 + 2 * DAY), [],
+      'once the moved activity is two UTC days old, the writer expires as a whole')
+    const expired = await retention.syncAt(repo, commonDir, retained.root, day0 + 2 * DAY)
+    assert.equal(expired.ok, true, JSON.stringify(expired.error))
+    assert.equal(existsSync(writerPath), false, 'expiry removes the local writer')
+    const expiredWriters = execFileSync('git', ['-C', repo, 'ls-tree', `${expired.root}:writers`], { encoding: 'utf8' })
+    assert.doesNotMatch(expiredWriters, /writer-moving\.ndjson/)
   })
 })

@@ -121,7 +121,7 @@ const withOwner = async (action) => {
         drains.push(Promise.allSettled([pending]))
         return pending
       },
-      writerFile: join(dir, 'wanxiang', 'events', `writer-bd009-${n}.ndjson`),
+      writerFile: join(dir, 'wanxiangshu', 'events', `writer-bd009-${n}.ndjson`),
     })
   } catch (error) {
     actionFailure = { error }

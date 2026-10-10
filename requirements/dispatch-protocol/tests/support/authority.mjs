@@ -72,7 +72,7 @@ export const acceptOwner = async (handle, session = 'authority-owner') => {
 export const hostPort = (send) => ({ SubscribeTerminal: () => ({ Dispose() {} }), SendPrompt: send })
 
 export const journalBytes = directory => {
-  const events = join(directory, 'wanxiang', 'events')
+  const events = join(directory, 'wanxiangshu', 'events')
   const names = readdirSync(events).filter(name => name.endsWith('.ndjson')).sort()
   assert.ok(names.length > 0, 'the real journal must contain event files')
   return names.map(name => {

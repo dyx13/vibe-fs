@@ -17,7 +17,6 @@
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.foundation-outcome.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-linkage-projection.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.guidance-delivery.opencode-host-pairprogramming-guidelineprojection.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.institutional-learning.enforcer-institutionallearning-facts.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.interaction-authority.interaction-authority-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-facts.fsproj"/>

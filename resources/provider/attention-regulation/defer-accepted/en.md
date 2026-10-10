@@ -1,1 +1,1 @@
-Deferred for later resurfacing: {{value}}
+Deferred for the next closing or handoff: {{value}}

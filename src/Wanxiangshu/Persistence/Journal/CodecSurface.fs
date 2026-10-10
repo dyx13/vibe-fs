@@ -206,6 +206,9 @@ module JournalCodecSurface =
                fact = factToJs envelope.Fact
                line = Envelope.serialize envelope |}
 
+    [<Emit("Buffer.from($0, 'base64')")>]
+    let private bytesOfBase64 (value: string) : byte[] = jsNative
+
     let private eventOfJs (value: obj) : EventEnvelope =
         let payload =
             match value?payload with
@@ -227,7 +230,16 @@ module JournalCodecSurface =
             else
                 unbox<string array> value?payloadRefs
                 |> Array.toList
-                |> List.map PayloadRef.create }
+                |> List.map PayloadRef.create
+          Payloads =
+            if isNull (value?payloads) then
+                Map.empty
+            else
+                emitJsExpr (value?payloads) "Object.keys($0 || {}).map(function (key) { return [key, $0[key]]; })"
+                |> unbox<(string * string) array>
+                |> Array.fold
+                    (fun acc (key, base64) -> Map.add (PayloadRef.create key) (bytesOfBase64 base64) acc)
+                    Map.empty }
         |> EventEnvelope.normalize
 
     let private eventToJs (event: EventEnvelope) : obj =

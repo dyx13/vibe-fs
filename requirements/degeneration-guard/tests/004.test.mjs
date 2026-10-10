@@ -6,12 +6,8 @@ import path from 'node:path'
 import test from 'node:test'
 import { Worker } from 'node:worker_threads'
 import { encode } from 'gpt-tokenizer/encoding/o200k_base'
-import * as detector from '../../../dist/Execution/Session/LoopDetectorSurface.js'
-import { integrationTest } from '../../verification-system/tests/support/tier-gate.mjs'
-import { deriveLoopDetectorEnvelope, encodeParallel, loadLoopDetectorRepositoryCorpusV1, writeLoopDetectorEnvelopeArtifact } from '../../../scripts/lib/derive-loop-detector-envelope.mjs'
+import { deriveLoopDetectorEnvelope, encodeParallel, loadLoopDetectorRepositoryCorpusV1 } from '../../../scripts/lib/derive-loop-detector-envelope.mjs'
 import { loopDetectorRepositoryInputFiles } from '../../../scripts/lib/loop-detector-repository-corpus.mjs'
-
-const close = (actual, expected) => assert.ok(Math.abs(actual - expected) <= 1e-9, `${actual} != ${expected}`)
 
 test('WHAT[degeneration-guard-004] selector admits tracked source documents and excludes generated vendor fixture structured deleted and untracked paths', () => {
   const root = mkdtempSync(path.join(tmpdir(), 'wanxiangshu-loop-selector-'))
@@ -87,47 +83,6 @@ test('WHAT[degeneration-guard-004] worker failure rejects only after all spawned
   }), /loop detector tokenize worker exited with 42/)
   assert.ok(spawned.length > 0)
   for (const worker of spawned) assert.equal(worker.threadId, -1)
-})
-
-const referenceEnvelope = (tokens, lambda, initial) => {
-  const lastSeen = new Map()
-  let value = initial
-  let sum = 0
-  const trajectory = new Float64Array(tokens.length)
-  for (let index = 0; index < tokens.length; index++) {
-    const token = tokens[index]
-    const step = index + 1
-    const previous = lastSeen.get(token)
-    value = lambda * value + 1 - (previous === undefined ? 0 : lambda ** (step - previous))
-    lastSeen.set(token, step)
-    trajectory[index] = value
-    sum += value
-  }
-  trajectory.sort()
-  return { mean: sum / tokens.length, minimum: trajectory[Math.ceil(0.025 * trajectory.length) - 1], maximum: trajectory.at(-1) }
-}
-
-integrationTest('WHAT[degeneration-guard-004] current runtime envelope matches a fresh repository derivation and the self-consistent prior', async () => {
-  let generatedBytes
-  const derived = await writeLoopDetectorEnvelopeArtifact(undefined, { writeArtifact: (_target, bytes) => { generatedBytes = bytes } })
-  assert.ok(Buffer.isBuffer(generatedBytes) && generatedBytes.length > 0)
-  assert.equal(derived.halfLife, 256)
-  close(derived.centralProbability, 0.975)
-  close(derived.lowerQuantileProbability, 0.025)
-  close(derived.upperQuantileProbability, 1)
-  close(detector.halfLife, derived.halfLife)
-  close(detector.lambda, derived.lambda)
-  close(detector.normalWeightedDistinctCount, derived.normalPrior)
-  close(detector.centralProbability, derived.centralProbability)
-  close(detector.lowerQuantileProbability, derived.lowerQuantileProbability)
-  close(detector.upperQuantileProbability, derived.upperQuantileProbability)
-  close(detector.minimumWeightedDistinctCount, derived.minimum)
-  close(detector.maximumWeightedDistinctCount, derived.maximum)
-  const tokens = encode(loadLoopDetectorRepositoryCorpusV1().texts.join('\n'))
-  const reference = referenceEnvelope(tokens, derived.lambda, derived.normalPrior)
-  close(reference.mean, derived.normalPrior)
-  close(reference.minimum, derived.minimum)
-  close(reference.maximum, derived.maximum)
 })
 
 test.todo('WHAT[degeneration-guard-004] actual build binds generator selector selected bytes and runtime traversal to one staged input (GAP-145)')

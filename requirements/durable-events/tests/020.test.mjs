@@ -20,7 +20,7 @@ test('WHAT[durable-events-020] Journal boot creates no writer until the first bu
     const booted = await journal.JournalSurface_bootWithWriterId(commonDir, 'boot-proof', 'runtime-proof', 6001, '9999-05-01T00:00:00Z')
     assert.equal(booted.ok, true)
     try {
-      const writer = join(commonDir, 'wanxiang/events/boot-proof.ndjson')
+      const writer = join(commonDir, 'wanxiangshu/events/boot-proof.ndjson')
       assert.equal(Number(booted.localSeq), 1)
       assert.equal(existsSync(writer), false)
       const appended = await journal.JournalSurface_appendAgent(booted.journal, { kind: 'Session', session: 'session-proof' }, null, {
@@ -40,7 +40,7 @@ test('WHAT[durable-events-020] Journal boot creates no writer until the first bu
 
 test('WHAT[durable-events-020] workspace capability acquisition defers malformed-history rejection until actual consumption', async () => {
   await withStoreDirectory(async (commonDir) => {
-    const events = join(commonDir, 'wanxiang/events')
+    const events = join(commonDir, 'wanxiangshu/events')
     mkdirSync(events, { recursive: true })
     const writer = join(events, 'invalid.ndjson')
     const bytes = '{invalid retained event}\n'
@@ -76,7 +76,7 @@ test('WHAT[durable-events-020] activated replay ignores the recognized legacy Jo
       payload_refs: [],
       stream_id: 'journal/workspace',
     }
-    const events = join(commonDir, 'wanxiang/events')
+    const events = join(commonDir, 'wanxiangshu/events')
     mkdirSync(events, { recursive: true })
     const bytes = `${JSON.stringify(legacy)}\n`
     writeFileSync(join(events, 'legacy.ndjson'), bytes)

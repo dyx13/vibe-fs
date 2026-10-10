@@ -68,12 +68,16 @@ const modelFromLease = async (sessionId, physicalUserMessageId, role, participan
   return { providerID, modelID: modelParts.join('/'), variant: target.reasoning }
 }
 
-test('WHAT[host-boundary-006] HOST-006_params_observation_rejects_participant_drift_against_the_exact_lease', async () => {
+test('WHAT[host-boundary-006] HOST-006_params_observation_is_read_only_and_does_not_reject_agent_drift', async () => {
   const params = await import('../../../dist/OpenCode/Host/ChatParamsSurface.js')
   const session = 'ses_hb006_drift'
   const physical = 'msg_hb006_drift'
   await modelFromLease(session, physical, 'engineer', 'engineer', undefined)
 
+  // The Host observes a different agent than the lease participant. Runtime
+  // observation is read-only: drift is a test-time fast-check property, so
+  // this observation passes and only projects temperature.
+  const output = {}
   const observed = params.apply(
     {
       sessionID: session,
@@ -82,11 +86,12 @@ test('WHAT[host-boundary-006] HOST-006_params_observation_rejects_participant_dr
       model: { providerID: 'test', id: 'system', capabilities: {} },
       message: { id: physical, model: {} },
     },
-    {},
+    output,
   )
 
-  assert.equal(observed.ok, false)
-  assert.match(observed.error, /provider agent drift for physical user message 'msg_hb006_drift' \(engineer -> devops\)/)
+  assert.equal(observed.ok, true, observed.error)
+  assert.equal(observed.temperature, 1)
+  assert.equal(output.temperature, 1)
 })
 test('WHAT[host-boundary-006] HOST-006_params_observation_leaves_a_message_without_an_exact_lease_to_the_host', async () => {
   const params = await import('../../../dist/OpenCode/Host/ChatParamsSurface.js')

@@ -1,1 +1,1 @@
-Finish this work. Quality, progress, tests, obligations, and Git state never block finishing; only live owned execution resources do.
+Finish this work. The first call returns this incumbency's review commitments and unconsumed deferred work for you to check and does not finish; call it again once no work remains to actually finish. Quality, progress, tests, obligations, and Git state never block finishing; only live owned execution resources do.

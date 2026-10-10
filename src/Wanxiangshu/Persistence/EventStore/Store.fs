@@ -171,30 +171,43 @@ module EventStore =
         |> List.traverseResultM (fun head -> validateParentList integrator batchIds head.Parents)
         |> Result.map ignore
 
-    let private validatePayloadClosure (commonDir: string) (events: EventEnvelope list) : Result<unit, StorageInvalid> =
-        let refs =
-            events
-            |> List.collect (fun envelope -> envelope.PayloadRefs)
-            |> PayloadRefs.canonicalize
+    let private validatePayloadClosure (events: EventEnvelope list) : Result<unit, StorageInvalid> =
+        // durable-events-012: payloads are inline in the event line; closure is
+        // satisfied exactly when every PayloadRef has inline content with a
+        // matching content address.
+        let unresolvedPayload (envelope: EventEnvelope) =
+            envelope.PayloadRefs
+            |> List.tryFind (fun payloadRef ->
+                envelope.Payloads
+                |> Map.tryFind payloadRef
+                |> Option.exists (fun content -> ProcessEventLog.payloadDigest content = PayloadRef.value payloadRef)
+                |> not)
 
-        match refs |> List.tryFind (ProcessEventLog.payloadExists commonDir >> not) with
-        | Some missing -> Error(StorageInvalid.MissingPayload missing)
-        | None -> Ok()
+        let orphanPayload (envelope: EventEnvelope) =
+            envelope.Payloads
+            |> Map.toList
+            |> List.map fst
+            |> List.tryFind (fun payloadRef -> not (List.contains payloadRef envelope.PayloadRefs))
+
+        events
+        |> List.tryPick (fun envelope ->
+            unresolvedPayload envelope
+            |> Option.orElseWith (fun () -> orphanPayload envelope))
+        |> Option.map (fun payloadRef -> Error(StorageInvalid.MissingPayload payloadRef))
+        |> Option.defaultValue (Ok())
 
     let private validateFreshBatch
-        (commonDir: string)
         (integrator: ICanonicalIntegrator)
         (fresh: EventEnvelope list)
         : Result<EventEnvelope list, StorageInvalid> =
         result {
             do! validateParents integrator fresh
             do! validateBatchDag fresh
-            do! validatePayloadClosure commonDir fresh
+            do! validatePayloadClosure fresh
             return fresh
         }
 
     let private validateForAppend
-        (commonDir: string)
         (integrator: ICanonicalIntegrator)
         (events: EventEnvelope list)
         : Result<EventEnvelope list, StorageInvalid> =
@@ -205,7 +218,7 @@ module EventStore =
             if List.isEmpty fresh then
                 return []
             else
-                return! validateFreshBatch commonDir integrator fresh
+                return! validateFreshBatch integrator fresh
         }
 
     let private completedAppend receipt prepared completion =
@@ -265,12 +278,11 @@ module EventStore =
         | Ok(Ok prepared) -> commitPrepared requested log prepared
 
     let private appendValidated
-        (commonDir: string)
         (integrator: ICanonicalIntegrator)
         (log: ProcessEventLog)
         (events: EventEnvelope list)
         : AppendWork =
-        match tryPreparation (fun () -> validateForAppend commonDir integrator events) with
+        match tryPreparation (fun () -> validateForAppend integrator events) with
         | Error primary -> notAttempted events None primary
         | Ok(Error invalid) -> AppendWork.Rejected(AppendPreWriteRejection.StorageInvalid invalid)
         | Ok(Ok []) -> AppendWork.NoNewWrite(AppendReceipt.empty, None)
@@ -358,20 +370,63 @@ module EventStore =
         | Ok() -> settleWork work
         | Error cause -> settleReleaseFailure requested work cause
 
-    let private appendOwned commonDir integrator log gate requested =
+    let private appendOwned
+        (commonDir: string)
+        (integrator: ICanonicalIntegrator)
+        (log: ProcessEventLog)
+        gate
+        requested
+        =
         task {
             match! acquireAppendGate commonDir with
             | Error primary -> return notAttempted requested None primary |> settleWork
             | Ok acquired ->
-                let work = lock gate (fun () -> appendValidated commonDir integrator log requested)
+                let work = lock gate (fun () -> appendValidated integrator log requested)
                 let! released = releaseAppendGate acquired
 
                 return settleReleased requested work released
         }
 
+    /// Inline payload staging for one process-local EventStore. WritePayload
+    /// stages bytes in memory; Append embeds them into the event line's inline
+    /// `payloads` field; ReadPayload serves staged bytes, then falls back to the
+    /// canonical Integrator's committed inline payload index (durable-events-012).
     let createLocal (commonDir: string) (writerId: string) (integrator: ICanonicalIntegrator) : IEventStore =
         let log = ProcessEventLog.create commonDir writerId
         let gate = obj ()
+        // DSL-MUTABLE: resource — staged inline payload bytes awaiting the next append.
+        let staged = System.Collections.Generic.Dictionary<string, byte[]>()
+        let digestOf (content: byte[]) : string = ProcessEventLog.payloadDigest content
+
+        let tryStaged (payloadRef: PayloadRef) : byte[] option =
+            match staged.TryGetValue(PayloadRef.value payloadRef) with
+            | true, bytes -> Some bytes
+            | _ -> None
+
+        /// Attach exactly the payloads this event references. Staged bytes win;
+        /// content already committed by an earlier event line is re-embedded from
+        /// the Integrator's own index so the new line stays self-contained
+        /// (durable-events-012).
+        let attachInline (envelope: EventEnvelope) =
+            let resolvePayloadContent (payloadRef: PayloadRef) : byte[] option =
+                let digest = PayloadRef.value payloadRef
+
+                tryStaged payloadRef
+                |> Option.filter (fun bytes -> digestOf bytes = digest)
+                |> Option.orElseWith (fun () -> integrator.TryPayload payloadRef)
+                |> Option.filter (fun bytes -> digestOf bytes = digest)
+
+            let inlinePayloads =
+                envelope.PayloadRefs
+                |> List.choose (fun payloadRef ->
+                    resolvePayloadContent payloadRef |> Option.map (fun bytes -> payloadRef, bytes))
+                |> Map.ofList
+
+            if Map.isEmpty inlinePayloads then
+                envelope
+            else
+                { envelope with
+                    Payloads = inlinePayloads }
 
         let reloadFromDisk () = integrator.ReloadLocal commonDir
 
@@ -381,24 +436,17 @@ module EventStore =
 
         { new IEventStore with
             member _.Append(events) =
-                appendOwned commonDir integrator log gate events
+                appendOwned commonDir integrator log gate (events |> List.map attachInline)
 
             member _.WritePayload(content) =
-                ProcessEventLog.withStoreLock commonDir (fun () ->
-                    task {
-                        try
-                            return Ok(ProcessEventLog.writePayload commonDir content)
-                        with ex ->
-                            return Error ex.Message
-                    })
+                let digest = digestOf content
+                staged.[digest] <- content
+                Task.FromResult(Ok(PayloadRef.create digest))
 
             member _.ReadPayload(payloadRef) =
-                task {
-                    try
-                        return Ok(ProcessEventLog.readPayload commonDir payloadRef)
-                    with ex ->
-                        return Error ex.Message
-                }
+                match tryStaged payloadRef with
+                | Some bytes -> Task.FromResult(Ok(Some bytes))
+                | None -> Task.FromResult(Ok(integrator.TryPayload payloadRef))
 
             member _.TryCurrent(key) = integrator.TryCurrent key
             member _.TryEvent(eventId) = integrator.TryEvent eventId

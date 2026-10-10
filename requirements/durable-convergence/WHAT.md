@@ -2,7 +2,7 @@
 
 ## [001] 活跃 writer 的合并是集合并集
 
-同一 retention 截止时刻，活跃 writer 的合并必须是 append-only 事实的集合并集，按 `event_id` 幂等去重。retention 只能整体移除最后活动时间早于固定 TTL 的 writer，不得按时间、版本或到达顺序裁掉保留 writer 内的事实。
+同一 retention 截止时刻，活跃 writer 的合并必须是 append-only 事实的集合并集，按 `event_id` 幂等去重。retention 只能按 UTC 日期分组整体移除过期 writer，不得按时间、版本或到达顺序裁掉保留 writer 内的事实。
 
 ## [002] 统一 KWayMerge
 
@@ -36,6 +36,10 @@
 
 本地 fingerprint、retention expiry 与上次成功快照未变，且 tracking ref 仍指向该快照时，`pre-push` 必须零网络复用。writer/payload、TTL 或已观察 tracking ref 变化时，双向读取、归并完整 writer 流，原子替换本地集合并 CAS 发布远端快照。未被本机观察的远端推进不由 clean no-op 主动拉取，也不得被覆盖；下次本地事实或 tracking 变化时再完整收敛。
 
+收敛的跨进程文件锁只覆盖本地 writer 字节边界：读取本地 writer 流、过期 writer 删除、远端事件导入写回、快照物化与物化缓存写入必须在同一互斥窗口内完成。网络发现与发布（`ls-remote`、`fetch`、`push`）不得在持锁期间执行；远端 Git 对象读取不需要锁。锁外不得读取本地 writer 文件字节；tracking ref 与物化缓存的只读短路是明确豁免的非权威优化。
+
+Hook 进程对单条 Git 命令与整次收敛设置有限 deadline：网络命令按类型取上限（`ls-remote` 30 秒，`fetch`/`rev-parse`/`push` 120 秒），整次收敛 600 秒，锁内 Git 子进程调用同样受 120 秒超时约束。deadline 超时只终止 hook 自身的物理等待并报错，不产生任何 durable 事实，也不改变失败同步阻塞用户 Git 操作的既有行为。
+
 ## [009] Dumb remote
 
 远端只提供标准 Git 对象读写、引用推进和 CAS，不解释领域事件，不执行合并，不依赖万象术专有后端。
@@ -44,13 +48,13 @@
 
 物理 fingerprint 缓存不具权威。满足 [008] 的 clean no-op 必须在任何同步 transport 前返回，不另行 `ls-remote`、`fetch` 或内部 `push`。发生变化时只读写、验证变动文件，远端竞争仍走 CAS 收敛。
 
-writer 的 remote-read 判定必须比较 manifest activity。payload 没有该语义：本地 stat identity 未变、cached OID 等于 remote OID 且远端为 blob 时，不得重读 payload；不得因缺少 writer manifest 而重读全部历史 payload。
+writer 的 remote-read 判定必须比较 manifest activity。事件行自包含载荷（[durable-events-012]），远端快照只含 `writers/` 与 `writer-manifest`，没有独立 payload 树；因此不存在「因缺少 writer manifest 而重读全部历史 payload」的路径。
 
 Hook 安装器只在当前仓库为未自定义 multiplex 的 SSH 命令追加短生命周期 `ControlMaster=auto`，保留原命令和 identity 参数；已有 `ControlMaster` 或 `ControlPath` 不得覆盖。自有 wrapper 每次执行前重建并收紧 repo-scoped socket 目录，永久配置不得依赖安装时的易失目录；须迁移旧版自有的过长 repo-local 和易失 tmp socket 路径。
 
 ## [011] Writer 整体过期且不被旧快照复活
 
-每个 writer 是一次进程输出流，固定 TTL 为 24 小时：`Retain(now, W) = {w ∈ W | lastActivity(w) >= now - TTL}`。同次同步按统一截止时刻满足 `Retain(A ∪ B) = Retain(A) ∪ Retain(B)`；过期 writer 同时退出本地集合和新远端快照，缓存不得跨下一 expiry 命中。
+每个 writer 是一次进程输出流。保留单位是最近活动时间的 **UTC 日期分组**：今天与昨天保留，前天及更早整体过期。`Retain(now, W) = {w ∈ W | utcDay(lastActivity(w)) >= utcDay(now) - 1}`。日期只作 GC 分组，不携带历史语义，允许 writer 因活动推进而移动到更晚的日期。同次同步按统一截止时刻满足 `Retain(A ∪ B) = Retain(A) ∪ Retain(B)`；过期 writer 同时退出本地集合和新远端快照，缓存不得跨下一 expiry 命中。
 
 活动时间优先取 writer 尾部 Journal 的 `payload.ObservedAt`；连续 `ProjectionCutTail` 须向前越过后再判定。非 Journal 尾部才可回退到 producer-side file activity。导入不得以 fetch 时间或新 mtime 刷新活动性。
 

@@ -17,7 +17,7 @@ export async function withHumanRootLoopFixture(run) {
   const workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wxs-humanroot-road-'))
   execFileSync('git', ['init', '-q', workDir])
   const commonDir = path.join(workDir, '.git')
-  const eventsDir = path.join(commonDir, 'wanxiang', 'events')
+  const eventsDir = path.join(commonDir, 'wanxiangshu', 'events')
   fs.mkdirSync(eventsDir, { recursive: true })
   const file = path.join(eventsDir, 'relay-fixture.ndjson')
   const target = 'ses_humanroot_canary'
@@ -57,9 +57,9 @@ export async function withHumanRootLoopFixture(run) {
       RootRequestDigest: 'root', RequirementSetDigest: 'requirements', EvidenceFrontierDigest: 'evidence',
     },
     ['WorkspaceSnapshotId', 'snapshot'], ['AuthorityRevision', `user:${road}`],
-    ['ScoreVector', ['LanguageAlgorithms', 'Simplicity', 'Structure', 'Granularity', 'TestsEvidence',
-      'LogicReliabilityBoundaries', 'CallerErgonomics', 'Completeness']
-      .map((dimension) => [dimension, dimension === 'Completeness' ? grade : 'Perfect'])],
+    ['AssessmentFindings', grade === 'Perfect' ? [] : [
+      { AcceptanceCriteria: 'Complete the original charge.', WorkPlan: 'Finish the remaining work.' },
+    ]],
   ]])
   const retire = (road, round, accepted) => append(road, [['RetirementCommitted', {
     Id: ['RetirementId', `retirement:${road}:${round}`], IncumbencyId: ['IncumbencyId', incumbent(road, round)],

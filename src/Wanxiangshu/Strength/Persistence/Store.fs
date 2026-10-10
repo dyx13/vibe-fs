@@ -296,7 +296,8 @@ module StrengthStore =
               EventType = eventType
               Parents = parentsFor sha256 event
               Payload = encodePayload event
-              PayloadRefs = payloadRefsOf event }
+              PayloadRefs = payloadRefsOf event
+              Payloads = Map.empty }
 
     let private decodeRequested payload : Result<StrengthEvent, string> =
         let decoder =

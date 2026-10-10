@@ -26,7 +26,7 @@ const toolModule = {
 }
 
 const journalBytes = directory => {
-  const events = join(directory, 'wanxiang', 'events')
+  const events = join(directory, 'wanxiangshu', 'events')
   const names = readdirSync(events).filter(name => name.endsWith('.ndjson')).sort()
   assert.ok(names.length > 0, 'the original Fork journal has event files')
   return names.map(name => ({ name, bytes: readFileSync(join(events, name)) }))

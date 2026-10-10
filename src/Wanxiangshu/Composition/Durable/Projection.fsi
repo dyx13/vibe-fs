@@ -8,7 +8,6 @@ open Wanxiangshu.Context.Prefix
 open Wanxiangshu.Context.Trace
 open Wanxiangshu.Enforcer
 open Wanxiangshu.Enforcer.Guidance
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Execution.Delegation
 open Wanxiangshu.Execution.Fission
 open Wanxiangshu.Execution.Session
@@ -53,7 +52,6 @@ type AgentProjectionSet =
         DelegationCompletedHandoffs: Map<string, int64>
         Attention: AttentionProjectionState
         Concern: ConcernProjectionState
-        InstitutionalLearning: InstitutionalLearningProjectionState
         RuntimeStartCount: int
     }
 

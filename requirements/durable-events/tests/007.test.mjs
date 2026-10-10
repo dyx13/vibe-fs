@@ -82,7 +82,7 @@ test('WHAT[durable-events-007] append_rejects_missing_parent_without_writing_byt
   const dir = withTemp((base) => base)
   const store = eventStore.create(dir, 'missing-parent-proof')
   try {
-    const file = path.join(dir, 'wanxiang', 'events', 'missing-parent-proof.ndjson')
+    const file = path.join(dir, 'wanxiangshu', 'events', 'missing-parent-proof.ndjson')
     assert.equal(existsSync(file), false)
     const r = await eventStore.append(store, [event(2, [99])])
     assert.equal(r.ok, false)
@@ -100,7 +100,7 @@ test('WHAT[durable-events-007] append_rejects_cycle_in_one_batch_before_durabili
     const b = event(2, [1])
     const r = await eventStore.append(store, [a, b])
     assert.equal(r.ok, false)
-    const file = path.join(dir, 'wanxiang', 'events', 'cycle-proof.ndjson')
+    const file = path.join(dir, 'wanxiangshu', 'events', 'cycle-proof.ndjson')
     assert.equal(existsSync(file), false, 'rejected structural append creates no writer file')
   } finally {
     eventStore.dispose(store)
@@ -232,7 +232,7 @@ const invalidUtf8Event = () => {
 test('WHAT[durable-events-007] local writer boot rejects invalid UTF-8 without replacement decoding', () => {
   const root = mkdtempSync(join(tmpdir(), 'wanxiang-invalid-utf8-'))
   const commonDir = join(root, '.git')
-  const eventsDir = join(commonDir, 'wanxiang', 'events')
+  const eventsDir = join(commonDir, 'wanxiangshu', 'events')
   mkdirSync(eventsDir, { recursive: true })
   writeFileSync(join(eventsDir, 'broken.ndjson'), invalidUtf8Event())
 

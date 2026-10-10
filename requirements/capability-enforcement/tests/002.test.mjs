@@ -97,7 +97,6 @@ const allowList = (config, name) => {
     'join',
     'horizon',
     'fission',
-    'sphinx',
     'review',
     'chronicle',
     'fetch',
@@ -111,13 +110,9 @@ const HOST_UTILITY_ALLOW = ['skill']
 const COGNITIVE_UTILITY_ALLOW = [
   'assume',
   'todowrite',
-  'enough',
-  'abandon',
   'defer',
-  'subscribe',
+
   'publish',
-  'celebrate',
-  'regret',
 ]
 const hostUtilityAllowFor = (role) => (role === 'Blogger' ? [] : HOST_UTILITY_ALLOW)
 const cognitiveUtilityAllowFor = (role) => (role === 'Blogger' ? [] : COGNITIVE_UTILITY_ALLOW)
@@ -129,11 +124,10 @@ const ROLE_ALLOW = {
     'horizon',
     'suicide',
     'review',
-    'sphinx',
     'js-manager',
   ],
-  Orchestrator: ['commission', 'join', 'horizon', 'sphinx'],
-  Engineer: ['read', 'write', 'edit', 'glob', 'grep', 'mv', 'rm', 'bash-honeypot', 'fetch', 'fission', 'sphinx', 'js-engineer'],
+  Orchestrator: ['commission', 'join', 'horizon'],
+  Engineer: ['read', 'write', 'edit', 'glob', 'grep', 'mv', 'rm', 'bash-honeypot', 'fetch', 'fission', 'js-engineer'],
   DevOps: [
     'read',
     'write',
@@ -182,7 +176,6 @@ test('WHAT[capability-enforcement-002] office_capability_permissions_agree_with_
       join: 'Join',
       horizon: 'Horizon',
       fission: 'Fission',
-      sphinx: 'Sphinx',
       read: 'Read',
       write: 'Write',
       edit: 'Edit',
@@ -311,7 +304,7 @@ test('WHAT[capability-enforcement-002] TOOLSPEC_engineer_and_devops_tools_have_o
 test('WHAT[capability-enforcement-002] TOOLSPEC_plugin_owned_cognitive_utility_tools_admission', () => {
   // Native todowrite has no plugin ToolSpec; its role boundary is asserted from
   // the Host permission matrix in capability-enforcement-006.
-  for (const tool of ['assume', 'enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret']) {
+  for (const tool of ['assume', 'defer',  'publish']) {
     assert.equal(rolePredicate(tool, 'engineer'), true, `${tool} should be allowed for engineer`)
     assert.equal(rolePredicate(tool, 'devops'), true, `${tool} should be allowed for devops`)
     assert.equal(rolePredicate(tool, 'manager'), true, `${tool} should be allowed for manager`)

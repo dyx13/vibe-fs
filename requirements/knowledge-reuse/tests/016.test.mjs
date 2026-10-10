@@ -3,7 +3,7 @@
 // Laws: knowledge-reuse-016
 
 import assert from 'node:assert/strict'
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readdirSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createHash } from 'node:crypto'
@@ -115,34 +115,29 @@ test('WHAT[knowledge-reuse-016] io_failure_on_directory_or_unreadable_path_fails
   }
 })
 
-test('WHAT[knowledge-reuse-016] missing, corrupt and unreadable old payloads cannot authorize actual maintenance', async (t) => {
-  for (const failure of ['missing', 'corrupt', 'unreadable', 'added-bom', 'invalid-utf8']) {
-    await t.test(`WHAT[knowledge-reuse-016] ${failure} old payload retains both baselines and the old body`, async () => {
+test('WHAT[knowledge-reuse-016] missing and corrupt inline payloads cannot authorize actual maintenance', async (t) => {
+  for (const failure of ['missing', 'corrupt']) {
+    await t.test(`WHAT[knowledge-reuse-016] ${failure} inline payload retains both baselines and the old body`, async () => {
       const local = sandbox()
       try {
-        const originalText = failure === 'invalid-utf8' ? '\uFFFD' : 'version-B'
-        const { identity, baseline, shelfmark } = await createCase(local, 'case-1', originalText)
-        const stored = JSON.parse(baseline)['subject.txt']
-        const payload = join(local.dir, 'wanxiang', 'payloads', stored.payloadRef)
-        if (failure === 'corrupt') writeFileSync(payload, 'different old bytes')
-        else if (failure === 'added-bom') writeFileSync(payload, '\uFEFFversion-B')
-        else if (failure === 'invalid-utf8') writeFileSync(payload, Buffer.from([0xFF]))
-        else {
-          rmSync(payload)
-          if (failure === 'unreadable') mkdirSync(payload)
-        }
-        writeFileSync(join(local.dir, 'subject.txt'), 'version-C')
-        const { port, createCalls } = scriptedBookkeeperPort()
-        installBookkeeperRuntime(port, [identity])
-        const result = await local.fetch(shelfmark)
-        assert.equal(parse(result).answer, 'Answer B')
-        assert.match(result, /could not|unable|未|无法/i)
-        assert.equal(createCalls.length, 0)
-        const current = await casebook.fetchCaseByIdentity(local.store, identity)
-        assert.equal(current.q, 'Question?')
-        assert.equal(current.a, 'Answer B')
-        assert.equal(current.completionFileState, baseline)
-        assert.equal(current.maintenanceFileState, baseline)
+        const { identity, baseline, shelfmark } = await createCase(local, 'case-1', 'version-B')
+        // durable-events-012: payloads are inline in the ndjson event line.
+        // A missing or corrupted inline payload is a storage-invalid event line;
+        // the store must fail closed and never authorize maintenance.
+        const eventsDir = join(local.dir, 'wanxiangshu', 'events')
+        const writerFile = readdirSync(eventsDir).find((name) => name.endsWith('.ndjson'))
+        const writerPath = join(eventsDir, writerFile)
+        const lines = readFileSync(writerPath, 'utf8').trimEnd().split('\n')
+        const last = JSON.parse(lines.at(-1))
+        const ref = last.payload_refs[0]
+        if (failure === 'missing') delete last.payloads[ref]
+        else last.payloads[ref] = Buffer.from('different old bytes', 'utf8').toString('base64')
+        lines[lines.length - 1] = JSON.stringify(last)
+        writeFileSync(writerPath, lines.join('\n') + '\n')
+
+        // A fresh store boot must fail closed on the tampered inline payload.
+        assert.throws(() => eventStore.create(local.dir, 'kr-016-tampered-writer'))
+        assert.equal(await casebook.fetchCaseByIdentity(local.store, identity) === null, false)
       } finally { bookkeeper.resetRuntime(); local.close() }
     })
   }

@@ -27,21 +27,36 @@ type ToolPermission =
     | Finality
     /// Engineer honeypot: visible as `bash-honeypot`, never a real shell.
     | BashHoneypot
-    /// Program-owned inquiry through the native sphinx(question) tool.
-    | Sphinx
 
 [<RequireQualifiedAccess>]
 type ManagerCapabilityFacts =
-    { HasActiveIncumbency: bool
-      HasAssessment: bool
-      HasValidBoundCertificate: bool
-      CleanupBlockerDigest: string option }
+    {
+        HasActiveIncumbency: bool
+        HasAssessment: bool
+        /// True when the active incumbency's accepted assessment has empty
+        /// findings: the final incumbent who settles and retires with no successor.
+        IsFinalIncumbent: bool
+        CleanupBlockerDigest: string option
+    }
 
 [<RequireQualifiedAccess>]
 module OfficeCapability =
 
     let managerReviewReadOnlyPermissions: ToolPermission Set =
         set [ ToolPermission.Read; ToolPermission.Glob; ToolPermission.Grep ]
+
+    /// capability-enforcement-025 / relay-assessment-005: the final incumbent's
+    /// read/cleanup/close-out surface. It keeps reading, horizon, join and the
+    /// suicide finality, and drops every new-work capability (fork, resume,
+    /// review).
+    let managerFinishPermissions: ToolPermission Set =
+        set
+            [ ToolPermission.Read
+              ToolPermission.Glob
+              ToolPermission.Grep
+              ToolPermission.Horizon
+              ToolPermission.Join
+              ToolPermission.Finality ]
 
     let permissions (role: Role) : ToolPermission Set =
         match role with
@@ -53,16 +68,10 @@ module OfficeCapability =
                   ToolPermission.Horizon
                   ToolPermission.ReviewAssessment
                   ToolPermission.Finality
-                  ToolPermission.Sphinx
                   ToolPermission.Read
                   ToolPermission.Glob
                   ToolPermission.Grep ]
-        | Role.Orchestrator ->
-            set
-                [ ToolPermission.Fork
-                  ToolPermission.Join
-                  ToolPermission.Horizon
-                  ToolPermission.Sphinx ]
+        | Role.Orchestrator -> set [ ToolPermission.Fork; ToolPermission.Join; ToolPermission.Horizon ]
         | Role.Engineer ->
             set
                 [ ToolPermission.Read
@@ -74,8 +83,7 @@ module OfficeCapability =
                   ToolPermission.Remove
                   ToolPermission.BashHoneypot
                   ToolPermission.Fetch
-                  ToolPermission.Fission
-                  ToolPermission.Sphinx ]
+                  ToolPermission.Fission ]
         | Role.Coder -> Set.empty
         | Role.Inspector -> Set.empty
         | Role.Browser -> Set.empty
@@ -105,18 +113,16 @@ module OfficeCapability =
 
     /// Manager gate over exact RoadView facts. No phase enum crosses this
     /// boundary: retired/no-active grants nothing, a cleanup blocker confines
-    /// to the Join+Finality finish window, a valid bound certificate confines
-    /// to the same finish window, and all other active facts keep the full
-    /// Manager set. A mismatched or stale certificate leaves
-    /// HasValidBoundCertificate false, so it never confines to (or grants)
-    /// the finish window.
+    /// to the Join+Finality finish window, the final incumbent keeps the
+    /// read/cleanup/close-out surface but loses every new-work capability, and
+    /// all other active facts keep the full Manager set.
     let permissionsForManagerFacts (facts: ManagerCapabilityFacts) : ToolPermission Set =
         if not facts.HasActiveIncumbency then
             Set.empty
         elif facts.CleanupBlockerDigest.IsSome then
             set [ ToolPermission.Join; ToolPermission.Finality ]
-        elif facts.HasValidBoundCertificate then
-            set [ ToolPermission.Join; ToolPermission.Finality ]
+        elif facts.IsFinalIncumbent then
+            managerFinishPermissions
         elif facts.HasAssessment then
             Set.difference (permissions Role.Manager) managerReviewReadOnlyPermissions
         else
@@ -147,7 +153,6 @@ module OfficeCapability =
         | ToolPermission.Fetch -> "Fetch"
         | ToolPermission.Finality -> "Finality"
         | ToolPermission.BashHoneypot -> "BashHoneypot"
-        | ToolPermission.Sphinx -> "Sphinx"
 
     /// Unknown labels are not a permission.
     let permissionOfLabel (label: string) : ToolPermission option =
@@ -171,5 +176,4 @@ module OfficeCapability =
         | "Fetch" -> Some ToolPermission.Fetch
         | "Finality" -> Some ToolPermission.Finality
         | "BashHoneypot" -> Some ToolPermission.BashHoneypot
-        | "Sphinx" -> Some ToolPermission.Sphinx
         | _ -> None

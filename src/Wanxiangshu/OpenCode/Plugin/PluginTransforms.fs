@@ -847,6 +847,18 @@ module PluginTransforms =
           InjectPairGuideline =
             fun projectionSessionIdOpt sessionStartedAt outObj ->
                 task {
+                    let language = languageFor projectionSessionIdOpt
+
+                    // crash-reconciliation-018: after this process's load-phase
+                    // normalization, the next real user instruction carries one
+                    // restart status guidance. It rides the same pair marker, so
+                    // its delivered bytes are frozen by the anchored MarkerText.
+                    let restartGuidance =
+                        if scope.RestartGuidancePending then
+                            Some(ProviderProse.render language "host/restart-guidance" Map.empty)
+                        else
+                            None
+
                     do!
                         PairProgrammingThoughtTransform.maybeInjectGuideline
                             journal
@@ -854,7 +866,9 @@ module PluginTransforms =
                             sessionStartedAt
                             clock
                             terminateSession
-                            (languageFor projectionSessionIdOpt)
+                            language
+                            restartGuidance
+                            scope.MarkRestartGuidanceDelivered
                             outObj
                 }
           ProjectRequirementGrounding =

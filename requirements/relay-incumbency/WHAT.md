@@ -22,13 +22,13 @@ Road 承载根用户需求，Incumbency 是一次 Manager 逻辑任期。同一 
 
 ## [006] 退休结果
 
-每次退休原子提交退休身份、任期、快照、authority revision、精确 provider-run/tool-call cut 与唯一结果 `Continue | Accepted certificateId`。Continue 保持 Road 的 LogicalRun 开放并自动续发；Accepted 关闭本任，证书有效时禁止新任，显式失效后由普通 ContinueLoop 开启新任。两类后继均保留完整物理历史；LatestRetirement cut 只识别 stale 请求，不过滤历史。
+每次退休原子提交退休身份、任期、快照、authority revision、精确 provider-run/tool-call cut 与唯一结果 `Continue | Accepted certificateId`。Continue 保持 Road 的 LogicalRun 开放并自动续发；Accepted 关闭本任，证书有效与否都不再阻止普通 ContinueLoop 开启新任。两类后继均保留完整物理历史；LatestRetirement cut 只识别 stale 请求，不过滤历史。
 
-Continue 携带退休时快照，可不同于评审快照；Accepted 必须匹配评审和证书快照，两者 authority revision 均须等于当前 revision。循环信号只从 outcome 派生。物理 SessionId 可复用，逻辑任期和 provider context 必须重开；循环决策与派发由 Manager owner 掌握，不得内联在 composition root。
+Continue 携带退休时快照，可不同于评审快照；Accepted 不再要求退休快照精确匹配评审或证书快照。循环信号只从 outcome 派生。物理 SessionId 可复用，逻辑任期和 provider context 必须重开；循环决策与派发由 Manager owner 掌握，不得内联在 composition root。
 
-## [008] 证书失效
+## [008] 证书只作历史
 
-AuthorityRevision、WorkspaceSnapshotId、requirement digest 或 target/base horizon 变化须显式使旧证书失效；失效不恢复评估者的工作权，只允许普通后继任期。
+AuthorityRevision、WorkspaceSnapshotId、requirement digest 或 target/base horizon 变化不再触发运行时失效或阻断后继。证书仍记录评估事实与 target horizon 供历史与发布门使用；后继一律按普通 ContinueLoop 独立评估，不因旧证书有效而被拒。
 
 ## [009] 权威修订
 

@@ -40,9 +40,9 @@ stdout/stderr 的内存缓冲有明确上限，超过阈值即切换外部流式
 
 终端及单次运行的完成结果给出真实 `exit_code` 与关联输出，不伪造或推断操作系统的退出状态。
 
-## [011] 单次执行参数一致
+## [011] 单次执行参数校验
 
-`run` 与 `query-shell` 对等支持并在执行前校验 `command`、`deadline_seconds`、`output_budget_bytes`、`world_lock`。它们只执行物理命令或静态观察，不承担模型摘要或蒸馏职责。
+`run` 在执行前校验 `command`、`deadline_seconds`、`output_budget_bytes`、`world_lock`。它只执行物理命令，不承担模型摘要或蒸馏职责。
 
 ## [012] 纯契约与物理实现分离
 

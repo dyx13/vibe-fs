@@ -49,7 +49,7 @@ module Fold =
             let sessionId = SessionId.create (RoadId.value payload.RoadId)
             let events = RelayTransaction.events payload.Transaction
 
-            // ATTENTION-004: a completed life takes its un-resurfaced deferred
+            // ATTENTION-004: a completed life takes its un-consumed deferred
             // work with it, so a reused SessionId cannot inherit it.
             let attentionAfterClosure =
                 settleAttentionLife events sessionId projection.Attention
@@ -104,9 +104,6 @@ module Fold =
         | AgentFact.Delegation delegation -> DelegationProjectionBridge.foldDelegation projection delegation
         | AgentFact.Attention attention -> ProjectionUpdate.applyAttention projection attention
         | AgentFact.Concern concern -> ProjectionUpdate.applyConcern projection concern
-        | AgentFact.InstitutionalLearning learning ->
-            ProjectionUpdate.applyInstitutionalLearning projection learning
-            |> Result.bind (fun updated -> ProjectionUpdate.applyAttentionLearning updated learning)
 
     /// Fact-only fold for callers that do not need envelope metadata.
     /// RuntimeStarted needs no envelope field (RuntimeId is in the payload).

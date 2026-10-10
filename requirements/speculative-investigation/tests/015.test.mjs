@@ -516,13 +516,13 @@ const canonicalLine = (envelope) => JSON.stringify(sortValue(envelope)) + '\n'
 const copyBackupWithLegacyDecision = () => {
   const base = mkdtempSync(join(tmpdir(), 'wxs-migrate-backup-'))
   const commonDir = join(base, '.git')
-  mkdirSync(join(commonDir, 'wanxiang', 'events'), { recursive: true })
+  mkdirSync(join(commonDir, 'wanxiangshu', 'events'), { recursive: true })
   const envelopes = [
     { event_id: 'evt-prepared-1', stream_id: STREAM, parents: [], event_type: 'StrengthCandidatePrepared', payload: { decision_id: 'decision-1', budget: 'K1', target_provider_run: 'run-old-1', frame_digest: 'frame-digest-old-1', byte_length: 123 }, payload_refs: [] },
     { event_id: 'evt-promoted-1', stream_id: STREAM, parents: [], event_type: 'StrengthCandidatePromoted', payload: { decision_id: 'decision-1', target_provider_run: 'run-old-1', frame_digest: 'frame-digest-old-1' }, payload_refs: [] },
     { event_id: 'evt-traced-1', stream_id: STREAM, parents: ['evt-promoted-1'], event_type: 'StrengthFramesTraced', payload: { decision_id: 'decision-1', start_inclusive: 20, end_exclusive: 24 }, payload_refs: [] },
   ]
-  writeFileSync(join(commonDir, 'wanxiang', 'events', WRITER_ID + '.ndjson'), envelopes.map(canonicalLine).join(''))
+  writeFileSync(join(commonDir, 'wanxiangshu', 'events', WRITER_ID + '.ndjson'), envelopes.map(canonicalLine).join(''))
   return { base, commonDir }
 }
 

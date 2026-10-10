@@ -6,7 +6,7 @@
 
 已配置 Predictor 模型时，仅对第 5.2 节参与工具（read/glob/grep/js-manager/js-engineer/js-devops/edit/write/mv/rm/fetch/run 共 12 个）装饰参数：必选原生整数 `estimated_readonly_rounds` 与可选参数 `self_note`，并在原工具描述之后幂等追加事实性估计说明；原有的必选项、功能说明与安全约束保持原样。
 
-所有未参与工具（如 fork/join/chronicle/horizon/review/fission/terminal 类工具/assume/enough 等）及未判定动态工具均保持原有定义，无任何本协议增量，也不截取其同名业务字段。
+所有未参与工具（如 fork/join/chronicle/horizon/review/fission/terminal 类工具/assume 等）及未判定动态工具均保持原有定义，无任何本协议增量，也不截取其同名业务字段。
 
 估计填 0 表示当前批次完成后没有可合理展望的连续只读查证，与"未配置 Predictor"是两个可观察区分的不同状态；启用不依赖任何人工确认、指纹、外部开关或额外设置。
 
@@ -81,7 +81,7 @@
 
 一份授权至少绑定：DecisionId（由协议版本 2、owner logical run 与来源 provider run 确定性派生，不按工具完成顺序或未来目标请求派生）、OwnerSessionId、owner logical run identity、authority root 与来源 physical user message、发出该批的 SourceProviderRun、固定顺序的完整 SourceToolCallIds（包含整批中不参与调用的 ID）、RequestedRounds（参与子集 max）与 ContractRevision（当前协议版本 2）。授权不增加 SelfNote、Hint 或 TrustScore 事件。
 
-持久化时机：来源整批完成并取得真实 owner 新输出证据后、外发副本前，写入 `DelegationRequested`；为合法普通续行冻结 target 与 mirror 后、副本首次外发前，写入 `DelegationBound`，固定 target、ReplicaSessionId 与 anchor digest；候选材料先写 `Prepared` 并持久化引用，之后才可被任何主模型可见路径消费。大对象仅通过 payload_refs 关联，不引入私有存储。
+持久化时机：来源整批完成并取得真实 owner 新输出证据后、外发副本前，写入 `DelegationRequested`；为合法普通续行冻结 target 与 mirror 后、副本首次外发前，写入 `DelegationBound`，固定 target、ReplicaSessionId 与 anchor digest；候选材料先写 `Prepared` 并持久化引用，之后才可被任何主模型可见路径消费。大对象以内容哈希 `payload_refs` 命名，其字节内嵌于同一条事件行（[durable-events-012]），不引入私有存储。
 
 写入失败或状态未知时 fail closed：先解析既有事实，未证明已提交不得外发；不得把存储错误降级为内存里的 consumed。Bound 必须先创建尚未发送 prompt 的空 child 并持久化成功，才允许发送 prompt 与进入模型准入；Bound 写失败时清理空 child，创建空 child 不得预占模型容量。
 
@@ -224,8 +224,8 @@ CLI 先校验参数、登记版本、备份路径和活库禁令，再加载迁�
 2. **逐工具判定（classifyTool）**：
    工具策略采用严格的三态联合类型，禁止任何形式的前缀匹配（如 `js-` 前缀）或名称模糊匹配（如包含 read/search）：
    - `EstimateAfterCall`（参与工具，共 12 个）：`read`、`glob`、`grep`、`js-manager`、`js-engineer`、`js-devops`、`edit`、`write`、`mv`、`rm`、`fetch`、`run`。调用完成后允许主模型提供后续只读查证估计；
-   - `NoEstimate`（不参与工具，显式白名单共 29 个）：`fork`、`resume`、`commission`、`join`、`horizon`、`review`、`suicide`、`fission`、`open-terminal`、`send-terminal`、`read-terminal`、`signal-terminal`、`skill`、`todowrite`、`sphinx`、`assume`、`enough`、`abandon`、`defer`、`subscribe`、`publish`、`celebrate`、`regret`、`chronicle`、`js-bookkeeper`、`bash-honeypot`、`invalid`、`js-orchestrator`、`js-blogger`。本协议不向其装饰任何字段与说明；
-   - `Unreviewed`（未判定工具）：所有不在上述 41 个固定名称表内的工具（包括带有已知前缀的衍生工具名如 `read-extra`、`globbing`、`grepper`、`edit_file`、`writer`、`run_command`、`fetch_data`、`js-devops-v2`、`fork_child`、`resume_parent`、`custom_tool` 等）一律判定为未判定，保持原有业务行为，不增加协议字段。
+   - `NoEstimate`（不参与工具，显式白名单共 24 个）：`fork`、`resume`、`commission`、`join`、`horizon`、`review`、`suicide`、`fission`、`open-terminal`、`send-terminal`、`read-terminal`、`signal-terminal`、`skill`、`todowrite`、`assume`、`defer`、`subscribe`、`publish`、`chronicle`、`js-bookkeeper`、`bash-honeypot`、`invalid`、`js-orchestrator`、`js-blogger`。本协议不向其装饰任何字段与说明；
+   - `Unreviewed`（未判定工具）：所有不在上述 36 个固定名称表内的工具（包括带有已知前缀的衍生工具名如 `read-extra`、`globbing`、`grepper`、`edit_file`、`writer`、`run_command`、`fetch_data`、`js-devops-v2`、`fork_child`、`resume_parent`、`custom_tool` 等）一律判定为未判定，保持原有业务行为，不增加协议字段。
 
 3. **入参容器与协议混合排斥**：
    - 参与工具的参数容器必须是普通非空、非数组的 JavaScript 对象（`isPlainObject`），传入 `null`、`undefined`、数字、字符串或数组等非普通对象一律拒绝；

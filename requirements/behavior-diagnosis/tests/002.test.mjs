@@ -53,5 +53,3 @@ integrationTest('WHAT[behavior-diagnosis-002] real resource loader refuses empty
     assert.throws(() => surface.rules())
   })
 })
-
-test.todo('WHAT[behavior-diagnosis-002] GAP-112 actual plugin startup converts resource failure to process fail-fast; institutional preflight revision race commits nothing')

@@ -7,4 +7,4 @@ Unchanged means no relevant file-state difference was found. Refreshed means
 maintenance succeeded from the supplied diff, possibly without a prose change.
 Stale means maintenance did not establish a current account. None proves current
 runtime correctness or complete dependency coverage. Use the answer within its
-conditions and obtain current evidence when the present task requires it.
+conditions and obtain current information when the present task requires it.

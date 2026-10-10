@@ -51,9 +51,7 @@ module FissionStartup =
               "The owner lifecycle work record follows. Continue its unfinished responsibility."
               ownerWorkRecord
               "Continue the same participant's responsibility. Do not treat sibling lanes as delegated agents." ]
-        |> LlmFacing.withData
-            [ LlmFacing.Data.intField "lane_index" lane.Index
-              LlmFacing.Data.intField "lane_count" laneCount ]
+        |> LlmFacing.withData [ LlmFacing.Data.intField "lane_count" laneCount ]
         |> LlmFacing.render
 
 module FissionAdmission =

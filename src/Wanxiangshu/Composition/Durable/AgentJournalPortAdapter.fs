@@ -11,7 +11,6 @@ open Wanxiangshu.Execution.Delegation
 open Wanxiangshu.Execution.Session
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Foundation
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Interaction.Attention
 open Wanxiangshu.Interaction.Concern
 open Wanxiangshu.Participant.Provider.Attempt.Fallback
@@ -31,9 +30,6 @@ module AgentJournalPortAdapter =
 
     let forConcern (journal: AgentJournal) : ConcernJournalPort =
         AttentionConcernJournalAdapter.forConcern journal
-
-    let forInstitutionalLearning (journal: AgentJournal) : InstitutionalLearningJournalPort =
-        InstitutionalLearningJournalAdapter.forInstitutionalLearning journal
 
     let forDelegatedToolEstimate (journal: AgentJournal) : DelegatedToolEstimatePort =
         SessionStartedAtJournalAdapter.forDelegatedToolEstimate journal

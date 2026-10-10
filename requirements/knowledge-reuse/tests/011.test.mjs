@@ -127,7 +127,7 @@ test(`WHAT[knowledge-reuse-011] physical workspace ${spelling} bindings and diff
     assert.notEqual(current.maintenanceFileState, baseline)
     const target = JSON.parse(current.maintenanceFileState)['subject.txt']
     assert.equal(Buffer.from(await eventStore.readPayload(local.store, target.payloadRef)).toString(), 'version-C')
-    const beforeBytes = readFileSync(join(local.dir, 'wanxiang', 'events', 'review-writer.ndjson'))
+    const beforeBytes = readFileSync(join(local.dir, 'wanxiangshu', 'events', 'review-writer.ndjson'))
     eventStore.dispose(shared)
     shared = undefined
     eventStore.dispose(local.store)
@@ -137,7 +137,7 @@ test(`WHAT[knowledge-reuse-011] physical workspace ${spelling} bindings and diff
     assert.notEqual(cold.pid, process.pid)
     assert.deepEqual(cold.current, { ...current, accessOrder: current.accessOrder.toString(), lastAccessOrder: current.lastAccessOrder.toString() })
     assert.equal(cold.payloads['subject.txt'], Buffer.from('version-C').toString('base64'))
-    assert.deepEqual(readFileSync(join(local.dir, 'wanxiang', 'events', 'review-writer.ndjson')), beforeBytes)
+    assert.deepEqual(readFileSync(join(local.dir, 'wanxiangshu', 'events', 'review-writer.ndjson')), beforeBytes)
   } finally {
     release.resolve()
     await Promise.allSettled([left, right])
@@ -362,7 +362,7 @@ test(`WHAT[knowledge-reuse-011] same key and actual Store execute again after ${
     assert.equal(current.completionFileState, baseline)
     assert.equal(current.maintenanceFileState, baseline)
     assert.ok(current.accessOrder > before.accessOrder)
-    const bytes = readFileSync(join(local.dir, 'wanxiang', 'events', 'review-writer.ndjson'))
+    const bytes = readFileSync(join(local.dir, 'wanxiangshu', 'events', 'review-writer.ndjson'))
     eventStore.dispose(shared)
     shared = undefined
     eventStore.dispose(local.store)
@@ -370,7 +370,7 @@ test(`WHAT[knowledge-reuse-011] same key and actual Store execute again after ${
       fileURLToPath(new URL('./support/fetch-cold-child.mjs', import.meta.url)), local.dir, identity,
     ], { cwd: local.dir, env: { ...process.env }, signal: t.signal }))
     assert.deepEqual(cold.current, { ...current, accessOrder: current.accessOrder.toString(), lastAccessOrder: current.lastAccessOrder.toString() })
-    assert.deepEqual(readFileSync(join(local.dir, 'wanxiang', 'events', 'review-writer.ndjson')), bytes)
+    assert.deepEqual(readFileSync(join(local.dir, 'wanxiangshu', 'events', 'review-writer.ndjson')), bytes)
   } finally {
     if (shared) eventStore.dispose(shared)
     local.close()
@@ -431,7 +431,7 @@ test('WHAT[knowledge-reuse-011] an active workspace flight rejects a different a
     assert.deepEqual(secondObservations, [])
     assert.deepEqual(firstIncidents, [])
     assert.deepEqual(secondIncidents, [])
-    assert.equal(existsSync(join(local.dir, 'wanxiang', 'events', 'second-independent-writer.ndjson')), false)
+    assert.equal(existsSync(join(local.dir, 'wanxiangshu', 'events', 'second-independent-writer.ndjson')), false)
     assert.equal(refused.status, 'rejected', 'an incompatible store binding must not receive the first flight result')
     assert.equal(refused.reason.message, storeMismatchMessage)
     assert.equal(settlements.isIncident(refused.reason), false, 'binding refusal has no settled semantic-cut incident')
@@ -470,7 +470,7 @@ const assertSharedCutSettlement = async (t, unknown) => {
     assert.equal(baselineBytes.toString('utf8'), 'version-B')
     await index.refresh(handle, 256)
     const beforeIndex = index.tryGet()
-    const eventsDirectory = join(directory, 'wanxiang', 'events')
+    const eventsDirectory = join(directory, 'wanxiangshu', 'events')
     const setupFile = join(eventsDirectory, 'setup.ndjson')
     const setupBytes = readFileSync(setupFile)
     eventStore.dispose(handle)
@@ -648,7 +648,7 @@ test('WHAT[knowledge-reuse-011] two required owners on one workspace store share
     assert.equal(baselineBytes.toString('utf8'), 'version-B')
     await index.refresh(handle, 256)
     const beforeIndex = index.tryGet()
-    const eventsDirectory = join(directory, 'wanxiang', 'events')
+    const eventsDirectory = join(directory, 'wanxiangshu', 'events')
     const setupFile = join(eventsDirectory, 'setup.ndjson')
     const setupBytes = readFileSync(setupFile)
     eventStore.dispose(handle)

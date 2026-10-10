@@ -15,7 +15,7 @@ This is not a technical phase and not Host admission machinery.
 A successful return establishes that the named road has taken the charge.
 It does not establish that the destination has been reached.
 
-For a new road, pass calling + name + charge.
+For a new road, pass name + charge; calling is optional and derives to lead.
 To continue a known road, omit calling and use the same name.
 
 calling accepts lead: a Manager who directs the road toward its destination,

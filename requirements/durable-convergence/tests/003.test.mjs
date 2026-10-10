@@ -74,7 +74,7 @@ test('WHAT[durable-convergence-003] sync blobifies each complete writer file onc
 
     const blobOidA = treeA.trim().split(/\s+/)[2]
     const blobContentA = execFileSync('git', ['-C', repoA, 'cat-file', '-p', blobOidA], { encoding: 'utf8' })
-    const fileContentA = readFileSync(join(commonA, 'wanxiang', 'events', 'writer-a.ndjson'), 'utf8')
+    const fileContentA = readFileSync(join(commonA, 'wanxiangshu', 'events', 'writer-a.ndjson'), 'utf8')
     assert.equal(blobContentA, fileContentA, 'entire local writer file is one Git blob without segments')
 
     // 2. Repo B has writer-b, fetches Repo A objects, and syncs against rootA -> convergence
@@ -85,8 +85,8 @@ test('WHAT[durable-convergence-003] sync blobifies each complete writer file onc
 
     const syncB1 = await retention.syncAt(repoB, commonB, syncA1.root, now)
     assert.equal(syncB1.ok, true, syncB1.ok ? '' : JSON.stringify(syncB1.error))
-    assert.equal(existsSync(join(commonB, 'wanxiang', 'events', 'writer-a.ndjson')), true)
-    assert.equal(existsSync(join(commonB, 'wanxiang', 'events', 'writer-b.ndjson')), true)
+    assert.equal(existsSync(join(commonB, 'wanxiangshu', 'events', 'writer-a.ndjson')), true)
+    assert.equal(existsSync(join(commonB, 'wanxiangshu', 'events', 'writer-b.ndjson')), true)
 
     // 3. Repeat sync on Repo B is idempotent
     const syncB2 = await retention.syncAt(repoB, commonB, syncB1.root, now)
@@ -98,7 +98,7 @@ test('WHAT[durable-convergence-003] sync blobifies each complete writer file onc
     const syncA2 = await retention.syncAt(repoA, commonA, syncB1.root, now)
     assert.equal(syncA2.ok, true)
     assert.equal(syncA2.root, syncB1.root, 'two sides converge to identical snapshot root')
-    assert.equal(existsSync(join(commonA, 'wanxiang', 'events', 'writer-b.ndjson')), true)
+    assert.equal(existsSync(join(commonA, 'wanxiangshu', 'events', 'writer-b.ndjson')), true)
 
     // 5. Corrupted / divergent writer history fails closed
     const canonicalLine = (event) => JSON.stringify({
@@ -109,7 +109,7 @@ test('WHAT[durable-convergence-003] sync blobifies each complete writer file onc
       payload_refs: [...event.payloadRefs].sort(),
       stream_id: event.stream,
     }) + '\n'
-    writeFileSync(join(commonA, 'wanxiang', 'events', 'writer-b.ndjson'), canonicalLine(make(C, 'stream/divergent')))
+    writeFileSync(join(commonA, 'wanxiangshu', 'events', 'writer-b.ndjson'), canonicalLine(make(C, 'stream/divergent')))
     const syncDivergent = await retention.syncAt(repoA, commonA, syncB1.root, now)
     assert.equal(syncDivergent.ok, false, 'divergent writer history must fail closed')
     assert.match(String(syncDivergent.error), /writer history diverged/i)
@@ -142,7 +142,7 @@ test('WHAT[durable-convergence-003] remote writer bytes reject invalid UTF-8 bef
   const repo = mkdtempSync(join(tmpdir(), 'wxs-remote-invalid-utf8-'))
   git(repo, ['init', '-q'])
   const commonDir = join(repo, '.git')
-  const eventsDir = join(commonDir, 'wanxiang', 'events')
+  const eventsDir = join(commonDir, 'wanxiangshu', 'events')
   const writerPath = join(eventsDir, 'writer-remote.ndjson')
   const nowMs = Date.now()
   const line = JSON.stringify({

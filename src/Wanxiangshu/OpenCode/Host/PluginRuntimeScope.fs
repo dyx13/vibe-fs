@@ -55,6 +55,12 @@ type PluginRuntimeScope(journal: AgentJournal option, isModelLeaseExternallyOwne
     let mutable durabilityActivators: (unit -> unit) list = []
     // DSL-MUTABLE: resource — first real durable admission owns activation exactly once.
     let mutable durabilityActivated = false
+    // DSL-MUTABLE: resource — crash-reconciliation-018: one restart status guidance
+    // is owed to the next real user instruction after this process's load-phase
+    // normalization; consumed once, never persisted (the delivered bytes are
+    // frozen by the pair-guideline anchor).
+    // DSL-MUTABLE: single-flight — one-shot restart guidance latch
+    let mutable restartGuidancePending = false
 
     /// HOST-006: the first compaction setting the config hook could not establish.
     ///
@@ -138,6 +144,14 @@ type PluginRuntimeScope(journal: AgentJournal option, isModelLeaseExternallyOwne
 
         for activate in activators do
             activate ()
+
+    /// crash-reconciliation-018: load-phase normalization just happened; the next
+    /// real user instruction in this process must carry one restart status guidance.
+    member _.MarkRestartGuidancePending() = restartGuidancePending <- true
+
+    member _.RestartGuidancePending = restartGuidancePending
+
+    member _.MarkRestartGuidanceDelivered() = restartGuidancePending <- false
 
     member _.AttachSessionCleanup(cleanup: string -> unit) =
         sessionCleanups <- cleanup :: sessionCleanups

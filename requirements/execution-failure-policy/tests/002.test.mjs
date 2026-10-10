@@ -292,6 +292,7 @@ const failures = [
   { kind: 'PersistenceFailure', commitment: 'NotCommitted' },
   { kind: 'PersistenceFailure', commitment: 'Committed' },
   { kind: 'PersistenceFailure', commitment: 'Unknown' },
+  { kind: 'PersistenceFailure', commitment: 'NoNewWrite' },
 ]
 const nonProviderFailures = failures.filter(
   (failure) => failure !== 'ProviderTransient' && failure !== 'ProviderPermanent',

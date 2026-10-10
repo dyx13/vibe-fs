@@ -266,7 +266,7 @@ export async function awaitFactBarrier(scenario, step, ctx = null) {
   }
   while (!cmp(observed.named) && Date.now() < deadline) {
     const remaining = Math.max(1, deadline - Date.now());
-    // Journal watch wakes on local .git/wanxiang/events writer-file changes; ≤FACT_WAKE_GUARD_MS wall guard is fallback only.
+    // Journal watch wakes on local .git/wanxiangshu/events writer-file changes; ≤FACT_WAKE_GUARD_MS wall guard is fallback only.
     await wakeOnJournal(scenario.host.workDir, Math.min(remaining, FACT_WAKE_GUARD_MS));
 
     const next = readCurrentFactCount();

@@ -49,13 +49,13 @@ module OfficeCapabilitySurface =
     let managerFacts
         (hasActiveIncumbency: bool)
         (hasAssessment: bool)
-        (hasValidCertificate: bool)
+        (isFinalIncumbent: bool)
         (cleanupBlockerDigest: string)
         : obj =
         box
             {| hasActiveIncumbency = hasActiveIncumbency
                hasAssessment = hasAssessment
-               hasValidCertificate = hasValidCertificate
+               isFinalIncumbent = isFinalIncumbent
                cleanupBlockerDigest = cleanupBlockerDigest |}
 
     let private factsOfJs (facts: obj) : ManagerCapabilityFacts option =
@@ -67,7 +67,7 @@ module OfficeCapabilitySurface =
             Some
                 { HasActiveIncumbency = unbox<bool> (facts?hasActiveIncumbency)
                   HasAssessment = unbox<bool> (facts?hasAssessment)
-                  HasValidBoundCertificate = unbox<bool> (facts?hasValidCertificate)
+                  IsFinalIncumbent = unbox<bool> (facts?isFinalIncumbent)
                   CleanupBlockerDigest = if isNullish digest then None else Some digest }
 
     /// capability-enforcement-025: the fact-driven manager gate. Missing facts and

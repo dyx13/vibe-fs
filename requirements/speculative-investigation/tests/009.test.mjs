@@ -310,9 +310,9 @@ const { withPreference } = await import('../../provider-language/tests/support/l
 const { readdirSync, readFileSync } = await import('node:fs')
 const { join } = await import('node:path')
 
-const facts = directory => readdirSync(join(directory, '.git', 'wanxiang', 'events'))
+const facts = directory => readdirSync(join(directory, '.git', 'wanxiangshu', 'events'))
   .filter(name => name.endsWith('.ndjson'))
-  .flatMap(name => readFileSync(join(directory, '.git', 'wanxiang', 'events', name), 'utf8').trim().split('\n'))
+  .flatMap(name => readFileSync(join(directory, '.git', 'wanxiangshu', 'events', name), 'utf8').trim().split('\n'))
   .filter(Boolean)
   .map(line => JSON.parse(line))
 const user = (sessionID, id, parts) => ({ info: { sessionID, id, role: 'user' }, parts })

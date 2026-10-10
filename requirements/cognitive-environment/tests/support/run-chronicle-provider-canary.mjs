@@ -129,7 +129,7 @@ export default function route(role) { return { model: role === 'blogger' ? 'test
     'the second response chronicle call must actually complete before history is accepted')
     assert.equal(JSON.stringify(history).includes(marker), false, 'the real Host persisted history must exclude the injected hint')
   }
-  const events = path.join(host.workDir, '.git/wanxiang/events')
+  const events = path.join(host.workDir, '.git/wanxiangshu/events')
   const walk = directory => {
     for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
       const filename = path.join(directory, entry.name)

@@ -1,1 +1,0 @@
-{{field}} quality rating; PERFECT, REVISE, or N/A

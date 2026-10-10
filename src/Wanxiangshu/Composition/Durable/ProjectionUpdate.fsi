@@ -1,7 +1,6 @@
 namespace Wanxiangshu.Composition.Durable
 
 open Wanxiangshu.Context.Prefix
-open Wanxiangshu.Enforcer.InstitutionalLearning
 open Wanxiangshu.Execution.Fission
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Interaction.Attention
@@ -37,13 +36,3 @@ module ProjectionUpdate =
 
     val applyAttention:
         projection: AgentProjectionSet -> fact: AttentionFactCases -> Result<AgentProjectionSet, FoldRejection>
-
-    val applyAttentionLearning:
-        projection: AgentProjectionSet ->
-        fact: InstitutionalLearningFactCases ->
-            Result<AgentProjectionSet, FoldRejection>
-
-    val applyInstitutionalLearning:
-        projection: AgentProjectionSet ->
-        fact: InstitutionalLearningFactCases ->
-            Result<AgentProjectionSet, FoldRejection>

@@ -103,6 +103,8 @@ const fullExport = (handle, inquiryId) => {
   assert.equal(exported.state.eventHead, exported.events.at(-1).event_id)
   for (let index = 0; index < exported.events.length; index++) {
     const event = exported.events[index]
+    // durable-events-012: `payloads` appears exactly when the event carries
+    // inline payload content; these Sphinx transitions reference none.
     assert.deepEqual(Object.keys(event).sort(), ['event_id', 'event_type', 'parents', 'payload', 'payload_refs', 'stream_id'])
     assert.equal(event.stream_id, 'sphinx-v2/' + inquiryId)
     assert.equal(event.event_type, 'sphinx/v2-transition@2')
@@ -123,7 +125,7 @@ const canonicalEvent = event => ({
 })
 
 const journalBytes = commonDir => {
-  const directory = join(commonDir, 'wanxiang', 'events')
+  const directory = join(commonDir, 'wanxiangshu', 'events')
   if (!existsSync(directory)) return []
   return readdirSync(directory).sort().map(name => ({
     name, bytes: readFileSync(join(directory, name)).toString('base64'),

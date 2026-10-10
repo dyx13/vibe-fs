@@ -16,7 +16,7 @@ import { CANONICAL_Q, CANONICAL_A, installBookkeeperRuntime, scriptedBookkeeperP
 const [mode, directory, scenario, requestJson] = process.argv.slice(2)
 const request = JSON.parse(requestJson)
 const commonDir = path.join(directory, '.git')
-const eventsDirectory = path.join(commonDir, 'wanxiang', 'events')
+const eventsDirectory = path.join(commonDir, 'wanxiangshu', 'events')
 const sourceFile = path.join(eventsDirectory, 'operation.ndjson')
 const encodeCase = value => value === null ? null : { ...value,
   accessOrder: value.accessOrder.toString(), lastAccessOrder: value.lastAccessOrder.toString() }
@@ -51,7 +51,7 @@ if (mode === 'cold') {
       assert.equal(current.maintenanceFileState, request.baseline)
     }
     assert.equal(fs.existsSync(path.join(eventsDirectory, 'independent-boot-cold-reader.ndjson')), false)
-    assert.equal(fs.existsSync(path.join(commonDir, 'wanxiang.lock')), false)
+    assert.equal(fs.existsSync(path.join(commonDir, 'wanxiangshu.lock')), false)
     assert.deepEqual(canonicalBytes(), request.physical.files)
     fs.writeSync(1, JSON.stringify({ pid: process.pid, parentPid: process.ppid,
       before: encodeCase(before), current: encodeCase(current), preserved: true }) + '\n')
@@ -122,7 +122,7 @@ if (mode === 'cold') {
     return result
   }
   fs.rmSync = function (...args) {
-    const ownsLock = typeof args[0] === 'string' && path.resolve(args[0]) === path.join(commonDir, 'wanxiang.lock')
+    const ownsLock = typeof args[0] === 'string' && path.resolve(args[0]) === path.join(commonDir, 'wanxiangshu.lock')
     if (ownsLock && counts.append > 0) {
       assert.equal(JSON.parse(fs.readFileSync(path.join(args[0], 'owner.json'), 'utf8')).pid, process.pid)
     }
@@ -154,7 +154,7 @@ if (mode === 'cold') {
         cleanupFailures: appendError.cleanupFailures, priorRejection: appendError.priorRejection },
       causeText: cause.message, indexUnchanged: JSON.stringify(index.tryGet()) === JSON.stringify(beforeIndex),
       physical: { facts, files: canonicalBytes(), counts: { ...counts },
-        lockReleased: !fs.existsSync(path.join(commonDir, 'wanxiang.lock')), openDescriptors: descriptors.size } })
+        lockReleased: !fs.existsSync(path.join(commonDir, 'wanxiangshu.lock')), openDescriptors: descriptors.size } })
   })
   try {
     lifecycle.notePrompt(identity, 'Original delegated investigation')

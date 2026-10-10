@@ -21,20 +21,6 @@ module RetentionSurface =
         | Ok streams -> streams |> List.map fst |> List.toArray
         | Error error -> failwith (sprintf "%A" error)
 
-    let remotePayloadNeedsRead
-        (cachedStatIdentity: string)
-        (cachedOid: string)
-        (currentStatIdentity: string)
-        (remoteOid: string)
-        (isBlob: bool)
-        : bool =
-        WriterStreamSync.payloadNeedsRemoteRead
-            (Some cachedStatIdentity)
-            (Some(GitObjectId.create cachedOid))
-            (Some currentStatIdentity)
-            (GitObjectId.create remoteOid)
-            isBlob
-
     let syncAt (repoPath: string) (commonDir: string) (remoteRoot: string) (nowMs: float) : Task<obj> =
         task {
             let raw = ProcessGitRawStore.create repoPath
@@ -142,8 +128,6 @@ module RetentionSurface =
                         Name = remoteWriterName
                         Oid = remoteBlob } ]
 
-            let payloadTree = putTree []
-
             let encodedName =
                 emitJsExpr remoteWriterName "Buffer.from($0, 'utf8').toString('base64url')"
                 |> unbox<string>
@@ -158,18 +142,17 @@ module RetentionSurface =
                     [ { Mode = "40000"
                         Name = "writers"
                         Oid = writerTree }
-                      { Mode = "40000"
-                        Name = "payloads"
-                        Oid = payloadTree }
                       { Mode = "100644"
                         Name = "writer-manifest"
                         Oid = manifest } ]
 
             let invalidRoot =
                 putTree
-                    [ { Mode = "40000"
-                        Name = "writers"
-                        Oid = writerTree } ]
+                    // durable-events-012: a root without the writers/ tree carries no
+                    // writer stream at all and must be refused.
+                    [ { Mode = "100644"
+                        Name = "writer-manifest"
+                        Oid = manifest } ]
 
             protocol.Clear()
 

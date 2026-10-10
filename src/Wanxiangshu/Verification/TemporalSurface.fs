@@ -894,11 +894,9 @@ module TemporalSurface =
               RequirementSetDigest = "digest-requirements"
               EvidenceFrontierDigest = "digest-evidence" }
 
-        let perfectScores =
-            Wanxiangshu.Mission.Relay.ScoreVector.tryCreate (
-                List.replicate 8 Wanxiangshu.Mission.Relay.ScoreGrade.Perfect
-            )
-            |> Result.defaultWith (fun _ -> failwith "perfectScores")
+        let perfectFindings =
+            Wanxiangshu.Mission.Relay.AssessmentFindings.tryCreate []
+            |> Result.defaultWith (fun _ -> failwith "perfectFindings")
 
         let openTx =
             Wanxiangshu.Mission.Relay.RelayTransaction.events opening.Transaction
@@ -908,7 +906,7 @@ module TemporalSurface =
                     binding,
                     snapId,
                     opening.AuthorityRevision,
-                    perfectScores
+                    perfectFindings
                 ) ]
             |> Wanxiangshu.Mission.Relay.RelayTransaction.create
             |> Result.defaultWith (fun _ -> failwith "openTx")

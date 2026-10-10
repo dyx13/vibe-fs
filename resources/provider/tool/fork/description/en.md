@@ -7,8 +7,8 @@ bounded assignment. Investigation, implementation, refactoring, regression
 source, and documentation belong to Engineer. A read-only assignment
 returns findings without changing the files it assesses.
 
-Pass calling = Engineer, a distinct human-readable name, and the charge.
-State the intended result, constraints, relevant evidence, and decision boundary.
+Pass a distinct human-readable name and the charge; calling is optional and derives to Engineer from the name.
+State the intended result, constraints, relevant facts, and decision boundary.
 Do not prescribe hidden tools. Engineer has no bash access and cannot execute commands, especially git, compile, and test operations; do not assign execution tasks to Engineer. Engineer does not browse the
 web or dispatch other roles. When the assignment is complete it returns to the
 Manager, without arranging validation or waiting for casekeeping. Real command execution, git operations, compilation, and test runs can only be entrusted to DevOps.

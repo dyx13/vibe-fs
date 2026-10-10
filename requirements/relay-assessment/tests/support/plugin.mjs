@@ -3,8 +3,11 @@ import { randomUUID } from 'node:crypto'
 import { withExecutablePlugin, acceptAuthorityRoot } from '../../../verification-system/tests/support/plugin-fixture.mjs'
 import * as journal from '../../../../dist/Persistence/Journal/ObligationJournalSurface.js'
 
-export const dimensions = ['language_algorithms', 'simplicity', 'structure', 'granularity', 'tests_evidence', 'logic_reliability_boundaries', 'caller_ergonomics', 'completeness']
-export const scores = grade => Object.fromEntries(dimensions.map(field => [field, grade]))
+// A non-empty findings array is the only failing shape; an empty array passes.
+export const findings = grade => grade === 'REVISE'
+  ? { findings: [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }] }
+  : { findings: [] }
+export const scores = findings
 export const withReview = async body => withExecutablePlugin(async (hooks, directory, created, runtime) => {
   const session = `review-manager-${randomUUID()}`
   await acceptAuthorityRoot(runtime, session, 'manager', 'user-root')

@@ -27,7 +27,7 @@ test('WHAT[durable-events-001] append_only_prior_writer_bytes_are_a_strict_prefi
   const dir = withTemp((base) => base)
   const store = eventStore.create(dir, 'append-law')
   try {
-    const file = join(dir, 'wanxiang', 'events', 'append-law.ndjson')
+    const file = join(dir, 'wanxiangshu', 'events', 'append-law.ndjson')
     await eventStore.append(store, [event(id(1))])
     const before = await readFile(file)
     await eventStore.append(store, [event(id(2), [id(1)])])
@@ -85,7 +85,7 @@ test('WHAT[durable-events-001] append_commits_complete_canonical_line_then_updat
     assert.ok(found)
     assert.equal(found.id, id(1))
     assert.deepEqual(found.payload, e.payload, 'read returns the event payload, not the canonical envelope')
-    const text = await readFile(path.join(dir, 'wanxiang', 'events', 'append-proof.ndjson'), 'utf8')
+    const text = await readFile(path.join(dir, 'wanxiangshu', 'events', 'append-proof.ndjson'), 'utf8')
     assert.equal(text.endsWith('\n'), true)
     assert.equal(text.trim().split('\n').length, 1)
   } finally {

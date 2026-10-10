@@ -10,11 +10,11 @@
 
 ## [003] 新道路与续做分开
 
-`fork` 必填 calling，创建独立道路；Manager 只能 fork `engineer`。`resume` 必填 name，续做既有道路，复用该 participant 的完整历史和 binding；传入 calling 须 typed 拒绝。Manager 固定 DevOps 的 name 为 `devops`。同一目标的后续阶段、纠正和重试仍属同一道路，不另建道路。
+`fork` 的 `calling` 可选，创建独立道路。省略时按 `name` 推导：`name` 为 `devops`（大小写不敏感）时推导为 `devops`，否则推导为 `engineer`；显式 `calling` 与推导不一致须 typed 拒绝。Manager 只能 fork `engineer`，`name` 为 `devops` 时不能用 `fork`。`resume` 必填 name，续做既有道路，复用该 participant 的完整历史和 binding；传入 calling 须 typed 拒绝。Manager 固定 DevOps 的 name 为 `devops`。同一目标的后续阶段、纠正和重试仍属同一道路，不另建道路。
 
 ## [004] 不同合同使用不同工具名
 
-同一工具名在全系统只有一个确定语义。Orchestrator 的 `commission`、Manager 的 `fork` 和既有道路的 `resume` 不得混用。
+同一工具名在全系统只有一个确定语义。Orchestrator 的 `commission`、Manager 的 `fork` 和既有道路的 `resume` 不得混用。`commission` 的 `calling` 可选：Orchestrator 只委任 Manager，省略时推导为 Manager persona `lead`，显式 `calling` 与推导不一致须 typed 拒绝。`name` 未出现时新建道路；`name` 已出现时，省略 `calling` 续做既有道路，显式给出 `calling` 则拒绝重名新建。
 
 ## [005] 委托面不暴露机器拓扑
 

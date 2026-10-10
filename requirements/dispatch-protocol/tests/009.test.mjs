@@ -82,7 +82,7 @@ const waitForSettledClaims = async (handle, session, count, message) => {
 }
 
 const journalLines = (base, writerId) =>
-  readFileSync(join(base, '.git', 'wanxiang', 'events', `${writerId}.ndjson`), 'utf8')
+  readFileSync(join(base, '.git', 'wanxiangshu', 'events', `${writerId}.ndjson`), 'utf8')
     .trim()
     .split('\n')
 

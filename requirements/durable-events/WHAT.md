@@ -6,11 +6,11 @@
 
 ## [002] EventEnvelope 无版本与 additive vocabulary
 
-事件信封采用无版本的统一结构（包含 `event_id`、`stream_id`、`event_type`、`parents`、`payload`、`payload_refs`）。信封与存储层严禁携带任何形式的 format/schema version 字段。已提交的 `event_type` 载荷结构一经发布即永久冻结；引入新业务语义必须声明全新的 `event_type`（追加词汇表原则）。
+事件信封采用无版本的统一结构（包含 `event_id`、`stream_id`、`event_type`、`parents`、`payload`、`payload_refs` 与内嵌 `payloads`）。信封与存储层严禁携带任何形式的 format/schema version 字段。已提交的 `event_type` 载荷结构一经发布即永久冻结；引入新业务语义必须声明全新的 `event_type`（追加词汇表原则）。
 
 ## [003] canonical JSON 是 identity 协议
 
-事件必须按规范化 JSON 序列化：UTF-8 编码、无 BOM、以单个换行符（LF）结尾；JSON 对象键必须按 Unicode 代码点升序递归排序；`parents` 与 `payload_refs` 数组必须先去重再按字符序排序。相同 `event_id` 产生不同字节流属于致命的标识碰撞（Identity Collision），必须 fail-closed；相同 `event_id` 且相同字节流则幂等去重。
+事件必须按规范化 JSON 序列化：UTF-8 编码、无 BOM、以单个换行符（LF）结尾；JSON 对象键必须按 Unicode 代码点升序递归排序；`parents` 与 `payload_refs` 数组必须先去重再按字符序排序，内嵌 `payloads` 对象的键同样按字符序排序。相同 `event_id` 产生不同字节流属于致命的标识碰撞（Identity Collision），必须 fail-closed；相同 `event_id` 且相同字节流则幂等去重。
 
 ## [004] local append 的提交原语为完整 NDJSON 行
 
@@ -18,7 +18,7 @@
 
 ## [005] Process 对应 single writer 与单个不分段文件
 
-每个进程实例分配全局唯一的 `WriterId`，且仅独占追加 `.git/wanxiang/events/<WriterId>.ndjson` 文件。该文件不按体积、事件数或时间进行分段切片。进程退出后该文件封存且不得被新进程接管；超过统一 writer-retention TTL 后允许整文件删除。新启动进程必须创建新的 `WriterId`。业务流标识、机器标识与角色均不得作为物理写者划分依据。
+每个进程实例分配全局唯一的 `WriterId`，且仅独占追加 `.git/wanxiangshu/events/<WriterId>.ndjson` 文件。该文件不按体积、事件数或时间进行分段切片。进程退出后该文件封存且不得被新进程接管；超过统一 writer-retention TTL 后允许整文件删除。新启动进程必须创建新的 `WriterId`。业务流标识、机器标识与角色均不得作为物理写者划分依据。
 
 ## [006] commit outcome 只由本地事实存在性判定
 
@@ -40,7 +40,7 @@
 
 ## [010] 单一 universal durable substrate 位于 .git 内本地事件文件
 
-动态事件的运行时物理载体唯一限定在 `.git/wanxiang/events/*.ndjson` 及其引用的 `.git/wanxiang/payloads/*` 大对象中。所有业务领域的信封全部进入这套通用文件体系，禁止任何模块维护私有 journal 文件或私有数据库。
+动态事件的运行时物理载体唯一限定在统一根目录 `<git-common-dir>/wanxiangshu/` 下的 `.git/wanxiangshu/events/*.ndjson`。事件行自包含全部载荷，不存在独立的 payloads 目录。所有业务领域的信封全部进入这套通用文件体系，禁止任何模块维护私有 journal 文件、私有数据库或旁挂载荷文件。历史遗留的 `.git/wanxiang/` 布局按 [009] leave-unread 处理：不读、不写、不自动迁移。
 
 ## [011] Git blob 只存在于 remote sync 边界且单文件对应单 blob
 
@@ -48,7 +48,7 @@ Git 对象数据库绝不是在线事件存储。仅在用户执行 Git 远程�
 
 ## [012] PayloadRef 与本地 payload closure
 
-体积庞大的正文内容首先按内容哈希生成不透明的 `PayloadRef`，并落盘在 `.git/wanxiang/payloads/<PayloadRef>`。事件追加成功前，其引用的所有 payload 必须已完成落盘且哈希完全匹配；引用缺失构成 `StorageInvalid`。
+体积庞大的正文内容按内容哈希生成不透明的 `PayloadRef`，其内容内嵌于同一事件行的内嵌 `payloads` 字段，事件行自包含（ndjson 是唯一载体，不产生旁挂文件）。事件追加成功前，其引用的所有 payload 必须已内嵌于事件行且哈希完全匹配；引用缺失或哈希失配构成 `StorageInvalid`。内嵌后单行体积随载荷增大，无固定上限；实际体积边界由存储性能与 GC 条款联合验证。
 
 ## [013] 查询只读正规 Integrator 的 Current 且先 commit 后 integrate
 

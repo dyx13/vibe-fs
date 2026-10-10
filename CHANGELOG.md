@@ -1,5 +1,20 @@
 # Changelog — 版本历史
 
+## Unreleased — WP-021 / WP-026（ndjson 内嵌载荷与措辞清理）
+
+- `durable-events-012`：取消旁挂 payloads 目录，事件行自包含载荷。`EventEnvelope` 增内嵌 `Payloads`；`CanonicalEventCodec` 仅在事件确实引用载荷时写出 `payloads` 键（无载荷事件的 canonical 字节不变）；`IEventStore.WritePayload` 改为进程内暂存、`Append` 内嵌；`ICanonicalIntegrator.TryPayload` 成为已提交内嵌载荷的唯一读口，Store 不再自行 `readStreams` 重建缓存。删除 `ProcessEventLog` 的 payload 文件 API、`WriterStreamSync` 与 `RetentionSurface` 的远端 payload 树及缓存。条款同步 `durable-events` [002]/[003]/[010]/[012]、`durable-convergence` [010]、`speculative-investigation` [006]。
+- `WP-026`：provider 可见文案统一改称「事实 / 事实链 / facts」；`证据 / evidence` 只保留在 `evidence` 字段名与「举证责任」法律用语上。双语同步，语言对等门绿。
+- 修复两处测试加载器：`007-composition-loader.mjs` 与 `prefix-digest-mutation-loader.mjs` 原先对 `Uint8Array` 源做 `String()`，且在同一模块上重复应用 mutation。现按 Node 版本正确解码，并保证每个模块只改一次。
+- 证据：Node 25（CI pin 为 Node 22）下 `requirements/verification-system/tests/run.mjs` 4895 passed / 0 failed；`node scripts/check.mjs` 与 `node scripts/build.mjs` 绿；`fantomas --check src/Wanxiangshu` 全树绿。
+
+## Unreleased — 开发者意见实现手册
+
+- 新增 `人工审订语义指南的保姆级多人协作实现法/000.md`（Knuth 式伪代码、ASD-STE100 风格短句）：把《用于人工审订的当前语义指南.md》中全部 42 条 `> {开发者…}` 意见逐条落成工作包（WP-001—WP-042），含波次划分（W0—W6）、顺序约束、冲突面、每卡算法与验收、42 行台账与覆盖率校验。本文是施工流程，不是产品规范；与 `requirements/` 冲突时以后者与源码为准。
+
+## Unreleased — spec/000 过程规范
+
+- 新增 `spec/000.md`（Knuth 式伪代码、简体短句）：记录本插件对 OpenCode 的全部实质性增强，27 节加附录，覆盖装载期到发布验证的完整链路；附录 A 如实登记三处观察（`sphinx` 原生工具与 `query-shell` 未在 `ToolRegistry` 注册，`CHANGELOG` 的 obligations 改名条目已被 `c8a742d23` 撤销）。README 仓库结构补 `spec/` 一行。本文是阅读地图，不是权威规范；与 `requirements/` 冲突时以后者与源码为准。
+
 ## Unreleased — S03 源码目录身份与 NuGet 协议夹具
 
 - gen112完整Node22/npm11.12.1/SDKroot仍5003ms静默、17/18排空；缺SDKroot的436/0/7skip/2TODO只属较窄截面，误名单仅setup。npm第一正例拆真实准备完成与实际install/assert判决叶，保原强断言/held负例/预算，gen113最终待附件，不提前记绿；Archive本批未施工。
@@ -188,12 +203,6 @@
 - **其余清零点**：`PhysicalAcceptance.fs` 环境变量解析、`AgentJournal.fs` 用 `Result.map fst`、`ToolRegistry.fs` 提取 `executeReplica`、`ProviderSystemTransform.fs` 提取 `isReplicaConstraintLine`、`SessionRecoveryHost.fs` 提取 `settleUnresumedFor`、`OpenCodePort.fs` 提取 `promptDispatchOutcome`（HTTP 前缀判定改为 guard）、`ModelRouting.fs` 提取 `normalizeProviderStepRecording`、`Runtime.fs` 提取 `settleInFlightDelegateExecution`、`PluginHooks.fs` 提取参数恢复与估计校验 helper（`toolAfter` 的 participating 恢复语义不变）。
 - **门禁说明同步**：`fsharp-control-pyramid-guide.mjs` 第 14 节改为「baseline 为空对象，任何 depth>=2 decision 即新增债务」，删去按文件历史记账的表述。
 - 验证：`node scripts/build.mjs` 绿（165 surfaces / 836 modules）；`node scripts/check.mjs` 中 `fsharp-control-pyramid` 报 0（余下 174 项为既有 `js-boundary-gate` 债务，不在本次范围）；定向套件 `structured-workflow-004`、`host-boundary-032`、`speculative-investigation-{002,004,011,012,013,016}`、`delegation-{007..012,023..025,028,031,032}`、`execution-model-routing-{004,010}`、`managed-session-lifecycle-{004,009,014}`、`provider-attempt-recovery-021`、`feature-ablation-002`、`crash-reconciliation-015` 共 32 个文件 0 failed。
-
-## Unreleased — todowrite 列表的 provider 名与 Host 名分离
-
-- **`todowrite` 的列表在 provider 面叫 `obligations`，executor 面仍是 `todos`（action-affordance-015 / obligation-ledger-001/002）**：`TodoWriteCompressionContract` 现在把发布 schema 里的 `todos` 属性（含其数组 items 与 `required`）原地换名为必填 `obligations`，`tool.execute.before` 再把该字段换回 `todos` 后交给原生 Effect schema，`tool.execute.after` 删除 `todos` 并恢复 `obligations`。换名与隐藏全程在参数对象内部以属性描述符完成（`obligations` 删除、`todos` 以同一描述符定义、原描述符存入私有 Symbol），因此 executor 收到的是同一个数组对象而非副本，provider wire 历史仍携带模型实际提交的字段名。同名同调（同时携带 `obligations` 与 `todos`）明确拒绝。
-- 依据：上游 `packages/opencode/src/tool/todo.ts` 的 `Parameters = Schema.Struct({ todos: ... })` 不变，插件不动宿主 schema；`Effect Struct` 只读入参自有属性，故 before 期把 `todos` 定义为参数自有属性后上游 `Schema.decodeUnknownSync` 可正常解出（已用 throwaway smoke 验证）。
-- 验证：`action-affordance-014`、`obligation-ledger-001/002`、`effect-accounting-008`、`context-compression-020`、`prefix-stability-009`、`host-boundary-032`（44 用例）全绿；`node scripts/build.mjs` 与 `npm run check` 对本次改动无新增问题。
 
 ## Unreleased — Pair Programming 指引七条纪律真理版本
 

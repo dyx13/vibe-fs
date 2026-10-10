@@ -16,14 +16,7 @@ module Surface =
         assessment: string ->
         snapshot: string ->
         authority: string ->
-        languageAlgorithms: string ->
-        simplicity: string ->
-        structure: string ->
-        granularity: string ->
-        testsEvidence: string ->
-        logicReliabilityBoundaries: string ->
-        callerErgonomics: string ->
-        completeness: string ->
+        findings: obj ->
             obj
 
     val invalidateCertificate: state: RelayState -> road: string -> reason: string -> obj
@@ -39,6 +32,9 @@ module Surface =
             obj
 
     val blockCleanup: state: RelayState -> road: string -> incumbent: string -> blockerDigest: string -> obj
+
+    val confirmRetirement:
+        state: RelayState -> road: string -> incumbent: string -> providerRunId: string -> toolCallId: string -> obj
 
     val retireContinue:
         state: RelayState ->

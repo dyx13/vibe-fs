@@ -35,6 +35,24 @@ if (mode === 'persist') {
   if (!boot.ok) throw new Error(boot.error)
   const written = await journal.JournalSurface_writePayload(boot.journal, 'committed-before-fuse')
   if (!written.ok) throw new Error(written.error)
+  // durable-events-012: the ndjson event line is the only payload carrier, so a
+  // payload survives exactly when a committed fact embeds it. Commit that fact.
+  const appended = await journal.JournalSurface_appendManagerLifecycle(
+    boot.journal,
+    { kind: 'Session', session: 'ses-fatal-exit' },
+    {
+      case: 'LifeOpened',
+      payload: {
+        SessionId: 'ses-fatal-exit',
+        LifeId: 'life-fatal-exit',
+        OpeningUserMessageId: 'msg-fatal-exit',
+        OpeningTextRef: written.blobRef,
+        OpeningTextDigest: written.blobDigest,
+        OpeningCursorSequence: 1,
+      },
+    },
+  )
+  if (!appended.ok) throw new Error(appended.error)
   console.log(JSON.stringify({ committedBlob: written.blobRef }))
 }
 

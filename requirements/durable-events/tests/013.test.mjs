@@ -37,7 +37,7 @@ test('WHAT[durable-events-013] before-append directory failure leaves bytes even
   const dir = withTemp((base) => base)
   const store = eventStore.create(dir, 'append-failure-proof')
   try {
-    const wanxiangDir = path.join(dir, 'wanxiang')
+    const wanxiangDir = path.join(dir, 'wanxiangshu')
     mkdirSync(wanxiangDir, { recursive: true })
     const eventsPath = path.join(wanxiangDir, 'events')
     const beforeBytes = Buffer.from('not a directory', 'utf8')
@@ -58,7 +58,7 @@ test('WHAT[durable-events-013] before-append directory failure leaves bytes even
     assert.equal(cause.path, eventsPath)
     assert.deepEqual(readFileSync(eventsPath), beforeBytes, 'the blocking ordinary file must remain byte-identical')
     assert.equal(existsSync(path.join(eventsPath, 'append-failure-proof.ndjson')), false)
-    assert.equal(existsSync(path.join(dir, 'wanxiang.lock')), false, 'the acquired physical gate is released')
+    assert.equal(existsSync(path.join(dir, 'wanxiangshu.lock')), false, 'the acquired physical gate is released')
     assert.equal(eventStore.read(store, id(3)), null, 'the unattempted append must not publish its prepared event')
     assert.equal(eventStore.head(store, 'append/proof'), null, 'the unattempted append must not advance Current')
     assert.deepEqual(eventStore.heads(store, 'append/proof'), [])

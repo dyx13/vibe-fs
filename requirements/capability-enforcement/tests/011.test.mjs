@@ -273,14 +273,14 @@ const TOOL_NAMES = [
   'fork', 'resume', 'commission', 'join', 'horizon', 'fission',
   'read', 'write', 'edit', 'glob', 'grep', 'mv', 'rm',
   'bash-honeypot', 'assume', 'todowrite',
-  'enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret',
+  'defer',  'publish',
   'run', 'open-terminal', 'send-terminal', 'read-terminal', 'signal-terminal',
   'review', 'chronicle', 'fetch', 'suicide',
 ]
 
 const ROLE_NAMES = ['orchestrator', 'manager', 'engineer', 'devops', 'blogger']
 
-const COGNITIVE_TOOLS = ['enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret']
+const COGNITIVE_TOOLS = ['defer',  'publish']
 
 const ALLOWED = {
   orchestrator: ['commission', 'join', 'horizon', 'assume', 'todowrite', ...COGNITIVE_TOOLS],

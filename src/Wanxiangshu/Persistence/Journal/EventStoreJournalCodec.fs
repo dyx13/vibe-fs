@@ -89,7 +89,8 @@ module EventStoreJournalCodec =
               EventType = JournalEnvelopeEventType
               Parents = parents
               Payload = payloadFromEnvelope envelope
-              PayloadRefs = payloadRefs }
+              PayloadRefs = payloadRefs
+              Payloads = Map.empty }
 
     let private ensureStreamMatches (stream: StreamId) (decoded: Envelope) =
         if stream <> decoded.Stream then

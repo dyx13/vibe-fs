@@ -48,7 +48,7 @@ const hostSurface = await import('../../../dist/Change/Host/Surface.js')
 const openJournal = (base, writer) =>
   journal.JournalSurface_bootWithWriterId(base, writer, `rt-${writer}`, 4242, '2026-01-01T00:00:00Z')
 
-const eventsFile = (base, writer) => join(base, 'wanxiang', 'events', `${writer}.ndjson`)
+const eventsFile = (base, writer) => join(base, 'wanxiangshu', 'events', `${writer}.ndjson`)
 
 const worktreeCases = (base, writer) =>
   readFileSync(eventsFile(base, writer), 'utf8')

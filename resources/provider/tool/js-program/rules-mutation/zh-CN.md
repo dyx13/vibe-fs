@@ -4,24 +4,24 @@ JavaScript 变量里，然后一次 rewrite/write。
 
 我也犯过更难看的版本：先拼太多，再用 replace 删局部，留下空行、悬空
 分隔符和残片，然后写第二、第三个 cleanup program 去修第一个 program。
-这不叫「健康的多阶段重构」；这是第一轮根本没有把目标文件定义清楚的证据。
+这不叫「健康的多阶段重构」；这是第一轮根本没有把目标文件定义清楚的事实。
 先从可信切片在内存里构造最终文本，再对这个 path 暂存一次 mutation。
 
 return 之前，检查那些便宜到不值得省的不变量：大致行数/长度量级、必须存在
 的标题或 sentinel、关键 section 的预期数量。一个普通重排如果从约 8k 行
 突然变成约 31k 行，不要只读前五十行，觉得「开头看起来正常」就继续猜。
 直接在 return 前 throw。mutation 还在 staging，当前 program 失败就会零
-提交。离谱的数字不是噪音，是证据；先尊重证据，别再制造第二个问题去修
+提交。离谱的数字不是噪音，是事实；先尊重事实，别再制造第二个问题去修
 第一个问题。
 
 先承诺，再动手：mutation 前就决定哪些廉价不变量必须成立。program 一旦把
 规则写出来，看见不方便的结果后就没有资格临时改口。「开头看起来正常」不是
-证据；「再 replace 一次大概就干净了」也不是证据。数字、必须存在的 sentinel、
+证明；「再 replace 一次大概就干净了」也不是事实。数字、必须存在的 sentinel、
 section 数优先于你在坏结果出现后给自己编的解释。
 
 停止信号：如果规模、section 数、sentinel 数或其它廉价不变量明显越界，当前
 program 就已经失去 commit 的资格。让它失败。不要拿一个可疑结果去奖励自己
-再做一轮猜测性变换。红灯之后最快的路是回到证据，不是冲进 cleanup。
+再做一轮猜测性变换。红灯之后最快的路是回到事实，不是冲进 cleanup。
 
 生成的 class 没有 commit、rollback、snapshot 或 transaction 方法。
 run() 正常返回 → Host preflight → prepare → commit。run() 抛出或

@@ -6,15 +6,15 @@ import { syncBuiltinESMExports } from 'node:module'
 const [mode, commonDir, writerId, scenario, requestJson] = process.argv.slice(2)
 const request = JSON.parse(requestJson)
 const root = path.dirname(commonDir)
-const sourceFile = path.join(commonDir, 'wanxiang', 'events', `${writerId}.ndjson`)
-const lock = path.join(commonDir, 'wanxiang.lock')
+const sourceFile = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+const lock = path.join(commonDir, 'wanxiangshu.lock')
 const dto = event => ({ id: event.event_id, stream: event.stream_id, type: event.event_type,
   parents: event.parents, payload: event.payload, payloadRefs: event.payload_refs })
 const store = await import('../../../../dist/Persistence/EventStore/Surface.js')
 const journals = await import('../../../../dist/Verification/JournalPortObservationSurface.js')
 
 if (mode === 'cold') {
-  const source = path.join(commonDir, 'wanxiang', 'events', `${request.sourceWriter}.ndjson`)
+  const source = path.join(commonDir, 'wanxiangshu', 'events', `${request.sourceWriter}.ndjson`)
   const handle = store.create(commonDir, writerId)
   let journal
   try {

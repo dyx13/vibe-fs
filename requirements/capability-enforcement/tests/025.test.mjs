@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parse as parseToml } from 'smol-toml'
 import './support/manager-programming.mjs'
@@ -17,8 +17,8 @@ import {
 
 const MANAGER_REVIEW_TOOL = 'js-manager'
 const RETIRED_REVIEW_TOOLS = ['read-manager', 'glob-manager', 'grep-manager']
-const managerFacts = (hasActiveIncumbency, hasAssessment, hasValidCertificate, cleanupBlockerDigest) =>
-  office.managerFacts(hasActiveIncumbency, hasAssessment, hasValidCertificate, cleanupBlockerDigest)
+const managerFacts = (hasActiveIncumbency, hasAssessment, isFinalIncumbent, cleanupBlockerDigest) =>
+  office.managerFacts(hasActiveIncumbency, hasAssessment, isFinalIncumbent, cleanupBlockerDigest)
 const isAllowedForManagerFacts = (facts, permission) => office.managerFactsAllowed(facts, permission)
 
 test('WHAT[capability-enforcement-025] P01_unaccepted_review_manager_static_permissions_include_read_glob_grep', () => {
@@ -43,7 +43,6 @@ test('WHAT[capability-enforcement-025] P02_review_accepted_facts_exclude_review_
   assert.equal(isAllowedForManagerFacts(facts, 'Join'), true, 'Join must remain allowed after assessment accepted')
   assert.equal(isAllowedForManagerFacts(facts, 'Horizon'), true, 'Horizon must remain allowed after assessment accepted')
   assert.equal(isAllowedForManagerFacts(facts, 'Finality'), true, 'Finality must remain allowed after assessment accepted')
-  assert.equal(isAllowedForManagerFacts(facts, 'Sphinx'), true, 'Sphinx must remain allowed after assessment accepted')
 })
 
 test('WHAT[capability-enforcement-025] P08_manager_native_read_glob_grep_projected_as_deny', () => {
@@ -113,7 +112,7 @@ test('WHAT[capability-enforcement-025] P03_unaccepted_or_malformed_review_retain
 
     // 驱动 malformed review 尝试：传入无效评分或缺少规范字段
     const reviewResult = await hooks.tool.review.execute(
-      { scores: 'invalid-scores-malformed' },
+      { findings: 'invalid-findings-malformed' },
       { sessionID, agent: 'manager' },
     )
     // 评审未被接纳（返回 recorded = false 或拒绝提示）
@@ -140,23 +139,10 @@ test('WHAT[capability-enforcement-025] P03_unaccepted_or_malformed_review_retain
   })
 })
 
-test('WHAT[capability-enforcement-025] P07_valid_certificate_cleanup_blocker_or_retirement_freeze_denies_review_tool', () => {
+test('WHAT[capability-enforcement-025] P07_cleanup_blocker_or_inactive_incumbency_denies_review_tool', () => {
   const REVIEW_TOOLS = ['js-manager']
 
-  // 1. 有效绑定证书状态（HasValidBoundCertificate = true）下：收窄为仅 Join/Finality，评审专用只读工具必须拒绝
-  const factsCert = managerFacts(true, false, true, undefined)
-  for (const tool of REVIEW_TOOLS) {
-    const perms = reviewToolPermissions(tool)
-    for (const p of perms) {
-      assert.equal(
-        isAllowedForManagerFacts(factsCert, p),
-        false,
-        `${tool} permission ${p} must be denied under valid certificate`,
-      )
-    }
-  }
-
-  // 2. 清理阻塞状态（CleanupBlockerDigest 有值）下：收窄为仅 Join/Finality，评审专用只读工具必须拒绝
+  // 1. 清理阻塞状态（CleanupBlockerDigest 有值）下：收窄为仅 Join/Finality，评审专用只读工具必须拒绝
   const factsCleanup = managerFacts(true, false, false, 'blocker-digest-xyz')
   for (const tool of REVIEW_TOOLS) {
     const perms = reviewToolPermissions(tool)
@@ -169,7 +155,7 @@ test('WHAT[capability-enforcement-025] P07_valid_certificate_cleanup_blocker_or_
     }
   }
 
-  // 3. 退任冻结与非活跃状态：无活跃任期（HasActiveIncumbency = false）评审专用工具收口拒绝
+  // 2. 退任冻结与非活跃状态：无活跃任期（HasActiveIncumbency = false）评审专用工具收口拒绝
   const factsFrozenOrInactive = managerFacts(false, false, false, undefined)
   for (const tool of REVIEW_TOOLS) {
     const perms = reviewToolPermissions(tool)
@@ -181,6 +167,42 @@ test('WHAT[capability-enforcement-025] P07_valid_certificate_cleanup_blocker_or_
       )
     }
   }
+})
+
+test('WHAT[capability-enforcement-025] P16_final_incumbent_keeps_read_cleanup_and_closeout_permissions', () => {
+  // 末任：已接纳空集 findings 的评估（HasAssessment = true, IsFinalIncumbent = true）。
+  // 读、清理与收口类动作必须放行。
+  const facts = managerFacts(true, true, true, undefined)
+  for (const permission of ['Read', 'Glob', 'Grep', 'Horizon', 'Join', 'Finality']) {
+    assert.equal(
+      isAllowedForManagerFacts(facts, permission),
+      true,
+      `final incumbent must keep close-out permission ${permission}`,
+    )
+  }
+})
+
+test('WHAT[capability-enforcement-025] P17_final_incumbent_loses_every_new_work_capability', () => {
+  // 末任不得开新工作：委托、续做与评审一律拒绝。
+  const facts = managerFacts(true, true, true, undefined)
+  for (const permission of ['Fork', 'Resume', 'ReviewAssessment']) {
+    assert.equal(
+      isAllowedForManagerFacts(facts, permission),
+      false,
+      `final incumbent must lose new-work permission ${permission}`,
+    )
+  }
+})
+
+test('WHAT[capability-enforcement-025] P18_final_incumbent_notice_text_present_in_both_languages', () => {
+  const zh = readFileSync(new URL('../../../resources/provider/runtime/manager-finish/zh-CN.md', import.meta.url), 'utf8')
+  const en = readFileSync(new URL('../../../resources/provider/runtime/manager-finish/en.md', import.meta.url), 'utf8')
+  assert.match(zh, /最后一任/)
+  assert.match(zh, /findings 为空集/)
+  assert.match(zh, /不得开新工作/)
+  assert.match(en, /final Manager/)
+  assert.match(en, /findings is empty/)
+  assert.match(en, /do not start new work/)
 })
 
 test('WHAT[capability-enforcement-025] P11_plugin_reopen_evaluates_durable_incumbency_facts_without_resetting_assessment', async () => {

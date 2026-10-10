@@ -20,7 +20,6 @@
 /src/Wanxiangshu/OpenCode/Tools/PtyTool.fs
 /src/Wanxiangshu/OpenCode/Tools/ExecutorTool.fs
 /resources/provider/tool/run/**
-/resources/provider/tool/query-shell/**
 /resources/provider/tool/open-terminal/**
 /resources/provider/tool/read-terminal/**
 /resources/provider/tool/send-terminal/**

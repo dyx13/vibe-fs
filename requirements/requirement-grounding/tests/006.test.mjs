@@ -32,7 +32,7 @@ const terminalRead = (path) => [{
 }]
 
 const readFacts = commonDir => {
-  const events = join(commonDir, 'wanxiang', 'events')
+  const events = join(commonDir, 'wanxiangshu', 'events')
   let names
   try { names = readdirSync(events) } catch (error) {
     if (error.code === 'ENOENT') return []
@@ -331,7 +331,7 @@ test('WHAT[requirement-grounding-006] registered program grep keeps scan freshne
     await hooks['tool.execute.before'](input, { args })
     const output = await hooks.tool['js-manager'].execute(args, { sessionID, agent: 'manager' })
     assert.match(output, /text = "GREPPED"/)
-    const events = join(directory, '.git', 'wanxiang', 'events')
+    const events = join(directory, '.git', 'wanxiangshu', 'events')
     const persisted = readdirSync(events).map(name => readFileSync(join(events, name), 'utf8')).join('\n')
     assert.equal(persisted.includes('RequirementGroundingMaterialObserved'), false, 'grep must not mint a complete material observation')
     assert.equal(persisted.includes('RequirementGroundingReadObserved'), false, 'grep must not mint an explicit read observation')
@@ -419,7 +419,7 @@ test('WHAT[requirement-grounding-006] historical material observations retain th
       return decoded.event
     })
     const writerId = randomUUID()
-    const writerFile = join(dir, 'wanxiang', 'events', writerId + '.ndjson')
+    const writerFile = join(dir, 'wanxiangshu', 'events', writerId + '.ndjson')
     assert.equal(existsSync(writerFile), false, 'this process creates a new physical fixture writer')
     const activity = {
       id: 'd'.repeat(40),

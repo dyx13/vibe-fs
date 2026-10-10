@@ -29,8 +29,8 @@ module ReliabilityDiagnosticsSurface =
     [<Emit("(() => { const freeze = value => { if (value && typeof value === 'object' && !Object.isFrozen(value)) { Object.freeze(value); Object.values(value).forEach(freeze); } return value; }; return freeze($0); })()")>]
     let private deepFreeze (value: obj) : obj = jsNative
 
-    [<Emit("process.env.WANXIANGSHU_DIAG === '1'")>]
-    let private diagnosticsVisible () : bool = jsNative
+    let diagnosticsVisible () : bool =
+        Environment.GetEnvironmentVariable "WANXIANGSHU_DIAG" = "1"
 
     [<Emit("console.error(JSON.stringify($0))")>]
     let private writeRecord (value: obj) : unit = jsNative
@@ -290,7 +290,7 @@ module ReliabilityDiagnosticsSurface =
                 Some(recoveryOf value?recoveryDecision)
           PersistenceCommitment = persistenceCommitment }
 
-    let internal redactText (value: string) =
+    let redactText (value: string) =
         let oneLine = Regex.Replace(value, "[\\r\\n].*$", "")
 
         oneLine
@@ -327,7 +327,7 @@ module ReliabilityDiagnosticsSurface =
         | DurableExecutionLifecycle.ProviderStarted -> "ProviderStarted"
         | DurableExecutionLifecycle.Terminal -> "Terminal"
 
-    let internal projectTyped (record: CausalDiagnosticRecord) : obj =
+    let projectTyped (record: CausalDiagnosticRecord) : obj =
         box
             {| operation = record.Operation
                logicalRunId = optionObject LogicalRunId.value record.LogicalRunId

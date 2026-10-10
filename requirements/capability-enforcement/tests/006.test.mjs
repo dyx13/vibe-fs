@@ -330,7 +330,6 @@ test('WHAT[capability-enforcement-006] inquiry_role_is_revoked_and_permissions_f
 })
 test('WHAT[capability-enforcement-006] inquiry_isAllowed_denies_all_tools', () => {
   assert.equal(surfaceIsAllowed('inquiry', 'Inspect'), false)
-  assert.equal(surfaceIsAllowed('inquiry', 'Sphinx'), false)
   assert.equal(surfaceIsAllowed('inquiry', 'Fission'), false)
   assert.equal(surfaceIsAllowed('inquiry', 'Read'), false)
 })
@@ -433,7 +432,7 @@ const TOOL_NAMES = [
   'fork', 'resume', 'commission', 'join', 'horizon', 'fission',
   'read', 'write', 'edit', 'glob', 'grep', 'mv', 'rm',
   'bash-honeypot', 'assume', 'todowrite',
-  'enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret',
+  'defer',  'publish',
   'run', 'open-terminal', 'send-terminal', 'read-terminal', 'signal-terminal',
   'review', 'chronicle', 'fetch', 'suicide',
 ]
@@ -441,13 +440,13 @@ const PLUGIN_TOOL_NAMES = [
   'fork', 'resume', 'commission', 'open-terminal', 'send-terminal', 'read-terminal', 'signal-terminal',
   'join', 'horizon', 'fission', 'review', 'suicide', 'run',
   'mv', 'rm', 'bash-honeypot', 'assume', 'chronicle',
-  'enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret',
+  'defer',  'publish',
   'js-engineer', 'js-devops',
 ]
 const HOST_OWNED_TOOL_NAMES = [ 'read', 'write', 'edit', 'glob', 'grep', 'skill', 'todowrite',
 ]
 const ROLE_NAMES = ['orchestrator', 'manager', 'engineer', 'devops', 'blogger']
-const COGNITIVE_TOOLS = ['enough', 'abandon', 'defer', 'subscribe', 'publish', 'celebrate', 'regret']
+const COGNITIVE_TOOLS = ['defer',  'publish']
 const ALLOWED = {
   orchestrator: ['commission', 'join', 'horizon', 'assume', 'todowrite', ...COGNITIVE_TOOLS],
   manager: ['fork', 'resume', 'join', 'horizon', 'review', 'suicide', 'assume', 'todowrite', ...COGNITIVE_TOOLS],

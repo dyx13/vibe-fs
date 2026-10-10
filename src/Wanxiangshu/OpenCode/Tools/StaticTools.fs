@@ -26,7 +26,6 @@ module StaticTools =
         | ToolPermission.BashHoneypot -> [ "bash-honeypot" ]
         | ToolPermission.Exec -> [ "run" ]
         | ToolPermission.Pty -> [ "open-terminal"; "send-terminal"; "read-terminal"; "signal-terminal" ]
-        | ToolPermission.Sphinx -> [ "sphinx" ]
         | ToolPermission.ReviewAssessment -> [ "review" ]
         | ToolPermission.Chronicle -> [ "chronicle" ]
         | ToolPermission.Fetch -> [ "fetch" ]
@@ -85,18 +84,12 @@ module StaticTools =
           "skill"
           "todowrite"
           "assume"
-          "enough"
-          "abandon"
           "defer"
-          "subscribe"
           "publish"
-          "celebrate"
-          "regret"
           "mv"
           "rm"
           "bash-honeypot"
           "run"
-          "sphinx"
           "review"
           "chronicle"
           "fetch"
@@ -122,13 +115,8 @@ module StaticTools =
             (name = "skill"
              || name = "todowrite"
              || name = "assume"
-             || name = "enough"
-             || name = "abandon"
              || name = "defer"
-             || name = "subscribe"
              || name = "publish"
-             || name = "celebrate"
-             || name = "regret"
              || Set.contains name allowedNames))
         |> Map.ofList
         |> AblationGate.filterToolPermissionMap registry
@@ -161,9 +149,8 @@ module StaticTools =
         | true, "skill", _ -> "allow"
         | true, ("assume" | "todowrite"), role when not (cognitiveUtilityRoleAllowed role) -> "deny"
         | true, ("assume" | "todowrite"), _ -> "allow"
-        | true, ("enough" | "abandon" | "defer" | "subscribe" | "publish" | "celebrate" | "regret"), Role.Blogger ->
-            "deny"
-        | true, ("enough" | "abandon" | "defer" | "subscribe" | "publish" | "celebrate" | "regret"), _ -> "allow"
+        | true, ("defer" | "publish"), Role.Blogger -> "deny"
+        | true, ("defer" | "publish"), _ -> "allow"
         | true, "js-bookkeeper", _ -> "deny"
         | true, name, _ when name.StartsWith "js-" -> jsPermission role name
         | true, _, _ -> defaultPermission allowed name

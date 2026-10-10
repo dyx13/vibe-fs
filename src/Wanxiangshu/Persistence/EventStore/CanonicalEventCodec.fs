@@ -8,10 +8,30 @@ open Wanxiangshu.Foundation.Identity
 /// recursive Unicode-codepoint key order, parents / payload_refs set-normalized.
 module CanonicalEventCodec =
 
+    [<Emit("Buffer.from($0).toString('base64')")>]
+    let private base64OfBytes (bytes: byte[]) : string = jsNative
+
+    [<Emit("Buffer.from($0, 'base64')")>]
+    let private bytesOfBase64 (value: string) : byte[] = jsNative
+
+    let private payloadsObject (payloads: Map<PayloadRef, byte[]>) : obj =
+        payloads
+        |> Map.toList
+        |> List.map (fun (payloadRef, bytes) -> PayloadRef.value payloadRef, box (base64OfBytes bytes))
+        |> createObj
+
+    let private payloadsOfParsed (parsed: obj) : Map<PayloadRef, byte[]> =
+        if isNull parsed || isNull (parsed?payloads) then
+            Map.empty
+        else
+            emitJsExpr parsed "Object.keys($0.payloads || {}).map(function (key) { return [key, $0.payloads[key]]; })"
+            |> unbox<(string * string) array>
+            |> Array.fold (fun acc (key, value) -> Map.add (PayloadRef.create key) (bytesOfBase64 value) acc) Map.empty
+
     let private envelopeObject (envelope: EventEnvelope) : obj =
         let normalized = EventEnvelope.normalize envelope
 
-        createObj
+        let fields =
             [ "event_id" ==> EventId.value normalized.EventId
               "stream_id" ==> EventStreamId.value normalized.StreamId
               "event_type" ==> normalized.EventType
@@ -19,6 +39,17 @@ module CanonicalEventCodec =
               "payload" ==> normalized.Payload
               "payload_refs"
               ==> (normalized.PayloadRefs |> List.map PayloadRef.value |> Array.ofList) ]
+
+        // durable-events-012: `payloads` appears exactly when the event carries
+        // inline payload content. An empty object would rewrite the canonical
+        // bytes of every payload-free event without adding truth.
+        let payloads =
+            if Map.isEmpty normalized.Payloads then
+                []
+            else
+                [ "payloads" ==> payloadsObject normalized.Payloads ]
+
+        createObj (fields @ payloads)
 
     /// Canonical JSON text including exactly one trailing LF (§5.0).
     let encode (envelope: EventEnvelope) : string =
@@ -68,10 +99,14 @@ module CanonicalEventCodec =
         return true;
       }
 
-      const allowed = new Set(['event_id', 'event_type', 'parents', 'payload', 'payload_refs', 'stream_id']);
+      const allowed = new Set(['event_id', 'event_type', 'parents', 'payload', 'payload_refs', 'payloads', 'stream_id']);
+      const payloads = value.payloads || {};
+      const payloadKeys = Object.keys(payloads).sort();
+      const sortedPayloadKeys = payloadKeys.every((key, i) => i === 0 || payloadKeys[i - 1] < key);
       return Object.keys(value).every(key => allowed.has(key))
         && sortedUnique(value.parents)
-        && sortedUnique(value.payload_refs);
+        && sortedUnique(value.payload_refs)
+        && sortedPayloadKeys;
     })($0)
     """)>]
     let private hasCanonicalStructure (parsed: obj) : bool = jsNative
@@ -104,7 +139,8 @@ module CanonicalEventCodec =
                   PayloadRefs =
                     (unbox<string[]> parsed?payload_refs)
                     |> Array.toList
-                    |> List.map PayloadRef.create })
+                    |> List.map PayloadRef.create
+                  Payloads = payloadsOfParsed parsed })
 
     let private tryDecodeCanonical (text: string) : Result<EventEnvelope, StorageInvalid> =
         try
