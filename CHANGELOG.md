@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — S1a 两段退休的真实 Host 验收
+
+- Long Stroke 的 HumanRoot 补第二次 suicide，后继收尾也按两段确认结束。逐任核 durable confirmation、退休cut与真实Host/SSE精确调用，按事件parents证明因果顺序；HumanRoot后继保留完整review与两次suicide历史。断因果边、首确认假退休及缺SSE来源有负控。同一serve真实36/0通过，完整release和待办/通知链仍开放。
+
 ## Unreleased — S0 / WP-042 干净构建包络交付
 
 - CI 与本地 CI 在发布验证前独立调用显式包络准备命令；普通构建仍不自动派生或检查语料变化。clean 重建沿用 staged swap，保留已有包络字节，并在失败时恢复先前输出。正式回归使用各自独立的 tracked 仓库及真实 Fable clean/full 编译，覆盖语料变化不隐式更新与后续产物拒绝后的回滚；完整 generated artifact lineage/traversal 仍属 GAP-145。

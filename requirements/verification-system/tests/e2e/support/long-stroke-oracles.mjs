@@ -724,6 +724,7 @@ export async function oracleLongStroke(scenario, ctx) {
       3,
       'long-stroke: candidate, repaired, and rebased snapshots must retire with Accepted certificates',
     );
+    await assertTwoStageRetirements(scenario, currentLoopId, logicalLoopCases, 'long-stroke');
   }
 
  // Pure-loop removals: an event-only fake continuation (IncumbencyOpened without
@@ -980,6 +981,79 @@ const assistantToolCallIds = (requests, tool) => {
   return ids;
 };
 
+async function assertTwoStageRetirements(scenario, sessionId, cases, label) {
+  const events = journalEventLines(scenario.host.workDir).map((line) => JSON.parse(line));
+  const parents = new Map(events.map((event) => [event.event_id, event.parents]));
+  const origins = new Map();
+  for (const event of events) {
+    for (const transaction of factPayloads([event], 'TransactionCommitted')) {
+      if (transaction?.RoadId?.[1] !== sessionId) continue;
+      for (const [index, value] of (transaction.Transaction?.[1] ?? []).entries()) {
+        const key = JSON.stringify(value);
+        const records = origins.get(key) ?? [];
+        records.push({ eventId: event.event_id, index });
+        origins.set(key, records);
+      }
+    }
+  }
+  const isAncestor = (ancestor, descendant) => {
+    const pending = [...(parents.get(descendant) ?? [])];
+    const visited = new Set();
+    while (pending.length > 0) {
+      const id = pending.pop();
+      if (id === ancestor) return true;
+      if (visited.has(id)) continue;
+      visited.add(id);
+      pending.push(...(parents.get(id) ?? []));
+    }
+    return false;
+  };
+  const precedes = (before, after) => (origins.get(JSON.stringify(before)) ?? []).some((left) =>
+    (origins.get(JSON.stringify(after)) ?? []).some((right) => left.eventId === right.eventId
+      ? left.index < right.index : isAncestor(left.eventId, right.eventId)));
+  const confirmations = cases.filter((event) => event?.[0] === 'RetirementConfirmationCommitted');
+  const retirements = cases.filter((event) => event?.[0] === 'RetirementCommitted');
+  assert.equal(confirmations.length, retirements.length, `${label}: every retirement requires one confirmation`);
+  const snapshot = await scenario.client.messages(sessionId);
+  assert.ok(snapshot.ok && Array.isArray(snapshot.data), `${label}: actual Host messages are required`);
+  const sourceBatches = scenario.provider.toolCallBatches;
+  assert.ok(Array.isArray(sourceBatches), `${label}: completed SSE source batches are required`);
+  const hostCall = (providerRun, callId, name) => {
+    const messages = snapshot.data.filter((message) => message?.info?.id === providerRun);
+    assert.equal(messages.length, 1, `${label}: exact provider run ${providerRun} must exist once`);
+    assert.equal(messages[0].info.role, 'assistant', `${label}: provider run must identify an assistant`);
+    const parts = messages[0].parts.filter((part) => part.type === 'tool' && part.callID === callId);
+    assert.equal(parts.length, 1, `${label}: exact Host tool call ${callId} must exist once`);
+    assert.equal(parts[0].tool, name, `${label}: durable call must name the actual tool`);
+    assert.equal(parts[0].state?.status, 'completed', `${label}: exact Host tool call must complete`);
+    const sources = sourceBatches.filter((batch) => batch.sessionId === sessionId
+      && batch.calls.some((call) => call.id === callId && call.name === name));
+    assert.equal(sources.length, 1, `${label}: exact Host call must have one completed SSE source`);
+    const source = sources[0].calls.find((call) => call.id === callId);
+    assert.deepEqual(parts[0].state.input, JSON.parse(source.arguments), `${label}: Host input must retain the exact SSE arguments`);
+    return parts[0];
+  };
+  for (const retirement of retirements) {
+    const summary = retirement[1];
+    const incumbent = summary.IncumbencyId?.[1];
+    const matching = confirmations.filter((event) => event[1]?.[1] === incumbent);
+    assert.equal(matching.length, 1, `${label}: exact incumbent requires one confirmation`);
+    const confirmation = matching[0];
+    const assessments = cases.filter((event) => event?.[0] === 'AssessmentCommitted' && event[2]?.[1] === incumbent);
+    assert.equal(assessments.length, 1, `${label}: exact incumbent requires one assessment`);
+    const assessment = assessments[0];
+    assert.ok(precedes(assessment, confirmation) && precedes(confirmation, retirement),
+      `${label}: assessment must precede confirmation and retirement`);
+    assert.notEqual(confirmation[3], summary.ProjectionCut.ToolCallId, `${label}: confirmation cannot be the retirement call`);
+    hostCall(assessment[3].ProviderRunId, assessment[3].ToolCallId, 'review');
+    const confirmed = hostCall(confirmation[2], confirmation[3], 'suicide');
+    assert.match(confirmed.state.output, /finished = false/, `${label}: first suicide must not retire`);
+    assert.match(confirmed.state.output, /confirmation_required = true/, `${label}: first suicide must require confirmation`);
+    const retired = hostCall(summary.ProjectionCut.ProviderRunId, summary.ProjectionCut.ToolCallId, 'suicide');
+    assert.match(retired.state.output, /finished = true/, `${label}: retirement cut must identify the finishing call`);
+  }
+}
+
 /**
  * HumanRoot manager loop canary oracle (preFlow, sole serve).
  *
@@ -1015,7 +1089,12 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
   assert.equal(
     scenario.provider.matchCount('humanroot-loop.1', sessionId),
     1,
-    `${label}: authority-turn close must be delivered once (Continue retirement)`,
+    `${label}: authority-turn confirmation must be delivered once`,
+  );
+  assert.equal(
+    scenario.provider.matchCount('humanroot-loop.2', sessionId),
+    1,
+    `${label}: authority-turn finish must be delivered once (Continue retirement)`,
   );
   assert.equal(
     scenario.provider.matchCount('manager-reopened-loop.0', sessionId),
@@ -1025,14 +1104,19 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
   assert.equal(
     scenario.provider.matchCount('manager-reopened-loop.1', sessionId),
     1,
-    `${label}: successor iteration close must be delivered once (Accepted retirement)`,
+    `${label}: successor iteration confirmation must be delivered once`,
+  );
+  assert.equal(
+    scenario.provider.matchCount('manager-reopened-loop.2', sessionId),
+    1,
+    `${label}: successor iteration finish must be delivered once (Accepted retirement)`,
   );
 
   const requests = canaryRequestsFor(scenario, sessionId);
   assert.equal(
     requests.length,
-    4,
-    `${label}: expected exactly 4 chat requests on the canary session (got ${requests.length})`,
+    6,
+    `${label}: expected exactly 6 chat requests on the canary session (got ${requests.length})`,
   );
  // Same physical SessionId on every request: continuations extend the
  // LogicalRun, they never create a new one. A new session here would be a
@@ -1055,7 +1139,7 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
  // provider-visible message structure only.
   assertManagerLoopAuthorityPreserved(scenario, sessionId);
   assert.equal(
-    hasAssistantOrToolMessages(requests[2]),
+    hasAssistantOrToolMessages(requests[3]),
     true,
     `${label}: next iteration-first must retain the predecessor physical history`,
   );
@@ -1066,7 +1150,10 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
     1,
     `${label}: first-iteration close must carry exactly the first-iteration review call (got ${firstIterationReviewIds.length})`,
   );
-  for (const request of [requests[2], requests[3]]) {
+  const firstIterationSuicideIds = assistantToolCallIds([requests[3]], 'suicide');
+  assert.equal(firstIterationSuicideIds.length, 2, `${label}: successor must retain both predecessor suicide calls`);
+  assert.equal(new Set(firstIterationSuicideIds).size, 2, `${label}: the two suicide calls must have different identities`);
+  for (const request of requests.slice(3)) {
     assert.equal(
       request.messages.some((message) =>
         message.tool_call_id === firstIterationReviewIds[0]
@@ -1074,6 +1161,12 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
       true,
       `${label}: next iteration must retain the first-iteration review call/result in its history`,
     );
+    for (const id of firstIterationSuicideIds) {
+      assert.ok(request.messages.some((message) => message.role === 'assistant'
+        && message.tool_calls?.some((call) => call.id === id)), `${label}: successor must retain each predecessor suicide call`);
+      assert.ok(request.messages.some((message) => message.role === 'tool' && message.tool_call_id === id),
+        `${label}: successor must retain each predecessor suicide result`);
+    }
   }
 
  // Durable loop behavior: two openings (initial + one after Continue), one
@@ -1124,6 +1217,8 @@ export async function assertHumanRootManagerLoop(scenario, sessionId, label = 'h
 
   const settled = await awaitSessionSettled(scenario, sessionId, WAIT_FACT_WINDOW_MS);
   assert.equal(settled, true, `${label}: canary session must settle to idle via causal host events`);
+  const cases = factPayloads(canaryEvents, 'TransactionCommitted').flatMap((payload) => payload?.Transaction?.[1] ?? []);
+  await assertTwoStageRetirements(scenario, sessionId, cases, label);
 }
 
 // ── DELEGATE 14.5: explicit read-only delegation legs ───────────────────────

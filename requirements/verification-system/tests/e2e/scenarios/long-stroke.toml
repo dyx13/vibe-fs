@@ -376,7 +376,7 @@ user = "HUMANROOT_MANAGER_LOOP_CANARY: run the independent HumanRoot manager ass
 
 # ONE reusable HumanRoot loop family: same lane/authority/steps reused for both
 # iterations. The binder returns low review on first delivery (Continue) and
-# perfect on second (Accepted); step-1 suicide is identical. Provider-visible
+# perfect on second (Accepted); each iteration confirms then retires. Provider-visible
 # user stays the original authority because the wake is stripped.
 [[turn]]
 id = "humanroot-loop"
@@ -390,6 +390,10 @@ tools = ["review", "suicide"]
 
   [[turn.step]]
   runtimeStep = 1
+  respond = { type = "tool-call", tool = "suicide", args = {} }
+
+  [[turn.step]]
+  runtimeStep = 2
   respond = { type = "tool-call", tool = "suicide", args = {} }
 
 [[turn]]
@@ -493,7 +497,7 @@ tools = ["fork", "resume", "join", "horizon", "review", "suicide"]
   [[turn.step]]
   runtimeStep = 2
   optional = true
-  respond = { type = "tool-call", tool = "join", args = {} }
+  respond = { type = "tool-call", tool = "suicide", args = {} }
 
   # After the join harvests the repaired work the successor closes its own iteration:
   # the same turn keeps growing because the last user message is still this assess

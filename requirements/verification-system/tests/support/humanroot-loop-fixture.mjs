@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import * as journal from '../../../../dist/Persistence/Journal/Surface.js'
 import { StrictMockSignals } from '../e2e/support/strict-mock-signals.js'
 import { releaseSharedObserver } from '../e2e/support/journal-observer.js'
@@ -23,15 +24,16 @@ export async function withHumanRootLoopFixture(run) {
   const target = 'ses_humanroot_canary'
   const foreign = 'ses_strength_owner'
   let sequence = 0
+  let previousEventId = null
   let replay = 0
   const incumbent = (road, round) => 'incumbency:' + (road === target ? 'a' : 'b') + String(round).padStart(63, '0')
   const assessment = (road, round) => `assessment:${road}:${round}`
-  const append = (road, cases) => {
-    const parent = sequence === 0 ? [] : [sequence.toString(16).padStart(40, '0')]
+  const append = (road, cases, parents = previousEventId === null ? [] : [previousEventId]) => {
     sequence += 1
-    const id = sequence.toString(16).padStart(40, '0')
+    const id = createHash('sha1').update(`fixture-event:${sequence}`).digest('hex')
+    previousEventId = id
     const event = {
-      event_id: id, event_type: 'JournalEnvelope', parents: parent, payload_refs: [],
+      event_id: id, event_type: 'JournalEnvelope', parents, payload_refs: [],
       stream_id: `journal/session/${road}`,
       payload: {
         EventId: ['EventId', id], RuntimeId: ['RuntimeId', 'rt_fixture'],
@@ -61,12 +63,16 @@ export async function withHumanRootLoopFixture(run) {
       { AcceptanceCriteria: 'Complete the original charge.', WorkPlan: 'Finish the remaining work.' },
     ]],
   ]])
-  const retire = (road, round, accepted) => append(road, [['RetirementCommitted', {
-    Id: ['RetirementId', `retirement:${road}:${round}`], IncumbencyId: ['IncumbencyId', incumbent(road, round)],
-    SnapshotId: ['WorkspaceSnapshotId', 'snapshot'], AuthorityRevision: ['AuthorityRevision', `user:${road}`],
-    ProjectionCut: { ProviderRunId: `provider:${road}:${round}`, ToolCallId: `suicide:${road}:${round}` },
-    Outcome: accepted ? ['Accepted', ['QualityCertificateId', `certificate:${assessment(road, round)}`]] : 'Continue',
-  }]])
+  const retire = (road, round, accepted, { confirmationParents } = {}) => {
+    append(road, [['RetirementConfirmationCommitted', ['IncumbencyId', incumbent(road, round)],
+      `provider:${road}:${round}:confirm`, `confirm:${road}:${round}`]], confirmationParents)
+    append(road, [['RetirementCommitted', {
+      Id: ['RetirementId', `retirement:${road}:${round}`], IncumbencyId: ['IncumbencyId', incumbent(road, round)],
+      SnapshotId: ['WorkspaceSnapshotId', 'snapshot'], AuthorityRevision: ['AuthorityRevision', `user:${road}`],
+      ProjectionCut: { ProviderRunId: `provider:${road}:${round}:retire`, ToolCallId: `suicide:${road}:${round}` },
+      Outcome: accepted ? ['Accepted', ['QualityCertificateId', `certificate:${assessment(road, round)}`]] : 'Continue',
+    }]])
+  }
   const reopen = (road, round) => {
     append(road, [['QualityCertificateInvalidated',
       ['QualityCertificateId', `certificate:${assessment(road, round - 1)}`], 'ContinuousSessionAdvancesRoad']])
@@ -87,28 +93,45 @@ export async function withHumanRootLoopFixture(run) {
     }
   }
   const signals = new StrictMockSignals()
-  for (const id of ['humanroot-loop.0', 'humanroot-loop.1', 'manager-reopened-loop.0', 'manager-reopened-loop.1']) {
+  for (const id of ['humanroot-loop.0', 'humanroot-loop.1', 'humanroot-loop.2', 'manager-reopened-loop.0', 'manager-reopened-loop.1', 'manager-reopened-loop.2']) {
     signals.consume({ id, sessionId: target })
   }
   for (const id of ['manager-reopened-loop.0', 'manager-reopened-loop.1']) signals.consume({ id, sessionId: foreign })
   const authority = [{ role: 'system', content: 'Manager authority' }, { role: 'user', content: 'HumanRoot demand' }]
-  const review = { role: 'assistant', tool_calls: [{ id: 'review:first', type: 'function',
-    function: { name: 'review', arguments: '{}' } }] }
-  const result = { role: 'tool', tool_call_id: 'review:first', content: 'review accepted' }
-  const successor = [...authority, review, result, { role: 'assistant', tool_calls: [{ id: 'retire:first',
-    type: 'function', function: { name: 'suicide', arguments: '{}' } }] },
-    { role: 'tool', tool_call_id: 'retire:first', content: 'Continue' },
+  const exchange = (tool, call, output) => [{ role: 'assistant', tool_calls: [{ id: call,
+    type: 'function', function: { name: tool, arguments: '{}' } }] },
+  { role: 'tool', tool_call_id: call, content: output }]
+  const firstReview = exchange('review', `review:${target}:1`, 'review accepted')
+  const firstConfirmation = exchange('suicide', `confirm:${target}:1`, 'finished = false\nconfirmation_required = true')
+  const firstRetirement = exchange('suicide', `suicide:${target}:1`, 'finished = true')
+  const secondReview = exchange('review', `review:${target}:2`, 'review accepted')
+  const secondConfirmation = exchange('suicide', `confirm:${target}:2`, 'finished = false\nconfirmation_required = true')
+  const successor = [...authority, ...firstReview, ...firstConfirmation, ...firstRetirement,
     { role: 'user', content: '# You are the 2 Manager taking over this mission.' }]
   const wire = (messages) => ({ sessionID: target, messages,
     tools: ['review', 'suicide'].map((name) => ({ function: { name } })) })
+  const calls = [
+    ['review', `provider:${target}:1`, `review:${target}:1`, 'review accepted'],
+    ['suicide', `provider:${target}:1:confirm`, `confirm:${target}:1`, 'finished = false\nconfirmation_required = true'],
+    ['suicide', `provider:${target}:1:retire`, `suicide:${target}:1`, 'finished = true'],
+    ['review', `provider:${target}:2`, `review:${target}:2`, 'review accepted'],
+    ['suicide', `provider:${target}:2:confirm`, `confirm:${target}:2`, 'finished = false\nconfirmation_required = true'],
+    ['suicide', `provider:${target}:2:retire`, `suicide:${target}:2`, 'finished = true'],
+  ]
+  const hostMessages = calls.map(([tool, id, callID, output]) => ({ info: { id, role: 'assistant' },
+    parts: [{ type: 'tool', tool, callID, state: { status: 'completed', input: {}, output } }] }))
   const scenario = {
     host: { workDir },
     provider: {
-      requests: [wire(authority), wire([...authority, review, result]), wire(successor),
-        wire([...successor, { ...review, tool_calls: [{ ...review.tool_calls[0], id: 'review:second' }] }])],
+      requests: [wire(authority), wire([...authority, ...firstReview]),
+        wire([...authority, ...firstReview, ...firstConfirmation]), wire(successor),
+        wire([...successor, ...secondReview]), wire([...successor, ...secondReview, ...secondConfirmation])],
+      toolCallBatches: calls.map(([name, , id], requestIndex) => ({ sessionId: target, requestIndex,
+        calls: [{ id, name, arguments: '{}' }] })),
       matchCount: (id, sessionId) => signals.matchCount(id, sessionId),
     },
-    client: { request: async () => ({ ok: true, data: { [target]: { type: 'idle' } } }) },
+    client: { request: async () => ({ ok: true, data: { [target]: { type: 'idle' } } }),
+      messages: async () => ({ ok: true, data: hostMessages }) },
   }
   try {
     return await run({ workDir, target, foreign, scenario, open, assess, retire, reopen, assertReplayed, signals })

@@ -476,15 +476,37 @@ test('WHAT[verification-system-014] the original HumanRoot loop oracle keeps exa
     assert.equal(scenario.provider.matchCount('manager-reopened-loop.0'), 2)
     assert.equal(scenario.provider.matchCount('manager-reopened-loop.0', target), 1)
     await assertHumanRootManagerLoop(scenario, target)
-    const firstReview = scenario.provider.requests[2].messages
-    scenario.provider.requests[2].messages = firstReview.filter((message) => message.role === 'system' || message.role === 'user')
+    const hostMessages = (await scenario.client.messages(target)).data
+    const confirmation = hostMessages.find((message) => message.info.id === `provider:${target}:1:confirm`).parts[0]
+    const originalOutput = confirmation.state.output
+    confirmation.state.output = 'finished = true'
+    await assert.rejects(assertHumanRootManagerLoop(scenario, target), /first suicide must not retire/)
+    confirmation.state.output = originalOutput
+    const originalSources = scenario.provider.toolCallBatches
+    scenario.provider.toolCallBatches = originalSources.filter((batch) => !batch.calls.some((call) => call.id === confirmation.callID))
+    await assert.rejects(assertHumanRootManagerLoop(scenario, target), /exact Host call must have one completed SSE source/)
+    scenario.provider.toolCallBatches = originalSources
+    const firstReview = scenario.provider.requests[3].messages
+    scenario.provider.requests[3].messages = firstReview.filter((message) => message.role === 'system' || message.role === 'user')
     await assert.rejects(assertHumanRootManagerLoop(scenario, target), /retain the predecessor physical history/)
-    scenario.provider.requests[2].messages = firstReview
+    scenario.provider.requests[3].messages = firstReview
     fixture.signals.consume({ id: 'manager-reopened-loop.0', sessionId: target })
     await assert.rejects(assertHumanRootManagerLoop(scenario, target), /successor iteration audit must be delivered once/)
     reopen(target, 3)
     await assertReplayed(target, 2, true)
     await assert.rejects(assertHumanRootManagerLoop(scenario, target), /IncumbencyOpened overshot eq 2 \(got 3\)/)
+  })
+})
+
+test('WHAT[verification-system-014] the HumanRoot oracle rejects a confirmation with no causal assessment ancestor', async () => {
+  await withHumanRootLoopFixture(async ({ target, scenario, open, assess, retire }) => {
+    open(target, 1)
+    assess(target, 1, 'Revise')
+    retire(target, 1, false, { confirmationParents: [] })
+    open(target, 2)
+    assess(target, 2, 'Perfect')
+    retire(target, 2, true)
+    await assert.rejects(assertHumanRootManagerLoop(scenario, target), /assessment must precede confirmation and retirement/)
   })
 })
 
@@ -519,12 +541,15 @@ test('WHAT[verification-system-014] Manager loop response binding isolates each 
   await CUSTOMS.bindManagerLoopSequence({ provider: { _scenario: runtime } })
   assert.deepEqual(dispatch('ses_strength', successor(2), 'manager-reopened-loop.0').args, { findings: [] })
   assert.equal(dispatch('ses_strength', null, 'manager-reopened-loop.1').tool, 'suicide')
+  assert.equal(dispatch('ses_strength', null, 'manager-reopened-loop.2').tool, 'suicide')
   assert.deepEqual(dispatch('ses_human', HUMANROOT_MANAGER_LOOP_CANARY_PROMPT, 'humanroot-loop.0').args, {
     findings: [{ acceptance_criteria: 'the target state is not yet reached', work_plan: 'close the remaining gap' }],
   })
   assert.equal(dispatch('ses_human', null, 'humanroot-loop.1').tool, 'suicide')
+  assert.equal(dispatch('ses_human', null, 'humanroot-loop.2').tool, 'suicide')
   assert.deepEqual(dispatch('ses_human', successor(2), 'manager-reopened-loop.0').args, { findings: [] })
   assert.equal(dispatch('ses_human', null, 'manager-reopened-loop.1').tool, 'suicide')
+  assert.equal(dispatch('ses_human', null, 'manager-reopened-loop.2').tool, 'suicide')
   assert.equal(dispatch('ses_strength', work, 'manager-current-action.0').tool, 'assume')
   const initial = compiled.scenario.entries.find((entry) => entry.id === 'manager-loop.0').turn
   assert.deepEqual(dispatch('ses_main', initial, 'manager-loop.0').args, {
