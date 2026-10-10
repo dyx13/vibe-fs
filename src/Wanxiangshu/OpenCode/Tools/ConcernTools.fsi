@@ -1,5 +1,6 @@
 namespace Wanxiangshu.OpenCode
 
+open System.Threading.Tasks
 open Wanxiangshu.Interaction.Concern
 
 [<RequireQualifiedAccess>]
@@ -9,5 +10,5 @@ module ConcernTools =
     val specs:
         factory: HostToolFactory ->
         journal: ConcernJournalPort option ->
-        toast: (string -> string -> unit) option ->
+        toast: (string -> string -> Task<Result<unit, string>>) option ->
             ToolSpec list

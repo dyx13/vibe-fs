@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — S1c 用户通知接纳
+
+- publish(user)等待实际SDK明确成功；缺方法、失败或畸形响应不再假成功。已落root副本保留，同occurrence原材料可重试，冲突/写入拒绝不通知。25项正式公开回归含真实SDK与HTTP。Pair Hint、代次退休和冷通知去重仍开放。
+
 ## Unreleased — S1b2 已知自然消费缺口
 
 - 真实Engineer自然终点反例证明：SDK呈现尚未返回、未物理接纳时已经消费待办。强化exact key/正文/原两occurrence前提后以显式TODO保留；批次持久绑定及冷恢复修复仍开放。

@@ -1760,8 +1760,8 @@ export const SURFACE_MANIFEST = [
   {
     module: 'Verification/JournalPortObservationSurface.js',
     owner: 'verification-system',
-    laws: ['DURABLE-EVENTS-006', 'DURABLE-EVENTS-023', 'DURABLE-EVENTS-024', 'ATTENTION-REGULATION-005'],
-    lawOwners: { 'DURABLE-EVENTS-006': 'durable-events', 'DURABLE-EVENTS-023': 'durable-events', 'DURABLE-EVENTS-024': 'durable-events', 'ATTENTION-REGULATION-005': 'attention-regulation' },
+    laws: ['DURABLE-EVENTS-006', 'DURABLE-EVENTS-023', 'DURABLE-EVENTS-024', 'ATTENTION-REGULATION-005', 'CONCERN-ROUTING-003'],
+    lawOwners: { 'DURABLE-EVENTS-006': 'durable-events', 'DURABLE-EVENTS-023': 'durable-events', 'DURABLE-EVENTS-024': 'durable-events', 'ATTENTION-REGULATION-005': 'attention-regulation', 'CONCERN-ROUTING-003': 'concern-routing' },
     source: 'src/Wanxiangshu/Verification/JournalPortObservationSurface.fs',
     representation: 'opaque-capability',
     kind: 'resource',

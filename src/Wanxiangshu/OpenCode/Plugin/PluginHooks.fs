@@ -92,6 +92,39 @@ module PluginHooks =
     [<Emit("Object.prototype.hasOwnProperty.call($0, $1)")>]
     let private hasOwnProperty (target: obj) (prop: string) : bool = jsNative
 
+    let private invokeUserNotification client title message : Task<Result<unit, string>> =
+        task {
+            let! (response: obj) =
+                emitJsExpr
+                    (client, title, message)
+                    "$0.tui.showToast({ body: { title: $1, message: $2, variant: 'info' }, responseStyle: 'fields' })"
+
+            let accepted: bool =
+                emitJsExpr response "$0?.data === true && $0?.error === undefined"
+
+            return
+                if accepted then
+                    Ok()
+                else
+                    Error "User notification was not accepted"
+        }
+
+    let private tryUserNotification client title message =
+        task {
+            try
+                return! invokeUserNotification client title message
+            with _ ->
+                return Error "User notification transport failed"
+        }
+
+    let private notifyUser client title message =
+        let available: bool = emitJsExpr client "typeof $0?.tui?.showToast === 'function'"
+
+        if available then
+            tryUserNotification client title message
+        else
+            Task.FromResult(Error "User notification transport is unavailable")
+
     /// Host hook surface: chat / transform / config / compaction / text /
     /// tool hooks plus event + dispose, and the optional client tool module.
     let create (boot: PluginBoot.Boot) (host: PluginHostWiring.Host) (transform: obj -> obj -> Task<unit>) : Task<obj> =
@@ -157,19 +190,7 @@ module PluginHooks =
 
             let client = if isNull input then null else input?client
 
-            // concern-routing-003: the reserved `user` address renders as a
-            // user-visible TUI notification. The server SDK exposes
-            // `client.tui.showToast`; a missing client leaves the notifier
-            // absent and publish still copies to `root`.
-            let userNotify =
-                if isNull client then
-                    None
-                else
-                    Some(fun (title: string) (message: string) ->
-                        Fable.Core.JsInterop.emitJsExpr
-                            (client, title, message)
-                            "$0?.tui?.showToast?.({ body: { title: $1, message: $2, variant: 'info' } })"
-                        |> ignore)
+            let userNotify = if isNull client then None else Some(notifyUser client)
 
             let configureClient () : Task<ToolRegistration> =
                 task {

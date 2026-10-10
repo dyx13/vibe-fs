@@ -1,6 +1,7 @@
 namespace Wanxiangshu.OpenCode
 
 open System
+open System.Threading.Tasks
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Interaction.Concern
@@ -38,6 +39,9 @@ module ConcernTools =
 
         [<Literal>]
         let UserNotificationTitle = "concern-routing/user-notification-title"
+
+        [<Literal>]
+        let UserNotificationUnavailable = "concern-routing/user-notification-unavailable"
 
     let private languageOf (ctx: HostToolContext) =
         ProviderLanguageBinding.forSessionText ctx.SessionId
@@ -93,6 +97,18 @@ module ConcernTools =
             | Error PublishFailure.DurableUnavailable -> return render ctx Path.DurableUnavailable Map.empty
         }
 
+    let private notificationResult ctx =
+        function
+        | Ok() -> render ctx Path.PublishAccepted (Map [ "id", ReservedAddress.User ])
+        | Error _ -> render ctx Path.UserNotificationUnavailable Map.empty
+
+    let private notifyUser toast message ctx =
+        match toast with
+        | None -> Task.FromResult(render ctx Path.UserNotificationUnavailable Map.empty)
+        | Some show ->
+            show (render ctx Path.UserNotificationTitle Map.empty) message
+            |> TaskValue.map (notificationResult ctx)
+
     /// concern-routing-003: the reserved user address is not a session mailbox.
     /// Publishing to it raises a user-visible notification and copies the same
     /// message to the reserved root address when that mailbox is live.
@@ -108,11 +124,7 @@ module ConcernTools =
 
             match copy with
             | Ok()
-            | Error PublishFailure.UnknownMailbox ->
-                toast
-                |> Option.iter (fun show -> show (render ctx Path.UserNotificationTitle Map.empty) message)
-
-                return render ctx Path.PublishAccepted (Map [ "id", ReservedAddress.User ])
+            | Error PublishFailure.UnknownMailbox -> return! notifyUser toast message ctx
             | Error PublishFailure.OccurrenceConflict -> return render ctx Path.PublishConflict Map.empty
             | Error PublishFailure.DurableUnavailable -> return render ctx Path.DurableUnavailable Map.empty
         }
@@ -125,7 +137,7 @@ module ConcernTools =
 
     let private publishExecute
         (journal: ConcernJournalPort option)
-        (toast: (string -> string -> unit) option)
+        (toast: (string -> string -> Task<Result<unit, string>>) option)
         (args: HostToolArguments)
         (ctx: HostToolContext)
         =
@@ -143,7 +155,11 @@ module ConcernTools =
     let admission: ToolAdmission =
         ToolAdmission.OfficeRole(fun _ (r: Role) -> r <> Role.Blogger && r <> Role.Distiller)
 
-    let specs factory (journal: ConcernJournalPort option) (toast: (string -> string -> unit) option) =
+    let specs
+        factory
+        (journal: ConcernJournalPort option)
+        (toast: (string -> string -> Task<Result<unit, string>>) option)
+        =
         let language = ProviderLanguageBinding.readGlobalPreference ()
 
         [ { Name = "publish"
