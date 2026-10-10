@@ -1,13 +1,15 @@
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync, rmSync, unlinkSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, unlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
 import { Worker } from 'node:worker_threads'
 import { encode } from 'gpt-tokenizer/encoding/o200k_base'
-import { deriveLoopDetectorEnvelope, encodeParallel, loadLoopDetectorRepositoryCorpusV1 } from '../../../scripts/lib/derive-loop-detector-envelope.mjs'
+import { deriveLoopDetectorEnvelope, encodeParallel, loadLoopDetectorRepositoryCorpusV1, writeLoopDetectorEnvelopeArtifact } from '../../../scripts/lib/derive-loop-detector-envelope.mjs'
 import { loopDetectorRepositoryInputFiles } from '../../../scripts/lib/loop-detector-repository-corpus.mjs'
+import { runBuild } from '../../../scripts/build.mjs'
+import { integrationTest } from '../../verification-system/tests/support/tier-gate.mjs'
 
 test('WHAT[degeneration-guard-004] selector admits tracked source documents and excludes generated vendor fixture structured deleted and untracked paths', () => {
   const root = mkdtempSync(path.join(tmpdir(), 'wanxiangshu-loop-selector-'))
@@ -83,6 +85,39 @@ test('WHAT[degeneration-guard-004] worker failure rejects only after all spawned
   }), /loop detector tokenize worker exited with 42/)
   assert.ok(spawned.length > 0)
   for (const worker of spawned) assert.equal(worker.threadId, -1)
+})
+
+integrationTest('WHAT[degeneration-guard-004] clean and full Fable rebuilds preserve explicit envelope bytes and restore them after a later artifact failure', async (t) => {
+  for (const clean of [true, false]) {
+    await t.test(`WHAT[degeneration-guard-004] ${clean ? 'clean' : 'full'} rebuild does not derive or lose the prepared envelope`, async () => {
+      const root = mkdtempSync(path.join(tmpdir(), 'wanxiangshu-explicit-envelope-build-'))
+      const sourceRoot = path.join(root, 'src/Wanxiangshu')
+      const envelopePath = path.join(root, 'dist/Execution/Session/LoopDetectorEnvelope.js')
+      try {
+        mkdirSync(sourceRoot, { recursive: true })
+        writeFileSync(path.join(sourceRoot, 'Fixture.fs'), 'module Fixture\nlet value = 1\n')
+        writeFileSync(path.join(sourceRoot, 'Wanxiangshu.Shard.Fixture.fsproj'), '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup><ItemGroup><Compile Include="Fixture.fs"/></ItemGroup></Project>\n')
+        writeFileSync(path.join(sourceRoot, 'compile-order.txt'), 'Fixture.fs\n')
+        writeFileSync(path.join(root, 'Directory.Build.props'), `<Project><Import Project="${path.resolve(import.meta.dirname, '../../../Directory.Build.props')}"/></Project>\n`)
+        writeFileSync(path.join(root, 'note.md'), 'This fixture owns the selected repository source.\n')
+        execFileSync('git', ['init', '-q'], { cwd: root })
+        execFileSync('git', ['add', 'src', 'Directory.Build.props', 'note.md'], { cwd: root })
+        const prepared = await writeLoopDetectorEnvelopeArtifact(root)
+        assert.ok(prepared.selectedInputs.some(({ path: selected }) => selected === 'note.md'))
+        assert.ok(prepared.selectedInputs.every(({ path: selected }) => !path.isAbsolute(selected)))
+        const envelopeBytes = readFileSync(envelopePath)
+        writeFileSync(path.join(root, 'note.md'), 'The corpus changed after explicit preparation.\n'.repeat(128))
+        await writeLoopDetectorEnvelopeArtifact(root)
+        assert.notDeepEqual(readFileSync(envelopePath), envelopeBytes)
+        writeFileSync(envelopePath, envelopeBytes)
+        await assert.rejects(runBuild({ targetRoot: root, clean, stdio: 'pipe' }), /missing entry artifact: .*OpenCode\/Plugin\/Plugin\.js/)
+        assert.deepEqual(readFileSync(envelopePath), envelopeBytes)
+        assert.equal(existsSync(path.join(root, '.fable-build/dist.staged-backup')), false)
+      } finally {
+        rmSync(root, { recursive: true, force: true })
+      }
+    })
+  }
 })
 
 test.todo('WHAT[degeneration-guard-004] actual build binds generator selector selected bytes and runtime traversal to one staged input (GAP-145)')

@@ -271,7 +271,7 @@ const deriveEnvelopeFromCorpus = async ({ selectedInputs, texts }) => {
 export const deriveLoopDetectorEnvelope = async (root = defaultRoot, dependencies = {}) =>
   deriveEnvelopeFromCorpus(loadLoopDetectorRepositoryCorpusV1(root, dependencies))
 
-const artifactSource = (envelope) => `// Generated from the current repository SSOT by scripts/build.mjs.
+const artifactSource = (envelope) => `// Generated from the selected repository SSOT by scripts/derive-envelope.mjs.
 // Ephemeral build input; never hand-edit or copy these values into tracked source.
 import { encode } from 'gpt-tokenizer/encoding/o200k_base'
 export { encode }

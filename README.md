@@ -219,6 +219,7 @@ npm run format-build-test
 ```bash
 npm ci
 dotnet tool restore
+node scripts/derive-envelope.mjs # 首次构建前显式准备包络
 npm run format-build-test   # 日常验证
 npm run verify:release      # 发布验证
 ```
@@ -234,7 +235,7 @@ npm run verify:release      # 发布验证
 |------|------|
 | `npm run format` | Fantomas 写盘（与 `format:check` 的相对面：一个改文件，一个只判失败） |
 | `node scripts/build.mjs --plan` | 只读计划报告：`mode`/`reason`/`changedInputs`/`selectedShards`/`compileItems`/`fableCompileInvocations`，不写 `dist/` |
-| `node scripts/derive-envelope.mjs` | 手动派生 loop detector envelope 到 `dist/Execution/Session/LoopDetectorEnvelope.js`。构建不自动派生；产物缺失时构建会提示运行本命令 |
+| `node scripts/derive-envelope.mjs` | 显式派生 loop detector envelope 到 `dist/Execution/Session/LoopDetectorEnvelope.js`。开发者手动更新，CI 在验证前独立准备；构建不自动派生，clean/full 重建保留已有产物字节 |
 
 ### 测试分层
 
@@ -288,7 +289,7 @@ resources/wanxiangshu.mjs
 - **构建**：`scripts/build.mjs`（增量：按输入摘要判定 no-op / focused / full / clean 四模式，plan 与 run 共用判定；非源码输入或工具链变化进入 full 编译但不清空 `dist/`；仅源图删除、重命名或显式 `--clean` 时清空输出目录后重建；其余情况按受影响分片增量聚焦编译；随后校验入口与资源）。不把 `resources/` 复制进 `dist/`。
 - **打包**：仓库根 `npm pack`（或 `--pack-destination artifacts/package`）。tarball = `dist/` + `resources/` + metadata（`package.json`、`README.md`、`LICENSE`）。不得含 `src/`、`requirements/`、`scripts/`、`artifacts/`。
 
-发布预检：`npm run verify:release`（干净工作树；验证日志默认写 `.fable-build/verify-logs/`，已被 .gitignore 忽略；CI 工作流 `.github/workflows/ci.yml` 运行同一命令，但无 artifact 上传，runner 结束后只剩余作业控制台输出）。
+发布预检：首次构建先执行 `node scripts/derive-envelope.mjs`，再运行 `npm run verify:release`（干净工作树；验证日志默认写 `.fable-build/verify-logs/`，已被 .gitignore 忽略）。CI 工作流以独立步骤准备包络后运行同一发布命令；失败时上传 verify-logs。
 
 ### 提交要求
 
@@ -302,6 +303,7 @@ resources/wanxiangshu.mjs
 ```bash
 npm ci
 dotnet tool restore
+node scripts/derive-envelope.mjs
 npm run verify:release
 npm pack --pack-destination artifacts/package
 ```

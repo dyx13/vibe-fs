@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — S0 / WP-042 干净构建包络交付
+
+- CI 与本地 CI 在发布验证前独立调用显式包络准备命令；普通构建仍不自动派生或检查语料变化。clean 重建沿用 staged swap，保留已有包络字节，并在失败时恢复先前输出。正式回归使用各自独立的 tracked 仓库及真实 Fable clean/full 编译，覆盖语料变化不隐式更新与后续产物拒绝后的回滚；完整 generated artifact lineage/traversal 仍属 GAP-145。
+
 ## Unreleased — WP-021 / WP-026（ndjson 内嵌载荷与措辞清理）
 
 - `durable-events-012`：取消旁挂 payloads 目录，事件行自包含载荷。`EventEnvelope` 增内嵌 `Payloads`；`CanonicalEventCodec` 仅在事件确实引用载荷时写出 `payloads` 键（无载荷事件的 canonical 字节不变）；`IEventStore.WritePayload` 改为进程内暂存、`Append` 内嵌；`ICanonicalIntegrator.TryPayload` 成为已提交内嵌载荷的唯一读口，Store 不再自行 `readStreams` 重建缓存。删除 `ProcessEventLog` 的 payload 文件 API、`WriterStreamSync` 与 `RetentionSurface` 的远端 payload 树及缓存。条款同步 `durable-events` [002]/[003]/[010]/[012]、`durable-convergence` [010]、`speculative-investigation` [006]。

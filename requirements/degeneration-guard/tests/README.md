@@ -6,7 +6,7 @@
 |---|---|---|
 | 001/003/005 | 有限重复/多样性样本、普通代码样本、严格边界、独立末次出现权重公式、词表计数 | 样本正常不保证所有正常输出无误杀；有限测试不证明渐近复杂度，须审查更新算法 |
 | 002 | 实际 delta codec 与传感器的文本/非文本区别 | 未证明所有真实 Host 输入都是 assistant、无权威旁路 |
-| 004 | 实际 selector 的正反路径、tracked read 后解码/过滤、字节摘要、并行编码等价、worker 失败清理、当前仓库重新派生及自洽先验 | 重新派生不等于同一 staged build 的完整 lineage/traversal；通用产物验证器见 structured-workflow[015] |
+| 004 | 实际 selector 的正反路径、tracked read 后解码/过滤、字节摘要、并行编码等价、worker 失败清理；显式派生后真实 Fable clean/full 编译与后续产物拒绝恢复原包络，语料变化不隐式更新 | 小型 fixture 缺 Plugin entry，有限证明包络保存与失败回滚；不授全仓构建或同一 staged build 的完整 lineage/traversal，GAP-145 保留 |
 | 006/008 | 独立对象、显式 reset/drop、精确 session/run 的消费与重复拒绝；006 新增 guard 截断后完整 fresh 统计、连续三轮、会话隔离与迟到 delta 的正式 Surface 回归 | 独立对象不是 OS 重启；已完成任务的删除不是在途取消；真实 Host run 边界与取消仍待接线证明，保留 GAP-145 |
 | 007/009 | 实际 sensor 的 interrupt、异步 reconcile、continuation、拒绝诊断及受控暂停；拒绝/抛错和续发结束后同 run 不重复中断 | 发送端口的 Result 不能证明真实 transport acceptance 分类；完整 Host 组合与取消仍属 GAP-145 |
 | 010 | 注入 eligibility 的正反控制 | 不代表生产 Owned/parent/managed/compaction 选择完整 |

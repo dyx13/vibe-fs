@@ -10,7 +10,6 @@ import { run as runSurfaceManifest } from './checks/js-surface-manifest.mjs'
 import { run as runModuleLinkage } from './checks/js-module-linkage.mjs'
 import {
   compileIncremental,
-  resetOutputDirectory,
   planImpactCompile,
 } from './lib/owner-compile.mjs'
 import {
@@ -504,7 +503,7 @@ export async function runBuild({
 
     if (buildMode === 'clean') {
       logInfo('Compiling F# (clean)...')
-      resetOutputDirectory(targetDist)
+      stagedBackupDir = stageDistForFullRebuild(targetDist)
       compileResult = await compileIncremental({
         changedPaths: compilerInputs.map((e) => path.resolve(resolvedRoot, e.path)),
         isClean: true,

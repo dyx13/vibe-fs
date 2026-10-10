@@ -19,6 +19,8 @@ jobs:
           global-json-file: global.json
       - run: npm ci
       - run: dotnet tool restore
+      - name: Prepare loop detector envelope
+        run: node scripts/derive-envelope.mjs
       - name: Run verification
         id: verify
         env:
