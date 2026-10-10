@@ -1102,24 +1102,65 @@ test('WHAT[verification-system-006] physical backstop diagnostics retain active 
   try {
     const launcher = path.join(directory, 'supervise.mjs')
     const moduleUrl = new URL('./e2e/support/supervise-node-test.mjs', import.meta.url).href
-    fs.writeFileSync(launcher, `import { superviseNodeTest } from ${JSON.stringify(moduleUrl)}
-await superviseNodeTest({ files: process.argv.slice(2), label: 'backstop-file-waits', silenceMs: 5000 })
+    const inner = path.join(directory, 'inner.mjs')
+    const gate = path.join(directory, 'release-next-verdict')
+    const reported = path.join(directory, 'next-verdict-reported')
+    const innerUrl = new URL('./support/run-inner.mjs', import.meta.url).href
+    fs.writeFileSync(inner, `import { writeFileSync } from 'node:fs'
+import { runTestFiles } from ${JSON.stringify(innerUrl)}
+const stdout = { write(chunk) {
+  return process.stdout.write(chunk, () => {
+    if (/^✔ bounded work 2 \\(\\d+(?:\\.\\d+)?ms\\)\\n$/.test(String(chunk))) {
+      writeFileSync(${JSON.stringify(reported)}, JSON.stringify({ line: String(chunk), pid: process.pid }))
+    }
+  })
+} }
+if (!await runTestFiles({ files: process.argv.slice(2), stdout })) process.exitCode = 1
+`)
+    fs.writeFileSync(launcher, `import { execFileSync } from 'node:child_process'
+import { existsSync, writeFileSync } from 'node:fs'
+import { performance } from 'node:perf_hooks'
+import { superviseNodeTest } from ${JSON.stringify(moduleUrl)}
+const wait = new Int32Array(new SharedArrayBuffer(4))
+await superviseNodeTest({ files: process.argv.slice(2), inner: ${JSON.stringify(inner)},
+  label: 'backstop-file-waits', silenceMs: 5000,
+  inspectProcessTree({ phase, timeout }) {
+    if (phase === 'initial-capture') {
+      writeFileSync(${JSON.stringify(gate)}, 'diagnostic cut already printed')
+      const deadline = performance.now() + timeout
+      while (!existsSync(${JSON.stringify(reported)})) {
+        if (performance.now() >= deadline) throw new Error('next real verdict was not reported before capture')
+        Atomics.wait(wait, 0, 0, 1)
+      }
+    }
+    return execFileSync('ps', ['-eo', 'pid=,ppid=,pgid=,stat='], { encoding: 'utf8', timeout })
+  },
+})
 `)
     const drained = fileURLToPath(new URL('./support/fixtures/all-pass.fixture.mjs', import.meta.url))
     const active = path.join(directory, 'finite-work.fixture.mjs')
     const queued = path.join(directory, 'queued.fixture.mjs')
     const queuedMarker = path.join(directory, 'queued-started')
     fs.writeFileSync(active, `import assert from 'node:assert/strict'
+import { existsSync } from 'node:fs'
 import test from 'node:test'
 import { setTimeout } from 'node:timers/promises'
 let completed = 0
-for (let index = 0; index < 100; index++) {
+for (let index = 0; index < 2; index++) {
   test('bounded work ' + index, async () => {
     await setTimeout(100)
     assert.equal(completed, index)
     completed++
   })
 }
+test('bounded work 2', async () => {
+  while (!existsSync(${JSON.stringify(gate)})) await setTimeout(1)
+  assert.equal(completed, 2)
+  completed++
+})
+test('waiting for process termination', async () => {
+  await new Promise(() => { setInterval(() => {}, 1000) })
+})
 `)
     fs.writeFileSync(queued, `import fs from 'node:fs'
 import test from 'node:test'
@@ -1141,15 +1182,19 @@ test('queued work', () => {})
     assert.doesNotMatch(output, /WATCHDOG/)
     assert.equal(fs.existsSync(queuedMarker), false, 'The queued entry never acquires the occupied lane')
     const verdicts = [...output.matchAll(/✔ bounded work (\d+) /g)]
-    assert.ok(verdicts.length >= 2, output)
+    assert.deepEqual(verdicts.map(match => Number(match[1])), [0, 1, 2], output)
+    const reportedVerdict = JSON.parse(fs.readFileSync(reported, 'utf8'))
+    assert.match(reportedVerdict.line, /^✔ bounded work 2 \(\d+(?:\.\d+)?ms\)\n$/)
+    assert.equal(output.split(reportedVerdict.line).length - 1, 1)
     assert.match(output, /file streams: 1 drained, 1 active, 1 queued/)
     const activeWaits = output.split('\n').filter(line => line.includes('active file '))
     assert.equal(activeWaits.length, 1, output)
     assert.ok(activeWaits[0].includes(path.relative(process.cwd(), active)), output)
-    assert.match(activeWaits[0], new RegExp(`last verdict: test:(?:pass|complete):bounded work ${verdicts.at(-1)[1]}$`))
+    assert.match(activeWaits[0], /last verdict: test:(?:pass|complete):bounded work 1$/)
     assert.match(output, /1 queued file\(s\) have not started/)
     const reclamation = /post-exit group verification\/reclamation: pid=(\d+);.*accepted=true/.exec(output)
     assert.ok(reclamation, output)
+    assert.equal(reportedVerdict.pid, Number(reclamation[1]))
     assert.throws(() => process.kill(Number(reclamation[1]), 0), error => error.code === 'ESRCH')
   } finally {
     fs.rmSync(directory, { recursive: true, force: true })
