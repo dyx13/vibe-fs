@@ -21,6 +21,8 @@ module JournalSurface =
     val acquireSharedForWorkspace: workspace: string -> processId: int -> startedAt: string -> Task<obj>
     val dispose: handle: JournalHandle -> unit
     val runtimeId: handle: JournalHandle -> string
+    val pendingDeferredWork: handle: JournalHandle -> session: string -> obj
+    val deferredWorkWasConsumed: handle: JournalHandle -> session: string -> occurrence: string -> bool
     val appendAgent: handle: JournalHandle -> stream: obj -> run: obj -> fact: obj -> Task<obj>
     val appendManagerLifecycle: handle: JournalHandle -> stream: obj -> factObj: obj -> Task<obj>
     val writePayload: handle: JournalHandle -> content: string -> Task<obj>

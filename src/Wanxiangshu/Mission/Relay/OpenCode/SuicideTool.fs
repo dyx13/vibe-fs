@@ -284,24 +284,23 @@ module SuicideTool =
             return blockedResult blockers
         }
 
-    /// ATTENTION-005: a completed retirement consumes this life's remaining
-    /// deferred work and leaves a durable consumption receipt, so a replayed
-    /// `DeferredWorkRecorded` cannot resurrect it after restart.
-    let private consumePendingDeferred (prepared: PreparedRetirement) =
+    let private consumePendingDeferred (prepared: PreparedRetirement) (pending: DeferredWorkItem list) =
         task {
             let port = AttentionConcernJournalAdapter.forAttention prepared.Bound.Journal
-            let pending = AttentionProjection.pending prepared.SessionId (port.Read())
 
             match pending with
-            | [] -> return ()
+            | [] -> return Ok()
             | items ->
                 let fact =
                     AttentionFactCases.DeferredWorkConsumed
                         {| SessionId = prepared.SessionId
                            OccurrenceIds = (items |> List.map (fun item -> item.OccurrenceId)) |}
 
-                let! _ = port.Append prepared.SessionId (Some prepared.Bound.ProviderRun) fact
-                return ()
+                let! appended = port.Append prepared.SessionId (Some prepared.Bound.ProviderRun) fact
+
+                return
+                    appended
+                    |> Result.mapError (fun _ -> "deferred work consumption durability unavailable")
         }
 
     let private runRetirement (prepared: PreparedRetirement) =
@@ -323,18 +322,13 @@ module SuicideTool =
             return retiredResult ()
         }
 
-    // ATTENTION-005: the completed retirement consumes this life's
-    // remaining deferred work. An append failure leaves the outcome
-    // unchanged; `RetirementCommitted` stays durable either way.
     let private completeRetirement (prepared: PreparedRetirement) =
-        task {
-            let! outcome = runRetirement prepared
-
-            match outcome with
-            | Ok value ->
-                do! consumePendingDeferred prepared
-                return Ok value
-            | Error error -> return Error error
+        taskResult {
+            let port = AttentionConcernJournalAdapter.forAttention prepared.Bound.Journal
+            let pending = AttentionProjection.pending prepared.SessionId (port.Read())
+            let! value = runRetirement prepared
+            let! _ = consumePendingDeferred prepared pending
+            return value
         }
 
     let private runRetirementOrBlocked
@@ -402,7 +396,7 @@ module SuicideTool =
         match outcome with
         | Ok value -> value
         | Error error ->
-            scope.UnfreezeRetirement context.SessionId
+            unfreezeUnlessRetired scope context
             raise (InvalidOperationException error)
 
     // No session-scoped physical cut here. AbortSession names a session, not the

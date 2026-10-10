@@ -19,12 +19,56 @@ open Wanxiangshu.Interaction.Dispatch
 open Wanxiangshu.Participant.Persona
 open Wanxiangshu.Persistence.EventStore
 open Wanxiangshu.Persistence.Journal
+open Fable.Core.JsInterop
 
 /// Observation-timing proofs for AgentJournalPortAdapter. Every scenario builds
 /// the production adapter over a real AgentJournal whose writer commits into a
 /// real filesystem EventStore, so a frozen-at-construction member reads through
 /// the same canonical projection the store publishes.
 module JournalPortObservationSurface =
+
+    let withAppendRefusal (handle: JournalHandle) target (action: unit -> Task<obj>) : Task<obj> =
+        if target <> "consumption" && target <> "retirement" then
+            invalidArg "target" "expected consumption or retirement"
+
+        let writer = handle.Journal.Writer
+        let originalMethod: obj = emitJsExpr writer "$0.Append"
+
+        let original: Func<StreamId, ProviderRunIdentity option, Fact, Task<CommitResult<Envelope>>> =
+            emitJsExpr (writer, originalMethod) "$1.bind($0)"
+
+        // DSL-MUTABLE: resource — count of refused writes at the injected physical boundary
+        let mutable refused = 0
+
+        let matches =
+            function
+            | Agent(AgentFact.Attention(AttentionFactCases.DeferredWorkConsumed _)) -> target = "consumption"
+            | Agent(AgentFact.Relay(Wanxiangshu.Mission.Relay.RelayFactCases.TransactionCommitted payload)) when
+                target = "retirement"
+                ->
+                Wanxiangshu.Mission.Relay.RelayTransaction.events payload.Transaction
+                |> List.exists (function
+                    | Wanxiangshu.Mission.Relay.RelayEvent.RetirementCommitted _ -> true
+                    | _ -> false)
+            | _ -> false
+
+        let replacement =
+            Func<StreamId, ProviderRunIdentity option, Fact, Task<CommitResult<Envelope>>>(fun stream run fact ->
+                if matches fact then
+                    refused <- refused + 1
+                    Task.FromResult(NotAttempted(EventId.create "injected-not-attempted", WriterClosing))
+                else
+                    original.Invoke(stream, run, fact))
+
+        task {
+            emitJsExpr (writer, replacement) "$0.Append = $1" |> ignore
+
+            try
+                let! value = action ()
+                return box {| refused = refused; value = value |}
+            finally
+                emitJsExpr (writer, originalMethod) "$0.Append = $1" |> ignore
+        }
 
     /// Armed after real authority admission, this parks the next business append.
     /// TryCurrent and the canonical integrator pass through untouched.

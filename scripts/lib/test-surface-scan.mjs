@@ -951,9 +951,12 @@ export const SURFACE_MANIFEST = [
   {
     module: 'Persistence/Journal/Surface.js',
     owner: 'durable-events',
-    laws: ['DURABLE-EVENTS-009', 'DURABLE-EVENTS-010', 'DURABLE-EVENTS-012', 'DURABLE-EVENTS-013', 'DURABLE-EVENTS-019', 'EFFECT-ACCOUNTING-008'],
+    laws: ['DURABLE-EVENTS-009', 'DURABLE-EVENTS-010', 'DURABLE-EVENTS-012', 'DURABLE-EVENTS-013', 'DURABLE-EVENTS-019', 'EFFECT-ACCOUNTING-008', 'ATTENTION-REGULATION-004', 'ATTENTION-REGULATION-005', 'ATTENTION-REGULATION-006'],
     lawOwners: {
       'EFFECT-ACCOUNTING-008': 'effect-accounting',
+      'ATTENTION-REGULATION-004': 'attention-regulation',
+      'ATTENTION-REGULATION-005': 'attention-regulation',
+      'ATTENTION-REGULATION-006': 'attention-regulation',
     },
     source: 'src/Wanxiangshu/Persistence/Journal/Surface.fs',
     representation: 'opaque-capability',
@@ -1756,8 +1759,8 @@ export const SURFACE_MANIFEST = [
   {
     module: 'Verification/JournalPortObservationSurface.js',
     owner: 'verification-system',
-    laws: ['DURABLE-EVENTS-006', 'DURABLE-EVENTS-023', 'DURABLE-EVENTS-024'],
-    lawOwners: { 'DURABLE-EVENTS-006': 'durable-events', 'DURABLE-EVENTS-023': 'durable-events', 'DURABLE-EVENTS-024': 'durable-events' },
+    laws: ['DURABLE-EVENTS-006', 'DURABLE-EVENTS-023', 'DURABLE-EVENTS-024', 'ATTENTION-REGULATION-005'],
+    lawOwners: { 'DURABLE-EVENTS-006': 'durable-events', 'DURABLE-EVENTS-023': 'durable-events', 'DURABLE-EVENTS-024': 'durable-events', 'ATTENTION-REGULATION-005': 'attention-regulation' },
     source: 'src/Wanxiangshu/Verification/JournalPortObservationSurface.fs',
     representation: 'opaque-capability',
     kind: 'resource',

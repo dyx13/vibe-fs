@@ -27,6 +27,7 @@ open Wanxiangshu.OpenCode.Host.PairProgramming
 open Wanxiangshu.OpenCode.Host.RequirementGrounding
 open Wanxiangshu.Execution.Session
 open Wanxiangshu.Interaction.Authority
+open Wanxiangshu.Interaction.Attention
 open Wanxiangshu.Participant.Provider.Attempt.Fallback
 
 /// Opaque capability for one journal projection and its local writer.
@@ -153,6 +154,19 @@ module JournalSurface =
                     match str payload?Ownership with
                     | "HostOwnedHidden" -> HandleOwnership.HostOwnedHidden
                     | _ -> HandleOwnership.DurableParentHandle |}
+        | "Attention", "DeferredWorkRecorded" ->
+            AgentFact.Attention(
+                AttentionFactCases.DeferredWorkRecorded
+                    {| SessionId = sessionIdOf (payload?SessionId)
+                       OccurrenceId = str payload?OccurrenceId
+                       Text = str payload?Text |}
+            )
+        | "Attention", "DeferredWorkConsumed" ->
+            AgentFact.Attention(
+                AttentionFactCases.DeferredWorkConsumed
+                    {| SessionId = sessionIdOf (payload?SessionId)
+                       OccurrenceIds = unbox<string array> (payload?OccurrenceIds) |> Array.toList |}
+            )
         | _ -> failwith $"JournalSurface: unknown AgentFact {family}.{case}"
 
     let private streamOfJs (value: obj) : StreamId =
@@ -498,6 +512,20 @@ module JournalSurface =
     /// Runtime identity is a plain diagnostic value; the journal remains opaque.
     let runtimeId (handle: JournalHandle) : string =
         AgentJournal.runtimeId handle.Journal |> RuntimeId.value
+
+    let pendingDeferredWork (handle: JournalHandle) (session: string) : obj =
+        (AgentJournal.snapshot handle.Journal).AgentProjections.Attention
+        |> AttentionProjection.pending (SessionId.create session)
+        |> List.map (fun item ->
+            box
+                {| occurrence = item.OccurrenceId
+                   text = item.Text |})
+        |> List.toArray
+        |> box
+
+    let deferredWorkWasConsumed (handle: JournalHandle) (session: string) occurrence : bool =
+        (AgentJournal.snapshot handle.Journal).AgentProjections.Attention
+        |> AttentionProjection.wasConsumed (SessionId.create session) occurrence
 
     /// Append an agent fact and return a normalized projection summary.
     let appendAgent (handle: JournalHandle) (stream: obj) (run: obj) (fact: obj) : Task<obj> =

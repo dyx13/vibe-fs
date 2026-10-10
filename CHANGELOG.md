@@ -1,5 +1,9 @@
 # Changelog — 版本历史
 
+## Unreleased — S1b1 Manager 退休消费凭据
+
+- 退休前取得待办 occurrence IDs，Continue/Accepted 正常退休后都追加独立 DeferredWorkConsumed。消费追加拒绝向上传递，已退休任保持冻结；退休追加拒绝不提前消费。正式注册工具、新 OS 重放与 foreign 同名隔离有证明，测试通过正式 Surface 接线。双追加崩溃恢复、CommitUnknown 与三角色自然终点消费仍开放。
+
 ## Unreleased — S1a 两段退休的真实 Host 验收
 
 - Long Stroke 的 HumanRoot 补第二次 suicide，后继收尾也按两段确认结束。逐任核 durable confirmation、退休cut与真实Host/SSE精确调用，按事件parents证明因果顺序；HumanRoot后继保留完整review与两次suicide历史。断因果边、首确认假退休及缺SSE来源有负控。同一serve真实36/0通过，完整release和待办/通知链仍开放。
