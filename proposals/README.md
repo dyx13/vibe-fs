@@ -1,5 +1,7 @@
 # 计划与提案入口
 
+2026-10-13 子系统拆分专项见[现状核对与收尾施工计划](子系统拆分收尾计划-2026-10-13.md)：逐项对照原 B00—B11 与现行规范，区分已保留的编译成果、依赖回退和证明缺口，按 R00—R11 收尾。GAP-033 已按当前三组子系统环重开为 PARTIAL；本次只交付核对与计划，生产重构和终态发布门禁尚未实施。其它产品工作仍按各自现行计划推进。
+
 2026-10-10接续施工见[一小时半记录](Upstream接续一小时半施工-2026-10-10.md)。S1b2已局部证明发送前exact batch绑定、真实PhysicalAccepted原子消费、三角色自然终点与新OS入口；启动自动检索Host历史、Manager双append恢复、完整life与发布吞吐继续开放。
 
 最新全仓CI以[4f0原始收据](archive/2026-10-06/baselines/4f0-ci/vibe-fs-4f0-ci-receipt.txt)为准：format/check/build通过，原300秒截断791/821、006/008活动、28queued、无summary；ps终止查询超时及GitHub两个orphan清理单列，外组accepted不证明全部detached资源排空。M1实际worker pre-import已收，缺exit仍明确missing；下一N00先正式复现查询失败的清理边界，再按真实成本确定因果实验，不改预算/worker。下方1eb为前一输入证书。
