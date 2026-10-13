@@ -339,6 +339,9 @@ const change = await import('../../../dist/Change/Surface.js')
 test('WHAT[change-integration-003] reentry with valid complete claim reenters without CandidateReady and publishes on the pin', async () => {
   const observation = await change.observeRelayProgram('reentry-valid')
 
+  assert.deepEqual(observation.removedWorktreePaths, ['/tmp/wanxiangshu-change-surface'])
+  assert.deepEqual(observation.deletedWorktreeIdentities, ['manager/surface-job'])
+
   assert.deepEqual(observation.verdict, { kind: 'Published', detail: 'rebased-1' })
   assert.deepEqual(observation.ffExpectedHeads, ['target-1'])
   assert.deepEqual(observation.ffPinnedCandidates, ['rebased-1'])

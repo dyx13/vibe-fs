@@ -4,6 +4,7 @@ open System.IO
 open System.Threading.Tasks
 open FsToolkit.ErrorHandling
 open Wanxiangshu.Composition.Durable
+open Wanxiangshu.Composition.Durable.Fact
 open Wanxiangshu.Execution.Session.Wait
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
@@ -95,15 +96,21 @@ type Orchestrator
     let programDeps: OrchestratorProgramDeps =
         { Git = git
           Relay = relay
-          AppendFact = appendFact
-          Snapshot = snapshot
+          AppendFact = fun fact -> appendFact StreamId.Workspace (AgentFact.Orchestrator fact)
+          TryJob = fun jobId -> OrchestratorProjection.tryFind jobId (snapshot ()).AgentProjections.Orchestrator
           AcquirePublishGate = acquirePublishGate }
 
     let startPublication (job: ManagerJob) =
         mailbox.StartJob()
 
         task {
-            let! verdict = OrchestratorProgram.run programDeps job
+            let publicationJob: PublicationJob =
+                { JobId = job.JobId
+                  TargetRef = job.TargetRef
+                  WorktreePath = job.Worktree.Path
+                  ReleaseWorktree = fun () -> job.Worktree.Release() }
+
+            let! verdict = OrchestratorProgram.run programDeps publicationJob
 
             mailbox.Publish verdict
         }

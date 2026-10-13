@@ -1,24 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <WanxiangshuSubsystem>durable-composition</WanxiangshuSubsystem>
+    <WanxiangshuSubsystem>change</WanxiangshuSubsystem>
     <WanxiangshuCompileShard>change-fold</WanxiangshuCompileShard>
     <WanxiangshuSemanticOwner>change-integration</WanxiangshuSemanticOwner>
     <WanxiangshuOwnerLocality>change-fold</WanxiangshuOwnerLocality>
-    <WanxiangshuOwnerLocalityKind>composition</WanxiangshuOwnerLocalityKind>
+    <WanxiangshuOwnerLocalityKind>contract</WanxiangshuOwnerLocalityKind>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-facts.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-linkage-projection.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.foundation-identity.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.foundation-outcome.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.durable-events.composition-durable-fact.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.durable-events.persistence-journal-promptfactcodec.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.relay-incumbency.mission-relay-core.fsproj"/>
+    <Compile Include="Change/Projection.fsi"/>
+    <Compile Include="Change/Projection.fs"/>
     <Compile Include="Change/Fold.fsi"/>
     <Compile Include="Change/Fold.fs"/>
     <Compile Include="Change/Types.fsi"/>
     <Compile Include="Change/Types.fs"/>
-    <Compile Include="Change/Orchestrator/OrchestratorPort.fsi"/>
-    <Compile Include="Change/Orchestrator/OrchestratorPort.fs"/>
   </ItemGroup>
 </Project>

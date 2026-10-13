@@ -3,12 +3,10 @@ namespace Wanxiangshu.Change
 open System
 open System.Threading.Tasks
 open FsToolkit.ErrorHandling
-open Wanxiangshu.Composition.Durable
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Host
 open Wanxiangshu.Mission.Relay
-open Wanxiangshu.Persistence.Journal
 
 /// One manager session owns one stable worktree. Human quality decisions come only from
 /// Relay incumbencies; Change owns deterministic Git admission, rebase and CAS.
@@ -28,7 +26,7 @@ module OrchestratorProgram =
           WorkspaceSnapshotId: WorkspaceSnapshotId }
 
     let private buildPublicationEvidence
-        (job: ManagerJob)
+        (job: PublicationJob)
         (rebasedReady:
             {| RebasedCommit: CommitHash
                TargetHeadSnapshot: CommitHash
@@ -44,7 +42,7 @@ module OrchestratorProgram =
           WorkspaceSnapshotId = rebasedReady.WorkspaceSnapshotId }
 
     let private buildClaimPublicationEvidence
-        (job: ManagerJob)
+        (job: PublicationJob)
         (claim:
             {| TargetRef: TargetRef
                RebasedCommit: CommitHash
@@ -61,7 +59,7 @@ module OrchestratorProgram =
           AuthorityRevision = claim.AuthorityRevision
           WorkspaceSnapshotId = claim.WorkspaceSnapshotId }
 
-    let private failed (job: ManagerJob) details =
+    let private failed (job: PublicationJob) details =
         OrchestratorVerdict.IntegrationFailed(job.JobId, details)
 
     let private mapTask (mapper: 'a -> 'b) (operation: Task<'a>) : Task<'b> =
@@ -85,47 +83,47 @@ module OrchestratorProgram =
     let private continueUnit binder operation =
         continueResult (fun () -> binder ()) operation
 
-    let private append (deps: OrchestratorProgramDeps) (job: ManagerJob) fact =
-        taskResult { do! deps.AppendFact StreamId.Workspace fact |> mapTaskError (failed job) }
+    let private append (deps: OrchestratorProgramDeps) (job: PublicationJob) fact =
+        taskResult { do! deps.AppendFact fact |> mapTaskError (failed job) }
 
-    let private readHead (deps: OrchestratorProgramDeps) (job: ManagerJob) =
-        deps.Git.ReadHead job.Worktree.Path
+    let private readHead (deps: OrchestratorProgramDeps) (job: PublicationJob) =
+        deps.Git.ReadHead job.WorktreePath
         |> mapTaskError (fun error -> failed job (sprintf "Git head lookup failed: %s" error))
 
-    let private targetHead (deps: OrchestratorProgramDeps) (job: ManagerJob) =
+    let private targetHead (deps: OrchestratorProgramDeps) (job: PublicationJob) =
         deps.Git.GetTargetHead job.TargetRef
         |> mapTaskError (fun error -> failed job (sprintf "Git target head lookup failed: %s" error))
 
-    let private invalidate (deps: OrchestratorProgramDeps) (job: ManagerJob) reason =
+    let private invalidate (deps: OrchestratorProgramDeps) (job: PublicationJob) reason =
         deps.Relay.InvalidateCertificate job.JobId reason
         |> mapTaskError (fun error -> failed job (sprintf "Certificate invalidation failed: %s" error))
 
-    let private continueLoop (deps: OrchestratorProgramDeps) (job: ManagerJob) =
+    let private continueLoop (deps: OrchestratorProgramDeps) (job: PublicationJob) =
         deps.Relay.ContinueLoop job.JobId
         |> mapTaskError (fun error -> failed job (sprintf "Manager loop continuation failed: %s" error))
 
-    let private captureSnapshotResult (deps: OrchestratorProgramDeps) (job: ManagerJob) details =
+    let private captureSnapshotResult (deps: OrchestratorProgramDeps) (job: PublicationJob) details =
         deps.Relay.CaptureSnapshot job.JobId
         |> mapTaskError (fun error -> failed job (sprintf "%s: %s" details error))
 
-    let private conflictedFilesResult (deps: OrchestratorProgramDeps) (job: ManagerJob) =
-        deps.Git.ConflictedFiles job.Worktree.Path
+    let private conflictedFilesResult (deps: OrchestratorProgramDeps) (job: PublicationJob) =
+        deps.Git.ConflictedFiles job.WorktreePath
         |> mapTaskError (fun error -> failed job (sprintf "Conflict-file lookup failed: %s" error))
 
-    let private prepareCandidateResult (deps: OrchestratorProgramDeps) (job: ManagerJob) =
+    let private prepareCandidateResult (deps: OrchestratorProgramDeps) (job: PublicationJob) =
         deps.Relay.PrepareCandidate job.JobId
         |> mapTaskError (fun error -> failed job (sprintf "Candidate admission failed: %s" error))
 
     let private recordCandidate
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (candidate: CommitHash)
         (certificate: QualityCertificate)
         =
         append
             deps
             job
-            (OrchestratorFact.CandidateReady
+            (OrchestratorFactCases.CandidateReady
                 {| ManagerJobId = job.JobId
                    CandidateCommit = candidate
                    WorkspaceSnapshotId = certificate.SnapshotId
@@ -133,7 +131,7 @@ module OrchestratorProgram =
 
     let private recordRebased
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (target: CommitHash)
         (snapshot: WorkspaceSnapshotId)
         =
@@ -144,7 +142,7 @@ module OrchestratorProgram =
                 append
                     deps
                     job
-                    (OrchestratorFact.RebasedCandidateReady
+                    (OrchestratorFactCases.RebasedCandidateReady
                         {| ManagerJobId = job.JobId
                            RebasedCommit = rebased
                            TargetHeadSnapshot = target
@@ -155,7 +153,7 @@ module OrchestratorProgram =
 
     let private recordConflict
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (candidate: CommitHash)
         (target: CommitHash)
         (snapshot: WorkspaceSnapshotId)
@@ -164,7 +162,7 @@ module OrchestratorProgram =
         append
             deps
             job
-            (OrchestratorFact.ConflictDetected
+            (OrchestratorFactCases.ConflictDetected
                 {| ManagerJobId = job.JobId
                    CandidateCommit = candidate
                    TargetHeadSnapshot = target
@@ -173,7 +171,7 @@ module OrchestratorProgram =
                    DiagnosticsDigest = HostDigest.sha256Hex (String.Join("\n", files)) |})
 
     let private publicationIdentityVerdict
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         : Result<unit, OrchestratorVerdict> =
@@ -187,7 +185,7 @@ module OrchestratorProgram =
             Ok()
 
     let private gateSnapshotVerdict
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (snapshot: WorkspaceSnapshotId)
         : Result<unit, OrchestratorVerdict> =
@@ -197,7 +195,7 @@ module OrchestratorProgram =
             Ok()
 
     let private worktreePinVerdict
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (worktreeHead: CommitHash)
         : Result<unit, OrchestratorVerdict> =
@@ -214,7 +212,7 @@ module OrchestratorProgram =
             Ok()
 
     let private prePublishConflictsVerdict
-        (job: ManagerJob)
+        (job: PublicationJob)
         (conflicts: string list)
         : Result<unit, OrchestratorVerdict> =
         if List.isEmpty conflicts then
@@ -223,7 +221,7 @@ module OrchestratorProgram =
             Error(failed job (sprintf "Worktree has unmerged conflicts before publish: %A" conflicts))
 
     let private ffMergeVerdict
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (merge: Result<CommitHash, string>)
         : Result<CommitHash option, OrchestratorVerdict> =
@@ -241,11 +239,15 @@ module OrchestratorProgram =
             )
         | Ok landed -> Ok(Some landed)
 
-    let private appendPublishClaimed (deps: OrchestratorProgramDeps) (job: ManagerJob) (evidence: PublicationEvidence) =
+    let private appendPublishClaimed
+        (deps: OrchestratorProgramDeps)
+        (job: PublicationJob)
+        (evidence: PublicationEvidence)
+        =
         append
             deps
             job
-            (OrchestratorFact.PublishClaimed
+            (OrchestratorFactCases.PublishClaimed
                 {| ManagerJobId = evidence.ManagerJobId
                    TargetRef = evidence.TargetRef
                    RebasedCommit = evidence.CandidateCommit
@@ -256,21 +258,21 @@ module OrchestratorProgram =
 
     let private appendPublishedEvidence
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (landed: CommitHash)
         =
         append
             deps
             job
-            (OrchestratorFact.Published
+            (OrchestratorFactCases.Published
                 {| ManagerJobId = evidence.ManagerJobId
                    CandidateCommit = evidence.CandidateCommit
                    ResultingTargetHead = landed |})
 
     let private finalizePublishedLanding
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (landed: CommitHash)
         =
@@ -282,7 +284,7 @@ module OrchestratorProgram =
 
     let private continueMergeAfterClassification
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (classified: Result<CommitHash option, OrchestratorVerdict>)
         =
@@ -295,18 +297,18 @@ module OrchestratorProgram =
 
     let private runPublishFfMerge
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         =
         task {
-            let! merge = deps.Git.FfMerge job.Worktree.Path job.TargetRef current evidence.CandidateCommit
+            let! merge = deps.Git.FfMerge job.WorktreePath job.TargetRef current evidence.CandidateCommit
             return! continueMergeAfterClassification deps job evidence (ffMergeVerdict job evidence merge)
         }
 
     let private claimRebasedForPublish
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         =
@@ -318,7 +320,7 @@ module OrchestratorProgram =
 
     let private continuePublishAfterConflicts
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         (conflicts: string list)
@@ -331,7 +333,7 @@ module OrchestratorProgram =
 
     let private verifyPublishWorktreeClean
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         =
@@ -343,7 +345,7 @@ module OrchestratorProgram =
 
     let private continuePublishAfterWorktreeHead
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         (worktreeHead: CommitHash)
@@ -356,7 +358,7 @@ module OrchestratorProgram =
 
     let private verifyPublishWorktreePin
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         =
@@ -368,7 +370,7 @@ module OrchestratorProgram =
 
     let private continuePublishAfterGateSnapshot
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         (snapshot: WorkspaceSnapshotId)
@@ -381,7 +383,7 @@ module OrchestratorProgram =
 
     let private capturePublishGateSnapshot
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         =
@@ -393,7 +395,7 @@ module OrchestratorProgram =
 
     let private completeClaimAndFf
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         =
@@ -404,7 +406,7 @@ module OrchestratorProgram =
         }
 
     let private claimExpectationVerdict
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (expectedHead: CommitHash)
         : Result<unit, OrchestratorVerdict> =
@@ -415,7 +417,7 @@ module OrchestratorProgram =
 
     let private continueClaimWithCurrent
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         =
@@ -426,7 +428,7 @@ module OrchestratorProgram =
 
     let private fetchClaimCurrentAndContinue
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         =
         task {
@@ -437,7 +439,7 @@ module OrchestratorProgram =
 
     let private claimAndFf
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (expectedHead: CommitHash)
         =
@@ -449,7 +451,7 @@ module OrchestratorProgram =
 
     let private publishUnderGate
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (expectedHead: CommitHash)
         =
@@ -473,13 +475,13 @@ module OrchestratorProgram =
             | Choice2Of2 error -> return Error(failed job (sprintf "Publish window failed: %s" error.Message))
         }
 
-    let private releaseTerminalWorktree (deps: OrchestratorProgramDeps) (job: ManagerJob) =
+    let private releaseTerminalWorktree (deps: OrchestratorProgramDeps) (job: PublicationJob) =
         task {
             do! deps.Relay.TerminateRoadResources job.JobId
-            return! job.Worktree.Release()
+            return! job.ReleaseWorktree()
         }
 
-    let private settleLanded (deps: OrchestratorProgramDeps) (job: ManagerJob) (commit: CommitHash) =
+    let private settleLanded (deps: OrchestratorProgramDeps) (job: PublicationJob) (commit: CommitHash) =
         task {
             match! releaseTerminalWorktree deps job with
             | Ok() -> return OrchestratorVerdict.Published(job.JobId, commit)
@@ -488,7 +490,7 @@ module OrchestratorProgram =
 
     let private backfillPublished
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (candidate: CommitHash)
         (resultingHead: CommitHash)
         =
@@ -497,7 +499,7 @@ module OrchestratorProgram =
                 append
                     deps
                     job
-                    (OrchestratorFact.Published
+                    (OrchestratorFactCases.Published
                         {| ManagerJobId = job.JobId
                            CandidateCommit = candidate
                            ResultingTargetHead = resultingHead |})
@@ -506,12 +508,11 @@ module OrchestratorProgram =
             | Ok() -> return! settleLanded deps job resultingHead
         }
 
-    let private currentRecord (deps: OrchestratorProgramDeps) (job: ManagerJob) =
-        OrchestratorProjection.tryFind job.JobId (deps.Snapshot()).AgentProjections.Orchestrator
+    let private currentRecord (deps: OrchestratorProgramDeps) (job: PublicationJob) = deps.TryJob job.JobId
 
     let private artifactSnapshotMatches
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (certificate: QualityCertificate)
         =
         taskResult {
@@ -522,14 +523,14 @@ module OrchestratorProgram =
             return snapshot = certificate.SnapshotId, snapshot
         }
 
-    let private requestAfterBindingChange (deps: OrchestratorProgramDeps) (job: ManagerJob) reason =
+    let private requestAfterBindingChange (deps: OrchestratorProgramDeps) (job: PublicationJob) reason =
         taskResult {
             do! invalidate deps job reason
             let! _ = continueLoop deps job
             return ()
         }
 
-    let rec private runManagerLoop (deps: OrchestratorProgramDeps) (job: ManagerJob) : Task<OrchestratorVerdict> =
+    let rec private runManagerLoop (deps: OrchestratorProgramDeps) (job: PublicationJob) : Task<OrchestratorVerdict> =
         task {
             match! deps.Relay.AwaitLoopSignal job.JobId with
             | Error error -> return failed job (sprintf "Manager loop signal failed: %s" error)
@@ -538,7 +539,7 @@ module OrchestratorProgram =
             | Ok(ManagerLoopSignal.ExceptionalTerminal reason) -> return failed job reason
         }
 
-    and private continueManagerLoop (deps: OrchestratorProgramDeps) (job: ManagerJob) : Task<OrchestratorVerdict> =
+    and private continueManagerLoop (deps: OrchestratorProgramDeps) (job: PublicationJob) : Task<OrchestratorVerdict> =
         task {
             match! continueLoop deps job with
             | Ok _ -> return! runManagerLoop deps job
@@ -547,7 +548,7 @@ module OrchestratorProgram =
 
     and private handleRebase
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (certificate: QualityCertificate)
         (candidate: CommitHash)
         (target: CommitHash)
@@ -581,7 +582,7 @@ module OrchestratorProgram =
 
         let afterInvalidation () =
             task {
-                let! rebase = deps.Git.Rebase job.Worktree.Path job.TargetRef
+                let! rebase = deps.Git.Rebase job.WorktreePath job.TargetRef
 
                 match rebase with
                 | Ok() -> return! onRebaseSuccess ()
@@ -592,7 +593,7 @@ module OrchestratorProgram =
 
     and private publishCertified
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (certificate: QualityCertificate)
         (candidate: CommitHash)
         (expectedHead: CommitHash)
@@ -689,7 +690,7 @@ module OrchestratorProgram =
 
     and private handleQualityCandidate
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (certificate: QualityCertificate)
         : Task<OrchestratorVerdict> =
         let resumeLoop () = runManagerLoop deps job
@@ -769,7 +770,7 @@ module OrchestratorProgram =
 
     let private resumePublishReady
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (expectedHead: CommitHash)
         =
@@ -782,7 +783,7 @@ module OrchestratorProgram =
 
     let private resumePublishReality
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         (reality: PublishClaimReality)
@@ -794,7 +795,10 @@ module OrchestratorProgram =
         | PublishClaimReality.PublishReady -> resumePublishReady deps job evidence evidence.ExpectedHead
         | PublishClaimReality.ClaimExpired -> runManagerLoop deps job
 
-    let private reentryClaimTargetVerdict (job: ManagerJob) (targetRef: TargetRef) : Result<unit, OrchestratorVerdict> =
+    let private reentryClaimTargetVerdict
+        (job: PublicationJob)
+        (targetRef: TargetRef)
+        : Result<unit, OrchestratorVerdict> =
         if targetRef <> job.TargetRef then
             Error(failed job "Publish claim target mismatch; refusing publish recovery")
         else
@@ -815,7 +819,7 @@ module OrchestratorProgram =
 
     let private continueReentryWithTarget
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (current: CommitHash)
         =
@@ -824,7 +828,11 @@ module OrchestratorProgram =
 
         resumePublishReality deps job evidence current reality
 
-    let private resolveReentryTarget (deps: OrchestratorProgramDeps) (job: ManagerJob) (evidence: PublicationEvidence) =
+    let private resolveReentryTarget
+        (deps: OrchestratorProgramDeps)
+        (job: PublicationJob)
+        (evidence: PublicationEvidence)
+        =
         task {
             let! targetResult = deps.Git.GetTargetHead job.TargetRef
 
@@ -835,7 +843,7 @@ module OrchestratorProgram =
 
     let private continueReentryAfterHead
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (worktreeHead: CommitHash)
         =
@@ -851,14 +859,18 @@ module OrchestratorProgram =
         else
             resolveReentryTarget deps job evidence
 
-    let private verifyReentryHead (deps: OrchestratorProgramDeps) (job: ManagerJob) (evidence: PublicationEvidence) =
+    let private verifyReentryHead
+        (deps: OrchestratorProgramDeps)
+        (job: PublicationJob)
+        (evidence: PublicationEvidence)
+        =
         task {
             match! readHead deps job with
             | Error err -> return err
             | Ok worktreeHead -> return! continueReentryAfterHead deps job evidence worktreeHead
         }
 
-    let private handleStaleReentrySnapshot (deps: OrchestratorProgramDeps) (job: ManagerJob) =
+    let private handleStaleReentrySnapshot (deps: OrchestratorProgramDeps) (job: PublicationJob) =
         task {
             match! requestAfterBindingChange deps job "WorkspaceChangedAfterAssessment" with
             | Error verdict -> return verdict
@@ -867,7 +879,7 @@ module OrchestratorProgram =
 
     let private continueReentryAfterSnapshot
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         (currentSnapshot: WorkspaceSnapshotId)
         =
@@ -878,7 +890,7 @@ module OrchestratorProgram =
 
     let private verifyReentrySnapshot
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         =
         task {
@@ -889,14 +901,14 @@ module OrchestratorProgram =
 
     let private continueReentryWithEvidence
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (evidence: PublicationEvidence)
         =
         verifyReentrySnapshot deps job evidence
 
     let private continueReentryWithRebased
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (claim:
             {| TargetRef: TargetRef
                RebasedCommit: CommitHash
@@ -916,7 +928,7 @@ module OrchestratorProgram =
 
     let private continueReentryWithRecord
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (claim:
             {| TargetRef: TargetRef
                RebasedCommit: CommitHash
@@ -934,7 +946,7 @@ module OrchestratorProgram =
 
     let private fetchReentryRecordAndContinue
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (claim:
             {| TargetRef: TargetRef
                RebasedCommit: CommitHash
@@ -951,7 +963,7 @@ module OrchestratorProgram =
 
     let private reenterPublishClaim
         (deps: OrchestratorProgramDeps)
-        (job: ManagerJob)
+        (job: PublicationJob)
         (claim:
             {| TargetRef: TargetRef
                RebasedCommit: CommitHash
@@ -966,20 +978,20 @@ module OrchestratorProgram =
             | Ok() -> return! fetchReentryRecordAndContinue deps job claim
         }
 
-    let private cleanUp (deps: OrchestratorProgramDeps) (job: ManagerJob) =
+    let private cleanUp (deps: OrchestratorProgramDeps) (job: PublicationJob) =
         task {
             match! releaseTerminalWorktree deps job with
             | Ok() -> return OrchestratorVerdict.Empty
             | Error error -> return failed job (sprintf "Terminal job cleanup failed: %s" error)
         }
 
-    let private program (deps: OrchestratorProgramDeps) (job: ManagerJob) =
+    let private program (deps: OrchestratorProgramDeps) (job: PublicationJob) =
         match currentRecord deps job with
         | Some { Terminal = Some _ } -> cleanUp deps job
         | Some { PublishClaimed = Some claim } -> reenterPublishClaim deps job claim
         | _ -> runManagerLoop deps job
 
-    let run (deps: OrchestratorProgramDeps) (job: ManagerJob) =
+    let run (deps: OrchestratorProgramDeps) (job: PublicationJob) =
         task {
             try
                 return! program deps job

@@ -770,6 +770,8 @@ Process/PtyApi.fsi
 Process/PtyApi.fs
 Change/Types.fsi
 Change/Types.fs
+Change/Orchestrator/OrchestratorJournalPort.fsi
+Change/Orchestrator/OrchestratorJournalPort.fs
 Change/Orchestrator/OrchestratorJournalAdapter.fsi
 Change/Orchestrator/OrchestratorJournalAdapter.fs
 Resources/PackageResources.fsi

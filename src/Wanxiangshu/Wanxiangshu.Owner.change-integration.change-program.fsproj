@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <WanxiangshuSubsystem>change</WanxiangshuSubsystem>
+    <WanxiangshuCompileShard>change-program</WanxiangshuCompileShard>
+    <WanxiangshuSemanticOwner>change-integration</WanxiangshuSemanticOwner>
+    <WanxiangshuOwnerLocality>change-program</WanxiangshuOwnerLocality>
+    <WanxiangshuOwnerLocalityKind>runtime</WanxiangshuOwnerLocalityKind>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-fold.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.intra-participant-parallelism.foundation-taskresult.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.runtime-platform.digest.fsproj"/>
+    <Compile Include="Change/Program.fsi"/>
+    <Compile Include="Change/Program.fs"/>
+  </ItemGroup>
+</Project>

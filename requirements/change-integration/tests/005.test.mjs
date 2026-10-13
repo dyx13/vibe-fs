@@ -284,6 +284,8 @@ test('WHAT[change-integration-005] cleanup failure after landed FF preserves pub
   assert.match(observation.verdict.detail, /disk detached/)
   assert.ok(observation.facts.includes('Published'))
   assert.ok(!observation.facts.includes('JobFailed'))
+  assert.deepEqual(observation.removedWorktreePaths, ['/tmp/wanxiangshu-change-surface'])
+  assert.deepEqual(observation.deletedWorktreeIdentities, ['manager/surface-job'])
 })
 test('WHAT[change-integration-005] reentry cleanup failure preserves PublishedPendingCleanup', async () => {
   const observation = await change.observeRelayProgram('reentry-cleanup-failed')

@@ -97,8 +97,6 @@ module Fold =
                     ChatExecutions = updated })
         | AgentFact.Cognition _ -> Ok projection
         | AgentFact.Orchestrator orchestrator ->
-            // The Change family fold consumes the journal-owned `ProjectionSet`,
-            // so its assembly stays with the dispatcher, downstream of that edge.
             OrchestratorFactFold.fold projection.Orchestrator orchestrator
             |> Result.map (fun updated ->
                 { projection with

@@ -6,4 +6,4 @@ open System.Threading.Tasks
 /// admission → invalidation/rebase/loop when needed → short-CAS ff-only
 /// publish.
 module OrchestratorProgram =
-    val run: deps: OrchestratorProgramDeps -> job: ManagerJob -> Task<OrchestratorVerdict>
+    val run: deps: OrchestratorProgramDeps -> job: PublicationJob -> Task<OrchestratorVerdict>

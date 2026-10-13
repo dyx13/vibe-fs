@@ -12,6 +12,8 @@
     <ProjectReference Include="Wanxiangshu.Owner.causal-wait.execution-session-wait-runtime.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-fold.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-program.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-orchestrator-contract.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-orchestrator-port-adapter.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-linkage-projection.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-host-adapter.fsproj"/>
@@ -41,8 +43,6 @@
     <Compile Include="Change/Job.fs"/>
     <Compile Include="Change/Prompts.fsi"/>
     <Compile Include="Change/Prompts.fs"/>
-    <Compile Include="Change/Program.fsi"/>
-    <Compile Include="Change/Program.fs"/>
     <Compile Include="Change/Runtime.fsi"/>
     <Compile Include="Change/Runtime.fs"/>
     <Compile Include="Git/Operations.fsi"/>

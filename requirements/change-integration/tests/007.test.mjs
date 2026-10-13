@@ -270,4 +270,29 @@ test('WHAT[change-integration-007] published-but-unsettled reentry never replays
   assert.deepEqual(observation.ffPinnedCandidates, [])
   assert.deepEqual(observation.ffExpectedHeads, [])
 })
+test('WHAT[change-integration-007] complete claim whose target already landed backfills publication without FF', async () => {
+  const observation = await change.observeRelayProgram('reentry-already-fast-forwarded')
+
+  assert.deepEqual(observation.verdict, { kind: 'Published', detail: 'rebased-1' })
+  assert.deepEqual(observation.facts, ['Published'])
+  assert.equal(observation.ffCalls, 0)
+  assert.equal(observation.gateAcquireCount, 0)
+  assert.equal(observation.gateReleaseCount, 0)
+  assert.equal(observation.signalCount, 0)
+  assert.deepEqual(observation.removedWorktreePaths, ['/tmp/wanxiangshu-change-surface'])
+  assert.deepEqual(observation.deletedWorktreeIdentities, ['manager/surface-job'])
+})
+test('WHAT[change-integration-007] complete claim whose target moved resumes the manager loop without publication', async () => {
+  const observation = await change.observeRelayProgram('reentry-claim-expired')
+
+  assert.deepEqual(observation.verdict, { kind: 'IntegrationFailed', detail: 'scenario-complete' })
+  assert.deepEqual(observation.facts, [])
+  assert.deepEqual(observation.continuations, ['surface-loop-1'])
+  assert.equal(observation.signalCount, 2)
+  assert.equal(observation.ffCalls, 0)
+  assert.equal(observation.gateAcquireCount, 0)
+  assert.equal(observation.gateReleaseCount, 0)
+  assert.deepEqual(observation.removedWorktreePaths, [])
+  assert.deepEqual(observation.deletedWorktreeIdentities, [])
+})
 }

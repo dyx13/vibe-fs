@@ -2,6 +2,4 @@
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.foundation-outcome.fsproj"/>    <ProjectReference Include="Wanxiangshu.Owner.durable-events.composition-durable-fact.fsproj"/>
     <Compile Include="Change/Fact.fsi"/>
     <Compile Include="Change/Fact.fs"/>
-    <Compile Include="Change/Projection.fsi"/>
-    <Compile Include="Change/Projection.fs"/>
 </ItemGroup></Project>

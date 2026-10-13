@@ -1,11 +1,8 @@
 namespace Wanxiangshu.Change
 
 open System.Threading.Tasks
-open Wanxiangshu.Composition.Durable
-open Wanxiangshu.Composition.Durable.Fact
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Mission.Relay
-open Wanxiangshu.Persistence.Journal
 
 type OrchestratorVerdict =
     | Published of jobId: ManagerJobId * head: CommitHash
@@ -57,17 +54,19 @@ type RelayPort =
       PrepareCandidate: ManagerJobId -> Task<Result<CommitHash, string>>
       TerminateRoadResources: ManagerJobId -> Task<unit> }
 
-type OrchestratorJournalPort =
-    { AppendFact: StreamId -> AgentFact -> Task<Result<ProjectionSet, string>>
-      Snapshot: unit -> ProjectionSet }
+type PublicationJob =
+    { JobId: ManagerJobId
+      TargetRef: TargetRef
+      WorktreePath: WorktreePath
+      ReleaseWorktree: unit -> Task<Result<unit, string>> }
 
 type PublishGateLease = { Release: unit -> Task<unit> }
 
 type OrchestratorProgramDeps =
     { Git: GitPort
       Relay: RelayPort
-      AppendFact: StreamId -> AgentFact -> Task<Result<unit, string>>
-      Snapshot: unit -> ProjectionSet
+      AppendFact: OrchestratorFactCases -> Task<Result<unit, string>>
+      TryJob: ManagerJobId -> ManagerJobProjection option
       AcquirePublishGate: unit -> Task<PublishGateLease> }
 
 module OrchestratorConstants =

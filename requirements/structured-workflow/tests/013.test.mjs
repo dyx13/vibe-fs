@@ -1,4 +1,5 @@
 import test from 'node:test'
+import { integrationTest } from '../../verification-system/tests/support/tier-gate.mjs'
 
 {
 const { default: assert } = await import("node:assert/strict");
@@ -265,3 +266,133 @@ test('WHAT[structured-workflow-013] reusable platform shards depend on no domain
   assert.match(legacyRed.violations.join('\n'), /reusable runtime-platform shard depends on domain subsystem dispatch\/runtime-nudge/)
 })
 }
+
+integrationTest('WHAT[structured-workflow-013] the real Change program runs through narrow contracts and rejects Journal and worktree implementations', async (t) => {
+  const { default: assert } = await import('node:assert/strict')
+  const { createHash } = await import('node:crypto')
+  const { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } = await import('node:fs')
+  const { tmpdir } = await import('node:os')
+  const { dirname, join, relative, resolve } = await import('node:path')
+  const { pathToFileURL } = await import('node:url')
+  const { planOwnerCompile, materializeOwnerCompile, compileOwnerProject } = await import('../../../scripts/lib/owner-compile.mjs')
+
+  const root = resolve(import.meta.dirname, '../../..')
+  const sourceRoot = join(root, 'src/Wanxiangshu')
+  const scratchRoot = mkdtempSync(join(tmpdir(), 'wanxiangshu-change-contract-'))
+  const programPath = join(sourceRoot, 'Wanxiangshu.Owner.change-integration.change-program.fsproj')
+  const providerPath = join(sourceRoot, 'Wanxiangshu.Owner.change-integration.git-integrationgate.fsproj')
+  const behaviorProbe = join(root, 'requirements/change-integration/tests/fixtures/ProgramProbe.fs')
+  const capabilityProbe = join(root, 'requirements/structured-workflow/tests/fixtures/change-contract-boundary/ForbiddenCapabilities.fs')
+  const forbiddenSources = [
+    join(sourceRoot, 'Persistence/Journal/AgentJournal.fs'),
+    join(sourceRoot, 'Git/WorktreeResource.fs'),
+  ]
+  const observedInputs = new Map()
+  const captureInput = (file) => {
+    const bytes = readFileSync(file)
+    if (observedInputs.has(file)) assert.deepEqual(bytes, observedInputs.get(file), `input changed during compiler proof: ${file}`)
+    else observedInputs.set(file, bytes)
+    return bytes
+  }
+  const assertInputsUnchanged = () => {
+    for (const [file, bytes] of observedInputs) {
+      assert.deepEqual(readFileSync(file), bytes, `input changed during compiler proof: ${file}`)
+    }
+  }
+  const compileProbe = async (projectPath, probe, label) => {
+    assertInputsUnchanged()
+    const plan = planOwnerCompile({ projectPath, aggregatePath: null })
+    for (const project of plan.projectPaths) {
+      assert.equal(captureInput(project).toString('utf8'), plan.projectContents.get(project))
+    }
+    const inputHash = createHash('sha256')
+    const compileItems = [...plan.compileItems, probe].map((file) => {
+      const bytes = captureInput(file)
+      const path = relative(root, file)
+      assert.ok(!path.startsWith('..'), `compiler input must belong to this repository: ${file}`)
+      inputHash.update(path).update('\0').update(bytes).update('\0')
+      const destination = join(scratchRoot, 'inputs', label, path)
+      mkdirSync(dirname(destination), { recursive: true })
+      writeFileSync(destination, bytes)
+      return destination
+    })
+    const isolatedPlan = { ...plan, compileItems, forceCompileCache: false }
+    const options = {
+      projectPath,
+      aggregatePath: null,
+      scratchRoot: join(scratchRoot, 'compiler'),
+      rootPropsPath: join(root, 'Directory.Build.props'),
+      stdio: 'pipe',
+      compilePlan: isolatedPlan,
+    }
+    const materialized = materializeOwnerCompile(isolatedPlan, options)
+    const projectXml = readFileSync(materialized.projectPath, 'utf8')
+    assert.doesNotMatch(projectXml, /<ProjectReference\b/)
+    assert.equal((projectXml.match(/<Compile Include=/g) ?? []).length, compileItems.length)
+    const result = await compileOwnerProject(options)
+    assertInputsUnchanged()
+    t.diagnostic(JSON.stringify({
+      label,
+      root: relative(root, projectPath),
+      shards: plan.projectPaths.length,
+      sources: plan.compileItems.filter((file) => file.endsWith('.fs')).length,
+      sourcesSha256: inputHash.digest('hex'),
+      code: result.code,
+      signal: result.signal,
+      elapsedMs: result.elapsedMs,
+      immutableInputsProven: false,
+    }))
+    return result
+  }
+  const assertCompiled = (result) => {
+    assert.equal(result.signal, null, `compiler was terminated: ${result.signal}`)
+    assert.equal(result.ok, true, `${result.stdout}\n${result.stderr}`)
+    assert.equal(result.code, 0)
+  }
+  const emittedFiles = (directory) => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const file = join(directory, entry.name)
+    return entry.isDirectory() ? emittedFiles(file) : [file]
+  })
+
+  try {
+    writeFileSync(join(scratchRoot, 'package.json'), '{"type":"module"}\n')
+    for (const file of [
+      'Directory.Build.props',
+      'src/Wanxiangshu/Directory.Build.props',
+      'src/Wanxiangshu/compile-order.txt',
+      '.config/dotnet-tools.json',
+      'global.json',
+      'package-lock.json',
+      'scripts/lib/owner-compile.mjs',
+    ]) captureInput(join(root, file))
+    const programPlan = planOwnerCompile({ projectPath: programPath, aggregatePath: null })
+    const providerPlan = planOwnerCompile({ projectPath: providerPath, aggregatePath: null })
+    for (const file of forbiddenSources) {
+      assert.ok(!programPlan.compileItems.includes(file), `the Change program must not acquire ${relative(sourceRoot, file)}`)
+      assert.ok(providerPlan.compileItems.includes(file), `the legal provider must contain ${relative(sourceRoot, file)}`)
+    }
+
+    const program = await compileProbe(programPath, behaviorProbe, 'program')
+    assertCompiled(program)
+    const modules = emittedFiles(program.outputPath).filter((file) => file.endsWith('/ProgramProbe.js'))
+    assert.equal(modules.length, 1, 'the fresh compiler output must contain exactly one ProgramProbe module')
+    const probe = await import(pathToFileURL(modules[0]).href)
+    assert.equal(typeof probe.verify, 'function')
+    await probe.verify()
+    t.diagnostic('the fresh Change program passed its capability-based behavior probe')
+
+    const provider = await compileProbe(providerPath, capabilityProbe, 'legal-provider')
+    assertCompiled(provider)
+
+    const rejected = await compileProbe(programPath, capabilityProbe, 'forbidden-capabilities')
+    const diagnostics = `${rejected.stdout}\n${rejected.stderr}`
+    assert.equal(rejected.signal, null, 'a terminated compiler is not a rejected capability')
+    assert.equal(rejected.ok, false, 'the narrow Change program must not acquire either physical implementation')
+    assert.notEqual(rejected.code, 0)
+    assert.match(diagnostics, /The type 'AgentJournal' is not defined/, diagnostics)
+    assert.match(diagnostics, /The type 'WorktreeResource' is not defined/, diagnostics)
+  } finally {
+    rmSync(scratchRoot, { recursive: true, force: true })
+    assertInputsUnchanged()
+  }
+})

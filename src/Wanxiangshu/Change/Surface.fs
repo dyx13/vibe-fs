@@ -804,13 +804,24 @@ module ChangeSurface =
               FailPublishedAppend = false
               GateCancelled = false
               CleanupFails = false }
-        | "reentry-valid" ->
+        | "reentry-valid"
+        | "reentry-already-fast-forwarded"
+        | "reentry-claim-expired" ->
             { InitialHead = "rebased-1"
-              InitialTarget = "target-1"
+              InitialTarget =
+                match name with
+                | "reentry-already-fast-forwarded" -> "rebased-1"
+                | "reentry-claim-expired" -> "target-2"
+                | _ -> "target-1"
               InitialRebasedTarget = None
-              Signals = []
+              Signals =
+                if name = "reentry-claim-expired" then
+                    [ ProgramScenarioSignal.Retired
+                      ProgramScenarioSignal.Exceptional "scenario-complete" ]
+                else
+                    []
               Snapshots = [ "snapshot-rebased-1"; "snapshot-rebased-1" ]
-              TargetReads = [ "target-1" ]
+              TargetReads = []
               RebaseResults = []
               ConflictReads = [ [] ]
               FfResults = [ ProgramScenarioFf.Ok "rebased-1" ]
@@ -1042,19 +1053,16 @@ module ChangeSurface =
 
     let private programFactName fact =
         match fact with
-        | AgentFact.Orchestrator value ->
-            match value with
-            | OrchestratorFactCases.ManagerJobCreated _ -> "ManagerJobCreated"
-            | OrchestratorFactCases.CandidateReady _ -> "CandidateReady"
-            | OrchestratorFactCases.ConflictDetected _ -> "ConflictDetected"
-            | OrchestratorFactCases.RebasedCandidateReady _ -> "RebasedCandidateReady"
-            | OrchestratorFactCases.PublishClaimed _ -> "PublishClaimed"
-            | OrchestratorFactCases.Published _ -> "Published"
-            | OrchestratorFactCases.JobFailed _ -> "JobFailed"
-            | OrchestratorFactCases.JobAbandoned _ -> "JobAbandoned"
-            | OrchestratorFactCases.WorktreeCreateRequested _ -> "WorktreeCreateRequested"
-            | OrchestratorFactCases.WorktreeCreated _ -> "WorktreeCreated"
-        | _ -> "Other"
+        | OrchestratorFactCases.ManagerJobCreated _ -> "ManagerJobCreated"
+        | OrchestratorFactCases.CandidateReady _ -> "CandidateReady"
+        | OrchestratorFactCases.ConflictDetected _ -> "ConflictDetected"
+        | OrchestratorFactCases.RebasedCandidateReady _ -> "RebasedCandidateReady"
+        | OrchestratorFactCases.PublishClaimed _ -> "PublishClaimed"
+        | OrchestratorFactCases.Published _ -> "Published"
+        | OrchestratorFactCases.JobFailed _ -> "JobFailed"
+        | OrchestratorFactCases.JobAbandoned _ -> "JobAbandoned"
+        | OrchestratorFactCases.WorktreeCreateRequested _ -> "WorktreeCreateRequested"
+        | OrchestratorFactCases.WorktreeCreated _ -> "WorktreeCreated"
 
     let private scenarioBinding tag =
         { PhysicalUserMessageId = "physical-" + tag
@@ -1157,6 +1165,8 @@ module ChangeSurface =
             let ffGateHeld = ResizeArray<bool>()
             let ffExpectedHeads = ResizeArray<string>()
             let ffPinnedCandidates = ResizeArray<string>()
+            let removedWorktreePaths = ResizeArray<string>()
+            let deletedWorktreeIdentities = ResizeArray<string>()
             // DSL-MUTABLE: resource — simulated worktree ref states
             let worktreeHead = ref scenario.InitialHead
             let targetHead = ref scenario.InitialTarget
@@ -1251,7 +1261,9 @@ module ChangeSurface =
                         else
                             Task.FromResult(Ok(conflictReads.Dequeue()))
                   RemoveWorktree =
-                    fun _ ->
+                    fun path ->
+                        removedWorktreePaths.Add(WorktreePath.value path)
+
                         if scenario.CleanupFails then
                             Task.FromResult(Error "disk detached")
                         else
@@ -1259,7 +1271,10 @@ module ChangeSurface =
                   HasRebaseHead = fun _ -> Task.FromResult false
                   ListWorktrees = fun () -> Task.FromResult(Ok [])
                   ListManagerBranches = fun () -> Task.FromResult(Ok [])
-                  DeleteBranch = fun _ -> Task.FromResult(Ok())
+                  DeleteBranch =
+                    fun identity ->
+                        deletedWorktreeIdentities.Add(WorktreeIdentity.value identity)
+                        Task.FromResult(Ok())
                   ReadHead =
                     fun _ ->
                         let value =
@@ -1283,12 +1298,11 @@ module ChangeSurface =
 
             let worktree = WorktreeResource.Adopt(git, worktreeIdentity, worktreePath)
 
-            let job =
+            let job: PublicationJob =
                 { JobId = jobId
-                  ManagerSessionId = sessionId
-                  ManagerAgent = "manager"
                   TargetRef = targetRef
-                  Worktree = worktree }
+                  WorktreePath = worktree.Path
+                  ReleaseWorktree = fun () -> worktree.Release() }
 
             let created =
                 OrchestratorProjection.createJob
@@ -1380,7 +1394,7 @@ module ChangeSurface =
                             { initialProjection.AgentProjections with
                                 Orchestrator = initialOrchestrator } }
 
-            let appendFact _ fact =
+            let appendFact fact =
                 task {
                     factCount.Value <- factCount.Value + 1
                     let name = programFactName fact
@@ -1393,7 +1407,9 @@ module ChangeSurface =
                         timeline.Add("fact:" + name)
 
                         match
-                            Wanxiangshu.Composition.Durable.Fold.foldAgentFact projection.Value.AgentProjections fact
+                            Wanxiangshu.Composition.Durable.Fold.foldAgentFact
+                                projection.Value.AgentProjections
+                                (AgentFact.Orchestrator fact)
                         with
                         | Error rejection -> return Error(sprintf "%A" rejection)
                         | Ok agents ->
@@ -1474,7 +1490,7 @@ module ChangeSurface =
                 { Git = git
                   Relay = relay
                   AppendFact = appendFact
-                  Snapshot = fun () -> projection.Value
+                  TryJob = fun id -> OrchestratorProjection.tryFind id projection.Value.AgentProjections.Orchestrator
                   AcquirePublishGate = acquireGate }
 
             let! verdict = OrchestratorProgram.run deps job
@@ -1501,6 +1517,8 @@ module ChangeSurface =
                            ffExpectedHeads = ffExpectedHeads.ToArray()
                            ffPinnedCandidates = ffPinnedCandidates.ToArray()
                            ffCalls = ffGateHeld.Count
+                           removedWorktreePaths = removedWorktreePaths.ToArray()
+                           deletedWorktreeIdentities = deletedWorktreeIdentities.ToArray()
                            signalCount = counters.SignalCount
                            continuationCount = counters.ContinuationCount
                            factCount = counters.FactCount

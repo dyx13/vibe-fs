@@ -161,6 +161,8 @@ test('WHAT[change-integration-001] fresh quality candidate runs to Published wit
   assert.deepEqual(observation.ffExpectedHeads, ['target-1'])
   assert.equal(observation.gateAcquireCount, 1)
   assert.equal(observation.gateReleaseCount, 1)
+  assert.deepEqual(observation.removedWorktreePaths, ['/tmp/wanxiangshu-change-surface'])
+  assert.deepEqual(observation.deletedWorktreeIdentities, ['manager/surface-job'])
 })
 test('WHAT[change-integration-001] pre-rebase C1/S1 certificate cannot authorize rebased S2 candidate and fails closed', async () => {
   const observation = await change.observeRelayProgram('rebase-reuse-old-cert')
