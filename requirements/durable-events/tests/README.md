@@ -1,6 +1,6 @@
 # durable-events 测试
 
-2026-10-13 R00/R01：原023的live/联合Current/revision/取消四例迁013，payload拒绝与原始poison例迁006，law同步。013新增真实Wire Accepted闭包、Recovery jobs/handles联合读取，以及屏障驱动的注册/双waiter/预取消/Journal自身关闭证明；生产修复预取消和关闭遗留等待，并用真实Fable取消类型结算无token调用方。正式8文件74 pass、0 fail、2个未开启的codec/fold integration skip；013强化instanceof后单独25 pass。隔离复制实际源码的5次真实Fable与同组行为得到基线绿、冻结snapshot/拆getter/闭包偷读live各指定红、恢复绿，详见[计划R01结算](../../../proposals/子系统拆分收尾计划-2026-10-13.md#r01-先补观察与资源释放的确定性保护)。不关闭全根编译、R09不可变输入或整个durable契约。
+2026-10-13 R00/R01：原023的live/联合Current/revision/取消四例迁013，payload拒绝与原始poison例迁006，law同步。013新增真实Wire Accepted闭包、Recovery jobs/handles联合读取，以及屏障驱动的注册/双waiter/预取消/Journal自身关闭证明；生产修复预取消和关闭遗留等待，并用真实Fable取消类型结算无token调用方。正式8文件74 pass、0 fail、2个未开启的codec/fold integration skip；取消类型断言现由原F# fixture验证真实类型并拒绝同消息普通Error，JS不导入Fable内部库。后续新增两例在物理追加屏障处关闭：订阅立即结束而已接受追加继续排空，006/013合计55 pass、0 fail、0 skip、0 TODO，013现含27项。隔离复制实际源码的5次真实Fable与同组行为得到基线绿、冻结snapshot/拆getter/闭包偷读live各指定红、恢复绿，详见[计划R01结算](../../../proposals/子系统拆分收尾计划-2026-10-13.md#r01-先补观察与资源释放的确定性保护)。不关闭全根编译、R09不可变输入或整个durable契约。
 
 2026-10-07 C0历史验收：022新增纯append-result唯一工程归属及同一IEventStore编译探针正反例，当时八原F#源和compile-order不改。Model3fs、纯结果4、Port6、Journal7及native11/0只属于gen220前沿，详见[原有限记录](../../../proposals/archive/2026-10-07/Upstream增量与结果合同施工-2026-10-07.md)。接续U0-A0已增加typed追加结算及Journal合法纯结果依赖，Journal现9fs、Git contract5fs；新正式与flat结果见[U0记录](../../../proposals/archive/2026-10-07/U0追加结果与消费者施工-2026-10-07.md)，不借旧证书验新合同，仍不授fresh派发许可。
 

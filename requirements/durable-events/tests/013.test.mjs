@@ -364,6 +364,66 @@ test('WHAT[durable-events-013] EXEC_cancellation_after_commit_does_not_replace_t
   })
 })
 for (const closeKind of ['close', 'closeAsync']) {
+test(`WHAT[durable-events-013] EXEC_${closeKind}_stops_waiters_while_an_accepted_append_drains`, async () => {
+  await withJournal(`revision-drain-${closeKind}`, async (handle, gate) => {
+    assert.equal((await appendLife(handle, `ses_${closeKind}_drain_seed`)).ok, true)
+    const session = `ses_${closeKind}_drain_commit`
+    const from = revisionOf(handle)
+    const probe = revisions.observeWaits(handle)
+    const waiting = probe.startWait(from, false)
+    let append
+    let closing
+    let afterClose
+
+    gate.arm()
+    try {
+      append = appendLife(handle, session)
+      await Promise.race([
+        gate.entered,
+        append.then(() => assert.fail('the accepted append completed before reaching the parked store')),
+      ])
+      assert.equal(probe.activeWaiterCount(), 1)
+      assert.equal(waiting.listenerCount(), 1)
+      assert.equal(journal.JournalSurface_hasSession(handle, session), false)
+
+      closing = Promise.resolve(probe[closeKind]())
+      assert.equal(probe.activeWaiterCount(), 0)
+      assert.equal((await waiting.result).kind, 'stopped')
+      assert.equal(waiting.listenerCount(), 0)
+
+      afterClose = probe.startWait(from, false)
+      assert.equal(probe.activeWaiterCount(), 0)
+      assert.equal((await afterClose.result).kind, 'stopped')
+      assert.equal(afterClose.listenerCount(), 0)
+      assert.equal(revisionOf(handle), from, 'close must not publish the parked append')
+      assert.equal(journal.JournalSurface_hasSession(handle, session), false)
+
+      gate.release()
+      const committed = await append
+      assert.equal(committed.ok, true, JSON.stringify(committed.error))
+      await closing
+
+      assert.equal(revisionOf(handle), from + 1, 'the accepted append must still commit once')
+      assert.equal(probe.activeWaiterCount(), 0)
+      assert.equal(journal.JournalSurface_hasSession(handle, session), true)
+      const current = journal.JournalSurface_snapshot(handle)
+      assert.equal(current.sessionProjections[session]?.xTrace?.latestTerminalPresent, true)
+      assert.equal(waiting.listenerCount(), 0)
+      assert.equal(afterClose.listenerCount(), 0)
+    } finally {
+      gate.release()
+      waiting.cancel()
+      afterClose?.cancel()
+      try {
+        await Promise.allSettled([append, closing])
+        await probe.closeAsync()
+      } finally {
+        waiting.dispose()
+        afterClose?.dispose()
+      }
+    }
+  })
+})
 test(`WHAT[durable-events-013] EXEC_${closeKind}_settles_waiters_and_rejects_new_subscriptions`, async () => {
   await withJournal(`revision-${closeKind}`, async (handle) => {
     const stale = revisionOf(handle)
