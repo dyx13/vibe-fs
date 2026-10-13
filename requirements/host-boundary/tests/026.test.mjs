@@ -24,6 +24,143 @@ integrationTest('WHAT[host-boundary-026] real Fable compiles Host diagnostics wi
 })
 
 {
+  const { createHash } = await import('node:crypto')
+  const { mkdirSync, readFileSync, readdirSync, symlinkSync, writeFileSync } = await import('node:fs')
+  const { basename, dirname, relative } = await import('node:path')
+  const { pathToFileURL } = await import('node:url')
+  const { readCompileShardInventory } = await import('../../../scripts/lib/compile-shards.mjs')
+  const { planOwnerCompile, materializeOwnerCompile } = await import('../../../scripts/lib/owner-compile.mjs')
+  const root = resolve(import.meta.dirname, '../../..')
+  const sourceRoot = join(root, 'src/Wanxiangshu')
+  const fixtureRoot = join(import.meta.dirname, 'fixtures/session-contract-boundary')
+  const sessionProject = 'Wanxiangshu.Owner.host-boundary.host-session-contract.fsproj'
+  const runtimeProject = 'Wanxiangshu.Owner.host-boundary.opencode-host-sessionquiescencegate.fsproj'
+  const chatProject = 'Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-facts.fsproj'
+  const erasedContracts = new Set(['OpenCode/Host/SessionHostPort.js', 'OpenCode/Host/SessionRuntimeOwner.js'])
+  const emittedFiles = (directory) => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const file = join(directory, entry.name)
+    return entry.isDirectory() ? emittedFiles(file) : [file]
+  })
+
+  const withHostCompiler = async (t, run) => {
+    const scratch = mkdtempSync(join(tmpdir(), 'wxs-host-session-compile-'))
+    const inventory = readCompileShardInventory({ repositoryRoot: root })
+    const observedInputs = new Map()
+    const capture = (file) => {
+      const bytes = readFileSync(file)
+      if (observedInputs.has(file)) assert.deepEqual(bytes, observedInputs.get(file), `compiler input changed: ${file}`)
+      else observedInputs.set(file, bytes)
+      return bytes
+    }
+    const assertUnchanged = () => {
+      for (const [file, bytes] of observedInputs) assert.deepEqual(readFileSync(file), bytes, `compiler input changed: ${file}`)
+    }
+    const load = async (result, suffix) => {
+      const matches = emittedFiles(result.outputPath).filter((file) => file.endsWith('/' + suffix))
+      if (matches.length === 0 && erasedContracts.has(suffix)) return
+      assert.equal(matches.length, 1, `the fresh compiler output must contain exactly one ${suffix}`)
+      return import(pathToFileURL(matches[0]).href)
+    }
+    const compile = async (name, label, probeName, expectedMissing, modules) => {
+      assertUnchanged()
+      const projectPath = join(sourceRoot, name)
+      const plan = planOwnerCompile({ projectPath, aggregatePath: null })
+      for (const file of plan.projectPaths) assert.equal(capture(file).toString('utf8'), plan.projectContents.get(file))
+      const inputHash = createHash('sha256')
+      const sourceFiles = [...plan.compileItems, ...(probeName ? [join(fixtureRoot, probeName)] : [])]
+      const compileItems = sourceFiles.map((file) => {
+        const bytes = capture(file)
+        inputHash.update(relative(root, file)).update('\0').update(bytes).update('\0')
+        const sourcePath = file.startsWith(fixtureRoot + '/') ? join('CompilerProbe', basename(file)) : relative(sourceRoot, file)
+        const destination = join(scratch, 'inputs', label, sourcePath)
+        mkdirSync(dirname(destination), { recursive: true })
+        writeFileSync(destination, bytes)
+        return destination
+      })
+      const isolatedPlan = { ...plan, compileItems, forceCompileCache: false }
+      const options = {
+        projectPath,
+        aggregatePath: null,
+        scratchRoot: join(scratch, 'compiler'),
+        rootPropsPath: join(sourceRoot, 'Directory.Build.props'),
+        stdio: 'pipe',
+        compilePlan: isolatedPlan,
+      }
+      const materialized = materializeOwnerCompile(isolatedPlan, options)
+      const flatProject = readFileSync(materialized.projectPath, 'utf8')
+      assert.doesNotMatch(flatProject, /<ProjectReference\b/)
+      assert.equal((flatProject.match(/<Compile Include=/g) ?? []).length, compileItems.length)
+      const result = await compileOwnerProject(options)
+      assertUnchanged()
+      t.diagnostic(JSON.stringify({
+        label, root: name, shards: plan.projectPaths.length,
+        sources: plan.compileItems.filter((file) => file.endsWith('.fs')).length,
+        inputSha256: inputHash.digest('hex'), code: result.code, signal: result.signal,
+      }))
+      const diagnostics = `${result.stdout}\n${result.stderr}`
+      assert.equal(result.signal, null, 'a terminated compiler does not prove a capability boundary')
+      if (expectedMissing) {
+        assert.equal(result.ok, false, `${expectedMissing} must not be available through the Session contract`)
+        assert.notEqual(result.code, 0)
+        assert.match(diagnostics, new RegExp(`The (?:type|value or constructor) '${expectedMissing}' is not defined`), diagnostics)
+        assert.ok(diagnostics.includes(probeName), 'the rejection must identify the capability probe')
+        return
+      }
+      assert.equal(result.ok, true, diagnostics)
+      assert.equal(result.code, 0)
+      const ownedModules = modules ?? inventory.projects.get(projectPath).implementationFiles
+        .map((file) => relative(sourceRoot, file).replace(/\.fs$/, '.js'))
+      for (const suffix of ownedModules) await load(result, suffix)
+      if (probeName) {
+        const probe = await load(result, 'CompilerProbe/' + probeName.replace(/\.fs$/, '.js'))
+        if (probeName === 'LegalSession.fs') probe.verify()
+      }
+    }
+    try {
+      for (const file of ['Directory.Build.props', 'src/Wanxiangshu/Directory.Build.props', 'src/Wanxiangshu/compile-order.txt', '.config/dotnet-tools.json', 'global.json', 'package-lock.json']) capture(join(root, file))
+      const packageConfig = JSON.parse(capture(join(root, 'package.json')))
+      writeFileSync(join(scratch, 'package.json'), JSON.stringify({ type: 'module', imports: packageConfig.imports }))
+      symlinkSync(join(root, 'node_modules'), join(scratch, 'node_modules'), 'dir')
+      const envelope = capture(join(root, 'resources/degeneration-guard/envelope/LoopDetectorEnvelope.js'))
+      const envelopePath = join(scratch, 'dist/Execution/Session/LoopDetectorEnvelope.js')
+      mkdirSync(dirname(envelopePath), { recursive: true })
+      writeFileSync(envelopePath, envelope)
+      assert.deepEqual(readFileSync(envelopePath), envelope)
+      await run(compile)
+    } finally {
+      rmSync(scratch, { recursive: true, force: true })
+      assertUnchanged()
+    }
+  }
+
+  integrationTest('WHAT[host-boundary-026] real Fable compiles Session consumers and rejects unrelated capabilities', async (t) => {
+    await withHostCompiler(t, async (compile) => {
+      await compile(sessionProject, 'session', 'LegalSession.fs')
+      await compile(runtimeProject, 'runtime', 'ForbiddenSessionRuntime.fs')
+      await compile(chatProject, 'chat-evidence', 'ForbiddenChatEvidence.fs')
+      await compile(sessionProject, 'forbidden-runtime', 'ForbiddenSessionRuntime.fs', 'SessionQuiescenceGate')
+      await compile(sessionProject, 'forbidden-chat', 'ForbiddenChatEvidence.fs', 'AcceptedChatExecutionEvidence')
+      for (const [label, name] of [
+        ['loop', 'Wanxiangshu.Owner.degeneration-guard.execution-session-loopdetector.fsproj'],
+        ['binding', 'Wanxiangshu.Owner.host-boundary.opencode-host-providerrunbinding.fsproj'],
+        ['casebook', 'Wanxiangshu.Owner.knowledge-reuse.runtime.fsproj'],
+        ['attachment', 'Wanxiangshu.Owner.managed-session-lifecycle.session-attachment-runtime.fsproj'],
+      ]) await compile(name, label)
+    })
+  })
+
+  integrationTest('WHAT[host-boundary-026] real Fable compiles direct ChatExecution consumers with their declared dependencies', async (t) => {
+    await withHostCompiler(t, async (compile) => {
+      for (const [label, name, module] of [
+        ['join-wake', 'Wanxiangshu.Owner.delegation.execution-delegation-hostturnobservedsurface.fsproj', 'Execution/Delegation/Handle/OpenCode/JoinWake.js'],
+        ['ingress', 'Wanxiangshu.Owner.dispatch-protocol.interaction-dispatch-opencode-ingresscodec.fsproj', 'Interaction/Dispatch/Ingress.js'],
+        ['journal-observation', 'Wanxiangshu.Owner.verification-system.verification-eventstorewritersurface.fsproj', 'Verification/JournalPortObservationSurface.js'],
+      ]) await compile(name, label, undefined, undefined, [module])
+    })
+  })
+}
+
+{
 const { default: assert } = await import("node:assert/strict");
 const { basename, join, resolve } = await import("node:path");
 const { default: test } = await import("node:test");
@@ -58,7 +195,7 @@ const productionSources = (plan) => plan.compileItems
   .filter((path) => path.endsWith('.fs'))
   .map((path) => path.slice(SOURCE_ROOT.length + 1).replaceAll('\\', '/'))
 
-test('WHAT[host-boundary-026] host session contract compiles independently without runtime or sphinx dependencies', () => {
+test('WHAT[host-boundary-026] host session contract plan excludes runtime and sphinx dependencies', () => {
   const { plan } = planShard('host-session-contract')
   const sources = productionSources(plan)
 
