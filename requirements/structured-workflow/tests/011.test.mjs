@@ -240,7 +240,7 @@ test('WHAT[structured-workflow-011] flattened Fable emitter mirrors compile-shar
   const props = readFileSync(join(SRC, 'Directory.Build.props'), 'utf8')
   assert.match(props, /<DisableTransitiveProjectReferences>true<\/DisableTransitiveProjectReferences>/)
 })
-test('WHAT[structured-workflow-011] subsystem ownership and compile-shard graph are complete and acyclic', () => {
+test('WHAT[structured-workflow-011] production ownership is complete and the compile-shard graph is acyclic', () => {
   const result = inventory
   assert.equal(result.ok, true, result.violations.join('\n'))
   assert.ok(result.sourceCount > 0, 'compile-shard graph must cover production sources')
@@ -407,7 +407,7 @@ test('WHAT[structured-workflow-011] subsystem is the only semantic governance id
     compileInventory: readRepo(ringDir),
     policyState: fakePolicy(['alpha', 'beta'], [['test-alpha-one', 'alpha'], ['test-alpha-two', 'alpha'], ['test-beta', 'beta']]),
   })
-  assert.equal(ring.ok, true, ring.violations.join('\n'))
+  assert.equal(ring.ok, true, 'migration inventory reports subsystem rings without claiming completed separation')
   assert.deepEqual(ring.cyclicComponents, [['alpha', 'beta']])
   assert.deepEqual(ring.largestSubsystemCycle, ['alpha', 'beta'])
 

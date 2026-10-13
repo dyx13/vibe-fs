@@ -1,5 +1,7 @@
 # verification-system 测试说明
 
+局部验证的现行要求见 verification-system-016、017、021：选集必须实际执行，消费与该次完整输入绑定的新产物，并保留因果监督、预算和清理。现有选文件能力及阶段前后摘要检查各有证明范围，不能合并宣称局部不可变输入闭环已实现。全分片独立编译覆盖归 structured-workflow-011；它与静态图、业务行为和完整发布分别记账。本说明不增加另一套门禁或规范权威。
+
 2026-10-10 S1a 两段退休链已补正式场景及oracle：HumanRoot两任、主Manager五任逐任核assessment→confirmation→retirement的事件parents因果关系，连exact Host assistant/ToolPart与completed SSE；完整review及双suicide历史新增强断言覆盖HumanRoot后继，主Manager保原权威/历史存在检查。原HumanRoot cursor2缺声明红、错误枚举顺序组合失败、断祖先边与finished/SSE负控均保留。gen385同一serve的真实LongStroke36/0、0skip/TODO；20文件相邻90/0、1skip/13TODO仅pending，见[本轮记录](../../../proposals/Upstream四小时施工-2026-10-10.md)。该证明不关闭全release、道路资源完整矩阵或defer/用户通知。S0精确CI干净build已过，后续unit006失败与原300s截断另见[收据](../../../proposals/archive/2026-10-10/baselines/s0-ci/receipt.md)。
 
 2026-10-08当前状态：R18/R19及R20 readiness有限闭环保持。新干净source candidate `65a70d0fd4c4`的原预算全项目验收已执行，结论FAILED，clean Fable gen375；unit824/824、4971pass/0fail/127skip/388TODO仅pending，独立integration43/44原300s截断、四计数unknown；harness292pass/0fail、skip/TODO无汇总为unknown，真实Long Stroke35pass/0fail/0skip/0TODO及package通过。六physical合跑原300s截断，6entered/5父终局，第6父单独有限5pass/0fail/0skip/0TODO，不拼全量绿。精确CI37783171051仍原300s截断539/824、2active/283queued，四计数unknown，不由local824或旧8d0覆盖。详见[65a矩阵](../../../proposals/K1A与全项目release验收-2026-10-08.md#r2165a冻结输入的完整执行与剩余截断)。最终docs-only提交CI按实际SHA单独核查并由交付链接给出，不借65a；opening append换Root未正式证明、388TODO/skip及稳定吞吐/具体环境原因unknown保留。原requests>1、1000≤elapsed<2000、ceilings、权限、并发/tier/预算均不放宽；下方均历史。
