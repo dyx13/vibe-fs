@@ -7,6 +7,7 @@ WHAT 是合同；本目录说明当前证据，不补充产品规则。
 - 006/013：实际 planner 的新建身份观察及不同 request kind/role 的对照，不声称跨物理重试保持身份。016 直接读取生产 RequestKind 的成功计账判别，不以手工调用 recordSuccess 假装上层会正确选择。
 - 008/012：实际内容有效性与 interrupted 分类。工具错误不等于 provider 失败；分类本身不证明预算没有变化。真实 Manager repair 与 reconciliation 仍待补。
 - 010/011/017：保留真实维护策略、计划冻结/绑定/消费与本地 Blogger request 所有权；不冒称完整发送、持久 Abandoned 或渲染先后。018 撤除用维护纯函数冒充 durable 事件等待的用例，改明确 TODO。
+- 011 补两次真实构造的等值计划：不同 handle 仍重放已有计划，再绑定首次冻结内容。2026-10-13 准入合同迁移的生产变异只忽略 ProjectionChoice，真实 Fable 编绿后，冻结候选及同 probeId/不同 digest 两项冲突断言均报错；恢复后通过。纯合同与 Wire 的正反编译见 structured-workflow013；它们不替代本文件的真实 Scope 行为，也不关闭实际渲染 TODO。
 - 019 的 retry-owner 扫描器是当前路径和词形的启发式检查，两项违约 fixture 只证明已识别模式会报警；它不是语义完备或替代实现可接受性的证明。真实 engine 矩阵与此分开。
 - 020：同一事实序列折叠及计划操作前后的 manual 计数。零 manual 不等于没有后台 resume；完整重启副作用边界仍待补。
 - 021：真实路由 runtime、可替换的受控调度器、单次 target witness、durable LWR 判别与实际上下文转换。retain/condemn 由测试显式选择，不表示生产恢复会选对；ordinary/delegate 组合证据仍 TODO。移除供应商模板常量与源码函数名计数。

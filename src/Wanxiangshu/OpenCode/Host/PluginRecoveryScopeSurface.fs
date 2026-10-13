@@ -3,6 +3,7 @@ namespace Wanxiangshu.OpenCode
 open Fable.Core.JsInterop
 open Wanxiangshu.Context.Prefix
 open Wanxiangshu.Foundation.Identity
+open Wanxiangshu.Participant.Provider.Attempt
 
 /// JS-native owner surface for provider-attempt-recovery-011 / provider-attempt-recovery-020 admitted-plan semantics.
 ///

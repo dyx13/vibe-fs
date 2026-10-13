@@ -2,6 +2,15 @@ namespace Wanxiangshu.Context.Prefix
 
 open Wanxiangshu.Foundation.Identity
 
+[<RequireQualifiedAccess>]
+type NoCandidateReason =
+    | NoCoverage
+    | WouldRetreat of committed: int * proposed: int
+    | NotNewerThanCommitted
+    | CutoffProofFailed of expected: string * recomputed: string
+    | BeyondPhaseBoundary of desired: int * material: int
+    | MaterialBeyondBoundary of material: int * bound: int
+
 type PrefixSnapshot =
     { FrozenRecordPrefixRef: BlobRef
       FrozenRecordPrefixDigest: BlobDigest

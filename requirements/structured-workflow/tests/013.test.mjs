@@ -423,3 +423,169 @@ integrationTest('WHAT[structured-workflow-013] the real Change program and recov
     assertInputsUnchanged()
   }
 })
+
+{
+  const { default: assert } = await import('node:assert/strict')
+  const { createHash } = await import('node:crypto')
+  const { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } = await import('node:fs')
+  const { tmpdir } = await import('node:os')
+  const { basename, dirname, join, relative, resolve } = await import('node:path')
+  const { pathToFileURL } = await import('node:url')
+  const { planOwnerCompile, materializeOwnerCompile, compileOwnerProject } = await import('../../../scripts/lib/owner-compile.mjs')
+
+  const root = resolve(import.meta.dirname, '../../..')
+  const sourceRoot = join(root, 'src/Wanxiangshu')
+  const fixtureRoot = join(import.meta.dirname, 'fixtures/attempt-contract-boundary')
+  const plannerProject = 'Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-planner.fsproj'
+  const scopeProject = 'Wanxiangshu.Owner.host-boundary.opencode-host-sharedstatesurface.fsproj'
+  const wireProject = 'Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj'
+  const emittedFiles = (directory) => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const file = join(directory, entry.name)
+    return entry.isDirectory() ? emittedFiles(file) : [file]
+  })
+
+  const withAttemptCompiler = async (t, run) => {
+    const scratch = mkdtempSync(join(tmpdir(), 'wxs-attempt-contract-'))
+    const observedInputs = new Map()
+    const capture = (file) => {
+      const bytes = readFileSync(file)
+      if (observedInputs.has(file)) assert.deepEqual(bytes, observedInputs.get(file), `compiler input changed: ${file}`)
+      else observedInputs.set(file, bytes)
+      return bytes
+    }
+    const assertUnchanged = () => {
+      for (const [file, bytes] of observedInputs) assert.deepEqual(readFileSync(file), bytes, `compiler input changed: ${file}`)
+    }
+    const load = async (result, suffix) => {
+      const matches = emittedFiles(result.outputPath).filter((file) => file.endsWith('/' + suffix))
+      assert.equal(matches.length, 1, `the fresh compiler output must contain exactly one ${suffix}`)
+      return import(pathToFileURL(matches[0]).href)
+    }
+    const compile = async (name, label, probeName, rejectScope = false, modules = ['Context/Prefix/Wire.js']) => {
+      assertUnchanged()
+      const projectPath = join(sourceRoot, name)
+      const plan = planOwnerCompile({ projectPath, aggregatePath: null })
+      for (const file of plan.projectPaths) assert.equal(capture(file).toString('utf8'), plan.projectContents.get(file))
+      const inputHash = createHash('sha256')
+      const compileItems = [...plan.compileItems, ...(probeName ? [join(fixtureRoot, probeName)] : [])].map((file) => {
+        const bytes = capture(file)
+        inputHash.update(relative(root, file)).update('\0').update(bytes).update('\0')
+        const sourcePath = file.startsWith(fixtureRoot + '/') ? join('CompilerProbe', basename(file)) : relative(sourceRoot, file)
+        const destination = join(scratch, 'inputs', label, sourcePath)
+        mkdirSync(dirname(destination), { recursive: true })
+        writeFileSync(destination, bytes)
+        return destination
+      })
+      const isolatedPlan = { ...plan, compileItems, forceCompileCache: false }
+      const options = {
+        projectPath,
+        aggregatePath: null,
+        scratchRoot: join(scratch, 'compiler'),
+        rootPropsPath: join(scratch, 'config/src/Wanxiangshu/Directory.Build.props'),
+        stdio: 'pipe',
+        compilePlan: isolatedPlan,
+      }
+      const materialized = materializeOwnerCompile(isolatedPlan, options)
+      const flatProject = readFileSync(materialized.projectPath, 'utf8')
+      assert.doesNotMatch(flatProject, /<ProjectReference\b/)
+      assert.equal((flatProject.match(/<Compile Include=/g) ?? []).length, compileItems.length)
+      const result = await compileOwnerProject(options)
+      assertUnchanged()
+      t.diagnostic(JSON.stringify({
+        label, root: name, shards: plan.projectPaths.length,
+        sources: plan.compileItems.filter((file) => file.endsWith('.fs')).length,
+        sourcesSha256: inputHash.digest('hex'), code: result.code, signal: result.signal,
+        elapsedMs: result.elapsedMs, immutableInputsProven: false,
+      }))
+      const diagnostics = `${result.stdout}\n${result.stderr}`
+      assert.equal(result.signal, null, 'a terminated compiler does not prove a capability boundary')
+      if (rejectScope) {
+        assert.equal(result.ok, false, 'the consumer must not acquire the physical recovery scope')
+        assert.equal(result.code, 1, diagnostics)
+        assert.match(diagnostics, /The type 'PluginRecoveryScope' is not defined/, diagnostics)
+        assert.ok(diagnostics.includes(probeName), 'the rejection must identify the scope probe')
+        return
+      }
+      assert.equal(result.ok, true, diagnostics)
+      assert.equal(result.code, 0)
+      if (modules.includes('OpenCode/Plugin/Plugin.js')) {
+        const metadata = emittedFiles(result.outputPath).filter((file) => file.endsWith('/Resources/PackageMetadata.js'))
+        assert.equal(metadata.length, 1, 'the compiled plugin must have one physical package resource root')
+        const packageRoot = resolve(dirname(metadata[0]), '../..')
+        for (const resource of ['host/pair-programming-guideline', 'tool/bash-honeypot/description']) {
+          for (const language of ['en', 'zh-CN']) {
+            const file = join('resources/provider', resource, language + '.md')
+            const destination = join(packageRoot, file)
+            mkdirSync(dirname(destination), { recursive: true })
+            writeFileSync(destination, capture(join(root, file)))
+            assert.deepEqual(readFileSync(destination), capture(join(root, file)))
+          }
+        }
+      }
+      if (probeName) return load(result, 'CompilerProbe/' + probeName.replace(/\.fs$/, '.js'))
+      for (const module of modules) await load(result, module)
+    }
+    try {
+      for (const file of [
+        'Directory.Build.props', 'src/Wanxiangshu/Directory.Build.props', 'src/Wanxiangshu/compile-order.txt',
+        '.config/dotnet-tools.json', 'global.json', 'package-lock.json', 'scripts/lib/owner-compile.mjs',
+      ]) capture(join(root, file))
+      for (const file of ['Directory.Build.props', 'src/Wanxiangshu/Directory.Build.props']) {
+        const destination = join(scratch, 'config', file)
+        mkdirSync(dirname(destination), { recursive: true })
+        writeFileSync(destination, capture(join(root, file)))
+      }
+      for (const resource of ['host/pair-programming-guideline', 'tool/bash-honeypot/description']) {
+        for (const language of ['en', 'zh-CN']) capture(join(root, 'resources/provider', resource, language + '.md'))
+      }
+      const packageConfig = JSON.parse(capture(join(root, 'package.json')))
+      writeFileSync(join(scratch, 'package.json'), JSON.stringify({ type: 'module', imports: packageConfig.imports }))
+      symlinkSync(join(root, 'node_modules'), join(scratch, 'node_modules'), 'dir')
+      const envelope = capture(join(root, 'resources/degeneration-guard/envelope/LoopDetectorEnvelope.js'))
+      const envelopePath = join(scratch, 'dist/Execution/Session/LoopDetectorEnvelope.js')
+      mkdirSync(dirname(envelopePath), { recursive: true })
+      writeFileSync(envelopePath, envelope)
+      assert.deepEqual(readFileSync(envelopePath), envelope)
+      await run(compile)
+    } finally {
+      rmSync(scratch, { recursive: true, force: true })
+      assertUnchanged()
+    }
+  }
+
+  integrationTest('WHAT[structured-workflow-013] real Fable runs the pure attempt admission contract and rejects the physical recovery scope', async (t) => {
+    await withAttemptCompiler(t, async (compile) => {
+      const probe = await compile(plannerProject, 'planner', 'AttemptAdmissionProbe.fs')
+      assert.equal(typeof probe.verify, 'function')
+      probe.verify()
+      await compile(scopeProject, 'legal-scope', 'ForbiddenRecoveryScope.fs')
+      await compile(plannerProject, 'forbidden-planner-scope', 'ForbiddenRecoveryScope.fs', true)
+    })
+  })
+
+  integrationTest('WHAT[structured-workflow-013] real Fable compiles prefix Wire without granting the physical recovery scope', async (t) => {
+    await withAttemptCompiler(t, async (compile) => {
+      await compile(wireProject, 'wire')
+      await compile(scopeProject, 'legal-scope', 'ForbiddenRecoveryScope.fs')
+      await compile(wireProject, 'forbidden-wire-scope', 'ForbiddenRecoveryScope.fs', true)
+    })
+  })
+
+  integrationTest('WHAT[structured-workflow-013] real Fable compiles the attempt admission surface and plugin consumers', async (t) => {
+    await withAttemptCompiler(t, async (compile) => {
+      await compile('Wanxiangshu.Owner.host-boundary.opencode-host-pluginrecoveryscopesurface.fsproj',
+        'scope-surface', null, false, ['OpenCode/Host/PluginRecoveryScopeSurface.js'])
+      await compile('Wanxiangshu.Owner.opencode-plugin.plugin-composition.fsproj',
+        'plugin', null, false, ['OpenCode/Plugin/PluginTransforms.js', 'OpenCode/Plugin/Plugin.js'])
+    })
+  })
+
+  integrationTest('WHAT[structured-workflow-013] real Fable compiles the candidate result contract and its selection owner', async (t) => {
+    await withAttemptCompiler(t, async (compile) => {
+      await compile('Wanxiangshu.Owner.prefix-stability.context-prefix-candidate.fsproj',
+        'candidate', null, false, ['Context/Prefix/Candidate.js'])
+      await compile('Wanxiangshu.Owner.prefix-stability.mission-obligation-todo-prefixepoch.fsproj',
+        'selection', null, false, ['Context/Prefix/ProbeSelection.js'])
+    })
+  })
+}

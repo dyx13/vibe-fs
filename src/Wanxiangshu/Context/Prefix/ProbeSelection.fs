@@ -3,33 +3,6 @@ namespace Wanxiangshu.Context.Prefix
 open Wanxiangshu.Context.Companion
 open Wanxiangshu.Foundation.Identity
 
-/// Why no probe was built. Every case is a normal outcome, not an error.
-///
-/// CTX-011 is explicit that an armed slot with no candidate sends its ordinary main
-/// request. So these are reasons for taking that path, and the caller treats all of
-/// them alike — they are distinguished only so a diagnostic can say which one
-/// happened (HOST-007).
-[<RequireQualifiedAccess>]
-type NoCandidateReason =
-    /// Nothing complete has been consumed yet, or a reanchor voided what had been.
-    | NoCoverage
-    /// CTX-011: the candidate would not move the covered range forward.
-    | WouldRetreat of committed: int * proposed: int
-    /// CTX-011: same cutoff, same prefix digest, same FrozenRecordPrefix digest as what is
-    /// already committed. Promoting it would spend an epoch and a cold boundary for a
-    /// prefix the model has already seen.
-    | NotNewerThanCommitted
-    /// COMPANION-011: the digest recomputed from X's current projection does not match
-    /// the one the Companion recorded. Fail closed — the numbering moved under us.
-    | CutoffProofFailed of expected: string * recomputed: string
-    /// context-compression-029: the material covers turns the window still keeps raw.
-    /// The caller must narrow the subset to the window boundary before asking again.
-    | BeyondPhaseBoundary of desired: int * material: int
-    /// context-compression-029: the frozen material claims more turns than the
-    /// request being answered, the coverage, or the window allows, so using it would
-    /// replace history the request may not cover.
-    | MaterialBeyondBoundary of material: int * bound: int
-
 /// context-compression-028/029: why this attempt is allowed to fold at all, and how
 /// far it may fold.
 ///

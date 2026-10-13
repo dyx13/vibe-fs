@@ -55,6 +55,31 @@ test('WHAT[provider-attempt-recovery-011] same-key same-plan replays the admitte
     RecoveryScope.recordAttemptPlan(scope, 'ses-1', 'phys-1', plan.handle)
   })
 })
+test('WHAT[provider-attempt-recovery-011] separately constructed equal plans replay and bind the first frozen values', () => {
+  const scope = RecoveryScope.createRecoveryScope()
+  const first = buildPlan({
+    session: 'ses-equal',
+    physical: 'phys-equal',
+    probe: probeInput({ probeId: 'probe-equal' }),
+  })
+  const second = buildPlan({
+    session: 'ses-equal',
+    physical: 'phys-equal',
+    probe: probeInput({ probeId: 'probe-equal' }),
+  })
+  assert.notEqual(second.handle, first.handle)
+  assert.deepEqual(second.view, first.view)
+
+  const admitted = RecoveryScope.freezeAttemptPlan(scope, 'ses-equal', 'phys-equal', first.handle)
+  assert.equal(admitted.outcome, 'Admitted')
+  const replayed = RecoveryScope.freezeAttemptPlan(scope, 'ses-equal', 'phys-equal', second.handle)
+  assert.equal(replayed.outcome, 'ReplayedExisting')
+  assert.deepEqual(replayed.view, admitted.view)
+
+  const bound = RecoveryScope.bindAttempt(scope, 'ses-equal', 'phys-equal', 'run-equal')
+  assert.equal(bound.bound, true)
+  assert.deepEqual(bound.view, { ...admitted.view, providerRun: 'run-equal' })
+})
 test('WHAT[provider-attempt-recovery-011] same-key different authority fails closed', () => {
   const scope = RecoveryScope.createRecoveryScope()
   const original = buildPlan({})

@@ -19,6 +19,29 @@ type PendingAttemptPlan =
       CommittedPrefixSnapshot: PrefixSnapshot option
       NoProbeReason: NoCandidateReason option }
 
+/// Result of admitting a pending attempt plan under exact physical identity.
+[<RequireQualifiedAccess>]
+type PendingAttemptPlanAdmission =
+    | Admitted of PendingAttemptPlan
+    | ReplayedExisting of PendingAttemptPlan
+    | IdentityMismatch of
+        expectedSession: SessionId *
+        expectedPhysical: PhysicalUserMessageId *
+        attempted: PendingAttemptPlan
+    | PlanConflict of existing: PendingAttemptPlan * attempted: PendingAttemptPlan
+
+module PendingAttemptPlanAdmission =
+    /// Exact equality for immutable admitted request evidence.
+    val areSemanticallyEqual: existing: PendingAttemptPlan -> attempted: PendingAttemptPlan -> bool
+
+    /// Same exact physical request identity, independent of its already-frozen projection choice.
+    val sameRequestIdentity: existing: PendingAttemptPlan -> attempted: PendingAttemptPlan -> bool
+
+    /// Same accepted physical authority before a more specific request owner freezes its request kind.
+    val samePhysicalAuthority: existing: PendingAttemptPlan -> attempted: PendingAttemptPlan -> bool
+
+    val requestIdentitySummary: plan: PendingAttemptPlan -> string
+
 [<RequireQualifiedAccess>]
 module AttemptPlanner =
     val ordinaryRequestKind: origin: PromptAuthority.PromptOrigin -> ProviderRequestKind

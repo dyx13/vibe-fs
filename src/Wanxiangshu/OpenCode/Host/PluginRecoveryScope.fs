@@ -43,48 +43,6 @@ open Wanxiangshu.Participant.Provider.Attempt.Fallback
 open Wanxiangshu.Execution.Session
 open Wanxiangshu.Persistence.Journal
 
-/// Result of admitting a pending attempt plan under exact physical identity.
-[<RequireQualifiedAccess>]
-type PendingAttemptPlanAdmission =
-    | Admitted of PendingAttemptPlan
-    | ReplayedExisting of PendingAttemptPlan
-    | IdentityMismatch of
-        expectedSession: SessionId *
-        expectedPhysical: PhysicalUserMessageId *
-        attempted: PendingAttemptPlan
-    | PlanConflict of existing: PendingAttemptPlan * attempted: PendingAttemptPlan
-
-module PendingAttemptPlanAdmission =
-    let areSemanticallyEqual (existing: PendingAttemptPlan) (attempted: PendingAttemptPlan) : bool =
-        existing = attempted
-
-    let samePhysicalAuthority (existing: PendingAttemptPlan) (attempted: PendingAttemptPlan) : bool =
-        existing.Authority.SessionId = attempted.Authority.SessionId
-        && existing.Authority.LogicalRunId = attempted.Authority.LogicalRunId
-        && existing.Authority.AuthorityRootUserMessageId = attempted.Authority.AuthorityRootUserMessageId
-        && existing.Authority.AuthorityKind = attempted.Authority.AuthorityKind
-        && existing.Authority.SelectedAgent = attempted.Authority.SelectedAgent
-        && existing.Authority.CanonicalRole = attempted.Authority.CanonicalRole
-        && existing.PhysicalUserMessageId = attempted.PhysicalUserMessageId
-        && existing.Origin = attempted.Origin
-
-    let sameRequestIdentity (existing: PendingAttemptPlan) (attempted: PendingAttemptPlan) : bool =
-        samePhysicalAuthority existing attempted
-        && existing.RequestKind = attempted.RequestKind
-
-    let requestIdentitySummary (plan: PendingAttemptPlan) : string =
-        sprintf
-            "session=%s physical=%s logical=%s root=%s authority=%A participant=%s role=%s origin=%A kind=%A"
-            (SessionId.value plan.Authority.SessionId)
-            (PhysicalUserMessageId.value plan.PhysicalUserMessageId)
-            (LogicalRunId.value plan.Authority.LogicalRunId)
-            (AuthorityRootUserMessageId.value plan.Authority.AuthorityRootUserMessageId)
-            plan.Authority.AuthorityKind
-            plan.Authority.SelectedAgent
-            (Roles.roleLabel plan.Authority.CanonicalRole)
-            plan.Origin
-            plan.RequestKind
-
 [<RequireQualifiedAccess>]
 type TransformAttemptPlanBindingError =
     | PendingAttemptPlanMissing of SessionId * PhysicalUserMessageId * ProviderRunIdentity

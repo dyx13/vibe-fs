@@ -50,6 +50,10 @@ A licensed BloggerMain retry uses BloggerSquash first when durable frames exist 
 
 Each AttemptPlan fixes probe and maintenance choices from RequestKind and persisted material before rendering, bound to its own physical message. Transient cross-callback state must neither decide these choices nor carry recovery permission.
 
+The planner owns the single pending-plan admission result and its pure comparisons. Depending on this contract alone must not make the plugin recovery scope or its mutable registries available. The plugin instance owns admission and binding: an exact session/physical key admits the first plan, replays an independently constructed equal plan, and rejects a different plan without replacing the first. A mismatched key is rejected. Later binding uses the first frozen values and the exact provider run.
+
+Complete plan equality, physical authority identity, and request identity are distinct. Physical authority identity includes session, logical run, authority root and kind, participant, role, physical message, and origin. Request identity also includes RequestKind; it does not include the frozen projection choice. Wire may reuse the first frozen choice for the same request identity, as required by host-boundary[008]. This does not weaken the scope's complete-value replay check.
+
 ## [012] Abort residue is not failure
 
 Host cleanup marking an in-flight tool call interrupted never advances the provider-failure budget.

@@ -1,0 +1,201 @@
+{
+  "scope": "R07a unique attempt admission contract and Wire shared-state reference removal",
+  "candidateParent": "3f417e237",
+  "date": "2026-10-13",
+  "tools": {
+    "node": "v26.6.0",
+    "fable": "5.13.0",
+    "compiler": "compileOwnerProject",
+    "supervisor": "superviseNodeTest",
+    "compilerCache": false,
+    "maximumConcurrentCompilers": 2,
+    "perTestTimeoutMs": 180000,
+    "verdictSilenceMs": 185000,
+    "suiteBackstopMs": 300000
+  },
+  "limits": [
+    "Execution receipt only; not an ownership registry or R09 immutable-input certificate.",
+    "Root digests exclude appended fixtures; fixture digests are recorded separately. Ordered digests hash each repository-relative path, NUL, current file bytes, NUL in planOwnerCompile order.",
+    "The helper checks captured sources, project bytes, props, configuration and runtime resource bytes before/after execution. These checks do not prove immutable inputs throughout every tool invocation.",
+    "Only these seven roots have independent positive proofs in this package. The 108 source-affected roots are covered by the canonical build, not 108 independent compiles.",
+    "Fresh module loading does not prove Plugin startup. Provider attempt behavior uses the production Scope through 011/020.",
+    "Wire still depends on AgentJournal through other real dependencies; subsystem SCCs and existing TODOs remain open."
+  ],
+  "finalIntegration": {
+    "file": "requirements/structured-workflow/tests/013.test.mjs",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "cleanupAccepted": true,
+    "wallSeconds": 216.43,
+    "totalFableCalls": 16,
+    "newFableCalls": 10,
+    "existingChangeFableCalls": 6,
+    "independentNewPositiveRoots": 7
+  },
+  "roots": [
+    {
+      "root": "Wanxiangshu.Owner.prefix-stability.context-prefix-candidate.fsproj",
+      "shards": 4,
+      "sources": 7,
+      "sourceDigest": "0d0e4db50d0f3296c2a85ab02bca981887cc5e1dfadd94bc31420d64c801325e",
+      "projectDigest": "94966623d96acd04f3b957452003ce7c9d108011a50aa92553c657cef9814c2e",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "Context/Prefix/Candidate.js"
+      ]
+    },
+    {
+      "root": "Wanxiangshu.Owner.prefix-stability.mission-obligation-todo-prefixepoch.fsproj",
+      "shards": 11,
+      "sources": 32,
+      "sourceDigest": "adab188d674395f7a1e4a1eec4d77cbc7b2b49c51101fec8ade9c22a730bb949",
+      "projectDigest": "7d825ab3dccbf3aefe04bc085b62cb55c9530514f0258f92206951cd75f7378b",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "Context/Prefix/ProbeSelection.js"
+      ]
+    },
+    {
+      "root": "Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-planner.fsproj",
+      "shards": 22,
+      "sources": 40,
+      "sourceDigest": "87c68e54dec75e883cc98623383061614f45ae0804c0319adf99932e44ce24e2",
+      "projectDigest": "6d4b51efbefee7d9c79e42298f2d745fbfdc0eec545dd66a7d9f4567def914cf",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "CompilerProbe/AttemptAdmissionProbe.js"
+      ]
+    },
+    {
+      "root": "Wanxiangshu.Owner.host-boundary.opencode-host-sharedstatesurface.fsproj",
+      "shards": 121,
+      "sources": 281,
+      "sourceDigest": "7ab0b2bdef1db4eed880192e78bed6ffbc39368ea407faba98ddce75c8db3a60",
+      "projectDigest": "25cbb52c68408aa4ab8340f5d581af4ab6eae23082e27b0b3a4bc1733b7eb417",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "CompilerProbe/ForbiddenRecoveryScope.js"
+      ]
+    },
+    {
+      "root": "Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj",
+      "shards": 88,
+      "sources": 219,
+      "sourceDigest": "651b6ca28421ba10a275c0c5e8c28c9271970018c0b8d8bc0a11f702481974f7",
+      "projectDigest": "dd57a612f2cca617ac7166e95bada5b77cfa5ebeeee8e35c2edc92bcde10acf5",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "Context/Prefix/Wire.js"
+      ]
+    },
+    {
+      "root": "Wanxiangshu.Owner.host-boundary.opencode-host-pluginrecoveryscopesurface.fsproj",
+      "shards": 124,
+      "sources": 286,
+      "sourceDigest": "44fdbe5bcd5c1c92b642a2e53e29694d9e06d6066d3a2236c135e38c204dd34c",
+      "projectDigest": "f79a1ff4d90b125dcee12734631539bab243ce5f8f9d159e7e30a5b00bad8fea",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "OpenCode/Host/PluginRecoveryScopeSurface.js"
+      ]
+    },
+    {
+      "root": "Wanxiangshu.Owner.opencode-plugin.plugin-composition.fsproj",
+      "shards": 254,
+      "sources": 717,
+      "sourceDigest": "e02afe9bec1bcc9912c428304b35c5fe867521253561863e363d28c08f2a79d2",
+      "projectDigest": "cc56065f12a4af087d1fa114d2d5f33881eff7861e9cb2f5981825df2fbc831b",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "OpenCode/Plugin/PluginTransforms.js",
+        "OpenCode/Plugin/Plugin.js"
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "requirements/structured-workflow/tests/fixtures/attempt-contract-boundary/AttemptAdmissionProbe.fs",
+      "sha256": "3da57d0deabd933b8de1fa5ac152807b149da5925451ebd66b1fa6215260d34f"
+    },
+    {
+      "path": "requirements/structured-workflow/tests/fixtures/attempt-contract-boundary/ForbiddenRecoveryScope.fs",
+      "sha256": "78f6f3ef2af5a2818a13c6c87b674922aa4d78b6290e6ecb30b3c6fcb6a09ec5"
+    }
+  ],
+  "negativeCompiles": [
+    {
+      "root": "Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-planner.fsproj",
+      "probe": "requirements/structured-workflow/tests/fixtures/attempt-contract-boundary/ForbiddenRecoveryScope.fs",
+      "compilerExitCode": 1,
+      "signal": null,
+      "requiredDiagnostic": "The type 'PluginRecoveryScope' is not defined"
+    },
+    {
+      "root": "Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj",
+      "probe": "requirements/structured-workflow/tests/fixtures/attempt-contract-boundary/ForbiddenRecoveryScope.fs",
+      "compilerExitCode": 1,
+      "signal": null,
+      "requiredDiagnostic": "The type 'PluginRecoveryScope' is not defined"
+    }
+  ],
+  "beforeRemoval": {
+    "wireClosure": {
+      "shards": 123,
+      "sources": 285
+    },
+    "physicalScopeProbeCompilerExitCode": 0,
+    "capabilityBoundaryAssertionFailed": true
+  },
+  "mutation": {
+    "change": "areSemanticallyEqual ignores ProjectionChoice",
+    "compilerGeneration": 438,
+    "compilerExitCode": 0,
+    "behaviorFile": "requirements/provider-attempt-recovery/tests/011.test.mjs",
+    "passed": 20,
+    "failed": 2,
+    "todo": 1,
+    "cleanupAccepted": true,
+    "failedCases": [
+      "same admitted plan drives binding and the frozen candidate is retained",
+      "same candidate probe id with a different digest conflicts"
+    ],
+    "expected": "PlanConflict",
+    "actual": "ReplayedExisting",
+    "restored": true
+  },
+  "canonicalBuild": {
+    "generation": 439,
+    "compilerInputDigest": "aee21dd5b95c418e4b7baaa6b4dd81ec70e82b424a2f7c781cba7bc7573172b3",
+    "sourceAndSignatureItems": 1552,
+    "surfaces": 175,
+    "loadedJsModules": 846
+  },
+  "focusedRegression": {
+    "files": 19,
+    "passed": 202,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 4,
+    "runnerExitCode": 1,
+    "cleanupAccepted": true,
+    "openGaps": [
+      "GAP-106",
+      "GAP-139"
+    ]
+  },
+  "logs": {
+    "compiler": "/private/tmp/vibe-admission-final-compiler.log",
+    "behavior": "/private/tmp/vibe-admission-final-behavior.log",
+    "build": "/private/tmp/vibe-admission-final-build.log",
+    "mutation": "/private/tmp/vibe-admission-mutation-behavior.log"
+  }
+}

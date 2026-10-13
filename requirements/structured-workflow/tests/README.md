@@ -12,6 +12,7 @@
 - 011 的静态检查拒绝分片图环，当前 subsystem 图仍处于完整报告阶段；其受控反例保留“分片 DAG 聚合后仍成环”的区别。016 只证明正式入口使用同一结构门禁。全 subsystem 无环、当前全部 shard 各自闭包的真实 Fable 覆盖，以及已迁边界的编译与行为保护，须按 structured-workflow-011、013、016 分别补齐，不能从静态绿色推得。
 - 013 的 GitGateway 检查固定了当前 change 归属及 Hook 引用路径，这是当前结构的回归，不能把归属标签当作永久规范。transport 的行为依据是 durable-convergence-008、009、010 和 durable-events-018；后续按真实责任拆分时仍须保护 Hook 不取得 Change 业务，并处理同片的 Process runner 工厂，不能只改归属。
 - 013 新增 Change Program 的真实编译边界：只从其声明闭包编译，加载新产物执行六个生产 Program 场景；同一 AgentJournal/WorktreeResource 探针须先在合法组合根编绿，再在窄根命中两个类型缺失诊断。源码复制与前后字节核对不证明全过程不可变输入，不能据此关闭 verification-system016 或局部开发入口的剩余义务。该用例属于 integration 层，默认 skip 不能计作证明。
+- 013 新增准入合同的四项 integration：Planner 的真实构造和三种比较、Planner/Wire 对同一 PluginRecoveryScope 探针的拒绝、真实 ScopeSurface/Plugin 消费者，以及 Candidate/选择器合同。七个不同根共十次冷 Fable 调用（SharedState 提供者重复一次，另有两次负例），只物化各根声明的源码，零 ProjectReference；加载各次新产物及原字节资源，不读正式 dist。四个 DU case 的构造只证明公开合同可消费；真实准入、重放、冲突和绑定由 provider-attempt-recovery011 证明。源码、工程和 props 的前后核对仍不是 R09 不可变输入证书；其它反向影响根没有因此获得独立编译证明。
 - 16 站补 012 的真实回归：同一输出目录先编译 Core，再局部编译 Alpha，必须真正产生 Alpha.js 且不编译无关 Beta。它抓到 Fable 在共享输出中复用旧 project cache 的问题；构建报告成功、目录已有某个 JS 文件都不是当前闭包已生成的证据。见 GAP-087 的修复记录。
 - 012 新增默认层生产图回归守护（2026-10-04，W1 第三批 build-closure 卡）：planImpactCompile 对 PluginSessionScope.fs 的 .fs-only 改动，断言选中闭包含 Context/Companion 的 Host.fsi 与 Host.fs 且类型定义先于消费者（CompanionHost 回归）。该守护只覆盖 PluginSessionScope 一条边，不宣称 shard 图整体完整——系统性缺边排查另立构建待办（见分册02 文件头）。DevOps 真实跑绿（012 默认层 41 条 0 fail）。
 - 015 验证生成产物辅助设施，但其旧 locality/authority 模型与现行单一 subsystem 权威之间仍需进一步核对；不能将辅助设施测试自动解释为现行发布门禁。
