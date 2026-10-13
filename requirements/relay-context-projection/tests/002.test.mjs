@@ -16,7 +16,7 @@ test('WHAT[relay-context-projection-002] the actual ordinary transform stops bef
 test('WHAT[relay-context-projection-002] the actual ordinary transform continues all context owners for a current iteration', async () => {
   assert.deepEqual(await ordinaryEffects(false, false), [
     'begin', 'session-time', 'deferred', 'relay',
-    'replay', 'restore-arguments', 'capture', 'commit-trace',
+    'tenure-isolation', 'replay', 'restore-arguments', 'capture', 'commit-trace',
     'refresh-companion', 'companion', 'prefix', 'freeze-plan',
     'continuation', 'pair', 'grounding', 'delegation',
     'chronicle', 'deferred', 'sanitize',

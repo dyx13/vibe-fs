@@ -20,7 +20,7 @@ test('WHAT[durable-events-020] Journal boot creates no writer until the first bu
     const booted = await journal.JournalSurface_bootWithWriterId(commonDir, 'boot-proof', 'runtime-proof', 6001, '9999-05-01T00:00:00Z')
     assert.equal(booted.ok, true)
     try {
-      const writer = join(commonDir, 'wanxiangshu/events/boot-proof.ndjson')
+      const writer = join(commonDir, 'wanxiangshu/events/boot-proof-0000.ndjson')
       assert.equal(Number(booted.localSeq), 1)
       assert.equal(existsSync(writer), false)
       const appended = await journal.JournalSurface_appendAgent(booted.journal, { kind: 'Session', session: 'session-proof' }, null, {

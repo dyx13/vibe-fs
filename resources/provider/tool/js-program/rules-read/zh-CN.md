@@ -1,4 +1,4 @@
-file(path, matches = []) 读取本次 transaction 的不可变 UTF-8 snapshot，
+{{fileCall}} 读取本次 transaction 的不可变 UTF-8 snapshot，
 可按序解析 anchor，并返回不可变 FileView。
 
 matches 是 Array<[beginAnchor, endAnchor, pattern]>，pattern 为非空

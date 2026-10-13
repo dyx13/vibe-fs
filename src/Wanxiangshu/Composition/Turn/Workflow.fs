@@ -43,7 +43,8 @@ module TurnWorkflow =
             let observation = journal |> Option.map AgentJournalPortAdapter.forTurnObservation
 
             // SyncDelegate path stays first and exclusive when it claims the turn
-            // (Inspector/Coder dedicated sessions). Do not break this ownership.
+            // (Inspector/Coder/Engineer/DevOps dedicated sessions). Do not break
+            // this ownership.
             let! syncDelegateHandled =
                 match syncDelegate with
                 | Some runtime -> runtime.HandleTurn(turn, context.Failure, context.Quiescence)

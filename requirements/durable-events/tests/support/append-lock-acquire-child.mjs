@@ -10,8 +10,8 @@ assert.ok(['measure', 'cold'].includes(mode))
 assert.ok(['mkdir-eacces', 'mkdir-eio', 'busy-success', 'busy-eacces'].includes(scenario))
 const target = path.join(commonDir, 'wanxiangshu')
 const lockPath = `${target}.lock`
-const sourceFile = path.join(target, 'events', `${request.sourceWriterId}.ndjson`)
-const writerFile = path.join(target, 'events', `${writerId}.ndjson`)
+const sourceFile = path.join(target, 'events', `${request.sourceWriterId}-0000.ndjson`)
+const writerFile = path.join(target, 'events', `${writerId}-0000.ndjson`)
 const views = (store, handle) => [request.seed, request.incoming].map(event => ({
   event: store.read(handle, event.id),
   head: store.head(handle, event.stream),

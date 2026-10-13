@@ -18,6 +18,7 @@ module AttachmentSurface =
         | "Engineer" -> SyncDelegateRole.Engineer
         | "Coder" -> SyncDelegateRole.Coder
         | "Inspector" -> SyncDelegateRole.Inspector
+        | "DevOps" -> SyncDelegateRole.DevOps
         | _ -> invalidArg "role" "Unknown attachment role"
 
     let createOwner () : obj = box (AttachedSessionRuntime())

@@ -387,7 +387,10 @@ module InteractionRepairWorkflow =
 
         if fissionReplaced || retryAttemptSuppressesRepair journal observation turn then
             AsyncSupport.completedTask ()
-        elif CompletedTurnClassifier.needsInteractionRepair turn.Role (box turn.Outcome) turn.Parts then
+        elif
+            not (CompletedTurnClassifier.isPlanEmptyStop turn.Role turn.Finish (box turn.Outcome))
+            && CompletedTurnClassifier.needsInteractionRepair turn.Role (box turn.Outcome) turn.Parts
+        then
             repairDefect
                 quiescence
                 context

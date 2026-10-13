@@ -19,5 +19,6 @@ module DelegationHandoffRoute =
         | SyncDelegateRole.Inspector -> create "sync" (ReuseScopeId.value scope + ":inspector")
         | SyncDelegateRole.Coder -> create "sync" (ReuseScopeId.value scope + ":coder")
         | SyncDelegateRole.Engineer -> create "sync" (ReuseScopeId.value scope + ":engineer")
+        | SyncDelegateRole.DevOps -> create "sync" (ReuseScopeId.value scope + ":devops")
 
     let value (DelegationHandoffRoute value) = value

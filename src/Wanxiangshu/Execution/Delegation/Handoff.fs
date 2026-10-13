@@ -112,23 +112,18 @@ module DelegationHandoff =
 
         XTraceRange.create startInclusive endExclusive
 
-    let promptDocument (charge: string) (parentRecord: string option) =
-        let body =
-            parentRecord
-            |> Option.map (fun record -> record.Trim())
-            |> Option.filter (System.String.IsNullOrWhiteSpace >> not)
-            |> Option.map (fun record -> [ LlmFacing.Data.stringField "parent_delta_work_record" record ])
-            |> Option.defaultValue []
-
-        LlmFacing.instruction charge |> LlmFacing.withData body
-
-    let renderPrompt (charge: string) (parentRecord: string option) =
-        promptDocument charge parentRecord |> LlmFacing.render
-
-    /// Append parent delta to an already-rendered provider prompt without
-    /// reinterpreting or re-rendering the existing bytes. Warm-start and other
-    /// typed provider documents keep their own instruction/data structure.
-    let appendParentDelta (providerPrompt: LlmFacing.Document) (parentRecord: string option) =
+    /// Append the parent delta to an already-built provider prompt, riding the
+    /// fork-child convention (delegation-019): the localized CommissionerRecord
+    /// prose header names the field on the instruction plane, the parent LWR
+    /// itself is a TOML data field (`commissioner_record`). Never dumped as
+    /// bare prose. Child → parent join is the opposite plane — do not conflate.
+    /// Warm-start and other typed provider documents keep their own
+    /// instruction/data structure.
+    let appendParentDelta
+        (commissionerRecordProse: string)
+        (providerPrompt: LlmFacing.Document)
+        (parentRecord: string option)
+        =
         match
             parentRecord
             |> Option.map (fun record -> record.Trim())
@@ -137,4 +132,5 @@ module DelegationHandoff =
         | None -> providerPrompt
         | Some record ->
             providerPrompt
-            |> LlmFacing.withData [ LlmFacing.Data.stringField "parent_delta_work_record" record ]
+            |> LlmFacing.withInstruction commissionerRecordProse
+            |> LlmFacing.withData [ LlmFacing.Data.stringField "commissioner_record" record ]

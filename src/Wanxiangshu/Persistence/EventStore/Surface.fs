@@ -200,6 +200,11 @@ module Surface =
     let create (commonDir: string, writerId: string) : EventStoreHandle =
         EventStoreHandle.Create(EventStore.createLocal commonDir writerId (createIntegrator ()))
 
+    /// Create a process-local writer capability with an injected single-segment
+    /// byte cap (durable-events-005). Production callers use `create`.
+    let createWithSegmentCap (commonDir: string, writerId: string, capBytes: int) : EventStoreHandle =
+        EventStoreHandle.Create(EventStore.createLocalWithSegmentCap commonDir writerId capBytes (createIntegrator ()))
+
     /// Actual canonical preparation and append; only its returned Commit boundary faults.
     let createWithCurrentCommitFault
         (commonDir: string, writerId: string, cause: obj, commitBeforeFailure: bool)

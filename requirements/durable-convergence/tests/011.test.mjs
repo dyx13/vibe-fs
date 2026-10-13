@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, utimesSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, utimesSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
@@ -51,7 +51,7 @@ const writeEvent = async (commonDir, writerId, event) => {
   } finally {
     eventStore.dispose(handle)
   }
-  return join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+  return join(commonDir, 'wanxiangshu', 'events', `${writerId}-0000.ndjson`)
 }
 
 test('WHAT[durable-convergence-011] reverse tail read is exact across block boundaries', () => {
@@ -196,7 +196,7 @@ test('WHAT[durable-convergence-011] UTC day-group expiry removes local writer an
     assert.match(rootTree, /writer-manifest/)
     const writers = execFileSync('git', ['-C', repo, 'ls-tree', `${result.root}:writers`], { encoding: 'utf8' })
     assert.doesNotMatch(writers, /writer-old\.ndjson/)
-    assert.match(writers, /writer-fresh\.ndjson/)
+    assert.match(writers, /writer-fresh-0000\.ndjson/)
   })
 })
 
@@ -419,3 +419,81 @@ test('WHAT[durable-convergence-011] advancing a writer activity from yesterday t
     assert.doesNotMatch(expiredWriters, /writer-moving\.ndjson/)
   })
 })
+
+{
+// WHAT[durable-events-005] 段序列合同在 retention 边界的红测试：
+// 旧实现把段文件当作独立 writer（<WriterId>-<seq>），retainedWriterIdsAt 的聚合断言
+// 与「不得按段部分移除」断言因聚合语义缺失而红。
+const journalEvent = (id, stream, parents, observedAt) => ({
+  id, stream, type: 'JournalEnvelope', parents,
+  payload: { ObservedAt: new Date(observedAt).toISOString() }, payloadRefs: [],
+})
+const writeCanonicalSegments = (commonDir, writerId, segments) => {
+  const directory = join(commonDir, 'wanxiangshu', 'events')
+  mkdirSync(directory, { recursive: true })
+  segments.forEach((events, index) => {
+    writeFileSync(join(directory, `${writerId}-${String(index).padStart(4, '0')}.ndjson`), events.map(canonicalLine).join(''))
+  })
+}
+
+test('WHAT[durable-convergence-011] segment_series_is_retained_and_expired_as_one_writer_whose_activity_reads_the_highest_segment_tail', async () => {
+  await withRepo(async (repo, commonDir) => {
+    const now = Date.parse('2026-09-25T12:00:00Z')
+    // 段 0 尾部 Journal 活动在三天前；段 1 尾部 Journal 活动在今天。
+    // writer 活动时间取逻辑流尾部（最高段）；旧段的陈旧活动不得单独过期整组。
+    const oldJournal = journalEvent(A, 'retention/segment-series', [], Date.parse('2026-09-22T12:00:00Z'))
+    const freshJournal = journalEvent(B, 'retention/segment-series', [A], Date.parse('2026-09-25T10:00:00Z'))
+    writeCanonicalSegments(commonDir, 'writer-segments', [[oldJournal], [freshJournal]])
+
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, now), ['writer-segments'],
+      'a segment series is one writer whose activity is the highest segment tail')
+
+    // 中间时刻：段 0 自身活动已过期、段 1 仍活跃——整组保留，不得按段部分移除。
+    const mid = Date.parse('2026-09-26T12:00:00Z')
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, mid), ['writer-segments'])
+    const retained = await retention.syncAt(repo, commonDir, null, mid)
+    assert.equal(retained.ok, true, JSON.stringify(retained.error))
+    const names = readdirSync(join(commonDir, 'wanxiangshu', 'events')).sort()
+    assert.deepEqual(names, ['writer-segments-0000.ndjson', 'writer-segments-0001.ndjson'],
+      'retention never removes a segment of a retained writer')
+    const writers = execFileSync('git', ['-C', repo, 'ls-tree', `${retained.root}:writers`], { encoding: 'utf8' })
+    assert.match(writers, /writer-segments-0000\.ndjson/)
+    assert.match(writers, /writer-segments-0001\.ndjson/)
+
+    // 最高段活动也过期后，整组一起退出。
+    const later = Date.parse('2026-09-28T00:00:00Z')
+    assert.deepEqual(retention.retainedWriterIdsAt(commonDir, later), [])
+    const expired = await retention.syncAt(repo, commonDir, retained.root, later)
+    assert.equal(expired.ok, true, JSON.stringify(expired.error))
+    assert.deepEqual(readdirSync(join(commonDir, 'wanxiangshu', 'events')).sort(), [],
+      'expiry removes every segment of the series')
+    assert.equal(execFileSync('git', ['-C', repo, 'ls-tree', `${expired.root}:writers`], { encoding: 'utf8' }).trim(), '')
+  })
+})
+
+test('WHAT[durable-convergence-011] manifest_binds_every_segment_blob_with_one_writer_activity', async () => {
+  await withRepo(async (repo, commonDir) => {
+    const now = Date.now()
+    const j1 = journalEvent(A, 'retention/segment-manifest', [], now - 60_000)
+    const j2 = journalEvent(B, 'retention/segment-manifest', [A], now - 30_000)
+    writeCanonicalSegments(commonDir, 'writer-manifest-seg', [[j1], [j2]])
+
+    const snap = await retention.syncAt(repo, commonDir, null, now)
+    assert.equal(snap.ok, true, JSON.stringify(snap.error))
+    const manifest = execFileSync('git', ['-C', repo, 'show', `${snap.root}:writer-manifest`], { encoding: 'utf8' })
+    const entries = manifest.trim().split('\n').slice(1).map(line => line.split('\t'))
+    assert.equal(entries.length, 2, 'one manifest entry per segment blob')
+
+    const decode = (encoded) => Buffer.from(encoded, 'base64url').toString('utf8')
+    assert.equal(decode(entries[0][0]), 'writer-manifest-seg-0000.ndjson')
+    assert.equal(decode(entries[1][0]), 'writer-manifest-seg-0001.ndjson')
+    assert.equal(entries[0][2], entries[1][2],
+      'all segments of one writer carry the same writer-level activity')
+
+    for (const [encoded, oid] of entries) {
+      const treeOid = execFileSync('git', ['-C', repo, 'rev-parse', `${snap.root}:writers/${decode(encoded)}`], { encoding: 'utf8' }).trim()
+      assert.equal(oid, treeOid, 'manifest OID must equal the writers tree entry')
+    }
+  })
+})
+}

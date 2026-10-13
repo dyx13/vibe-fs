@@ -50,7 +50,8 @@ type AttachedSessionRuntime
     let ownKinds =
         [ AttachmentKind.SyncInspector
           AttachmentKind.SyncCoder
-          AttachmentKind.SyncEngineer ]
+          AttachmentKind.SyncEngineer
+          AttachmentKind.SyncDevOps ]
 
     let leaseValue (lease: AttachmentLeaseCore.Lease) =
         let child = SessionId.create lease.SessionId

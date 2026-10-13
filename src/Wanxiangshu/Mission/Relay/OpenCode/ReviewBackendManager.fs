@@ -15,12 +15,14 @@ open Wanxiangshu.OpenCode
 open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Persistence.Journal
 
-module ReviewTool =
+/// relay-assessment-011: the Manager backend of the shared `review` shell.
+/// Owns the relay assessment binding, transaction and failure paths; the
+/// shell (ReviewShell) dispatches to it for every non-Plan caller. The logic
+/// below is the former ReviewTool body, moved without behavioral change.
+module ReviewBackendManager =
+
     [<RequireQualifiedAccess>]
     module Path =
-        [<Literal>]
-        let Description = "tool/review/description"
-
         [<Literal>]
         let Finish = "runtime/manager-finish"
 
@@ -38,9 +40,6 @@ module ReviewTool =
 
         [<Literal>]
         let RecordFailed = "tool/review/record-failed"
-
-        [<Literal>]
-        let FindingsArgument = "tool/review/findings-argument"
 
         [<Literal>]
         let ReplayConflict = "tool/review/replay-conflict"
@@ -448,7 +447,7 @@ module ReviewTool =
         | Ok value -> value
         | Error failure -> rejectedResult failure
 
-    let private execute (scope: ToolRuntimeScope) (args: HostToolArguments) (context: HostToolContext) =
+    let execute (scope: ToolRuntimeScope) (args: HostToolArguments) (context: HostToolContext) =
         task {
             let! outcome =
                 taskResult {
@@ -459,24 +458,3 @@ module ReviewTool =
 
             return renderExecution outcome
         }
-
-    let admission =
-        ToolAdmission.OfficeRole(fun _ role -> OfficeCapability.isAllowed role ToolPermission.ReviewAssessment)
-
-    let spec (factory: HostToolFactory) (scope: ToolRuntimeScope) : ToolSpec =
-        let findingSchema =
-            ToolHostCodec.objectSchemaOf
-                [ "acceptance_criteria", ToolHostCodec.stringSchema factory
-                  "work_plan", ToolHostCodec.stringSchema factory ]
-                factory
-
-        let findingsSchema =
-            ToolHostCodec.arraySchemaOf findingSchema (providerText Path.FindingsArgument Map.empty) factory
-
-        let noteArgument = "note", ToolHostCodec.optionalStringSchema factory
-
-        { Name = "review"
-          Description = providerText Path.Description Map.empty
-          Arguments = [ "findings", findingsSchema; noteArgument ]
-          Admission = admission
-          Execute = execute scope }

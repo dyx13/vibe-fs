@@ -58,6 +58,7 @@ type JsFailure =
     | TransactionRecoveryRequired
     | TransactionPersistenceFailed of JsTransactionAppendFailure
     | UnknownMember
+    | PlanReviewRequired
 
 module JsFailure =
 
@@ -109,6 +110,7 @@ module JsFailure =
         | JsFailure.TransactionPersistenceFailed failure ->
             transactionPhaseCode failure.Phase + appendFailureCode failure.Error
         | JsFailure.UnknownMember -> "UNKNOWN_MEMBER"
+        | JsFailure.PlanReviewRequired -> "PLAN_REVIEW_REQUIRED"
 
     /// LLM-visible stable reason text (proposal §78: readable, stable, no stack noise).
     let private reasonWithMessage fallback prefix message =
@@ -154,6 +156,8 @@ module JsFailure =
                 (EventId.value failure.EventId)
                 (AppendError.describe failure.Error)
         | JsFailure.UnknownMember -> "member is not part of this generated surface"
+        | JsFailure.PlanReviewRequired ->
+            "Review is required before modifying the plan artifact. You must call review first."
 
     /// JS-078.1 stable result shape for failures: { ok: false, code, reason }.
     let render (failure: JsFailure) : string =
@@ -205,4 +209,5 @@ module JsFailure =
         | "TRANSACTION_ROLLBACK_FAILED" -> JsFailure.TransactionRollbackFailed
         | "TRANSACTION_RECOVERY_REQUIRED" -> JsFailure.TransactionRecoveryRequired
         | "UNKNOWN_MEMBER" -> JsFailure.UnknownMember
+        | "PLAN_REVIEW_REQUIRED" -> JsFailure.PlanReviewRequired
         | _ -> JsFailure.ProgramFailed text

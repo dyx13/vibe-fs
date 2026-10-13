@@ -161,12 +161,7 @@ module ForkTool =
         ProviderProse.render language path (Map [ "name", byname ])
 
     let private forkInstructions (sessionId: SessionId) : ForkChildInstructions =
-        let lang = SessionProviderLanguage.languageOf sessionId
-
-        { Base = ProviderProse.instructionLines lang ForkChildPayload.BasePath Map.empty
-          CommissionerRecord = ProviderProse.render lang ForkChildPayload.CommissionerRecordPath Map.empty
-          Attachment = ProviderProse.render lang ForkChildPayload.AttachmentPath Map.empty
-          Requirements = ProviderProse.render lang ForkChildPayload.RequirementsPath Map.empty }
+        Wanxiangshu.Execution.Delegation.SyncDelegate.HostForkProse.forkInstructions sessionId
 
     type Request =
         { Calling: string
@@ -850,6 +845,9 @@ module ForkTool =
     let managerAdmission: ToolAdmission =
         ToolAdmission.OfficeRole(fun _ r -> r = Role.Manager)
 
+    let resumeAdmission: ToolAdmission =
+        ToolAdmission.OfficeRole(fun _ r -> r = Role.Manager || r = Role.Plan)
+
     let orchestratorAdmission: ToolAdmission =
         ToolAdmission.OfficeRole(fun _ r -> r = Role.Orchestrator)
 
@@ -891,7 +889,7 @@ module ForkTool =
               "keywords", ToolHostCodec.optionalStringSchemaDescribed (prose language Path.Fork.ArgKeywords) factory
               "attach", ToolHostCodec.optionalStringSchemaDescribed (prose language Path.Fork.ArgAttach) factory
               "expected_tool_calls", DelegatedToolEstimate.schema language factory ]
-          Admission = managerAdmission
+          Admission = resumeAdmission
           Execute =
             fun args context ->
                 task {

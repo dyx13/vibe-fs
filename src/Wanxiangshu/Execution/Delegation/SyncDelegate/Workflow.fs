@@ -95,7 +95,8 @@ module internal SyncDelegateWorkflow =
         =
         match role with
         | SyncDelegateRole.Inspector
-        | SyncDelegateRole.Engineer ->
+        | SyncDelegateRole.Engineer
+        | SyncDelegateRole.DevOps ->
             store.TryTakeDeletedDelegate ownerScope
             |> Option.iter (fun sessionId -> deps.CleanupDelegateDraft(SessionId.value sessionId))
         | SyncDelegateRole.Coder -> ()
@@ -199,7 +200,11 @@ module internal SyncDelegateWorkflow =
 
             let! handoff = deps.SendPrompt call request
 
-            if role = SyncDelegateRole.Inspector || role = SyncDelegateRole.Engineer then
+            if
+                role = SyncDelegateRole.Inspector
+                || role = SyncDelegateRole.Engineer
+                || role = SyncDelegateRole.DevOps
+            then
                 deps.NoteDelegatePrompt (SessionId.value delegateSession) request.Charge
 
             let! workRecord =

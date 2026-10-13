@@ -100,7 +100,14 @@ export function bindTestEntry(event, entryFile) {
 
 export async function runTestFiles({
   files, concurrency = parseConcurrency(process.env.NODE_TEST_CONCURRENCY),
-  send = (message, callback) => process.send?.(message, callback), stdout = process.stdout, stderr = process.stderr,
+  send = (message, callback) => {
+    // 当 supervisor 已终止（watchdog 静默 / backstop）时，process.connected 会先翻为 false，
+    // 而 inner runner 尚未收到 SIGKILL。此时调用 process.send 会触发 ERR_IPC_CHANNEL_CLOSED，
+    // 该错误经 process.nextTick 以 'error' 事件异步抛出，无监听器时直接崩掉 runner。
+    // 先检查 process.connected，同时避免同步 throw 与异步 'error' 事件。
+    if (typeof process.send !== 'function' || !process.connected) return
+    try { process.send(message, callback) } catch { /* IPC 已关闭 —— supervisor 已终止 */ }
+  }, stdout = process.stdout, stderr = process.stderr,
 }) {
   const fileLimit = parseConcurrency(concurrency)
   const workerCount = Math.min(files.length,

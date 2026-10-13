@@ -3,6 +3,8 @@ namespace Wanxiangshu.OpenCode
 open Wanxiangshu.Context.Prefix
 open Wanxiangshu.Foundation
 open Wanxiangshu.Interaction.Authority
+open Wanxiangshu.OpenCode.Host
+open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Participant.Provider.Attempt
 
 /// JS-native execution-gate surface. ToolRegistry remains the owner of the
@@ -48,3 +50,26 @@ module ToolRegistrySurface =
             |> List.sort
             |> List.toArray
         | _ -> [||]
+
+    let runJsPlan
+        (store: Wanxiangshu.Persistence.EventStore.IEventStore)
+        (root: string)
+        (workId: string)
+        (program: string)
+        : System.Threading.Tasks.Task<string> =
+        let prose =
+            Wanxiangshu.Repository.Programming.Js.OpenCode.JsDescriptionAssets.load (
+                ProviderLanguageBinding.readGlobalPreference ()
+            )
+
+        ToolRegistry.runPlanProgram prose store root workId program
+
+    let jsPlanDescription (language: string) : string =
+        let parsed = ProviderLanguage.parse language
+
+        let prose =
+            Wanxiangshu.Repository.Programming.Js.OpenCode.JsDescriptionAssets.load parsed
+
+        Wanxiangshu.Repository.Programming.Js.JsCanonicalDescription.renderPlan
+            prose
+            (ProviderProse.render parsed "tool/js-plan" Map.empty)

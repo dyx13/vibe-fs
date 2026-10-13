@@ -45,7 +45,7 @@ const retention = await import("../../../dist/Persistence/EventStore/RetentionSu
 
 const make = (id, stream, parents = []) => ({ id, stream, type: 'JobRequested', parents, payload: {}, payloadRefs: [] })
 
-test('WHAT[durable-convergence-003] sync blobifies each complete writer file once without segments or index', async () => {
+test('WHAT[durable-convergence-003] sync blobifies each writer segment file once', async () => {
   const root = mkdtempSync(join(tmpdir(), 'wxs-writer-blobify-'))
   const repoA = join(root, 'a')
   const repoB = join(root, 'b')
@@ -68,14 +68,14 @@ test('WHAT[durable-convergence-003] sync blobifies each complete writer file onc
     const syncA1 = await retention.syncAt(repoA, commonA, null, now)
     assert.equal(syncA1.ok, true, syncA1.ok ? '' : JSON.stringify(syncA1.error))
 
-    // Prove complete writer file is exactly one Git blob in writers/ tree
+    // Prove each writer segment file is exactly one Git blob in writers/ tree
     const treeA = execFileSync('git', ['-C', repoA, 'ls-tree', `${syncA1.root}:writers`], { encoding: 'utf8' })
-    assert.match(treeA.trim(), /^100644 blob [0-9a-f]{40}\twriter-a\.ndjson$/)
+    assert.match(treeA.trim(), /^100644 blob [0-9a-f]{40}\twriter-a-0000\.ndjson$/)
 
     const blobOidA = treeA.trim().split(/\s+/)[2]
     const blobContentA = execFileSync('git', ['-C', repoA, 'cat-file', '-p', blobOidA], { encoding: 'utf8' })
-    const fileContentA = readFileSync(join(commonA, 'wanxiangshu', 'events', 'writer-a.ndjson'), 'utf8')
-    assert.equal(blobContentA, fileContentA, 'entire local writer file is one Git blob without segments')
+    const fileContentA = readFileSync(join(commonA, 'wanxiangshu', 'events', 'writer-a-0000.ndjson'), 'utf8')
+    assert.equal(blobContentA, fileContentA, 'each writer segment file is one Git blob')
 
     // 2. Repo B has writer-b, fetches Repo A objects, and syncs against rootA -> convergence
     execFileSync('git', ['-C', repoB, 'fetch', '-q', repoA, syncA1.root])
@@ -85,8 +85,8 @@ test('WHAT[durable-convergence-003] sync blobifies each complete writer file onc
 
     const syncB1 = await retention.syncAt(repoB, commonB, syncA1.root, now)
     assert.equal(syncB1.ok, true, syncB1.ok ? '' : JSON.stringify(syncB1.error))
-    assert.equal(existsSync(join(commonB, 'wanxiangshu', 'events', 'writer-a.ndjson')), true)
-    assert.equal(existsSync(join(commonB, 'wanxiangshu', 'events', 'writer-b.ndjson')), true)
+    assert.equal(existsSync(join(commonB, 'wanxiangshu', 'events', 'writer-a-0000.ndjson')), true)
+    assert.equal(existsSync(join(commonB, 'wanxiangshu', 'events', 'writer-b-0000.ndjson')), true)
 
     // 3. Repeat sync on Repo B is idempotent
     const syncB2 = await retention.syncAt(repoB, commonB, syncB1.root, now)
@@ -98,7 +98,7 @@ test('WHAT[durable-convergence-003] sync blobifies each complete writer file onc
     const syncA2 = await retention.syncAt(repoA, commonA, syncB1.root, now)
     assert.equal(syncA2.ok, true)
     assert.equal(syncA2.root, syncB1.root, 'two sides converge to identical snapshot root')
-    assert.equal(existsSync(join(commonA, 'wanxiangshu', 'events', 'writer-b.ndjson')), true)
+    assert.equal(existsSync(join(commonA, 'wanxiangshu', 'events', 'writer-b-0000.ndjson')), true)
 
     // 5. Corrupted / divergent writer history fails closed
     const canonicalLine = (event) => JSON.stringify({
@@ -109,7 +109,7 @@ test('WHAT[durable-convergence-003] sync blobifies each complete writer file onc
       payload_refs: [...event.payloadRefs].sort(),
       stream_id: event.stream,
     }) + '\n'
-    writeFileSync(join(commonA, 'wanxiangshu', 'events', 'writer-b.ndjson'), canonicalLine(make(C, 'stream/divergent')))
+    writeFileSync(join(commonA, 'wanxiangshu', 'events', 'writer-b-0000.ndjson'), canonicalLine(make(C, 'stream/divergent')))
     const syncDivergent = await retention.syncAt(repoA, commonA, syncB1.root, now)
     assert.equal(syncDivergent.ok, false, 'divergent writer history must fail closed')
     assert.match(String(syncDivergent.error), /writer history diverged/i)
@@ -196,4 +196,27 @@ test('WHAT[durable-convergence-003] remote writer bytes reject invalid UTF-8 bef
     rmSync(repo, { recursive: true, force: true })
   }
 })
+
+  test('WHAT[durable-convergence-003] segment_files_of_one_writer_aggregate_into_a_single_stream_before_k_way', () => {
+    // 旧实现把这两个文件当作两个独立 writer（writer-agg-0000 / writer-agg-0001）；
+    // 新合同（[003] + durable-events-005/014）要求同 WriterId 的段聚合为单一逻辑流。
+    const idA = 'a'.repeat(40)
+    const idB = 'b'.repeat(40)
+    const idC = 'c'.repeat(40)
+    const commonDir = join(mkdtempSync(join(tmpdir(), 'wxs-seg-aggregate-')), '.git')
+    try {
+      const directory = join(commonDir, 'wanxiangshu', 'events')
+      mkdirSync(directory, { recursive: true })
+      const line = (id, parents = []) => JSON.stringify({
+        event_id: id, event_type: 'JobRequested', parents: [...parents].sort(),
+        payload: {}, payload_refs: [], stream_id: 'proof/aggregate',
+      }) + '\n'
+      writeFileSync(join(directory, 'writer-agg-0000.ndjson'), line(idA) + line(idB, [idA]))
+      writeFileSync(join(directory, 'writer-agg-0001.ndjson'), line(idC, [idB]))
+      assert.deepEqual(retention.retainedWriterIdsAt(commonDir, Date.now()), ['writer-agg'],
+        'segments of one WriterId are one writer stream, never independent writers')
+    } finally {
+      rmSync(commonDir, { recursive: true, force: true })
+    }
+  })
 }

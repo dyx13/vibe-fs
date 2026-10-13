@@ -58,4 +58,4 @@ child、attached 和 internal execution 与 owner 读同一个全局设置，不
 
 ## [012] 双语职责语义一致
 
-Engineer、DevOps、Manager 和 Sphinx 内部 Engineer 的提示词、Role Law、工具描述及示例，必须共同表达 office-capability 和 delegation 定义的当前职责。中英文不得增加、削弱或互相矛盾；任何版本均不得保留违反这些职责的示例。
+Engineer、DevOps、Manager、Plan 和 Sphinx 内部 Engineer 的提示词、Role Law、工具描述及示例，必须共同表达 office-capability 和 delegation 定义的当前职责。中英文不得增加、削弱或互相矛盾；任何版本均不得保留违反这些职责的示例。Plan 的角色提示与各 stage 方法资源（`resources/provider/planning/s1|s2|s3/`）同样成对提供并按 [006] 拒绝缺失，其装配语义归 planning 条款。

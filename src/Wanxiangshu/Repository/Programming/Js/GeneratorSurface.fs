@@ -37,6 +37,10 @@ module JsGeneratorSurface =
         | "Fetch" -> Some ToolPermission.Fetch
         | "Finality" -> Some ToolPermission.Finality
         | "BashHoneypot" -> Some ToolPermission.BashHoneypot
+        | "JsPlan" -> Some ToolPermission.JsPlan
+        | "Ask" -> Some ToolPermission.Ask
+        | "Deliver" -> Some ToolPermission.Deliver
+        | "Review" -> Some ToolPermission.Review
         | _ -> None
 
     let private permissionLabel permission =
@@ -60,6 +64,10 @@ module JsGeneratorSurface =
         | ToolPermission.Fetch -> "Fetch"
         | ToolPermission.Finality -> "Finality"
         | ToolPermission.BashHoneypot -> "BashHoneypot"
+        | ToolPermission.JsPlan -> "JsPlan"
+        | ToolPermission.Ask -> "Ask"
+        | ToolPermission.Deliver -> "Deliver"
+        | ToolPermission.Review -> "Review"
 
     let private capabilityLabel capability =
         match capability with

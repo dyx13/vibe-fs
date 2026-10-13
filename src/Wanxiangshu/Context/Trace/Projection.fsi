@@ -138,6 +138,7 @@ module XTraceProjection =
 
     val internal tryHostMessageId: part: XTracePartRef -> string option
     val tryHostMessageIdAt: cursor: XTraceCursor -> state: XTraceProjectionState -> string option
+    val hostMessageFirstCursors: state: XTraceProjectionState -> Map<string, int64>
     val partsForHostMessageIds: messageIds: Set<string> -> state: XTraceProjectionState -> XTraceSemanticPartView list
     val tryContiguousHostRange: messageIds: Set<string> -> state: XTraceProjectionState -> XTraceRange option
     val tryTurnOfHostMessageId: messageId: string -> state: XTraceProjectionState -> int option

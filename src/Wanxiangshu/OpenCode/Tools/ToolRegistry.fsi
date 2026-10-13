@@ -10,6 +10,7 @@ open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Host.Contract
 open Wanxiangshu.Mission.Relay
 open Wanxiangshu.Persistence.Journal
+open Wanxiangshu.Persistence.EventStore
 open Wanxiangshu.Repository.Programming.Js
 
 /// Assembly-only registry: tool behavior lives in one vertical verb module;
@@ -48,6 +49,14 @@ module ToolRegistry =
     /// sessionId is the tool call's Host session; bloggerHost is optional for tests.
     val rolePredicate:
         specName: string -> bloggerHost: IBloggerRuntimeHost option -> sessionId: string -> (Role -> bool)
+
+    val runPlanProgram:
+        prose: JsCanonicalDescription.Prose ->
+        store: IEventStore ->
+        root: string ->
+        sessionId: string ->
+        program: string ->
+            Task<string>
 
     val create:
         toolModule: obj ->

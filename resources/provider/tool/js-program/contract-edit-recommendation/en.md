@@ -1,1 +1,1 @@
-- Use edit(path, changes) for ordinary exact changes; use rewrite(path, newText) only when the complete final file must be computed, reordered, or generated.
+- Use {{editCall}} for ordinary exact changes; use {{rewriteCall}} only when the complete final file must be computed, reordered, or generated.

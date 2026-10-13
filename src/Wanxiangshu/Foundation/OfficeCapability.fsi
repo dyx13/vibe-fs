@@ -21,6 +21,12 @@ type ToolPermission =
     | Fetch
     | Finality
     | BashHoneypot
+    | JsPlan
+    | Ask
+    | Deliver
+    /// planning-002: Plan's review hard gate. Shares the `review` tool name
+    /// with Manager's ReviewAssessment; the label stays distinct.
+    | Review
 
 [<RequireQualifiedAccess>]
 type ManagerCapabilityFacts =

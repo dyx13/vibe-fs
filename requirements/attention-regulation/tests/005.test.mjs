@@ -6,6 +6,7 @@ import * as tools from '../../../dist/OpenCode/Tools/AttentionToolSurface.js'
 import { withReview, findings } from '../../relay-assessment/tests/support/plugin.mjs'
 import { factPayloads, journalEventLines } from '../../verification-system/tests/e2e/support/journal-observer.js'
 import { execFileSync } from 'node:child_process'
+import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import * as journal from '../../../dist/Persistence/Journal/Surface.js'
 import * as dispatch from '../../../dist/Interaction/Dispatch/DispatchSurface.js'
@@ -295,7 +296,8 @@ test(`WHAT[attention-regulation-005] natural ${role} completion preserves and co
       assert.equal(captured.length, 1, `the real natural terminal prepares one presentation: ${JSON.stringify(runtime.prompts)}`)
       assert.equal(captured[0].body.metadata.wanxiangshu_origin, 'DeferredWorkPresentation')
       assert.match(captured[0].body.metadata.wanxiangshu_prompt_key, /^[0-9a-f]{64}$/)
-      assert.equal(captured[0].body.parts[0].text, '- Inspect the next source change\n- Document the next boundary')
+      const guidance = readFileSync(new URL('../../../resources/provider/attention-regulation/defer-presentation/en.md', import.meta.url), 'utf8').trimEnd()
+      assert.equal(captured[0].body.parts[0].text, guidance + '\n\n- Inspect the next source change\n- Document the next boundary')
       await hooks.event({ event: { type: 'message.updated', properties: { info: assistant.info } } })
       await hooks.event({ event: { type: 'session.idle', properties: { sessionID: session } } })
       await new Promise(resolve => setTimeout(resolve, 100))

@@ -8,4 +8,9 @@ module RetentionSurface =
     val retainedWriterIdsAt: commonDir: string -> nowMs: float -> string[]
 
     val syncAt: repoPath: string -> commonDir: string -> remoteRoot: string -> nowMs: float -> Task<obj>
+
+    /// durable-events-005: sync under an injected segment cap.
+    val syncAtWithSegmentCap:
+        repoPath: string -> commonDir: string -> remoteRoot: string -> nowMs: float -> capBytes: int -> Task<obj>
+
     val writerSyncAdapterScenario: input: obj -> Task<obj>

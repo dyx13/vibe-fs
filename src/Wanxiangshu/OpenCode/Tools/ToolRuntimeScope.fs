@@ -744,6 +744,46 @@ type ToolRuntimeScope
 
     member _.EnsureRoadDevOpsBound(parentSessionId: SessionId) = ensureRoadDevOpsBound parentSessionId
 
+    /// planning-023: spawn a parentless execution session for a delivered plan.
+    /// The session is created with the requested agent and no parentID — equal
+    /// to a user-created session; its later lifecycle belongs to the ordinary
+    /// system for that agent and is no longer coupled to the plan work. A
+    /// no-op terminal listener satisfies the send-before-listen order check
+    /// (the reacting listener belongs to whoever awaits the agent, not to the
+    /// spawn). A missing Host transport fails closed.
+    member _.SpawnExecutionSession(agent: string, prompt: string) : Task<Result<string, string>> =
+        task {
+            let options: OpenCodeChildOptions =
+                { Title = Some agent
+                  Agent = Some agent
+                  Directory = None }
+
+            let sendOutcomeOf (sessionId: SessionId) (outcome: Outcome.SendOutcome) : Result<string, string> =
+                match outcome with
+                | Outcome.SendOutcome.AdmittedWithReceipt _
+                | Outcome.SendOutcome.AdmittedWithPhysicalMessage _ -> Ok(SessionId.value sessionId)
+                | Outcome.SendOutcome.Retryable reason
+                | Outcome.SendOutcome.AcceptanceUnknown reason
+                | Outcome.SendOutcome.Fatal reason ->
+                    Error(sprintf "Execution session prompt delivery failed: %s" reason)
+
+            match! sessions.CreateSiblingSession(SessionId.create agent, None, options) with
+            | Error error -> return Error(sprintf "Execution session spawn failed: %s" error)
+            | Ok sessionId ->
+                use _listener = sessions.SubscribeTerminal(sessionId, (fun _ _ -> ()))
+
+                let sendOptions: SessionPromptOptions =
+                    { Model = None
+                      Agent = Some agent
+                      Directory = None
+                      Metadata = None
+                      Tools = None
+                      DetachedListener = None }
+
+                let! outcome = sessions.SendPrompt(sessionId, prompt, sendOptions)
+                return sendOutcomeOf sessionId outcome
+        }
+
     /// Manager authorization facts for the capability gate, derived purely
     /// from the objective RoadView. The final incumbent is the one whose
     /// accepted assessment has empty findings: it keeps the read/cleanup/

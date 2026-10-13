@@ -58,6 +58,7 @@ module SemanticTraceSurface =
             obj array
 
     val tryHostMessageIdAt: cursor: 'a -> projection: SemanticTraceProjection -> string option
+    val hostMessageFirstCursors: projection: SemanticTraceProjection -> obj
     val partsForHostMessageIds: ids: string array -> projection: SemanticTraceProjection -> obj array
     val tryContiguousHostRange: ids: string array -> projection: SemanticTraceProjection -> obj option
     val tryTurnOfHostMessageId: id: string -> projection: SemanticTraceProjection -> int option

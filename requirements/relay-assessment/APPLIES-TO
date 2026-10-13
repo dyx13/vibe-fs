@@ -1,6 +1,7 @@
 # Repository-root relative paths; this requirement package is implicit.
 /src/Wanxiangshu/Mission/Relay/Assessment/**
-/src/Wanxiangshu/Mission/Relay/OpenCode/ReviewTool.*
+/src/Wanxiangshu/Mission/Relay/OpenCode/ReviewShell.*
+/src/Wanxiangshu/Mission/Relay/OpenCode/ReviewBackendManager.*
 /src/Wanxiangshu/Mission/Relay/OpenCode/WorkspaceSnapshot.*
 /src/Wanxiangshu/Mission/Relay/Contract.*
 /src/Wanxiangshu/Mission/Relay/Fold.*

@@ -152,7 +152,31 @@ module PluginHooks =
             let isReplica (sessionId: SessionId) =
                 boot.StrengthScope.StrengthRuntime.TryFindByReplica sessionId |> Option.isSome
 
-            let systemTransform = ProviderSystemTransform.createWith roleFor isReplica
+            // planning-014: resolve the stage-method semantic path for the
+            // session's active plan incumbency. Non-plan sessions, missing
+            // stores and delivered works resolve None and append nothing, so
+            // the non-plan system prompt path stays byte-identical.
+            let stagePathOf (stage: Wanxiangshu.Mission.Planning.PlanStage) =
+                match stage with
+                | Wanxiangshu.Mission.Planning.PlanStage.S1 -> "planning/s1"
+                | Wanxiangshu.Mission.Planning.PlanStage.S2 -> "planning/s2"
+                | Wanxiangshu.Mission.Planning.PlanStage.S3 -> "planning/s3"
+
+            let planStageFor (sessionId: SessionId) : string option =
+                match roleFor sessionId with
+                | Some Role.Plan ->
+                    workspaceDirectory
+                    |> Option.map Wanxiangshu.Persistence.Journal.RuntimePath.gitCommonDir
+                    |> Option.bind Wanxiangshu.OpenCode.WorkspaceEventStore.tryCurrent
+                    |> Option.bind (fun store ->
+                        Wanxiangshu.Mission.Planning.PlanEventStore.activeWorkState
+                            store
+                            (Wanxiangshu.Mission.Planning.PlanWorkId.create (SessionId.value sessionId)))
+                    |> Option.bind (fun state -> state.Active |> Option.map (fun active -> stagePathOf active.Stage))
+                | _ -> None
+
+            let systemTransform =
+                ProviderSystemTransform.createWith roleFor isReplica planStageFor
 
             // CASE-003: typed capture at the tool boundary — shared
             // CasebookLifecycle.collector; marker flag gates the after-hook.
@@ -623,6 +647,9 @@ module PluginHooks =
                 else
                     HiddenProtocolArguments.SameCall
 
+            // 隐藏状态合并规则是合同：任一 Different → Different；都 Same → Same；
+            // 否则 NotHidden。并发与重放下同一参数对象只有一个隐藏归属
+            //（host-boundary-032）。
             let combineHiddenStates review delegation =
                 match review, delegation with
                 | HiddenProtocolArguments.DifferentCallOrChangedArguments, _
@@ -653,6 +680,19 @@ module PluginHooks =
                         "Invalid investigation estimate arguments: hidden arguments belong to another call or were changed before restoration"
                 | HiddenProtocolArguments.NotHidden -> false
 
+            // 隐藏前再核一次：本调用尚未隐藏且 args 可读才执行 hide。
+            // hideProtocolArguments 半途失败时补偿性全量 restore 再重抛，是 before
+            // 失败的唯一回滚点（宿主不会在 before 失败后再调 after）。
+            let hideProtocolArgumentsIfShown owner toolName isDelegationActive (toolOutput: obj) =
+                if
+                    not (protocolArgumentsAreHidden owner toolName isDelegationActive toolOutput)
+                    && not (isNull toolOutput)
+                    && not (isNull toolOutput?args)
+                then
+                    hideProtocolArguments owner toolName isDelegationActive toolOutput?args
+
+            // 新参数准备链的具名步骤，按序：非法估计拒绝 → wire vault 记录 →
+            // 委托估计观察 → 隐藏协议字段。
             let prepareNewProtocolArguments owner toolName isDelegationActive toolInput toolOutput =
                 task {
                     if isDelegationActive then
@@ -660,76 +700,97 @@ module PluginHooks =
 
                     recordProtocolArgumentVault toolInput toolOutput
                     do! observeDelegatedToolEstimate toolInput
-
-                    if
-                        not (protocolArgumentsAreHidden owner toolName isDelegationActive toolOutput)
-                        && not (isNull toolOutput)
-                        && not (isNull toolOutput?args)
-                    then
-                        hideProtocolArguments owner toolName isDelegationActive toolOutput?args
+                    hideProtocolArgumentsIfShown owner toolName isDelegationActive toolOutput
                 }
 
-            let prepareProtocolArguments toolName isDelegationActive toolInput toolOutput =
-                let owner = argumentCallOwner toolName toolInput
+            // 已隐藏同调用 → 短路：不重复记录、不重复隐藏。不同调用或参数已变
+            // 由 protocolArgumentsAreHidden 报错。
+            let beforeStagePrepareProtocolArguments toolName isDelegationActive toolInput toolOutput =
+                task {
+                    let owner = argumentCallOwner toolName toolInput
 
-                if protocolArgumentsAreHidden owner toolName isDelegationActive toolOutput then
-                    Task.FromResult(())
-                else
-                    prepareNewProtocolArguments owner toolName isDelegationActive toolInput toolOutput
+                    if not (protocolArgumentsAreHidden owner toolName isDelegationActive toolOutput) then
+                        do! prepareNewProtocolArguments owner toolName isDelegationActive toolInput toolOutput
+                }
+
+            // tool.execute.before 的具名 stage 序列。次序即合同（host-boundary-019），
+            // 不得重排。第 1 步无条件最先；第 2 步只对评审工具生效；第 3/4 步
+            // 服务参与工具的估计协议。任何一步抛错即中断本次 before。
+            let beforeStageRequirementGrounding (toolInput: obj) (toolOutput: obj) =
+                Wanxiangshu.OpenCode.Host.RequirementGrounding.RequirementGroundingGate.before
+                    journal
+                    workspaceDirectory
+                    toolInput
+                    toolOutput
+
+            let beforeStageReviewPermission (toolName: string) (toolInput: obj) =
+                checkManagerReviewPermissions toolName toolInput
+
+            let beforeStageDelegationActive toolName =
+                let isParticipatingTool =
+                    InvestigationEstimateContract.classifyTool toolName = InvestigationEstimateContract.InvestigationToolPolicy.EstimateAfterCall
+
+                readonlyDelegationPredictorConfigured () && isParticipatingTool
 
             let toolBefore (toolInput: obj) (toolOutput: obj) =
                 task {
+                    do! beforeStageRequirementGrounding toolInput toolOutput
+                    let toolName = toolField toolInput "tool"
+                    beforeStageReviewPermission toolName toolInput
+
                     do!
-                        Wanxiangshu.OpenCode.Host.RequirementGrounding.RequirementGroundingGate.before
-                            journal
-                            workspaceDirectory
+                        beforeStagePrepareProtocolArguments
+                            toolName
+                            (beforeStageDelegationActive toolName)
                             toolInput
                             toolOutput
-
-                    let toolName = toolField toolInput "tool"
-                    checkManagerReviewPermissions toolName toolInput
-
-                    let isParticipatingTool =
-                        InvestigationEstimateContract.classifyTool toolName = InvestigationEstimateContract.InvestigationToolPolicy.EstimateAfterCall
-
-                    let isDelegationActive =
-                        readonlyDelegationPredictorConfigured () && isParticipatingTool
-
-                    do! prepareProtocolArguments toolName isDelegationActive toolInput toolOutput
                 }
 
+            // 先 Delegation（仅参与工具）后 Manager，两个字段族互不覆盖。
             let restoreOwnedArguments owner isParticipatingTool args =
                 if isParticipatingTool then
                     ReadonlyDelegationContract.restoreForCall owner args
 
                 ManagerReviewContract.restoreForCall owner args
 
+            let restoreArgumentsForTarget owner isParticipatingTool (target: obj) =
+                if not (isNull target) && not (isNull target?args) then
+                    restoreOwnedArguments owner isParticipatingTool target?args
+
+            // after stage 1: 按 exact 调用身份重算 classify/owner，对 toolInput 与
+            // toolOutput 各恢复一次协议字段。restore 抛错则后续 stage 不执行（现状）。
+            let afterStageRestoreProtocolArguments (toolInput: obj) (toolOutput: obj) =
+                let toolName = toolField toolInput "tool"
+                let owner = argumentCallOwner toolName toolInput
+
+                let isParticipatingTool =
+                    InvestigationEstimateContract.classifyTool toolName = InvestigationEstimateContract.InvestigationToolPolicy.EstimateAfterCall
+
+                restoreArgumentsForTarget owner isParticipatingTool toolInput
+                restoreArgumentsForTarget owner isParticipatingTool toolOutput
+
+            // after stage 2: requirement grounding 读结果补规范。
+            let afterStageRequirementGrounding (toolInput: obj) (toolOutput: obj) =
+                Wanxiangshu.OpenCode.Host.RequirementGrounding.RequirementGroundingGate.after
+                    journal
+                    workspaceDirectory
+                    toolInput
+                    toolOutput
+
+            // after stage 3: 可选 casebook 观察。失败只发诊断，不改关键结果
+            //（host-boundary-024）。
+            let afterStageCasebookObservation (toolInput: obj) (toolOutput: obj) =
+                if casebookEnabled then
+                    HookPolicy.observeOptional Diagnostic.emit OptionalHookEffect.CasebookObservation (fun () ->
+                        collectCasebookObservation toolInput toolOutput)
+                    |> ignore
+
+            // tool.execute.after 的具名 stage 序列。次序即合同。
             let toolAfter (toolInput: obj) (toolOutput: obj) =
                 task {
-                    let toolName = toolField toolInput "tool"
-                    let owner = argumentCallOwner toolName toolInput
-
-                    let isParticipatingTool =
-                        InvestigationEstimateContract.classifyTool toolName = InvestigationEstimateContract.InvestigationToolPolicy.EstimateAfterCall
-
-                    let restoreTarget (target: obj) =
-                        if not (isNull target) && not (isNull target?args) then
-                            restoreOwnedArguments owner isParticipatingTool target?args
-
-                    restoreTarget toolInput
-                    restoreTarget toolOutput
-
-                    do!
-                        Wanxiangshu.OpenCode.Host.RequirementGrounding.RequirementGroundingGate.after
-                            journal
-                            workspaceDirectory
-                            toolInput
-                            toolOutput
-
-                    if casebookEnabled then
-                        HookPolicy.observeOptional Diagnostic.emit OptionalHookEffect.CasebookObservation (fun () ->
-                            collectCasebookObservation toolInput toolOutput)
-                        |> ignore
+                    afterStageRestoreProtocolArguments toolInput toolOutput
+                    do! afterStageRequirementGrounding toolInput toolOutput
+                    afterStageCasebookObservation toolInput toolOutput
                 }
 
             let chatMessage =

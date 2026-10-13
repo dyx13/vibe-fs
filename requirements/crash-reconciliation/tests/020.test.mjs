@@ -210,7 +210,7 @@ const assertChildSettlementAppendFailure = async phase => {
     const { mkdirSync, readFileSync, renameSync, writeFileSync, rmSync } = await import('node:fs')
     const { join } = await import('node:path')
     const events = join(commonDir, 'wanxiangshu', 'events')
-    const writer = join(events, `${writerId}.ndjson`)
+    const writer = join(events, `${writerId}-0000.ndjson`)
     const blocked = phase === 'PhysicalAppend' ? writer : events
     const saved = join(commonDir, 'wanxiangshu', 'saved-append-target')
     // Activate the fresh writer before the fault, so the failed physical append

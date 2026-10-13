@@ -18,3 +18,12 @@ module ToolRegistrySurface =
 
     /// Provider tool names projected from the same capability set as the gate.
     val capabilityToolNames: roleLabel: string -> requestKindLabel: string -> string array
+
+    val runJsPlan:
+        store: Wanxiangshu.Persistence.EventStore.IEventStore ->
+        root: string ->
+        workId: string ->
+        program: string ->
+            System.Threading.Tasks.Task<string>
+
+    val jsPlanDescription: language: string -> string

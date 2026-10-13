@@ -88,6 +88,9 @@ module JsCanonicalDescription =
         let UltraManagerInvestigation = "tool/js-program/ultra-manager-investigation"
 
         [<Literal>]
+        let UltraPlan = "tool/js-program/ultra-plan"
+
+        [<Literal>]
         let MechanicalSemantic = "tool/js-program/mechanical-semantic"
 
         [<Literal>]
@@ -206,6 +209,7 @@ module JsCanonicalDescription =
           UltraInvestigation: string
           UltraDevOps: string
           UltraManagerInvestigation: string
+          UltraPlan: string
           MechanicalSemantic: string
           CommentAnchorOwnSearch: string
           CommentIgnoreGy: string
@@ -245,6 +249,36 @@ module JsCanonicalDescription =
 
         replaced
 
+    type TutorialSurface =
+        { FileCall: string
+          FileMatches: string
+          EditCall: string
+          EditTarget: string
+          RewriteCall: string }
+
+    let repositoryTutorial =
+        { FileCall = "file(path, matches = [])"
+          FileMatches = "file(matches)"
+          EditCall = "edit(path, changes)"
+          EditTarget = "\"src/config.js\", "
+          RewriteCall = "rewrite(path, newText)" }
+
+    let planTutorial =
+        { FileCall = "file(matches = [])"
+          FileMatches = "file(matches)"
+          EditCall = "edit(changes)"
+          EditTarget = ""
+          RewriteCall = "rewrite(newText)" }
+
+    let private fillTutorial (surface: TutorialSurface) (template: string) =
+        fill
+            template
+            [ "fileCall", surface.FileCall
+              "fileMatches", surface.FileMatches
+              "editCall", surface.EditCall
+              "editTarget", surface.EditTarget
+              "rewriteCall", surface.RewriteCall ]
+
     let private fileReasons (prose: Prose) =
         [ "reason_empty_string_pattern", prose.ReasonEmptyStringPattern
           "reason_invalid_regexp", prose.ReasonInvalidRegexp
@@ -259,11 +293,8 @@ module JsCanonicalDescription =
           "comment_anchor_own_search", prose.CommentAnchorOwnSearch
           "comment_ignore_gy", prose.CommentIgnoreGy ]
 
-    /// Proposal §16 canonical file() body (description uses HOST_READ).
-    /// `raiseFailure` closes over `code` and `reason`.
-    let fileAlgorithm (prose: Prose) (readSourceLine: string) (raiseFailure: string) =
-        fill
-            """  async file(path, matches = []) {
+    let private fileAlgorithmTemplate =
+        """
     const fail = (code, reason) => {
       {{raise_failure}}
     };
@@ -401,9 +432,41 @@ module JsCanonicalDescription =
       },
     });
   }"""
+
+    let private fileAlgorithmCore (prose: Prose) (header: string) (readSourceLine: string) (raiseFailure: string) =
+        let template = header + fileAlgorithmTemplate
+
+        fill
+            template
             (("raise_failure", raiseFailure)
              :: ("read_source", readSourceLine)
              :: fileReasons prose)
+
+    /// Proposal §16 canonical file() body (description uses HOST_READ).
+    /// `raiseFailure` closes over `code` and `reason`.
+    let fileAlgorithm (prose: Prose) (readSourceLine: string) (raiseFailure: string) =
+        fileAlgorithmCore prose "  async file(path, matches = []) {" readSourceLine raiseFailure
+
+    let planFileAlgorithm (prose: Prose) (readSourceLine: string) (raiseFailure: string) =
+        fileAlgorithmCore
+            prose
+            """  async file(matches = []) {
+    if (typeof matches === "string" || arguments.length > 1) {
+      const err = new Error("PATH_FORBIDDEN: js-plan operates strictly on the plan artifact; passing a path is forbidden. Call file(matches) without a path.");
+      err.__jsFailure = { code: "PATH_DENIED", reason: "js-plan operates strictly on the plan artifact; passing a path is forbidden." };
+      throw err;
+    }
+    const path = "plan.md";"""
+            readSourceLine
+            raiseFailure
+
+    let private publicPlanFileAlgorithm (prose: Prose) (readSourceLine: string) (raiseFailure: string) =
+        fileAlgorithmCore
+            prose
+            "  async file(matches = []) {\n    const path = \"plan.md\";"
+            readSourceLine
+            raiseFailure
+
 
     let private globStub (prose: Prose) =
         fill
@@ -503,14 +566,13 @@ class JsProgram {"""
 const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
             .Trim()
 
-    /// High-level Edit affordance. It deliberately lives in the generated SDK
-    /// rather than a second Host mutation primitive: matching is pure and the
-    /// only effect remains the existing guarded js.edit staging executor.
-    /// Every change addresses the same immutable snapshot; approximate
-    /// similarity is diagnostic-only and can never authorize a write.
-    let private editAlgorithm (prose: Prose) (readSourceLine: string) (raiseFailure: string) =
-        fill
-            """  edit(path, changes) {
+    let private runtimePathRefusal =
+        """const err = new Error("PATH_FORBIDDEN: js-plan operates strictly on the plan artifact; passing a path is forbidden. Call edit(changes) without a path.");
+      err.__jsFailure = { code: "PATH_DENIED", reason: "js-plan operates strictly on the plan artifact; passing a path is forbidden." };
+      throw err;"""
+
+    let private editPrologue =
+        """(path, changes) {
     const fail = (code, reason) => {
       {{raise_failure}}
     };
@@ -533,8 +595,40 @@ const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
 
     if (typeof path !== "string" || path.length === 0) {
       failEdit("INVALID_EDIT", "{{reason_edit_invalid}}", 1);
-    }
+    }"""
 
+    let private planEditPrologue =
+        """(changes) {
+    const fail = (code, reason) => {
+      {{raise_failure}}
+    };
+    if (typeof changes === "string" || arguments.length > 1) {
+      {{path_refusal}}
+    }
+    const path = "plan.md";
+    const bounded = (value, limit = 240) => {
+      let text;
+      try {
+        text = typeof value === "string" ? value : String(value);
+      } catch {
+        text = "<unprintable>";
+      }
+      return text.length > limit ? text.slice(0, limit) + "…" : text;
+    };
+    const shownPath = "\"plan.md\"";
+    const atomicity = "{{reason_edit_atomicity}}";
+    const failEdit = (code, message, operation, details = []) => {
+      const location = `path=${shownPath}; change ${operation}.`;
+      fail(code, [message, location, ...details, atomicity].join("\n"));
+    };"""
+
+    /// High-level Edit affordance. It deliberately lives in the generated SDK
+    /// rather than a second Host mutation primitive: matching is pure and the
+    /// only effect remains the existing guarded js.edit staging executor.
+    /// Every change addresses the same immutable snapshot; approximate
+    /// similarity is diagnostic-only and can never authorize a write.
+    let private editAlgorithmBody =
+        """
     const declarations = Array.isArray(changes) ? changes : [changes];
 
     if (declarations.length === 0) {
@@ -919,6 +1013,12 @@ const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
       replacements: planned.length,
     });
   }"""
+
+    let private editAlgorithmCore (prose: Prose) (prologue: string) (readSourceLine: string) (raiseFailure: string) =
+        let template = "  edit" + prologue + "\n" + editAlgorithmBody
+
+        fill
+            template
             [ "raise_failure", raiseFailure
               "read_source", readSourceLine
               "rethrow_host", rethrowHost
@@ -934,6 +1034,69 @@ const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
               "reason_edit_candidate", prose.ReasonEditCandidate
               "reason_edit_line", prose.ReasonEditLine
               "reason_edit_overlaps", prose.ReasonEditOverlaps ]
+
+    let editAlgorithm (prose: Prose) (readSourceLine: string) (raiseFailure: string) =
+        editAlgorithmCore prose editPrologue readSourceLine raiseFailure
+
+    let planEditAlgorithm (prose: Prose) (readSourceLine: string) (raiseFailure: string) =
+        editAlgorithmCore
+            prose
+            (planEditPrologue.Replace("{{path_refusal}}", runtimePathRefusal))
+            readSourceLine
+            raiseFailure
+
+    let planRewriteAlgorithm (prose: Prose) (raiseFailure: string) =
+        fill
+            """  rewrite(newText) {
+    const fail = (code, reason) => {
+      {{raise_failure}}
+    };
+    if (typeof newText !== "string" || arguments.length > 1) {
+      fail("PATH_DENIED", "js-plan operates strictly on the plan artifact; passing a path is forbidden. Call rewrite(newText) without a path.");
+    }
+    const result = this._api.js.edit("plan.md", newText);
+    {{rethrow_host}}
+  }"""
+            [ "raise_failure", raiseFailure; "rethrow_host", rethrowHost ]
+
+    let planRewriteStub (prose: Prose) =
+        fill
+            """  rewrite(newText) {
+    // {{comment_host_capability}}
+  }"""
+            [ "comment_host_capability", prose.CommentHostCapability ]
+
+    let private runtimePlanReadSource (prose: Prose) =
+        fill
+            """const snapshot = this._api.js.read("plan.md");
+    if (snapshot && snapshot.ok === false) fail(snapshot.code || "FILE_READ_FAILED", snapshot.reason || snapshot.code || "{{reason_file_read_failed}}");
+    const source = typeof snapshot === "string" ? snapshot : (snapshot.text || "");"""
+            [ "reason_file_read_failed", prose.ReasonFileReadFailed ]
+
+    let runtimePlanBaseClass (prose: Prose) : string =
+        let methods =
+            [ """
+  constructor(api) { this._api = api; }"""
+                  .TrimStart()
+              planFileAlgorithm prose (runtimePlanReadSource prose) runtimeRaiseFailure
+              planEditAlgorithm prose (runtimePlanReadSource prose) runtimeRaiseFailure
+              planRewriteAlgorithm prose runtimeRaiseFailure
+              runStub prose ]
+
+        String.concat "\n\n" (classOpen :: methods @ [ "}" ])
+
+    let publicPlanBaseClass (prose: Prose) : string =
+        let methods =
+            [ publicPlanFileAlgorithm prose publicReadSource publicRaiseFailure
+              fill
+                  """  edit(changes) {
+    // {{comment_host_capability}}
+  }"""
+                  [ "comment_host_capability", prose.CommentHostCapability ]
+              planRewriteStub prose
+              runStub prose ]
+
+        String.concat "\n\n" (classOpen :: methods @ [ "}" ])
 
     let runtimeBaseClass (prose: Prose) (capabilities: Set<JsCapability>) : string =
         let methods =
@@ -980,7 +1143,12 @@ const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
 
         String.concat "\n\n" (classOpen :: methods @ [ "}" ])
 
-    let contract (prose: Prose) (toolName: string) (capabilities: Set<JsCapability>) =
+    let private contractFor
+        (prose: Prose)
+        (tutorial: TutorialSurface)
+        (toolName: string)
+        (capabilities: Set<JsCapability>)
+        =
         let verbs =
             List.concat
                 [ if has capabilities JsCapability.Read then
@@ -1015,27 +1183,33 @@ const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
               "verbs", verbs
               "editRecommendation",
               if has capabilities JsCapability.Edit then
-                  prose.ContractEditRecommendation
+                  fillTutorial tutorial prose.ContractEditRecommendation
               else
                   ""
               "parallelLine", fill parallelTemplate [ "toolName", toolName ] ]
 
-    let rules (prose: Prose) (capabilities: Set<JsCapability>) : string =
+    let contract (prose: Prose) (toolName: string) (capabilities: Set<JsCapability>) =
+        contractFor prose repositoryTutorial toolName capabilities
+
+    let private rulesFor (prose: Prose) (tutorial: TutorialSurface) (capabilities: Set<JsCapability>) : string =
         let blocks =
             [ if has capabilities JsCapability.Read then
-                  prose.ReadRules
+                  fillTutorial tutorial prose.ReadRules
               if has capabilities JsCapability.Glob then
                   prose.GlobRules
               if has capabilities JsCapability.Grep then
                   prose.GrepRules
               if has capabilities JsCapability.Edit then
-                  prose.EditRules
+                  fillTutorial tutorial prose.EditRules
               if has capabilities JsCapability.Write then
                   prose.WriteRules
               if has capabilities JsCapability.Edit || has capabilities JsCapability.Write then
                   prose.MutationRules ]
 
         String.concat "\n\n" blocks
+
+    let rules (prose: Prose) (capabilities: Set<JsCapability>) : string =
+        rulesFor prose repositoryTutorial capabilities
 
     let ultraExample (prose: Prose) (roleName: string) (capabilities: Set<JsCapability>) : JsExample option =
         let candidate =
@@ -1044,6 +1218,8 @@ const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
                 Some(set [ JsCapability.Read; JsCapability.Grep; JsCapability.Edit ], prose.UltraEngineering)
             | "engineer" -> Some(set [ JsCapability.Read; JsCapability.Grep ], prose.UltraInvestigation)
             | "devops" -> Some(set [ JsCapability.Read; JsCapability.Edit ], prose.UltraDevOps)
+            | "plan" when has capabilities JsCapability.Read && has capabilities JsCapability.Edit ->
+                Some(set [ JsCapability.Read; JsCapability.Edit ], prose.UltraPlan)
             | "manager" when
                 Set.isSubset capabilities (set [ JsCapability.Read; JsCapability.Glob; JsCapability.Grep ])
                 && not (Set.isEmpty capabilities)
@@ -1058,7 +1234,14 @@ const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
             else
                 None)
 
-    let render (prose: Prose) (roleName: string) (toolName: string) (capabilities: Set<JsCapability>) : string =
+    let private renderFor
+        (prose: Prose)
+        (tutorial: TutorialSurface)
+        (roleName: string)
+        (toolName: string)
+        (capabilities: Set<JsCapability>)
+        (baseClass: string)
+        : string =
         let ultraBlock =
             match ultraExample prose roleName capabilities with
             | Some example -> prose.UltraFraming + "\n\n```js\n" + example.Source + "\n```"
@@ -1066,15 +1249,27 @@ const err = new Error(reason); err.__jsFailure = { code, reason }; throw err;"""
 
         let blocks =
             [ if has capabilities JsCapability.Edit then
-                  prose.EditPrelude
+                  fillTutorial tutorial prose.EditPrelude
               if has capabilities JsCapability.Edit && has capabilities JsCapability.Read then
-                  prose.EditStructuralGuidance
+                  fillTutorial tutorial prose.EditStructuralGuidance
               prose.Header
-              contract prose toolName capabilities
-              "```js\n" + publicBaseClass prose capabilities + "\n```"
-              rules prose capabilities
+              contractFor prose tutorial toolName capabilities
+              "```js\n" + baseClass + "\n```"
+              rulesFor prose tutorial capabilities
               prose.MechanicalSemantic
               ultraBlock
               prose.Footer ]
+
+        String.concat "\n\n" blocks
+
+    let render (prose: Prose) (roleName: string) (toolName: string) (capabilities: Set<JsCapability>) : string =
+        renderFor prose repositoryTutorial roleName toolName capabilities (publicBaseClass prose capabilities)
+
+    let renderPlan (prose: Prose) (scope: string) : string =
+        let planCapabilities = set [ JsCapability.Read; JsCapability.Edit ]
+
+        let blocks =
+            [ scope
+              renderFor prose planTutorial "plan" "js-plan" planCapabilities (publicPlanBaseClass prose) ]
 
         String.concat "\n\n" blocks

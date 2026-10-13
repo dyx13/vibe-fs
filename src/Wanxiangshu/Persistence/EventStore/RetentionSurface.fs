@@ -40,6 +40,17 @@ module RetentionSurface =
             | Error error -> return createObj [ "ok" ==> false; "error" ==> sprintf "%A" error ]
         }
 
+    /// durable-events-005: sync under an injected segment cap — reorganization
+    /// and import segmentation honor it. Production callers use `syncAt`.
+    let syncAtWithSegmentCap
+        (repoPath: string)
+        (commonDir: string)
+        (remoteRoot: string)
+        (nowMs: float)
+        (capBytes: int)
+        : Task<obj> =
+        ProcessEventLog.withSegmentCapTask capBytes (fun () -> syncAt repoPath commonDir remoteRoot nowMs)
+
     [<Import("createHash", "node:crypto")>]
     let private createHash (algorithm: string) : obj = jsNative
 

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
+import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -107,15 +108,17 @@ export async function repositoryNugetProjectTest(t) {
         return { id, version, archivePath, sha512 }
       })
       sdkArchivePath = path.join(archiveRoot, 'sdk.tar')
+      let sdkVersion = '10.0.302'
       let sdkArchiveSha256 = copySelectedSdkArchive(sdkArchivePath)
       if (sdkArchiveSha256 === null) {
         assert.ok(process.env.WXS_VERIFICATION_DOTNET_ROOT, 'The complete SDK installation must be selected explicitly')
         const sdkDirectory = fs.realpathSync(process.env.WXS_VERIFICATION_DOTNET_ROOT)
         fs.cpSync(sdkDirectory, path.join(selectedRoot, 'dotnet-sdk'), { recursive: true, verbatimSymlinks: true })
+        sdkVersion = execFileSync(path.join(selectedRoot, 'dotnet-sdk/dotnet'), ['--version'], { encoding: 'utf8' }).trim()
         await create({ cwd: selectedRoot, file: sdkArchivePath, portable: true, noMtime: true }, ['dotnet-sdk'])
         sdkArchiveSha256 = hash('sha256', fs.readFileSync(sdkArchivePath))
       }
-      sdk = await prepareVerificationDotnetSdk({ sourceRoot: source.sourceRoot, parentDirectory, archivePath: sdkArchivePath, archiveSha256: sdkArchiveSha256, expectedSdkVersion: '10.0.302', signal: t.signal })
+      sdk = await prepareVerificationDotnetSdk({ sourceRoot: source.sourceRoot, parentDirectory, archivePath: sdkArchivePath, archiveSha256: sdkArchiveSha256, expectedSdkVersion: sdkVersion, signal: t.signal })
       fs.rmSync(selectedRoot, { recursive: true, force: true })
       assertSource()
       assertArchives()

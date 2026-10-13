@@ -22,6 +22,9 @@ type AttachmentKind =
     | SyncCoder
     /// EXEC-026: the Engineer role's dedicated attachment identity.
     | SyncEngineer
+    /// planning-010: the plan ask delegation's fixed DevOps attachment
+    /// identity (Work+Attached, same family as the other sync kinds).
+    | SyncDevOps
     | Bookkeeper of transactionId: string
     /// Short-lived decision-local InternalLeaf replica attachment.
     /// Not a SatelliteKind case — Universal AttachmentKind ownership only.

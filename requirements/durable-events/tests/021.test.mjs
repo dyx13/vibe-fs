@@ -45,7 +45,7 @@ test('WHAT[durable-events-021] low-level append persists bad fact and cut togeth
     assert.equal(first.cuts[0].failedEventId, id(10))
     assert.equal(first.cuts[0].rule, 'Casebook')
 
-    const file = path.join(dir, 'wanxiangshu', 'events', 'semantic-cut-proof.ndjson')
+    const file = path.join(dir, 'wanxiangshu', 'events', 'semantic-cut-proof-0000.ndjson')
     const afterBad = (await readFile(file, 'utf8')).trim().split('\n').map(JSON.parse)
     assert.equal(afterBad.length, 2, 'bad fact and reset fact are one durable append')
     assert.equal(afterBad[0].event_type, 'InspectorCaseCaptured')

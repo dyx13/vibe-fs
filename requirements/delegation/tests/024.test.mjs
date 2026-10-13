@@ -143,12 +143,6 @@ test('WHAT[delegation-024] reusable handoff advances one durable parent delta wi
 
   assert.deepEqual(handoff.handoffWindow(17, 17), { start: 17, end: 17, isInitial: false })
 })
-test('WHAT[delegation-024] reusable prompt carries the new charge and parent delta as data', () => {
-  const prompt = handoff.render('fix the second defect', 'parent delta only')
-  assert.match(prompt, /# fix the second defect/)
-  assert.match(prompt, /parent_delta_work_record\s*=/)
-  assert.match(prompt, /parent delta only/)
-})
 test('WHAT[delegation-024] bounded child result never widens to an earlier invocation', () => {
   assert.deepEqual(handoff.childRange(31, 44), { start: 31, end: 44 })
 })
@@ -190,6 +184,11 @@ const verifyReusableHandoff = async (role) => {
     await waitForPromptCount(h, owner, role, 1)
     assert.equal(sync.handoffFrontier(h, owner, role), null)
     assert.match(sync.prompt(h, owner, role, 0), /ROOT-OPENING-MARKER/)
+    assert.match(
+      sync.prompt(h, owner, role, 0),
+      /closing report/,
+      'the charge prompt must carry the shared fork-child Base guidance (delegation-019)',
+    )
 
     assert.equal(await settle(h, owner, role, 'FIRST-ANSWER', 'run-first'), true)
     const firstResult = await first
@@ -204,7 +203,7 @@ const verifyReusableHandoff = async (role) => {
     await waitForPromptCount(h, owner, role, 2)
     const secondPrompt = sync.prompt(h, owner, role, 1)
     assert.match(secondPrompt, /SECOND-CHARGE/)
-    assert.match(secondPrompt, /parent_delta_work_record\s*=/)
+    assert.match(secondPrompt, /commissioner_record\s*=/)
     assert.match(secondPrompt, /PARENT-DELTA-ONLY-MARKER/)
     assert.doesNotMatch(secondPrompt, /ROOT-OPENING-MARKER/)
     assert.equal(sync.handoffFrontier(h, owner, role), firstFrontier)
@@ -227,5 +226,9 @@ const verifyReusableHandoff = async (role) => {
 
 test('WHAT[delegation-024] Engineer reuse sends parent delta waits for its own root and returns its own child delta', async () => {
   await verifyReusableHandoff('Engineer')
+})
+
+test('WHAT[delegation-024] DevOps completion is claimed by HandleTurn and its LWR returns to the caller', async () => {
+  await verifyReusableHandoff('DevOps')
 })
 }

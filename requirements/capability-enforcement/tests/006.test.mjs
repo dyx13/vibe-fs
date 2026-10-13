@@ -436,13 +436,7 @@ const TOOL_NAMES = [
   'run', 'open-terminal', 'send-terminal', 'read-terminal', 'signal-terminal',
   'review', 'chronicle', 'fetch', 'suicide',
 ]
-const PLUGIN_TOOL_NAMES = [
-  'fork', 'resume', 'commission', 'open-terminal', 'send-terminal', 'read-terminal', 'signal-terminal',
-  'join', 'horizon', 'fission', 'review', 'suicide', 'run',
-  'mv', 'rm', 'bash-honeypot', 'assume', 'chronicle',
-  'defer',  'publish',
-  'js-engineer', 'js-devops',
-]
+
 const HOST_OWNED_TOOL_NAMES = [ 'read', 'write', 'edit', 'glob', 'grep', 'skill', 'todowrite',
 ]
 const ROLE_NAMES = ['orchestrator', 'manager', 'engineer', 'devops', 'blogger']

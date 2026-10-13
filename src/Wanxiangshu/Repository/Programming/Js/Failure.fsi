@@ -53,6 +53,7 @@ type JsFailure =
     | TransactionRecoveryRequired
     | TransactionPersistenceFailed of JsTransactionAppendFailure
     | UnknownMember
+    | PlanReviewRequired
 
 module JsFailure =
     val code: failure: JsFailure -> string

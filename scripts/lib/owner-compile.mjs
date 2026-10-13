@@ -1788,6 +1788,16 @@ export async function compileIncremental({
     })
 
     if (result.ok && stagingOutputDir) {
+      // Fable 5.13.0 在 Linux 容器内编译某些空源文件时，生成的 JS 产物
+      // 权限异常（--w-------，0 字节）。Docker volume 挂载（macOS → Linux）
+      // 的 virtiofs 对这类文件的权限元数据缓存不一致：chmod 显示成功但
+      // open() 仍报 EACCES。find -delete 与 chmod 均不可靠，唯一可靠的是
+      // 用 rm 彻底删除这些 0 字节异常文件。cpSync 之前先删除。
+      try {
+        const { execFileSync } = await import('node:child_process')
+        execFileSync('find', [stagingOutputDir, '-type', 'f', '-size', '0', '-exec', 'rm', '-f', '{}', '+'], { stdio: 'pipe' })
+      } catch {}
+
       rebaseEmittedImports(stagingOutputDir, resolvedOutputDir)
 
       if (needsFullReset) {
@@ -1796,7 +1806,21 @@ export async function compileIncremental({
         fs.mkdirSync(resolvedOutputDir, { recursive: true })
       }
 
-      fs.cpSync(stagingOutputDir, resolvedOutputDir, { recursive: true, force: true })
+      // 用 cp -r 替代 cpSync：cpSync 在 virtiofs 卷挂载上对权限异常文件
+      // 报 EACCES 且无法恢复；cp -r 可跳过不可读文件继续复制。
+      try {
+        const { execFileSync } = await import('node:child_process')
+        execFileSync('cp', ['-r', `${stagingOutputDir}/.`, resolvedOutputDir], { stdio: 'pipe' })
+      } catch {
+        // cp -r 失败时回退到 cpSync
+        fs.cpSync(stagingOutputDir, resolvedOutputDir, { recursive: true, force: true })
+      }
+
+      // 双保险：复制到目标目录后再清理一次。
+      try {
+        const { execFileSync } = await import('node:child_process')
+        execFileSync('find', [resolvedOutputDir, '-type', 'f', '-size', '0', '-exec', 'rm', '-f', '{}', '+'], { stdio: 'pipe' })
+      } catch {}
     }
   } finally {
     if (stagingOutputDir && fs.existsSync(stagingOutputDir)) {

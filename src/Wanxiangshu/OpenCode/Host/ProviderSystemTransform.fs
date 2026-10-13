@@ -55,6 +55,33 @@ module ProviderSystemTransform =
         | true -> updateMatchingConstraintLine currentSystem isConstraintLine nextConstraint
         | false -> emitJsExpr (currentSystem, nextConstraint) "$0.push($1)" |> ignore
 
+    /// planning-014: the three stage-method resources. The stage slot is one
+    /// line whose content is decided by the current incumbency's stage and the
+    /// current language; recognition stays byte-only across all six candidates
+    /// (3 stages × 2 languages), exactly like the replica constraint slot.
+    let private planStagePaths = [ "planning/s1"; "planning/s2"; "planning/s3" ]
+
+    let private planStageGuidanceFor (lang: ProviderLanguage) (stagePath: string) =
+        ProviderProse.render lang stagePath Map.empty
+
+    let private applyPlanStageGuidance (lang: ProviderLanguage) (currentSystem: string array) (stagePath: string) =
+        let expected =
+            [ for path in planStagePaths do
+                  for stageLang in [ ProviderLanguage.English; ProviderLanguage.SimplifiedChinese ] do
+                      canonical (planStageGuidanceFor stageLang path) ]
+
+        let isStageLine (text: string) =
+            expected |> List.contains (canonical text)
+
+        let nextGuidance = planStageGuidanceFor lang stagePath
+        let hasStageLine = currentSystem |> Array.exists isStageLine
+
+        // Same stage + same language replays the same bytes in place
+        // (idempotent); a stage change replaces the slot on the next request.
+        match hasStageLine with
+        | true -> updateMatchingConstraintLine currentSystem isStageLine nextGuidance
+        | false -> emitJsExpr (currentSystem, nextGuidance) "$0.push($1)" |> ignore
+
     /// Only active roles own a projected segment; retired identities are
     /// decoded for history but never rewrite a live system prompt.
     let private catalogPrompt (catalog: PromptCatalog) =
@@ -64,6 +91,7 @@ module ProviderSystemTransform =
         | Role.Engineer -> Some catalog.EngineerSystemPrompt
         | Role.DevOps -> Some catalog.DevopsSystemPrompt
         | Role.Blogger -> Some catalog.BloggerSystemPrompt
+        | Role.Plan -> Some catalog.PlanSystemPrompt
         | Role.Coder
         | Role.Inspector
         | Role.Browser
@@ -98,7 +126,12 @@ module ProviderSystemTransform =
             None
 
     let private activeRoles =
-        [ Role.Manager; Role.Orchestrator; Role.Engineer; Role.DevOps; Role.Blogger ]
+        [ Role.Manager
+          Role.Orchestrator
+          Role.Engineer
+          Role.DevOps
+          Role.Blogger
+          Role.Plan ]
 
     let private chooseBookkeeperPrompt expectedEn expectedZh nextPrompt (text: string) =
         let c = canonical text
@@ -191,7 +224,13 @@ module ProviderSystemTransform =
             |> Array.iteri (fun index text ->
                 system.[index] <- chooseRolePrompt expectedEn expectedZh expectedCur expectedInstalled nextPrompt text)
 
-    let private transformSystem (role: SessionId -> Role option) (isReplica: SessionId -> bool) sessionText system =
+    let private transformSystem
+        (role: SessionId -> Role option)
+        (isReplica: SessionId -> bool)
+        (planStage: SessionId -> string option)
+        sessionText
+        system
+        =
         let sid = SessionId.create sessionText
         let lang = GlobalProviderLanguage.current ()
 
@@ -203,10 +242,18 @@ module ProviderSystemTransform =
         if isReplica sid then
             applyReplicaConstraint lang system
 
-    let createWith (role: SessionId -> Role option) (isReplica: SessionId -> bool) : obj -> obj -> Task<unit> =
+        match planStage sid with
+        | Some stagePath -> applyPlanStageGuidance lang system stagePath
+        | None -> ()
+
+    let createWith
+        (role: SessionId -> Role option)
+        (isReplica: SessionId -> bool)
+        (planStage: SessionId -> string option)
+        : obj -> obj -> Task<unit> =
         fun input output ->
             task {
                 match sessionTransformInput input output with
                 | None -> ()
-                | Some(sessionText, system) -> transformSystem role isReplica sessionText system
+                | Some(sessionText, system) -> transformSystem role isReplica planStage sessionText system
             }

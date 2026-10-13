@@ -22,6 +22,10 @@ import {
   readManifest,
   writeManifest,
 } from './lib/build-state.mjs'
+import {
+  loopDetectorEnvelopeDistPath,
+  loopDetectorEnvelopeRepositoryPath,
+} from './lib/loop-detector-envelope-paths.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
@@ -124,29 +128,32 @@ export class CrossProcessMutex {
 
 // ── Resource & Artifact Verification ─────────────────────────────────────────
 
-async function verifyArtifacts(targetRoot = root) {
-  // degeneration-guard-004: repository is the SSOT, but the envelope is derived manually.
-  // Build never auto-derives it and never checks whether it changed; a missing artifact
-  // fails the build and points at the explicit derivation command.
-  const envelopeArtifact = path.join(targetRoot, 'dist/Execution/Session/LoopDetectorEnvelope.js')
-  if (!fs.existsSync(envelopeArtifact)) {
-    // A full rebuild stages the prior dist aside before compiling into a blank
-    // dist. The manually derived envelope is not an F# compile output, so it
-    // would otherwise be lost on every full rebuild. Preserve the existing
-    // manual artifact from the staged backup; this is not auto-derivation.
-    // Only when neither the current dist nor the staged backup carries the
-    // artifact do we fail and point at the explicit derivation command.
-    const stagedEnvelope = path.join(stagedBackupDirFor(path.join(targetRoot, 'dist')), 'Execution/Session/LoopDetectorEnvelope.js')
-    if (fs.existsSync(stagedEnvelope)) {
-      fs.mkdirSync(path.dirname(envelopeArtifact), { recursive: true })
-      fs.copyFileSync(stagedEnvelope, envelopeArtifact)
-    } else {
-      throw new Error(
-        `missing loop detector envelope artifact: ${envelopeArtifact}\n` +
-          'Run `node scripts/derive-envelope.mjs` to derive it from the repository corpus.',
-      )
-    }
+export function materializeLoopDetectorEnvelope(targetRoot = root) {
+  // degeneration-guard-004: the envelope is derived manually into the tracked
+  // repository artifact. The build never auto-derives it and never checks
+  // whether it changed; it copies the repository artifact verbatim into dist.
+  const source = path.join(targetRoot, loopDetectorEnvelopeRepositoryPath)
+  const target = path.join(targetRoot, loopDetectorEnvelopeDistPath)
+  if (!fs.existsSync(source)) {
+    throw new Error(
+      `missing repository loop detector envelope artifact: ${source}\n` +
+        'Run `node scripts/derive-envelope.mjs` to derive it from the repository corpus.',
+    )
   }
+  fs.mkdirSync(path.dirname(target), { recursive: true })
+  fs.copyFileSync(source, target)
+}
+
+async function verifyArtifacts(targetRoot = root) {
+  // Fable 在 Linux 容器内可能生成权限异常（--w-------）的 0 字节产物，
+  // 导致后续 surface/linkage 遍历 readFileSync 报 EACCES/ENOENT。
+  // 所有检查之前先清理这些异常产物。
+  try {
+    const { execFileSync } = await import('node:child_process')
+    execFileSync('find', [path.join(targetRoot, 'dist'), '-type', 'f', '-size', '0', '-exec', 'rm', '-f', '{}', '+'], { stdio: 'pipe' })
+  } catch {}
+
+  materializeLoopDetectorEnvelope(targetRoot)
 
   const entry = path.join(targetRoot, 'dist/OpenCode/Plugin/Plugin.js')
   if (!fs.existsSync(entry)) throw new Error(`missing entry artifact: ${entry}`)
@@ -555,6 +562,12 @@ export async function runBuild({
       }
       logInfo(`compiled focused impact (${compileResult.compileItems?.length ?? 0} items in ${compileResult.elapsedMs}ms)`)
     }
+
+    // 编译后先清理这些异常产物，避免后续 verifyArtifacts / collectOutputs 遍历失败。
+    try {
+      const { execFileSync } = await import('node:child_process')
+      execFileSync('find', [targetDist, '-type', 'f', '-size', '0', '-exec', 'rm', '-f', '{}', '+'], { stdio: 'pipe' })
+    } catch {}
 
     // Envelope & artifact verification
     await verifyArtifacts(resolvedRoot)

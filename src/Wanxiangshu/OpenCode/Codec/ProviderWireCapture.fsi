@@ -15,6 +15,7 @@ module ProviderWireCapture =
           Parts: CapturedWirePart list }
 
     val decodeCapturedMessage: rawObj: obj -> CapturedWireMessage option
+    val isSyntheticMessage: rawObj: obj -> bool
     val decodeMessage: rawObj: obj -> WireMessage option
     val visibleProviderRuns: rawMessages: obj list -> Set<ProviderRunIdentity>
     val decodeRequest: requestObj: obj -> ProviderWireProjection

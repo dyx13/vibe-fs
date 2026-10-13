@@ -65,3 +65,9 @@ DevOps 不发明架构、产品含义、兼容性或安全政策，不削弱断�
 Sphinx 以独立 MCP stdio 服务存在（`Sphinx/V2/ServeEntry` 与 `Hosts/Mcp` 七件套），插件不提供 `sphinx` 原生工具面或对应 capability。程序内部的标准 Engineer 调用遵循 delegation 与 capability-enforcement 的现有资格、authority 检查，不另设只读 profile，不增加真实执行或 DevOps 调度权。
 
 Sphinx 不是 Role、Persona 或普通 subagent，不拥有独立 Fission 身份、不增加 session 层级，不设 Inquiry 或其他中间模型驾驶层。
+
+## [019] Plan
+
+Plan 负责在同一物理会话内以多任期接力推进单一规划底稿 `P`：通过 `js-plan` 读写底稿，用 `ask` 同步委派固定 DevOps 做只读调查，用与 Manager 共享的 `review` 承担阶段晋级硬门，用 `deliver` 持权交付或无权接力。Plan 的工具权限集为 `js-plan`、`ask`、`review`、`deliver`；`resume` 与 `handoff` 不属于 Plan 的工具面。
+
+Plan 不获得代码仓库与执行工具的权限，不开放任何真实 shell 或命令执行通道（`ask` 委派的 DevOps 调查含 bash，其只读约束由 office 提示词承担，不做运行时门）。Plan 是唯一允许空停等用户 prompt 的 role（自然停止语义归 planning 条款）。

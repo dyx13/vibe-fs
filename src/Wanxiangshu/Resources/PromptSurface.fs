@@ -20,14 +20,16 @@ module PromptSurface =
                EngineerSystemPrompt = catalog.EngineerSystemPrompt
                DevopsSystemPrompt = catalog.DevopsSystemPrompt
                OrchestratorSystemPrompt = catalog.OrchestratorSystemPrompt
-               BloggerSystemPrompt = catalog.BloggerSystemPrompt |}
+               BloggerSystemPrompt = catalog.BloggerSystemPrompt
+               PlanSystemPrompt = catalog.PlanSystemPrompt |}
 
     let private catalogValues (catalog: PromptCatalog) : string array =
         [| catalog.ManagerSystemPrompt
            catalog.EngineerSystemPrompt
            catalog.DevopsSystemPrompt
            catalog.OrchestratorSystemPrompt
-           catalog.BloggerSystemPrompt |]
+           catalog.BloggerSystemPrompt
+           catalog.PlanSystemPrompt |]
 
     let private ruleToJs (rule: obj) : obj =
         emitJsExpr
@@ -90,6 +92,7 @@ module PromptSurface =
         | Role.Engineer -> "role/engineer"
         | Role.DevOps -> "role/devops"
         | Role.Blogger -> "role/blogger"
+        | Role.Plan -> "role/plan"
         | _ -> "role/engineer"
 
     // provider-language-008: role law is Class A text the model reads. The

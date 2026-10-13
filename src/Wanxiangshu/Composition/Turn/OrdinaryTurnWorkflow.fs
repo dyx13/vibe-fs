@@ -200,7 +200,15 @@ module OrdinaryTurnWorkflow =
         (items: DeferredWorkItem list)
         =
         task {
-            let prompt = items |> List.map (fun item -> "- " + item.Text) |> String.concat "\n"
+            let guidance =
+                ProviderProse.render
+                    (ProviderProse.languageOf turn.SessionId)
+                    "attention-regulation/defer-presentation"
+                    Map.empty
+
+            let entries = items |> List.map (fun item -> "- " + item.Text) |> String.concat "\n"
+
+            let prompt = guidance + "\n\n" + entries
 
             let! _ =
                 HostSessionNudge.sendContinuation

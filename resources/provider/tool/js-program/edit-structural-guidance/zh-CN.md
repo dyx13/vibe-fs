@@ -1,5 +1,5 @@
-Read 可用时，结构重组才使用 file(matches) + text() + rewrite()。
+Read 可用时，结构重组才使用 {{fileMatches}} + text() + rewrite()。
 
-如果你正准备手算结构边界，先问：file(matches) + 有序 anchor + text() 是否
+如果你正准备手算结构边界，先问：{{fileMatches}} + 有序 anchor + text() 是否
 已经拥有这层边界？如果是，就用它。后面一旦结果违反明显不变量，把它当成
 停止信号，不要把它解释成「再猜一次也许就好了」。

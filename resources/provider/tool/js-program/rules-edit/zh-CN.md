@@ -1,6 +1,6 @@
 ## 编辑已有文件
 
-### 默认入口：edit(path, changes)
+### 默认入口：{{editCall}}
 
 当你能够同时声明当前文本与最终文本时，使用 edit()。它读取目标已有 UTF-8 文件的一份不可变
 快照，让所有 change 都在同一份快照上规划，并且至多暂存一个 Rewrite 意图；它不会立即写盘。
@@ -8,7 +8,7 @@
 规范形态：
 
 ```js
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: "const timeout = 1000;",
   put: "const timeout = 5000;",
 });
@@ -26,25 +26,25 @@ changes 可以是一个 object，也可以是非空数组。每个规范 change 
 
 ```js
 // 精确替换一段。
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: "const timeout = 1000;",
   put: "const timeout = 5000;",
 });
 
 // 在锚点后插入：put 中先原样保留锚点，再写最终新增文本。
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: 'import { load } from "./load.js";',
   put: 'import { load } from "./load.js";\nimport { save } from "./save.js";',
 });
 
 // 删除：put 为空字符串。删除整行时，把换行一起放进 find。
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: "const obsolete = true;\n",
   put: "",
 });
 
 // 替换每一处精确命中。多重性由 all 决定，不由 RegExp 的 g flag 决定。
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: /\boldApi\b/,
   put: "newApi",
   all: true,
@@ -54,7 +54,7 @@ this.edit("src/config.js", {
 同一文件的独立修改放进一次调用：
 
 ```js
-const report = this.edit("src/config.js", [
+const report = this.edit({{editTarget}}[
   { find: "const timeout = 1000;", put: "const timeout = 5000;" },
   { find: "const retries = 2;", put: "const retries = 3;" },
 ]);
@@ -93,7 +93,7 @@ const report = this.edit("src/config.js", [
 单行或 put 不会把普通 mismatch 变成超大失败。由于同一 program 对一个路径只能声明一次修改，
 不要对同一路径调用两次 edit()/rewrite()。
 
-### 高级逃生舱：rewrite(path, newText)
+### 高级逃生舱：{{rewriteCall}}
 
 当最终文件需要计算、重排、生成，或无法表示为少量互相独立的精确 span 时，使用 rewrite()。
 newText 是完整结果文件，不是 patch。目标必须已经存在，否则失败为 FILE_NOT_FOUND。调用只暂存

@@ -363,6 +363,12 @@ module SemanticTraceSurface =
     let tryHostMessageIdAt cursor projection =
         XTraceProjection.tryHostMessageIdAt (cursorOf cursor) (stateOf projection)
 
+    let hostMessageFirstCursors projection : obj =
+        XTraceProjection.hostMessageFirstCursors (stateOf projection)
+        |> Map.toList
+        |> List.map (fun (messageId, cursor) -> messageId, box cursor)
+        |> createObj
+
     let partsForHostMessageIds ids projection =
         XTraceProjection.partsForHostMessageIds (Set.ofArray ids) (stateOf projection)
         |> List.map partView

@@ -1,5 +1,6 @@
 namespace Wanxiangshu.Git
 
+open System
 open System.Threading.Tasks
 open Wanxiangshu.Foundation
 open Wanxiangshu.Persistence.EventStore

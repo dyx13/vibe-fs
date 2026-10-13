@@ -7,6 +7,11 @@ import test from 'node:test'
 import { Worker } from 'node:worker_threads'
 import { encode } from 'gpt-tokenizer/encoding/o200k_base'
 import { deriveLoopDetectorEnvelope, encodeParallel, loadLoopDetectorRepositoryCorpusV1, writeLoopDetectorEnvelopeArtifact } from '../../../scripts/lib/derive-loop-detector-envelope.mjs'
+import { materializeLoopDetectorEnvelope } from '../../../scripts/build.mjs'
+import {
+  loopDetectorEnvelopeDistPath,
+  loopDetectorEnvelopeRepositoryPath,
+} from '../../../scripts/lib/loop-detector-envelope-paths.mjs'
 import { loopDetectorRepositoryInputFiles } from '../../../scripts/lib/loop-detector-repository-corpus.mjs'
 import { runBuild } from '../../../scripts/build.mjs'
 import { integrationTest } from '../../verification-system/tests/support/tier-gate.mjs'
@@ -92,7 +97,7 @@ integrationTest('WHAT[degeneration-guard-004] clean and full Fable rebuilds pres
     await t.test(`WHAT[degeneration-guard-004] ${clean ? 'clean' : 'full'} rebuild does not derive or lose the prepared envelope`, async () => {
       const root = mkdtempSync(path.join(tmpdir(), 'wanxiangshu-explicit-envelope-build-'))
       const sourceRoot = path.join(root, 'src/Wanxiangshu')
-      const envelopePath = path.join(root, 'dist/Execution/Session/LoopDetectorEnvelope.js')
+      const envelopePath = path.join(root, loopDetectorEnvelopeRepositoryPath)
       try {
         mkdirSync(sourceRoot, { recursive: true })
         writeFileSync(path.join(sourceRoot, 'Fixture.fs'), 'module Fixture\nlet value = 1\n')
@@ -110,13 +115,47 @@ integrationTest('WHAT[degeneration-guard-004] clean and full Fable rebuilds pres
         await writeLoopDetectorEnvelopeArtifact(root)
         assert.notDeepEqual(readFileSync(envelopePath), envelopeBytes)
         writeFileSync(envelopePath, envelopeBytes)
+        materializeLoopDetectorEnvelope(root)
         await assert.rejects(runBuild({ targetRoot: root, clean, stdio: 'pipe' }), /missing entry artifact: .*OpenCode\/Plugin\/Plugin\.js/)
         assert.deepEqual(readFileSync(envelopePath), envelopeBytes)
+        assert.deepEqual(readFileSync(path.join(root, loopDetectorEnvelopeDistPath)), envelopeBytes)
         assert.equal(existsSync(path.join(root, '.fable-build/dist.staged-backup')), false)
       } finally {
         rmSync(root, { recursive: true, force: true })
       }
     })
+  }
+})
+
+test('WHAT[degeneration-guard-004] derived envelope bytes stay out of the corpus via the generated marker', () => {
+  const root = mkdtempSync(path.join(tmpdir(), 'wanxiangshu-loop-envelope-'))
+  try {
+    execFileSync('git', ['init', '-q'], { cwd: root })
+    mkdirSync(path.dirname(path.join(root, loopDetectorEnvelopeRepositoryPath)), { recursive: true })
+    writeFileSync(path.join(root, loopDetectorEnvelopeRepositoryPath), '// auto-generated from the repository SSOT; do not edit by hand.\nexport const normalWeightedDistinctCount = 1\n')
+    mkdirSync(path.join(root, 'src'), { recursive: true })
+    writeFileSync(path.join(root, 'src/keep.fs'), 'module Keep\n')
+    execFileSync('git', ['add', '-f', loopDetectorEnvelopeRepositoryPath, 'src/keep.fs'], { cwd: root })
+    const corpus = loadLoopDetectorRepositoryCorpusV1(root)
+    assert.deepEqual(corpus.selectedInputs.map(({ path: inputPath }) => inputPath), [loopDetectorEnvelopeRepositoryPath, 'src/keep.fs'])
+    assert.deepEqual(corpus.texts, ['module Keep\n'])
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+  }
+})
+
+test('WHAT[degeneration-guard-004] build materializes the tracked repository envelope artifact into dist', () => {
+  const root = mkdtempSync(path.join(tmpdir(), 'wanxiangshu-loop-materialize-'))
+  try {
+    const source = path.join(root, loopDetectorEnvelopeRepositoryPath)
+    const target = path.join(root, loopDetectorEnvelopeDistPath)
+    mkdirSync(path.dirname(source), { recursive: true })
+    assert.throws(() => materializeLoopDetectorEnvelope(root), /missing repository loop detector envelope artifact/)
+    writeFileSync(source, '// auto-generated from the repository SSOT; do not edit by hand.\nexport const minimumWeightedDistinctCount = 0.5\n')
+    materializeLoopDetectorEnvelope(root)
+    assert.equal(readFileSync(target, 'utf8'), readFileSync(source, 'utf8'))
+  } finally {
+    rmSync(root, { recursive: true, force: true })
   }
 })
 

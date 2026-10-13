@@ -11,8 +11,8 @@ const writerId = 'independent-cold-reader'
 const eventsDirectory = join(directory, 'wanxiangshu', 'events')
 const handle = eventStore.create(directory, writerId)
 try {
-  assert.deepEqual(readFileSync(join(eventsDirectory, 'setup.ndjson')).toString('base64'), request.setupBytes)
-  assert.deepEqual(readFileSync(join(eventsDirectory, `${request.writer}.ndjson`)).toString('base64'), request.operationBytes)
+  assert.deepEqual(readFileSync(join(eventsDirectory, 'setup-0000.ndjson')).toString('base64'), request.setupBytes)
+  assert.deepEqual(readFileSync(join(eventsDirectory, `${request.writer}-0000.ndjson`)).toString('base64'), request.operationBytes)
   let expected = before
   if (request.refreshed === undefined) {
     const badFact = eventStore.read(handle, request.failedEventId)
@@ -57,8 +57,8 @@ try {
   assert.equal(current.completionFileState, request.baseline)
   assert.equal(current.maintenanceFileState, expected.maintenanceFileState)
   assert.equal(Buffer.from(await eventStore.readPayload(handle, request.payloadRef)).toString('base64'), request.payloadBytes)
-  assert.deepEqual(readdirSync(eventsDirectory).sort(), ['setup.ndjson', `${request.writer}.ndjson`].sort())
-  assert.equal(existsSync(join(eventsDirectory, `${writerId}.ndjson`)), false)
+  assert.deepEqual(readdirSync(eventsDirectory).sort(), ['setup-0000.ndjson', `${request.writer}-0000.ndjson`].sort())
+  assert.equal(existsSync(join(eventsDirectory, `${writerId}-0000.ndjson`)), false)
   assert.equal(existsSync(join(directory, 'wanxiangshu.lock')), false)
   process.stdout.write(JSON.stringify({ pid: process.pid,
     current: { ...current, accessOrder: current.accessOrder.toString(), lastAccessOrder: current.lastAccessOrder.toString() },

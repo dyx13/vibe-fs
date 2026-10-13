@@ -26,7 +26,7 @@ for (const scenario of ['valid', 'malformed-release', 'valid-release', 'not-atte
     const root = realpathSync(mkdtempSync(join(tmpdir(), 'sphinx-command-settlement-')))
     const commonDir = join(root, '.git')
     const sourceWriter = randomUUID()
-    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}.ndjson`)
+    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}-0000.ndjson`)
     const command = { commandId: 'settlement-' + scenario, goalText: '实际目标\r\nNUL:\u0000；雪 😀 尾部  ',
       constraints: ['preserve the authorized text'], materialRefs: ['material:source'],
       authorizationRef: 'authorized-user', profileRef: configuration.profileRef }
@@ -204,7 +204,7 @@ for (const binding of ['wire', 'mcp']) {
         assert.equal(physical.openDescriptors, 0)
         assert.equal(physical.syncedDescriptors, 0)
         assert.equal(existsSync(join(commonDir, 'wanxiangshu.lock')), false)
-        const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}.ndjson`)
+        const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}-0000.ndjson`)
         assert.equal(readFileSync(sourceFile, 'base64'), physical.bytes)
         for (const head of physical.heads) {
           const fact = physical.facts.find(value => value.stream === head.stream)
@@ -265,7 +265,7 @@ for (const binding of ['wire', 'mcp']) {
         assert.equal(cold.bytes, physical.bytes)
         assert.equal(existsSync(join(commonDir, 'wanxiangshu', 'events', `${coldWriter}.ndjson`)), false)
         assert.equal(readFileSync(sourceFile, 'base64'), physical.bytes)
-        if (seed) assert.equal(readFileSync(join(commonDir, 'wanxiangshu', 'events', `${seed.writerId}.ndjson`), 'base64'), seed.bytes)
+        if (seed) assert.equal(readFileSync(join(commonDir, 'wanxiangshu', 'events', `${seed.writerId}-0000.ndjson`), 'base64'), seed.bytes)
         t.diagnostic(JSON.stringify({ binding, scenario, nativePid: measured.pid, coldPid: cold.pid,
           terminal: measured.signal ?? measured.exitCode, physicalAndCold: true }))
         completed = true
@@ -287,7 +287,7 @@ for (const scenario of ['valid', 'valid-release', 'malformed', 'malformed-releas
     const root = realpathSync(mkdtempSync(join(tmpdir(), 'journal-physical-settlement-')))
     const commonDir = join(root, '.git')
     const sourceWriter = randomUUID()
-    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}.ndjson`)
+    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}-0000.ndjson`)
     const malformed = scenario.startsWith('malformed')
     const release = scenario.endsWith('-release')
     const env = { ...process.env }
@@ -421,7 +421,7 @@ for (const variant of ['valid', 'valid-release', 'malformed', 'malformed-release
     const root = realpathSync(mkdtempSync(join(tmpdir(), 'journal-business-settlement-')))
     const commonDir = join(root, '.git')
     const sourceWriter = randomUUID()
-    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}.ndjson`)
+    const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriter}-0000.ndjson`)
     const malformed = variant.startsWith('malformed')
     const release = variant.endsWith('-release')
     const env = { ...process.env }

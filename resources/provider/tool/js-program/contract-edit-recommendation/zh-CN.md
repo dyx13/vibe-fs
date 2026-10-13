@@ -1,1 +1,1 @@
-- 普通精确修改使用 edit(path, changes)；只有完整最终文件需要计算、重排或生成时，才使用 rewrite(path, newText)。
+- 普通精确修改使用 {{editCall}}；只有完整最终文件需要计算、重排或生成时，才使用 {{rewriteCall}}。

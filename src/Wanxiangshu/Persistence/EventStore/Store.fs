@@ -391,8 +391,13 @@ module EventStore =
     /// stages bytes in memory; Append embeds them into the event line's inline
     /// `payloads` field; ReadPayload serves staged bytes, then falls back to the
     /// canonical Integrator's committed inline payload index (durable-events-012).
-    let createLocal (commonDir: string) (writerId: string) (integrator: ICanonicalIntegrator) : IEventStore =
-        let log = ProcessEventLog.create commonDir writerId
+    let createLocalWithSegmentCap
+        (commonDir: string)
+        (writerId: string)
+        (segmentCap: int)
+        (integrator: ICanonicalIntegrator)
+        : IEventStore =
+        let log = ProcessEventLog.createWithSegmentCap commonDir writerId segmentCap
         let gate = obj ()
         // DSL-MUTABLE: resource — staged inline payload bytes awaiting the next append.
         let staged = System.Collections.Generic.Dictionary<string, byte[]>()
@@ -454,3 +459,8 @@ module EventStore =
             member _.TryHead(streamId) = integrator.TryHead streamId
             member _.AllHeads() = integrator.AllHeads()
             member _.ReloadLocal() = reloadFromDisk () }
+
+    /// durable-events-005: default-cap wrapper; the 64 MiB ceiling applies
+    /// unless a caller explicitly injects a smaller one for tests.
+    let createLocal (commonDir: string) (writerId: string) (integrator: ICanonicalIntegrator) : IEventStore =
+        createLocalWithSegmentCap commonDir writerId ProcessEventLog.DefaultSegmentCapBytes integrator

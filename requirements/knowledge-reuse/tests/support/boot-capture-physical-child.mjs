@@ -17,7 +17,7 @@ const [mode, directory, scenario, requestJson] = process.argv.slice(2)
 const request = JSON.parse(requestJson)
 const commonDir = path.join(directory, '.git')
 const eventsDirectory = path.join(commonDir, 'wanxiangshu', 'events')
-const sourceFile = path.join(eventsDirectory, 'operation.ndjson')
+const sourceFile = path.join(eventsDirectory, 'operation-0000.ndjson')
 const encodeCase = value => value === null ? null : { ...value,
   accessOrder: value.accessOrder.toString(), lastAccessOrder: value.lastAccessOrder.toString() }
 const canonicalBytes = () => Object.fromEntries(fs.readdirSync(eventsDirectory).sort()
@@ -50,7 +50,7 @@ if (mode === 'cold') {
       assert.equal(current.completionFileState, request.baseline)
       assert.equal(current.maintenanceFileState, request.baseline)
     }
-    assert.equal(fs.existsSync(path.join(eventsDirectory, 'independent-boot-cold-reader.ndjson')), false)
+    assert.equal(fs.existsSync(path.join(eventsDirectory, 'independent-boot-cold-reader-0000.ndjson')), false)
     assert.equal(fs.existsSync(path.join(commonDir, 'wanxiangshu.lock')), false)
     assert.deepEqual(canonicalBytes(), request.physical.files)
     fs.writeSync(1, JSON.stringify({ pid: process.pid, parentPid: process.ppid,

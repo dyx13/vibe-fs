@@ -241,7 +241,7 @@ export function sealDecision({ previousWire, body, boundary }) {
     // break it. A `manager-loop` boundary sits on a reusable step-0 entry, so its
     // initial delivery has no previous wire and must be held.
     if (boundary !== null && boundary !== undefined
-        && (boundary.kind === 'prefix-probe' || boundary.kind === 'frame-commit' || boundary.kind === 'manager-loop')) {
+        && (boundary.kind === 'prefix-probe' || boundary.kind === 'frame-commit' || boundary.kind === 'manager-loop' || boundary.kind === 'epoch-switch')) {
       return { held: true };
     }
     return boundary === null || boundary === undefined
@@ -267,7 +267,7 @@ export function sealDecision({ previousWire, body, boundary }) {
     // accumulate. `manager-loop` shares it too: a reusable step-0 entry may see
     // append-only retries that stay held, with only the next iteration's restart
     // breaking the seal.
-    return boundary.kind === 'prefix-probe' || boundary.kind === 'frame-commit' || boundary.kind === 'manager-loop'
+    return boundary.kind === 'prefix-probe' || boundary.kind === 'frame-commit' || boundary.kind === 'manager-loop' || boundary.kind === 'epoch-switch'
       ? { held: true }
       : { broken: 'boundary-not-reached', kind: boundary.kind };
   }

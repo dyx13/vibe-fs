@@ -1,6 +1,6 @@
 ## Editing existing files
 
-### Default: edit(path, changes)
+### Default: {{editCall}}
 
 Use edit() when you can state both the current text and the final text. It reads one immutable
 snapshot of the existing UTF-8 target, plans every change against that same snapshot, and stages
@@ -9,7 +9,7 @@ at most one Rewrite intent. It never writes immediately.
 Canonical shape:
 
 ```js
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: "const timeout = 1000;",
   put: "const timeout = 5000;",
 });
@@ -27,25 +27,25 @@ The four common forms are deliberately mechanical:
 
 ```js
 // Replace one exact span.
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: "const timeout = 1000;",
   put: "const timeout = 5000;",
 });
 
 // Insert after an anchor: repeat the kept anchor in put, then add final text.
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: 'import { load } from "./load.js";',
   put: 'import { load } from "./load.js";\nimport { save } from "./save.js";',
 });
 
 // Delete: put is the empty string. Include the newline when deleting a whole line.
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: "const obsolete = true;\n",
   put: "",
 });
 
 // Replace every exact occurrence. all, not the RegExp g flag, owns multiplicity.
-this.edit("src/config.js", {
+this.edit({{editTarget}}{
   find: /\boldApi\b/,
   put: "newApi",
   all: true,
@@ -55,7 +55,7 @@ this.edit("src/config.js", {
 Put independent changes to one file in one call:
 
 ```js
-const report = this.edit("src/config.js", [
+const report = this.edit({{editTarget}}[
   { find: "const timeout = 1000;", put: "const timeout = 5000;" },
   { find: "const retries = 2;", put: "const retries = 3;" },
 ]);
@@ -98,7 +98,7 @@ write. Diagnostic windows and copy-ready payloads are bounded; a huge line or pu
 normal mismatch into an oversized failure. Because one program may mutate a path only once, do not
 call edit()/rewrite() twice for the same path.
 
-### Advanced escape hatch: rewrite(path, newText)
+### Advanced escape hatch: {{rewriteCall}}
 
 Use rewrite() when the final file is computed, reordered, generated, or otherwise cannot be stated
 as a few independent exact spans. newText is the complete resulting file, not a patch. The target

@@ -458,10 +458,13 @@ export const coldBoundaryCases = [
       // Same reasoning as an empty `attempts` list: the author believes a cold
       // boundary is covered, and the scenario silently stopped exercising it. Treating
       // it as harmless is how a scenario decays into an assertion about nothing.
-      // `manager-loop` is absent here on purpose: a reusable step-0 entry
-      // legitimately mixes held retries with one breaking restart, so held is
-      // legal for it (see the case above) and never `boundary-not-reached`.
-      for (const kind of ['epoch-switch', 'fallback-side']) {
+      // `manager-loop` and `epoch-switch` are absent here on purpose: a reusable
+      // step-0 entry legitimately mixes held retries with one breaking restart,
+      // so held is legal for them (see the case above) and never `boundary-not-reached`.
+      // `epoch-switch` shares the same shape: the declaration admits a wholesale
+      // prefix rebase, and a delivery that stays append-only is perfectly legal
+      // (the boundary simply wasn't needed for this particular run).
+      for (const kind of ['fallback-side']) {
         const decision = decide(FIRST, APPENDED, at(kind));
         assertEq(decision.broken, 'boundary-not-reached', `${kind} declared but seal held`);
         assertEq(decision.kind, kind, 'the diagnostic names which declaration went unused');
@@ -474,7 +477,10 @@ export const coldBoundaryCases = [
     fn: () => {
       // Nothing is sealed yet, so no break can happen there. Accepting it silently
       // would make the declaration decorative.
-      assertEq(decide(null, FIRST, at('epoch-switch')).broken, 'boundary-not-reached');
+      // Note: epoch-switch/prefix-probe/frame-commit/manager-loop are multi-delivery
+      // held exemptions. A single-delivery boundary like fallback-side must report
+      // boundary-not-reached on first request.
+      assertEq(decide(null, FIRST, at('fallback-side')).broken, 'boundary-not-reached');
     },
   },
 

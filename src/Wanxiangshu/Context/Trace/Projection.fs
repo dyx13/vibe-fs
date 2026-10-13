@@ -412,6 +412,16 @@ module XTraceProjection =
         |> List.tryFind (fun part -> part.Cursor = cursor)
         |> Option.bind tryHostMessageId
 
+    let hostMessageFirstCursors (state: XTraceProjectionState) : Map<string, int64> =
+        parts state
+        |> List.fold
+            (fun cursors part ->
+                match tryHostMessageId part with
+                | Some messageId when not (Map.containsKey messageId cursors) ->
+                    Map.add messageId (XTraceCursor.sequence part.Cursor) cursors
+                | _ -> cursors)
+            Map.empty
+
     let partsForHostMessageIds (messageIds: Set<string>) (state: XTraceProjectionState) : XTraceSemanticPartView list =
         parts state
         |> List.filter (fun part -> tryHostMessageId part |> Option.exists messageIds.Contains)

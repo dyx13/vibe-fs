@@ -12,6 +12,7 @@ open Wanxiangshu.Context.Companion.Blogger.OpenCode
 open Wanxiangshu.Context.Companion.Blogger.Runtime
 open Wanxiangshu.Context.Trace
 open Wanxiangshu.Execution.Delegation
+open Wanxiangshu.Execution.Delegation.Fork
 open Wanxiangshu.Execution.Delegation.SyncDelegate.OpenCode
 open Wanxiangshu.Execution.Failure
 open Wanxiangshu.Execution.Session.Attachment
@@ -625,6 +626,8 @@ module SyncDelegateSurface =
             Ok SyncDelegateRole.Inspector
         elif value.Equals("Engineer", StringComparison.OrdinalIgnoreCase) then
             Ok SyncDelegateRole.Engineer
+        elif value.Equals("DevOps", StringComparison.OrdinalIgnoreCase) then
+            Ok SyncDelegateRole.DevOps
         else
             Error(sprintf "unknown role: %s" value)
 
@@ -637,6 +640,8 @@ module SyncDelegateSurface =
             Error "retired sync delegate role: Inspector"
         elif value.Equals("Engineer", StringComparison.OrdinalIgnoreCase) then
             Ok SyncDelegateRole.Engineer
+        elif value.Equals("DevOps", StringComparison.OrdinalIgnoreCase) then
+            Ok SyncDelegateRole.DevOps
         else
             Error(sprintf "unknown role: %s" value)
 
@@ -653,6 +658,7 @@ module SyncDelegateSurface =
         | SyncDelegateRole.Coder -> Role.Coder
         | SyncDelegateRole.Inspector -> Role.Inspector
         | SyncDelegateRole.Engineer -> Role.Engineer
+        | SyncDelegateRole.DevOps -> Role.DevOps
 
     let private createJournal (directory: string) : Task<AgentJournal> =
         task {
@@ -1265,7 +1271,7 @@ module SyncDelegateSurface =
         harness.Runtime.InvokeObservedPrepared(
             harness.OwnerSession owner,
             charge,
-            (fun () -> Task.FromResult(LlmFacing.instruction charge))
+            (fun () -> Task.FromResult(HostForkProse.chargeDocument (harness.OwnerSession owner) charge))
         )
         |> box
 
@@ -2047,7 +2053,7 @@ module SyncDelegateSurface =
                         role,
                         charge,
                         batch,
-                        (fun () -> Task.FromResult(LlmFacing.instruction charge))
+                        (fun () -> Task.FromResult(HostForkProse.chargeDocument (harness.OwnerSession owner) charge))
                     )
 
                 return

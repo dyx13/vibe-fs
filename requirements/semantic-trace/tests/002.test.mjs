@@ -198,3 +198,77 @@ test('WHAT[semantic-trace-002] exact provider tool and Host identities are query
   )
 })
 }
+
+{
+const { default: assert } = await import('node:assert/strict')
+const trace = await import('../../../dist/Context/Trace/SemanticTraceSurface.js')
+const { PlanningSurface } = await import('../../../dist/Mission/Planning/Surface.js')
+
+test('WHAT[semantic-trace-002] later parts and reanchor copies cannot move a retired physical exchange into the current tenure', () => {
+  let projection = trace.emptyProjection()
+  for (const [sequence, messageId, generation, kind] of [
+    [1, 'user-opening', 0, 'text'],
+    [2, 'retired-exchange', 0, 'tool_call'],
+    [5, 'retired-exchange', 0, 'tool_result'],
+    [6, 'current-answer', 0, 'text'],
+    [7, 'retired-exchange', 1, 'tool_result'],
+    [8, 'current-answer', 1, 'text'],
+    [9, 'user-followup', 1, 'text'],
+  ]) {
+    const appended = trace.appendPart(projection, {
+      sequence,
+      role: messageId.startsWith('user-') ? 'user' : 'assistant',
+      provenance: `g:${generation}/msg:${messageId}/host-part:part-${sequence}`,
+      turn: sequence,
+      partIndex: 0,
+      kind,
+      toolName: kind.startsWith('tool_') ? 'js-plan' : undefined,
+      textRef: `blob-${sequence}`,
+      textDigest: `digest-${sequence}`,
+      providerRun: messageId.startsWith('user-') ? undefined : messageId,
+      toolCallId: kind.startsWith('tool_') ? 'retired-call' : undefined,
+      hostToolPartId: kind.startsWith('tool_') ? 'retired-tool-part' : undefined,
+    })
+    assert.equal(appended.ok, true, appended.error)
+    projection = appended.projection
+  }
+
+  const opening = {
+    info: { id: 'user-opening', role: 'user' },
+    parts: [{ type: 'text', text: 'Original requirement' }],
+  }
+  const retired = {
+    info: { id: 'retired-exchange', role: 'assistant' },
+    parts: [{
+      id: 'retired-tool-part', type: 'tool', callID: 'retired-call', tool: 'js-plan',
+      state: { status: 'completed', input: { program: 'previous work' }, output: 'retired output' },
+    }],
+  }
+  const answer = {
+    info: { id: 'current-answer', role: 'assistant' },
+    parts: [{ type: 'text', text: 'CURRENT_ANSWER' }],
+  }
+  const followup = {
+    info: { id: 'user-followup', role: 'user' },
+    parts: [{ type: 'text', text: 'CURRENT_FOLLOWUP' }],
+  }
+  const result = PlanningSurface.assembleTenureMessages(
+    [opening, retired, answer, followup],
+    {
+      workId: 'trace-tenure', incumbencyId: 'inc-current', stage: 'S2',
+      openingCursor: 4n, previousRange: [0n, 4n], isFreshHandover: false,
+    },
+    () => 'PREVIOUS_WORK_RECORD',
+    trace.hostMessageFirstCursors(projection),
+  )
+  assert.deepEqual(
+    result.messages.map((message) => message.info.id),
+    ['user-opening', 'lwr-prev-inc-current', 'current-answer', 'user-followup'],
+  )
+  assert.equal(result.messages[2], answer)
+  assert.equal(result.messages[3], followup)
+  assert.deepEqual(result.messages.flatMap((message) => message.parts.map((part) => part.text)), [
+    'Original requirement', 'PREVIOUS_WORK_RECORD', 'CURRENT_ANSWER', 'CURRENT_FOLLOWUP',
+  ])
+})
+}

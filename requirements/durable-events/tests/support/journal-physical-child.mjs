@@ -6,7 +6,7 @@ import { syncBuiltinESMExports } from 'node:module'
 const [mode, commonDir, writerId, scenario, requestJson] = process.argv.slice(2)
 const request = JSON.parse(requestJson)
 const root = path.dirname(commonDir)
-const sourceFile = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+const sourceFile = path.join(commonDir, 'wanxiangshu', 'events', `${writerId}-0000.ndjson`)
 const lock = path.join(commonDir, 'wanxiangshu.lock')
 const dto = event => ({ id: event.event_id, stream: event.stream_id, type: event.event_type,
   parents: event.parents, payload: event.payload, payloadRefs: event.payload_refs })
@@ -14,7 +14,7 @@ const store = await import('../../../../dist/Persistence/EventStore/Surface.js')
 const journals = await import('../../../../dist/Verification/JournalPortObservationSurface.js')
 
 if (mode === 'cold') {
-  const source = path.join(commonDir, 'wanxiangshu', 'events', `${request.sourceWriter}.ndjson`)
+  const source = path.join(commonDir, 'wanxiangshu', 'events', `${request.sourceWriter}-0000.ndjson`)
   const handle = store.create(commonDir, writerId)
   let journal
   try {
@@ -31,7 +31,7 @@ if (mode === 'cold') {
     assert.deepEqual(projection, request.projection)
     assert.equal(fs.existsSync(sourceFile), false)
     assert.equal(fs.existsSync(lock), false)
-    assert.deepEqual(fs.readdirSync(path.dirname(source)).sort(), [`${request.sourceWriter}.ndjson`])
+    assert.deepEqual(fs.readdirSync(path.dirname(source)).sort(), [`${request.sourceWriter}-0000.ndjson`])
     fs.writeSync(1, JSON.stringify({ pid: process.pid, parentPid: process.ppid, writerId,
       projection, bytes: fs.readFileSync(source, 'base64'), preserved: true }) + '\n')
   } finally {

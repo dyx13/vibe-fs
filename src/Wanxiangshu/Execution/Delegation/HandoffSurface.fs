@@ -25,9 +25,6 @@ module HandoffSurface =
                ``end`` = handoff.Range |> XTraceRange.endExclusive |> XTraceCursor.sequence |> int
                isInitial = handoff.IsInitial |}
 
-    let render (charge: string) (parentRecord: string) : string =
-        DelegationHandoff.renderPrompt charge (Option.ofObj parentRecord)
-
     let childRange (startInclusive: int) (endExclusive: int) : obj =
         DelegationHandoff.childRange
             (startInclusive |> int64 |> XTraceCursor.create)

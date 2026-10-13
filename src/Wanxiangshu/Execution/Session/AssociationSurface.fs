@@ -83,6 +83,7 @@ module AssociationSurface =
         | AttachmentKind.SyncInspector -> "SyncInspector", null
         | AttachmentKind.SyncCoder -> "SyncCoder", null
         | AttachmentKind.SyncEngineer -> "SyncEngineer", null
+        | AttachmentKind.SyncDevOps -> "SyncDevOps", null
         | AttachmentKind.Bookkeeper transactionId -> "Bookkeeper", box transactionId
         | AttachmentKind.StrengthReplica -> "StrengthReplica", null
 
@@ -199,6 +200,7 @@ module AssociationSurface =
             | "SyncInspector" -> AttachmentKind.SyncInspector
             | "SyncCoder" -> AttachmentKind.SyncCoder
             | "SyncEngineer" -> AttachmentKind.SyncEngineer
+            | "SyncDevOps" -> AttachmentKind.SyncDevOps
             | "Bookkeeper" -> AttachmentKind.Bookkeeper ""
             | "StrengthReplica" -> AttachmentKind.StrengthReplica
             | _ -> AttachmentKind.Companion
@@ -211,6 +213,7 @@ module AssociationSurface =
             | "SyncInspector" -> AttachmentKind.SyncInspector
             | "SyncCoder" -> AttachmentKind.SyncCoder
             | "SyncEngineer" -> AttachmentKind.SyncEngineer
+            | "SyncDevOps" -> AttachmentKind.SyncDevOps
             | "Bookkeeper" -> AttachmentKind.Bookkeeper ""
             | "StrengthReplica" -> AttachmentKind.StrengthReplica
             | _ -> AttachmentKind.Companion
@@ -235,6 +238,7 @@ module AssociationSurface =
         match role with
         | "Coder" -> SyncDelegateRole.Coder
         | "Engineer" -> SyncDelegateRole.Engineer
+        | "DevOps" -> SyncDelegateRole.DevOps
         | _ -> SyncDelegateRole.Inspector
 
     let dedicatedOwnership (owner: string) (role: string) : obj =

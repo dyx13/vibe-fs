@@ -1,4 +1,4 @@
-file(path, matches = []) reads this transaction's immutable UTF-8 snapshot,
+{{fileCall}} reads this transaction's immutable UTF-8 snapshot,
 optionally resolves ordered anchors, and returns an immutable FileView.
 
 matches is Array<[beginAnchor, endAnchor, pattern]> where pattern is a non-empty

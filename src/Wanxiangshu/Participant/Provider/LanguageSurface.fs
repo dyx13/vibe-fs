@@ -106,7 +106,12 @@ module ProviderLanguageSurface =
             let output = createObj [ "system" ==> system ]
 
             let! _ =
-                Wanxiangshu.OpenCode.ProviderSystemTransform.createWith (fun _ -> None) (fun _ -> false) input output
+                Wanxiangshu.OpenCode.ProviderSystemTransform.createWith
+                    (fun _ -> None)
+                    (fun _ -> false)
+                    (fun _ -> None)
+                    input
+                    output
 
             return box {| system = unbox<string array> output?system |}
         }
@@ -123,7 +128,12 @@ module ProviderLanguageSurface =
             let output = createObj [ "system" ==> system ]
 
             let! _ =
-                Wanxiangshu.OpenCode.ProviderSystemTransform.createWith (fun _ -> role) (fun _ -> false) input output
+                Wanxiangshu.OpenCode.ProviderSystemTransform.createWith
+                    (fun _ -> role)
+                    (fun _ -> false)
+                    (fun _ -> None)
+                    input
+                    output
 
             return box {| system = unbox<string array> output?system |}
         }
@@ -138,7 +148,12 @@ module ProviderLanguageSurface =
             let output = createObj [ "system" ==> system ]
 
             let! _ =
-                Wanxiangshu.OpenCode.ProviderSystemTransform.createWith (fun _ -> role) (fun _ -> true) input output
+                Wanxiangshu.OpenCode.ProviderSystemTransform.createWith
+                    (fun _ -> role)
+                    (fun _ -> true)
+                    (fun _ -> None)
+                    input
+                    output
 
             return box {| system = unbox<string array> output?system |}
         }

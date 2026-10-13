@@ -83,13 +83,14 @@ module SyncDelegate =
         | _ -> None
 
     /// EXEC-026: canonical wire role label for a dedicated SyncDelegate
-    /// (`engineer`; `inspector`/`coder` are historical decodes). Sole
+    /// (`engineer`, `devops`; `inspector`/`coder` are historical decodes). Sole
     /// definition — Session/ layer references this.
     let roleLabel (role: SyncDelegateRole) : string =
         match role with
         | SyncDelegateRole.Inspector -> "inspector"
         | SyncDelegateRole.Coder -> "coder"
         | SyncDelegateRole.Engineer -> "engineer"
+        | SyncDelegateRole.DevOps -> "devops"
 
     /// HOST-008: SyncDelegateRole → AttachmentKind for Work+Attached registration.
     let delegateRoleToAttachment (role: SyncDelegateRole) : AttachmentKind = SyncDelegateRole.toAttachmentKind role

@@ -11,6 +11,10 @@ module Surface =
     /// Create a process-local writer capability. The caller owns its lifecycle.
     val create: commonDir: string * writerId: string -> EventStoreHandle
 
+    /// Create a process-local writer capability with an injected single-segment
+    /// byte cap (durable-events-005); `create` uses the 64 MiB default.
+    val createWithSegmentCap: commonDir: string * writerId: string * capBytes: int -> EventStoreHandle
+
     val createWithCurrentCommitFault:
         commonDir: string * writerId: string * cause: obj * commitBeforeFailure: bool -> EventStoreHandle
 

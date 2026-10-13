@@ -12,6 +12,7 @@ module PromptResources =
         | Role.Engineer -> "role/engineer"
         | Role.DevOps -> "role/devops"
         | Role.Blogger -> "role/blogger"
+        | Role.Plan -> "role/plan"
         | Role.Coder
         | Role.Inspector
         | Role.Browser
@@ -30,7 +31,11 @@ module PromptResources =
           "role/devops"
           "role/orchestrator"
           "role/blogger"
-          "role/bookkeeper" ]
+          "role/bookkeeper"
+          "role/plan"
+          "planning/s1"
+          "planning/s2"
+          "planning/s3" ]
 
     let private ensureParity () =
         semanticPaths |> List.iter ProviderResources.requireLanguagePair
@@ -87,7 +92,8 @@ module PromptResources =
           EngineerSystemPrompt = systemForRole lang Role.Engineer
           DevopsSystemPrompt = systemForRole lang Role.DevOps
           OrchestratorSystemPrompt = systemForRole lang Role.Orchestrator
-          BloggerSystemPrompt = systemForRole lang Role.Blogger }
+          BloggerSystemPrompt = systemForRole lang Role.Blogger
+          PlanSystemPrompt = systemForRole lang Role.Plan }
 
     let load () : PromptCatalog =
         loadForLanguage ProviderLanguage.English

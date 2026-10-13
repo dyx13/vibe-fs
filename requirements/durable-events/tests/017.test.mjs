@@ -62,7 +62,7 @@ test('WHAT[durable-events-017] DURABLE_EVENTS_004_017_local_append_has_zero_Git_
 
     // 1. Two appends preserve all previous bytes exactly
     assert.equal((await eventStore.append(store1, [e1])).ok, true)
-    const file = path.join(gitCommonDir, 'wanxiangshu', 'events', 'writer-bytes-1.ndjson')
+    const file = path.join(gitCommonDir, 'wanxiangshu', 'events', 'writer-bytes-1-0000.ndjson')
     const bytesAfterFirst = await readFile(file)
 
     assert.equal((await eventStore.append(store1, [e2])).ok, true)
@@ -131,8 +131,8 @@ for (const historyLength of [8, 128]) {
     const root = await mkdtemp(path.join(tmpdir(), 'wanxiang-append-io-'))
     const commonDir = path.join(root, '.git')
     const eventsDir = path.join(commonDir, 'wanxiangshu', 'events')
-    const historicalFile = path.join(eventsDir, 'historical-writer.ndjson')
-    const writerFile = path.join(eventsDir, 'meter-writer.ndjson')
+    const historicalFile = path.join(eventsDir, 'historical-writer-0000.ndjson')
+    const writerFile = path.join(eventsDir, 'meter-writer-0000.ndjson')
     const history = []
     for (let index = 0; index < historyLength; index++) {
       history.push({
@@ -154,7 +154,7 @@ for (const historyLength of [8, 128]) {
       assert.equal(eventStore.head(seed, incoming.stream), history.at(-1).id)
       eventStore.dispose(seed)
       seed = undefined
-      assert.deepEqual(await readdir(eventsDir), ['historical-writer.ndjson'])
+      assert.deepEqual(await readdir(eventsDir), ['historical-writer-0000.ndjson'])
       const historicalBefore = await readFile(historicalFile)
       assert.deepEqual(historicalBefore, Buffer.from(history.map(event => codec.encode(event)).join(''), 'utf8'))
       const request = { historicalFile, anchor: history.at(-1), incoming, expectedEvents: [...history, incoming] }
@@ -167,13 +167,13 @@ for (const historyLength of [8, 128]) {
       assert.deepEqual(Buffer.from(measured.writtenBase64, 'base64'), expectedBytes)
       assert.deepEqual(await readFile(writerFile), expectedBytes)
       assert.deepEqual(await readFile(historicalFile), historicalBefore)
-      assert.deepEqual((await readdir(eventsDir)).sort(), ['historical-writer.ndjson', 'meter-writer.ndjson'])
+      assert.deepEqual((await readdir(eventsDir)).sort(), ['historical-writer-0000.ndjson', 'meter-writer-0000.ndjson'])
       const cold = await runChild('cold', commonDir, 'cold-writer', request, t.signal)
       assert.ok(Number.isInteger(cold.pid) && cold.pid > 0 && cold.pid !== process.pid && cold.pid !== measured.pid)
       assert.deepEqual(cold.events, request.expectedEvents)
       assert.equal(cold.head, incoming.id)
       assert.deepEqual(cold.heads, [incoming.id])
-      assert.deepEqual((await readdir(eventsDir)).sort(), ['historical-writer.ndjson', 'meter-writer.ndjson'])
+      assert.deepEqual((await readdir(eventsDir)).sort(), ['historical-writer-0000.ndjson', 'meter-writer-0000.ndjson'])
       assert.deepEqual(await readFile(writerFile), expectedBytes)
       assert.equal(expectedBytes.at(-1), 10)
       assert.deepEqual(await readFile(historicalFile), historicalBefore)

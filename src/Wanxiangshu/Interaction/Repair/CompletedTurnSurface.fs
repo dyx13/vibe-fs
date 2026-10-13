@@ -95,12 +95,15 @@ module CompletedTurnSurface =
 
     let needsInteractionRepair (role: string) (completed: bool) (finish: string) (parts: obj) : bool =
         let roleValue = optionalRole role
+        let finishValue = optionalText (box finish)
         let typedParts = partsOf parts
 
         let classified =
-            CompletedTurnClassifier.classifyOutcome completed (optionalText (box finish)) None typedParts
+            CompletedTurnClassifier.classifyOutcome completed finishValue None typedParts
 
-        CompletedTurnClassifier.needsInteractionRepair roleValue classified typedParts
+        // planning-009: Plan's empty stop is a natural stop, never a repair.
+        not (CompletedTurnClassifier.isPlanEmptyStop roleValue finishValue classified)
+        && CompletedTurnClassifier.needsInteractionRepair roleValue classified typedParts
 
     let private repairDecisionName =
         function

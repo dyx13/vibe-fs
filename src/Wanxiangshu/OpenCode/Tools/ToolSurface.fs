@@ -7,8 +7,14 @@ open Wanxiangshu.Foundation
 /// owner-defined identity and catalog facts needed by semantic unit laws.
 module ToolSurface =
 
+    /// planning-013: the spec projection of the static catalog. `resume` keeps
+    /// its permission entry for every role (Manager's delegation surface owns
+    /// the verb, capability-enforcement-011), but it is not a registered plan
+    /// spec; `handoff` left the catalog entirely.
     let toolSpecNames () : string array =
-        StaticTools.knownToolNames |> List.toArray
+        StaticTools.knownToolNames
+        |> List.filter (fun name -> name <> "resume")
+        |> List.toArray
 
 
 

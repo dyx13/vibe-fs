@@ -148,7 +148,7 @@ test('WHAT[speculative-investigation-016] the production classifier admits exact
     'fork', 'resume', 'commission', 'join', 'horizon', 'review', 'suicide',
     'fission', 'open-terminal', 'send-terminal', 'read-terminal', 'signal-terminal',
     'skill', 'todowrite', 'assume', 'defer',
-    'publish', 'chronicle', 'js-bookkeeper',
+    'publish', 'chronicle', 'js-bookkeeper', 'js-predictor',
     'bash-honeypot', 'invalid', 'js-orchestrator', 'js-blogger'
   ];
   for (const name of noEstimate) {

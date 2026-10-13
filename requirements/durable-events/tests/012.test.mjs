@@ -68,7 +68,7 @@ test('WHAT[durable-events-012] appended_fact_lifts_real_blob_digest_into_persist
     )
     assert.ok(appended.projection)
 
-    const ndjson = readFileSync(join(commonDir, 'wanxiangshu', 'events', 'journal-closure-proof.ndjson'), 'utf8')
+    const ndjson = readFileSync(join(commonDir, 'wanxiangshu', 'events', 'journal-closure-proof-0000.ndjson'), 'utf8')
     assert.match(ndjson, new RegExp(`"payload_refs":\\["${handle}"\\]`))
     // The same event line embeds the payload inline (durable-events-012).
     assert.match(ndjson, new RegExp(`"payloads":\\{"${handle}":"${Buffer.from('part-body\n', 'utf8').toString('base64')}"\\}`))
@@ -138,7 +138,7 @@ const lifeOpened = (session, ref, digest) => ({
   },
 })
 const payloadRefsFromFile = (commonDir, writerId) => {
-  const file = join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+  const file = join(commonDir, 'wanxiangshu', 'events', `${writerId}-0000.ndjson`)
   return readFileSync(file, 'utf8')
     .trim()
     .split('\n')
@@ -147,7 +147,7 @@ const payloadRefsFromFile = (commonDir, writerId) => {
     .map((event) => event.payload_refs)
 }
 const inlinePayloadsFromFile = (commonDir, writerId) => {
-  const file = join(commonDir, 'wanxiangshu', 'events', `${writerId}.ndjson`)
+  const file = join(commonDir, 'wanxiangshu', 'events', `${writerId}-0000.ndjson`)
   return readFileSync(file, 'utf8')
     .trim()
     .split('\n')
@@ -238,7 +238,7 @@ test('WHAT[durable-events-012] closure_is_empty_for_a_fact_without_blob_fields',
       const commonDir = join(root, '.git')
       const sourceWriterId = randomUUID()
       const measureWriter = randomUUID()
-      const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriterId}.ndjson`)
+      const sourceFile = join(commonDir, 'wanxiangshu', 'events', `${sourceWriterId}-0000.ndjson`)
       const request = { sourceWriterId, sessionId: 'payload-g1-existing-session',
         oldBody: '原有非空payload\r\nNUL:\u0000；雪 😀 保留尾空格  ',
         incomingBody: '新的非空payload\r\nNUL:\u0000；é 😀 保留尾空格  ' }
@@ -275,7 +275,7 @@ test('WHAT[durable-events-012] closure_is_empty_for_a_fact_without_blob_fields',
         assert.equal(measured.payloadBeforeRelease, false)
         assert.equal(measured.observed.injected, 0)
         assert.equal(measured.observed.append, 0)
-        assert.deepEqual(measured.before.eventFiles, [`${sourceWriterId}.ndjson`])
+        assert.deepEqual(measured.before.eventFiles, [`${sourceWriterId}-0000.ndjson`])
         assert.equal(measured.before.writerCreated, false)
         assert.ok(measured.beforeCurrent.sessions.includes(request.sessionId))
         assert.deepEqual(measured.beforeCurrent.sessionProjections[request.sessionId].xTrace,

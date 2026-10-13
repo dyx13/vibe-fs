@@ -36,8 +36,9 @@ module WriterStreamSync =
           Writers: Map<string, CachedFile> }
 
     type private MaterializedWriter =
-        { Entry: TreeEntry
-          StatIdentity: string
+        { WriterId: string
+          Entries: TreeEntry list
+          StatIdentityByName: Map<string, string>
           LastActivityMs: float }
 
     type private WriterManifestEntry =
@@ -198,69 +199,33 @@ module WriterStreamSync =
         exactCached cacheFiles name statIdentity
         |> Option.map (fun cached -> cached.Oid)
 
-    let private resolveBlobOid (raw: IGitRawStore) (readBytes: string -> byte[]) cacheFiles name statIdentity =
-        match cachedOid cacheFiles name statIdentity with
-        | Some oid -> Task.FromResult oid
-        | None -> raw.WriteBlob(readBytes name)
-
-    let private materializeFileEntries
+    let private resolveSegmentEntry
         (raw: IGitRawStore)
         (readBytes: string -> byte[])
         (cacheFiles: Map<string, CachedFile>)
-        (files: (string * string) list)
-        : Task<TreeEntry list> =
-        let rec loop remaining acc =
-            task {
-                match remaining with
-                | [] -> return List.rev acc
-                | (name, statIdentity) :: tail ->
-                    let! oid = resolveBlobOid raw readBytes cacheFiles name statIdentity
-
-                    return!
-                        loop
-                            tail
-                            ({ Mode = blobMode
-                               Name = name
-                               Oid = oid }
-                             :: acc)
-            }
-
-        loop files []
-
-    let private resolveWriter
-        (raw: IGitRawStore)
-        commonDir
-        (cacheFiles: Map<string, CachedFile>)
-        (metadata: ProcessEventLog.WriterPhysicalMetadata)
-        =
-        let activityForWrittenBlob oid =
-            Map.tryFind metadata.Name cacheFiles
-            |> Option.filter (fun cached -> cached.Oid = oid)
-            |> Option.bind _.LastActivityMs
-            |> Option.defaultValue metadata.LastActivityMs
-
+        (name: string)
+        (statIdentity: string)
+        : Task<TreeEntry> =
         task {
-            match exactCached cacheFiles metadata.Name metadata.StatIdentity with
-            | Some cached ->
+            match cachedOid cacheFiles name statIdentity with
+            | Some oid ->
                 return
-                    { Entry =
-                        { Mode = blobMode
-                          Name = metadata.Name
-                          Oid = cached.Oid }
-                      StatIdentity = metadata.StatIdentity
-                      LastActivityMs = cached.LastActivityMs |> Option.defaultValue metadata.LastActivityMs }
+                    { Mode = blobMode
+                      Name = name
+                      Oid = oid }
             | None ->
-                let! oid = raw.WriteBlob(ProcessEventLog.readWriterFileBytes commonDir metadata.Name)
+                let! oid = raw.WriteBlob(readBytes name)
 
                 return
-                    { Entry =
-                        { Mode = blobMode
-                          Name = metadata.Name
-                          Oid = oid }
-                      StatIdentity = metadata.StatIdentity
-                      LastActivityMs = activityForWrittenBlob oid }
+                    { Mode = blobMode
+                      Name = name
+                      Oid = oid }
         }
 
+    /// durable-events-005: one writer materializes as its segment blob list.
+    /// Each segment resolves its OID independently through the stat cache, so
+    /// a sealed segment is blobbed exactly once across syncs
+    /// (durable-convergence-010) and rolling only blobs the new segment.
     let private materializeWriters
         (raw: IGitRawStore)
         commonDir
@@ -268,28 +233,63 @@ module WriterStreamSync =
         (writerMetadata: ProcessEventLog.WriterPhysicalMetadata list)
         : Task<MaterializedWriter list> =
         let cached = cacheFiles (fun value -> value.Writers) cache
+        let stats = ProcessEventLog.writerPhysicalStats commonDir |> Map.ofList
 
-        let rec loop remaining acc =
+        let readBytes name =
+            ProcessEventLog.readWriterFileBytes commonDir name
+
+        let statIdentityOf name =
+            match Map.tryFind name stats with
+            | Some identity -> identity
+            | None -> failwith ("writer segment stat missing: " + name)
+
+        let rec resolveFiles remaining acc =
+            task {
+                match remaining with
+                | [] -> return List.rev acc
+                | name :: tail ->
+                    let! entry = resolveSegmentEntry raw readBytes cached name (statIdentityOf name)
+                    return! resolveFiles tail (entry :: acc)
+            }
+
+        let rec resolveWriters (remaining: ProcessEventLog.WriterPhysicalMetadata list) acc =
             task {
                 match remaining with
                 | [] -> return List.rev acc
                 | metadata :: tail ->
-                    let! writer = resolveWriter raw commonDir cached metadata
-                    return! loop tail (writer :: acc)
+                    let identities =
+                        metadata.FileNames
+                        |> List.choose (fun name ->
+                            Map.tryFind name stats |> Option.map (fun identity -> name, identity))
+
+                    let! entries = resolveFiles (identities |> List.map fst) []
+
+                    return!
+                        resolveWriters
+                            tail
+                            ({ WriterId = metadata.WriterId
+                               Entries = entries
+                               StatIdentityByName = Map.ofList identities
+                               LastActivityMs = metadata.LastActivityMs }
+                             :: acc)
             }
 
-        loop writerMetadata []
+        resolveWriters writerMetadata []
 
+    /// durable-convergence-011: one manifest entry per segment blob; all
+    /// segments of one writer carry the same writer-level activity.
     let private writerManifestText (writers: MaterializedWriter list) =
         [ yield writerManifestVersion
           yield!
               writers
-              |> List.map (fun writer ->
-                  String.concat
-                      "\t"
-                      [ encodeFileName writer.Entry.Name
-                        GitObjectId.value writer.Entry.Oid
-                        formatFloat writer.LastActivityMs ]) ]
+              |> List.collect (fun writer ->
+                  writer.Entries
+                  |> List.map (fun entry ->
+                      String.concat
+                          "\t"
+                          [ encodeFileName entry.Name
+                            GitObjectId.value entry.Oid
+                            formatFloat writer.LastActivityMs ])) ]
         |> String.concat "\n"
         |> fun text -> text + "\n"
 
@@ -341,14 +341,19 @@ module WriterStreamSync =
         |> List.sort
         |> List.tryHead
 
-    let private cacheWriterLine (writer: MaterializedWriter) =
-        String.concat
-            "\t"
-            [ "w"
-              encodeFileName writer.Entry.Name
-              writer.StatIdentity
-              GitObjectId.value writer.Entry.Oid
-              formatFloat writer.LastActivityMs ]
+    let private cacheWriterLines (writer: MaterializedWriter) =
+        writer.Entries
+        |> List.choose (fun entry ->
+            writer.StatIdentityByName
+            |> Map.tryFind entry.Name
+            |> Option.map (fun statIdentity ->
+                String.concat
+                    "\t"
+                    [ "w"
+                      encodeFileName entry.Name
+                      statIdentity
+                      GitObjectId.value entry.Oid
+                      formatFloat writer.LastActivityMs ]))
 
     let private writeMaterializationCache commonDir (snapshot: StoreSnapshot) (writers: MaterializedWriter list) =
         try
@@ -358,7 +363,7 @@ module WriterStreamSync =
 
             let body =
                 [ yield String.concat "\t" [ materializationCacheVersion; fingerprint; root; expiry ]
-                  yield! writers |> List.map cacheWriterLine ]
+                  yield! writers |> List.collect cacheWriterLines ]
                 |> String.concat "\n"
                 |> fun value -> value + "\n"
 
@@ -372,7 +377,7 @@ module WriterStreamSync =
             |> List.partition (fun writer -> isWriterActiveAt nowMs writer.LastActivityMs)
 
         expired
-        |> List.iter (fun writer -> ProcessEventLog.removeWriterFile commonDir writer.Entry.Name)
+        |> List.iter (fun writer -> ProcessEventLog.removeWriter commonDir writer.WriterId)
 
         active
 
@@ -381,10 +386,41 @@ module WriterStreamSync =
             let cache = readMaterializationCache commonDir
             let writerMetadata = ProcessEventLog.writerPhysicalMetadata commonDir
 
-            let! resolvedWriters = materializeWriters raw commonDir cache writerMetadata
+            // GC BEFORE blobbing: expired writers are deleted by metadata only,
+            // so their multi-MB bytes are never read or hashed. Retention is a
+            // UTC-day group on LastActivityMs; it needs no file content.
+            let activeMetadata, expiredMetadata =
+                writerMetadata
+                |> List.partition (fun metadata -> isWriterActiveAt nowMs metadata.LastActivityMs)
+
+            expiredMetadata
+            |> List.iter (fun metadata -> ProcessEventLog.removeWriter commonDir metadata.WriterId)
+
+            // durable-events-005: converge oversized legacy files and interrupted
+            // reorganization intermediates into segment series before blobbing,
+            // so every published blob respects the cap.
+            let convergence =
+                activeMetadata
+                |> List.fold
+                    (fun state metadata ->
+                        state
+                        |> Result.bind (fun () -> ProcessEventLog.convergeWriterFiles commonDir metadata.WriterId))
+                    (Ok())
+
+            match convergence with
+            | Error reason -> raise (exn reason)
+            | Ok() -> ()
+
+            // Re-enumerate after convergence: a reorganized writer now exposes
+            // a different physical file set.
+            let activeAfter =
+                ProcessEventLog.writerPhysicalMetadata commonDir
+                |> List.filter (fun metadata -> isWriterActiveAt nowMs metadata.LastActivityMs)
+
+            let! resolvedWriters = materializeWriters raw commonDir cache activeAfter
             let writers = removeExpiredLocalWriters nowMs resolvedWriters commonDir
 
-            let! writerTree = raw.WriteTree(writers |> List.map (fun writer -> writer.Entry))
+            let! writerTree = raw.WriteTree(writers |> List.collect (fun writer -> writer.Entries))
             let! manifestBlob = writerManifestText writers |> Encoding.UTF8.GetBytes |> raw.WriteBlob
 
             let! root =
@@ -400,19 +436,19 @@ module WriterStreamSync =
 
             // Re-read stats after expiry deletion so the physical fingerprint and
             // cache entries describe exactly the materialized retained set.
-            let retainedStats =
-                ProcessEventLog.writerPhysicalMetadata commonDir
-                |> List.map (fun item -> item.Name, item)
-                |> Map.ofList
+            let retainedStats = ProcessEventLog.writerPhysicalStats commonDir |> Map.ofList
 
             let retainedWriters =
                 writers
-                |> List.choose (fun writer ->
-                    retainedStats
-                    |> Map.tryFind writer.Entry.Name
-                    |> Option.map (fun stat ->
-                        { writer with
-                            StatIdentity = stat.StatIdentity }))
+                |> List.map (fun writer ->
+                    { writer with
+                        StatIdentityByName =
+                            writer.StatIdentityByName
+                            |> Map.filter (fun name _ -> Map.containsKey name retainedStats)
+                            |> Map.map (fun name identity ->
+                                match Map.tryFind name retainedStats with
+                                | Some fresh -> fresh
+                                | None -> identity) })
 
             writeMaterializationCache commonDir snapshot retainedWriters
             return snapshot
@@ -533,32 +569,52 @@ module WriterStreamSync =
         =
         entries |> List.filter (remoteEntryNeeded cacheFiles currentStats manifest)
 
-    let private writerFromBlob
+    /// durable-events-005/014: aggregate the fetched blobs of one WriterId
+    /// (segments in ordinal order, or a single legacy suffixless blob) into
+    /// one RemoteWriter whose text is the whole logical stream.
+    let private remoteWriterOfGroup
         (manifest: Map<string, WriterManifestEntry>)
         (entryByName: Map<string, TreeEntry>)
-        (name: string, bytes: byte[])
+        (writerId: string)
+        (blobs: (string * byte[]) list)
         : Result<RemoteWriter, ConvergeError> =
         result {
-            if not (name.EndsWith(".ndjson", StringComparison.Ordinal)) then
-                return! Error(asStorage (sprintf "invalid writer filename: %s" name))
-
-            let writerId = name.Substring(0, name.Length - ".ndjson".Length)
+            let ordered = blobs |> List.sortBy fst
 
             let activity =
-                entryByName
-                |> Map.tryFind name
-                |> Option.bind (manifestForEntry manifest)
+                ordered
+                |> List.tryHead
+                |> Option.bind (fun (name, _) ->
+                    entryByName |> Map.tryFind name |> Option.bind (manifestForEntry manifest))
                 |> Option.map (fun info -> info.LastActivityMs)
 
-            let! text =
-                CanonicalEventCodec.tryDecodeUtf8Text bytes
-                |> Result.mapError ConvergeError.StorageInvalid
+            let! texts =
+                ordered
+                |> List.traverseResultM (fun (_, bytes) ->
+                    CanonicalEventCodec.tryDecodeUtf8Text bytes
+                    |> Result.mapError ConvergeError.StorageInvalid)
 
             return
                 { WriterId = writerId
-                  Text = text
+                  Text = String.concat "" texts
                   LastActivityMs = activity }
         }
+
+    let private remoteWritersFromBlobs
+        (manifest: Map<string, WriterManifestEntry>)
+        (entryByName: Map<string, TreeEntry>)
+        (blobs: (string * byte[]) list)
+        : Result<RemoteWriter list, ConvergeError> =
+        let invalidName =
+            blobs
+            |> List.tryFind (fun (name, _) -> not (name.EndsWith(".ndjson", StringComparison.Ordinal)))
+
+        match invalidName with
+        | Some(name, _) -> Error(asStorage (sprintf "invalid writer filename: %s" name))
+        | None ->
+            blobs
+            |> List.groupBy (fun (name, _) -> ProcessEventLog.writerKeyOfFileName name)
+            |> List.traverseResultM (fun (writerId, group) -> remoteWriterOfGroup manifest entryByName writerId group)
 
     let private readRemoteTrees
         (raw: IGitRawStore)
@@ -602,7 +658,7 @@ module WriterStreamSync =
             let entryByName =
                 retainedEntries |> List.map (fun entry -> entry.Name, entry) |> Map.ofList
 
-            let! remoteWriters = writerBlobs |> List.traverseResultM (writerFromBlob manifest entryByName)
+            let! remoteWriters = remoteWritersFromBlobs manifest entryByName writerBlobs
             return remoteWriters
         }
 

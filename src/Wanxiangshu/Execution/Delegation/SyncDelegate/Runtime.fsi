@@ -5,6 +5,7 @@ open System.Threading.Tasks
 open Wanxiangshu.Composition.Turn
 open Wanxiangshu.Context.Trace
 open Wanxiangshu.Execution.Delegation
+open Wanxiangshu.Execution.Delegation.Fork
 open Wanxiangshu.Execution.Session.Attachment
 open Wanxiangshu.Execution.Session.Wait
 open Wanxiangshu.Foundation
@@ -13,6 +14,10 @@ open Wanxiangshu.Interaction.Dispatch
 open Wanxiangshu.OpenCode
 open Wanxiangshu.Participant.Provider.Attempt.Fallback
 open Wanxiangshu.Persistence.Journal
+
+module HostForkProse =
+    val forkInstructions: sessionId: SessionId -> ForkChildInstructions
+    val chargeDocument: owner: SessionId -> charge: string -> LlmFacing.Document
 
 module internal SyncDelegatePhysicalIdentity =
     val title: scope: ReuseScopeId -> role: SyncDelegateRole -> agentName: string -> string

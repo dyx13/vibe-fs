@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url'
 const [mode, commonDir, writerId, requestJson] = process.argv.slice(2)
 const request = JSON.parse(requestJson)
 const eventsDir = path.join(commonDir, 'wanxiangshu', 'events')
-const writerFile = path.join(eventsDir, `${writerId}.ndjson`)
+const writerFile = path.join(eventsDir, `${writerId}-0000.ndjson`)
 const originalRead = fs.readFileSync
 const originalMkdir = fs.mkdirSync
 const originalWrite = fs.writeFileSync

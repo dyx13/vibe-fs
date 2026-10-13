@@ -312,4 +312,5 @@ module StrengthReplicaAssociationHints =
         | AttachmentKind.SyncInspector
         | AttachmentKind.SyncCoder
         | AttachmentKind.SyncEngineer
+        | AttachmentKind.SyncDevOps
         | AttachmentKind.Bookkeeper _ -> false

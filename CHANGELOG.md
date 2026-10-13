@@ -39,6 +39,50 @@
 ## Unreleased — S0 / WP-042 干净构建包络交付
 
 - CI 与本地 CI 在发布验证前独立调用显式包络准备命令；普通构建仍不自动派生或检查语料变化。clean 重建沿用 staged swap，保留已有包络字节，并在失败时恢复先前输出。正式回归使用各自独立的 tracked 仓库及真实 Fable clean/full 编译，覆盖语料变化不隐式更新与后续产物拒绝后的回滚；完整 generated artifact lineage/traversal 仍属 GAP-145。
+## Unreleased — js-plan 复用共享锚点教程
+
+- `js-plan` 的模型可见描述不再使用独立短教程。它复用其它 `js-*` 的同一套教程：有序锚点、`text(from, to)`、精确 edit、结构重组和失败记忆。教程签名槽按工具填写，Plan 面为 `file(matches = [])`、`edit(changes)`、`rewrite(newText)`；仓库面仍为带路径签名。
+- `tool/js-plan` 只保留单一底稿、禁路径和写前评审这三项作用域约束。新增一份无路径、按底稿职责成形的双语样例 `tool/js-program/ultra-plan`。公开基类只展示无路径方法签名，不暴露运行时内部失败对象。
+- `requirements/planning` [011] 增加工具描述复用条款；`011.test.mjs` 验收中英文交付描述都包含共享锚点教程且不含路径参数。
+- 证据：`node scripts/build.mjs` 绿（generation 214）；planning-011、planning-014、repository-programming-002、repository-programming-005、repository-programming-022 共 20 项全绿；`language-parity-gate` 334 项资源对等绿。
+
+## Unreleased — Plan 最后回合丢失修复（planning-007 / 017 / 021）
+
+- Plan 发给 LLM 的请求在任期隔离阶段丢失最后回合。根因是 `TenureIsolation` 与真实 Host 消息形态脱节：`AssistantMessage` 没有 `cursor` 字段（SDK types.gen.d.ts:213-247）、工具结果挂在 assistant 的 `parts` 上，而隔离把「消息数组下标 + 缺失的 cursor」当任期归属证据；同时把全部 U 提前再拼 assistant/tool 打乱因果顺序，非首任更在无 cursor 时整段丢弃当前 assistant/tool。生产接力另有两处语义缺陷：退休游标用 `openingCursor + 10` 伪造、上一任期 LWR 回调固定返回空串。
+- `src/Wanxiangshu/Mission/Planning/TenureIsolation.fs`：`assemble` 接受规范 `TenureMessage` 列表（Id/Role/IsSynthetic/HasSemanticParts/Raw）与 `messageCursors: Map<string,int64>`；任期归属由稳定 Host 消息身份在 XTrace 中的**首次观察游标**决定，跨 epoch 稳定，工具调用与其结果作为整段物理交互保留或剥除；按原交错顺序输出，`LWR_prev` 注入在首条本任物理消息之前，无本任消息时置于历史 U 之后。合成 LWR 行在装配前剥除，仅注入一条当前记录；非空上任范围缺 LWR、或语义 assistant/tool 无规范身份，一律 fail-closed，不静默丢消息也不放行旧交互。`ReanchorRequested = IsFreshHandover`（每任期一次），不再每次空停重发。
+- `src/Wanxiangshu/Mission/Planning/Surface.fs` + `src/Wanxiangshu/OpenCode/Plugin/PluginTransforms.fs`：`assembleTenureMessages` 现取 4 参（末位 id→bigint 游标映射），生产隔离改为在过滤前用 `XTraceCapture` 以稳定 Host 身份捕获本请求全部新观察物理消息（重试 continuation 行保位不产生语义 part），再由 `XTraceProjection.hostMessageFirstCursors` 供游标；`TenureReanchored` 事实改为 await 提交，经 `PrefixEpochProjection.isTenureReanchored` 去重，失败即抛出，不再 fire-and-forget。`executeDeliver` 契约收紧为必填 `int64` 退休游标（不接受 option/缺省），无证据在任何写入或 spawn 前失败。
+- `src/Wanxiangshu/Mission/Planning/PlanTools.fs` + `src/Wanxiangshu/OpenCode/Tools/ToolRegistry.fs`：删除 `openingCursor + 10` 猜测。生产 deliver 通过 `ToolRuntimeScope.Snapshot` + `XTraceCapture.captureSessionMessagesWithReceipt` 取本次 deliver 所属**exact** 物理 assistant/tool 交互（`ctx.ProviderRunId`/`ctx.ToolCallId` 身份验证）的 XTrace 消费前沿作退休游标；后继 `openingCursor =` 退休游标（consumed-through，不再 +1），deliver 期间到达的更新用户/其它 provider run 不扩大本次退休范围；快照/journal 缺失、owning 身份不符或捕获失败均拒绝接力、零写入。
+- `src/Wanxiangshu/Mission/Planning/Fold.fs`：新增 `PredecessorRange`（`PlanWorkState` 字段），继任开任时由 `LatestRetirement` 派生，`Delivered`/`Reopened` 原样保留；重开不再把自身交付记录当作上任。`PluginTransforms.buildTenureOf` 改读 `PredecessorRange` 作 LWR 上任范围。
+- `requirements/planning/WHAT.md`：[007] 明确退休游标必须来自 exact 物理交互的 consumed-through XTrace 边界，禁止固定增量/下标/缺省伪造；[017] 重写为规范身份归属、因果顺序保留、LWR 注入点、fail-closed 与每任期一次 await 重锚；[021] 明确 reprompt 保留继承的上任范围。
+- `requirements/semantic-trace/tests/002.test.mjs` 与 `requirements/planning/tests/support/run-plan-request-loss-smoke.mjs`：前者用 canonical XTrace 跨 epoch 事实驱动 Plan 装配（追加 part 与重锚复制都不能把旧消息变成新任消息）；后者用真实安装 OpenCode + 生产插件 + 严格 mock provider 捕获实际 HTTP 请求体，断言最新用户回合与最新工具结果在接力前后完整保留。
+- 退役：`TenureIsolation.assembleAskContinuation`/`messageOfRaw`/`tenureOfRaw`（两段式 ask 协议遗骸）、`extractInt64Opt` 的数组包装与数字回退、`host-canary-plan-relay.test.mjs`（`test.todo` 假 canary，行为并入编号用例）。测试夹具收敛到单一 `{info, parts}` Host 形态加 `msgId`/`msgRole`/`msgText` 访问器，不再依赖消息上的 `cursor`。
+- 修复两处测试自身的语义笔误：`007` 连续三接力实退休 3 个任期（原断 4）、`021` 上任范围继承改走 planning-004 授权的合法三段 ladder。
+- 证据（2026-10-12 终态）：`node scripts/build.mjs` 全量绿（generation 462，1550 items、175 surfaces、845 modules）；planning + semantic-trace-002 + execution-model-routing 45 文件 215 passed / 0 failed / 8 todo（todo 均既有设计内）；host-boundary 集成层（`WXS_TIER_INTEGRATION=1`）33 文件 278 passed / 0 failed / 3 todo（019/029/032 三条设计内 canary todo）；真实安装 OpenCode 1.18.29 + 生产插件冒烟实跑 5 个 provider 请求，最后回合、工具交换与接力后继断言全绿；两债务门（fsharp-control-pyramid、js-boundary-gate）对改动文件 0 违规。
+
+## Unreleased — Plan 模式（接力式规划协议）完整实现
+
+- Plan 模式按 `feat-PLANNER/001.md` D1–D20 重写交付（`24babfac8`）：Role.Plan 四工具集 `js-plan`/`ask`/`review`/`deliver`（handoff 并入 deliver、resume 退役）；`review` 晋级硬门（与 Manager 共用同一工具、每任一次、评审目标 = 下一里程碑）；`deliver` 双路径（无权接力退休开下任、持权交付并起无 parent 的 Manager 执行会话）；`ask` 同步委派固定 DevOps（取代两段式）；自然停止（Plan 空停等用户 prompt）；tenure-isolation 与前缀重锚、崩溃恢复保留。
+- 后续 `8af4fc11c` 合并重复条款并补齐测试锚点：requirements/planning 包现为 20 条条款、74 项测试（73 过 + 1 canary todo 设计内）。
+
+## Unreleased — Blogger Provider 容量泄漏修复（GAP1 / GAP2）
+
+- `managed-session-lifecycle` [026]（`e0527f7bb`）：Main 会话收束（宿主 `SessionDeleted` 且有 durable `CompanionBloggerLinked`）时，级联结算每个 linked Blogger 名下全部已准入 execution——pre-provider 复用 `PreProviderSettlement.settle`、after-provider-start 复用 `ManagedChatProviderLifecycle.terminal`，durable 提交确认后逐个 exact 归还容量；`AlreadyApplied`/`StaleFence` 幂等接受，`Conflict` 不吞没。
+- `managed-session-lifecycle` [027]（`4133e0aa2`）：Session 收束（`ClearSession`）时取消自身与每个 linked Attached InternalLeaf 名下的全部 retained continuation input，并以 `admissionOwner.ReleasePhysical` 的 exact 路径回放其挂起的旧 credit 归还；`AlreadyApplied`/`StaleFence` 幂等接受，`Conflict` 显式暴露（带 exact key 的 `InvalidOperationException`）并保留挂起记录；不触发 `ReleaseExecution`/`ReleaseSession` 等 force 路径，重复收束幂等；`surface` 补 `sharedRetainContinuationInput` 对称暴露 shared runtime 保留操作。
+- `managed-session-lifecycle` [027] 失败隔离：`ClearSession` 的 Main 自身结算/保留取消/释放、每个 linked Attached InternalLeaf 的结算/取消/释放、以及无条件 per-session 清理组逐段隔离，任一步失败不跳过其余独立义务，首个真实失败在其余义务完成后重抛；`PluginRuntimeScope.DisposeSession` 承接失败后仍执行其后续清理组。
+- 对应测试：`requirements/managed-session-lifecycle/tests/026.test.mjs`、`requirements/managed-session-lifecycle/tests/027.test.mjs`、`requirements/managed-chat-execution/tests/015.test.mjs`、`requirements/provider-attempt-recovery/tests/024.test.mjs`；运行结果见提交时的工作记录。
+- `managed-chat-execution` [015]（`fa40d6fbb`）：transform 在 provider 启动边界拒绝执行（attempt plan freeze 失败）时，对 exact `Accepted ∧ ¬ProviderStarted ∧ ¬Terminal` 执行写 typed pre-provider `Failed` terminal，durable 提交确认后精确归还其容量；projection 中无该 key 时不伪造结算、交准入侧；原拒绝异常仍照常上报。
+- `provider-attempt-recovery` [024]（`2da1be87e`）：加载归位废弃 stale Blogger open request（`stale-open-at-load`）时，同源 `Accepted ∧ ¬ProviderStarted` 执行一并定夺为 `Failed` 并在 boot 场景发出幂等 release 请求；已启动/已终态与其他 session 不动，重复加载幂等。
+- 剩余边界：终态拒绝分支显式化（GAP-227）、全量 boot sweep（GAP-228）登记于 `requirements/GAP.md`。
+
+## Unreleased — 开发者意见 W1–W6 施工
+
+- W1 持久化与工具链：插件路径统一 `<git-common-dir>/wanxiangshu/`（WP-001）；ndjson 事件行内嵌载荷、取消旁挂 payloads（WP-021）；UTC 日期分组 GC（WP-022）；writer 增量读与有界锁等待（WP-023，修复前后数字对比未验证）；git hook 修复后默认重开（WP-024）。
+- W2 provider 与恢复：运行时漂移校验退役、交测试期性质保证（WP-003）；重启后首个新指令 prepend 状态指导（WP-020）；horizon 崩溃后不泄露未决工作（WP-025）；provider 可见文案改称「事实」（WP-026）；失败恢复去刻板实现（WP-027）；assume 穿透 LWR 核对（WP-028）。
+- W3 工具面与通信：celebrate/regret 整包退役（WP-036）；enough/abandon 合入 assume（WP-029）；defer 新消费语义与 Pair Hint 鼓励（WP-030、WP-031、WP-032）；会话自动订阅自身名字（WP-033）；publish 至 user 弹窗并复制 root（WP-034）；邮箱语义双语解释（WP-035）；fork/commission calling 可选（WP-009、WP-011）；底层 id 可见面收敛核对（WP-012）。
+- W4 relay：评审对象改为 findings pairs（WP-014、WP-015）；两段式 suicide 确认（WP-018）；末任收尾（WP-016）；快照去形式化（WP-017）；证书只作历史（WP-019）。
+- W5 重构与遗骸：normalTransform 具名 stage 管线（WP-004）；共享 ProtocolArgumentStash 原语（WP-005）；tool.execute 具名 stage 序列（WP-006）；工具门链具名化与 capability 单源（WP-007）；Sphinx 收敛 MCP-only（WP-039）；query-shell 遗骸丢弃（WP-040）；CHANGELOG 遗骸清理（WP-041）。
+- W6 文档收尾：环境变量 KISS（WP-037）；验证入口 KISS（WP-038）；指南 42 条状态标注与文档同步（算法 F）。
+- 证据：各包套件与门禁由 DevOps 实跑，数字见 `proposals/` 施工记录；WP-023 修复前后同输入的数字对比未验证。
 
 ## Unreleased — WP-021 / WP-026（ndjson 内嵌载荷与措辞清理）
 

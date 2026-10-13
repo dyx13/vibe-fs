@@ -123,6 +123,10 @@ module StrengthSurface =
         | ToolPermission.Fetch -> "Fetch"
         | ToolPermission.Finality -> "Finality"
         | ToolPermission.BashHoneypot -> "BashHoneypot"
+        | ToolPermission.JsPlan -> "JsPlan"
+        | ToolPermission.Ask -> "Ask"
+        | ToolPermission.Deliver -> "Deliver"
+        | ToolPermission.Review -> "Review"
 
     let private permissionsToJs permissions =
         permissions
@@ -603,7 +607,8 @@ module StrengthSurface =
             | Role.Inspector
             | Role.Browser
             | Role.Inquiry
-            | Role.Distiller -> ""
+            | Role.Distiller
+            | Role.Plan -> ""
 
     let clearsFailureCountOnSuccess (requestKind: string) =
         match requestKindResult (box requestKind) with

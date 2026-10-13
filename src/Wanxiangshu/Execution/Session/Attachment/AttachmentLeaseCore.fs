@@ -68,6 +68,7 @@ module AttachmentLeaseCore =
         | AttachmentKind.SyncInspector -> "sync-inspector"
         | AttachmentKind.SyncCoder -> "sync-coder"
         | AttachmentKind.SyncEngineer -> "sync-engineer"
+        | AttachmentKind.SyncDevOps -> "sync-devops"
         | AttachmentKind.Bookkeeper transactionId -> "bookkeeper\u001f" + transactionId
         | AttachmentKind.StrengthReplica -> "strength-replica"
 
@@ -208,6 +209,7 @@ type AttachmentLeaseRegistry() =
           AttachmentKind.SyncInspector
           AttachmentKind.SyncCoder
           AttachmentKind.SyncEngineer
+          AttachmentKind.SyncDevOps
           AttachmentKind.StrengthReplica ]
 
     /// Re-parse one registry key back into `(owner, kind)`. The registry keeps only

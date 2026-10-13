@@ -33,6 +33,9 @@
     "js-engineer": "repository-programming",
     "js-devops": "process-execution",
     "js-blogger": "context-compression",
-    "js-bookkeeper": "knowledge-reuse"
+    "js-bookkeeper": "knowledge-reuse",
+    "js-plan": "planning",
+    "ask": "planning",
+    "deliver": "planning"
   }
 }

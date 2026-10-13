@@ -27,6 +27,12 @@ type ToolPermission =
     | Finality
     /// Engineer honeypot: visible as `bash-honeypot`, never a real shell.
     | BashHoneypot
+    | JsPlan
+    | Ask
+    | Deliver
+    /// planning-002: Plan's review hard gate. Shares the `review` tool name
+    /// with Manager's ReviewAssessment; the label stays distinct.
+    | Review
 
 [<RequireQualifiedAccess>]
 type ManagerCapabilityFacts =
@@ -102,6 +108,14 @@ module OfficeCapability =
                   ToolPermission.Join
                   ToolPermission.Horizon ]
         | Role.Distiller -> Set.empty
+        | Role.Plan ->
+            // planning-002: the plan toolset is exactly { js-plan, ask,
+            // review, deliver }; resume and handoff are retired.
+            set
+                [ ToolPermission.JsPlan
+                  ToolPermission.Ask
+                  ToolPermission.Review
+                  ToolPermission.Deliver ]
         // ENFORCER-010: Blogger's tool set is exactly { chronicle }.
         | Role.Blogger -> set [ ToolPermission.Chronicle ]
 
@@ -153,6 +167,10 @@ module OfficeCapability =
         | ToolPermission.Fetch -> "Fetch"
         | ToolPermission.Finality -> "Finality"
         | ToolPermission.BashHoneypot -> "BashHoneypot"
+        | ToolPermission.JsPlan -> "JsPlan"
+        | ToolPermission.Ask -> "Ask"
+        | ToolPermission.Deliver -> "Deliver"
+        | ToolPermission.Review -> "Review"
 
     /// Unknown labels are not a permission.
     let permissionOfLabel (label: string) : ToolPermission option =
@@ -176,4 +194,8 @@ module OfficeCapability =
         | "Fetch" -> Some ToolPermission.Fetch
         | "Finality" -> Some ToolPermission.Finality
         | "BashHoneypot" -> Some ToolPermission.BashHoneypot
+        | "JsPlan" -> Some ToolPermission.JsPlan
+        | "Ask" -> Some ToolPermission.Ask
+        | "Deliver" -> Some ToolPermission.Deliver
+        | "Review" -> Some ToolPermission.Review
         | _ -> None

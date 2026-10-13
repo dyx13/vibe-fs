@@ -83,6 +83,9 @@ module JsCanonicalDescription =
         val UltraManagerInvestigation: string = "tool/js-program/ultra-manager-investigation"
 
         [<Literal>]
+        val UltraPlan: string = "tool/js-program/ultra-plan"
+
+        [<Literal>]
         val MechanicalSemantic: string = "tool/js-program/mechanical-semantic"
 
         [<Literal>]
@@ -201,6 +204,7 @@ module JsCanonicalDescription =
           UltraInvestigation: string
           UltraDevOps: string
           UltraManagerInvestigation: string
+          UltraPlan: string
           MechanicalSemantic: string
           CommentAnchorOwnSearch: string
           CommentIgnoreGy: string
@@ -231,6 +235,11 @@ module JsCanonicalDescription =
           ReasonEditOverlaps: string }
 
     val fileAlgorithm: prose: Prose -> readSourceLine: string -> raiseFailure: string -> string
+    val planFileAlgorithm: prose: Prose -> readSourceLine: string -> raiseFailure: string -> string
+    val planEditAlgorithm: prose: Prose -> readSourceLine: string -> raiseFailure: string -> string
+    val planRewriteAlgorithm: prose: Prose -> raiseFailure: string -> string
+    val runtimePlanBaseClass: prose: Prose -> string
+    val publicPlanBaseClass: prose: Prose -> string
     val has: capabilities: Set<JsCapability> -> capability: JsCapability -> bool
     val publicBaseClass: prose: Prose -> capabilities: Set<JsCapability> -> string
     val runtimeBaseClass: prose: Prose -> capabilities: Set<JsCapability> -> string
@@ -238,3 +247,4 @@ module JsCanonicalDescription =
     val rules: prose: Prose -> capabilities: Set<JsCapability> -> string
     val ultraExample: prose: Prose -> roleName: string -> capabilities: Set<JsCapability> -> JsExample option
     val render: prose: Prose -> roleName: string -> toolName: string -> capabilities: Set<JsCapability> -> string
+    val renderPlan: prose: Prose -> scope: string -> string
