@@ -4,6 +4,7 @@ open Wanxiangshu.Persistence.Journal.JournalOutcome
 open System
 open System.Threading
 open System.Threading.Tasks
+open Wanxiangshu.Change
 open Wanxiangshu.Composition.Durable
 open Wanxiangshu.Composition.Durable.Fact
 open Wanxiangshu.Context.Companion
@@ -91,8 +92,12 @@ module JournalPortObservationSurface =
         (inner: IEventStore, entered: TaskCompletionSource<unit>, release: TaskCompletionSource<unit>) =
         // DSL-MUTABLE: resource — one-shot ownership of the parked append
         let mutable parkNext = false
+        // DSL-MUTABLE: resource — reads through the real canonical store
+        let mutable currentReads = 0
 
         member _.ParkNextAppend() = parkNext <- true
+        member _.ResetCurrentReads() = currentReads <- 0
+        member _.CurrentReads = currentReads
 
         interface IEventStore with
             member _.Append events =
@@ -109,12 +114,47 @@ module JournalPortObservationSurface =
 
             member _.WritePayload content = inner.WritePayload content
             member _.ReadPayload payloadRef = inner.ReadPayload payloadRef
-            member _.TryCurrent key = inner.TryCurrent key
+
+            member _.TryCurrent key =
+                if key = "Journal" then
+                    currentReads <- currentReads + 1
+
+                inner.TryCurrent key
+
             member _.TryEvent eventId = inner.TryEvent eventId
             member _.TryHeads streamId = inner.TryHeads streamId
             member _.TryHead streamId = inner.TryHead streamId
             member _.AllHeads() = inner.AllHeads()
             member _.ReloadLocal() = inner.ReloadLocal()
+
+    let private measureCurrentReads (store: GatedAppendStore) action =
+        store.ResetCurrentReads()
+        let value = action ()
+        value, store.CurrentReads
+
+    let private awaitParkedAppend (entered: TaskCompletionSource<unit>) (pending: Task<'outcome>) : Task<unit> =
+        task {
+            let enteredFirst =
+                task {
+                    do! entered.Task
+                    return true
+                }
+
+            let completedFirst =
+                task {
+                    let! _ = pending
+                    return false
+                }
+
+            let winner: Task<bool> =
+                emitJsExpr (enteredFirst, completedFirst) "Promise.race([$0, $1])"
+
+            let! parked = winner
+
+            if not parked then
+                let! outcome = pending
+                failwithf "append completed before the physical barrier: %A" outcome
+        }
 
     let private openStore (commonDir: string) (writerTag: string) : IEventStore =
         EventStore.createLocal
@@ -137,6 +177,25 @@ module JournalPortObservationSurface =
                 match AgentJournal.createFromProjection writer projection with
                 | Error rejection -> return failwith $"journal attach rejected: {rejection.Fact}: {rejection.Reason}"
                 | Ok journal -> return journal
+        }
+
+    let openGated (commonDir: string) (writerTag: string) : Task<obj> =
+        task {
+            let entered =
+                TaskCompletionSource<unit>(TaskCreationOptions.RunContinuationsAsynchronously)
+
+            let release =
+                TaskCompletionSource<unit>(TaskCreationOptions.RunContinuationsAsynchronously)
+
+            let store = GatedAppendStore(openStore commonDir writerTag, entered, release)
+            let! journal = openJournal (store :> IEventStore) writerTag
+
+            return
+                box
+                    {| handle = JournalHandle.Create journal
+                       arm = fun () -> store.ParkNextAppend()
+                       entered = entered.Task
+                       release = fun () -> AsyncSupport.trySetResult release () |> ignore |}
         }
 
     let private appendOutcomeName (result: Result<ProjectionSet, JournalAppendFailure>) =
@@ -389,6 +448,262 @@ module JournalPortObservationSurface =
                        postLinked = postLinked
                        postState = postState
                        advancedOnce = advancedOnce |}
+        }
+
+    let wireSnapshotScenario (commonDir: string) (writerTag: string) : Task<obj> =
+        task {
+            let entered =
+                TaskCompletionSource<unit>(TaskCreationOptions.RunContinuationsAsynchronously)
+
+            let release =
+                TaskCompletionSource<unit>(TaskCreationOptions.RunContinuationsAsynchronously)
+
+            let store = GatedAppendStore(openStore commonDir writerTag, entered, release)
+            use! journal = openJournal (store :> IEventStore) writerTag
+            let wire = AgentJournalPortAdapter.forWire journal
+            let session = SessionId.create "ses-port-wire-snapshot"
+            let physical = PhysicalUserMessageId.create "msg-port-wire-snapshot"
+
+            let emptyView, emptyReads =
+                measureCurrentReads store (fun () -> wire.ReadView session)
+
+            let dispatcher = PromptDispatcher.forPrompts (PromptJournalAdapter.create journal)
+
+            let identity =
+                ParticipantIdentity.resolveAtRoot "manager"
+                |> Result.defaultWith (fun error -> failwithf "wire identity rejected: %A" error)
+
+            let! registered =
+                dispatcher.AcceptHumanRoot session physical (Some(PromptIdentitySeed.RootSelection identity))
+
+            let authority =
+                registered
+                |> Result.defaultWith (fun error -> failwithf "wire authority rejected: %A" error)
+
+            let! opening = journal.AppendAgent (StreamId.Session session) None (openingFact session)
+
+            let heldView, heldReads =
+                measureCurrentReads store (fun () -> wire.ReadView session)
+
+            let heldOriginBefore, heldOriginBeforeReads =
+                measureCurrentReads store (fun () -> heldView.AcceptedOrigin physical)
+
+            let origin =
+                PromptAuthority.PromptOrigin.AuthorityRoot PromptAuthority.RootAuthorityKind.HumanRoot
+
+            let evidence =
+                Wanxiangshu.Execution.Session.ChatExecution.ManagedChatAcceptance.evidenceFromIntent
+                    authority
+                    physical
+                    origin
+
+            let key: Wanxiangshu.Execution.Session.ChatExecution.ChatExecutionKey =
+                { SessionId = session
+                  PhysicalUserMessageId = physical }
+
+            let fromRevision = journal.Revision
+            store.ParkNextAppend()
+
+            let accepting =
+                Wanxiangshu.Composition.Durable.ManagedChatAcceptance.accept journal key evidence
+
+            let! midReads, midOrigin, midOriginReads, parkedRevision =
+                task {
+                    try
+                        do! awaitParkedAppend entered accepting
+                        let midView, midReads = measureCurrentReads store (fun () -> wire.ReadView session)
+
+                        let midOrigin, midOriginReads =
+                            measureCurrentReads store (fun () -> midView.AcceptedOrigin physical)
+
+                        return midReads, midOrigin, midOriginReads, journal.Revision
+                    finally
+                        AsyncSupport.trySetResult release () |> ignore
+                }
+
+            let! accepted = accepting
+
+            let heldOriginAfter, heldOriginAfterReads =
+                measureCurrentReads store (fun () -> heldView.AcceptedOrigin physical)
+
+            let freshView, freshReads =
+                measureCurrentReads store (fun () -> wire.ReadView session)
+
+            let freshOrigin, freshOriginReads =
+                measureCurrentReads store (fun () -> freshView.AcceptedOrigin physical)
+
+            let originName =
+                function
+                | Some(PromptAuthority.PromptOrigin.AuthorityRoot PromptAuthority.RootAuthorityKind.HumanRoot) ->
+                    "HumanRoot"
+                | Some _ -> "Other"
+                | None -> "None"
+
+            let profileRun (view: WireSnapshotView) =
+                view.ActiveAuthorityProfile
+                |> Option.map (fun profile -> LogicalRunId.value profile.LogicalRunId)
+
+            let hasTrace (view: WireSnapshotView) =
+                view.State |> Option.bind _.XTrace |> Option.isSome
+
+            return
+                box
+                    {| openingOutcome = appendOutcomeName opening
+                       accepted = Result.isOk accepted
+                       emptyState = Option.isSome emptyView.State
+                       emptyReads = emptyReads
+                       heldReads = heldReads
+                       heldHasTrace = hasTrace heldView
+                       heldProfileRun = profileRun heldView
+                       expectedProfileRun = LogicalRunId.value authority.LogicalRunId
+                       heldOriginBefore = originName heldOriginBefore
+                       heldOriginBeforeReads = heldOriginBeforeReads
+                       midReads = midReads
+                       midOrigin = originName midOrigin
+                       midOriginReads = midOriginReads
+                       parkedRevisionUnchanged = parkedRevision = fromRevision
+                       heldOriginAfter = originName heldOriginAfter
+                       heldOriginAfterReads = heldOriginAfterReads
+                       freshReads = freshReads
+                       freshHasTrace = hasTrace freshView
+                       freshProfileRun = profileRun freshView
+                       freshOrigin = originName freshOrigin
+                       freshOriginReads = freshOriginReads
+                       advancedOnce = JournalRevision.value journal.Revision = JournalRevision.value fromRevision + 1L |}
+        }
+
+    let recoverySnapshotScenario (commonDir: string) (writerTag: string) : Task<obj> =
+        task {
+            let entered =
+                TaskCompletionSource<unit>(TaskCreationOptions.RunContinuationsAsynchronously)
+
+            let release =
+                TaskCompletionSource<unit>(TaskCreationOptions.RunContinuationsAsynchronously)
+
+            let store = GatedAppendStore(openStore commonDir writerTag, entered, release)
+            use! journal = openJournal (store :> IEventStore) writerTag
+            let sweep = OrchestratorJournalAdapter.forSweep journal
+            let parent = SessionId.create "ses-port-recovery-parent"
+            let child = SessionId.create "ses-port-recovery-child"
+            let jobId = ManagerJobId.create "job-port-recovery"
+            let emptyJobs, emptyJobsReads = measureCurrentReads store sweep.ActiveJobs
+
+            let emptyJob, emptyJobReads =
+                measureCurrentReads store (fun () -> sweep.TryJob jobId)
+
+            do! acceptChildWork journal parent child
+
+            let! created =
+                journal.AppendAgent
+                    StreamId.Workspace
+                    None
+                    (OrchestratorFact.ManagerJobCreated
+                        {| ManagerJobId = jobId
+                           ManagerSessionId = child
+                           ManagerAgent = "engineer"
+                           Byname = "port-recovery"
+                           WorktreeIdentity = WorktreeIdentity.create "manager/job-port-recovery"
+                           WorktreePath = WorktreePath.create "/tmp/port-recovery"
+                           TargetRef = TargetRef.create "refs/heads/main"
+                           TargetBranchFrozen = "refs/heads/main" |})
+
+            let activeJobs, activeJobsReads = measureCurrentReads store sweep.ActiveJobs
+
+            let activeJob, activeJobReads =
+                measureCurrentReads store (fun () -> sweep.TryJob jobId)
+
+            let heldView, heldReads =
+                measureCurrentReads store (fun () -> sweep.RecoveryView parent)
+
+            let fromRevision = journal.Revision
+            store.ParkNextAppend()
+
+            let linking =
+                journal.AppendAgent (StreamId.Session parent) None (handleLinkedFact parent child)
+
+            let! midView, midReads, parkedRevision =
+                task {
+                    try
+                        do! awaitParkedAppend entered linking
+
+                        let midView, midReads =
+                            measureCurrentReads store (fun () -> sweep.RecoveryView parent)
+
+                        return midView, midReads, journal.Revision
+                    finally
+                        AsyncSupport.trySetResult release () |> ignore
+                }
+
+            let! linked = linking
+
+            let freshView, freshReads =
+                measureCurrentReads store (fun () -> sweep.RecoveryView parent)
+
+            let advancedOnce =
+                JournalRevision.value journal.Revision = JournalRevision.value fromRevision + 1L
+
+            let! failed =
+                journal.AppendAgent
+                    StreamId.Workspace
+                    None
+                    (OrchestratorFact.JobFailed
+                        {| ManagerJobId = jobId
+                           Reason = "snapshot-probe-complete" |})
+
+            let terminalJobs, terminalJobsReads = measureCurrentReads store sweep.ActiveJobs
+
+            let terminalJob, terminalJobReads =
+                measureCurrentReads store (fun () -> sweep.TryJob jobId)
+
+            let terminalView, terminalReads =
+                measureCurrentReads store (fun () -> sweep.RecoveryView parent)
+
+            let jobIds (jobs: ManagerJobProjection list) =
+                jobs
+                |> List.map (fun job -> ManagerJobId.value job.ManagerJobId)
+                |> List.toArray
+
+            let childIds (view: OrchestratorRecoveryView) =
+                view.Handles
+                |> Option.map (fun handles ->
+                    handles.Handles
+                    |> Map.toList
+                    |> List.map (fun (_, handle) -> SessionId.value handle.ChildSessionId)
+                    |> List.toArray)
+                |> Option.defaultValue [||]
+
+            return
+                box
+                    {| createdOutcome = appendOutcomeName created
+                       linkedOutcome = appendOutcomeName linked
+                       failedOutcome = appendOutcomeName failed
+                       emptyJobIds = jobIds emptyJobs
+                       emptyJobsReads = emptyJobsReads
+                       emptyJobFound = Option.isSome emptyJob
+                       emptyJobReads = emptyJobReads
+                       activeJobIds = jobIds activeJobs
+                       activeJobsReads = activeJobsReads
+                       activeJobFound = Option.isSome activeJob
+                       activeJobReads = activeJobReads
+                       heldJobIds = jobIds heldView.ActiveJobs
+                       heldChildren = childIds heldView
+                       heldReads = heldReads
+                       midJobIds = jobIds midView.ActiveJobs
+                       midChildren = childIds midView
+                       midReads = midReads
+                       parkedRevisionUnchanged = parkedRevision = fromRevision
+                       freshJobIds = jobIds freshView.ActiveJobs
+                       freshChildren = childIds freshView
+                       freshReads = freshReads
+                       advancedOnce = advancedOnce
+                       terminalJobIds = jobIds terminalJobs
+                       terminalJobsReads = terminalJobsReads
+                       terminalJobRetained = Option.isSome terminalJob
+                       terminalJobIsClosed = terminalJob |> Option.bind _.Terminal |> Option.isSome
+                       terminalJobReads = terminalJobReads
+                       terminalViewJobIds = jobIds terminalView.ActiveJobs
+                       terminalChildren = childIds terminalView
+                       terminalReads = terminalReads |}
         }
 
     let revisionWaitScenario (commonDir: string) (writerTag: string) : Task<obj> =

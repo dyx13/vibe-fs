@@ -74,6 +74,27 @@ module private AgentJournalInternals =
         for tcs, change in notify do
             AsyncSupport.trySetResult tcs (Some change) |> ignore
 
+    let registerCancellation (cancellation: CancellationToken) (cancelWaiter: unit -> unit) =
+        let registration = cancellation.Register cancelWaiter
+
+        if cancellation.IsCancellationRequested then
+            cancelWaiter ()
+
+        registration
+
+    let cancelledWait () : Task<JournalChange> =
+        let completion = TaskCompletionSource<JournalChange>()
+        // Fable's cancellation continuation creates the runtime cancellation type.
+        Async.StartWithContinuations(
+            Async.FromContinuations ignore,
+            completion.SetResult,
+            (fun error -> completion.SetException error),
+            (fun cancellation -> completion.SetException cancellation),
+            cancellationToken = CancellationToken(true)
+        )
+
+        completion.Task
+
     let agentFactTag (fact: AgentFact) =
         match fact with
         | AgentFact.Prompt _ -> "AgentFact.Prompt"
@@ -114,9 +135,22 @@ type AgentJournal internal (writer: IJournalWriter, initialProjection: Projectio
     let mutable revision = JournalRevision.create writer.LastCommittedLocalSeq
     // DSL-MUTABLE: resource — last journal change notification payload
     let mutable lastChange: JournalChange option = None
+    // DSL-MUTABLE: resource — journal subscription lifetime
+    let mutable closed = false
 
     let waiters =
         ResizeArray<JournalRevision * TaskCompletionSource<JournalChange option>>()
+
+    let closeWaiters () =
+        let pending =
+            lock gate (fun () ->
+                closed <- true
+                let pending = waiters |> Seq.map snd |> Seq.toArray
+                waiters.Clear()
+                pending)
+
+        for waiter in pending do
+            AsyncSupport.trySetResult waiter None |> ignore
 
     member _.Writer = writer
     member _.RuntimeId = writer.RuntimeId
@@ -155,8 +189,13 @@ type AgentJournal internal (writer: IJournalWriter, initialProjection: Projectio
         task {
             let pending, registered =
                 lock gate (fun () ->
-                    match JournalRevision.isAfter revision fromRevision, lastChange with
-                    | true, Some change -> Task.FromResult(Some change), None
+                    match
+                        closed || cancellation.IsCancellationRequested,
+                        JournalRevision.isAfter revision fromRevision,
+                        lastChange
+                    with
+                    | true, _, _ -> Task.FromResult None, None
+                    | false, true, Some change -> Task.FromResult(Some change), None
                     | _ ->
                         let waiter = registerWaiter fromRevision waiters
                         waiter.Task, Some waiter)
@@ -164,11 +203,11 @@ type AgentJournal internal (writer: IJournalWriter, initialProjection: Projectio
             match registered with
             | None -> return! pending
             | Some waiter ->
-                use _registration =
-                    cancellation.Register(fun () ->
-                        lock gate (fun () -> removeWaiter fromRevision waiter waiters)
-                        AsyncSupport.trySetResult waiter None |> ignore)
+                let cancelWaiter () =
+                    lock gate (fun () -> removeWaiter fromRevision waiter waiters)
+                    AsyncSupport.trySetResult waiter None |> ignore
 
+                use _registration = registerCancellation cancellation cancelWaiter
                 return! pending
         }
 
@@ -179,7 +218,7 @@ type AgentJournal internal (writer: IJournalWriter, initialProjection: Projectio
 
             match change with
             | Some committed -> return committed
-            | None -> return failwith "unreachable: uncancelled journal wait"
+            | None -> return! cancelledWait ()
         }
 
     /// Append one fact and fold it.
@@ -289,10 +328,14 @@ type AgentJournal internal (writer: IJournalWriter, initialProjection: Projectio
         }
 
     interface IDisposable with
-        member _.Dispose() = writer.Release()
+        member _.Dispose() =
+            closeWaiters ()
+            writer.Release()
 
     interface IAsyncDisposable with
-        member _.DisposeAsync() = writer.ReleaseAsync()
+        member _.DisposeAsync() =
+            closeWaiters ()
+            writer.ReleaseAsync()
 
 module AgentJournal =
 

@@ -8,6 +8,10 @@ open System.Threading.Tasks
 /// revision and canonical line needed to observe one successful fold.
 [<RequireQualifiedAccess>]
 module JournalRevisionSurface =
+    /// Operate real subscriptions and observe their Fable waiter/listener counts.
+    /// The retained journal permits a close-then-subscribe rejection check.
+    val observeWaits: handle: JournalHandle -> obj
+
     /// Current projection revision as an integer.
     val revision: handle: JournalHandle -> int
 

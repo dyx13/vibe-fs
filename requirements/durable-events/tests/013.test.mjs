@@ -164,6 +164,8 @@ const { join } = await import("node:path");
 const { default: test } = await import("node:test");
 const journal = await import("../../../dist/Persistence/Journal/Surface.js");
 const revisions = await import("../../../dist/Persistence/Journal/RevisionSurface.js");
+const observation = await import("../../../dist/Verification/JournalPortObservationSurface.js");
+const { OperationCanceledException } = await import("../../../dist/fable_modules/fable-library-js.5.13.0/AsyncBuilder.js");
 
 const lifeOpened = (session) => ({
   case: 'LifeOpened',
@@ -180,12 +182,13 @@ const openJournal = async (writerId) => {
   const repo = mkdtempSync(join(tmpdir(), `wxs-jrev-${writerId}-`))
   execFileSync('git', ['init', '--quiet', repo])
   const commonDir = join(repo, '.git')
-  const opened = await journal.JournalSurface_bootWithWriterId(commonDir, writerId, `rt-${writerId}`, 4242, '2026-04-01T00:00:00Z')
-  assert.equal(opened.ok, true, JSON.stringify(opened.error))
+  const opened = await observation.openGated(commonDir, writerId)
   return {
-    handle: opened.journal,
+    handle: opened.handle,
+    gate: opened,
     close: () => {
-      journal.JournalSurface_dispose(opened.journal)
+      opened.release()
+      journal.JournalSurface_dispose(opened.handle)
       rmSync(repo, { recursive: true, force: true })
     },
   }
@@ -193,7 +196,7 @@ const openJournal = async (writerId) => {
 const withJournal = async (writerId, fn) => {
   const opened = await openJournal(writerId)
   try {
-    await fn(opened.handle)
+    await fn(opened.handle, opened.gate)
   } finally {
     opened.close()
   }
@@ -214,45 +217,276 @@ test('WHAT[durable-events-013] EXEC_journal_revision_advances_only_on_successful
   const after = Number(revisions.revision(opened.handle))
   assert.equal(after, 2, 'first business append lazily writes RuntimeStarted#1 then publishes business#2')
 })
-test('WHAT[durable-events-013] EXEC_AwaitChangeFrom_after_append_returns_promptly', async () => {
+test('WHAT[durable-events-013] EXEC_commit_before_registration_returns_the_committed_change', async () => {
   await withJournal('revision-prompt', async (handle) => {
     const from = revisionOf(handle)
     const linked = await appendLife(handle, 'ses_prompt')
     assert.equal(linked.ok, true, JSON.stringify(linked.error))
-
-    const started = Date.now()
-    const change = await revisions.awaitChangeFrom(from, handle)
-    const elapsed = Date.now() - started
-
-    assert.ok(elapsed < 500, `must not wait full budget; elapsed=${elapsed}`)
-    assert.ok(change.revision > from)
-    assert.equal(change.revision, revisionOf(handle))
+    const probe = revisions.observeWaits(handle)
+    const waiting = probe.startWait(from, false)
+    try {
+      assert.equal(probe.activeWaiterCount(), 0, 'the retained change needs no new subscription')
+      const change = await waiting.result
+      assert.equal(change.kind, 'committed')
+      assert.equal(change.revision, revisionOf(handle))
+      assert.ok(change.revision > from)
+      assert.equal(waiting.listenerCount(), 0)
+    } finally {
+      waiting.cancel()
+      waiting.dispose()
+    }
   })
 })
-test('WHAT[durable-events-013] EXEC_AwaitChangeFrom_before_append_waits_then_completes', async () => {
-  await withJournal('revision-wait', async (handle) => {
+for (const stage of ['before-append', 'append-entered']) {
+test(`WHAT[durable-events-013] EXEC_wait_registration_${stage}_observes_one_real_commit`, async () => {
+  await withJournal(`revision-${stage}`, async (handle, gate) => {
+    assert.equal((await appendLife(handle, `ses_seed_${stage}`)).ok, true)
     const from = revisionOf(handle)
-    const pending = revisions.awaitChangeFrom(from, handle)
-
-    setTimeout(() => {
-      void appendLife(handle, 'ses_wait').then((linked) => {
-        assert.equal(linked.ok, true, JSON.stringify(linked.error))
-      })
-    }, 30)
-
-    const change = await pending
-    assert.ok(change.revision > from)
-    assert.equal(typeof change.envelope, 'string')
-    assert.ok(change.envelope.length > 0)
+    const probe = revisions.observeWaits(handle)
+    gate.arm()
+    let waiting
+    let append
+    try {
+      if (stage === 'before-append') waiting = probe.startWait(from, false)
+      append = appendLife(handle, `ses_commit_${stage}`)
+      await gate.entered
+      if (stage === 'append-entered') waiting = probe.startWait(from, false)
+      assert.equal(revisionOf(handle), from, 'the real store append entered but has not published Current')
+      assert.equal(probe.activeWaiterCount(), 1)
+      assert.equal(waiting.listenerCount(), 1)
+      gate.release()
+      const committed = await append
+      assert.equal(committed.ok, true, JSON.stringify(committed.error))
+      assert.equal(probe.activeWaiterCount(), 0)
+      const change = await waiting.result
+      assert.equal(change.kind, 'committed')
+      assert.equal(change.revision, from + 1)
+      assert.equal(change.revision, revisionOf(handle))
+      assert.ok(change.envelope.includes(`ses_commit_${stage}`), 'the wake carries the parked business fact')
+      assert.equal(waiting.listenerCount(), 0)
+    } finally {
+      gate.release()
+      waiting?.cancel()
+      waiting?.dispose()
+      if (append) await append
+    }
   })
 })
-test('WHAT[durable-events-013] EXEC_cancelled_revision_subscription_unregisters_without_a_fact', async () => {
+}
+test('WHAT[durable-events-013] EXEC_cancel_one_of_two_same_revision_waiters_preserves_the_other', async () => {
   await withJournal('revision-cancel', async (handle) => {
+    assert.equal((await appendLife(handle, 'ses_cancel_seed')).ok, true)
     const from = revisionOf(handle)
-    assert.equal(await revisions.awaitCancelled(from, handle), true)
-    assert.equal(revisionOf(handle), from, 'cancellation is not a durable fact')
+    const probe = revisions.observeWaits(handle)
+    const cancelled = probe.startWait(from, false)
+    const survivor = probe.startWait(from, false)
+    try {
+      assert.equal(probe.activeWaiterCount(), 2)
+      cancelled.cancel()
+      assert.equal(probe.activeWaiterCount(), 1)
+      assert.equal((await cancelled.result).kind, 'stopped')
+      assert.equal(cancelled.listenerCount(), 0)
+      assert.equal(survivor.listenerCount(), 1)
+      assert.equal(revisionOf(handle), from, 'cancellation is not a durable fact')
+      assert.equal((await appendLife(handle, 'ses_cancel_commit')).ok, true)
+      assert.equal(probe.activeWaiterCount(), 0)
+      const change = await survivor.result
+      assert.equal(change.kind, 'committed')
+      assert.equal(change.revision, from + 1)
+      assert.equal(revisionOf(handle), from + 1)
+      assert.equal(survivor.listenerCount(), 0)
+    } finally {
+      cancelled.cancel()
+      survivor.cancel()
+      cancelled.dispose()
+      survivor.dispose()
+    }
   })
 })
+test('WHAT[durable-events-013] EXEC_pre_cancelled_subscription_registers_no_waiter', async () => {
+  await withJournal('revision-pre-cancel', async (handle) => {
+    const from = revisionOf(handle)
+    const probe = revisions.observeWaits(handle)
+    const waiting = probe.startWait(from, true)
+    try {
+      assert.equal(probe.activeWaiterCount(), 0, 'an already cancelled token must not leave a pending waiter')
+      assert.equal((await waiting.result).kind, 'stopped')
+      assert.equal(waiting.listenerCount(), 0)
+      assert.equal(revisionOf(handle), from)
+    } finally {
+      waiting.cancel()
+      waiting.dispose()
+    }
+  })
+})
+test('WHAT[durable-events-013] EXEC_pre_cancellation_takes_priority_over_a_retained_change', async () => {
+  await withJournal('revision-pre-cancel-retained', async (handle) => {
+    const from = revisionOf(handle)
+    assert.equal((await appendLife(handle, 'ses_retained_change')).ok, true)
+    const committedRevision = revisionOf(handle)
+    const probe = revisions.observeWaits(handle)
+    const cancelled = probe.startWait(from, true)
+    const observer = probe.startWait(from, false)
+    try {
+      assert.equal(probe.activeWaiterCount(), 0)
+      assert.equal((await cancelled.result).kind, 'stopped')
+      assert.equal(cancelled.listenerCount(), 0)
+      const change = await observer.result
+      assert.equal(change.kind, 'committed')
+      assert.equal(change.revision, committedRevision, 'the cancelled caller must not consume the retained change')
+      assert.equal(probe.revision(), committedRevision)
+    } finally {
+      cancelled.cancel()
+      observer.cancel()
+      cancelled.dispose()
+      observer.dispose()
+    }
+  })
+})
+test('WHAT[durable-events-013] EXEC_cancellation_after_commit_does_not_replace_the_successful_wake', async () => {
+  await withJournal('revision-cancel-after-commit', async (handle) => {
+    assert.equal((await appendLife(handle, 'ses_commit_cancel_seed')).ok, true)
+    const from = revisionOf(handle)
+    const probe = revisions.observeWaits(handle)
+    const waiting = probe.startWait(from, false)
+    try {
+      assert.equal(probe.activeWaiterCount(), 1)
+      assert.equal((await appendLife(handle, 'ses_commit_cancel')).ok, true)
+      assert.equal(probe.activeWaiterCount(), 0)
+      waiting.cancel()
+      const change = await waiting.result
+      assert.equal(change.kind, 'committed')
+      assert.equal(change.revision, from + 1)
+      assert.equal(waiting.listenerCount(), 0)
+    } finally {
+      waiting.cancel()
+      waiting.dispose()
+    }
+  })
+})
+for (const closeKind of ['close', 'closeAsync']) {
+test(`WHAT[durable-events-013] EXEC_${closeKind}_settles_waiters_and_rejects_new_subscriptions`, async () => {
+  await withJournal(`revision-${closeKind}`, async (handle) => {
+    const stale = revisionOf(handle)
+    assert.equal((await appendLife(handle, `ses_${closeKind}_seed`)).ok, true)
+    const from = revisionOf(handle)
+    const probe = revisions.observeWaits(handle)
+    const first = probe.startWait(from, false)
+    const second = probe.startWait(from, false)
+    let afterClose
+    try {
+      assert.equal(probe.activeWaiterCount(), 2)
+      await probe[closeKind]()
+      assert.equal(probe.activeWaiterCount(), 0, 'Journal close itself must remove pending waiters')
+      assert.equal((await first.result).kind, 'stopped')
+      assert.equal((await second.result).kind, 'stopped')
+      assert.equal(first.listenerCount(), 0)
+      assert.equal(second.listenerCount(), 0)
+      assert.equal(probe.revision(), from, 'closing must not publish a business revision')
+      afterClose = probe.startWait(stale, false)
+      assert.equal(probe.activeWaiterCount(), 0, 'a closed journal must not accept another waiter')
+      assert.equal((await afterClose.result).kind, 'stopped')
+      assert.equal(afterClose.listenerCount(), 0)
+    } finally {
+      first.cancel()
+      second.cancel()
+      afterClose?.cancel()
+      first.dispose()
+      second.dispose()
+      afterClose?.dispose()
+    }
+  })
+})
+test(`WHAT[durable-events-013] EXEC_${closeKind}_cancels_uncancellable_waits_with_the_cancellation_exception`, async () => {
+  await withJournal(`revision-uncancellable-${closeKind}`, async (handle) => {
+    const from = revisionOf(handle)
+    const probe = revisions.observeWaits(handle)
+    const pending = revisions.awaitChangeFrom(from, handle)
+    const isJournalCancellation = (error) => {
+      assert.ok(error instanceof OperationCanceledException, 'the actual Fable cancellation type must reach the caller')
+      return true
+    }
+    const rejected = assert.rejects(pending, isJournalCancellation)
+    assert.equal(probe.activeWaiterCount(), 1)
+    await probe[closeKind]()
+    assert.equal(probe.activeWaiterCount(), 0)
+    await rejected
+    await assert.rejects(revisions.awaitChangeFrom(from, handle), isJournalCancellation)
+    assert.equal(probe.activeWaiterCount(), 0)
+    assert.equal(probe.revision(), from)
+  })
+})
+}
+}
+
+{
+const { default: assert } = await import('node:assert/strict')
+const { execFileSync } = await import('node:child_process')
+const { mkdtempSync, rmSync } = await import('node:fs')
+const { tmpdir } = await import('node:os')
+const { join } = await import('node:path')
+const surface = await import('../../../dist/Verification/JournalPortObservationSurface.js')
+
+const withJournalDir = async (tag, scenario) => {
+  const dir = mkdtempSync(join(tmpdir(), `wxs-portobs-${tag}-`))
+  execFileSync('git', ['init', '--quiet', dir])
+  try {
+    return await scenario(join(dir, '.git'), tag)
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
+}
+
+test('WHAT[durable-events-013] EXEC_port_members_read_journal_at_call_time', () =>
+  withJournalDir('live-read', (commonDir, tag) =>
+    surface.liveReadScenario(commonDir, tag).then((result) => {
+      assert.equal(result.folded, true, 'the seeded fact must fold')
+      assert.equal(result.openedOk, true, 'the session-opening fact must fold')
+      assert.equal(result.pendingBefore, 0, 'no deferred work before the append')
+      assert.equal(result.pendingAfter, 1, 'a port built before the append must still read live')
+      assert.equal(result.freshAfter, 1, 'a port built after the append reads the same live state')
+      assert.equal(result.poisonedBefore, false)
+      assert.equal(result.poisonedAfter, false, 'a healthy journal is never poisoned')
+      assert.equal(result.stateBefore, false, 'no session state before the opening append')
+      assert.equal(result.stateAfter, true, 'ReadView must observe the XTrace slice the opening wrote')
+    }),
+  ))
+test('WHAT[durable-events-013] EXEC_one_commit_moves_every_related_view_together', () =>
+  withJournalDir('same-commit', (commonDir, tag) =>
+    surface.sameCommitViewScenario(commonDir, tag).then((result) => {
+      assert.equal(result.outcome, 'Ok', `commit must succeed, got ${result.outcome}`)
+      assert.equal(result.preMember, false)
+      assert.equal(result.preLinked, false)
+      assert.equal(result.preState, false)
+      assert.equal(result.midMember, false, 'mid-commit member must not see the parked handle')
+      assert.equal(result.midLinked, false, 'mid-commit view must not see the parked link')
+      assert.equal(result.midState, false, 'mid-commit canonical handle state must stay absent')
+      assert.equal(result.midCompanion, false)
+      assert.equal(result.postMember, true, 'after release both handle slices are visible')
+      assert.equal(result.postLinked, true)
+      assert.equal(result.postState, true, 'the canonical parent handle state must appear with both derived views')
+      assert.equal(result.advancedOnce, true, 'only the parked handle commit advances the accepted setup revision')
+    }),
+  ))
+test('WHAT[durable-events-013] EXEC_revision_waiter_wakes_on_next_commit', { timeout: 8000 }, () =>
+  withJournalDir('wait', (commonDir, tag) =>
+    surface.revisionWaitScenario(commonDir, tag).then((result) => {
+      assert.equal(result.committed, 'Ok')
+      assert.equal(result.resolved, true, 'the registered waiter must resolve through the commit, not a poll')
+      assert.ok(result.changeRevision > 0, 'the woken waiter must carry the new revision')
+      assert.equal(result.changeRevision, result.currentRevision, 'the wake revision is the live revision')
+      assert.equal(result.observedHandle, true, 'the member reads the committed state after the wake')
+      assert.equal(result.advancedOnce, true, 'the waiter observes exactly the next commit after physical admission setup')
+    }),
+  ))
+test('WHAT[durable-events-013] EXEC_cancelled_waiter_releases_without_stealing_a_commit', () =>
+  withJournalDir('cancel', (commonDir, tag) =>
+    surface.cancelWaiterScenario(commonDir, tag).then((result) => {
+      assert.equal(result.cancelledToNone, true, 'a cancelled waiter resolves to None')
+      assert.equal(result.committed, 'Ok')
+      assert.equal(result.revisionAdvanced, true, 'the commit still lands and advances revision')
+    }),
+  ))
 }
 
 {
@@ -379,5 +613,75 @@ test('WHAT[durable-events-013] production CanonicalIntegrator has the shared one
     [],
     violations.map((v) => `[${v.id}] ${v.file}:${v.line} ${v.token} ${v.label}`).join('\n'),
   )
+})
+}
+
+{
+const { default: assert } = await import('node:assert/strict')
+const { execFileSync } = await import('node:child_process')
+const { mkdtempSync, rmSync } = await import('node:fs')
+const { tmpdir } = await import('node:os')
+const { join } = await import('node:path')
+const observation = await import('../../../dist/Verification/JournalPortObservationSurface.js')
+
+const withSnapshotJournal = async (tag, scenario) => {
+  const directory = mkdtempSync(join(tmpdir(), `wxs-snapshot-${tag}-`))
+  execFileSync('git', ['init', '--quiet', directory])
+  try {
+    return await scenario(join(directory, '.git'), tag)
+  } finally {
+    rmSync(directory, { recursive: true, force: true })
+  }
+}
+
+test('WHAT[durable-events-013] Wire retains one snapshot including AcceptedOrigin while later real acceptance becomes visible to a fresh view', async () => {
+  const result = await withSnapshotJournal('wire', observation.wireSnapshotScenario)
+  assert.equal(result.openingOutcome, 'Ok')
+  assert.equal(result.accepted, true)
+  assert.equal(result.emptyState, false)
+  assert.equal(result.heldHasTrace, true)
+  assert.equal(result.freshHasTrace, true)
+  assert.equal(result.heldProfileRun, result.expectedProfileRun)
+  assert.equal(result.freshProfileRun, result.expectedProfileRun)
+  assert.equal(result.heldOriginBefore, 'None')
+  assert.equal(result.midOrigin, 'None')
+  assert.equal(result.parkedRevisionUnchanged, true)
+  assert.equal(result.heldOriginAfter, 'None', 'the retained view must not read the later Accepted fact')
+  assert.equal(result.freshOrigin, 'HumanRoot')
+  assert.equal(result.advancedOnce, true)
+  for (const field of ['emptyReads', 'heldReads', 'midReads', 'freshReads']) {
+    assert.equal(result[field], 1, `${field}: ReadView must read canonical Current exactly once`)
+  }
+  for (const field of ['heldOriginBeforeReads', 'midOriginReads', 'heldOriginAfterReads', 'freshOriginReads']) {
+    assert.equal(result[field], 0, `${field}: AcceptedOrigin must use the captured snapshot`)
+  }
+})
+
+test('WHAT[durable-events-013] Change sweep reads live commits and each RecoveryView obtains jobs and handles from one Current read', async () => {
+  const result = await withSnapshotJournal('recovery', observation.recoverySnapshotScenario)
+  for (const field of ['createdOutcome', 'linkedOutcome', 'failedOutcome']) assert.equal(result[field], 'Ok')
+  assert.deepEqual(result.emptyJobIds, [])
+  assert.equal(result.emptyJobFound, false)
+  assert.deepEqual(result.activeJobIds, ['job-port-recovery'])
+  assert.equal(result.activeJobFound, true)
+  assert.deepEqual(result.heldJobIds, ['job-port-recovery'])
+  assert.deepEqual(result.heldChildren, [], 'the retained pre-link view must remain unchanged after commit')
+  assert.deepEqual(result.midJobIds, ['job-port-recovery'])
+  assert.deepEqual(result.midChildren, [])
+  assert.equal(result.parkedRevisionUnchanged, true)
+  assert.deepEqual(result.freshJobIds, ['job-port-recovery'])
+  assert.deepEqual(result.freshChildren, ['ses-port-recovery-child'])
+  assert.equal(result.advancedOnce, true)
+  assert.deepEqual(result.terminalJobIds, [])
+  assert.equal(result.terminalJobRetained, true)
+  assert.equal(result.terminalJobIsClosed, true)
+  assert.deepEqual(result.terminalViewJobIds, [])
+  assert.deepEqual(result.terminalChildren, ['ses-port-recovery-child'])
+  for (const field of [
+    'emptyJobsReads', 'emptyJobReads', 'activeJobsReads', 'activeJobReads',
+    'heldReads', 'midReads', 'freshReads', 'terminalJobsReads', 'terminalJobReads', 'terminalReads',
+  ]) {
+    assert.equal(result[field], 1, `${field}: each sweep member must read canonical Current exactly once`)
+  }
 })
 }

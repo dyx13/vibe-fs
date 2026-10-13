@@ -8,6 +8,8 @@ open System.Threading.Tasks
 [<RequireQualifiedAccess>]
 module JournalPortObservationSurface =
 
+    val openGated: commonDir: string -> writerTag: string -> Task<obj>
+
     val withAppendRefusal:
         handle: Wanxiangshu.Persistence.Journal.JournalHandle ->
         target: string ->
@@ -22,6 +24,14 @@ module JournalPortObservationSurface =
     /// physical append is parked mid-commit every member still reads the
     /// pre-commit state, and after release all of them read post-commit.
     val sameCommitViewScenario: commonDir: string -> writerTag: string -> Task<obj>
+
+    /// Retained Wire views keep their accepted-origin lookup on the original
+    /// snapshot while a later real commit becomes visible to the next view.
+    val wireSnapshotScenario: commonDir: string -> writerTag: string -> Task<obj>
+
+    /// Sweep members read live state, and each RecoveryView reads jobs and
+    /// handles with exactly one canonical Current lookup.
+    val recoverySnapshotScenario: commonDir: string -> writerTag: string -> Task<obj>
 
     /// check-then-subscribe: a waiter registered at an old revision wakes on the
     /// next committed fact with no polling or sleep in the observed direction.

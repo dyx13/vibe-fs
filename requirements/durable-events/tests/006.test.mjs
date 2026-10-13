@@ -211,7 +211,8 @@ import test from 'node:test'
   const { randomUUID } = await import('node:crypto')
   const { fileURLToPath } = await import('node:url')
   const { runVerificationToolProbe } = await import('../../../scripts/lib/verification-tool-probe.mjs')
-  await import('../../../dist/Verification/JournalPortObservationSurface.js')
+  const { execFileSync } = await import('node:child_process')
+  const surface = await import('../../../dist/Verification/JournalPortObservationSurface.js')
   const child = fileURLToPath(new URL('./support/journal-settlement-child.mjs', import.meta.url))
   for (const scenario of ['initialization-release', 'business-release', 'initialization-fsync', 'business-fsync']) {
     test(`WHAT[durable-events-006] actual_journal_${scenario}_keeps_business_fate_poison_and_waiters_separate`, async t => {
@@ -270,6 +271,33 @@ import test from 'node:test'
       }
     })
   }
+
+  const withJournalDir = async (tag, scenario) => {
+    const dir = mkdtempSync(path.join(tmpdir(), `wxs-portobs-${tag}-`))
+    execFileSync('git', ['init', '--quiet', dir])
+    try {
+      return await scenario(path.join(dir, '.git'), tag)
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  }
+
+  test('WHAT[durable-events-006] EXEC_missing_payload_is_known_not_attempted_and_poisons_with_the_original_rejection', () =>
+    withJournalDir('poison', (commonDir, tag) =>
+      surface.rejectedPayloadPoisonsWriterScenario(commonDir, tag).then((result) => {
+        assert.equal(result.seededOk, true)
+        assert.ok(result.failedOutcome.startsWith('Poisoned:'), `the known missing-payload rejection must not become Unknown, got ${result.failedOutcome}`)
+        assert.equal(result.missingPayloadRef, 'f'.repeat(64), 'the writer maps the blob address to its canonical payload handle')
+        assert.equal(result.failedFactAbsent, true, 'the rejected fact must not exist in canonical Current')
+        assert.equal(result.poisoned, true, 'the port must observe the poisoned writer')
+        assert.ok(result.afterOutcome.startsWith('Poisoned:'), `a poisoned writer must refuse later appends, got ${result.afterOutcome}`)
+        assert.equal(result.afterOutcome, result.failedOutcome, 'later refusal renders the original typed rejection')
+        assert.equal(result.laterFactAbsent, true, 'the poisoned writer must not publish a later fact')
+        assert.equal(result.originalPoisonPreserved, true, 'later refusal retains the first event identity and original AppendError object')
+        assert.equal(result.revisionAfterFailure, result.revisionBefore, 'known storage rejection publishes no revision')
+        assert.equal(result.revisionAfterPoisoned, result.revisionBefore, 'poison refusal publishes no revision')
+      }),
+    ))
 }
 
 {
