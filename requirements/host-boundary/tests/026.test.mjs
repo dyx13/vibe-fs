@@ -34,6 +34,7 @@ integrationTest('WHAT[host-boundary-026] real Fable compiles Host diagnostics wi
   const sourceRoot = join(root, 'src/Wanxiangshu')
   const fixtureRoot = join(import.meta.dirname, 'fixtures/session-contract-boundary')
   const sessionProject = 'Wanxiangshu.Owner.host-boundary.host-session-contract.fsproj'
+  const snapshotProject = 'Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj'
   const runtimeProject = 'Wanxiangshu.Owner.host-boundary.opencode-host-sessionquiescencegate.fsproj'
   const chatProject = 'Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-facts.fsproj'
   const erasedContracts = new Set(['OpenCode/Host/SessionHostPort.js', 'OpenCode/Host/SessionRuntimeOwner.js'])
@@ -102,7 +103,9 @@ integrationTest('WHAT[host-boundary-026] real Fable compiles Host diagnostics wi
       if (expectedMissing) {
         assert.equal(result.ok, false, `${expectedMissing} must not be available through the Session contract`)
         assert.notEqual(result.code, 0)
-        assert.match(diagnostics, new RegExp(`The (?:type|value or constructor) '${expectedMissing}' is not defined`), diagnostics)
+        for (const capability of [expectedMissing].flat()) {
+          assert.match(diagnostics, new RegExp(`The (?:type|value or constructor) '${capability}' is not defined`), diagnostics)
+        }
         assert.ok(diagnostics.includes(probeName), 'the rejection must identify the capability probe')
         return
       }
@@ -158,6 +161,13 @@ integrationTest('WHAT[host-boundary-026] real Fable compiles Host diagnostics wi
       ]) await compile(name, label, undefined, undefined, [module])
     })
   })
+
+  integrationTest('WHAT[host-boundary-026] real Fable grants snapshot types only through their declared contract', async (t) => {
+    await withHostCompiler(t, async (compile) => {
+      await compile(snapshotProject, 'snapshot', 'ForbiddenSessionSnapshot.fs')
+      await compile(sessionProject, 'forbidden-snapshot', 'ForbiddenSessionSnapshot.fs', ['SessionMessage', 'ISessionSnapshotPort'])
+    })
+  })
 }
 
 {
@@ -201,8 +211,9 @@ test('WHAT[host-boundary-026] host session contract plan excludes runtime and sp
 
   assert.ok(sources.includes('OpenCode/Host/SessionContract.fs'), 'host-session-contract must include SessionContract.fs')
   assert.ok(sources.includes('OpenCode/Host/SessionHostPort.fs'), 'host-session-contract must include SessionHostPort.fs')
-  assert.ok(sources.includes('OpenCode/Host/SessionSnapshot.fs'), 'host-session-contract must include SessionSnapshot.fs')
   const forbidden = [
+    'OpenCode/Host/SessionSnapshot.fs',
+    'OpenCode/Host/Message.fs',
     'OpenCode/Codec/ToolHostCodec.fs',
     'OpenCode/Codec/ToolHostSurface.fs',
     'OpenCode/Codec/HostEventCodec.fs',

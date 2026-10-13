@@ -8,6 +8,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.chat-admission-transaction.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.behavior-diagnosis.enforcer-continuation.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.distribution.resources-enforcercatalogresource.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.capability-enforcement.opencode-host-managedagentconfig.fsproj"/><ProjectReference Include="Wanxiangshu.Owner.causal-wait.execution-session-wait-contract.fsproj"/><ProjectReference Include="Wanxiangshu.Owner.causal-wait.execution-session-wait-runtime.fsproj"/>

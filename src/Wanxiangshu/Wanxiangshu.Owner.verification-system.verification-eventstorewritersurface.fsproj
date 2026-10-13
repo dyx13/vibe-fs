@@ -7,6 +7,7 @@
     <WanxiangshuOwnerLocalityKind>composition</WanxiangshuOwnerLocalityKind>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-fold.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-orchestrator-port-adapter.fsproj"/>

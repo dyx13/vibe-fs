@@ -1,0 +1,735 @@
+{
+  "scope": "R02 Session to Snapshot reference removal and existing missing dependency declarations",
+  "candidateParent": "b3e90c357",
+  "date": "2026-10-13",
+  "tools": {
+    "node": "v26.6.0",
+    "fable": "5.13.0",
+    "compiler": "compileOwnerProject",
+    "supervisor": "superviseNodeTest",
+    "compilerCache": false,
+    "maximumConcurrentCompilers": 2,
+    "perTestTimeoutMs": 180000,
+    "verdictSilenceMs": 185000
+  },
+  "inputChecks": "Ordered source and project bytes checked before and after each root; captured props, compile order, package/tool configuration and envelope resource checked against the final candidate.",
+  "limits": [
+    "This is an execution receipt, not an ownership registry or reusable R09 immutable-input certificate.",
+    "Only the listed roots were independently compiled; a dependency compiled inside another root does not count as its own root proof.",
+    "Fresh module loading is listed separately and is not a behavior assertion.",
+    "Snapshot still depends on MessagePart. Wire still carries the real shared-state runtime dependency."
+  ],
+  "attemptedMatrixInputs": {
+    "final-even": "c9030034609933576cb3b248e0085833eb3e57db2180de032bee55cc3841606e",
+    "final-odd": "c9030034609933576cb3b248e0085833eb3e57db2180de032bee55cc3841606e",
+    "repaired-a": "8bc7579b893b48c9cb436140f74f1caa4fc755650c256843b4024d6c969b2d96",
+    "repaired-b": "8bc7579b893b48c9cb436140f74f1caa4fc755650c256843b4024d6c969b2d96"
+  },
+  "independentRoots": 32,
+  "compilerElapsedMsForSelectedProofs": 588198,
+  "roots": [
+    {
+      "root": "Wanxiangshu.Owner.behavior-diagnosis.enforcer-repair.fsproj",
+      "shards": 71,
+      "sources": 172,
+      "sourceDigest": "2002d9407cd56e7ab73217f61d0ab6164b24f5a6545d692ae70b4aea39663948",
+      "projectDigest": "cd10cc1533bb827812af8b0555074fd7c5182117937cb92d620716f917f85968",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 12850,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.capability-enforcement.opencode-host-managedagentconfig.fsproj",
+      "shards": 230,
+      "sources": 642,
+      "sourceDigest": "6ecdc4541a98ee186f6c080f4d05e7244abef90f120e87b2a70f9219613d1f15",
+      "projectDigest": "9e5b1a4696f126ca5946ccd650b81f4bd12ab813b70f94f5789fcf5fe538ec74",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 34501,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "repaired-a"
+    },
+    {
+      "root": "Wanxiangshu.Owner.change-integration.git-integrationgate.fsproj",
+      "shards": 151,
+      "sources": 406,
+      "sourceDigest": "911b0941e012132135edb1bb42ea178d610d9e92159ef05c4ca6bf760a14ba3e",
+      "projectDigest": "a93077807ad12d2fb032b1092fdd092579ea01986ad3d0b0703fc40eb1464f34",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 26534,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.context-compression.context-companion-runtimesurface.fsproj",
+      "shards": 109,
+      "sources": 257,
+      "sourceDigest": "89c606bb92c3a8e1a42dcf4cb5b7c2cef082e5f624bd8b45c3ced07548c7ef78",
+      "projectDigest": "a80789ce77caf958323d621421a3ffd7713c8edb5cb11621acb5a3b9a58d1cbe",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 19805,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.delegation.delegation-host-adapter.fsproj",
+      "shards": 119,
+      "sources": 298,
+      "sourceDigest": "f517e8ef90f27d30e0db4ccdf578704f3fe782fe522180f01f5a3109c15c9809",
+      "projectDigest": "c7ee890f10e4b0e5d4e2fa7a3f4dd6bd57e9520bb8ea7a1b1d83940cfe4937d3",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 22910,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.delegation.execution-delegation-hostturnobservedsurface.fsproj",
+      "shards": 163,
+      "sources": 444,
+      "sourceDigest": "847226a0caac96fb92734b9baf57cbce959bc4eb07cb2ce8c4bddcd052a939ec",
+      "projectDigest": "f83cd88d0255475aca0a83e65a06d55bfc33b780f259b1a5b1e3d14df582da9f",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 33364,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.delegation.runtime.fsproj",
+      "shards": 195,
+      "sources": 547,
+      "sourceDigest": "077cdae412f6831701ed17a1a0396ec7ef64412012138e9b6e8b44b5cf3c7953",
+      "projectDigest": "14514cbbc10db24885fcb17f7cd7709d3ed033432c287dd6248aeaa32dca9144",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 31110,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "repaired-b"
+    },
+    {
+      "root": "Wanxiangshu.Owner.dispatch-protocol.composition-turn-reconcilesurface.fsproj",
+      "shards": 136,
+      "sources": 354,
+      "sourceDigest": "a0f6ffc06c1f6179941d37bb7444742e5e69f735320ed2718add47a3d72dd316",
+      "projectDigest": "3cbdfd7477e11e01110f6564f8e68f643605261795269948d5aa61a8d3594117",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 22068,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.dispatch-protocol.composition-turn-scheduler.fsproj",
+      "shards": 101,
+      "sources": 237,
+      "sourceDigest": "a93ff34b9c5846c9e45af4c8d3f7f43bede2ced8640ffcad163aa6f4ed9ccece",
+      "projectDigest": "b9960de06cdd3def9bbbfbee48a29b8510dbcbe3cac0682db9f0953f47944453",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 16061,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.dispatch-protocol.interaction-dispatch-opencode-ingresscodec.fsproj",
+      "shards": 94,
+      "sources": 222,
+      "sourceDigest": "b58ce59b4e7867776931ac05b0d90f4252a96a7fb43d9d1f007f8e8829c39b15",
+      "projectDigest": "e7bc8b0db1f3981a43f4f2d5097b118a2cfb54cceb1ef98fce33ba4e15d5e778",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 15507,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.dispatch-protocol.interaction-repair-completedturn.fsproj",
+      "shards": 48,
+      "sources": 115,
+      "sourceDigest": "b3fc5984c9bd10e65e22bfae7b437baa606343003fab3c4f18b6a23fbfa192de",
+      "projectDigest": "bde40ac86e80cb2335ceabafff8101a03a92fe0e669e22a675a1b39126775ebd",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 10817,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj",
+      "shards": 80,
+      "sources": 202,
+      "sourceDigest": "4ca84b824a25af641bc3e807539976229d79925a787d576b6887b8aa9d10c707",
+      "projectDigest": "65528d8a764decd22069a16e85fe4881ab1aeae94c3561f08c57620aa5e14600",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 15001,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.host-boundary.opencode-host-fissionhostsurface.fsproj",
+      "shards": 180,
+      "sources": 482,
+      "sourceDigest": "7c425dbd6f1cc5590cfb1f0e61722048298296ce9d1c3194ea7006365cebbc1c",
+      "projectDigest": "17514e3cf443027224578fd66bcc53ea98f89484510aa26d5b1addf8bd64578f",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 30735,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.host-boundary.opencode-host-hostsignalbootstrap.fsproj",
+      "shards": 200,
+      "sources": 542,
+      "sourceDigest": "c480c32913182329464ae9b939363ec2678fae3b19a291c4d015f4f9c98ff7c9",
+      "projectDigest": "a2811e322f65e0d8baaaa3d1a32450467edd7fc9096459d8cf7a294754d4391a",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 30006,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "repaired-a"
+    },
+    {
+      "root": "Wanxiangshu.Owner.host-boundary.opencode-host-providerrunbinding.fsproj",
+      "shards": 17,
+      "sources": 37,
+      "sourceDigest": "29989eda9c07c06291ef4772f1b7f035fb877962826e5e12131feec202894de3",
+      "projectDigest": "5f94cc6beae654c32c108da9b1498eda074316525f6c12232ace9a832cb213b6",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 6492,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [
+        "OpenCode/Host/ProviderRunBinding.js",
+        "OpenCode/Host/ProviderRunBindingSurface.js"
+      ],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.host-boundary.opencode-host-sessionquiescencegate.fsproj",
+      "shards": 16,
+      "sources": 35,
+      "sourceDigest": "432caddf49160d5f6338157c5d2630517230c25bc2eb67fcdf97875d6175d4b0",
+      "projectDigest": "2682e1fd741625db0a49b6587e4690e7e3708c117cc3ab069b5df0e286a78d50",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 5899,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [
+        "OpenCode/Host/SessionSnapshotPort.js",
+        "OpenCode/Host/SessionSnapshotSurface.js",
+        "OpenCode/Host/SessionQuiescenceGate.js",
+        "OpenCode/Host/ProviderAttemptStopFence.js",
+        "OpenCode/Host/ProviderAttemptStopFenceSurface.js",
+        "OpenCode/Host/QuiescenceSurface.js",
+        "OpenCode/Host/HostMessageProjection.js",
+        "OpenCode/Host/HostSessionContext.js",
+        "OpenCode/Host/HostBoundarySurface.js",
+        "OpenCode/Host/HostSessionContextSurface.js"
+      ],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.interaction-authority.runtime.fsproj",
+      "shards": 50,
+      "sources": 121,
+      "sourceDigest": "8b1e3e6fd5b8a09e3ae57b032f63e073e5ff72f771afa0f00fc7f9af23912084",
+      "projectDigest": "f315282b57bffbe52eb94ff1c9761552bfdedbb2dc682075f48203ade72bd4d9",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 11145,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.managed-chat-execution.opencode-host-chatadmission-transaction.fsproj",
+      "shards": 144,
+      "sources": 369,
+      "sourceDigest": "1edfbc28c4ece58b2659025855c8034df3d630c5a467bc325718525e673ddcfe",
+      "projectDigest": "11b4c564776e1d9b155b9b87dc6d19a4497485e95fd05c9f3bd380409b249c40",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 25082,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.managed-session-lifecycle.opencode-tools-toolruntimescope.fsproj",
+      "shards": 159,
+      "sources": 424,
+      "sourceDigest": "3662f0de8297280b310a7bbaef42087e411f252c4b6b6861d98382b40c752800",
+      "projectDigest": "ac686a84d4f34374fbcddf0597efadae1907ad50f3ebd649c8887f04d9f39531",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 28889,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.opencode-plugin.plugin-composition.fsproj",
+      "shards": 254,
+      "sources": 717,
+      "sourceDigest": "4d5ca27c1b89aee38fafb6692156d23e91fef49b73491c7581c8b8a95f54221d",
+      "projectDigest": "70ee860a8611a4ddc2886fe5acab692a4eb34b08adde1e785e10864a88b39671",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 40020,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "repaired-b"
+    },
+    {
+      "root": "Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj",
+      "shards": 123,
+      "sources": 285,
+      "sourceDigest": "b91465b308edc9a2dbdbb1c42b95d8816b03c9c8ab239a8cb325dc57f1992790",
+      "projectDigest": "8d8f878eeed7be44589d754200639febc71a3076008538d610374af56f58f17d",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 16144,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "repaired-a"
+    },
+    {
+      "root": "Wanxiangshu.Owner.relay-assessment.mission-relay-reviewtool.fsproj",
+      "shards": 165,
+      "sources": 443,
+      "sourceDigest": "dab9eff6fe7d287df2a4933700f38e966b6323fc9416f3119709b9dd0a67f43a",
+      "projectDigest": "817336cba0acf9e382585a9714f06af494042de97ae3b53023b77c7bcec6f26e",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 22993,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.speculative-investigation.strength-opencode-delegate.fsproj",
+      "shards": 136,
+      "sources": 334,
+      "sourceDigest": "548b1013c6295a7f2078d1a7bf9954edf8b86f81df08b84c9d67bd2b23d323a0",
+      "projectDigest": "237d42eb1cbc99899c86d247df0032b94b2a5a14e41636a814afb2d007f6402c",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 20886,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.speculative-investigation.strength-replica-runtime.fsproj",
+      "shards": 53,
+      "sources": 126,
+      "sourceDigest": "235c3f45f7598c066e85bc0d1ab3bf356bf0687cb3d47db1804ac08694d7cb80",
+      "projectDigest": "cad770ca217fa30d98d3973716b6710ab69c448fd9510e3c9a5c94aba63607e8",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 9413,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.speculative-investigation.strength-turnevidence.fsproj",
+      "shards": 89,
+      "sources": 230,
+      "sourceDigest": "a131d8a9ba735753c86cdd6104c28d41de48ac491a2db61d29fc856b24571352",
+      "projectDigest": "bd1a3a44105c05731896e81710e7fd7cd748a56e0bbd28e5e776210bbc896558",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 14479,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.verification-system.verification-eventstorewritersurface.fsproj",
+      "shards": 170,
+      "sources": 452,
+      "sourceDigest": "d65bcb6ed6c8408e4fa652fc717a5885f13d2b15334a305a7f819e971a5469ad",
+      "projectDigest": "4a1e7f51225182a42443467734104c46f83271375f2fb2757700993d455fd795",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 23890,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.degeneration-guard.execution-session-loopdetector.fsproj",
+      "shards": 10,
+      "sources": 18,
+      "sourceDigest": "1d2c4fad8e515633dac0ce0e0f1656c6d19fcba7d57d2eb1a0650c5b503dc171",
+      "projectDigest": "671c8a478675c961dc8a09735e6ad61dba3a9e10c93924bf993a58f36b56fbbd",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 4905,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [
+        "Execution/Session/LoopDetector.js",
+        "Execution/Session/LoopDetectorSurface.js",
+        "OpenCode/Host/LoopSensor.js",
+        "OpenCode/Host/LoopSensorSurface.js"
+      ],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.dispatch-protocol.dispatch-runtime.fsproj",
+      "shards": 35,
+      "sources": 74,
+      "sourceDigest": "de439e4efd815b8a7b7f34aece719eda033c0df53a6c146b239a0e2bf08b24d5",
+      "projectDigest": "dfe6efbd79e3291325fc9e8532ca04c80e7537c1c7f359746d45b7476b7fd2aa",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 7203,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.host-boundary.host-session-contract.fsproj",
+      "shards": 7,
+      "sources": 12,
+      "sourceDigest": "ecc7c232e6b72f50c7d9db9c478cd5d0fc101d886778516fe7025221aaa76ae6",
+      "projectDigest": "1aebaf7eec904b0b1dce63fb7c5b09cb301dbc7ee429b8e7689dd744b12dc794",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 4552,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [
+        "OpenCode/Host/SessionContract.js"
+      ],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.knowledge-reuse.runtime.fsproj",
+      "shards": 40,
+      "sources": 96,
+      "sourceDigest": "39f0464e9d25f7224bba4adfce900e8a29f08369408f3f9d2ab77ec4a871e8b2",
+      "projectDigest": "2e99825ff08da116c20b1f99134ff5f37d3f5ef3bff463f9e5cfaf839ed9add1",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 7896,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [
+        "Repository/Knowledge/Casebook/BookkeeperRefreshSurface.js",
+        "Repository/Knowledge/Casebook/BookkeeperSurface.js",
+        "Repository/Knowledge/Casebook/SettlementSurface.js",
+        "Repository/Knowledge/Casebook/FetchSurface.js",
+        "Repository/Knowledge/Casebook/Surface.js",
+        "Repository/Knowledge/Casebook/IndexSurface.js"
+      ],
+      "attempt": "final-odd"
+    },
+    {
+      "root": "Wanxiangshu.Owner.managed-session-lifecycle.session-attachment-runtime.fsproj",
+      "shards": 14,
+      "sources": 28,
+      "sourceDigest": "b7423dafaa5c63c3b4510e9a0efe593be9546b9f52c758865464314e0f0c6958",
+      "projectDigest": "ebd7e3d7171aa826902773be85471c1c074e77dafc3a7784ae256e13f00d004f",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 5431,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [
+        "Execution/Session/Attachment/AttachedRuntime.js",
+        "Execution/Session/Attachment/AttachmentSurface.js",
+        "Execution/Session/Attachment/CompanionLeaseRuntime.js",
+        "OpenCode/Host/SatelliteSurface.js"
+      ],
+      "attempt": "final-even"
+    },
+    {
+      "root": "Wanxiangshu.Owner.session-ontology.opencode-host-sessionbindingsurface.fsproj",
+      "shards": 85,
+      "sources": 207,
+      "sourceDigest": "f845c3406fd6f3d625ba2a494af6fdcb770a8752a788aaa656771674f7e9c6e6",
+      "projectDigest": "e3b9ab3f9ab4e9d8aa76d3b995809296bf6437e972d31d4b6dd051cfeb7894d5",
+      "compilerExitCode": 0,
+      "signal": null,
+      "compilerElapsedMs": 11610,
+      "supervisedTests": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      },
+      "freshLoadedModules": [],
+      "attempt": "final-odd"
+    }
+  ],
+  "initialCompilerRejections": [
+    {
+      "attempt": "initial",
+      "root": "Wanxiangshu.Owner.behavior-diagnosis.enforcer-repair.fsproj",
+      "shards": 70,
+      "sources": 171,
+      "sourceDigest": "a13ab58ff19a270d63289ece71ed1049b12db61c371f2bdba4ca169b0850cc5a",
+      "projectDigest": "25181f64e019f7f21926f4d887f68b3dee4eb585ab79098126615455521e85aa",
+      "missing": "PromptAuthorityProjectionQueries",
+      "compilerExitCode": 1,
+      "signal": null,
+      "compilerElapsedMs": 11033
+    },
+    {
+      "attempt": "settled",
+      "root": "Wanxiangshu.Owner.dispatch-protocol.composition-turn-reconcilesurface.fsproj",
+      "shards": 135,
+      "sources": 353,
+      "sourceDigest": "d8de9b576618578fc319846b3362baa1f5c635c48ed4758b96537fb28b5b4e79",
+      "projectDigest": "0b87a3fd201ef3212a8f89fdd11a1590c58588f6843494ffa9c16b716378a559",
+      "missing": "IRootWorkspaceReader",
+      "compilerExitCode": 1,
+      "signal": null,
+      "compilerElapsedMs": 20539
+    },
+    {
+      "attempt": "final-odd",
+      "root": "Wanxiangshu.Owner.host-boundary.opencode-host-hostsignalbootstrap.fsproj",
+      "shards": 198,
+      "sources": 538,
+      "sourceDigest": "e19ab97306cd85ec94f28a25aa44bb29663a44940061192c0160ac93a2a0ff15",
+      "projectDigest": "cd38c4a52ca48705493872f6b3a73ae80dca9d865b10ff4b28ecec7e42f628e5",
+      "missing": "ProviderRunBinding; ProviderLifecycle",
+      "compilerExitCode": 1,
+      "signal": null,
+      "compilerElapsedMs": 34068
+    },
+    {
+      "attempt": "final-odd",
+      "root": "Wanxiangshu.Owner.opencode-plugin.plugin-composition.fsproj",
+      "shards": 253,
+      "sources": 715,
+      "sourceDigest": "bb20d5531d8a6984f09055f1da6c547f8450356f5541ec9d36631cc028c4126e",
+      "projectDigest": "a9de3047268fe866f0db0af8826b378561be131c5ed21a7b00443ab3580460bb",
+      "missing": "ProviderLifecycle",
+      "compilerExitCode": 1,
+      "signal": null,
+      "compilerElapsedMs": 43391
+    },
+    {
+      "attempt": "final-even",
+      "root": "Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj",
+      "shards": 88,
+      "sources": 219,
+      "sourceDigest": "7a0da3b0a7e770d1c309a3ba4382ac1d3c8a6b7a25af0c8c6948a49fde46b0c0",
+      "projectDigest": "dd57a612f2cca617ac7166e95bada5b77cfa5ebeeee8e35c2edc92bcde10acf5",
+      "missing": "PendingAttemptPlanAdmission",
+      "compilerExitCode": 1,
+      "signal": null,
+      "compilerElapsedMs": 19866
+    }
+  ]
+}

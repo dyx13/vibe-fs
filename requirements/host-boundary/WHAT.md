@@ -103,7 +103,8 @@ Host 只通过 `ReliabilityDiagnostics.CausalDiagnosticRecord` 发布结构化�
 ## [026] Host Contract/Runtime 编译分界与单向依赖
 
 Host subsystem 的公开 Contract、Runtime 与物理 Adapter 必须保持编译隔离。以下名称标识合同和编译边界，不赋予 compile shard 独立的架构治理身份或 consumer 授权：
-- `Host.Session.Contract`（`host-session-contract`）：仅包含会话静止 capability 与纯 `SessionSnapshot` 词汇、端口、定位 decision，不依赖 SDK/HTTP 投影、具体 Host 运行时、进程控制、诊断或 Sphinx MCP。
+- `Host.Session.Contract`（`host-session-contract`）：仅发布会话执行与静止 capability、Host 端口及资源 owner 合同，不传递快照读取或消息词汇，不依赖 SDK/HTTP 投影、具体 Host 运行时、进程控制、诊断或 Sphinx MCP。
+- `Host.Session.Snapshot.Contract`（`host-session-snapshot-contract`）：独立发布纯 `SessionSnapshot` 词汇、读取端口与定位 decision；实际消费者直接引用此合同，不经 `Host.Session.Contract` 获取。`SessionMessage.Parts` 保留对 `MessagePart` 的真实依赖，不引入 SDK/HTTP 投影或具体 Host 运行时。
 - `Host.Signal.Contract`（`host-signal-contract`）：仅发布共享终端词汇 `EventContract`，无状态且零副作用；不得因终端词汇而传递摘要实现、消息词汇、SDK 类型、工具注册或物理启动配置，不作为兼容 umbrella。
 - `Host.Message.Contract`（`host-message-contract`）：独立发布 `Message`/`MessagePart` 消息词汇，不携带 SDK 类型、终端事件或摘要实现。
 - `Host.SDK.Types`（`host-opencode-types`）：独立发布 `OpencodeTypes`/`OpencodeModel` SDK 数据类型，不携带消息词汇、终端事件或物理 Host 能力。
