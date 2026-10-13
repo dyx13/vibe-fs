@@ -46,6 +46,7 @@ module JournalRevisionSurface =
 
         box
             {| startWait = Func<int64, bool, obj>(startWait)
+               isCancellation = fun (error: obj) -> error :? OperationCanceledException
                activeWaiterCount = fun () -> (emitJsExpr journal "$0.waiters.length": int)
                revision = fun () -> JournalRevision.value journal.Revision |> int
                close = fun () -> (journal :> IDisposable).Dispose()

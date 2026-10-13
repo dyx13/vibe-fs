@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <WanxiangshuSubsystem>change</WanxiangshuSubsystem>
+    <WanxiangshuCompileShard>change-recovery</WanxiangshuCompileShard>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-fold.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-orchestrator-port-contract.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-linkage-projection.fsproj"/>
+    <Compile Include="Change/Recovery.fsi"/>
+    <Compile Include="Change/Recovery.fs"/>
+  </ItemGroup>
+</Project>

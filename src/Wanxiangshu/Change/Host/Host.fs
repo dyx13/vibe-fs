@@ -348,7 +348,12 @@ type OrchestratorHost(deps: OrchestratorHostDeps, orchestratorId: SessionId) =
     let recoverJobsIfPresent (value: Orchestrator) =
         match sweepPortOpt with
         | Some sweep ->
-            OrchestratorManagerJob.recoverJobs sweep orchestratorId worktrees deps.RegisterChildDirectory value
+            OrchestratorManagerJob.recoverJobs
+                (fun () -> sweep.RecoveryView orchestratorId)
+                (fun job -> worktrees.[ManagerJobId.value job.ManagerJobId] <- WorktreePath.value job.WorktreePath)
+                (fun handles ->
+                    OrchestratorSessionDirectories.registerRestored handles worktrees deps.RegisterChildDirectory)
+                value.RecoverManagerJob
         | None -> task { return () }
 
     let mapSweepError (pending: Task<Result<unit, string>>) : Task<Result<unit, string>> =

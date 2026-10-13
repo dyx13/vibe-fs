@@ -267,7 +267,7 @@ test('WHAT[structured-workflow-013] reusable platform shards depend on no domain
 })
 }
 
-integrationTest('WHAT[structured-workflow-013] the real Change program runs through narrow contracts and rejects Journal and worktree implementations', async (t) => {
+integrationTest('WHAT[structured-workflow-013] the real Change program and recovery run through narrow contracts and reject physical implementations', async (t) => {
   const { default: assert } = await import('node:assert/strict')
   const { createHash } = await import('node:crypto')
   const { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } = await import('node:fs')
@@ -280,12 +280,16 @@ integrationTest('WHAT[structured-workflow-013] the real Change program runs thro
   const sourceRoot = join(root, 'src/Wanxiangshu')
   const scratchRoot = mkdtempSync(join(tmpdir(), 'wanxiangshu-change-contract-'))
   const programPath = join(sourceRoot, 'Wanxiangshu.Owner.change-integration.change-program.fsproj')
+  const recoveryPath = join(sourceRoot, 'Wanxiangshu.Owner.change-integration.change-recovery.fsproj')
+  const portContractPath = join(sourceRoot, 'Wanxiangshu.Owner.change-integration.change-orchestrator-port-contract.fsproj')
   const providerPath = join(sourceRoot, 'Wanxiangshu.Owner.change-integration.git-integrationgate.fsproj')
   const behaviorProbe = join(root, 'requirements/change-integration/tests/fixtures/ProgramProbe.fs')
+  const recoveryProbe = join(root, 'requirements/change-integration/tests/fixtures/RecoveryProbe.fs')
   const capabilityProbe = join(root, 'requirements/structured-workflow/tests/fixtures/change-contract-boundary/ForbiddenCapabilities.fs')
   const forbiddenSources = [
     join(sourceRoot, 'Persistence/Journal/AgentJournal.fs'),
     join(sourceRoot, 'Git/WorktreeResource.fs'),
+    join(sourceRoot, 'Change/Runtime.fs'),
   ]
   const observedInputs = new Map()
   const captureInput = (file) => {
@@ -306,7 +310,7 @@ integrationTest('WHAT[structured-workflow-013] the real Change program runs thro
       assert.equal(captureInput(project).toString('utf8'), plan.projectContents.get(project))
     }
     const inputHash = createHash('sha256')
-    const compileItems = [...plan.compileItems, probe].map((file) => {
+    const compileItems = [...plan.compileItems, ...(probe ? [probe] : [])].map((file) => {
       const bytes = captureInput(file)
       const path = relative(root, file)
       assert.ok(!path.startsWith('..'), `compiler input must belong to this repository: ${file}`)
@@ -366,9 +370,11 @@ integrationTest('WHAT[structured-workflow-013] the real Change program runs thro
       'scripts/lib/owner-compile.mjs',
     ]) captureInput(join(root, file))
     const programPlan = planOwnerCompile({ projectPath: programPath, aggregatePath: null })
+    const recoveryPlan = planOwnerCompile({ projectPath: recoveryPath, aggregatePath: null })
     const providerPlan = planOwnerCompile({ projectPath: providerPath, aggregatePath: null })
     for (const file of forbiddenSources) {
       assert.ok(!programPlan.compileItems.includes(file), `the Change program must not acquire ${relative(sourceRoot, file)}`)
+      assert.ok(!recoveryPlan.compileItems.includes(file), `Change recovery must not acquire ${relative(sourceRoot, file)}`)
       assert.ok(providerPlan.compileItems.includes(file), `the legal provider must contain ${relative(sourceRoot, file)}`)
     }
 
@@ -381,16 +387,37 @@ integrationTest('WHAT[structured-workflow-013] the real Change program runs thro
     await probe.verify()
     t.diagnostic('the fresh Change program passed its capability-based behavior probe')
 
+    const recovery = await compileProbe(recoveryPath, recoveryProbe, 'recovery')
+    assertCompiled(recovery)
+    const recoveryModules = emittedFiles(recovery.outputPath).filter((file) => file.endsWith('/RecoveryProbe.js'))
+    assert.equal(recoveryModules.length, 1, 'the fresh compiler output must contain exactly one RecoveryProbe module')
+    const recoveryBehavior = await import(pathToFileURL(recoveryModules[0]).href)
+    assert.equal(typeof recoveryBehavior.verify, 'function')
+    await recoveryBehavior.verify()
+
+    const portContract = await compileProbe(portContractPath, null, 'orchestrator-port-contract')
+    assertCompiled(portContract)
+
     const provider = await compileProbe(providerPath, capabilityProbe, 'legal-provider')
     assertCompiled(provider)
 
     const rejected = await compileProbe(programPath, capabilityProbe, 'forbidden-capabilities')
     const diagnostics = `${rejected.stdout}\n${rejected.stderr}`
     assert.equal(rejected.signal, null, 'a terminated compiler is not a rejected capability')
-    assert.equal(rejected.ok, false, 'the narrow Change program must not acquire either physical implementation')
+    assert.equal(rejected.ok, false, 'the narrow Change program must not acquire a Journal, worktree or engine implementation')
     assert.notEqual(rejected.code, 0)
     assert.match(diagnostics, /The type 'AgentJournal' is not defined/, diagnostics)
     assert.match(diagnostics, /The type 'WorktreeResource' is not defined/, diagnostics)
+    assert.match(diagnostics, /The type 'Orchestrator' is not defined/, diagnostics)
+
+    const rejectedRecovery = await compileProbe(recoveryPath, capabilityProbe, 'forbidden-recovery-capabilities')
+    const recoveryDiagnostics = `${rejectedRecovery.stdout}\n${rejectedRecovery.stderr}`
+    assert.equal(rejectedRecovery.signal, null, 'a terminated compiler is not a rejected capability')
+    assert.equal(rejectedRecovery.ok, false, 'pure recovery must not acquire a Journal, worktree or engine implementation')
+    assert.notEqual(rejectedRecovery.code, 0)
+    assert.match(recoveryDiagnostics, /The type 'AgentJournal' is not defined/, recoveryDiagnostics)
+    assert.match(recoveryDiagnostics, /The type 'WorktreeResource' is not defined/, recoveryDiagnostics)
+    assert.match(recoveryDiagnostics, /The type 'Orchestrator' is not defined/, recoveryDiagnostics)
   } finally {
     rmSync(scratchRoot, { recursive: true, force: true })
     assertInputsUnchanged()

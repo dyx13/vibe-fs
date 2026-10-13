@@ -1,8 +1,7 @@
 namespace Wanxiangshu.Change
 
-open System.Collections.Generic
 open System.Threading.Tasks
-open Wanxiangshu.Foundation.Identity
+open Wanxiangshu.Execution.Delegation
 
 /// Lazy durable recovery for persisted ManagerJobs.
 ///
@@ -14,9 +13,8 @@ open Wanxiangshu.Foundation.Identity
 /// and ORCH-007 decides the resume action from the last durable fact.
 module OrchestratorManagerJob =
     val recoverJobs:
-        sweep: OrchestratorSweepPort ->
-        orchestratorId: SessionId ->
-        worktrees: Dictionary<string, string> ->
-        registerChildDirectory: (SessionId -> string -> unit) ->
-        engine: Orchestrator ->
+        readView: (unit -> OrchestratorRecoveryView) ->
+        registerWorktree: (ManagerJobProjection -> unit) ->
+        registerHandles: (AgentLinkageProjection option -> unit) ->
+        recoverJob: (ManagerJobProjection -> unit) ->
             Task<unit>

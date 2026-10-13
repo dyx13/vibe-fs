@@ -14,7 +14,9 @@
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-fold.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-program.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-orchestrator-contract.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-orchestrator-port-contract.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-orchestrator-port-adapter.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.change-integration.change-recovery.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-linkage-projection.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-host-adapter.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.delegation.execution-delegation-ledger.fsproj"/>
@@ -57,8 +59,6 @@
     <Compile Include="Change/Host/Types.fs"/>
     <Compile Include="Change/Host/SessionDirectories.fsi"/>
     <Compile Include="Change/Host/SessionDirectories.fs"/>
-    <Compile Include="Change/Recovery.fsi"/>
-    <Compile Include="Change/Recovery.fs"/>
     <Compile Include="Change/Host/Host.fsi"/>
     <Compile Include="Change/Host/Host.fs"/>
     <Compile Include="Change/Host/Surface.fsi"/>

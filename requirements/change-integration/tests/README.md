@@ -6,6 +6,7 @@
 
 - `observeRelayProgram` 执行真实 Change Program，注入受控 Git、Relay、持久化和资源端口，记录实际调用。它能证明程序对这些端口结果的裁决与顺序，不能证明外部端口已完成持久化、真实 Agent 独立评估或整个 Orchestrator 已接线。
 - Program 接缝只提供 Change 事实追加、按 Job 读取当前投影及同一工作树实例的释放能力。`003/007` 分别执行 claim 可发布、目标已落地但尚无 Published、目标已前移三条生产恢复路径；物理删除观察记录实际 path 与 identity。`fixtures/ProgramProbe.fs` 供 structured-workflow-013 从纯 Program 闭包编译后执行六个受控场景，不依赖全仓 dist；它不证明 RecoveryView 同 revision 或真实重启。
+- `fixtures/RecoveryProbe.fs` 从 Recovery 自身声明闭包编译并执行生产 `recoverJobs`，证明单次读、先注册全部 worktree/handles 再恢复原 Job，以及两种注册失败均停止恢复。联合快照来自真实 Journal 的证据在 durable-events013；本夹具不执行 Host 字典绑定，也不证明实际进程重启。具体 Journal、WorktreeResource、Orchestrator 类型在同一编译探针的合法装配根可用，在 Program/Recovery 窄根不可用。
 - `recordFact`、`fold` 和分类用例验证事实投影与恢复裁决；重复纯 fold、重建 projection 或注入已有 claim 都不等于发生过进程崩溃和恢复。旧标题中的 `THEOREM`、`PERSIST` 也不提升证明层级。
 - Git adapter 用例调用实际适配器，以命令端口注入正常与失败结果。`002` 还通过实际 Host 的 ForkManagerJob 调用实际 Git adapter，验证 cleanliness 检查失败或命令拒绝时，新 Job 不追加 worktree 请求、不创建 worktree 或 Manager；clean 正向对照确实抵达 worktree 请求和创建边界。该夹具从空的 Orchestrator 历史开始，不能证明 Host 初始化时恢复、清理旧义务没有副作用。真实临时 Git 仓库用例另证 status 失败返回错误及 dirty target 不被推进。
 - IntegrationGate 用例实际创建并释放锁；ManagerLoop 的 10,000 次 Continue 用例执行真实循环，只证明这些信号下的有限推进及资源计账，不声称完成 10,000 次发布。
@@ -19,7 +20,7 @@
 | [003] | 各事实独立投影；完整 claim 的恢复裁决；缺失字段拒绝；Published 追加失败不会伪装成功 | 任意真实崩溃点都有足够持久材料可恢复 |
 | [004] | rebase/冲突处置不持锁；ff 受锁保护；发布完成后释放门禁再清理一次；实际锁与循环 | 门内只存在 ref 重读和 CAS；durable claim/Published 写入等仍在门内，见 GAP-215 |
 | [005] | 冲突事实及 snapshot 留存、门外继续循环、worktree 清理错误传播 | 完整 Relay 失效与下一真实 incumbency 的端到端因果链；重复 fold 不是重启 |
-| [006] | 事实投影保留 Road、终态和 worktree 身份；受控资源创建/采用/清理 | fresh process 从真实中断产物恢复且沿用原 worktree，见 GAP-212 |
+| [006] | 事实投影保留 Road、终态和 worktree 身份；受控资源创建/采用/清理；窄闭包中的生产 Recovery 保持注册/恢复顺序与失败传播 | fresh process 从真实中断产物恢复且沿用原 worktree，见 GAP-212 |
 | [007] | claim 三分支优先级；真实 Program 在受控 target 现实下发布、补记 Published 或继续循环；已发布重入不再 ff | 在真实进程故障后自动完成这些分支 |
 | [008] | 冻结符号引用、head 读取拒绝、错误分支与 expected head、严格快进判定 | 所有并发进程共享同一入口的完整发布原子性 |
 | [009] | Job/worktree 身份在事实投影中稳定 | 追加 charge、retirement、AuthorityRevision 与真实物理 session 的完整接线 |

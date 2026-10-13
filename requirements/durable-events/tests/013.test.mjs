@@ -165,7 +165,6 @@ const { default: test } = await import("node:test");
 const journal = await import("../../../dist/Persistence/Journal/Surface.js");
 const revisions = await import("../../../dist/Persistence/Journal/RevisionSurface.js");
 const observation = await import("../../../dist/Verification/JournalPortObservationSurface.js");
-const { OperationCanceledException } = await import("../../../dist/fable_modules/fable-library-js.5.13.0/AsyncBuilder.js");
 
 const lifeOpened = (session) => ({
   case: 'LifeOpened',
@@ -403,7 +402,8 @@ test(`WHAT[durable-events-013] EXEC_${closeKind}_cancels_uncancellable_waits_wit
     const probe = revisions.observeWaits(handle)
     const pending = revisions.awaitChangeFrom(from, handle)
     const isJournalCancellation = (error) => {
-      assert.ok(error instanceof OperationCanceledException, 'the actual Fable cancellation type must reach the caller')
+      assert.equal(probe.isCancellation(error), true, 'the actual Fable cancellation type must reach the caller')
+      assert.equal(probe.isCancellation(new Error(error.message)), false, 'a matching message must not impersonate cancellation')
       return true
     }
     const rejected = assert.rejects(pending, isJournalCancellation)
