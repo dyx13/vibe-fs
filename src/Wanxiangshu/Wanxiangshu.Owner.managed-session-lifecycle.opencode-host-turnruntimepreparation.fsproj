@@ -27,7 +27,8 @@
     <ProjectReference Include="Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-opencode-host.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.managed-session-lifecycle.opencode-host-pluginruntimescope.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.knowledge-reuse.repository-knowledge-casebook-bookkeeper.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-workflow.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.durable-composition.durable-adapter-prefix.fsproj"/>
     <Compile Include="OpenCode/Host/TurnRuntimePreparation.fsi"/>
     <Compile Include="OpenCode/Host/TurnRuntimePreparation.fs"/>
     <Compile Include="OpenCode/Host/HostTurnObserver.fsi"/>

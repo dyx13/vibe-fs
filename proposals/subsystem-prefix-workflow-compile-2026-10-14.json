@@ -1,0 +1,470 @@
+{
+  "scope": "R07a prefix materialization, dispatch workflow, JS bridge and Journal assembly; R06 prefix family migration",
+  "candidateParent": "7678c8781",
+  "date": "2026-10-14",
+  "mainCompilerEvidenceDate": "2026-10-13",
+  "tools": {
+    "node": "v26.6.0",
+    "fable": "5.13.0",
+    "compiler": "compileOwnerProject",
+    "supervisor": "superviseNodeTest",
+    "compilerCache": false,
+    "maximumConcurrentCompilers": 2,
+    "perTestTimeoutMs": 180000,
+    "verdictSilenceMs": 185000,
+    "suiteBackstopMs": 300000,
+    "regularVerdictSilenceMs": 5000
+  },
+  "limits": [
+    "Execution receipt only; not an ownership registry or R09 immutable-input certificate.",
+    "Root digests cover source/signature and project bytes in current planOwnerCompile order, excluding appended fixtures. Each entry hashes repository-relative path, NUL, bytes, NUL. Reconstruction at resume matches the canonical compiler input hashes; per-call diagnostic digests were not retained by the custom reporter.",
+    "The compiler test copies declared source closure and two props layers, uses a flat project with zero ProjectReference and disables compiler cache. Captured source, project, configuration and resource bytes are checked before and after calls; this is not a proof of immutable inputs throughout every invocation.",
+    "Five new roots have independent positive proofs, and three roots reject the same AgentJournal fixture after a legal provider compiles it. Existing SW013 consumers are recompiled independently; dependency inclusion is not counted as a root proof.",
+    "Fresh Plugin module loading does not prove server startup. Registered Plugin behavior is separately observed in focused tests and provider-projection011.",
+    "The prefix adapter intentionally depends on the physical Journal. The workflow retains pure provider codecs and turn/SDK data contracts. Other Journal adapter families and the three subsystem SCCs remain open.",
+    "The real Journal proof covers one PrefixRebaseCommitted append and its combined visibility. The pure-capability workflow proof covers actual reconciliation ordering. Neither closes the full next-attempt seal TODO or GAP-106/139.",
+    "The early-consume mutation was tested before final adapter extraction. Its exact assertion proves workflow consumption order at that input; final restored workflow and current adapters are covered by the final integration run."
+  ],
+  "roots": [
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-materialization.fsproj",
+      "shards": 16,
+      "sources": 40,
+      "sourceAndSignatureItems": 80,
+      "sourceDigest": "4d4681ba737d11cb1cd36ba03c26f2e91abe1284cbf28bbd0cc913ff142e7114",
+      "projectDigest": "5a8308aa56a5a7a717e1833169ff6cc031b315e5ace31a528deeb8c378a0aac5",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "Context/Prefix/Materialization.js"
+      ]
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-port.fsproj",
+      "shards": 33,
+      "sources": 71,
+      "sourceAndSignatureItems": 142,
+      "sourceDigest": "cd726b07216073c19cd86642dcd9ea5504771a1ac18b96a34c7d057e5225a15e",
+      "projectDigest": "30464c32e2ec5773f6ae1db8f4cf5287d7881a14c02d3866399bc847f75400f7",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "Interaction/Dispatch/PrefixPort.js"
+      ]
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-workflow.fsproj",
+      "shards": 40,
+      "sources": 84,
+      "sourceAndSignatureItems": 168,
+      "sourceDigest": "73303e8e90da573c328e8292a4591bd5700dc875dafa0e2931aab23040c20117",
+      "projectDigest": "5c4077de8dda1c94da025f98a11c9e8d67a4baceaeef3bf7e2e6e66c109b374a",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "CompilerProbe/PrefixWorkflowProbe.js"
+      ]
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-wire-surface.fsproj",
+      "shards": 42,
+      "sources": 87,
+      "sourceAndSignatureItems": 174,
+      "sourceDigest": "8434e2c3417d13eea26ad47432fc6806c295c25daf59738cef53ae3a7e63fdab",
+      "projectDigest": "5f229cb5efe22514fbb096827fc09884f04ecd1a52690cdcf69717cfab5f2fd5",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "Context/Prefix/XWireSurface.js"
+      ]
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-prefix.fsproj",
+      "shards": 88,
+      "sources": 211,
+      "sourceAndSignatureItems": 422,
+      "sourceDigest": "a495b3169a9874d465f4a6c65d3e2af24cd8175e167d95bebcb54611be3fb630",
+      "projectDigest": "8460548782c96140dfa1c09af65c6ace4de0bcb8a2405562ec36aa5f04a147ba",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "Composition/Durable/PrefixJournalAdapter.js"
+      ]
+    }
+  ],
+  "actualConsumers": [
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-sharedstatesurface.fsproj",
+      "shards": 117,
+      "sources": 273,
+      "sourceAndSignatureItems": 546,
+      "sourceDigest": "a599665e91a1bc0c9ca9edc1e5128a12d2432af579a4ca03a59613c83d7c7c66",
+      "projectDigest": "d02740844fcea2df8664b0e86ff249bc6efd7cdb9238ff79cfcb88802d55f6f4",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "CompilerProbe/ForbiddenRecoveryScope.js"
+      ]
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-pluginrecoveryscopesurface.fsproj",
+      "shards": 123,
+      "sources": 280,
+      "sourceAndSignatureItems": 560,
+      "sourceDigest": "8a176f540085731847c6cb3a93ebf9bdd131149db38b6e9e48f3b8d432f8c35b",
+      "projectDigest": "19cae3d1a1ddc374000997c7db872bd9f620b2040ff2ac07704fc2ac17ca097f",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "OpenCode/Host/PluginRecoveryScopeSurface.js"
+      ]
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.opencode-plugin.plugin-composition.fsproj",
+      "shards": 256,
+      "sources": 718,
+      "sourceAndSignatureItems": 1436,
+      "sourceDigest": "2e7529eb0cf82e179966af6a1559b93426b4f541314e16a7421929970cfaf478",
+      "projectDigest": "86bc44e98353549fbaf2921e9c8ba87ad297b251edff6a87f2a0e73a3cb52e90",
+      "compilerExitCode": 0,
+      "signal": null,
+      "freshLoadedModules": [
+        "OpenCode/Plugin/PluginTransforms.js",
+        "OpenCode/Plugin/Plugin.js"
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "requirements/prefix-stability/tests/fixtures/PrefixWorkflowProbe.fs",
+      "sha256": "bb19f36a40d1b467dcefa1dd457a74707bb0cfb960ba5cd5c118c025a21a5c67"
+    },
+    {
+      "path": "requirements/prefix-stability/tests/fixtures/ForbiddenJournal.fs",
+      "sha256": "6cfe88ea49c4272d92f2f655a49fbfff60ee7b9e1cc992a3121a6730287cdd29"
+    }
+  ],
+  "capturedConfigAndResources": [
+    {
+      "path": "Directory.Build.props",
+      "sha256": "dc00d8142af69b3b9a1bba40ffced39e79b54ebed7c0814adf0855cc12b465c6"
+    },
+    {
+      "path": "src/Wanxiangshu/Directory.Build.props",
+      "sha256": "b3fd7b3b0541a793f314daa122f06b65b1de0d68f0eed63345d3434e3c7fd4e4"
+    },
+    {
+      "path": "global.json",
+      "sha256": "b48d6da8fa62c0da7cc8a2da4ea036ac55836660a448ba533135abb5b8451b73"
+    },
+    {
+      "path": ".config/dotnet-tools.json",
+      "sha256": "87d70c4ba7b3031d6cc2c870a6ef6d0e04da67945e06061d6128a97e4569dd02"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6d55122cc8645199101ee8ae6025fbcea6fbb90209ad2c435d3fe5a11dcacfa7"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "de0950778e8ea227daaa8cb3de032cd2a31e2b890c016c3063a0dcd254c4ddfc"
+    },
+    {
+      "path": "src/Wanxiangshu/compile-order.txt",
+      "sha256": "e932a94ed34c618c34335bb840eab5ea44f582e206cbfce57ffe73321c968d64"
+    },
+    {
+      "path": "scripts/lib/owner-compile.mjs",
+      "sha256": "0c93d0b665f83ec9090b51dddb64d94a88f979225c1c8c60217318c3764d2e66"
+    },
+    {
+      "path": "resources/degeneration-guard/envelope/LoopDetectorEnvelope.js",
+      "sha256": "dce808b6404a2308029e04a45d2020dfa7ceebead8deabd834a64848a434df9b"
+    }
+  ],
+  "prefixIntegration": {
+    "file": "requirements/prefix-stability/tests/005.test.mjs",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 1,
+    "wallSeconds": 86.81,
+    "runnerExitCode": 1,
+    "exitReason": "existing TODO",
+    "cleanupAccepted": true,
+    "totalFableCalls": 9,
+    "independentNewPositiveRoots": 5,
+    "calls": [
+      {
+        "label": "legal-journal",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-prefix.fsproj",
+        "fixture": "requirements/prefix-stability/tests/fixtures/ForbiddenJournal.fs",
+        "compilerExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "adapter",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-prefix.fsproj",
+        "compilerExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "workflow",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-workflow.fsproj",
+        "fixture": "requirements/prefix-stability/tests/fixtures/PrefixWorkflowProbe.fs",
+        "compilerExitCode": 0,
+        "signal": null,
+        "behavior": "verify() completed"
+      },
+      {
+        "label": "port",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-port.fsproj",
+        "compilerExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "materialization",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-materialization.fsproj",
+        "compilerExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "surface",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-wire-surface.fsproj",
+        "compilerExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "forbidden-src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-workflow.fsproj",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-workflow.fsproj",
+        "fixture": "requirements/prefix-stability/tests/fixtures/ForbiddenJournal.fs",
+        "compilerExitCode": 1,
+        "signal": null,
+        "requiredDiagnostic": "The type 'AgentJournal' is not defined",
+        "fixtureDiagnosticRequired": true
+      },
+      {
+        "label": "forbidden-src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-materialization.fsproj",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-materialization.fsproj",
+        "fixture": "requirements/prefix-stability/tests/fixtures/ForbiddenJournal.fs",
+        "compilerExitCode": 1,
+        "signal": null,
+        "requiredDiagnostic": "The type 'AgentJournal' is not defined",
+        "fixtureDiagnosticRequired": true
+      },
+      {
+        "label": "forbidden-src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-wire-surface.fsproj",
+        "root": "src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-wire-surface.fsproj",
+        "fixture": "requirements/prefix-stability/tests/fixtures/ForbiddenJournal.fs",
+        "compilerExitCode": 1,
+        "signal": null,
+        "requiredDiagnostic": "The type 'AgentJournal' is not defined",
+        "fixtureDiagnosticRequired": true
+      }
+    ]
+  },
+  "actualJournal": {
+    "store": "filesystem EventStore and real AgentJournal",
+    "adapter": "PrefixJournalAdapter",
+    "fact": "PrefixRebaseCommitted",
+    "parked": {
+      "epoch": "0",
+      "tip": true,
+      "guidelines": 1,
+      "grounding": 1,
+      "revisionUnchanged": true
+    },
+    "committed": {
+      "epoch": "1",
+      "tip": false,
+      "guidelines": 0,
+      "grounding": 0,
+      "revisionAdvances": 1
+    },
+    "refused": {
+      "refusedAppends": 1,
+      "oldJointViewRetained": true,
+      "revisionUnchanged": true
+    }
+  },
+  "workflowBehavior": {
+    "factory": "AttemptPlanner.freezePreInference and bindProviderRun",
+    "entry": "PrefixWorkflow.reconcileAttempt",
+    "successEffects": [
+      "rebase",
+      "success",
+      "consume"
+    ],
+    "parkedEffects": [
+      "rebase"
+    ],
+    "rebaseRefusalEffects": [
+      "rebase-refused"
+    ],
+    "successRefusalEffects": [
+      "rebase",
+      "success-refused"
+    ],
+    "payloadChecks": [
+      "exact session and run",
+      "frozen probe id",
+      "frozen record digest"
+    ]
+  },
+  "mutation": {
+    "change": "ConsumeAttemptPlan moved before prefix rebase",
+    "compilerExitCode": 0,
+    "failedAssertion": "A parked rebase must not consume its plan",
+    "passed": 3,
+    "failed": 1,
+    "todo": 1,
+    "wallSeconds": 29.39,
+    "cleanupAccepted": true,
+    "restored": true
+  },
+  "consumerIntegration": {
+    "file": "requirements/structured-workflow/tests/013.test.mjs",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "wallSeconds": 188,
+    "cleanupAccepted": true,
+    "totalFableCalls": 16,
+    "existingChangeFableCalls": 6,
+    "attemptAdmissionAndConsumerFableCalls": 10,
+    "physicalScopeBoundaryStillRejected": true
+  },
+  "canonicalBuild": {
+    "generation": 446,
+    "sourceAndSignatureItems": 1556,
+    "compilerInputDigest": "e65114b1b89ca5ba809347cff6acaa5accda7ae58b3cce58b91cd5123f7c1bb0",
+    "fableSeconds": 47.321,
+    "wrapperSeconds": 49.688,
+    "surfaces": 175,
+    "loadedJsModules": 848
+  },
+  "focusedRegression": {
+    "files": 20,
+    "passed": 341,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 4,
+    "wallSeconds": 10.72,
+    "runnerExitCode": 1,
+    "cleanupAccepted": true
+  },
+  "providerDigestRegression": {
+    "file": "requirements/provider-projection/tests/011.test.mjs",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "wallSeconds": 8.22,
+    "runnerExitCode": 0,
+    "cleanupAccepted": true,
+    "productionMutationCases": [
+      "incorrect hash",
+      "incorrect cutoff"
+    ],
+    "loaderTarget": "dist/Context/Prefix/Materialization.js"
+  },
+  "graph": {
+    "subsystems": 28,
+    "shards": 281,
+    "productionSources": 778,
+    "projectReferences": 2366,
+    "shardDag": true,
+    "subsystemCycles": [
+      [
+        "authority",
+        "chat-execution",
+        "context",
+        "enforcer",
+        "host",
+        "knowledge",
+        "provider"
+      ],
+      [
+        "application-composition",
+        "change",
+        "durable-composition",
+        "interaction",
+        "relay",
+        "sphinx"
+      ],
+      [
+        "delegation",
+        "process"
+      ]
+    ]
+  },
+  "existingOpenTodos": [
+    "prefix-stability001 actual outbound wires",
+    "prefix-stability005 actual next-attempt seal after durable success or append refusal",
+    "prefix-stability009 actual Host canonical source",
+    "provider-attempt-recovery011 actual render of immutable admitted plan",
+    "provider-attempt-recovery020 actual replay without licence side effects"
+  ],
+  "logs": {
+    "prefix": {
+      "path": "/private/tmp/vibe-r07a-final-005.log",
+      "sha256": "a21f545c1ef54e25d713454215621d55c31fc16b0fcdf149602d5b832ce4f364"
+    },
+    "consumers": {
+      "path": "/private/tmp/vibe-r07a-final-declared-sw013.log",
+      "sha256": "bf5d6d7e0f0c37ae3f05a6d518ce455d516d098d43d2f252cce7201ad36e88e0"
+    },
+    "regression": {
+      "path": "/private/tmp/vibe-r07a-final-regression.log",
+      "sha256": "b701983239c2d315d59589fc6621683a28813b8c59853edd31847b6593784257"
+    },
+    "canonicalBuild": {
+      "path": "/private/tmp/vibe-r07a-final-declared-build.log",
+      "sha256": "60082f32c5c3057dc225292ccbfbccf711fd4b4a2604542f7464dbb1dc99ec60"
+    },
+    "check": {
+      "path": "/private/tmp/vibe-r07a-final-check.log",
+      "sha256": "f85e2fbbeb4babe0eb77ea12f8d603378a395ced56b6eaa0d2d6a2a47f4b9cce"
+    },
+    "earlyConsumeMutation": {
+      "path": "/private/tmp/vibe-r07a-consume-mutation.log",
+      "sha256": "1ddc36315cbf5be8e4219f5ae62a875b5aa74288cf16549b1549c6ffaf65419d"
+    },
+    "providerDigest": {
+      "path": "/private/tmp/vibe-r07a-resume-provider-digest.log",
+      "sha256": "f63283cb3400fcaafa9ea1e56f8e59ca23ee07aff9be13d890b27abe8da5dfbf"
+    },
+    "generatedRefresh": {
+      "path": "/private/tmp/vibe-r07a-resume-build.log",
+      "sha256": "a62cff606307292ef120ca0c3343d806b4a61c5f4b499a731168ec2ef95e364f"
+    },
+    "documentTests": {
+      "path": "/private/tmp/vibe-r07a-records-tests.log",
+      "sha256": "18b7e6c8505e2131130f53eba130e2f1e1b300e56717c024a482fa59981be7f9"
+    },
+    "finalCheck": {
+      "path": "/private/tmp/vibe-r07a-records-check.log",
+      "sha256": "f85e2fbbeb4babe0eb77ea12f8d603378a395ced56b6eaa0d2d6a2a47f4b9cce"
+    }
+  },
+  "finalDocumentGates": {
+    "files": [
+      "requirements/requirement-system/tests/017.test.mjs",
+      "requirements/requirement-system/tests/018.test.mjs"
+    ],
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "wallSeconds": 0.6,
+    "runnerExitCode": 0,
+    "cleanupAccepted": true,
+    "checkExitCode": 0,
+    "fantomasCheckExitCode": 0,
+    "jsSyntaxCheckExitCode": 0,
+    "diffCheckExitCode": 0,
+    "freshnessChecked": true,
+    "compilerInputDigest": "e65114b1b89ca5ba809347cff6acaa5accda7ae58b3cce58b91cd5123f7c1bb0"
+  }
+}

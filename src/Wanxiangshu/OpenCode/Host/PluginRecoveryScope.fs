@@ -72,7 +72,7 @@ type PluginRecoveryScope(journal: AgentJournal option) =
     let pendingAttemptPlans = Dictionary<string, PendingAttemptPlan>()
 
     /// DSL-cross-callback-proof: physical single-flight — opaque frozen attempt plan channel.
-    /// Owning recovery CE (XWire.reconcileAttempt) consumes via ConsumeAttemptPlan on terminal;
+    /// Owning recovery CE (PrefixWorkflow.reconcileAttempt) consumes via ConsumeAttemptPlan on terminal;
     /// transform adapter records via RecordAttemptPlan; Strength peeks via TryAttemptPlan.
     /// No stringly-typed TryGet/Clear drives business branching (structured-workflow-017②, structured-workflow-009, provider-attempt-recovery-011).
     // DSL-MUTABLE: single-flight — per-provider-run attempt plan channel (frozen decision, typed handle)

@@ -17,7 +17,6 @@ open Wanxiangshu.Participant.Provider.Attempt.Fallback
 open Wanxiangshu.Requirement.Grounding
 open Wanxiangshu.Persistence.Journal
 open Wanxiangshu.Context.Trace
-open Wanxiangshu.Context.Prefix
 open Wanxiangshu.OpenCode.Host.RequirementGrounding
 open Wanxiangshu.OpenCode
 open Wanxiangshu.Host
@@ -136,87 +135,6 @@ module AgentJournalPortAdapter =
 
     let forRequirementGrounding (journal: AgentJournal) : RequirementGroundingPort =
         RequirementGroundingJournalAdapter.forRequirementGrounding journal
-
-    let forWire (journal: AgentJournal) : WireJournalPort =
-        let failurePort = forProviderFailure journal
-
-        { ReadView =
-            fun sessionId ->
-                let snapshot = AgentJournal.snapshot journal
-                let projections = snapshot.AgentProjections
-                let sessionProj = AgentProjection.tryFind sessionId projections
-
-                let isComp =
-                    SessionAssociationProjection.isCompanion sessionId projections.Associations
-
-                let activeProf =
-                    PromptAuthorityProjectionQueries.activeProfile sessionId projections
-
-                let failState = sessionProj |> Option.bind (fun session -> session.ProviderFailures)
-
-                let wireState =
-                    sessionProj
-                    |> Option.map (fun s ->
-                        { XTrace = s.XTrace
-                          Blog = s.Blog
-                          PrefixEpoch = s.PrefixEpoch
-                          TodoCheckpoints =
-                            projections.TodoCheckpoints
-                            |> Map.tryFind sessionId
-                            |> Option.defaultValue PhaseWindow.emptyWindow })
-
-                { State = wireState
-                  IsCompanion = isComp
-                  ActiveAuthorityProfile = activeProf
-                  ProviderFailureState = failState
-                  AcceptedOrigin =
-                    fun physical ->
-                        let key: Wanxiangshu.Execution.Session.ChatExecution.ChatExecutionKey =
-                            { SessionId = sessionId
-                              PhysicalUserMessageId = physical }
-
-                        projections.ChatExecutions
-                        |> Wanxiangshu.Execution.Session.ChatExecution.ChatExecutionProjection.byKey key
-                        |> Option.map _.origin }
-          ReadBlob = fun blobRef -> journal.Writer.BlobWriter.Read blobRef
-          WriteBlob =
-            fun content ->
-                task {
-                    let! res = journal.WriteBlob content
-
-                    return
-                        res
-                        |> Result.map (fun r ->
-                            { BlobRef = r.BlobRef
-                              BlobDigest = r.BlobDigest })
-                }
-          CurrentProjection = fun xTrace -> XTraceMaterialization.currentProjection journal xTrace
-          RecordConfirmedSuccess = ProviderFailureLedger.recordConfirmedSuccess failurePort
-          CommitPrefixRebase =
-            fun sessionId providerRun rebase ->
-                task {
-                    let fact =
-                        ContextFact.PrefixRebaseCommitted
-                            {| SessionId = sessionId
-                               PreviousEpochId = rebase.PreviousEpochId
-                               NextEpochId = rebase.NextEpochId
-                               FrozenRecordPrefixRef = rebase.FrozenRecordPrefixRef
-                               FrozenRecordPrefixDigest = rebase.FrozenRecordPrefixDigest
-                               CutoffExclusive = rebase.CutoffExclusive
-                               CoveredPrefixDigest = rebase.CoveredPrefixDigest
-                               SealRoot = rebase.SealRoot
-                               SyntheticMessageId = rebase.SyntheticMessageId
-                               ProbeId = rebase.ProbeId
-                               SolvingProviderRun = providerRun |}
-
-                    let! appended =
-                        AgentJournal.appendAgent (StreamId.Session sessionId) (Some providerRun) fact journal
-
-                    return
-                        appended
-                        |> Result.map (fun _ -> ())
-                        |> Result.mapError JournalAppendFailure.describe
-                } }
 
     /// delegation-029: durable composition is the only place that wraps delegation fact
     /// cases into the outer routing union and adapts the journal handle.

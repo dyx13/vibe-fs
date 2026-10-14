@@ -438,7 +438,7 @@ integrationTest('WHAT[structured-workflow-013] the real Change program and recov
   const fixtureRoot = join(import.meta.dirname, 'fixtures/attempt-contract-boundary')
   const plannerProject = 'Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-planner.fsproj'
   const scopeProject = 'Wanxiangshu.Owner.host-boundary.opencode-host-sharedstatesurface.fsproj'
-  const wireProject = 'Wanxiangshu.Owner.prefix-stability.context-prefix-wire.fsproj'
+  const wireProject = 'Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-workflow.fsproj'
   const emittedFiles = (directory) => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const file = join(directory, entry.name)
     return entry.isDirectory() ? emittedFiles(file) : [file]
@@ -461,7 +461,7 @@ integrationTest('WHAT[structured-workflow-013] the real Change program and recov
       assert.equal(matches.length, 1, `the fresh compiler output must contain exactly one ${suffix}`)
       return import(pathToFileURL(matches[0]).href)
     }
-    const compile = async (name, label, probeName, rejectScope = false, modules = ['Context/Prefix/Wire.js']) => {
+    const compile = async (name, label, probeName, rejectScope = false, modules = ['Interaction/Dispatch/PrefixWorkflow.js']) => {
       assertUnchanged()
       const projectPath = join(sourceRoot, name)
       const plan = planOwnerCompile({ projectPath, aggregatePath: null })

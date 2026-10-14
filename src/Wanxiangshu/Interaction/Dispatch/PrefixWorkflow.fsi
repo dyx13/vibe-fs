@@ -1,9 +1,9 @@
-namespace Wanxiangshu.Context.Prefix
+namespace Wanxiangshu.Interaction.Dispatch
 
 open System.Threading.Tasks
 open Wanxiangshu.Composition.Turn
 open Wanxiangshu.Foundation.Identity
-open Wanxiangshu.OpenCode
+open Wanxiangshu.Context.Prefix
 open Wanxiangshu.Participant.Provider.Attempt
 
 [<RequireQualifiedAccess>]
@@ -16,24 +16,7 @@ type XWireReconciliationDecision =
       Cleared: bool
       KeptPlan: bool }
 
-type AttemptPlanCapability =
-    { TryAttemptPlan: SessionId -> ProviderRunIdentity -> AttemptPlan option
-      TryBindAttemptPlan: SessionId -> PhysicalUserMessageId -> ProviderRunIdentity -> AttemptPlan option
-      ConsumeAttemptPlan: SessionId -> ProviderRunIdentity -> AttemptPlan option
-      FreezePendingAttemptPlan: SessionId -> PhysicalUserMessageId -> PendingAttemptPlan -> PendingAttemptPlanAdmission
-      TryPendingAttemptPlan: SessionId -> PhysicalUserMessageId -> PendingAttemptPlan option }
-
-module XWire =
-
-    val internal candidate:
-        port: WireJournalPort ->
-        window: ProbeBound ->
-        sessionId: SessionId ->
-        snapshot: Wanxiangshu.Participant.Provider.Projection.ProjectionSnapshot ->
-        committed: PrefixSnapshot option ->
-        state: WireSessionState ->
-        requestCutoff: int ->
-            Task<Result<PrefixProbe, NoCandidateReason>>
+module PrefixWorkflow =
 
     val mayProbe: budget: ProviderFailureBudget.FailureBudget -> bool
 
@@ -60,7 +43,7 @@ module XWire =
 
     val applyTransform:
         isReplicaSession: (SessionId -> bool) ->
-        snapshot: ISessionSnapshotPort option ->
+        presentation: PrefixPresentationPort ->
         port: WireJournalPort option ->
         attempts: AttemptPlanCapability ->
         output: obj ->

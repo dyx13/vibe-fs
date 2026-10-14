@@ -1,9 +1,9 @@
 export async function load(url, context, nextLoad) {
   const loaded = await nextLoad(url, context)
-  if (!url.endsWith('/dist/Context/Prefix/Wire.js')) return loaded
+  if (!url.endsWith('/dist/Interaction/Dispatch/PrefixWorkflow.js')) return loaded
   const source = loaded.source.toString()
   if (source.includes('/* registered-failed-promotion-mutant */')) return loaded
-  const entry = 'function XWire_settleAttemptPlan(port, attempts, sessionId, providerRun, outcome, plan) {'
+  const entry = 'function PrefixWorkflow_settleAttemptPlan(port, attempts, sessionId, providerRun, outcome, plan) {'
   if (source.split(entry).length !== 2) {
     throw new Error('the production attempt settlement entry must occur exactly once')
   }

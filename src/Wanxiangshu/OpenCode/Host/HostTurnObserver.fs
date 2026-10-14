@@ -180,8 +180,12 @@ module HostTurnObserver =
                   FreezePendingAttemptPlan = scope.Recovery.FreezePendingAttemptPlan
                   TryPendingAttemptPlan = scope.Recovery.TryPendingAttemptPlan }
 
-            let wirePort = journal |> Option.map AgentJournalPortAdapter.forWire
-            do! XWire.reconcileAttempt wirePort attempts turn
+            let wirePort =
+                journal
+                |> Option.map (fun journal ->
+                    PrefixJournalAdapter.create (AgentJournalPortAdapter.forProviderFailure journal) journal)
+
+            do! PrefixWorkflow.reconcileAttempt wirePort attempts turn
             do! TurnRuntimePreparation.prepare scope.DisposeExecutorRuntime turn
 
             let! fissionHandled =
@@ -257,8 +261,12 @@ module HostTurnObserver =
                       FreezePendingAttemptPlan = scope.Recovery.FreezePendingAttemptPlan
                       TryPendingAttemptPlan = scope.Recovery.TryPendingAttemptPlan }
 
-                let wirePort = journal |> Option.map AgentJournalPortAdapter.forWire
-                do! XWire.reconcileAttempt wirePort attempts turn
+                let wirePort =
+                    journal
+                    |> Option.map (fun journal ->
+                        PrefixJournalAdapter.create (AgentJournalPortAdapter.forProviderFailure journal) journal)
+
+                do! PrefixWorkflow.reconcileAttempt wirePort attempts turn
                 return ()
             else
                 // speculative-investigation-013 / STRENGTH-010 / STRENGTH-007: primary turn observation

@@ -10,9 +10,6 @@
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.journal-outcome-contract.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.attention-regulation.interaction-attention-facts.fsproj"/><ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-linkage-projection.fsproj"/><ProjectReference Include="Wanxiangshu.Owner.requirement-grounding.host-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.concern-routing.interaction-concern-facts.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.prefix-stability.mission-obligation-todo-prefixepoch.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.prefix-stability.context-prefix-wire-port.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.delegation.delegation-journal-port.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.time-capability.execution-session-sessionstartedatprojection.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.provider-attempt-recovery.participant-provider-attempt-fallback-fact.fsproj"/>
@@ -23,7 +20,6 @@
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.composition-durable-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.durable-events.persistence-journal-agentjournal.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.intra-participant-parallelism.execution-fission-fact.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.runtime-platform.digest.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.context-compression.context-companion-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.composition-turn-observation-port.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.interaction-authority.opencode-host-chatadmission-intent.fsproj"/>

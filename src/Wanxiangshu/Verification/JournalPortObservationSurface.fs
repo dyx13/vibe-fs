@@ -37,7 +37,8 @@ module JournalPortObservationSurface =
                       "retirement"
                       "publication"
                       "presentation-claim"
-                      "physical-acceptance" ]
+                      "physical-acceptance"
+                      "prefix-rebase" ]
             )
         then
             invalidArg "target" "unknown append refusal target"
@@ -53,6 +54,7 @@ module JournalPortObservationSurface =
 
         let matches =
             function
+            | Agent(AgentFact.Context(ContextFactCases.PrefixRebaseCommitted _)) -> target = "prefix-rebase"
             | Agent(AgentFact.Attention(AttentionFactCases.DeferredWorkConsumed _)) -> target = "consumption"
             | Agent(AgentFact.Prompt(PromptFactCases.DeferredWorkPresentationClaimed _)) ->
                 target = "presentation-claim"
@@ -323,7 +325,152 @@ module JournalPortObservationSurface =
     let private portsOf (journal: AgentJournal) : AttentionJournalPort * TerminalPolicyPort * WireJournalPort =
         AgentJournalPortAdapter.forAttention journal,
         AgentJournalPortAdapter.forTerminalPolicy journal,
-        AgentJournalPortAdapter.forWire journal
+        PrefixJournalAdapter.create (AgentJournalPortAdapter.forProviderFailure journal) journal
+
+    let prefixRebaseScenario (commonDir: string) (writerTag: string) (refuse: bool) : Task<obj> =
+        task {
+            let entered =
+                TaskCompletionSource<unit>(TaskCreationOptions.RunContinuationsAsynchronously)
+
+            let release =
+                TaskCompletionSource<unit>(TaskCreationOptions.RunContinuationsAsynchronously)
+
+            let store = GatedAppendStore(openStore commonDir writerTag, entered, release)
+            use! journal = openJournal (store :> IEventStore) writerTag
+            let sessionId = SessionId.create "ses-prefix-atomic"
+            let run = ProviderRunIdentity.create "run-prefix-atomic"
+            let address = TranscriptMessageAddress.create "msg-prefix-guidance"
+
+            let grounding: Wanxiangshu.Requirement.Grounding.GroundingSnapshot =
+                { Workspace = "prefix-workspace"
+                  PackageName = "prefix-package"
+                  Digest = "grounding-digest"
+                  Materials =
+                    [ { Path = "requirements/PREFIX.md"
+                        ResultBytes = "prefix grounding material" } ] }
+
+            let facts =
+                [ Wanxiangshu.Host.HostFactCases.TipGuidanceDelivered
+                      {| SessionId = sessionId
+                         TipName = "prefix-tip"
+                         OccurrenceId = Some "prefix-occurrence"
+                         Presentation = Wanxiangshu.Host.TipPresentation.Full |}
+                  Wanxiangshu.Host.HostFactCases.PairProgrammingGuidelineAnchored
+                      {| SessionId = sessionId
+                         Ordinal = 1L
+                         CallId = ToolCallId.create "prefix-guideline"
+                         MarkerText = "prefix guideline"
+                         CallGap = TranscriptGap.Before address
+                         ResultGap = TranscriptGap.After address
+                         ConcernPlacement = None |}
+                  Wanxiangshu.Host.HostFactCases.RequirementGroundingRequested
+                      {| SessionId = sessionId
+                         Snapshot = grounding |}
+                  Wanxiangshu.Host.HostFactCases.RequirementGroundingAnchored
+                      {| SessionId = sessionId
+                         Occurrence =
+                          { Workspace = grounding.Workspace
+                            PackageName = grounding.PackageName
+                            Digest = grounding.Digest
+                            Ordinal = 1L
+                            Reads =
+                              [ { CallId = ToolCallId.create "prefix-grounding-read"
+                                  Path = "requirements/PREFIX.md"
+                                  ArgsJson = "{}"
+                                  ResultBytes = "prefix grounding material"
+                                  CursorResultBytes = "prefix grounding material" } ]
+                            CallGap = TranscriptGap.Before address
+                            ResultGap = TranscriptGap.After address } |} ]
+
+            for fact in facts do
+                let! result = journal.AppendAgent (StreamId.Session sessionId) None (AgentFact.Host fact)
+
+                result
+                |> Result.defaultWith (fun error -> failwith (JournalAppendFailure.describe error))
+                |> ignore
+
+            let observe () =
+                let snapshot = AgentJournal.snapshot journal
+
+                let session =
+                    AgentProjection.tryFind sessionId snapshot.AgentProjections |> Option.get
+
+                {| epoch =
+                    session.PrefixEpoch
+                    |> Option.map (fun prefix -> PrefixEpochId.value prefix.EpochId)
+                    |> Option.defaultValue 0L
+                   tip =
+                    session.TipDelivery
+                    |> Option.exists (Wanxiangshu.Enforcer.Guidance.TipDeliveryProjection.hasFullDelivered "prefix-tip")
+                   guidelines =
+                    session.Guidelines
+                    |> Option.map (
+                        Wanxiangshu.OpenCode.Host.PairProgramming.GuidelineProjection.visiblePairs
+                        >> List.length
+                    )
+                    |> Option.defaultValue 0
+                   grounding =
+                    session.RequirementGrounding
+                    |> Option.map (
+                        Wanxiangshu.OpenCode.Host.RequirementGrounding.RequirementGroundingProjection.visibleOccurrences
+                        >> List.length
+                    )
+                    |> Option.defaultValue 0 |}
+
+            let wire =
+                PrefixJournalAdapter.create (AgentJournalPortAdapter.forProviderFailure journal) journal
+
+            let! written = journal.WriteBlob "frozen prefix material"
+            let blob = written |> Result.defaultWith failwith
+
+            let rebase: WirePrefixRebasePayload =
+                {| SessionId = sessionId
+                   PreviousEpochId = PrefixEpochId.initial
+                   NextEpochId = PrefixEpochId.next PrefixEpochId.initial
+                   FrozenRecordPrefixRef = blob.BlobRef
+                   FrozenRecordPrefixDigest = blob.BlobDigest
+                   CutoffExclusive = 1
+                   CoveredPrefixDigest = "covered-prefix"
+                   SealRoot = "prefix-seal"
+                   SyntheticMessageId = "prefix-synthetic"
+                   ProbeId = "prefix-probe"
+                   SolvingProviderRun = run |}
+
+            let before = observe ()
+            let revision = journal.Revision
+
+            if refuse then
+                let! refusal =
+                    withAppendRefusal (JournalHandle.Create journal) "prefix-rebase" (fun () ->
+                        task {
+                            let! outcome = wire.CommitPrefixRebase sessionId run rebase
+                            return box {| committed = Result.isOk outcome |}
+                        })
+
+                return
+                    box
+                        {| before = before
+                           after = observe ()
+                           revisionUnchanged = journal.Revision = revision
+                           refusal = refusal |}
+            else
+                store.ParkNextAppend()
+                let pending = wire.CommitPrefixRebase sessionId run rebase
+                do! awaitParkedAppend entered pending
+                let parked = observe ()
+                let parkedRevisionUnchanged = journal.Revision = revision
+                AsyncSupport.trySetResult release () |> ignore
+                let! outcome = pending
+
+                return
+                    box
+                        {| before = before
+                           parked = parked
+                           after = observe ()
+                           committed = Result.isOk outcome
+                           parkedRevisionUnchanged = parkedRevisionUnchanged
+                           advancedOnce = JournalRevision.value journal.Revision = JournalRevision.value revision + 1L |}
+        }
 
     let liveReadScenario (commonDir: string) (writerTag: string) : Task<obj> =
         task {
@@ -460,7 +607,10 @@ module JournalPortObservationSurface =
 
             let store = GatedAppendStore(openStore commonDir writerTag, entered, release)
             use! journal = openJournal (store :> IEventStore) writerTag
-            let wire = AgentJournalPortAdapter.forWire journal
+
+            let wire =
+                PrefixJournalAdapter.create (AgentJournalPortAdapter.forProviderFailure journal) journal
+
             let session = SessionId.create "ses-port-wire-snapshot"
             let physical = PhysicalUserMessageId.create "msg-port-wire-snapshot"
 

@@ -16,19 +16,12 @@ open Wanxiangshu.Context.Trace
 open Wanxiangshu.Participant.Provider.Projection
 open Wanxiangshu.Participant.Provider.Projection.ProviderProjection
 open Wanxiangshu.Participant.Provider.Attempt
+open Wanxiangshu.Interaction.Dispatch
 
-/// host-boundary-020/021: X-wire transform decision surface.
-///
-/// The production `XWire.applyTransform` is async and coupled to `AgentJournal`,
-/// `PluginRuntimeScope`, and `ISessionSnapshotPort` — it orchestrates blob reads,
-/// session-snapshot awaits, and in-place message replacement. The *decisions* it
-/// makes are pure: `PrefixProbeSelection.select`, and
-/// `XPrefixProjection.forChoice` / `XPrefixProjection.render`. This surface exposes that decision pipeline
-/// as a single JS-callable function with JS-native input/output, so the
-/// fail-closed and no-op laws can be proven without a live runtime.
-///
-/// The surface IS the production algorithm: every branch delegates to the same
-/// pure functions `applyTransform` calls. No support-model copy.
+/// JS input and observation bridge for prefix decisions and candidate capabilities.
+/// Attempt orchestration belongs to PrefixWorkflow. Candidate construction calls
+/// PrefixMaterialization with the same hash and WorkRecord rendering rules as the
+/// production Journal adapter.
 [<RequireQualifiedAccess>]
 module XWireSurface =
 
@@ -153,7 +146,7 @@ module XWireSurface =
                        sealRoot = c.SealRoot
                        syntheticId = c.SyntheticMessageId |} |}
 
-    // ── sha256: exact production owner used by XWire.applyTransform ─────────
+    // ── sha256: exact production owner used by the Journal adapter ─────────
 
     let private sha256Hex (value: string) : string = HostDigest.sha256Hex value
 
@@ -186,7 +179,7 @@ module XWireSurface =
         ProjectionRenderer.cutoffDigest HostDigest.sha256Hex snapshot cutoff
 
     let presentationHorizon (hasProbe: bool) : string =
-        match XWire.presentationHorizonForProbe hasProbe with
+        match PrefixWorkflow.presentationHorizonForProbe hasProbe with
         | PrefixPresentationHorizon.Current -> "Current"
         | PrefixPresentationHorizon.TentativeCold -> "TentativeCold"
 
@@ -196,7 +189,7 @@ module XWireSurface =
             | "TentativeCold" -> PrefixPresentationHorizon.TentativeCold
             | _ -> PrefixPresentationHorizon.Current
 
-        XWire.retryTransportRetirement typedHorizon (Array.toList rawMessages)
+        PrefixWorkflow.retryTransportRetirement typedHorizon (Array.toList rawMessages)
         |> Set.toArray
 
     let replacePrefixByHostIds
@@ -206,7 +199,7 @@ module XWireSurface =
         (syntheticMessageId: string)
         (memory: string)
         : obj array =
-        XWire.replacePrefixByHostIds
+        PrefixWorkflow.replacePrefixByHostIds
             (if isNull rawMessages then [] else Array.toList rawMessages)
             (if isNull coveredHostMessageIds then
                  []
@@ -221,7 +214,7 @@ module XWireSurface =
         |> List.toArray
 
     let suppressHostMessagesByIds (rawMessages: obj array) (hostMessageIds: string array) : obj array =
-        XWire.suppressHostMessagesByIds
+        PrefixWorkflow.suppressHostMessagesByIds
             (if isNull rawMessages then [] else Array.toList rawMessages)
             (if isNull hostMessageIds then
                  Set.empty
@@ -360,7 +353,7 @@ module XWireSurface =
                             ProjectionRenderer.cutoffDigest HostDigest.sha256Hex projectionSnapshot
 
                         let allowProbe =
-                            XWire.mayProbe { ConsecutiveFailureCount = intValue input?failures }
+                            PrefixWorkflow.mayProbe { ConsecutiveFailureCount = intValue input?failures }
 
                         // CTX-028/029: `phaseWindow` carries the window boundary when one
                         // spoke; otherwise this slot is failure recovery, whose only bound
@@ -427,7 +420,7 @@ module XWireSurface =
                         // We have the choice and probe result directly,
                         // so the promote decision is: Completed + has probe.
                         let reconcileDecision =
-                            XWire.reconciliationDecision
+                            PrefixWorkflow.reconciliationDecision
                                 true
                                 (attemptOutcomeOfJs input?outcome)
                                 (Result.isOk probeResult)
@@ -479,7 +472,7 @@ module XWireSurface =
     /// host-boundary-021: reconcile decision — does a completed attempt promote
     /// a prefix rebase, and does a failed/aborted attempt clear the plan?
     ///
-    /// Delegates to the pure decision used by `XWire.reconcileAttempt`. The
+    /// Delegates to the pure decision used by `PrefixWorkflow.reconcileAttempt`. The
     /// production function is async and writes a durable fact; this surface
     /// exposes that shared decision.
     ///
@@ -516,7 +509,7 @@ module XWireSurface =
             | _ -> false
 
         let decision =
-            XWire.reconciliationDecision hasPlan (attemptOutcomeOfJs input?outcome) hasProbe epochMatches
+            PrefixWorkflow.reconciliationDecision hasPlan (attemptOutcomeOfJs input?outcome) hasProbe epochMatches
 
         box
             {| promoted = decision.Promoted
@@ -789,13 +782,13 @@ module XWireSurface =
                                 return Error ex.Message
                         }
 
-                    let port: WireJournalPort =
-                        { ReadView = fun _ -> failwith "not used in candidate"
+                    let port: PrefixCandidatePort =
+                        { Hash = HostDigest.sha256Hex
+                          Materialize =
+                            fun opening frames ->
+                                Wanxiangshu.Mission.WorkRecord.LifecycleWorkRecord.materialize opening frames "" false
                           ReadBlob = readBlobFn
-                          WriteBlob = writeBlobFn
-                          CurrentProjection = fun _ -> failwith "not used in candidate"
-                          RecordConfirmedSuccess = fun _ _ -> failwith "not used in candidate"
-                          CommitPrefixRebase = fun _ _ _ -> failwith "not used in candidate" }
+                          WriteBlob = writeBlobFn }
 
                     let sessionId =
                         SessionId.create (
@@ -932,7 +925,7 @@ module XWireSurface =
                             Some(snapshotOfJs input?committedSnapshot)
 
                     let! candidateResult =
-                        XWire.candidate
+                        PrefixMaterialization.candidate
                             port
                             (if isNullish input?phaseCutoff then
                                  ProbeBound.CoverageOnly

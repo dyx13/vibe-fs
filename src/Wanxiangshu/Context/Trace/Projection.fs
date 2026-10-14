@@ -16,7 +16,7 @@ open Wanxiangshu.Foundation
 ///
 /// Bodies live in blobs (PERSIST-007): the journal line carries cursor, kind,
 /// role, digest and reference; the text is resolved at the read boundary, the
-/// same way `XWire.readFrames` resolves `BlogFrame.TextRef`.
+/// same way `PrefixMaterialization.candidate` resolves `BlogFrame.TextRef`.
 type XTraceProjectionState =
     private
         {

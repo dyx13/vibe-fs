@@ -1,23 +1,13 @@
-namespace Wanxiangshu.Context.Prefix
+namespace Wanxiangshu.Interaction.Dispatch
 
 open System.Threading.Tasks
-open Wanxiangshu.Context.Companion.Blogger
+open Wanxiangshu.Context.Prefix
 open Wanxiangshu.Context.Trace
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Interaction.Authority
 open Wanxiangshu.Participant.Provider.Attempt.Fallback
 open Wanxiangshu.Participant.Provider.Projection
-
-/// Domain-owned state view for one session needed by Wire.
-type WireSessionState =
-    {
-        XTrace: XTraceProjectionState option
-        Blog: BlogProjectionState option
-        PrefixEpoch: ActivePrefixEpoch option
-        /// Successful todowrite checkpoints still on the raw side of the
-        /// committed prefix.
-        TodoCheckpoints: PhaseWindow.PhaseCommitWindow
-    }
+open Wanxiangshu.Participant.Provider.Attempt
 
 /// Single-snapshot view required by Wire for one call.
 /// Derived from exactly one Journal Snapshot read per call.
@@ -33,9 +23,16 @@ type WireSnapshotView =
         AcceptedOrigin: PhysicalUserMessageId -> PromptAuthority.PromptOrigin option
     }
 
-type WireBlobRecord =
-    { BlobRef: BlobRef
-      BlobDigest: BlobDigest }
+type AttemptPlanCapability =
+    { TryAttemptPlan: SessionId -> ProviderRunIdentity -> AttemptPlan option
+      TryBindAttemptPlan: SessionId -> PhysicalUserMessageId -> ProviderRunIdentity -> AttemptPlan option
+      ConsumeAttemptPlan: SessionId -> ProviderRunIdentity -> AttemptPlan option
+      FreezePendingAttemptPlan: SessionId -> PhysicalUserMessageId -> PendingAttemptPlan -> PendingAttemptPlanAdmission
+      TryPendingAttemptPlan: SessionId -> PhysicalUserMessageId -> PendingAttemptPlan option }
+
+type PrefixPresentationPort =
+    { MemoryPreamble: SessionId -> string
+      ReplaceMessages: obj -> obj list -> unit }
 
 type WirePrefixRebasePayload =
     {| SessionId: SessionId
@@ -52,8 +49,7 @@ type WirePrefixRebasePayload =
 
 type WireJournalPort =
     { ReadView: SessionId -> WireSnapshotView
-      ReadBlob: BlobRef -> Task<Result<string, string>>
-      WriteBlob: string -> Task<Result<WireBlobRecord, string>>
+      Candidate: PrefixCandidatePort
       CurrentProjection: XTraceProjectionState -> Task<Result<ProviderProjection.ProviderSemanticProjection, string>>
       RecordConfirmedSuccess: SessionId -> ProviderRunIdentity -> Task<Result<unit, string>>
       CommitPrefixRebase: SessionId -> ProviderRunIdentity -> WirePrefixRebasePayload -> Task<Result<unit, string>> }

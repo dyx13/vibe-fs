@@ -654,8 +654,10 @@ Persistence/Journal/SharedAgentJournal.fsi
 Persistence/Journal/SharedAgentJournal.fs
 Context/Trace/Materialization.fsi
 Context/Trace/Materialization.fs
-Context/Prefix/WirePort.fsi
-Context/Prefix/WirePort.fs
+Context/Prefix/Materialization.fsi
+Context/Prefix/Materialization.fs
+Interaction/Dispatch/PrefixPort.fsi
+Interaction/Dispatch/PrefixPort.fs
 Change/Orchestrator/OrchestratorPort.fsi
 Change/Orchestrator/OrchestratorPort.fs
 Composition/Turn/TurnObservationPort.fsi
@@ -672,6 +674,8 @@ Composition/Durable/SessionStartedAtJournalAdapter.fsi
 Composition/Durable/SessionStartedAtJournalAdapter.fs
 Composition/Durable/RequirementGroundingJournalAdapter.fsi
 Composition/Durable/RequirementGroundingJournalAdapter.fs
+Composition/Durable/PrefixJournalAdapter.fsi
+Composition/Durable/PrefixJournalAdapter.fs
 Composition/Durable/AgentJournalPortAdapter.fsi
 Composition/Durable/AgentJournalPortAdapter.fs
 Git/Subject.fsi
@@ -1182,8 +1186,8 @@ Composition/Turn/Workflow.fsi
 Composition/Turn/Workflow.fs
 OpenCode/Host/HostCompactionGate.fsi
 OpenCode/Host/HostCompactionGate.fs
-Context/Prefix/Wire.fsi
-Context/Prefix/Wire.fs
+Interaction/Dispatch/PrefixWorkflow.fsi
+Interaction/Dispatch/PrefixWorkflow.fs
 Context/Prefix/XWireSurface.fsi
 Context/Prefix/XWireSurface.fs
 OpenCode/Host/PluginRecoveryScopeSurface.fsi

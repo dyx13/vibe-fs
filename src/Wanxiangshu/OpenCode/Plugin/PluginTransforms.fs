@@ -1077,8 +1077,22 @@ module PluginTransforms =
                   FreezePendingAttemptPlan = scope.Recovery.FreezePendingAttemptPlan
                   TryPendingAttemptPlan = scope.Recovery.TryPendingAttemptPlan }
 
-            let wirePort = journal |> Option.map AgentJournalPortAdapter.forWire
-            XWire.applyTransform isReplica snapshotOpt wirePort attempts
+            let wirePort =
+                journal
+                |> Option.map (fun journal ->
+                    PrefixJournalAdapter.create (AgentJournalPortAdapter.forProviderFailure journal) journal)
+
+            PrefixWorkflow.applyTransform
+                isReplica
+                { MemoryPreamble =
+                    fun sessionId ->
+                        ProviderProse.render
+                            (ProviderProse.languageOf sessionId)
+                            CompanionPrompt.MemoryPreamble
+                            Map.empty
+                  ReplaceMessages = HostMessageProjection.replaceMessagesInPlace }
+                wirePort
+                attempts
           FreezeProviderAttemptPlan = freezeProviderAttemptPlan
           ApplyEnforcerContinuation =
             fun projectionSessionIdOpt outObj ->
@@ -1177,8 +1191,25 @@ module PluginTransforms =
                           FreezePendingAttemptPlan = scope.Recovery.FreezePendingAttemptPlan
                           TryPendingAttemptPlan = scope.Recovery.TryPendingAttemptPlan }
 
-                    let wirePort = journal |> Option.map AgentJournalPortAdapter.forWire
-                    let! _ = XWire.applyTransform isReplica snapshotOpt wirePort attempts outObj
+                    let wirePort =
+                        journal
+                        |> Option.map (fun journal ->
+                            PrefixJournalAdapter.create (AgentJournalPortAdapter.forProviderFailure journal) journal)
+
+                    let! _ =
+                        PrefixWorkflow.applyTransform
+                            isReplica
+                            { MemoryPreamble =
+                                fun sessionId ->
+                                    ProviderProse.render
+                                        (ProviderProse.languageOf sessionId)
+                                        CompanionPrompt.MemoryPreamble
+                                        Map.empty
+                              ReplaceMessages = HostMessageProjection.replaceMessagesInPlace }
+                            wirePort
+                            attempts
+                            outObj
+
                     return ()
                 }
           ReplicaSanitize = HostMessageProjection.sanitizeOutputMessages }
@@ -1332,7 +1363,7 @@ module PluginTransforms =
                               do! caps.ApplyCompanion frame.SessionId frame.InObj frame.OutObj
                               return Some frame
                           } }
-                  // 10. XWire.applyTransform. A selected prefix probe creates a
+                  // 10. PrefixWorkflow.applyTransform. A selected prefix probe creates a
                   // tentative cold horizon for this physical request; downstream
                   // historical auxiliaries must not replay the old horizon into it.
                   { Name = "apply-xwire"

@@ -29,6 +29,8 @@ module JournalPortObservationSurface =
     /// snapshot while a later real commit becomes visible to the next view.
     val wireSnapshotScenario: commonDir: string -> writerTag: string -> Task<obj>
 
+    val prefixRebaseScenario: commonDir: string -> writerTag: string -> refuse: bool -> Task<obj>
+
     /// Sweep members read live state, and each RecoveryView reads jobs and
     /// handles with exactly one canonical Current lookup.
     val recoverySnapshotScenario: commonDir: string -> writerTag: string -> Task<obj>

@@ -3,6 +3,7 @@ namespace Wanxiangshu.OpenCode
 open System
 open System.Threading.Tasks
 open Wanxiangshu.Context.Prefix
+open Wanxiangshu.Interaction.Dispatch
 open Wanxiangshu.Context.Trace
 open Wanxiangshu.Mission.Relay.OpenCode
 open Wanxiangshu.Mission.Manager

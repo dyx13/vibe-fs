@@ -14,15 +14,15 @@ const mutatedUrls = new Set()
 
 export async function load(url, context, nextLoad) {
   const loaded = await nextLoad(url, context)
-  if (!url.endsWith('/dist/Context/Prefix/Wire.js') || mutatedUrls.has(url)) return loaded
+  if (!url.endsWith('/dist/Context/Prefix/Materialization.js') || mutatedUrls.has(url)) return loaded
   const source = decodeSource(loaded.source)
-  const expression = 'ProjectionRenderer_cutoffDigest(sha256Hex, snapshot, cutoff)'
+  const expression = 'ProjectionRenderer_cutoffDigest(port.Hash, snapshot, cutoff)'
   if (source.split(expression).length !== 2) {
-    throw new Error('production Wire digest expression must occur exactly once')
+    throw new Error('production prefix digest expression must occur exactly once')
   }
   const replacement = process.env.WANXIANGSHU_PREFIX_DIGEST_MUTATION === 'hash'
     ? 'ProjectionRenderer_cutoffDigest(() => "incorrect-digest", snapshot, cutoff)'
-    : 'ProjectionRenderer_cutoffDigest(sha256Hex, snapshot, cutoff - 1)'
+    : 'ProjectionRenderer_cutoffDigest(port.Hash, snapshot, cutoff - 1)'
   mutatedUrls.add(url)
   return { ...loaded, source: reencodeSource(loaded.source, source.replace(expression, replacement)) }
 }

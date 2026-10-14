@@ -46,7 +46,8 @@
     <ProjectReference Include="Wanxiangshu.Owner.delegation.execution-delegation-fact.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.composition-turn-observation-port.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.participant-identity.foundation-roles.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.prefix-stability.context-prefix-wire-port.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-port.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.durable-composition.durable-adapter-prefix.fsproj"/>
     <Compile Include="Verification/EventStoreWriterSurface.fsi"/>
     <Compile Include="Verification/EventStoreWriterSurface.fs"/>
     <Compile Include="Verification/TemporalSurface.fsi"/>

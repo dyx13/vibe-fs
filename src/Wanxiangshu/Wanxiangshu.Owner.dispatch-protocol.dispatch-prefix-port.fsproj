@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <WanxiangshuSubsystem>context</WanxiangshuSubsystem>
-    <WanxiangshuCompileShard>context-prefix-wire-port</WanxiangshuCompileShard>
-    <WanxiangshuSemanticOwner>prefix-stability</WanxiangshuSemanticOwner>
-    <WanxiangshuOwnerLocality>context-prefix-wire-port</WanxiangshuOwnerLocality>
+    <WanxiangshuSubsystem>dispatch</WanxiangshuSubsystem>
+    <WanxiangshuCompileShard>dispatch-prefix-port</WanxiangshuCompileShard>
+    <WanxiangshuSemanticOwner>dispatch-protocol</WanxiangshuSemanticOwner>
+    <WanxiangshuOwnerLocality>dispatch-prefix-port</WanxiangshuOwnerLocality>
     <WanxiangshuOwnerLocalityKind>contract</WanxiangshuOwnerLocalityKind>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.foundation-identity.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.dispatch-attempt-planner.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.prefix-stability.context-prefix-materialization.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.prefix-stability.mission-obligation-todo-prefixepoch.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.foundation-outcome.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.interaction-authority.interaction-authority-identityseed.fsproj"/>
@@ -16,7 +18,7 @@
     <ProjectReference Include="Wanxiangshu.Owner.context-compression.context-companion-facts.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.provider-projection.participant-provider-projection-wire.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.semantic-trace.context-trace-model.fsproj"/>
-    <Compile Include="Context/Prefix/WirePort.fsi"/>
-    <Compile Include="Context/Prefix/WirePort.fs"/>
+    <Compile Include="Interaction/Dispatch/PrefixPort.fsi"/>
+    <Compile Include="Interaction/Dispatch/PrefixPort.fs"/>
   </ItemGroup>
 </Project>

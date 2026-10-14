@@ -20,6 +20,8 @@ ActivePrefixEpoch 与 PrefixRebaseCommitted 是唯一前缀 epoch 合同。阶�
 
 PrefixRebaseCommitted 须在下一次真实 provider attempt 的 seal 绑定前原子提交。已提交事实的不可逆性见 [012]。
 
+同一次 PrefixRebaseCommitted 的 durable 提交同时推进前缀 epoch 并退休旧 Tip、Guidelines 和 RequirementGrounding 的可见性。提交前只能观察旧视图，提交后只能观察联合新视图。attempt 编排先完成前缀提交和成功计账，再消费原计划；任一提交失败都保留计划，供 exact attempt 的后续观察重试。候选构造和编排只接收所需合同，JS 接线及具体 Journal 实例由装配边界提供。
+
 ## [006] Host compaction 重锚
 
 Plan tenure 交接通过 TenureReanchored 收容：epoch 加一、清除 Snapshot、PrefixCoverage 归零。记录已处理 incumbencyId，同一任期不重锚两次。Host compaction 只通过 ContextReanchored 收容：epoch 加一、清除 Snapshot、PrefixCoverage 归零。记录已处理 run，同一 compaction 不重锚两次。
