@@ -28,7 +28,7 @@ open Fable.Core.JsInterop
 /// the same canonical projection the store publishes.
 module JournalPortObservationSurface =
 
-    let withAppendRefusal (handle: JournalHandle) target (action: unit -> Task<obj>) : Task<obj> =
+    let private requireAppendTarget target =
         if
             not (
                 List.contains
@@ -38,11 +38,33 @@ module JournalPortObservationSurface =
                       "publication"
                       "presentation-claim"
                       "physical-acceptance"
-                      "prefix-rebase" ]
+                      "prefix-rebase"
+                      "provider-success" ]
             )
         then
             invalidArg "target" "unknown append refusal target"
 
+    let private matchesAppendTarget target =
+        function
+        | Agent(AgentFact.Context(ContextFactCases.PrefixRebaseCommitted _)) -> target = "prefix-rebase"
+        | Agent(AgentFact.ProviderFailure(Wanxiangshu.Participant.Provider.Attempt.Fallback.ProviderFailureFactCases.SuccessRecorded _)) ->
+            target = "provider-success"
+        | Agent(AgentFact.Attention(AttentionFactCases.DeferredWorkConsumed _)) -> target = "consumption"
+        | Agent(AgentFact.Prompt(PromptFactCases.DeferredWorkPresentationClaimed _)) -> target = "presentation-claim"
+        | Agent(AgentFact.Prompt(PromptFactCases.PluginPromptPhysicalAccepted _)) -> target = "physical-acceptance"
+        | Agent(AgentFact.Concern(Wanxiangshu.Interaction.Concern.ConcernFactCases.MessagePublished _)) ->
+            target = "publication"
+        | Agent(AgentFact.Relay(Wanxiangshu.Mission.Relay.RelayFactCases.TransactionCommitted payload)) when
+            target = "retirement"
+            ->
+            Wanxiangshu.Mission.Relay.RelayTransaction.events payload.Transaction
+            |> List.exists (function
+                | Wanxiangshu.Mission.Relay.RelayEvent.RetirementCommitted _ -> true
+                | _ -> false)
+        | _ -> false
+
+    let withAppendRefusal (handle: JournalHandle) target (action: unit -> Task<obj>) : Task<obj> =
+        requireAppendTarget target
         let writer = handle.Journal.Writer
         let originalMethod: obj = emitJsExpr writer "$0.Append"
 
@@ -52,27 +74,9 @@ module JournalPortObservationSurface =
         // DSL-MUTABLE: resource — count of refused writes at the injected physical boundary
         let mutable refused = 0
 
-        let matches =
-            function
-            | Agent(AgentFact.Context(ContextFactCases.PrefixRebaseCommitted _)) -> target = "prefix-rebase"
-            | Agent(AgentFact.Attention(AttentionFactCases.DeferredWorkConsumed _)) -> target = "consumption"
-            | Agent(AgentFact.Prompt(PromptFactCases.DeferredWorkPresentationClaimed _)) ->
-                target = "presentation-claim"
-            | Agent(AgentFact.Prompt(PromptFactCases.PluginPromptPhysicalAccepted _)) -> target = "physical-acceptance"
-            | Agent(AgentFact.Concern(Wanxiangshu.Interaction.Concern.ConcernFactCases.MessagePublished _)) ->
-                target = "publication"
-            | Agent(AgentFact.Relay(Wanxiangshu.Mission.Relay.RelayFactCases.TransactionCommitted payload)) when
-                target = "retirement"
-                ->
-                Wanxiangshu.Mission.Relay.RelayTransaction.events payload.Transaction
-                |> List.exists (function
-                    | Wanxiangshu.Mission.Relay.RelayEvent.RetirementCommitted _ -> true
-                    | _ -> false)
-            | _ -> false
-
         let replacement =
             Func<StreamId, ProviderRunIdentity option, Fact, Task<CommitResult<Envelope>>>(fun stream run fact ->
-                if matches fact then
+                if matchesAppendTarget target fact then
                     refused <- refused + 1
                     Task.FromResult(NotAttempted(EventId.create "injected-not-attempted", WriterClosing))
                 else
@@ -84,6 +88,38 @@ module JournalPortObservationSurface =
             try
                 let! value = action ()
                 return box {| refused = refused; value = value |}
+            finally
+                emitJsExpr (writer, originalMethod) "$0.Append = $1" |> ignore
+        }
+
+    let withAppendBarrier (handle: JournalHandle) target (barrier: unit -> Task<unit>) (action: unit -> Task<obj>) =
+        requireAppendTarget target
+        let writer = handle.Journal.Writer
+        let originalMethod: obj = emitJsExpr writer "$0.Append"
+
+        let original: Func<StreamId, ProviderRunIdentity option, Fact, Task<CommitResult<Envelope>>> =
+            emitJsExpr (writer, originalMethod) "$1.bind($0)"
+
+        // DSL-MUTABLE: resource — one-shot ownership of the target append barrier
+        let mutable armed = true
+
+        let replacement =
+            Func<StreamId, ProviderRunIdentity option, Fact, Task<CommitResult<Envelope>>>(fun stream run fact ->
+                if armed && matchesAppendTarget target fact then
+                    armed <- false
+
+                    task {
+                        do! barrier ()
+                        return! original.Invoke(stream, run, fact)
+                    }
+                else
+                    original.Invoke(stream, run, fact))
+
+        task {
+            emitJsExpr (writer, replacement) "$0.Append = $1" |> ignore
+
+            try
+                return! action ()
             finally
                 emitJsExpr (writer, originalMethod) "$0.Append = $1" |> ignore
         }

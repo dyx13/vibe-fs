@@ -16,6 +16,13 @@ module JournalPortObservationSurface =
         action: (unit -> Task<obj>) ->
             Task<obj>
 
+    val withAppendBarrier:
+        handle: Wanxiangshu.Persistence.Journal.JournalHandle ->
+        target: string ->
+        barrier: (unit -> Task<unit>) ->
+        action: (unit -> Task<obj>) ->
+            Task<obj>
+
     /// Call-time reads: a port built before an append observes the new state on
     /// the very next member call; a port built after it observes the same.
     val liveReadScenario: commonDir: string -> writerTag: string -> Task<obj>

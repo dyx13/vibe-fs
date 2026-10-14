@@ -1,0 +1,311 @@
+{
+  "scope": "R07a actual registered Plugin next-request seal after prefix and success commits",
+  "candidateParent": "bc158b072",
+  "date": "2026-10-14",
+  "limits": [
+    "Execution receipt only; not an ownership registry or R09 immutable-input certificate.",
+    "The Plugin is the production registered server and the Journal/filesystem EventStore are real shared instances. The Host SDK client remains the established fixture; no installed Host or remote provider transport capture is claimed.",
+    "Normal loader hooks only observe the original scope freeze/consume function entry and read its opaque handle through the existing peekAttempt surface. Single-install markers prevent duplicate instrumentation. Scope storage and production settlement bodies are unchanged.",
+    "Refusal is NotAttempted at the real writer entry, with other appends forwarded unchanged. This does not prove partial IO failure, Unknown persistence or cross-process recovery.",
+    "PrefixRebaseCommitted atomically advances prefix and retires auxiliary visibility. SuccessRecorded is a separate commit. A refused success retains the committed prefix and the original attempt plan.",
+    "The premature-consumption variant modifies the actual emitted production JS in its isolated child. It is a behavior counterexample, not a new Fable compile of mutated F#.",
+    "Current five compile roots have the same source/project digests as the previous structural package and are independently recompiled by 005. Root digests exclude fixtures; no full 281-root coverage or Plugin startup proof is inferred from a module import.",
+    "Only the next-attempt seal TODO in prefix005 is closed. Other prefix and provider recovery TODOs, GAP-106/139, subsystem cycles and R08/R09/R10/R11 remain open."
+  ],
+  "inputs": [
+    {
+      "path": "requirements/prefix-stability/tests/005.test.mjs",
+      "sha256": "9ddf6859f4c76c2e92e7e6e2ff30054592c3c9c73ddac5b7c0c32c208d25e587"
+    },
+    {
+      "path": "requirements/prefix-stability/tests/support/next-request-seal.mjs",
+      "sha256": "1dda50c1f241e8c98bcb14660372eefcf5413aa2570182e4bbb6e683da6c215b"
+    },
+    {
+      "path": "requirements/prefix-stability/tests/support/plan-observation-loader.mjs",
+      "sha256": "d2269049788e0af639adddb19f6bf5a39f6a26bd8533b3b09179a03da9231988"
+    },
+    {
+      "path": "requirements/prefix-stability/tests/support/registered-prefix.mjs",
+      "sha256": "a964226c6a790dc226716c7d9cc1d94027fa87768ae14e4be343a77738885b48"
+    },
+    {
+      "path": "src/Wanxiangshu/Verification/JournalPortObservationSurface.fs",
+      "sha256": "d4c7979f186026684adeafe3eecbde8095e13a0a52a10a2319e3b208f936eff1"
+    },
+    {
+      "path": "src/Wanxiangshu/Verification/JournalPortObservationSurface.fsi",
+      "sha256": "49480c05b66425ba97d124f3e440805695a9fd3577d16231941003d7fd689798"
+    }
+  ],
+  "unchangedProduction": [
+    {
+      "path": "src/Wanxiangshu/Interaction/Dispatch/PrefixWorkflow.fs",
+      "sha256": "382c32654186e8e909d6091529a91170c3f6e8c14a6e92538fe9d67b6ed65bf6",
+      "matchesParent": true
+    },
+    {
+      "path": "src/Wanxiangshu/Composition/Durable/PrefixJournalAdapter.fs",
+      "sha256": "ea11dd3d88c0505773bf1c9ebf16adb9ab42600e69c373f4507324351919b696",
+      "matchesParent": true
+    },
+    {
+      "path": "src/Wanxiangshu/OpenCode/Host/PluginRecoveryScope.fs",
+      "sha256": "f3db26abcf0626102742d5759dc4a1e26c720ed80df9121e17288c3d87c38d6f",
+      "matchesParent": true
+    },
+    {
+      "path": "src/Wanxiangshu/OpenCode/Plugin/PluginTransforms.fs",
+      "sha256": "f5ed33651997cff3956fcf2ad79c6d5b05151aef4d36d191ea26f8b3a61b5472",
+      "matchesParent": true
+    },
+    {
+      "path": "src/Wanxiangshu/OpenCode/Host/ChatAdmission/ProviderLifecycle.fs",
+      "sha256": "5a59d3598e9e4d6db5ca6dc8e32e5da3b1f25bed33fe3021a7cde78ac11165be",
+      "matchesParent": true
+    }
+  ],
+  "canonicalBuild": {
+    "generation": 450,
+    "mode": "focused",
+    "sourceAndSignatureItems": 912,
+    "fableSeconds": 23.494,
+    "wrapperSeconds": 25.554,
+    "compilerInputDigest": "44a7653263ea5090dfb483d5fbc11509a704306ce0b44372b94013115e2a36ca",
+    "surfaces": 175,
+    "loadedJsModules": 848
+  },
+  "regularPrefix": {
+    "file": "requirements/prefix-stability/tests/005.test.mjs",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 1,
+    "todo": 0,
+    "wallSeconds": 10.51,
+    "runnerExitCode": 0,
+    "cleanupAccepted": true,
+    "verdictSilenceMs": 5000,
+    "skip": "existing compiler integration tier"
+  },
+  "fullPrefix": {
+    "file": "requirements/prefix-stability/tests/005.test.mjs",
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "wallSeconds": 80.99,
+    "runnerExitCode": 0,
+    "cleanupAccepted": true,
+    "fableCalls": 9,
+    "independentPositiveRoots": 5,
+    "legalProviderRepeat": 1,
+    "journalNegativeCompiles": 3,
+    "compilerCache": false,
+    "compilerAndLeafTimeoutMs": 180000,
+    "verdictSilenceMs": 185000,
+    "suiteBackstopMs": 300000,
+    "regularCasesOverlap": true
+  },
+  "compileRoots": [
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-materialization.fsproj",
+      "shards": 16,
+      "sources": 40,
+      "sourceDigest": "4d4681ba737d11cb1cd36ba03c26f2e91abe1284cbf28bbd0cc913ff142e7114",
+      "projectDigest": "5a8308aa56a5a7a717e1833169ff6cc031b315e5ace31a528deeb8c378a0aac5",
+      "compilerExitCode": 0,
+      "signal": null
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-port.fsproj",
+      "shards": 33,
+      "sources": 71,
+      "sourceDigest": "cd726b07216073c19cd86642dcd9ea5504771a1ac18b96a34c7d057e5225a15e",
+      "projectDigest": "30464c32e2ec5773f6ae1db8f4cf5287d7881a14c02d3866399bc847f75400f7",
+      "compilerExitCode": 0,
+      "signal": null
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.dispatch-prefix-workflow.fsproj",
+      "shards": 40,
+      "sources": 84,
+      "sourceDigest": "73303e8e90da573c328e8292a4591bd5700dc875dafa0e2931aab23040c20117",
+      "projectDigest": "5c4077de8dda1c94da025f98a11c9e8d67a4baceaeef3bf7e2e6e66c109b374a",
+      "compilerExitCode": 0,
+      "signal": null
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.prefix-stability.context-prefix-wire-surface.fsproj",
+      "shards": 42,
+      "sources": 87,
+      "sourceDigest": "8434e2c3417d13eea26ad47432fc6806c295c25daf59738cef53ae3a7e63fdab",
+      "projectDigest": "5f229cb5efe22514fbb096827fc09884f04ecd1a52690cdcf69717cfab5f2fd5",
+      "compilerExitCode": 0,
+      "signal": null
+    },
+    {
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-adapter-prefix.fsproj",
+      "shards": 88,
+      "sources": 211,
+      "sourceDigest": "a495b3169a9874d465f4a6c65d3e2af24cd8175e167d95bebcb54611be3fb630",
+      "projectDigest": "8460548782c96140dfa1c09af65c6ace4de0bcb8a2405562ec36aa5f04a147ba",
+      "compilerExitCode": 0,
+      "signal": null
+    }
+  ],
+  "scenarios": {
+    "setup": [
+      "registered authority and Host history",
+      "actual Blogger Chronicle and native checkpoint",
+      "registered first failure writes FailureRecorded",
+      "licensed retry freezes its actual prefix probe"
+    ],
+    "parkedRebase": {
+      "epoch": "0",
+      "failureCount": 1,
+      "originalPlanRetained": true,
+      "rebaseFacts": 0,
+      "successFacts": 0,
+      "nextFreezeObserved": false,
+      "nextProviderStartedFacts": 0
+    },
+    "parkedSuccess": {
+      "epoch": "1",
+      "failureCount": 1,
+      "originalPlanRetained": true,
+      "rebaseFacts": 1,
+      "successFacts": 0,
+      "nextFreezeObserved": false,
+      "nextProviderStartedFacts": 0
+    },
+    "rebaseRefused": {
+      "refusedTargetAppends": 1,
+      "error": "prefix rebase commit failed",
+      "epoch": "0",
+      "failureCount": 1,
+      "originalFrozenPlanRetained": true,
+      "nextFreezeObserved": false,
+      "nextProviderStartedFacts": 0,
+      "retryAfterRestoringWriter": true
+    },
+    "successRefused": {
+      "refusedTargetAppends": 1,
+      "error": "provider success commit failed",
+      "epoch": "1",
+      "failureCount": 1,
+      "originalFrozenPlanRetained": true,
+      "rebaseFacts": 1,
+      "successFacts": 0,
+      "nextFreezeObserved": false,
+      "nextProviderStartedFacts": 0,
+      "retryAddsNoSecondRebase": true
+    },
+    "completed": {
+      "epoch": "1",
+      "failureCount": 0,
+      "actualPlanConsumptions": 1,
+      "oldPlanAbsentAtNextFreeze": true,
+      "rebaseFacts": 1,
+      "successFacts": 1,
+      "exactSolvingProviderRun": true,
+      "nextProviderStartedFacts": 1,
+      "nextProviderRun": "run-msg-seal-next",
+      "projectionChoice": "UseCommittedEpoch",
+      "syntheticIdFromCommittedRebase": true,
+      "actualMemoryPartsEqualSuccessfulFrozenCandidate": true
+    }
+  },
+  "mutation": {
+    "target": "dist/Interaction/Dispatch/PrefixWorkflow.js",
+    "change": "ConsumeAttemptPlan before settlement",
+    "childExitCode": 1,
+    "signal": null,
+    "requiredAssertion": "a parked rebase must retain the frozen plan",
+    "normalSameProofPasses": true
+  },
+  "regression": {
+    "files": 13,
+    "passed": 202,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 5,
+    "wallSeconds": 24.71,
+    "runnerExitCode": 1,
+    "exitReason": "existing TODOs",
+    "cleanupAccepted": true
+  },
+  "documentGates": {
+    "files": 2,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "wallSeconds": 0.6,
+    "runnerExitCode": 0,
+    "cleanupAccepted": true
+  },
+  "finalCheck": {
+    "exitCode": 0,
+    "fantomasCheckExitCode": 0,
+    "jsSyntaxCheckExitCode": 0,
+    "diffCheckExitCode": 0
+  },
+  "graph": {
+    "subsystems": 28,
+    "shards": 281,
+    "productionSources": 778,
+    "projectReferences": 2366,
+    "shardDag": true,
+    "subsystemCycleSizes": [
+      7,
+      6,
+      2
+    ]
+  },
+  "todoClosed": "prefix-stability005 actual next-attempt seal after durable success or append refusal",
+  "selectedExistingTodos": [
+    "prefix-stability001 actual outbound provider wires",
+    "prefix-stability009 actual Host canonical XTrace source",
+    "provider-attempt-recovery011 actual render of immutable admitted plan",
+    "provider-attempt-recovery016 all ordinary/Blogger eligible success kinds",
+    "provider-attempt-recovery020 actual replay without licence side effects"
+  ],
+  "logs": {
+    "canonicalBuild": {
+      "path": "/private/tmp/vibe-r07a-seal-first-build.log",
+      "sha256": "ad16b3d23e2a59fd122ecefcc248863178d6cfa2c5d9304b27bfbf0202fd4d07"
+    },
+    "regularPrefix": {
+      "path": "/private/tmp/vibe-r07a-seal-bytes-tests.log",
+      "sha256": "c07b9f3feb8023df742fa74a260990365e9c1191cfdda64d1694423f62c98691"
+    },
+    "fullPrefix": {
+      "path": "/private/tmp/vibe-r07a-seal-candidate-integration.log",
+      "sha256": "aa971dc0e5d8c51e70e189222d85ffead7e641d42c6626e747b16149a219f9a3"
+    },
+    "regression": {
+      "path": "/private/tmp/vibe-r07a-seal-final-regression.log",
+      "sha256": "49dd9ea7fb3da51b5aeef60aa879ef5f6cb1a5e2965d32893af9ee3478dd7e27"
+    },
+    "check": {
+      "path": "/private/tmp/vibe-r07a-seal-candidate-check.log",
+      "sha256": "5f53e45563957690585e4075c0ad91561223d6b6dd469b3b3784afe4dbe0634f"
+    },
+    "documentGates": {
+      "path": "/private/tmp/vibe-r07a-seal-document-tests.log",
+      "sha256": "b3e56e5cc93684f33d73966e9a2b6d9a5500b1974430b4a2bce4986e68be5bf2"
+    },
+    "candidateRefresh": {
+      "path": "/private/tmp/vibe-r07a-seal-candidate-build.log",
+      "sha256": "0441f6d4dd1b146648fd9e891b4b51c234703478f339ec144f0afcaa952c1d76"
+    },
+    "initialObservationFailure": {
+      "path": "/private/tmp/vibe-r07a-seal-diagnostic-tests.log",
+      "sha256": "efcd04c62d05e223b4988ee03701d9d8fbbc04fb5ceebfa274e1f2ab4297a770"
+    },
+    "duplicateObservationFailure": {
+      "path": "/private/tmp/vibe-r07a-seal-refined-tests.log",
+      "sha256": "36293eda499330c3d59ff5885679803e4a599af367600cdc0cb9a94ae69bd855"
+    }
+  }
+}

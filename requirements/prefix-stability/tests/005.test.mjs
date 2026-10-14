@@ -39,7 +39,43 @@ test('WHAT[prefix-stability-005] CTX_012_a_replayed_rebase_is_reported_as_stale'
   assert.deepEqual(once.snapshot, candidate({ cutoff: 4, seal: 'seal-P1' }))
 })
 
-test.todo('WHAT[prefix-stability-005] actual next-attempt seal observes a durably committed rebase and refuses progression after append failure; GAP-106')
+for (const target of ['success', 'prefix-rebase', 'provider-success']) {
+  test(`WHAT[prefix-stability-005] registered next-request seal waits for ${target}`, async () => {
+    if (process.env.WXS_PREFIX_PLAN_OBSERVATION === '1') {
+      const { registeredSealScenario } = await import('./support/next-request-seal.mjs')
+      await registeredSealScenario(target)
+      return
+    }
+    const { execFile } = await import('node:child_process')
+    const { promisify } = await import('node:util')
+    const { join } = await import('node:path')
+    const env = { ...process.env, WXS_PREFIX_PLAN_OBSERVATION: '1' }
+    delete env.NODE_TEST_CONTEXT
+    const result = await promisify(execFile)(process.execPath, [
+      '--experimental-loader', join(import.meta.dirname, 'support/plan-observation-loader.mjs'),
+      '--test', '--test-reporter=tap', '--test-name-pattern', `registered next-request seal waits for ${target}$`, import.meta.filename,
+    ], { env }).catch(error => assert.fail(`${error.stdout}\n${error.stderr}`))
+    assert.match(result.stdout, /# pass 1\b/)
+    assert.match(result.stdout, /# fail 0\b/)
+  })
+}
+
+test('WHAT[prefix-stability-005] the registered seal proof detects premature plan consumption', async () => {
+  const { execFile } = await import('node:child_process')
+  const { promisify } = await import('node:util')
+  const { join } = await import('node:path')
+  const env = { ...process.env, WXS_PREFIX_PLAN_OBSERVATION: '1', WXS_PREFIX_EARLY_CONSUME: '1' }
+  delete env.NODE_TEST_CONTEXT
+  await assert.rejects(() => promisify(execFile)(process.execPath, [
+    '--experimental-loader', join(import.meta.dirname, 'support/plan-observation-loader.mjs'),
+    '--test', '--test-reporter=tap', '--test-name-pattern', 'registered next-request seal waits for success$', import.meta.filename,
+  ], { env }), error => {
+    assert.equal(error.code, 1)
+    assert.equal(error.signal, null)
+    assert.match(error.stdout, /a parked rebase must retain the frozen plan/)
+    return true
+  })
+})
 
 for (const refused of [false, true]) {
   test(`WHAT[prefix-stability-005] the real Journal ${refused ? 'refuses the whole prefix transition' : 'publishes the prefix epoch and auxiliary retirement together'}`, async () => {

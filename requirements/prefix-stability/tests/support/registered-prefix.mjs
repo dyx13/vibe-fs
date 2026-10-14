@@ -182,13 +182,17 @@ export const continuation = async (hooks, runtime, session, physical, origin = '
   return { physical, message: output.message, run, projected }
 }
 
-export const completeToolAttempt = async (session, attempt, hooks) => {
+export const recordCompletedToolAttempt = (session, attempt) => {
   attempt.run.info.finish = 'tool-calls'
   attempt.run.info.time.completed = session.clock + 2
   attempt.run.parts = [{ type: 'tool-call', tool: 'read', callID: `call-${attempt.physical}`, args: { path: 'tail' } }]
   session.messages.push(structuredClone(attempt.run), { info: { id: `result-${attempt.physical}`, sessionID: session.sessionID, role: 'tool', time: { created: session.clock + 2 } }, parts: [{ type: 'tool-result', callID: `call-${attempt.physical}`, output: 'tail result' }] })
   session.push(structuredClone(session.messages.at(-1)))
   session.push({ info: { id: `next-${attempt.physical}`, sessionID: session.sessionID, parentID: attempt.physical, role: 'assistant', agent: 'manager', providerID: 'provider', modelID: 'manager-model', time: { created: session.clock + 3 } }, parts: [] })
+}
+
+export const completeToolAttempt = async (session, attempt, hooks) => {
+  recordCompletedToolAttempt(session, attempt)
   return session.transform(hooks)
 }
 
