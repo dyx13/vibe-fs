@@ -23,7 +23,7 @@
 
 ## 运行
 
-现有选文件运行器并不单独证明 structured-workflow-012 要求的局部开发闭环。局部入口还须证明实际所选产物、对应命题执行、冷启动和连续修改，并满足 verification-system-016 的固定输入与新鲜度要求；全仓 build 后选跑文件不能代替这些义务。
+structured-workflow-012 允许首次完整构建建立基线，后续局部验证可沿用新鲜的canonical dist与现有选文件运行器，不要求空dist或新增入口。验收仍须证明基线后连续修改的实际编译范围、产物和对应命题执行，并满足 verification-system-016 的固定输入与新鲜度要求；只选跑文件不能代替这些证据。011的全部分片独立编译证明另行验收，不由首次完整构建代证。
 
 在仓库根目录执行 `node scripts/build.mjs`，然后通过正式运行器选择本包存在的 `NNN.test.mjs`。018 的 TODO 明确阻断完整验收。真实 Fable 边界检查在 012/013，开启 integration 后经现有监督器执行；只使用 Fable，不使用 `dotnet build`。Change 最小证明的具体调用和范围见[施工计划 R07e](../../../proposals/子系统拆分收尾计划-2026-10-13.md)。
 
