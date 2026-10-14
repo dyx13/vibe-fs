@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../../../../src/Wanxiangshu/Wanxiangshu.Owner.semantic-trace.context-trace-semantictracesurface.fsproj"/>
+    <ProjectReference Include="../../../../../src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-turnevidence.fsproj"/>
+    <Compile Include="MessageFlow.fs" />
+  </ItemGroup>
+</Project>

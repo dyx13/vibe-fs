@@ -41,7 +41,7 @@ type XTraceStableCaptureEligibility =
     | DuplicateHostMessageIdentity
 
 type XTraceMessageObservation =
-    { Message: ProviderWireCapture.CapturedWireMessage
+    { Message: CapturedWireMessage
       HostMessageId: string option
       Origin: PromptAuthority.PromptOrigin option }
 
@@ -50,8 +50,6 @@ type XTraceMessageCapture =
       Current: XTraceProjectionState option }
 
 module XTraceCapture =
-    val semanticPart: part: MessagePart -> SemanticPart option
-
     val stableCaptureEligibility:
         journal: AgentJournal option ->
         sessionId: SessionId ->
@@ -107,7 +105,7 @@ module XTraceCapture =
         journal: AgentJournal option ->
         sessionId: SessionId ->
         messageIds: string list option ->
-        messages: ProviderWireCapture.CapturedWireMessage list ->
+        messages: CapturedWireMessage list ->
             Task<Result<XTraceCaptureReceipt, XTraceCaptureError>>
 
     val captureSessionMessagesWithReceipt:

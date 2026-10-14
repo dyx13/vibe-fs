@@ -15,20 +15,6 @@ open Wanxiangshu.Foundation.Identity
 /// parallel parser.
 module ProviderWireCapture =
 
-    /// One decoded wire part plus the stable Host ToolPart address when present.
-    type CapturedWirePart =
-        { WirePart: WirePart
-          HostPartId: HostMessagePartId option
-          HostToolPartId: HostToolPartId option }
-
-    /// A decoded wire message retaining the assistant provider-run identity.
-    /// The normal wire projection deliberately omits source addresses; capture
-    /// needs them to bind a tool call to its durable XTrace range.
-    type CapturedWireMessage =
-        { Role: string
-          ProviderRun: ProviderRunIdentity option
-          Parts: CapturedWirePart list }
-
     let private capturePart (rawPart: obj) : CapturedWirePart option =
         ProviderWireDecode.decodePart rawPart
         |> Option.map (fun wirePart ->

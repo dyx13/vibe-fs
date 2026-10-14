@@ -4,6 +4,7 @@ open System
 open Wanxiangshu.Composition.Turn
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.OpenCode
+open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Strength.Replica
 
 /// STRENGTH-007: maps Host reconciliation material onto the domain's causal

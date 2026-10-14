@@ -1,5 +1,7 @@
 # semantic-trace 测试
 
+002新增受监督的真实Fable边界验证：纯消息转换不取得Journal或持久化capture入口，同一探针须先在真实提供方编绿。生产Snapshot解码、CompletedTurn构造、Repair/Strength分类和公开capture receipt在同一输入上保留各自语义，沿真实Journal核字节、工具/部件身份、重放幂等与重开。LegalMessageConversion覆盖交错Activity、短PartIds、工具顺序不同和缺失身份；隔离源码提前过滤Activity后，编译仍绿但原身份断言拒绝，恢复后通过。此范围不关闭其它Trace链、R02全部元数据、R08或GAP-033。原预算与既有compiler/helper/监督器不变。
+
 本目录说明实际证据，不增加 WHAT 以外的规则。
 
 - 001/003/004/006 检查真实投影的 Opening、Terminal、游标、溯源和精确范围。003 另使用真实日志并发捕获，确认游标不重叠；006 覆盖缺失身份、夹入其它身份、游标缺口和半开边界。

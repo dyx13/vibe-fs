@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <WanxiangshuSubsystem>provider</WanxiangshuSubsystem>
+    <WanxiangshuCompileShard>provider-message-evidence</WanxiangshuCompileShard>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Participant/Provider/MessageEvidence.fsi" />
+    <Compile Include="Participant/Provider/MessageEvidence.fs" />
+  </ItemGroup>
+</Project>

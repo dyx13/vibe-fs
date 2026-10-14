@@ -12,6 +12,8 @@ XTrace 是工作会话唯一的原始语义事实源，只能追加。Opening �
 
 Stable historical insertion 须有 durable journal、非 legacy positional trace，且普通 Host 消息身份全部存在、非空、互异。资格查询与捕获复用 trace 所有者的同一纯裁决，消费者不得重写判断。
 
+Snapshot到capture的纯转换先按原位置配对Parts/PartIds、按callId关联ToolParts，再丢弃Activity；缺少物理part身份时只沿用原tool-part身份补足，不以过滤后的数组下标重建身份。Text、Reasoning、参数和结果字节原样传递。仅显式语义转换丢弃call身份；该纯转换不取得Journal或持久化捕获入口。
+
 ## [003] cursor 严格单调、独立于 Host 坐标
 
 游标独立于 Host 下标与轮次，在会话内严格递增；重复或回退的追加拒绝。同一会话的并发捕获须在分配游标前串行化，不能先分配冲突游标再拒绝一方。该顺序不授予业务进度或恢复资格；compaction 与重锚不得重置已有游标和历史覆盖事实。

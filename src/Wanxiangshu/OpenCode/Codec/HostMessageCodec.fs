@@ -3,6 +3,7 @@ namespace Wanxiangshu.OpenCode
 open System
 open Fable.Core
 open Fable.Core.JsInterop
+open Wanxiangshu.Participant.Provider
 
 /// Raw OpenCode part codec. This is the only message-part module allowed to
 /// inspect dynamic Host objects.

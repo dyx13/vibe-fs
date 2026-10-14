@@ -12,6 +12,16 @@ module ProviderProjection =
 
     type WireMessage = { Role: string; Parts: WirePart list }
 
+    type CapturedWirePart =
+        { WirePart: WirePart
+          HostPartId: HostMessagePartId option
+          HostToolPartId: HostToolPartId option }
+
+    type CapturedWireMessage =
+        { Role: string
+          ProviderRun: ProviderRunIdentity option
+          Parts: CapturedWirePart list }
+
     type ProviderWireProjection =
         { ProviderId: string option
           ModelId: string option

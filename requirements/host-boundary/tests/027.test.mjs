@@ -56,7 +56,7 @@ test('WHAT[host-boundary-027] production inventory closes Host codec audiences w
   assert.deepEqual(relSources(message), ['src/Wanxiangshu/OpenCode/Codec/HostMessageCodec.fs'])
 
   const messageSources = closureSources(message, projects)
-  assert.ok(messageSources.has('src/Wanxiangshu/OpenCode/Host/Message.fs'))
+  assert.ok(messageSources.has('src/Wanxiangshu/Participant/Provider/MessageEvidence.fs'))
   for (const unrelated of [
     'src/Wanxiangshu/OpenCode/Codec/OpencodeTypes.fs',
     'src/Wanxiangshu/OpenCode/Signals/EventContract.fs',

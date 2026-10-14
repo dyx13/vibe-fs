@@ -9,6 +9,7 @@ open Wanxiangshu.Composition.Durable
 open Wanxiangshu.Context.Companion
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Interaction.Authority
+open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Participant.Provider.Projection.ProviderProjection
 open Wanxiangshu.Persistence.Journal
 open Wanxiangshu.Foundation
@@ -87,19 +88,14 @@ module SemanticTraceSurface =
 
     let private messagePartOf value =
         match text (field value "kind") with
-        | "text" -> Wanxiangshu.OpenCode.MessagePart.Text(text (field value "text"))
-        | "reasoning" -> Wanxiangshu.OpenCode.MessagePart.Reasoning(text (field value "text"))
+        | "text" -> MessagePart.Text(text (field value "text"))
+        | "reasoning" -> MessagePart.Reasoning(text (field value "text"))
         | "tool-call"
         | "tool_call" ->
-            Wanxiangshu.OpenCode.MessagePart.ToolCall(
-                text (field value "callId"),
-                text (field value "name"),
-                text (field value "args")
-            )
+            MessagePart.ToolCall(text (field value "callId"), text (field value "name"), text (field value "args"))
         | "tool-result"
-        | "tool_result" ->
-            Wanxiangshu.OpenCode.MessagePart.ToolResult(text (field value "callId"), text (field value "result"))
-        | "activity" -> Wanxiangshu.OpenCode.MessagePart.Activity(text (field value "activity"))
+        | "tool_result" -> MessagePart.ToolResult(text (field value "callId"), text (field value "result"))
+        | "activity" -> MessagePart.Activity(text (field value "activity"))
         | other -> failwith $"SemanticTraceSurface: unknown capture part '{other}'"
 
     let private projectionOf value : ProviderSemanticProjection =
@@ -235,7 +231,7 @@ module SemanticTraceSurface =
     let mapPart value : obj option =
         value
         |> messagePartOf
-        |> XTraceCapture.semanticPart
+        |> XTraceMessageConversion.semanticPart
         |> Option.map semanticPartView
 
     let semanticText value : obj = semanticPartView (SemanticText value)

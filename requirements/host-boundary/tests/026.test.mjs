@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { compileOwnerProject } from '../../../scripts/lib/owner-compile.mjs'
 import { integrationTest } from '../../verification-system/tests/support/tier-gate.mjs'
+import { withHostCompiler } from './support/contract-compiler.mjs'
 
 integrationTest('WHAT[host-boundary-026] real Fable compiles Host diagnostics with only its declared dependencies', async () => {
   const root = resolve(import.meta.dirname, '../../..')
@@ -24,118 +25,10 @@ integrationTest('WHAT[host-boundary-026] real Fable compiles Host diagnostics wi
 })
 
 {
-  const { createHash } = await import('node:crypto')
-  const { mkdirSync, readFileSync, readdirSync, symlinkSync, writeFileSync } = await import('node:fs')
-  const { basename, dirname, relative } = await import('node:path')
-  const { pathToFileURL } = await import('node:url')
-  const { readCompileShardInventory } = await import('../../../scripts/lib/compile-shards.mjs')
-  const { planOwnerCompile, materializeOwnerCompile } = await import('../../../scripts/lib/owner-compile.mjs')
-  const root = resolve(import.meta.dirname, '../../..')
-  const sourceRoot = join(root, 'src/Wanxiangshu')
-  const fixtureRoot = join(import.meta.dirname, 'fixtures/session-contract-boundary')
   const sessionProject = 'Wanxiangshu.Owner.host-boundary.host-session-contract.fsproj'
   const snapshotProject = 'Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj'
   const runtimeProject = 'Wanxiangshu.Owner.host-boundary.opencode-host-sessionquiescencegate.fsproj'
   const chatProject = 'Wanxiangshu.Owner.managed-chat-execution.execution-session-chatexecution-facts.fsproj'
-  const erasedContracts = new Set(['OpenCode/Host/SessionHostPort.js', 'OpenCode/Host/SessionRuntimeOwner.js'])
-  const emittedFiles = (directory) => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const file = join(directory, entry.name)
-    return entry.isDirectory() ? emittedFiles(file) : [file]
-  })
-
-  const withHostCompiler = async (t, run) => {
-    const scratch = mkdtempSync(join(tmpdir(), 'wxs-host-session-compile-'))
-    const inventory = readCompileShardInventory({ repositoryRoot: root })
-    const observedInputs = new Map()
-    const capture = (file) => {
-      const bytes = readFileSync(file)
-      if (observedInputs.has(file)) assert.deepEqual(bytes, observedInputs.get(file), `compiler input changed: ${file}`)
-      else observedInputs.set(file, bytes)
-      return bytes
-    }
-    const assertUnchanged = () => {
-      for (const [file, bytes] of observedInputs) assert.deepEqual(readFileSync(file), bytes, `compiler input changed: ${file}`)
-    }
-    const load = async (result, suffix) => {
-      const matches = emittedFiles(result.outputPath).filter((file) => file.endsWith('/' + suffix))
-      if (matches.length === 0 && erasedContracts.has(suffix)) return
-      assert.equal(matches.length, 1, `the fresh compiler output must contain exactly one ${suffix}`)
-      return import(pathToFileURL(matches[0]).href)
-    }
-    const compile = async (name, label, probeName, expectedMissing, modules) => {
-      assertUnchanged()
-      const projectPath = join(sourceRoot, name)
-      const plan = planOwnerCompile({ projectPath, aggregatePath: null })
-      for (const file of plan.projectPaths) assert.equal(capture(file).toString('utf8'), plan.projectContents.get(file))
-      const inputHash = createHash('sha256')
-      const sourceFiles = [...plan.compileItems, ...(probeName ? [join(fixtureRoot, probeName)] : [])]
-      const compileItems = sourceFiles.map((file) => {
-        const bytes = capture(file)
-        inputHash.update(relative(root, file)).update('\0').update(bytes).update('\0')
-        const sourcePath = file.startsWith(fixtureRoot + '/') ? join('CompilerProbe', basename(file)) : relative(sourceRoot, file)
-        const destination = join(scratch, 'inputs', label, sourcePath)
-        mkdirSync(dirname(destination), { recursive: true })
-        writeFileSync(destination, bytes)
-        return destination
-      })
-      const isolatedPlan = { ...plan, compileItems, forceCompileCache: false }
-      const options = {
-        projectPath,
-        aggregatePath: null,
-        scratchRoot: join(scratch, 'compiler'),
-        rootPropsPath: join(sourceRoot, 'Directory.Build.props'),
-        stdio: 'pipe',
-        compilePlan: isolatedPlan,
-      }
-      const materialized = materializeOwnerCompile(isolatedPlan, options)
-      const flatProject = readFileSync(materialized.projectPath, 'utf8')
-      assert.doesNotMatch(flatProject, /<ProjectReference\b/)
-      assert.equal((flatProject.match(/<Compile Include=/g) ?? []).length, compileItems.length)
-      const result = await compileOwnerProject(options)
-      assertUnchanged()
-      t.diagnostic(JSON.stringify({
-        label, root: name, shards: plan.projectPaths.length,
-        sources: plan.compileItems.filter((file) => file.endsWith('.fs')).length,
-        inputSha256: inputHash.digest('hex'), code: result.code, signal: result.signal,
-      }))
-      const diagnostics = `${result.stdout}\n${result.stderr}`
-      assert.equal(result.signal, null, 'a terminated compiler does not prove a capability boundary')
-      if (expectedMissing) {
-        assert.equal(result.ok, false, `${expectedMissing} must not be available through the Session contract`)
-        assert.notEqual(result.code, 0)
-        for (const capability of [expectedMissing].flat()) {
-          assert.match(diagnostics, new RegExp(`The (?:type|value or constructor) '${capability}' is not defined`), diagnostics)
-        }
-        assert.ok(diagnostics.includes(probeName), 'the rejection must identify the capability probe')
-        return
-      }
-      assert.equal(result.ok, true, diagnostics)
-      assert.equal(result.code, 0)
-      const ownedModules = modules ?? inventory.projects.get(projectPath).implementationFiles
-        .map((file) => relative(sourceRoot, file).replace(/\.fs$/, '.js'))
-      for (const suffix of ownedModules) await load(result, suffix)
-      if (probeName) {
-        const probe = await load(result, 'CompilerProbe/' + probeName.replace(/\.fs$/, '.js'))
-        if (probeName === 'LegalSession.fs') probe.verify()
-      }
-    }
-    try {
-      for (const file of ['Directory.Build.props', 'src/Wanxiangshu/Directory.Build.props', 'src/Wanxiangshu/compile-order.txt', '.config/dotnet-tools.json', 'global.json', 'package-lock.json']) capture(join(root, file))
-      const packageConfig = JSON.parse(capture(join(root, 'package.json')))
-      writeFileSync(join(scratch, 'package.json'), JSON.stringify({ type: 'module', imports: packageConfig.imports }))
-      symlinkSync(join(root, 'node_modules'), join(scratch, 'node_modules'), 'dir')
-      const envelope = capture(join(root, 'resources/degeneration-guard/envelope/LoopDetectorEnvelope.js'))
-      const envelopePath = join(scratch, 'dist/Execution/Session/LoopDetectorEnvelope.js')
-      mkdirSync(dirname(envelopePath), { recursive: true })
-      writeFileSync(envelopePath, envelope)
-      assert.deepEqual(readFileSync(envelopePath), envelope)
-      await run(compile)
-    } finally {
-      rmSync(scratch, { recursive: true, force: true })
-      assertUnchanged()
-    }
-  }
-
   integrationTest('WHAT[host-boundary-026] real Fable compiles Session consumers and rejects unrelated capabilities', async (t) => {
     await withHostCompiler(t, async (compile) => {
       await compile(sessionProject, 'session', 'LegalSession.fs')
@@ -168,6 +61,17 @@ integrationTest('WHAT[host-boundary-026] real Fable compiles Host diagnostics wi
       await compile(sessionProject, 'forbidden-snapshot', 'ForbiddenSessionSnapshot.fs', ['SessionMessage', 'ISessionSnapshotPort'])
     })
   })
+
+  integrationTest('WHAT[host-boundary-026] real Fable separates complete message evidence from SDK and snapshot capabilities', async (t) => {
+    await withHostCompiler(t, async (compile) => {
+      const evidence = 'Wanxiangshu.Owner.provider-projection.provider-message-evidence.fsproj'
+      await compile(evidence, 'message-evidence', 'LegalMessageEvidence.fs')
+      await compile(snapshotProject, 'legal-message-sdk', 'ForbiddenMessageSdk.fs')
+      await compile(evidence, 'forbidden-message-sdk', 'ForbiddenMessageSdk.fs', ['OpencodeModel', 'SessionMessage'])
+      await compile('Wanxiangshu.Owner.dispatch-protocol.execution-session-recovery-model.fsproj', 'turn-observation')
+    })
+  })
+
 }
 
 {
@@ -213,7 +117,7 @@ test('WHAT[host-boundary-026] host session contract plan excludes runtime and sp
   assert.ok(sources.includes('OpenCode/Host/SessionHostPort.fs'), 'host-session-contract must include SessionHostPort.fs')
   const forbidden = [
     'OpenCode/Host/SessionSnapshot.fs',
-    'OpenCode/Host/Message.fs',
+    'Participant/Provider/MessageEvidence.fs',
     'OpenCode/Codec/ToolHostCodec.fs',
     'OpenCode/Codec/ToolHostSurface.fs',
     'OpenCode/Codec/HostEventCodec.fs',
@@ -257,7 +161,7 @@ test('WHAT[host-boundary-026] host session contract plan excludes runtime and sp
   for (const consumer of ['opencode-host-opencodeport', 'strength-policy']) {
     const consumerSources = productionSources(planShard(consumer).plan)
     assert.ok(consumerSources.includes('OpenCode/Codec/OpencodeTypes.fs'))
-    for (const unrelated of ['OpenCode/Signals/EventContract.fs', 'OpenCode/Host/Message.fs']) {
+    for (const unrelated of ['OpenCode/Signals/EventContract.fs', 'Participant/Provider/MessageEvidence.fs']) {
       assert.ok(!consumerSources.includes(unrelated), `${consumer} must not acquire ${unrelated}`)
     }
   }
@@ -266,7 +170,7 @@ test('WHAT[host-boundary-026] host session contract plan excludes runtime and sp
 
   for (const consumer of ['host-signal-contract', 'delegation-sync-runtime', 'host-diagnostics-runtime', 'opencode-host-messagevisibility']) {
     const consumerSources = productionSources(planShard(consumer).plan)
-    for (const unrelated of ['Host/Digest.fs', 'OpenCode/Codec/OpencodeTypes.fs', 'OpenCode/Host/Message.fs']) {
+    for (const unrelated of ['Host/Digest.fs', 'OpenCode/Codec/OpencodeTypes.fs', 'Participant/Provider/MessageEvidence.fs']) {
       assert.ok(!consumerSources.includes(unrelated), `${consumer} must not acquire ${unrelated}`)
     }
   }
@@ -279,7 +183,7 @@ test('WHAT[host-boundary-026] host session contract plan excludes runtime and sp
   for (const required of ['Execution/Failure/Model.fs', 'Execution/Session/ChatExecution/Facts.fs', 'Persistence/Journal/RuntimePath.fs']) {
     assert.ok(adapterSources.includes(required), `signal adapter must compile its actual dependency ${required}`)
   }
-  for (const unrelated of ['OpenCode/Codec/OpencodeTypes.fs', 'OpenCode/Host/Message.fs']) {
+  for (const unrelated of ['OpenCode/Codec/OpencodeTypes.fs', 'Participant/Provider/MessageEvidence.fs']) {
     assert.ok(!adapterSources.includes(unrelated), `signal adapter must not acquire ${unrelated}`)
   }
 })
@@ -287,7 +191,6 @@ test('WHAT[host-boundary-026] Host source ownership follows subsystem inventory 
   const hostSources = [
     // EventContract was retagged to runtime-platform next to Digest/Quiescence; physical
     // host boundary ownership only applies to protocol/codec/adapter sources.
-    'OpenCode/Host/Message.fs',
     'OpenCode/Codec/ToolHostCodec.fs',
     'OpenCode/Codec/ToolHostSurface.fs',
     'OpenCode/Host/Diagnostic.fs',
@@ -298,6 +201,13 @@ test('WHAT[host-boundary-026] Host source ownership follows subsystem inventory 
     const owner = shardInventory.sourceProject.get(join(SOURCE_ROOT, source))
     assert.ok(owner, `${source} must have a unique production shard`)
     assert.equal(subsystemInventory.projects.get(owner.projectPath).subsystem, 'host', `${source} belongs to the Host subsystem`)
+  }
+  const messageOwner = shardInventory.sourceProject.get(join(SOURCE_ROOT, 'Participant/Provider/MessageEvidence.fs'))
+  assert.equal(subsystemInventory.projects.get(messageOwner.projectPath).subsystem, 'provider')
+  assert.deepEqual(productionSources(planShard('provider-message-evidence').plan), ['Participant/Provider/MessageEvidence.fs'])
+  const conversionSources = productionSources(planShard('context-trace-message-conversion').plan)
+  for (const forbidden of ['Persistence/Journal/AgentJournal.fs', 'Context/Trace/Capture.fs', 'OpenCode/Host/SessionSnapshotPort.fs', 'OpenCode/Codec/ProviderWireCapture.fs']) {
+    assert.ok(!conversionSources.includes(forbidden), `pure conversion must not acquire ${forbidden}`)
   }
   // SessionContract was retagged to provider because its shape carries provider request-kind
   // types and the dispatch layer consumes it through the boundary; keeping it in host would

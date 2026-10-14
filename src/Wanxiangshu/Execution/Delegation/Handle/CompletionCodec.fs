@@ -12,7 +12,6 @@ open Wanxiangshu.Execution.Delegation
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
-open Wanxiangshu.OpenCode
 
 /// EXEC-009 durable join payload. Written before `HandleCompleted`; join reads
 /// it after a controlled consume. Identity fields that already live on the

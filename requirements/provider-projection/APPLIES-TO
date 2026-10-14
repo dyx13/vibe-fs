@@ -3,6 +3,8 @@
 # Ordinary rules include matching paths. A leading ! excludes an exception from earlier includes.
 
 /src/Wanxiangshu/Participant/Provider/Projection/Model.fs
+/src/Wanxiangshu/Participant/Provider/MessageEvidence.fs
+/src/Wanxiangshu/Participant/Provider/MessageEvidence.fsi
 /src/Wanxiangshu/Participant/Provider/Projection/Intent.fs
 /src/Wanxiangshu/Participant/Provider/Projection/Planner.fs
 /src/Wanxiangshu/Participant/Provider/Projection/Renderer.fs

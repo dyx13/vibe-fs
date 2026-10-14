@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <WanxiangshuSubsystem>context</WanxiangshuSubsystem>
+    <WanxiangshuCompileShard>context-trace-message-conversion</WanxiangshuCompileShard>
+    <WanxiangshuSemanticOwner>semantic-trace</WanxiangshuSemanticOwner>
+    <WanxiangshuOwnerLocality>context-trace-message-conversion</WanxiangshuOwnerLocality>
+    <WanxiangshuOwnerLocalityKind>pure</WanxiangshuOwnerLocalityKind>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.provider-projection.participant-provider-projection-wire.fsproj"/>
+    <Compile Include="Context/Trace/MessageConversion.fsi"/>
+    <Compile Include="Context/Trace/MessageConversion.fs"/>
+  </ItemGroup>
+</Project>

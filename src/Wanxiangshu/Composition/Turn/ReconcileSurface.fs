@@ -8,6 +8,7 @@ open Fable.Core.JsInterop
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.OpenCode
+open Wanxiangshu.Participant.Provider
 
 /// JS boundary for reconciliation's classifiers, evidence, wakes and publish
 /// seals. Maps and idle permits remain opaque handles; decisions and

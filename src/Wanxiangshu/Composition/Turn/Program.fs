@@ -5,8 +5,6 @@ open Wanxiangshu.Execution.Failure
 open System
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
-open Wanxiangshu.Participant.Persona
-open Wanxiangshu.Participant.Provider
 
 /// Reconcile pure Domain: Evidence → Decision + publish seals.
 /// Zero task, zero mutable, zero I/O (FLOW-001 / FLOW-004).

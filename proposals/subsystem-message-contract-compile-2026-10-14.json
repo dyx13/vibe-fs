@@ -1,0 +1,959 @@
+{
+  "schemaVersion": 1,
+  "workPackage": "R02 complete message evidence and pure capture conversion",
+  "startedFrom": "f568f35b7",
+  "recordedHead": "e1d7e07bcde37fa80d2a5a97d5576dad0ee754f8",
+  "date": "2026-10-14",
+  "independentRoots": 22,
+  "compilerElapsedMsForIndependentRoots": 320167,
+  "budget": {
+    "perTestTimeoutMs": 180000,
+    "verdictSilenceMs": 185000,
+    "suiteBackstopMs": 300000,
+    "maximumFableConcurrency": 2
+  },
+  "graph": {
+    "subsystems": 28,
+    "shards": 282,
+    "sources": 779,
+    "references": 2369,
+    "shardDag": true,
+    "cyclicSubsystems": [
+      [
+        "application-composition",
+        "change",
+        "durable-composition",
+        "interaction",
+        "relay",
+        "sphinx"
+      ],
+      [
+        "delegation",
+        "process"
+      ]
+    ]
+  },
+  "roots": [
+    {
+      "label": "Wanxiangshu.Owner.delegation.delegation-recovery-runtime",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.delegation.delegation-recovery-runtime.fsproj",
+      "shards": 27,
+      "sources": 54,
+      "inputSha256": "4928ce9bd1f857d800051d84fa97de1f06408376aeccb6fc91360da6ca2a18c4",
+      "projectSha256": "67f731798be472801d313b688ef9a7845656c6f714ad6bbfd4fca6c63c1f4618",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 8013,
+      "cached": false,
+      "freshLoadedModules": [
+        "Execution/Delegation/Fork/ChildRecovery.js",
+        "Execution/Delegation/Handle/CompletionCodec.js",
+        "Execution/Delegation/Handle/Controller.js",
+        "Execution/Delegation/Handle/JoinDrain.js",
+        "Execution/Delegation/ChildRecoveryWorkflow.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.delegation.runtime",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.delegation.runtime.fsproj",
+      "shards": 198,
+      "sources": 549,
+      "inputSha256": "4bcfc6399de9120de78225022c223f17d10b43b239d6662d36be4dc56c597b5a",
+      "projectSha256": "2116fee5a4e8c825929254ee1640470700ca944ec73337dde084b947b4008e5d",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 30316,
+      "cached": false,
+      "freshLoadedModules": [
+        "Execution/Delegation/Fork/ChildRecoverySurface.js",
+        "Execution/Delegation/Handle/Surface.js",
+        "Execution/Delegation/DelegatedToolEstimateSurface.js",
+        "Execution/Delegation/Handle/FoldSurface.js",
+        "Execution/Delegation/HostTurnObservedSurface.js",
+        "Execution/Delegation/Fork/LifecycleSurface.js",
+        "Execution/Delegation/Fork/Surface.js",
+        "Execution/Delegation/HandoffSurface.js",
+        "Execution/Delegation/Fork/Host/Restart.js",
+        "Execution/Delegation/Fork/Host/JoinSurface.js",
+        "Execution/Delegation/Fork/Host/HostForkPtySurface.js",
+        "Execution/Delegation/Fork/OpenCode/JoinSurface.js",
+        "Execution/Delegation/Fork/CleanBreakSurface.js",
+        "Execution/Delegation/Fork/OpenCode/ToolSurface.js",
+        "Execution/Delegation/SyncDelegate/Surface.js",
+        "Execution/Delegation/Handle/JournalSurface.js",
+        "Execution/Delegation/Fork/Host/HostForkRunLifecycleSurface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.dispatch-protocol.composition-turn-reconcilesurface",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.composition-turn-reconcilesurface.fsproj",
+      "shards": 134,
+      "sources": 349,
+      "inputSha256": "5e41ac3f8d72cd66110d64c2c1a1c4beacc7b3b3630ebedbfd559d4c5b87a461",
+      "projectSha256": "63badfaa29944fca6d9bbaf1fe18cf3cb3ff87e689a5d33bcee6f2ac17095395",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 19345,
+      "cached": false,
+      "freshLoadedModules": [
+        "Composition/Turn/ReconcileSurface.js",
+        "Interaction/Dispatch/DispatchSurface.js",
+        "Interaction/Dispatch/RecoverySurface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.dispatch-protocol.execution-session-recovery-model",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.execution-session-recovery-model.fsproj",
+      "shards": 8,
+      "sources": 13,
+      "inputSha256": "ac074c478fed5080e013b9fcdc78d1b3bebad431f62a3ddb8eeffa15c70127fa",
+      "projectSha256": "0eb60576f3fa4d8d4b8ff8da2230eadae4b2197f1b58d1d8e1000848b2b24a23",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 5742,
+      "cached": false,
+      "freshLoadedModules": [
+        "Execution/Session/Recovery/Model.js",
+        "Composition/Turn/Program.js",
+        "Composition/Turn/Observation.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.dispatch-protocol.interaction-repair-completedturn",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.dispatch-protocol.interaction-repair-completedturn.fsproj",
+      "shards": 48,
+      "sources": 115,
+      "inputSha256": "761c3da46aae06b1fe25622fff86d7ab2fb48b1cc0e6170b5227a3a09ed36eb0",
+      "projectSha256": "a7e681626aa77f461fc144b0bebe10ca349655451b542a5bb6a5b02839e3a5b7",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 10497,
+      "cached": false,
+      "freshLoadedModules": [
+        "Interaction/Authority/Child.js",
+        "Interaction/Repair/CompletedTurn.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.durable-composition.durable-trace-capture",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj",
+      "shards": 81,
+      "sources": 203,
+      "inputSha256": "1a94954b50380b68e394b990613cc2100c84e62cac55121707bda051d7d357d2",
+      "projectSha256": "70180e1154c62696fcefd74f3a2f5ff9b56bc106f7b5f098af89ce4ebcae0667",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 14420,
+      "cached": false,
+      "freshLoadedModules": [
+        "Context/Trace/Capture.js",
+        "Context/Trace/Materialization.js",
+        "Context/Trace/TerminalTracePort.js",
+        "Context/Trace/TerminalReporter.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.host-boundary.host-message-codec",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-message-codec.fsproj",
+      "shards": 3,
+      "sources": 4,
+      "inputSha256": "14d702a0033b384ef97248563dadd3ef0b78834ad39506857db4d98fd32f4786",
+      "projectSha256": "deb1ea8bf3d4bec222befc9b4588d3350816b83d8daa7e6049be4925c8fd3c52",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 5177,
+      "cached": false,
+      "freshLoadedModules": [
+        "OpenCode/Codec/HostMessageCodec.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj",
+      "shards": 4,
+      "sources": 5,
+      "inputSha256": "a4518a359568a588c5a48fc4637a75f6df4edff39d1c195f19913850d53739a4",
+      "projectSha256": "9d2e1ce4aa7febf3d8372c848734f58d5695e1738fbb2e5b59b56b9ce482ac55",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 5258,
+      "cached": false,
+      "freshLoadedModules": [
+        "OpenCode/Host/SessionSnapshot.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.host-boundary.opencode-host-fissionhostsurface",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-fissionhostsurface.fsproj",
+      "shards": 180,
+      "sources": 482,
+      "inputSha256": "a04e89f9ef0771b9d0c09e433b7368deae39285bed7add90e65f81ff84479179",
+      "projectSha256": "145ae2367d9e8c64f2e7f4215291afb84fe6326f9051e840c17b80059f484046",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 27613,
+      "cached": false,
+      "freshLoadedModules": [
+        "OpenCode/Host/FissionHostSurface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.host-boundary.opencode-host-sessionquiescencegate",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.opencode-host-sessionquiescencegate.fsproj",
+      "shards": 16,
+      "sources": 35,
+      "inputSha256": "82e8dc363147d081f04f5d31d6c63f217f44d2d064cbc7d95986096b6dc2b6ec",
+      "projectSha256": "87daf0f79dc5ae5f4f359f94998b50eaf2667e1d74bc028f915d9e7bd754ff89",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 6840,
+      "cached": false,
+      "freshLoadedModules": [
+        "OpenCode/Host/SessionSnapshotPort.js",
+        "OpenCode/Host/SessionSnapshotSurface.js",
+        "OpenCode/Host/SessionQuiescenceGate.js",
+        "OpenCode/Host/ProviderAttemptStopFence.js",
+        "OpenCode/Host/ProviderAttemptStopFenceSurface.js",
+        "OpenCode/Host/QuiescenceSurface.js",
+        "OpenCode/Host/HostMessageProjection.js",
+        "OpenCode/Host/HostSessionContext.js",
+        "OpenCode/Host/HostBoundarySurface.js",
+        "OpenCode/Host/HostSessionContextSurface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.interaction-authority.runtime",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.interaction-authority.runtime.fsproj",
+      "shards": 50,
+      "sources": 121,
+      "inputSha256": "f6f59b2b31c2d32532bf7f19dc55d86df71d6bce46d439b08d9cf86166ca87c0",
+      "projectSha256": "28691234a1a55c72e2a4ee6db031d06005eb963f64426e05b9453052a74f2bd7",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 11559,
+      "cached": false,
+      "freshLoadedModules": [
+        "Interaction/Authority/Surface.js",
+        "Interaction/Authority/RuntimeSurface.js",
+        "Interaction/Repair/CompletedTurnSurface.js",
+        "OpenCode/Host/ChatAdmission/IntentSurface.js",
+        "OpenCode/Host/TerminalPolicySurface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.opencode-plugin.plugin-composition",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.opencode-plugin.plugin-composition.fsproj",
+      "shards": 257,
+      "sources": 719,
+      "inputSha256": "5e9125dc3d9fa581d1e2d94b366ded93f06cf287a174ef2d61beef700ce1aa94",
+      "projectSha256": "e9e6f702b76e14ec328b06d17b2f97f263954f6d3a5dfbe35f1137ceec1d5924",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 43168,
+      "cached": false,
+      "freshLoadedModules": [
+        "OpenCode/Host/PluginHostInterop.js",
+        "OpenCode/Host/ProtocolArgumentStash.js",
+        "OpenCode/Host/ManagerReviewContract.js",
+        "OpenCode/Host/ToolSchemaJson.js",
+        "OpenCode/Host/ReadonlyDelegationContract.js",
+        "OpenCode/Host/BloggerChronicleText.js",
+        "OpenCode/Host/BloggerChronicleSurface.js",
+        "OpenCode/Host/PluginHost.js",
+        "OpenCode/Host/ProtocolArgumentVault.js",
+        "OpenCode/Plugin/PluginBoot.js",
+        "OpenCode/Host/PluginHooksSurface.js",
+        "OpenCode/Plugin/PluginStrengthPorts.js",
+        "OpenCode/Plugin/PluginHostWiring.js",
+        "OpenCode/Plugin/PluginHostWiringSurface.js",
+        "OpenCode/Plugin/PluginSessionWiring.js",
+        "OpenCode/Host/SessionBindingRecovery.js",
+        "OpenCode/Host/ChildWorkRecovery.js",
+        "OpenCode/Host/LoadRecoverySurface.js",
+        "OpenCode/Plugin/PluginRecoveryWiring.js",
+        "OpenCode/Plugin/PlanWorkOpenWiring.js",
+        "OpenCode/Plugin/PluginTransforms.js",
+        "OpenCode/Host/PluginTransformSurface.js",
+        "OpenCode/Plugin/PluginHooks.js",
+        "OpenCode/Plugin/SpikePlugin.js",
+        "OpenCode/Plugin/PluginLifecycleSurface.js",
+        "OpenCode/Plugin/Plugin.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.provider-projection.opencode-codec-providerprojectionsurface",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.opencode-codec-providerprojectionsurface.fsproj",
+      "shards": 103,
+      "sources": 245,
+      "inputSha256": "a3a5dd74e092379cc980e3bfeaabe451c0b185813cd97fffafcd7ed63dea092e",
+      "projectSha256": "0857b421f39bbdc9db10b49808ec92649f7a6c8413af63591f0a3eeb63b92ae6",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 18319,
+      "cached": false,
+      "freshLoadedModules": [
+        "OpenCode/Codec/ProviderProjectionSurface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.provider-projection.opencode-codec-providerwiredecode",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.opencode-codec-providerwiredecode.fsproj",
+      "shards": 9,
+      "sources": 18,
+      "inputSha256": "66bdb2a746acf8c81686ebadfbcc845f4fb28e2762d4d4ab030ae2d9fb1f6dc1",
+      "projectSha256": "112c97cf289e0668b564a33dd21de62356e1eb3b20095d41ede30e66f615d19c",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 5582,
+      "cached": false,
+      "freshLoadedModules": [
+        "OpenCode/Codec/ProviderWireDecode.js",
+        "OpenCode/Codec/ProviderWireCapture.js",
+        "OpenCode/Codec/ProjectionMessageEdit.js",
+        "Participant/Provider/Projection/Surface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.provider-projection.participant-provider-projection-wire",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.participant-provider-projection-wire.fsproj",
+      "shards": 4,
+      "sources": 8,
+      "inputSha256": "1d3d98a325f759b4d38f92c5ec9a8882a333e18649bdf4841ae3138ed504957f",
+      "projectSha256": "25677fc35885f860a461b67409fa7fef5eeb4600fc275e8c34993b8675cfc20a",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 5173,
+      "cached": false,
+      "freshLoadedModules": [
+        "Participant/Provider/Projection/Model.js",
+        "Participant/Provider/Projection/Intent.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.provider-projection.provider-message-evidence",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.provider-message-evidence.fsproj",
+      "shards": 1,
+      "sources": 1,
+      "inputSha256": "43bc4191f635ecf6dc478f7813196bc3f2ed240ec73b198e367b5669700de7f2",
+      "projectSha256": "8bc6f8589e155bd0137dce8fe165d6113e32eff55325eb6f74c5e95158ec56a6",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 5490,
+      "cached": false,
+      "freshLoadedModules": [
+        "Participant/Provider/MessageEvidence.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.relay-assessment.mission-relay-reviewtool",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.relay-assessment.mission-relay-reviewtool.fsproj",
+      "shards": 165,
+      "sources": 443,
+      "inputSha256": "c291a78df6b9709eb17f392e1ebb86403f3b670c3bc49eb30daee8409c4ac4f0",
+      "projectSha256": "c3b61233ef9d071fc8c4191a6b56d200a657e326c71f85b472c2b3827bb22769",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 26092,
+      "cached": false,
+      "freshLoadedModules": [
+        "Mission/Relay/OpenCode/ReviewBackendManager.js",
+        "Mission/Relay/OpenCode/ReviewShell.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.semantic-trace.context-trace-message-conversion",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.semantic-trace.context-trace-message-conversion.fsproj",
+      "shards": 8,
+      "sources": 12,
+      "inputSha256": "f74b2e9598bb0831b359570b20704aa6521dbe38be162ad1b11c546755163e0a",
+      "projectSha256": "48e95567cc1efb10a4c76d521af064c244dfb858ea39ce51f0a8048cd3471bb4",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 4533,
+      "cached": false,
+      "freshLoadedModules": [
+        "Context/Trace/MessageConversion.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.semantic-trace.context-trace-semantictracesurface",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.semantic-trace.context-trace-semantictracesurface.fsproj",
+      "shards": 111,
+      "sources": 304,
+      "inputSha256": "8a4754c48222da4b4943759cd2cc0885487565c8e98408533ce3f601f46cb968",
+      "projectSha256": "142333597298ddc6f872256e8efe00fb521cf5604eb5ae21a0dcd4512118e7e6",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 16225,
+      "cached": false,
+      "freshLoadedModules": [
+        "Context/Trace/SemanticTraceSurface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.speculative-investigation.strength-opencode-delegate",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-opencode-delegate.fsproj",
+      "shards": 136,
+      "sources": 334,
+      "inputSha256": "1640d098d1a5bfe4c37ecf4462c5c86c04b7cd8c96f95817a636c37e5cb9cbc1",
+      "projectSha256": "beeb6ed3ff91bf3e82d709225eff093d9dde34b139b230f7c0d038ffb46b24f9",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 24978,
+      "cached": false,
+      "freshLoadedModules": [
+        "Strength/OpenCode/Delegate.js",
+        "Strength/Surface.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.speculative-investigation.strength-replica-runtime",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-replica-runtime.fsproj",
+      "shards": 53,
+      "sources": 126,
+      "inputSha256": "4395119d2021c23733b02268b6d8682504636ac33bb549f43e5c35e63f6a7599",
+      "projectSha256": "4ad670d61779f435306876bf8e7bfb6ae3367f0a615506bd65ff12d9b99d035a",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 13177,
+      "cached": false,
+      "freshLoadedModules": [
+        "Strength/Replica/TwinBijection.js",
+        "Strength/Replica/Transform.js",
+        "Strength/Replica/Runtime.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    },
+    {
+      "label": "Wanxiangshu.Owner.speculative-investigation.strength-turnevidence",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.speculative-investigation.strength-turnevidence.fsproj",
+      "shards": 89,
+      "sources": 230,
+      "inputSha256": "d334c5e1fdc55c22143054c524de3bdf5916adfc22d9e215b3081d8b1561464c",
+      "projectSha256": "45975fdf5809042df867ced0a5c88c7d1c478a3683b4cc814a6d73be6c32d76e",
+      "code": 0,
+      "signal": null,
+      "elapsedMs": 12650,
+      "cached": false,
+      "freshLoadedModules": [
+        "Strength/TurnEvidence.js",
+        "Strength/Lifecycle.js",
+        "Strength/OpenCode/Replay.js",
+        "Strength/OpenCode/PluginScope.js"
+      ],
+      "supervised": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "todo": 0,
+        "cleanupAccepted": true
+      }
+    }
+  ],
+  "probes": [
+    {
+      "label": "snapshot-sdk-positive",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.host-boundary.host-session-snapshot-contract.fsproj",
+      "fixture": "requirements/host-boundary/tests/fixtures/session-contract-boundary/ForbiddenMessageSdk.fs",
+      "inputSha256": "6feeb9de355d02582314c00c720e5793aecbaf90ee277a3703060f7bfa94659c",
+      "projectSha256": "9d2e1ce4aa7febf3d8372c848734f58d5695e1738fbb2e5b59b56b9ce482ac55",
+      "observedCode": 0,
+      "observedSignal": null,
+      "rejectedSymbols": [],
+      "evidence": "Formal host-boundary-026 and semantic-trace-002 tests require these exact exit and symbol diagnostics."
+    },
+    {
+      "label": "message-sdk-negative",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.provider-projection.provider-message-evidence.fsproj",
+      "fixture": "requirements/host-boundary/tests/fixtures/session-contract-boundary/ForbiddenMessageSdk.fs",
+      "inputSha256": "64aebb69eb43c7a39cc7517585c9e5d5c87c6abfc1a7c38101540f0647821690",
+      "projectSha256": "8bc6f8589e155bd0137dce8fe165d6113e32eff55325eb6f74c5e95158ec56a6",
+      "observedSignal": null,
+      "rejectedSymbols": [
+        "OpencodeModel",
+        "SessionMessage"
+      ],
+      "evidence": "Formal host-boundary-026 and semantic-trace-002 tests require these exact exit and symbol diagnostics.",
+      "observedCompilerRejected": true,
+      "codeEvidence": "A nonzero exit and exact missing symbols are required by the passing formal test."
+    },
+    {
+      "label": "conversion-behavior-positive",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.semantic-trace.context-trace-message-conversion.fsproj",
+      "fixture": "requirements/host-boundary/tests/fixtures/session-contract-boundary/LegalMessageConversion.fs",
+      "inputSha256": "107b91413136b133be0945fc80933c1ce9254d112b2fb16ad1f7af93d2c51ea1",
+      "projectSha256": "48e95567cc1efb10a4c76d521af064c244dfb858ea39ce51f0a8048cd3471bb4",
+      "observedCode": 0,
+      "observedSignal": null,
+      "rejectedSymbols": [],
+      "evidence": "Formal host-boundary-026 and semantic-trace-002 tests require these exact exit and symbol diagnostics."
+    },
+    {
+      "label": "durable-capture-positive",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj",
+      "fixture": "requirements/host-boundary/tests/fixtures/session-contract-boundary/ForbiddenDurableCapture.fs",
+      "inputSha256": "4fe9ffa1e36e7bdfc1b3e0bf0dad3a3b881031d32763f7cb4bff2a6aa37270e6",
+      "projectSha256": "70180e1154c62696fcefd74f3a2f5ff9b56bc106f7b5f098af89ce4ebcae0667",
+      "observedCode": 0,
+      "observedSignal": null,
+      "rejectedSymbols": [],
+      "evidence": "Formal host-boundary-026 and semantic-trace-002 tests require these exact exit and symbol diagnostics."
+    },
+    {
+      "label": "conversion-capture-negative",
+      "root": "src/Wanxiangshu/Wanxiangshu.Owner.semantic-trace.context-trace-message-conversion.fsproj",
+      "fixture": "requirements/host-boundary/tests/fixtures/session-contract-boundary/ForbiddenDurableCapture.fs",
+      "inputSha256": "826e23ece08f72b993f95f5a82684985077ed0b37a9fef95fa4fc2a98a82e6e6",
+      "projectSha256": "48e95567cc1efb10a4c76d521af064c244dfb858ea39ce51f0a8048cd3471bb4",
+      "observedSignal": null,
+      "rejectedSymbols": [
+        "AgentJournal",
+        "XTraceCapture"
+      ],
+      "evidence": "Formal host-boundary-026 and semantic-trace-002 tests require these exact exit and symbol diagnostics.",
+      "observedCompilerRejected": true,
+      "codeEvidence": "A nonzero exit and exact missing symbols are required by the passing formal test."
+    }
+  ],
+  "resources": [
+    {
+      "file": "resources/degeneration-guard/envelope/LoopDetectorEnvelope.js",
+      "sha256": "dce808b6404a2308029e04a45d2020dfa7ceebead8deabd834a64848a434df9b"
+    },
+    {
+      "file": "resources/provider/host/pair-programming-guideline/en.md",
+      "sha256": "ba9f1fdcf8d997f5c1efbf81e2b031327319ff38222f6a854728ede76eb9f243"
+    },
+    {
+      "file": "resources/provider/host/pair-programming-guideline/zh-CN.md",
+      "sha256": "6195bad060c5b53739306b054073f7597255e67e419feb9449e32a33ab69e65b"
+    },
+    {
+      "file": "resources/provider/tool/bash-honeypot/description/en.md",
+      "sha256": "5cef507da6cceb11a07e1f39332301414f6cef53aa007a97bba73c5b9efae211"
+    },
+    {
+      "file": "resources/provider/tool/bash-honeypot/description/zh-CN.md",
+      "sha256": "3f13fa2daded8c15f1e16fd37a4f3b089de433d2e6c804c51ee64caa0c3dccbb"
+    }
+  ],
+  "behavior": {
+    "formalFiles": [
+      "requirements/host-boundary/tests/026.test.mjs",
+      "requirements/semantic-trace/tests/002.test.mjs"
+    ],
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "realFableInvocations": 23,
+    "wallSeconds": 153.67,
+    "cleanupAccepted": true,
+    "covers": [
+      "original Parts/PartIds pairing before Activity filtering",
+      "ToolParts matching by callId under reordered and missing identities",
+      "Repair Activity versus Strength TransportOnly on the same decoded input",
+      "provider run, physical prompt and authority identities in the original turn builder",
+      "Chinese, CRLF, whitespace, NUL and original parameter/result strings",
+      "public durable capture receipt, replay idempotence and real Journal reopen"
+    ]
+  },
+  "mutation": {
+    "changedSource": "Context/Trace/MessageConversion.fs",
+    "change": "filter Activity before Array.mapi",
+    "compilerCode": 0,
+    "compilerSignal": null,
+    "compilerElapsedMs": 5057,
+    "behaviorRejection": "Parts must pair with original positions before Activity filtering",
+    "restoredCompilerCode": 0,
+    "restoredCompilerElapsedMs": 4758,
+    "restoredBehaviorRejection": null,
+    "sourceDigests": [
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Identity.fsi",
+        "sha256": "afc494df4cf5b35568818d45686675a2c5f231669731fb9b8dcbf7fd8aea8dc5"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Identity.fs",
+        "sha256": "b8a2944a100ab2f053e11444e3a213adebc8ff21684fc940c8efcf08705fd949"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Quiescence.fsi",
+        "sha256": "2329dffbc13b2e3a5773b9224119f17a20af73c0ebe7eba30912a2a0964d7b4c"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Quiescence.fs",
+        "sha256": "2329dffbc13b2e3a5773b9224119f17a20af73c0ebe7eba30912a2a0964d7b4c"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/MessageEvidence.fsi",
+        "sha256": "45fb8bba833d7caa74cb4cb3206b8913a05e673f5398ec00bcbbe734ab767bec"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/MessageEvidence.fs",
+        "sha256": "45fb8bba833d7caa74cb4cb3206b8913a05e673f5398ec00bcbbe734ab767bec"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Roles.fsi",
+        "sha256": "5ce5ecfdc93a37b9b3e52ad0df44f9c213c9d5de0681be2a1b0f72adae768c37"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Roles.fs",
+        "sha256": "3f4abfd946d83814ce917514b0c4dd57632838b7d469f101e05be20d23753912"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/RolesSurface.fsi",
+        "sha256": "06d8eaf56d8b5ba1b83fc3deb3881ab2b5f65e96ed72d9000e3fe6d7756279eb"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/RolesSurface.fs",
+        "sha256": "33edd643aff7c8642be9ee56833c3061a362992ef4400e20cb0b54c3d80c3557"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Outcome.fsi",
+        "sha256": "972bc9f9e5bbbe5169880b83f97a368da0982c687ac4a56b0822e0254b395a34"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Outcome.fs",
+        "sha256": "d870792eae8711a974f9e3dd21b6a6bab0641d5bd6395b55c5215a30c0f79473"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/Projection/Model.fsi",
+        "sha256": "85da54760ae834a1bd4d866495eace4cd16c29ffb93b41d75bff729c84ee45be"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/Projection/Model.fs",
+        "sha256": "708acf430703d328c3f3b443f8d84be59c9a34e04395ec5dd8f358035e16dd5b"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/Projection/Intent.fsi",
+        "sha256": "9faaf9ec1aaf9250ecf4e6f7676eedd71692b20f0454d69d7fb44ab9926bbb34"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/Projection/Intent.fs",
+        "sha256": "b407438127b87008828f1f656659143a37794607120d120f0f05257ba0023d03"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/OpenCode/Codec/OpencodeTypes.fsi",
+        "sha256": "1bc64976bd7b8ea8fe9780bb154218d75d77abde08b26910993d68cafe032546"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/OpenCode/Codec/OpencodeTypes.fs",
+        "sha256": "3dd37cfb866d23556d9a26b19d84744e5574ba7000e58f28ec49cf258d436652"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/OpenCode/Host/SessionSnapshot.fsi",
+        "sha256": "979bc022da2f4c0ebccaa9ffd0db1fb4f6cd2736d712f8190c438a883758b7f8"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/OpenCode/Host/SessionSnapshot.fs",
+        "sha256": "0453d7ff183b929a746d2ddeca8145b91a5e1e88fa4c5355dd64f308b740a96a"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Context/Trace/MessageConversion.fsi",
+        "sha256": "acd23c276cc590aaa99d9bf2d4dfad63be74d9b3fffde1f05507879bc45b2ffe"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Context/Trace/MessageConversion.fs",
+        "sha256": "6ed5fc553ee9004025b18f0703002c9cf25594e39dc998864686fcf497f726a4"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/OutcomeSurface.fsi",
+        "sha256": "7a6e1fd313b6a379b0b74890a18d896492b679a5d89a1202e6f4d4419c78bdae"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/OutcomeSurface.fs",
+        "sha256": "dd67ae286e26697690866cf83fbc4453302ca1efc2f36f237c342d9e4470474f"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/CompilerProbe/LegalMessageConversion.fs",
+        "sha256": "c0c6674bc8b6b8007a725b4b52175881b2f918c7ab26bc6f0416a556ef79f65d"
+      }
+    ],
+    "restoredSourceDigests": [
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Identity.fsi",
+        "sha256": "afc494df4cf5b35568818d45686675a2c5f231669731fb9b8dcbf7fd8aea8dc5"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Identity.fs",
+        "sha256": "b8a2944a100ab2f053e11444e3a213adebc8ff21684fc940c8efcf08705fd949"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Quiescence.fsi",
+        "sha256": "2329dffbc13b2e3a5773b9224119f17a20af73c0ebe7eba30912a2a0964d7b4c"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Quiescence.fs",
+        "sha256": "2329dffbc13b2e3a5773b9224119f17a20af73c0ebe7eba30912a2a0964d7b4c"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/MessageEvidence.fsi",
+        "sha256": "45fb8bba833d7caa74cb4cb3206b8913a05e673f5398ec00bcbbe734ab767bec"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/MessageEvidence.fs",
+        "sha256": "45fb8bba833d7caa74cb4cb3206b8913a05e673f5398ec00bcbbe734ab767bec"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Roles.fsi",
+        "sha256": "5ce5ecfdc93a37b9b3e52ad0df44f9c213c9d5de0681be2a1b0f72adae768c37"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Roles.fs",
+        "sha256": "3f4abfd946d83814ce917514b0c4dd57632838b7d469f101e05be20d23753912"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/RolesSurface.fsi",
+        "sha256": "06d8eaf56d8b5ba1b83fc3deb3881ab2b5f65e96ed72d9000e3fe6d7756279eb"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/RolesSurface.fs",
+        "sha256": "33edd643aff7c8642be9ee56833c3061a362992ef4400e20cb0b54c3d80c3557"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Outcome.fsi",
+        "sha256": "972bc9f9e5bbbe5169880b83f97a368da0982c687ac4a56b0822e0254b395a34"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/Outcome.fs",
+        "sha256": "d870792eae8711a974f9e3dd21b6a6bab0641d5bd6395b55c5215a30c0f79473"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/Projection/Model.fsi",
+        "sha256": "85da54760ae834a1bd4d866495eace4cd16c29ffb93b41d75bff729c84ee45be"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/Projection/Model.fs",
+        "sha256": "708acf430703d328c3f3b443f8d84be59c9a34e04395ec5dd8f358035e16dd5b"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/Projection/Intent.fsi",
+        "sha256": "9faaf9ec1aaf9250ecf4e6f7676eedd71692b20f0454d69d7fb44ab9926bbb34"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Participant/Provider/Projection/Intent.fs",
+        "sha256": "b407438127b87008828f1f656659143a37794607120d120f0f05257ba0023d03"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/OpenCode/Codec/OpencodeTypes.fsi",
+        "sha256": "1bc64976bd7b8ea8fe9780bb154218d75d77abde08b26910993d68cafe032546"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/OpenCode/Codec/OpencodeTypes.fs",
+        "sha256": "3dd37cfb866d23556d9a26b19d84744e5574ba7000e58f28ec49cf258d436652"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/OpenCode/Host/SessionSnapshot.fsi",
+        "sha256": "979bc022da2f4c0ebccaa9ffd0db1fb4f6cd2736d712f8190c438a883758b7f8"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/OpenCode/Host/SessionSnapshot.fs",
+        "sha256": "0453d7ff183b929a746d2ddeca8145b91a5e1e88fa4c5355dd64f308b740a96a"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Context/Trace/MessageConversion.fsi",
+        "sha256": "acd23c276cc590aaa99d9bf2d4dfad63be74d9b3fffde1f05507879bc45b2ffe"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Context/Trace/MessageConversion.fs",
+        "sha256": "f41707a053a5fd21fd1a13bb08f1e84abbed4561389fc42b786fc9cf669eed70"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/OutcomeSurface.fsi",
+        "sha256": "7a6e1fd313b6a379b0b74890a18d896492b679a5d89a1202e6f4d4419c78bdae"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/Foundation/OutcomeSurface.fs",
+        "sha256": "dd67ae286e26697690866cf83fbc4453302ca1efc2f36f237c342d9e4470474f"
+      },
+      {
+        "file": "/private/tmp/vibe-r02-message-mutation/inputs/CompilerProbe/LegalMessageConversion.fs",
+        "sha256": "c0c6674bc8b6b8007a725b4b52175881b2f918c7ab26bc6f0416a556ef79f65d"
+      }
+    ],
+    "cleanupAccepted": true
+  },
+  "regression": {
+    "files": 15,
+    "passed": 110,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 1,
+    "retainedTodo": "interaction-authority-023 / GAP-122",
+    "supervisorExitCode": 1,
+    "wallSeconds": 1.75,
+    "cleanupAccepted": true
+  },
+  "canonicalBuild": {
+    "generation": 460,
+    "compilerInputDigest": "cc869dec6dddd40cdd0308001f39beebbafab1fe4d8e7bbaff5bd69b048fa0f3",
+    "compileItems": 116,
+    "fableMilliseconds": 4996,
+    "wrapperMilliseconds": 6869,
+    "surfaces": 175,
+    "linkedJavaScriptModules": 849
+  },
+  "logs": {
+    "formal": "/private/tmp/vibe-r02-message-final-compiler.log",
+    "regression": "/private/tmp/vibe-r02-message-final-regression.log",
+    "build": "/private/tmp/vibe-r02-message-final-build.log",
+    "directFirstBatch": "/private/tmp/vibe-r02-message-direct-settled-compiler.log",
+    "directSecondBatch": "/private/tmp/vibe-r02-message-direct-rest-compiler.log",
+    "mutation": "/private/tmp/vibe-r02-message-mutation-supervisor.log",
+    "restored": "/private/tmp/vibe-r02-message-restored-supervisor.log"
+  },
+  "limits": [
+    "Execution receipt, not an ownership registry or R09 immutable-input certificate.",
+    "Only these 22 actual roots were independently compiled; prior package counts are not added as current coverage.",
+    "Composite MessageFlow runs original production code but does not prove every physical Host route or provider canary.",
+    "SDK Model and other observation metadata, Relay prefix extraction, R08 full coverage, R09 iteration and the remaining two subsystem cycles stay open.",
+    "GAP-122 remains TODO; release acceptance is not claimed."
+  ]
+}

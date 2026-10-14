@@ -12,6 +12,8 @@ Provider 消息投影采用类型化组合与直接计算，不引入中介 AST 
 
 输出依次为 `SemanticEventTree → ProviderSemanticProjection → ProviderWireProjection`。语义视图去除易失 ID，用于等价比对与规范摘要；Wire 视图保留物理 ID 和本地序号。两者使用不同类型，不得隐式混用。
 
+Provider拥有完整消息观测`MessagePart`，保留正文、推理、工具callId、参数/结果字节与Activity。它是分类和捕获的输入，不能以去身份的SemanticPart或含Media的WirePart替换。用于capture的CapturedWirePart/Message也是纯数据合同，保留provider run、物理part与tool-part身份；运输解码不拥有这些类型，语义降格须显式执行。
+
 ## [004] 严格划分 Coordinator、Planner 与 Renderer 三层
 
 系统结构严格划分为三层：

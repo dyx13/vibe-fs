@@ -11,6 +11,7 @@ open Wanxiangshu.Execution.Session.Attachment
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Interaction.Dispatch
+open Wanxiangshu.Participant.Provider
 open Wanxiangshu.OpenCode.Host
 open Wanxiangshu.Persistence.Journal
 open Wanxiangshu.Persistence.EventStore

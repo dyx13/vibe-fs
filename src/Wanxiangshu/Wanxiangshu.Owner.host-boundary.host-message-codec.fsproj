@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="Wanxiangshu.Owner.dispatch-protocol.foundation-canonical-json.fsproj"/>
-    <ProjectReference Include="Wanxiangshu.Owner.host-boundary.host-message-contract.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.provider-projection.provider-message-evidence.fsproj"/>
     <Compile Include="OpenCode/Codec/HostMessageCodec.fsi"/>
     <Compile Include="OpenCode/Codec/HostMessageCodec.fs"/>
   </ItemGroup>

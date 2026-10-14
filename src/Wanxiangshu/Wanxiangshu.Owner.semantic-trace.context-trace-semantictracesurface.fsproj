@@ -22,6 +22,7 @@
     <ProjectReference Include="Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.semantic-trace.context-trace-cursor.fsproj"/>
     <ProjectReference Include="Wanxiangshu.Owner.semantic-trace.context-trace-model.fsproj"/>
+    <ProjectReference Include="Wanxiangshu.Owner.semantic-trace.context-trace-message-conversion.fsproj"/>
     <Compile Include="Context/Trace/SemanticTraceSurface.fsi"/>
     <Compile Include="Context/Trace/SemanticTraceSurface.fs"/>
   </ItemGroup>

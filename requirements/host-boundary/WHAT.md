@@ -104,9 +104,9 @@ Host 只通过 `ReliabilityDiagnostics.CausalDiagnosticRecord` 发布结构化�
 
 Host subsystem 的公开 Contract、Runtime 与物理 Adapter 必须保持编译隔离。以下名称标识合同和编译边界，不赋予 compile shard 独立的架构治理身份或 consumer 授权：
 - `Host.Session.Contract`（`host-session-contract`）：仅发布会话执行与静止 capability、Host 端口及资源 owner 合同，不传递快照读取或消息词汇，不依赖 SDK/HTTP 投影、具体 Host 运行时、进程控制、诊断或 Sphinx MCP。
-- `Host.Session.Snapshot.Contract`（`host-session-snapshot-contract`）：独立发布纯 `SessionSnapshot` 词汇、读取端口与定位 decision；实际消费者直接引用此合同，不经 `Host.Session.Contract` 获取。`SessionMessage.Parts` 保留对 `MessagePart` 的真实依赖，不引入 SDK/HTTP 投影或具体 Host 运行时。
+- `Host.Session.Snapshot.Contract`（`host-session-snapshot-contract`）：独立发布纯 `SessionSnapshot` 词汇、读取端口与定位 decision；实际消费者直接引用此合同，不经 `Host.Session.Contract` 获取。`SessionMessage.Parts` 使用provider拥有的完整消息观测词汇，保留Activity、工具call身份与正文；Parts与PartIds同序，ToolParts按callId关联，不引入SDK/HTTP投影或具体Host运行时。
 - `Host.Signal.Contract`（`host-signal-contract`）：仅发布共享终端词汇 `EventContract`，无状态且零副作用；不得因终端词汇而传递摘要实现、消息词汇、SDK 类型、工具注册或物理启动配置，不作为兼容 umbrella。
-- `Host.Message.Contract`（`host-message-contract`）：独立发布 `Message`/`MessagePart` 消息词汇，不携带 SDK 类型、终端事件或摘要实现。
+- `Provider.Message.Evidence`（`provider-message-evidence`）：独立发布完整的`MessagePart`观测词汇，不携带SDK类型、终端事件、摘要实现或Host构造器。Host codec只负责把公开运输输入解码为这份唯一合同；回合分类使用完整观测，不能提前以语义投影替代。
 - `Host.SDK.Types`（`host-opencode-types`）：独立发布 `OpencodeTypes`/`OpencodeModel` SDK 数据类型，不携带消息词汇、终端事件或物理 Host 能力。
 - `Host.Event.Envelope`（`host-event-envelope`）：只发布 raw Host envelope unwrap、event type、session identity 与 message-session identity 的唯一无状态公式；不得修改输入对象。
 - `Host.Message.Codec`（`host-message-codec`）：只发布 raw Host message part → `MessagePart` 的无状态 decode；其 bounded audience 只包含实际 message consumer。

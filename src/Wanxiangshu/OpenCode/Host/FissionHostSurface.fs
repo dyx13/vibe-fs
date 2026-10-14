@@ -11,6 +11,7 @@ open Wanxiangshu.Execution.Fission
 open Wanxiangshu.Execution.Fission.OpenCode
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
+open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Foundation.Outcome
 open Wanxiangshu.OpenCode
 open Wanxiangshu.Ablation

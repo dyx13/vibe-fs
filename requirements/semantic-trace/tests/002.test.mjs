@@ -1,4 +1,97 @@
 import test from 'node:test'
+import assert from 'node:assert/strict'
+import { mkdtempSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { integrationTest } from '../../verification-system/tests/support/tier-gate.mjs'
+import { fixtureRoot, withHostCompiler } from '../../host-boundary/tests/support/contract-compiler.mjs'
+
+integrationTest('WHAT[semantic-trace-002] real Fable grants identity-preserving conversion without Journal or durable capture', async (t) => {
+  await withHostCompiler(t, async (compile) => {
+    const conversion = 'Wanxiangshu.Owner.semantic-trace.context-trace-message-conversion.fsproj'
+    await compile(conversion, 'message-conversion', 'LegalMessageConversion.fs')
+    await compile('Wanxiangshu.Owner.durable-composition.durable-trace-capture.fsproj', 'legal-durable-capture', 'ForbiddenDurableCapture.fs')
+    await compile(conversion, 'forbidden-durable-capture', 'ForbiddenDurableCapture.fs', ['AgentJournal', 'XTraceCapture'])
+  })
+})
+
+integrationTest('WHAT[semantic-trace-002] decoded snapshots preserve identity and bytes through observation and real Journal capture', async (t) => {
+  await withHostCompiler(t, async (compile) => {
+    const result = await compile(join(fixtureRoot, 'Wanxiangshu.MessageFlow.fsproj'), 'message-flow', undefined, undefined, [])
+    const flow = await result.load('CompilerProbe/MessageFlow.js')
+    const journal = await result.load('Persistence/Journal/Surface.js')
+    const trace = await result.load('Context/Trace/SemanticTraceSurface.js')
+    const body = '  中文\r\n正文\n\u0000尾部  '
+    const reasoning = '\t推理\r\n  '
+    const args = '{ "z" : 2, "a": "中\\n文" }\n'
+    const output = '结果\r\n\t尾部  '
+    const activityParts = ['patch', 'step_start', 'step-finish'].map((type, index) => ({ type, id: `activity-${index}` }))
+    const raw = [{
+      info: { id: 'run-byte', role: 'assistant', parentID: 'physical-byte', finish: 'tool-calls', time: { created: 4, completed: 8 }, providerID: 'provider-byte', modelID: 'model-byte' },
+      parts: [
+        activityParts[0], { type: 'unknown', id: 'ignored' }, { type: 'text', id: 'text-id', text: body },
+        activityParts[1], { type: 'tool-call', id: 'call-id', callID: 'call-byte', name: 'read', args },
+        { type: 'reasoning', id: 'reason-id', text: reasoning }, activityParts[2],
+        { type: 'tool-result', id: 'result-id', callID: 'call-byte', result: output },
+      ],
+    }]
+    const observed = flow.observe(raw)
+    assert.equal(observed.partCount, 7)
+    assert.deepEqual(observed.partIds, ['activity-0', 'text-id', 'activity-1', 'call-id', 'reason-id', 'activity-2', 'result-id'])
+    assert.equal(observed.providerRun, 'run-byte')
+    assert.equal(observed.physicalUserMessageId, 'physical-byte')
+    assert.equal(observed.authorityRoot, 'authority-byte')
+    assert.equal(observed.modelId, 'model-byte')
+    assert.equal(observed.formalText, body)
+    assert.equal(observed.sessionText, `${body}\n\n${reasoning}`)
+    assert.equal(observed.repairActivity, true)
+    assert.equal(observed.strengthEvidence, 'real-output')
+    assert.deepEqual(observed.capturedIds, ['text-id', 'call-id', 'reason-id', 'result-id'])
+    assert.equal(observed.capturedCallId, 'call-byte')
+    assert.equal(observed.capturedArgs, args)
+    for (const part of activityParts) {
+      const activity = flow.observe([{ ...raw[0], parts: [part] }])
+      assert.equal(activity.repairActivity, true)
+      assert.equal(activity.strengthEvidence, 'transport-only')
+      assert.deepEqual(activity.capturedIds, [])
+    }
+    const noActivity = flow.observe([{ ...raw[0], parts: [{ type: 'unknown', id: 'ignored' }] }])
+    assert.equal(noActivity.repairActivity, false)
+    assert.equal(noActivity.strengthEvidence, 'no-output')
+    const resultOnly = flow.observe([{ ...raw[0], parts: [{ type: 'tool-result', id: 'result-only', callID: 'call-byte', result: output }] }])
+    assert.equal(resultOnly.repairActivity, false)
+    assert.equal(resultOnly.strengthEvidence, 'transport-only')
+    assert.deepEqual(resultOnly.capturedIds, ['result-only'])
+    const store = mkdtempSync(join(tmpdir(), 'wxs-message-flow-journal-'))
+    let handle
+    try {
+      const boot = await journal.JournalSurface_boot(store, 'rt_message_flow', 4242, '2026-10-14T00:00:00Z')
+      assert.equal(boot.ok, true)
+      handle = boot.journal
+      assert.equal(await flow.capture(handle, raw), 4)
+      const evidence = trace.orderedSemanticParts(trace.snapshot(handle, 'session-byte'))
+      assert.deepEqual(evidence.map((part) => part.provenance), ['text-id', 'call-id', 'reason-id', 'result-id'].map((id) => `g:0/msg:run-byte/host-part:${id}`))
+      assert.deepEqual(evidence.filter((part) => part.toolCallId).map((part) => part.toolCallId), ['call-byte', 'call-byte'])
+      assert.deepEqual(evidence.filter((part) => part.toolCallId).map((part) => part.hostToolPartId), ['call-id', 'call-id'])
+      assert.deepEqual(await trace.currentProjection(handle, 'session-byte'), { messages: [{ role: 'assistant', parts: [
+        { kind: 'text', text: body }, { kind: 'tool-call', name: 'read', args },
+        { kind: 'reasoning', text: reasoning }, { kind: 'tool-result', result: output },
+      ] }] })
+      assert.equal(await flow.capture(handle, raw), 0)
+      assert.deepEqual(trace.orderedSemanticParts(trace.snapshot(handle, 'session-byte')), evidence, 'replay must not append a second copy')
+      journal.JournalSurface_dispose(handle)
+      handle = undefined
+      const reopened = await journal.JournalSurface_boot(store, 'rt_message_flow_reopen', 4243, '2026-10-14T00:00:01Z')
+      assert.equal(reopened.ok, true)
+      handle = reopened.journal
+      assert.deepEqual(trace.orderedSemanticParts(trace.snapshot(handle, 'session-byte')), evidence, 'real Journal reopen must retain paired identities')
+      assert.equal((await trace.currentProjection(handle, 'session-byte')).messages[0].parts[0].text, body)
+    } finally {
+      if (handle) journal.JournalSurface_dispose(handle)
+      rmSync(store, { recursive: true, force: true })
+    }
+  })
+})
 
 {
 const { default: assert } = await import("node:assert/strict");

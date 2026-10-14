@@ -13,6 +13,7 @@ open Wanxiangshu.Execution.Session
 open Wanxiangshu.Execution.Session.ChatExecution
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
+open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Foundation.Outcome
 open Wanxiangshu.Mission.WorkRecord
 open Wanxiangshu.Interaction.Authority

@@ -4,6 +4,7 @@ open Wanxiangshu.Composition.Turn
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.OpenCode
+open Wanxiangshu.Participant.Provider
 
 module CompletedTurnClassifier =
     [<RequireQualifiedAccess>]

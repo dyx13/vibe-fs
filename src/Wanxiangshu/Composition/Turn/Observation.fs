@@ -2,8 +2,8 @@ namespace Wanxiangshu.Composition.Turn
 
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
-open Wanxiangshu.Participant.Persona
 open Wanxiangshu.OpenCode
+open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Execution.Failure
 
 /// DSL-state-combination: domain — this is a single reconciled provider-turn

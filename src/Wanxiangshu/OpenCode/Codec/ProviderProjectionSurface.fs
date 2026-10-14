@@ -5,6 +5,7 @@ open Fable.Core.JsInterop
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.Interaction.Dispatch.OpenCode
 open Wanxiangshu.Participant.Provider.Projection
+open Wanxiangshu.Participant.Provider
 
 /// JS-native provider projection codec owner surface.
 /// Raw Host objects are decoded here; tests never import internal codec modules

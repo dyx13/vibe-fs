@@ -1,4 +1,4 @@
-namespace Wanxiangshu.OpenCode
+namespace Wanxiangshu.Participant.Provider
 
 [<RequireQualifiedAccess>]
 type MessagePart =

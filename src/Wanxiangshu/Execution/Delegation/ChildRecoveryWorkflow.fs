@@ -5,6 +5,7 @@ open System
 open System.Threading.Tasks
 open Wanxiangshu.Execution.Delegation.Fork.ChildRecovery
 open Wanxiangshu.OpenCode
+open Wanxiangshu.Participant.Provider
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity

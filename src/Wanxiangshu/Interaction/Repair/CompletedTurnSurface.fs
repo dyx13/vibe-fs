@@ -5,6 +5,7 @@ open Wanxiangshu.Composition.Turn
 open Wanxiangshu.Foundation
 open Wanxiangshu.Foundation.Identity
 open Wanxiangshu.OpenCode
+open Wanxiangshu.Participant.Provider
 
 /// JS-native semantic surface for completed-turn classification.
 /// Host message parts and turn outcomes remain typed behind this boundary.
