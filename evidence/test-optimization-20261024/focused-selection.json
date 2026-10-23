@@ -1,0 +1,31 @@
+{
+  "scope": "Planning probe only; no requirement tests or build executed.",
+  "nodeVersion": "v26.6.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "verificationSourceSha256": "3e5f72bb53a3edf3c776364ea53069207c053f1f3f26d93743c0f71ffeabf2b3",
+  "focused": {
+    "suite": "time-capability",
+    "plannedFiles": [
+      "requirements/time-capability/tests/001.test.mjs",
+      "requirements/time-capability/tests/002.test.mjs",
+      "requirements/time-capability/tests/003.test.mjs",
+      "requirements/time-capability/tests/004.test.mjs",
+      "requirements/time-capability/tests/005.test.mjs",
+      "requirements/time-capability/tests/006.test.mjs",
+      "requirements/time-capability/tests/007.test.mjs",
+      "requirements/time-capability/tests/008.test.mjs"
+    ],
+    "plannedFileCount": 8,
+    "childSelection": null,
+    "defaultDiscoveryFileCount": 752
+  },
+  "mixedUnknownSuite": {
+    "requestedSuites": [
+      "time-capability",
+      "missing-suite-does-not-exist"
+    ],
+    "acceptedFileCount": 8
+  },
+  "formalSelectionStripped": true
+}

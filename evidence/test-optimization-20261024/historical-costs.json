@@ -1,0 +1,105 @@
+{
+  "scope": "Historical observations only; not a current performance baseline.",
+  "records": [
+    {
+      "label": "2026-10-08 local run",
+      "sourceLog": "/Users/yuanxi/Workwork/vibe-fs/.fable-build/verify-logs/2026-10-08T13-17-40-465Z/unit.log",
+      "sourceLogSha256": "124be954352d1de64665727cea26793412fa29067afb5751c2ec817ea8342fb7",
+      "parentRunnerPid": 44498,
+      "completedFiles": 824,
+      "slowestFiles": [
+        {
+          "file": "requirements/verification-system/tests/016.test.mjs",
+          "startSeconds": 13.89,
+          "wallSeconds": 168.58
+        },
+        {
+          "file": "requirements/verification-system/tests/006.test.mjs",
+          "startSeconds": 0.19,
+          "wallSeconds": 25.73
+        },
+        {
+          "file": "requirements/requirement-grounding/tests/007.test.mjs",
+          "startSeconds": 256.73,
+          "wallSeconds": 18.44
+        },
+        {
+          "file": "requirements/context-compression/tests/024.test.mjs",
+          "startSeconds": 81.79,
+          "wallSeconds": 13.73
+        },
+        {
+          "file": "requirements/host-boundary/tests/032.test.mjs",
+          "startSeconds": 188.48,
+          "wallSeconds": 11.62
+        },
+        {
+          "file": "requirements/delegation/tests/025.test.mjs",
+          "startSeconds": 106.97,
+          "wallSeconds": 11.07
+        },
+        {
+          "file": "requirements/relay-retirement/tests/008.test.mjs",
+          "startSeconds": 248.75,
+          "wallSeconds": 7.98
+        },
+        {
+          "file": "requirements/durable-events/tests/024.test.mjs",
+          "startSeconds": 163.54,
+          "wallSeconds": 7.97
+        }
+      ],
+      "summary": "[test-summary] 824 file(s), 4971 passed, 0 failed, 127 skipped, 388 todo (286.46s wall, 604.15s test time)"
+    },
+    {
+      "label": "Merged branch generation 48 local run",
+      "sourceLog": "/private/tmp/m22-pr1-ci-all-unit48.log",
+      "sourceLogSha256": "63489575b8d1af9e6e4fca19591e07fcef994eed58ee24077a270beebf8db592",
+      "parentRunnerPid": 26759,
+      "completedFiles": 765,
+      "slowestFiles": [
+        {
+          "file": "requirements/verification-system/tests/016.test.mjs",
+          "startSeconds": 54.57,
+          "wallSeconds": 205.88
+        },
+        {
+          "file": "requirements/managed-session-lifecycle/tests/025.test.mjs",
+          "startSeconds": 2.96,
+          "wallSeconds": 131.91
+        },
+        {
+          "file": "requirements/verification-system/tests/006.test.mjs",
+          "startSeconds": 0.07,
+          "wallSeconds": 52.18
+        },
+        {
+          "file": "requirements/process-execution/tests/003.test.mjs",
+          "startSeconds": 277.02,
+          "wallSeconds": 38.06
+        },
+        {
+          "file": "requirements/delegation/tests/025.test.mjs",
+          "startSeconds": 224.27,
+          "wallSeconds": 22.06
+        },
+        {
+          "file": "requirements/prefix-stability/tests/014.test.mjs",
+          "startSeconds": 251.53,
+          "wallSeconds": 15.87
+        },
+        {
+          "file": "requirements/durable-events/tests/006.test.mjs",
+          "startSeconds": 268.81,
+          "wallSeconds": 14.15
+        },
+        {
+          "file": "requirements/durable-events/tests/024.test.mjs",
+          "startSeconds": 148.78,
+          "wallSeconds": 14.05
+        }
+      ],
+      "summary": "[test-summary] 765 file(s), 4765 passed, 0 failed, 112 skipped, 267 todo (486.99s wall, 853.71s test time)"
+    }
+  ]
+}

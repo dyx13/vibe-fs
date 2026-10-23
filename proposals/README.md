@@ -1,5 +1,9 @@
 # 计划与提案入口
 
+## 测试优化方案（2026-10-24）
+
+[测试优化方案](TEST-OPTIMIZATION-2026-10-24.md)基于独立同步的 upstream `d140299a8`。先修复 `--suites` 选集传递，再测量当前版本、减少重夹具准备成本，最后按证据调整资源调度。[调查记录](../evidence/test-optimization-20261024/README.md)区分已复现问题和历史成本。方案已完成，优化未开工；自有 master 合并另做，不以本次同步或调查宣称产品验收通过。
+
 ## 多人抽吸的当前入口（2026-10-15）
 
 Lifecycle cutover 已进入 master。下一轮多人切刀从[保姆级施工指南](extraction-kanban/README.md)开始，在[唯一看板](extraction-kanban/BOARD.md)认领，再读[职责卡](extraction-kanban/CARDS.md)、[范围与旧计划对账](extraction-kanban/COVERAGE.md)和[可复制模板](extraction-kanban/TEMPLATES.md)。蓝图覆盖当前职责，分别记录独立库、主仓接线、旧实现退出，以及须先裁决的保留/删除项。
