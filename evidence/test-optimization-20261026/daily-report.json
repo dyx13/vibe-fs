@@ -1,0 +1,58 @@
+{
+  "mode": "daily",
+  "steps": [
+    {
+      "label": "format:check",
+      "stage": "format:check",
+      "status": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "durationMs": 6169,
+      "wallMs": 6169
+    },
+    {
+      "label": "check",
+      "status": "not-run"
+    },
+    {
+      "label": "build",
+      "status": "not-run"
+    },
+    {
+      "label": "unit",
+      "status": "not-run"
+    },
+    {
+      "label": "integration",
+      "status": "not-run"
+    }
+  ],
+  "outcome": "fail",
+  "candidateDigest": "c9e928399345700a84a1414e15d2f1172ad5f681842a16acf5dc6075d7c32de1",
+  "failureReason": "step-failed:format:check",
+  "wallMs": 6384,
+  "logDirectory": "/Users/yuanxi/.codex/worktrees/test-optimization-20261024/vibe-fs/.fable-build/verify-logs/2026-10-26T07-29-26-981Z",
+  "exitCode": 1,
+  "profile": [
+    {
+      "stage": "format:check",
+      "wallMs": 6169
+    },
+    {
+      "stage": "check",
+      "wallMs": 0
+    },
+    {
+      "stage": "build",
+      "wallMs": 0
+    },
+    {
+      "stage": "unit",
+      "wallMs": 0
+    },
+    {
+      "stage": "integration",
+      "wallMs": 0
+    }
+  ]
+}

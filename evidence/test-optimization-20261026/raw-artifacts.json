@@ -1,0 +1,102 @@
+[
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/baseline-console.log",
+    "bytes": 1905,
+    "sha256": "7a3f134ccc9954728d0f6c66dd458d8c5538e9ed630968fb996907c2f002aa0d"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/baseline-summary.json",
+    "bytes": 1124688,
+    "sha256": "8d94727a8a9d4b5e87718acb559eae2994f0e50cfc848ec143e5500165c2e369"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/baseline-unit-result.json",
+    "bytes": 192126,
+    "sha256": "0259f09b0f19e60c996a8ac147c784f77b2f550701cd7b1dedc09f68310a281d"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/baseline-unit.log",
+    "bytes": 3502772,
+    "sha256": "e2b8e7851343ba54540ef3e43c41f56a7a0c8c856d14d05593bf6b984e12f3eb"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/build-initial.log",
+    "bytes": 77304,
+    "sha256": "f58ff932d42df8434a82bc64c084a6fc4c8e2b2c39df8c8d457f9d893f2a3334"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/build-noop.log",
+    "bytes": 1478,
+    "sha256": "bdbce7ee3524d472f21683f7c9e8a42d5fcc52a9e1549406624c536d7aca552e"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/dotnet-tools.log",
+    "bytes": 174,
+    "sha256": "0e68b3c2c0d99e6c314982fd5612765d876009dfbbf97b82b29f7fd952ee390a"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/focused-time.log",
+    "bytes": 31931,
+    "sha256": "f02aa550ff3efcc6e0be9558149cf6031f029ad63e0c387a2e9590e01c582c3e"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/lifecycle-suite-after.log",
+    "bytes": 166397,
+    "sha256": "02695d9da67b83cd304eccf187f9c3094fcc17e1c4a3a545d8342aff20def26f"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/lifecycle028-after.json",
+    "bytes": 1005,
+    "sha256": "9130864cc76a6bf487a50b0f9eeb5e82e125d65e6d5f1dc60f71cb807b6ec80a"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/lifecycle028-after.log",
+    "bytes": 4726,
+    "sha256": "07fa833846688548f900925c952fda96b16ff793cbbc6dd057a0a50fa481c286"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/lifecycle028-before.json",
+    "bytes": 1012,
+    "sha256": "925c8c99a7736d61f0304040fb29e9f0266666c580d77d872d3e22afc6c0e8f2"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/lifecycle028-before.log",
+    "bytes": 4731,
+    "sha256": "1f267571fdec5c32ca0a0aee19468af1e288de9a28bfd01f976d8b1a5072f9e3"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/npm-ci.log",
+    "bytes": 303,
+    "sha256": "6641c4ec4a0d115e7021ec68eef4679f8d2baec17b076aac3babc7acd5bd4db8"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/runtime.json",
+    "bytes": 915,
+    "sha256": "6dfaf1ecf5b22d0ecc445161894815a96f93362af1734aca4e9b9fc36bbe787a"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/t1-initial.log",
+    "bytes": 7122,
+    "sha256": "ddfcb6452a9f9ca172db919695c7fb33f6af7678b55f752be3695e58b19bf62a"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/t1-related.log",
+    "bytes": 95025,
+    "sha256": "9a6681f556175fa64afa11f9ae05e57033ec7f28ac12eadc66c2dbf92448e036"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/t1-report-path-fixed.log",
+    "bytes": 19218,
+    "sha256": "c85941beeb20208b3fe00929d4f7802f846a58edd6bb5c912183507f4f2a49ac"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/t1-report.log",
+    "bytes": 15260,
+    "sha256": "797dcb804d6f6c1e3ec507f9547151889a2b46871f31f5383eaf8c7026d8ef0d"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-test-optimization-20261026/t1-watchdog-fixed.log",
+    "bytes": 33268,
+    "sha256": "fc71984bd09cb71a28a253446dcc9ba0efa9fb33df06237a854d6f824019e045"
+  }
+]

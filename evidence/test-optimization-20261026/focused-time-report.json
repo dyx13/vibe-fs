@@ -1,0 +1,121 @@
+{
+  "mode": "focused (time-capability)",
+  "steps": [
+    {
+      "label": "format:check",
+      "status": "not-run",
+      "reason": "outside-focused-unit-scope"
+    },
+    {
+      "label": "check",
+      "status": "not-run",
+      "reason": "outside-focused-unit-scope"
+    },
+    {
+      "label": "build",
+      "status": "not-run",
+      "reason": "outside-focused-unit-scope"
+    },
+    {
+      "label": "unit",
+      "stage": "unit",
+      "status": "ok",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1784,
+      "wallMs": 1784,
+      "verification": {
+        "version": 1,
+        "plannedFiles": [
+          "requirements/time-capability/tests/001.test.mjs",
+          "requirements/time-capability/tests/002.test.mjs",
+          "requirements/time-capability/tests/003.test.mjs",
+          "requirements/time-capability/tests/004.test.mjs",
+          "requirements/time-capability/tests/005.test.mjs",
+          "requirements/time-capability/tests/006.test.mjs",
+          "requirements/time-capability/tests/007.test.mjs",
+          "requirements/time-capability/tests/008.test.mjs"
+        ],
+        "completedFiles": [
+          "requirements/time-capability/tests/001.test.mjs",
+          "requirements/time-capability/tests/002.test.mjs",
+          "requirements/time-capability/tests/003.test.mjs",
+          "requirements/time-capability/tests/004.test.mjs",
+          "requirements/time-capability/tests/005.test.mjs",
+          "requirements/time-capability/tests/006.test.mjs",
+          "requirements/time-capability/tests/007.test.mjs",
+          "requirements/time-capability/tests/008.test.mjs"
+        ],
+        "counts": {
+          "passed": 30,
+          "failed": 0,
+          "skipped": 0,
+          "todo": 3,
+          "cancelled": 0,
+          "containerFailures": 0
+        },
+        "outcome": "pass",
+        "failureReason": null
+      }
+    },
+    {
+      "label": "integration",
+      "status": "not-run",
+      "reason": "outside-focused-unit-scope"
+    },
+    {
+      "label": "e2e",
+      "status": "not-run",
+      "reason": "outside-focused-unit-scope"
+    },
+    {
+      "label": "package",
+      "status": "not-run",
+      "reason": "outside-focused-unit-scope"
+    }
+  ],
+  "outcome": "pass",
+  "candidateDigest": "c9e928399345700a84a1414e15d2f1172ad5f681842a16acf5dc6075d7c32de1",
+  "wallMs": 2663,
+  "logDirectory": "/Users/yuanxi/.codex/worktrees/test-optimization-20261024/vibe-fs/.fable-build/verify-logs/2026-10-26T07-26-23-618Z",
+  "exitCode": 0,
+  "profile": [
+    {
+      "stage": "unit",
+      "wallMs": 1784
+    }
+  ],
+  "scope": {
+    "requestedSuites": [
+      "time-capability"
+    ],
+    "plannedFiles": [
+      "requirements/time-capability/tests/001.test.mjs",
+      "requirements/time-capability/tests/002.test.mjs",
+      "requirements/time-capability/tests/003.test.mjs",
+      "requirements/time-capability/tests/004.test.mjs",
+      "requirements/time-capability/tests/005.test.mjs",
+      "requirements/time-capability/tests/006.test.mjs",
+      "requirements/time-capability/tests/007.test.mjs",
+      "requirements/time-capability/tests/008.test.mjs"
+    ],
+    "completedFiles": [
+      "requirements/time-capability/tests/001.test.mjs",
+      "requirements/time-capability/tests/002.test.mjs",
+      "requirements/time-capability/tests/003.test.mjs",
+      "requirements/time-capability/tests/004.test.mjs",
+      "requirements/time-capability/tests/005.test.mjs",
+      "requirements/time-capability/tests/006.test.mjs",
+      "requirements/time-capability/tests/007.test.mjs",
+      "requirements/time-capability/tests/008.test.mjs"
+    ],
+    "counts": {
+      "passed": 30,
+      "failed": 0,
+      "skipped": 0,
+      "todo": 3,
+      "cancelled": 0,
+      "containerFailures": 0
+    }
+  }
+}

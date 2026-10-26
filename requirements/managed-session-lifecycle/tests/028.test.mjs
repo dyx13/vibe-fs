@@ -110,12 +110,19 @@ const publishTerminal = async (hooks, assistant, child) => {
 
 /** A join that must terminate: a hung join is a failure, not a slow success. */
 const joinWithin = async (hooks, owner, timeoutMs = 15000) => {
-  const outcome = await Promise.race([
-    joinCall(hooks, owner),
-    new Promise((resolve) => setTimeout(() => resolve('JOIN-HUNG'), timeoutMs)),
-  ])
-  assert.notEqual(outcome, 'JOIN-HUNG', 'the join must terminate, never hang')
-  return String(outcome)
+  let timer
+  try {
+    const outcome = await Promise.race([
+      joinCall(hooks, owner),
+      new Promise((resolve) => {
+        timer = setTimeout(() => resolve('JOIN-HUNG'), timeoutMs)
+      }),
+    ])
+    assert.notEqual(outcome, 'JOIN-HUNG', 'the join must terminate, never hang')
+    return String(outcome)
+  } finally {
+    clearTimeout(timer)
+  }
 }
 
 test('WHAT[managed-session-lifecycle-028] a faulted view read degrades to an empty record and still settles the completed child', async () => {
