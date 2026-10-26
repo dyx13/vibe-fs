@@ -1,0 +1,87 @@
+[
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/a1-before-analysis.json",
+    "bytes": 993406,
+    "sha256": "fd18db0bd67c728f20acf9c3dfd4031d19deacdcc866d7a72572cb7640fac633"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/a1-before.json",
+    "bytes": 372,
+    "sha256": "80aca10479b73050501eee09b1a56b68c6a9ba0c279317057ccab68e1a2a3a4b"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/a1-before.log",
+    "bytes": 3496936,
+    "sha256": "f77546cf8962e24d5325c2624ab1ffcac72dca3987c8f70ab1ccf787bc119f8a"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/first-pair-identity-comparison.json",
+    "bytes": 1287,
+    "sha256": "6c4592aee3663998420a250fe49f122caffb58a8858a2921da25b9cbd26085fb"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/host-load.jsonl",
+    "bytes": 16817,
+    "sha256": "4a0d174ec6f20d17449b603811935205fb3b7cb617de120c4265197cc4a52445"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r1-before-analysis.json",
+    "bytes": 995007,
+    "sha256": "666dbdb971591d6296aa78d63ff658f1c3ce6c151b5c6b88667dfafcf4869d36"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r1-before.json",
+    "bytes": 372,
+    "sha256": "7eda564af7a700d652841ae2641fd2cd05494d602e0ebc7d72ac5b133fdffe4e"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r1-before.log",
+    "bytes": 3488880,
+    "sha256": "a2611d98145d6cf9af8bd6f699fba900c4332ce4aa620d0cc8ede63d49edad36"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r2-after-analysis.json",
+    "bytes": 994747,
+    "sha256": "1246b12bfc8f4298f40464a0d652bc2598dcc2e4e5ca6dacd8b785d898b325cb"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r2-after.json",
+    "bytes": 192420,
+    "sha256": "50eb9b325bc5f9156761f7a4e0964a81108d75db459d0a83cad170968e44ecd4"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r2-after.log",
+    "bytes": 3502353,
+    "sha256": "785fa038f16f0c35c3e285dc66f81ee42d0db05987fa9a402e35cbe347529848"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r3-after-analysis.json",
+    "bytes": 994695,
+    "sha256": "882bf7be8ff2a3577f10e91f2d568d8eebc6bb5dca229da1a2403634840c471d"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r3-after.json",
+    "bytes": 192420,
+    "sha256": "5bbc4ecfc0abe6bd608f1bd85fe490dbd6f4c3adfba0747a15312e5d718c86d5"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r3-after.log",
+    "bytes": 3501852,
+    "sha256": "8aabae3b8727ca6681faaf5851dc0d0c68b6cbd489578e092ba45d35faefc1df"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r4-before-analysis.json",
+    "bytes": 994793,
+    "sha256": "4fb645f33bf5be68f3deb90ae308abc7260456f5c48d3c661374d4c7cbae5934"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r4-before.json",
+    "bytes": 372,
+    "sha256": "1a8e44756b99757c0f9ce5302d92d6b66b613a2c8b2f6be3ea917d76cbb172ef"
+  },
+  {
+    "file": "/private/tmp/vibe-fs-full-comparison-20261026/r4-before.log",
+    "bytes": 3497478,
+    "sha256": "59789c62ca1c557533a8fc1c844818307458e477a90c570bb84638c5ef8e0619"
+  }
+]

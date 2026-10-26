@@ -1,0 +1,392 @@
+{
+  "date": "2026-10-26",
+  "timezone": "Asia/Singapore",
+  "order": [
+    "r1-before",
+    "r2-after",
+    "r3-after",
+    "r4-before"
+  ],
+  "versions": {
+    "before": "ab070405ef71bb94fcc3ffe3d00e59de962dbcce",
+    "after": "564b61f32785379b3fc565ede0bf0498175e4695",
+    "library": "3bcb47be43c4ba1225c5a1928e2f7b974e9aad74"
+  },
+  "environment": {
+    "node": "22.23.4",
+    "npm": "11.12.1",
+    "platform": "darwin-arm64",
+    "cpu": "Apple M3 Pro",
+    "concurrency": 2,
+    "unitVerdictSilenceMs": 30000,
+    "suiteBackstopMs": 900000,
+    "acceptTodo": true,
+    "workerDiagnostics": true,
+    "integrationTier": false,
+    "releaseTier": false,
+    "manifestSha256": "4ee101690255f4eb5de687458f0f03429a6d5328e4918f0fa4b6d04db8037c77",
+    "root": "/Users/yuanxi/.codex/worktrees/test-optimization-20261024/vibe-fs"
+  },
+  "timingScope": "Whole unit runner child lifetime, including freshness and process reclamation. Input digest collection outside the child is excluded. The daily/release pipeline was not rerun.",
+  "runs": [
+    {
+      "id": "r1-before",
+      "variant": "before",
+      "wallMs": 330286.391917,
+      "exitCode": 1,
+      "signal": null,
+      "inputDigestBefore": "143339c9f16367779334e98947eede109a815ebf1821fd122a7c80fd72fc9be8",
+      "inputDigestAfter": "143339c9f16367779334e98947eede109a815ebf1821fd122a7c80fd72fc9be8",
+      "plannedFileCount": 752,
+      "completedFileCount": 752,
+      "plannedFilesSha256": "ae260fb8690249db8688c74770ce3355538cfe23d6a7d013a43829f787562562",
+      "counts": {
+        "passed": 3639,
+        "failed": 151,
+        "skipped": 87,
+        "todo": 262,
+        "cancelled": 0,
+        "containerFailures": 1
+      },
+      "startedCaseCount": 4048,
+      "startedCasesSha256": "5f2e6cf9e211c046e2eabffa4f30fc01a63e795a219cc8fea951bf769cdc64b8",
+      "failureIdentityCount": 152,
+      "failureIdentitiesSha256": "f003aab2d731f0dd78bb62b6b496f3736d5fb71f596921fda0f1573b30f4d913",
+      "exclusionsSha256": "9378c9765cbcb9f7d45ded1f75c8604703ef53eca5a1c3650b3cd24cfbb368b7",
+      "resultChannel": "original supervisor summary and file lifecycle; this revision has no result IPC",
+      "nativeSummary": "[test-summary] 752 file(s), 3639 passed, 151 failed, 87 skipped, 262 todo, 1 failed containers (329.79s wall, 358.24s test time)",
+      "finalSummary": "runner: 3639 passed, 151 failed; 752/752 planned file(s) completed",
+      "groupReclaimed": true,
+      "sourceLog": "/private/tmp/vibe-fs-full-comparison-20261026/r1-before.log",
+      "logSha256": "a2611d98145d6cf9af8bd6f699fba900c4332ce4aa620d0cc8ede63d49edad36",
+      "hostLoadSamples": [
+        {
+          "time": "2026-10-26T12:19:22.390Z",
+          "loadavg": [
+            8.060546875,
+            9.95556640625,
+            9.5556640625
+          ],
+          "freemem": 130924544
+        },
+        {
+          "time": "2026-10-26T12:21:34.781Z",
+          "loadavg": [
+            7.00634765625,
+            9.1474609375,
+            9.3046875
+          ],
+          "freemem": 294060032
+        },
+        {
+          "time": "2026-10-26T12:22:31.241Z",
+          "loadavg": [
+            7.01953125,
+            8.806640625,
+            9.16796875
+          ],
+          "freemem": 318144512
+        },
+        {
+          "time": "2026-10-26T12:23:33.490Z",
+          "loadavg": [
+            7.2841796875,
+            8.5380859375,
+            9.03955078125
+          ],
+          "freemem": 314671104
+        }
+      ]
+    },
+    {
+      "id": "r2-after",
+      "variant": "after",
+      "wallMs": 310940.07179200003,
+      "exitCode": 1,
+      "signal": null,
+      "inputDigestBefore": "d04d895c8a2296bf96d585c9433602fcf0fbaa4690dfb0be7e7285ce4af83b71",
+      "inputDigestAfter": "d04d895c8a2296bf96d585c9433602fcf0fbaa4690dfb0be7e7285ce4af83b71",
+      "plannedFileCount": 752,
+      "completedFileCount": 752,
+      "plannedFilesSha256": "ae260fb8690249db8688c74770ce3355538cfe23d6a7d013a43829f787562562",
+      "counts": {
+        "passed": 3646,
+        "failed": 149,
+        "skipped": 87,
+        "todo": 262,
+        "cancelled": 0,
+        "containerFailures": 1
+      },
+      "startedCaseCount": 4053,
+      "startedCasesSha256": "e563e0045a62d3f4f0bf875dc70289bea3541226279eb82dc5b35335f325d255",
+      "failureIdentityCount": 150,
+      "failureIdentitiesSha256": "43283ead55b2a4052b19322ee7cf09158d69dad42b5d941b12216f9e62ca6b38",
+      "exclusionsSha256": "9378c9765cbcb9f7d45ded1f75c8604703ef53eca5a1c3650b3cd24cfbb368b7",
+      "resultChannel": "supervisor IPC, cross-checked with native summary",
+      "nativeSummary": "[test-summary] 752 file(s), 3646 passed, 149 failed, 87 skipped, 262 todo, 1 failed containers (310.37s wall, 341.88s test time)",
+      "finalSummary": "runner: 3646 passed, 149 failed; 752/752 planned file(s) completed",
+      "groupReclaimed": true,
+      "sourceLog": "/private/tmp/vibe-fs-full-comparison-20261026/r2-after.log",
+      "logSha256": "785fa038f16f0c35c3e285dc66f81ee42d0db05987fa9a402e35cbe347529848",
+      "hostLoadSamples": [
+        {
+          "time": "2026-10-26T12:24:51.404Z",
+          "loadavg": [
+            6.74755859375,
+            8.091796875,
+            8.8251953125
+          ],
+          "freemem": 294027264
+        },
+        {
+          "time": "2026-10-26T12:25:47.388Z",
+          "loadavg": [
+            7.01806640625,
+            7.9130859375,
+            8.708984375
+          ],
+          "freemem": 90669056
+        },
+        {
+          "time": "2026-10-26T12:26:50.164Z",
+          "loadavg": [
+            7.244140625,
+            7.74462890625,
+            8.5810546875
+          ],
+          "freemem": 214958080
+        },
+        {
+          "time": "2026-10-26T12:27:52.953Z",
+          "loadavg": [
+            6.02978515625,
+            7.2548828125,
+            8.3359375
+          ],
+          "freemem": 139083776
+        },
+        {
+          "time": "2026-10-26T12:28:51.892Z",
+          "loadavg": [
+            7.03759765625,
+            7.3388671875,
+            8.29248046875
+          ],
+          "freemem": 207355904
+        },
+        {
+          "time": "2026-10-26T12:29:30.989Z",
+          "loadavg": [
+            7.0234375,
+            7.30810546875,
+            8.23583984375
+          ],
+          "freemem": 40812544
+        }
+      ]
+    },
+    {
+      "id": "r3-after",
+      "variant": "after",
+      "wallMs": 291679.04562499997,
+      "exitCode": 1,
+      "signal": null,
+      "inputDigestBefore": "d04d895c8a2296bf96d585c9433602fcf0fbaa4690dfb0be7e7285ce4af83b71",
+      "inputDigestAfter": "d04d895c8a2296bf96d585c9433602fcf0fbaa4690dfb0be7e7285ce4af83b71",
+      "plannedFileCount": 752,
+      "completedFileCount": 752,
+      "plannedFilesSha256": "ae260fb8690249db8688c74770ce3355538cfe23d6a7d013a43829f787562562",
+      "counts": {
+        "passed": 3646,
+        "failed": 149,
+        "skipped": 87,
+        "todo": 262,
+        "cancelled": 0,
+        "containerFailures": 1
+      },
+      "startedCaseCount": 4053,
+      "startedCasesSha256": "e563e0045a62d3f4f0bf875dc70289bea3541226279eb82dc5b35335f325d255",
+      "failureIdentityCount": 150,
+      "failureIdentitiesSha256": "43283ead55b2a4052b19322ee7cf09158d69dad42b5d941b12216f9e62ca6b38",
+      "exclusionsSha256": "9378c9765cbcb9f7d45ded1f75c8604703ef53eca5a1c3650b3cd24cfbb368b7",
+      "resultChannel": "supervisor IPC, cross-checked with native summary",
+      "nativeSummary": "[test-summary] 752 file(s), 3646 passed, 149 failed, 87 skipped, 262 todo, 1 failed containers (291.25s wall, 313.01s test time)",
+      "finalSummary": "runner: 3646 passed, 149 failed; 752/752 planned file(s) completed",
+      "groupReclaimed": true,
+      "sourceLog": "/private/tmp/vibe-fs-full-comparison-20261026/r3-after.log",
+      "logSha256": "8aabae3b8727ca6681faaf5851dc0d0c68b6cbd489578e092ba45d35faefc1df",
+      "hostLoadSamples": [
+        {
+          "time": "2026-10-26T12:31:23.505Z",
+          "loadavg": [
+            7.20751953125,
+            7.18115234375,
+            8.06103515625
+          ],
+          "freemem": 161284096
+        },
+        {
+          "time": "2026-10-26T12:32:15.902Z",
+          "loadavg": [
+            8.88037109375,
+            7.58203125,
+            8.1552734375
+          ],
+          "freemem": 168214528
+        },
+        {
+          "time": "2026-10-26T12:33:23.780Z",
+          "loadavg": [
+            7.62109375,
+            7.55126953125,
+            8.103515625
+          ],
+          "freemem": 113131520
+        },
+        {
+          "time": "2026-10-26T12:34:40.770Z",
+          "loadavg": [
+            7.27587890625,
+            7.591796875,
+            8.08056640625
+          ],
+          "freemem": 361660416
+        }
+      ]
+    },
+    {
+      "id": "r4-before",
+      "variant": "before",
+      "wallMs": 293023.678417,
+      "exitCode": 1,
+      "signal": null,
+      "inputDigestBefore": "143339c9f16367779334e98947eede109a815ebf1821fd122a7c80fd72fc9be8",
+      "inputDigestAfter": "143339c9f16367779334e98947eede109a815ebf1821fd122a7c80fd72fc9be8",
+      "plannedFileCount": 752,
+      "completedFileCount": 752,
+      "plannedFilesSha256": "ae260fb8690249db8688c74770ce3355538cfe23d6a7d013a43829f787562562",
+      "counts": {
+        "passed": 3639,
+        "failed": 151,
+        "skipped": 87,
+        "todo": 262,
+        "cancelled": 0,
+        "containerFailures": 1
+      },
+      "startedCaseCount": 4048,
+      "startedCasesSha256": "5f2e6cf9e211c046e2eabffa4f30fc01a63e795a219cc8fea951bf769cdc64b8",
+      "failureIdentityCount": 152,
+      "failureIdentitiesSha256": "f003aab2d731f0dd78bb62b6b496f3736d5fb71f596921fda0f1573b30f4d913",
+      "exclusionsSha256": "9378c9765cbcb9f7d45ded1f75c8604703ef53eca5a1c3650b3cd24cfbb368b7",
+      "resultChannel": "original supervisor summary and file lifecycle; this revision has no result IPC",
+      "nativeSummary": "[test-summary] 752 file(s), 3639 passed, 151 failed, 87 skipped, 262 todo, 1 failed containers (292.58s wall, 303.92s test time)",
+      "finalSummary": "runner: 3639 passed, 151 failed; 752/752 planned file(s) completed",
+      "groupReclaimed": true,
+      "sourceLog": "/private/tmp/vibe-fs-full-comparison-20261026/r4-before.log",
+      "logSha256": "59789c62ca1c557533a8fc1c844818307458e477a90c570bb84638c5ef8e0619",
+      "hostLoadSamples": [
+        {
+          "time": "2026-10-26T12:36:13.045Z",
+          "loadavg": [
+            6.9287109375,
+            7.2939453125,
+            7.9091796875
+          ],
+          "freemem": 123666432
+        },
+        {
+          "time": "2026-10-26T12:36:57.722Z",
+          "loadavg": [
+            5.83154296875,
+            6.99169921875,
+            7.767578125
+          ],
+          "freemem": 182878208
+        },
+        {
+          "time": "2026-10-26T12:38:42.155Z",
+          "loadavg": [
+            3.30517578125,
+            5.77197265625,
+            7.1982421875
+          ],
+          "freemem": 74940416
+        },
+        {
+          "time": "2026-10-26T12:39:39.401Z",
+          "loadavg": [
+            4.072265625,
+            5.48974609375,
+            6.98974609375
+          ],
+          "freemem": 84836352
+        },
+        {
+          "time": "2026-10-26T12:40:15.811Z",
+          "loadavg": [
+            3.1884765625,
+            5.11669921875,
+            6.79296875
+          ],
+          "freemem": 207028224
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "before": {
+      "samplesMs": [
+        330286.391917,
+        293023.678417
+      ],
+      "meanMs": 311655.035167,
+      "minMs": 293023.678417,
+      "maxMs": 330286.391917
+    },
+    "after": {
+      "samplesMs": [
+        310940.07179200003,
+        291679.04562499997
+      ],
+      "meanMs": 301309.5587085,
+      "minMs": 291679.04562499997,
+      "maxMs": 310940.07179200003
+    },
+    "meanSavedMs": 10345.476458500023,
+    "meanReductionPercent": 3.3195280971335532,
+    "forwardPairSavedMs": 19346.32012499997,
+    "reversePairSavedMs": 1344.6327920000185
+  },
+  "equivalence": {
+    "filePlansMatch": true,
+    "withinVersionStartedCasesMatch": true,
+    "withinVersionFailureIdentitiesMatch": true,
+    "exclusionsMatch": true,
+    "addedCases": [
+      "requirements/verification-system/tests/017.test.mjs:WHAT[verification-system-017] a missing suite value cannot consume another CLI option",
+      "requirements/verification-system/tests/017.test.mjs:WHAT[verification-system-017] focused reports preserve actual completion, failures and excluded stages",
+      "requirements/verification-system/tests/017.test.mjs:WHAT[verification-system-017] focused selection reaches the real unit runner without enabling other tiers",
+      "requirements/verification-system/tests/017.test.mjs:WHAT[verification-system-017] invalid focused suites fail before creating a run or starting a stage",
+      "requirements/verification-system/tests/017.test.mjs:WHAT[verification-system-017] release cannot silently become focused unit verification"
+    ],
+    "removedCases": [],
+    "resolvedFailures": [
+      "requirements/verification-system/tests/006.test.mjs:WHAT[verification-system-006] a supervised run reports the inner startup as its first causal transition",
+      "requirements/verification-system/tests/006.test.mjs:WHAT[verification-system-006] a supervised run without any lifecycle transition still terminates on the original silence window"
+    ],
+    "addedFailures": []
+  },
+  "excludedRun": {
+    "id": "a1-before",
+    "wallMs": 343135.795667,
+    "reason": "The stop operation had not run when the conversation was interrupted, so this morning run finished. It is preserved but excluded from the resumed evening ABBA comparison.",
+    "sourceLog": "/private/tmp/vibe-fs-full-comparison-20261026/a1-before.log",
+    "logSha256": "f77546cf8962e24d5325c2624ab1ffcac72dca3987c8f70ab1ccf787bc119f8a"
+  },
+  "limits": [
+    "Two observations per version; both ranges overlap. This is not a stable speedup estimate or a statistical significance claim.",
+    "Tests ran on a desktop with other applications. Sequential execution and ABBA order do not eliminate changing load or cache state.",
+    "All runs failed on existing tests and one unloaded file. Failed or missing coverage is not accepted as success.",
+    "The 016 preparation tests did not load. Integration, e2e, package and the complete daily pipeline are outside this experiment."
+  ]
+}
