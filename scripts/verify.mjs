@@ -98,14 +98,26 @@ export function verificationSteps({ root = ROOT, release = false, verbose = fals
 }
 
 export function focusedSuiteFiles(root, suites) {
-  const suiteList = Array.isArray(suites) ? suites : String(suites).split(',').map((s) => s.trim()).filter(Boolean)
+  const requested = Array.isArray(suites) ? suites : typeof suites === 'string' ? suites.split(',') : []
+  if (requested.length === 0) throw new Error('focused verify: --suites requires at least one package name')
+  const suiteList = [...new Set(requested.map((value) => {
+    const suite = typeof value === 'string' ? value.trim() : ''
+    if (!suite || suite === '.' || suite === '..' || /[\\/,\0]/.test(suite)) {
+      throw new Error(`focused verify: invalid package name: ${JSON.stringify(value)}`)
+    }
+    return suite
+  }))]
   const allFiles = []
   for (const suite of suiteList) {
-    const suiteDir = path.join(root, 'requirements', suite, 'tests')
-    if (!fs.existsSync(suiteDir)) continue
+    const suiteRoot = path.join(root, 'requirements', suite)
+    if (!fs.lstatSync(suiteRoot, { throwIfNoEntry: false })?.isDirectory()) {
+      throw new Error(`focused verify: package directory is missing or not a real directory: ${suite}`)
+    }
+    const suiteDir = path.join(suiteRoot, 'tests')
     const files = walk(suiteDir, ['.test.mjs'])
-      .filter((f) => !f.includes('/tests/e2e/') && !f.includes('/tests/integration/'))
       .map((f) => path.relative(root, f).replace(/\\/g, '/'))
+      .filter((f) => !f.includes('/tests/e2e/') && !f.includes('/tests/integration/'))
+    if (files.length === 0) throw new Error(`focused verify: no unit *.test.mjs found for suite: ${suite}`)
     allFiles.push(...files)
   }
   return { suites: suiteList, files: [...new Set(allFiles)].sort() }
@@ -113,19 +125,17 @@ export function focusedSuiteFiles(root, suites) {
 
 export function focusedVerificationSteps({ root = ROOT, suites, verbose = false, env: hostEnv = process.env } = {}) {
   const { suites: suiteList, files } = focusedSuiteFiles(root, suites)
-  if (files.length === 0) {
-    throw new Error(`focused verify: no *.test.mjs found for suite(s): ${suiteList.join(', ')}`)
-  }
-  const scopedEnv = {
-    ...hostEnv,
-    TESTS_MJS_FILES: files.join(','),
-  }
   return [
     {
       label: 'unit',
       cmd: process.execPath,
       argv: [path.join(root, 'requirements/verification-system/tests/run.mjs')],
-      env: getTestEnv({ verbose, hostEnv: scopedEnv }),
+      env: getTestEnv({ verbose, hostEnv, extra: {
+        TESTS_MJS_FILES: files.join(','),
+        WXS_TIER_INTEGRATION: '0',
+        WXS_TIER_RELEASE: '0',
+        WXS_RELEASE: '0',
+      } }),
       focusedFiles: files,
       focusedSuites: suiteList,
     },
@@ -265,18 +275,14 @@ export async function verify({
   env: hostEnv = process.env,
 } = {}) {
   const resolvedRoot = path.resolve(root)
-  ensureNativeOpencode({ root: resolvedRoot })
-  const baseLogDir = logDirectory ? path.resolve(logDirectory) : path.join(resolvedRoot, '.fable-build', 'verify-logs')
-  const runLogDir = allocateRunLogDir(baseLogDir)
-
-  const stepRunner = runStepOverride ?? defaultRunStepFactory(resolvedRoot, verbose, output)
   let plannedSteps
   let mode
   let focusedInfo = null
-  if (suites) {
+  if (suites !== null) {
     try {
+      if (release) throw new Error('focused verify: --release cannot be combined with --suites')
       plannedSteps = focusedVerificationSteps({ root: resolvedRoot, suites, verbose, env: hostEnv })
-      focusedInfo = focusedSuiteFiles(resolvedRoot, suites)
+      focusedInfo = { suites: plannedSteps[0].focusedSuites, files: plannedSteps[0].focusedFiles }
       mode = `focused (${focusedInfo.suites.join(', ')})`
     } catch (err) {
       output.write(`FAIL: ${err.message}\n`)
@@ -291,6 +297,10 @@ export async function verify({
     plannedSteps = verificationSteps({ root: resolvedRoot, release, verbose, env: hostEnv })
     mode = release ? 'release' : 'daily'
   }
+  ensureNativeOpencode({ root: resolvedRoot })
+  const baseLogDir = logDirectory ? path.resolve(logDirectory) : path.join(resolvedRoot, '.fable-build', 'verify-logs')
+  const runLogDir = allocateRunLogDir(baseLogDir)
+  const stepRunner = runStepOverride ?? defaultRunStepFactory(resolvedRoot, verbose, output)
   const runStart = Date.now()
 
   let beforeInputs
@@ -472,6 +482,11 @@ async function main() {
     } else if (arg.startsWith('--suites=')) {
       suites = arg.slice('--suites='.length)
     } else if (arg === '--suites') {
+      if (!argv[i + 1] || argv[i + 1].startsWith('-')) {
+        process.stderr.write('focused verify: --suites requires a package list\n')
+        process.exitCode = 2
+        return
+      }
       suites = argv[++i]
     } else if (arg === '--verbose') {
       verbose = true
@@ -479,6 +494,7 @@ async function main() {
       profile = true
     } else if (arg === '-h' || arg === '--help') {
       process.stdout.write('Usage: node scripts/verify.mjs [--release] [--verbose] [--profile] [--suites <pkg,...>]\n')
+      process.stdout.write('--suites runs unit tests for the named packages after an explicit build; it cannot be combined with --release.\n')
       process.exit(0)
     } else {
       process.stderr.write(`Unknown option: ${arg}\n`)

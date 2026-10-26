@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
-import { execFileSync } from 'node:child_process'
-import { verify, verificationSteps } from '../../../scripts/verify.mjs'
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, rmSync, writeFileSync } from 'node:fs'
+import { execFileSync, spawnSync } from 'node:child_process'
+import { focusedVerificationSteps, verify, verificationSteps } from '../../../scripts/verify.mjs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -50,6 +50,134 @@ function createMemorySink() {
     },
   }
 }
+
+function writeSuiteFixture(root, suite, source) {
+  const directory = join(root, 'requirements', suite, 'tests')
+  mkdirSync(directory, { recursive: true })
+  writeFileSync(join(directory, '001.test.mjs'), source)
+}
+
+test('WHAT[verification-system-017] focused selection reaches the real unit runner without enabling other tiers', () => {
+  const root = mkdtempSync(join(tmpdir(), 'focused-selection-'))
+  const { NODE_TEST_CONTEXT, ...hostEnv } = process.env
+  try {
+    writeSuiteFixture(root, 'selected', `import assert from 'node:assert/strict'
+import { appendFileSync } from 'node:fs'
+import test from 'node:test'
+test('selected proof', () => {
+  appendFileSync('selected-ran', 'selected\\n')
+  assert.equal(process.env.WXS_TIER_INTEGRATION, '0')
+  assert.equal(process.env.WXS_TIER_RELEASE, '0')
+  assert.equal(process.env.WXS_RELEASE, '0')
+})
+`)
+    writeSuiteFixture(root, 'unselected', `import assert from 'node:assert/strict'
+import { writeFileSync } from 'node:fs'
+import test from 'node:test'
+test('unselected failure', () => {
+  writeFileSync('unselected-ran', 'ran')
+  assert.fail('selected failure must propagate')
+})
+`)
+    const run = (suites) => {
+      const [step] = focusedVerificationSteps({ root, suites, env: {
+        ...hostEnv,
+        NODE_TEST_CONCURRENCY: '1',
+        TESTS_MJS_FILES: 'requirements/unselected/tests/001.test.mjs',
+        WXS_TIER_INTEGRATION: '1',
+        WXS_TIER_RELEASE: '1',
+        WXS_RELEASE: '1',
+      } })
+      assertRealEntry(root, step.argv[0])
+      // These runner fixtures import no generated product output.
+      return spawnSync(step.cmd, [resolve(ROOT, relative(root, step.argv[0])), '--skip-staleness-check'], {
+        cwd: root,
+        env: step.env,
+        encoding: 'utf8',
+      })
+    }
+
+    const selected = run(' selected,selected ')
+    assert.ifError(selected.error)
+    assert.equal(selected.signal, null, selected.stderr)
+    assert.equal(selected.status, 0, selected.stderr + selected.stdout)
+    assert.equal(readFileSync(join(root, 'selected-ran'), 'utf8'), 'selected\n')
+    assert.equal(existsSync(join(root, 'unselected-ran')), false)
+
+    const failed = run('unselected')
+    assert.ifError(failed.error)
+    assert.equal(failed.signal, null, failed.stderr)
+    assert.equal(failed.status, 1, failed.stderr + failed.stdout)
+    assert.equal(readFileSync(join(root, 'unselected-ran'), 'utf8'), 'ran')
+    assert.equal(readFileSync(join(root, 'selected-ran'), 'utf8'), 'selected\n')
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+  }
+})
+
+test('WHAT[verification-system-017] invalid focused suites fail before creating a run or starting a stage', async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'focused-invalid-'))
+  const root = inputFixture(directory)
+  const logDirectory = join(directory, 'logs')
+  try {
+    writeSuiteFixture(root, 'selected', '')
+    mkdirSync(join(root, 'requirements/empty/tests'), { recursive: true })
+    mkdirSync(join(root, 'requirements/blocked'), { recursive: true })
+    writeFileSync(join(root, 'requirements/blocked/tests'), 'not a directory')
+    symlinkSync(join(root, 'requirements/selected'), join(root, 'requirements/linked'), 'dir')
+    for (const suites of ['', ' ', [], [''], 'selected,', 'selected,missing', 'selected,empty',
+      '..', '../selected', 'selected\\tests', 'blocked', 'linked']) {
+      const calls = []
+      const result = await verify({ root, suites, logDirectory, output: createMemorySink(),
+        runStep: async ({ label }) => {
+          calls.push(label)
+          return { label, ok: true, exitCode: 0 }
+        },
+      })
+      assert.equal(result.exitCode, 1, JSON.stringify(suites))
+      assert.equal(result.outcome, 'fail')
+      assert.ok(result.failureReason)
+      assert.deepEqual(calls, [])
+      assert.equal(existsSync(logDirectory), false)
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true })
+  }
+})
+
+test('WHAT[verification-system-017] release cannot silently become focused unit verification', async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'focused-release-'))
+  try {
+    const calls = []
+    const result = await verify({ root: directory, release: true, suites: 'selected',
+      logDirectory: join(directory, 'logs'), output: createMemorySink(),
+      runStep: async ({ label }) => {
+        calls.push(label)
+        return { label, ok: true, exitCode: 0 }
+      },
+    })
+    assert.equal(result.exitCode, 1)
+    assert.match(result.failureReason, /--release cannot be combined with --suites/)
+    assert.deepEqual(calls, [])
+    assert.equal(existsSync(join(directory, 'logs')), false)
+  } finally {
+    rmSync(directory, { recursive: true, force: true })
+  }
+})
+
+test('WHAT[verification-system-017] a missing suite value cannot consume another CLI option', () => {
+  const { NODE_TEST_CONTEXT, ...env } = process.env
+  for (const option of ['--verbose', '--release']) {
+    const result = spawnSync(process.execPath, [join(ROOT, 'scripts/verify.mjs'), '--suites', option, '--help'], {
+      env,
+      encoding: 'utf8',
+    })
+    assert.ifError(result.error)
+    assert.equal(result.signal, null)
+    assert.equal(result.status, 2, result.stderr + result.stdout)
+    assert.match(result.stderr, /--suites requires a package list/)
+  }
+})
 
 test('WHAT[verification-system-017] release adds one Long Stroke and package proof after a clean build', async () => {
   const directory = mkdtempSync(join(tmpdir(), 'release-order-'))
