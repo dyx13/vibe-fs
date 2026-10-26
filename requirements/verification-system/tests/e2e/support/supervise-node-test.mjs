@@ -212,6 +212,7 @@ export async function superviseNodeTest({
   logPrefix = 'runner',
   inner = NODE_TEST_INNER,
   inspectProcessTree,
+  onResult,
   // When true, suite failures throw instead of process.exit, so a parent
   // orchestrator (integration/run.mjs) can print its own group-level line
   // and continue to its final summary. Default false: existing callers
@@ -232,8 +233,11 @@ export async function superviseNodeTest({
     : null
   let result
   let failure
+  let observation = { completedFiles: null, counts: null }
   try {
-    result = await superviseOwnedNodeTest({ files, label, silenceMs, env, logPrefix, inner, ownedHome, inspectProcessTree })
+    result = await superviseOwnedNodeTest({ files, label, silenceMs, env, logPrefix, inner, ownedHome, inspectProcessTree,
+      observeResult(value) { observation = value },
+    })
   } catch (error) {
     failure = { error }
   } finally {
@@ -245,6 +249,13 @@ export async function superviseNodeTest({
         : error }
     }
   }
+  await onResult?.({
+    version: 1,
+    plannedFiles: files.map(file => resolve(file)),
+    ...observation,
+    outcome: failure ? 'fail' : 'pass',
+    failureReason: failure ? failure.error.message : null,
+  })
   if (failure) {
     if (throwOnFailure) throw failure.error
     console.error(failure.error)
@@ -253,7 +264,7 @@ export async function superviseNodeTest({
   return result
 }
 
-async function superviseOwnedNodeTest({ files, label, silenceMs, env, logPrefix, inner, ownedHome, inspectProcessTree }) {
+async function superviseOwnedNodeTest({ files, label, silenceMs, env, logPrefix, inner, ownedHome, inspectProcessTree, observeResult }) {
   let terminationFailure = null
   const fail = (code = 1) => {
     throw Object.assign(new Error(`${logPrefix}: supervised suite failed (exit ${code})`, {
@@ -486,6 +497,12 @@ async function superviseOwnedNodeTest({ files, label, silenceMs, env, logPrefix,
   watchdog.stop()
   clearTimeout(backstop)
   if (termination !== null) await termination
+  observeResult({
+    completedFiles: fileWaits.snapshot().drained.filter(file => !outstanding.has(file)),
+    counts: runnerSummary ? Object.fromEntries(
+      ['passed', 'failed', 'skipped', 'todo', 'cancelled', 'containerFailures'].map(key => [key, runnerSummary[key]]),
+    ) : null,
+  })
   const groupVerificationStarted = performance.now()
   const processGroupClean = child.pid ? await verifyExitedGroup(child.pid, logPrefix) : false
   console.error(

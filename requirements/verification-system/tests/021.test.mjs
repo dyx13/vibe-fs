@@ -350,6 +350,7 @@ process.send({ type: 'inner:drained' })
 
 test('WHAT[verification-system-021] a clean child exit without authoritative summary is inconclusive', async () => {
   const messages = []
+  const reports = []
   const originalError = console.error
   console.error = (...args) => {
     messages.push(args.join(' '))
@@ -358,12 +359,18 @@ test('WHAT[verification-system-021] a clean child exit without authoritative sum
   try {
     await assert.rejects(superviseNodeTest({
       files: [fixture], inner: fixture, env: childEnv, label: 'no-summary-fixture', silenceMs: 10000, throwOnFailure: true,
+      onResult: result => reports.push(result),
     }), /supervised suite failed/)
   } finally {
     console.error = originalError
   }
   assert.match(messages.join('\n'), /verdict counts unavailable; no authoritative summary/)
   assert.doesNotMatch(messages.join('\n'), /\b0 passed, 0 failed\b/)
+  assert.equal(reports.length, 1)
+  assert.deepEqual(reports[0].plannedFiles, [fixture])
+  assert.deepEqual(reports[0].completedFiles, [])
+  assert.equal(reports[0].counts, null)
+  assert.equal(reports[0].outcome, 'fail')
 })
 
 test('WHAT[verification-system-021] nested supervision preserves child output without corrupting the outer test protocol', async () => {

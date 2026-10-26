@@ -1407,7 +1407,11 @@ test('WHAT[verification-system-006] a supervised run reports the inner startup a
     const launcher = path.join(directory, 'supervise.mjs')
     const moduleUrl = new URL('./e2e/support/supervise-node-test.mjs', import.meta.url).href
     fs.writeFileSync(fixture, `import test from 'node:test'
-test('never finishes', async () => { await new Promise(() => {}) })
+test('never finishes', async () => {
+  const hold = setInterval(() => {}, 1000)
+  try { await new Promise(() => {}) }
+  finally { clearInterval(hold) }
+})
 `)
     fs.writeFileSync(launcher, `import { superviseNodeTest } from ${JSON.stringify(moduleUrl)}
 await superviseNodeTest({ files: [${JSON.stringify(fixture)}], label: 'runner-started', silenceMs: 1000 })
@@ -1462,11 +1466,9 @@ test('WHAT[verification-system-006] a supervised run without any lifecycle trans
     const fixture = path.join(directory, 'quiet.test.mjs')
     const launcher = path.join(directory, 'supervise.mjs')
     const moduleUrl = new URL('./e2e/support/supervise-node-test.mjs', import.meta.url).href
-    fs.writeFileSync(fixture, `import test from 'node:test'
-test('never finishes', async () => { await new Promise(() => {}) })
-`)
+    fs.writeFileSync(fixture, 'setInterval(() => {}, 1000)\n')
     fs.writeFileSync(launcher, `import { superviseNodeTest } from ${JSON.stringify(moduleUrl)}
-await superviseNodeTest({ files: [${JSON.stringify(fixture)}], label: 'no-transition', silenceMs: 1000 })
+await superviseNodeTest({ files: [${JSON.stringify(fixture)}], inner: ${JSON.stringify(fixture)}, label: 'no-transition', silenceMs: 1000 })
 `)
     const env = { ...process.env, NODE_TEST_CONCURRENCY: '1' }
     delete env.NODE_TEST_CONTEXT
@@ -1480,7 +1482,7 @@ await superviseNodeTest({ files: [${JSON.stringify(fixture)}], label: 'no-transi
     })
     assert.equal(code, 1, output)
     assert.match(output, /WATCHDOG: 'no-transition' silent for/)
-    assert.match(output, /0 blocking progress update\(s\)/)
+    assert.match(output, /0 blocking progress update\(s\), 0 causal transition\(s\)/)
   } finally {
     fs.rmSync(directory, { recursive: true, force: true })
   }

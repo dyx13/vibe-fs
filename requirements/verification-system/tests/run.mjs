@@ -96,4 +96,7 @@ await superviseNodeTest({
   label: 'tests/unit',
   silenceMs: Number(process.env.UNIT_VERDICT_SILENCE_MS || UNIT_VERDICT_SILENCE_MS),
   logPrefix: 'runner',
+  onResult: process.send ? (data) => new Promise((resolve, reject) => {
+    process.send({ type: 'verification:unit-result', data }, error => error ? reject(error) : resolve())
+  }) : undefined,
 })

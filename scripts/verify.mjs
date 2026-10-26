@@ -151,6 +151,7 @@ function defaultRunStepFactory(root, verbose, output) {
     timeoutMs = 600_000,
     logDir,
     cwd = root,
+    focusedFiles,
   }) {
     const startedAt = Date.now()
     const stepLog = path.join(logDir, `${label.replace(/:/g, '-')}.log`)
@@ -164,6 +165,8 @@ function defaultRunStepFactory(root, verbose, output) {
     timer.unref()
 
     let child
+    let unitResult = null
+    let unitResultError = null
     try {
       const childEnv = env ? { ...env } : (() => {
         const { TESTS_MJS_FILES, ...cleanEnv } = process.env
@@ -177,7 +180,7 @@ function defaultRunStepFactory(root, verbose, output) {
       }
       child = spawn(cmd, argv, {
         cwd,
-        stdio: ['ignore', 'pipe', 'pipe'],
+        stdio: label === 'unit' ? ['ignore', 'pipe', 'pipe', 'ipc'] : ['ignore', 'pipe', 'pipe'],
         env: childEnv,
       })
     } catch (spawnError) {
@@ -194,6 +197,18 @@ function defaultRunStepFactory(root, verbose, output) {
         error: spawnError,
       }
     }
+
+    if (label === 'unit') child.on('message', (message) => {
+      try {
+        if (unitResult || unitResultError || message?.type !== 'verification:unit-result') {
+          throw new Error('unit result channel received an unexpected or repeated message')
+        }
+        unitResult = validateUnitResult(message.data, root, focusedFiles)
+      } catch (error) {
+        unitResult = null
+        unitResultError = error
+      }
+    })
 
     child.stdout.on('data', (chunk) => {
       logStream.write(chunk)
@@ -212,9 +227,12 @@ function defaultRunStepFactory(root, verbose, output) {
     clearTimeout(timer)
     logStream.end()
 
-    const ok = exit.code === 0 && !exit.signal && !killed
+    if (label === 'unit' && !unitResult && !unitResultError) unitResultError = new Error('unit result was not received')
+    const ok = exit.code === 0 && !exit.signal && !killed && !unitResultError &&
+      (label !== 'unit' || unitResult.outcome === 'pass')
 
     if (!ok) {
+      if (unitResultError) process.stderr.write(`[${label}] ${unitResultError.message}\n`)
       // 无论 verbose 与否，失败时自动 Dump 诊断日志尾部到控制台，消除 CI 无控制台输出的信息黑洞
       try {
         const content = fs.readFileSync(stepLog, 'utf8')
@@ -230,15 +248,38 @@ function defaultRunStepFactory(root, verbose, output) {
 
     return {
       label,
-      exitCode: exit.code ?? 1,
+      exitCode: ok ? 0 : exit.code || 1,
       signal: exit.signal,
       killed,
       durationMs: Date.now() - startedAt,
       logPath: path.relative(root, stepLog),
       ok,
-      ...(exit.error ? { error: exit.error } : {}),
+      ...(unitResult ? { verification: unitResult } : {}),
+      ...(unitResultError || exit.error ? { error: unitResultError ?? exit.error } : {}),
     }
   }
+}
+
+function validateUnitResult(value, root, focusedFiles) {
+  const countKeys = ['passed', 'failed', 'skipped', 'todo', 'cancelled', 'containerFailures']
+  const validFiles = files => Array.isArray(files) && new Set(files).size === files.length &&
+    files.every(file => typeof file === 'string' && path.isAbsolute(file))
+  if (!value || value.version !== 1 || !['pass', 'fail'].includes(value.outcome) ||
+      !validFiles(value.plannedFiles) || value.plannedFiles.length === 0 ||
+      value.completedFiles !== null && (!validFiles(value.completedFiles) ||
+        value.completedFiles.some(file => !value.plannedFiles.includes(file))) ||
+      value.counts !== null && (!value.counts || countKeys.some(key => !Number.isSafeInteger(value.counts[key]) || value.counts[key] < 0)) ||
+      value.outcome === 'pass' && (!value.counts || value.counts.failed > 0 || value.counts.cancelled > 0 ||
+        value.counts.containerFailures > 0 || value.completedFiles?.length !== value.plannedFiles.length)) {
+    throw new Error('unit result has an invalid scope or verdict')
+  }
+  const realRoot = fs.realpathSync(root)
+  const relativeFiles = files => files.map(file => path.relative(realRoot, file).replace(/\\/g, '/')).sort()
+  const plannedFiles = relativeFiles(value.plannedFiles)
+  if (focusedFiles && JSON.stringify(plannedFiles) !== JSON.stringify([...focusedFiles].sort())) {
+    throw new Error('unit result differs from the focused file plan')
+  }
+  return { ...value, plannedFiles, completedFiles: value.completedFiles === null ? null : relativeFiles(value.completedFiles) }
 }
 
 function allocateRunLogDir(baseLogDir) {
@@ -302,6 +343,27 @@ export async function verify({
   const runLogDir = allocateRunLogDir(baseLogDir)
   const stepRunner = runStepOverride ?? defaultRunStepFactory(resolvedRoot, verbose, output)
   const runStart = Date.now()
+  const finish = (result) => {
+    if (focusedInfo) {
+      const unit = result.steps.find(step => step.label === 'unit')
+      const excluded = label => ({ label, status: 'not-run', reason: 'outside-focused-unit-scope' })
+      result.steps = [
+        ...['format:check', 'check', 'build'].map(excluded),
+        ...result.steps,
+        ...['integration', 'e2e', 'package'].map(excluded),
+      ]
+      result.scope = {
+        requestedSuites: focusedInfo.suites,
+        plannedFiles: focusedInfo.files,
+        completedFiles: unit?.verification?.completedFiles ?? null,
+        counts: unit?.verification?.counts ?? null,
+      }
+      output.write('Scope: unit only; format:check, check, build, integration, e2e, package not-run.\n')
+      output.write(`Completed files: ${result.scope.completedFiles?.length ?? 'unknown'}/${focusedInfo.files.length}; report: ${path.join(runLogDir, 'report.json')}\n`)
+    }
+    fs.writeFileSync(path.join(runLogDir, 'report.json'), JSON.stringify(result, null, 2) + '\n')
+    return result
+  }
 
   let beforeInputs
   try {
@@ -310,7 +372,7 @@ export async function verify({
     const wallMs = Date.now() - runStart
     output.write(`\n=== verify: ${mode}  inputs=error ===\n`)
     output.write(`FAIL: input collection error: ${err.message}\n`)
-    return {
+    return finish({
       mode,
       steps: plannedSteps.map((p) => ({ label: p.label, status: 'not-run' })),
       outcome: 'fail',
@@ -318,7 +380,7 @@ export async function verify({
       wallMs,
       logDirectory: runLogDir,
       exitCode: 1,
-    }
+    })
   }
 
   const fullDigest = computeDigest(beforeInputs)
@@ -369,6 +431,7 @@ export async function verify({
         signal: res.signal ?? null,
         durationMs,
         wallMs: durationMs,
+        ...(res.verification ? { verification: res.verification } : {}),
       })
       output.write(`  ${stepPlan.label.padEnd(14)} OK  ${(durationMs / 1000).toFixed(1)}s\n`)
 
@@ -395,7 +458,8 @@ export async function verify({
         signal: res.signal ?? null,
         durationMs,
         wallMs: durationMs,
-        ...(res.error ? { error: res.error } : {}),
+        ...(res.verification ? { verification: res.verification } : {}),
+        ...(res.error ? { error: res.error.message ?? String(res.error) } : {}),
       })
       output.write(`  ${stepPlan.label.padEnd(14)} FAIL(${res.exitCode ?? 1})  ${(durationMs / 1000).toFixed(1)}s\n`)
     }
@@ -434,7 +498,7 @@ export async function verify({
       }
       output.write(`  ${JSON.stringify(stepResults.map((s) => ({ stage: s.label, wallMs: s.wallMs ?? 0 })))}\n`)
     }
-    return {
+    return finish({
       mode,
       steps: stepResults,
       outcome: 'fail',
@@ -445,7 +509,7 @@ export async function verify({
       logDirectory: runLogDir,
       exitCode: 1,
       profile: stepResults.map((s) => ({ stage: s.label, wallMs: s.wallMs ?? 0 })),
-    }
+    })
   }
 
   output.write(`PASS  verify ${mode}  ${(wallMs / 1000).toFixed(1)}s\n`)
@@ -456,7 +520,7 @@ export async function verify({
     }
     output.write(`  ${JSON.stringify(stepResults.map((s) => ({ stage: s.label, wallMs: s.wallMs ?? 0 })))}\n`)
   }
-  return {
+  return finish({
     mode,
     steps: stepResults,
     outcome: 'pass',
@@ -465,7 +529,7 @@ export async function verify({
     logDirectory: runLogDir,
     exitCode: 0,
     profile: stepResults.map((s) => ({ stage: s.label, wallMs: s.wallMs ?? 0 })),
-  }
+  })
 }
 
 async function main() {

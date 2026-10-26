@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
 import { focusedVerificationSteps, verify, verificationSteps } from '../../../scripts/verify.mjs'
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, realpathSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -176,6 +176,74 @@ test('WHAT[verification-system-017] a missing suite value cannot consume another
     assert.equal(result.signal, null)
     assert.equal(result.status, 2, result.stderr + result.stdout)
     assert.match(result.stderr, /--suites requires a package list/)
+  }
+})
+
+test('WHAT[verification-system-017] focused reports preserve actual completion, failures and excluded stages', async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'focused-report-'))
+  const root = inputFixture(directory)
+  const runnerDirectory = join(root, 'requirements/verification-system/tests')
+  const runnerUrl = new URL('./run.mjs', import.meta.url).href
+  const { NODE_TEST_CONTEXT, ...env } = process.env
+  try {
+    mkdirSync(runnerDirectory, { recursive: true })
+    writeFileSync(join(runnerDirectory, 'run.mjs'), `process.argv.push('--skip-staleness-check')\nawait import(${JSON.stringify(runnerUrl)})\n`)
+    writeSuiteFixture(root, 'passing', "import test from 'node:test'\ntest('passing proof', () => {})\n")
+    writeSuiteFixture(root, 'failing', "import test from 'node:test'\ntest('failed proof', () => { throw new Error('expected failure') })\n")
+    for (const suite of ['passing', 'failing']) {
+      const sink = createMemorySink()
+      const result = await verify({ root, suites: suite, output: sink, logDirectory: join(directory, 'logs'),
+        env: { ...env, NODE_TEST_CONCURRENCY: '1' },
+      })
+      assert.equal(result.exitCode, suite === 'passing' ? 0 : 1, sink.output)
+      assert.deepEqual(result.scope.requestedSuites, [suite])
+      assert.deepEqual(result.scope.plannedFiles, [`requirements/${suite}/tests/001.test.mjs`])
+      assert.deepEqual(result.scope.completedFiles, result.scope.plannedFiles)
+      assert.deepEqual(result.scope.counts, {
+        passed: suite === 'passing' ? 1 : 0, failed: suite === 'failing' ? 1 : 0,
+        skipped: 0, todo: 0, cancelled: 0, containerFailures: 0,
+      })
+      assert.deepEqual(result.steps.filter(step => step.status === 'not-run').map(step => step.label),
+        ['format:check', 'check', 'build', 'integration', 'e2e', 'package'])
+      assert.ok(result.steps.filter(step => step.status === 'not-run').every(step => step.reason === 'outside-focused-unit-scope'))
+      assert.match(result.candidateDigest, /^[a-f0-9]{64}$/)
+      assert.match(sink.output, /unit only/)
+      assert.deepEqual(JSON.parse(readFileSync(join(result.logDirectory, 'report.json'), 'utf8')), result)
+    }
+
+    writeFileSync(join(runnerDirectory, 'run.mjs'), 'console.log("runner: 1 passed, 0 failed; 1/1 planned file(s) completed")\n')
+    const missing = await verify({ root, suites: 'passing', output: createMemorySink(),
+      logDirectory: join(directory, 'logs'), env,
+    })
+    assert.equal(missing.exitCode, 1)
+    assert.equal(missing.scope.completedFiles, null)
+    assert.equal(missing.scope.counts, null)
+    assert.match(missing.steps.find(step => step.label === 'unit').error, /unit result was not received/)
+
+    const plannedFile = join(realpathSync(root), 'requirements/passing/tests/001.test.mjs')
+    const foreignFile = join(realpathSync(root), 'requirements/failing/tests/001.test.mjs')
+    const record = { version: 1, outcome: 'pass', failureReason: null,
+      plannedFiles: [plannedFile], completedFiles: [plannedFile],
+      counts: { passed: 1, failed: 0, skipped: 0, todo: 0, cancelled: 0, containerFailures: 0 },
+    }
+    for (const [data, repeated, reason] of [
+      [{ ...record, plannedFiles: [foreignFile], completedFiles: [foreignFile] }, false, /differs from the focused file plan/],
+      [{ ...record, completedFiles: [] }, false, /invalid scope or verdict/],
+      [record, true, /unexpected or repeated message/],
+    ]) {
+      const message = JSON.stringify({ type: 'verification:unit-result', data })
+      writeFileSync(join(runnerDirectory, 'run.mjs'), repeated
+        ? `process.send(${message}, () => process.send(${message}, () => process.disconnect()))\n`
+        : `process.send(${message}, () => process.disconnect())\n`)
+      const rejected = await verify({ root, suites: 'passing', output: createMemorySink(),
+        logDirectory: join(directory, 'logs'), env,
+      })
+      assert.equal(rejected.exitCode, 1)
+      assert.equal(rejected.scope.completedFiles, null)
+      assert.match(rejected.steps.find(step => step.label === 'unit').error, reason)
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true })
   }
 })
 
