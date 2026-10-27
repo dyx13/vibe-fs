@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { assertYieldTimerReleased } from './support/yield-timer.mjs'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -14,6 +15,12 @@ import {
 const sandbox = () => {
   const dir = mkdtempSync(join(tmpdir(), 'wxs-unpark-'))
   return { dir, cleanup: () => rmSync(dir, { recursive: true, force: true }) }
+}
+
+for (const mode of ['resume-complete', 'resume-fail', 'resume-park', 'resume-yield']) {
+  test(`WHAT[repository-programming-032] resumed invocation yield timer is released after ${mode}`, async () => {
+    await assertYieldTimerReleased(mode)
+  })
 }
 
 const program = (body) => `class Js extends JsProgram {

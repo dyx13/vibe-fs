@@ -1,0 +1,247 @@
+[
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/analyze.mjs",
+    "bytes": 4125,
+    "sha256": "96075d74ff1cbb21667cc306bae93f43f4266f6d5f1ada4c3fc7d46cab27ec64"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/build-after-2.log",
+    "bytes": 2994,
+    "sha256": "c925086aba4a6dae581bd799eb872e50bcadfe49e2528280a79a141b852507e4"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/build-after.log",
+    "bytes": 2016,
+    "sha256": "483fb33691bde3bf37801837140b58dadcdafaa66333ec2223a35c989aeb74dc"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/build-before.log",
+    "bytes": 1449,
+    "sha256": "8db319fa08165624def1fa0b77b5aa8669063e98d48121165447d5decb476779"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/build-final.log",
+    "bytes": 2991,
+    "sha256": "29c5b0f90a8f70738def3a04ace3fc902990f7965c780c9e7b3bbb9250789795"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/check.log",
+    "bytes": 85134,
+    "sha256": "9ca4ab53c89a0035eb227e82b586777fc00d36360613aaf755db07ec075fd641"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/compare.mjs",
+    "bytes": 6490,
+    "sha256": "fd53924ec497f3ea3f64367d851f201c03e01d31edddd397022922b71bcc0d50"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/comparison.json",
+    "bytes": 215810,
+    "sha256": "1a81acc98369796a664718411e9664ecad8296e64462636351b85d3d90eb85f6"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/coverage.json",
+    "bytes": 851087,
+    "sha256": "b27ea9b0fef4f2bb4f82d593db0beb19a2929ecef7243e893be15043919f7ba3"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/excluded-baseline-analysis-summary.txt",
+    "bytes": 1301,
+    "sha256": "41b5bbb13836527415999a7dc694a0b1925cf59211971d8a32e618a789339383"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/file-costs.jsonl",
+    "bytes": 168796,
+    "sha256": "4d2aeb6d2b977ab352e9fd86bd507c178f87cec244a07311bc0b0ffbb1e60c11"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/format-all.log",
+    "bytes": 1067,
+    "sha256": "0f3e12491258e3c6b1b6c9767bb85f091f3f87b14afb8e579ce50d52f36064a8"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/format-check.log",
+    "bytes": 244,
+    "sha256": "364665d58cadb16b7d53cd6235ac67f47046d1e6da88f7032cb95b227950f8fa"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/format-preview.log",
+    "bytes": 296,
+    "sha256": "abe3040e91cae781e50872f4c1100fa7bc998d86133efd3ffdcabfc32e5e0e6f"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-1-analysis.json",
+    "bytes": 1116753,
+    "sha256": "af1977f895e46514d39be161e4cb024723d38c3fd86f2c0db795136287315c92"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-1.json",
+    "bytes": 199261,
+    "sha256": "904b3c65d2d161a7868626eea4bf03850b30904fa146f8642a40021ec0890dde"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-1.log",
+    "bytes": 3505099,
+    "sha256": "8bd236172fa103fc10685aff5fe847168cff2e226c8a9f74e08664f3a519164a"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-2-analysis.json",
+    "bytes": 1115611,
+    "sha256": "d840b77254ad57410e89fc2e5a5e0c5ff0118d18c0b879e2eac0a4f3dec0df73"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-2.json",
+    "bytes": 199268,
+    "sha256": "ab4ebda2d24a1a7ab0873f7795fa86672952de8e6f6d938f9fbdea93f178bc35"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-2.log",
+    "bytes": 3503918,
+    "sha256": "29200541c9a1538c80bc324d716ee23065fef6fb4f38765aef37b90ebafff6be"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-3-analysis.json",
+    "bytes": 1116207,
+    "sha256": "2a4614beef3ddb372b815268a1b6376d58af9cc6eb9630ddb7afc873cb40981d"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-3.json",
+    "bytes": 199247,
+    "sha256": "4f3cba80e15aee2f508bdddb28469794381271c7098e74be775e2a44a6d8e985"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-after-3.log",
+    "bytes": 3503718,
+    "sha256": "9c59d1b2c02195e52848c8470563aa662ad691a12493ae5752cea60dfc26cf93"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-1-analysis.json",
+    "bytes": 1117205,
+    "sha256": "8e650e3e4e164ba4a73c8236c5f29b600f1d1a25a82fe59ee2d3199d03ef6eeb"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-1.json",
+    "bytes": 197720,
+    "sha256": "940f51eb7f4f8ece9dec5c10742bce854a248325f07d0455caf3f38018e5150c"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-1.log",
+    "bytes": 3487386,
+    "sha256": "eeaab43023edf35c177b57551a4f1836627e49fe379ae49cb05385c73b32875a"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-2-analysis.json",
+    "bytes": 1119887,
+    "sha256": "fd0d81b34781da1dd6205dda4086f637b1307dc8b70360d7beac1dc14803bee1"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-2.json",
+    "bytes": 199421,
+    "sha256": "4a8ec3354998265970acb8abae7880042917b9cb263033c4bdb8b4821751da06"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-2.log",
+    "bytes": 3515161,
+    "sha256": "581e8f04d9464df85a2391fc47e917481771e6198bd3370affc4c526e3c0a644"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-3-analysis.json",
+    "bytes": 1118439,
+    "sha256": "8274734ece0d62915dbfef610e52ba1feab22b0f30b263c5fb861167ec5e4d4f"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-3.json",
+    "bytes": 199794,
+    "sha256": "5991763921a8e1a1e867925fd8791ddd3173b24da94f6c079370c58ccd033a64"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/full-before-3.log",
+    "bytes": 3515733,
+    "sha256": "e4024f0b11536b30cbd0c5045df18d66f9cd0fc62337f61aab2ff1517643c2b4"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/measure.mjs",
+    "bytes": 4126,
+    "sha256": "1da589d303cb3db36a9886376483e79cf4733c43d3d3f618c16c6a2903ea346d"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/p1-implementation.patch",
+    "bytes": 4371,
+    "sha256": "9590934ab5f89e64657d53072e075d018fcea4cc3ca1572cbb28a2d9d051e5e0"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/regressions-after.json",
+    "bytes": 4047,
+    "sha256": "67b9e265a548f514befc869e00ad25757f42cfd2fc79b0fa3bd1382ed079dc37"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/regressions-after.log",
+    "bytes": 13312,
+    "sha256": "6050d6e22d05f23852dfae05516d56bd1078614a890f5ef526fc715091c96be1"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/regressions-before-2.json",
+    "bytes": 2161,
+    "sha256": "68b12b084aaa2f9333b4c1b7cabb3fb423a77cb0d87dd623d74ca8b0a474226e"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/regressions-before-2.log",
+    "bytes": 24246,
+    "sha256": "b299e5aa63043a11ab63f6eb96562e54efb236877ff6395ac96800d18c155efe"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/regressions-before.json",
+    "bytes": 2150,
+    "sha256": "b291a7773578d678b8d2d412f8a80aa165395fca4c6914cf733d1f0aa2316e99"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/regressions-before.log",
+    "bytes": 26554,
+    "sha256": "da9eea21920e81d021839aad939cd7f56aca61cd12442b75bd2f54547a9f0dfa"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/related-after-analysis.json",
+    "bytes": 134708,
+    "sha256": "923f752ff23c2482872a23f2cc07616457af2708b7339d1bf4931caece8362a0"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/related-after.json",
+    "bytes": 29757,
+    "sha256": "f06111c597354937b2918fcc37aab7db0e6f7137d47dcaeb222d40c54d3f9028"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/related-after.log",
+    "bytes": 433944,
+    "sha256": "043805c695b46834f956b0c1ead1b2d5a39012be61c38dd4e91b854df7c70417"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/run-tool.mjs",
+    "bytes": 1096,
+    "sha256": "a78169708356e0305579bc01d96fbe6beb960a09b4f0055e5131b94fd5d0740d"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/sandbox-followup-analysis.json",
+    "bytes": 4063,
+    "sha256": "064c92da7f7098f084aebbd6c978367220ee653677e097d8bca5d97facba47e7"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/sandbox-followup.json",
+    "bytes": 3677,
+    "sha256": "ddc70673168e346746ebe92331a223b6d7d277d055cc6e8b44de317eabb6f21e"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/sandbox-followup.log",
+    "bytes": 8765,
+    "sha256": "ebc41c129413c96f245e20e6bff7163783ffb708ecec7f55be5bc20d419178e8"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/test-inputs-before.json",
+    "bytes": 189123,
+    "sha256": "1d6e6f5e7301f25870197bda036bd21d8b9e5e1c10db046e27c0fa15d73ad434"
+  },
+  {
+    "path": "/Users/yuanxi/Workwork/vibe-fs/.Herdchestra/test-optimization/20261027/tool-path.txt",
+    "bytes": 1090,
+    "sha256": "ba778e1a7b0e170f63e975f26072f6ee3c3c2c3b95fa64e26b5efa2b2fb55f13"
+  }
+]

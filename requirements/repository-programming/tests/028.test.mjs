@@ -1,7 +1,14 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { assertYieldTimerReleased } from './support/yield-timer.mjs'
 
 const { start } = await import('../../../dist/Repository/Programming/Js/RuntimeSurface.js')
+
+for (const mode of ['complete', 'fail', 'invalid', 'park', 'yield']) {
+  test(`WHAT[repository-programming-028] invocation yield timer is released after ${mode}`, async () => {
+    await assertYieldTimerReleased(mode)
+  })
+}
 
 const BASE = `class JsProgram {
   constructor(api) { this._api = api; }

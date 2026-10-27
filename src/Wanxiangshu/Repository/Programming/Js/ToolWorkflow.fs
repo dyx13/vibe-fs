@@ -905,12 +905,19 @@ module JsToolWorkflow =
 
     let private armProgramYieldTimer
         (parkState: Wanxiangshu.Process.JsSandbox.ParkState)
-        (budgetMs: int)
+        (budgetMs: int option)
         (makePayload: unit -> obj)
-        : unit =
+        : IDisposable =
         let callback = fun () -> fireProgramYield parkState makePayload
-        let _ = emitJsExpr (callback, budgetMs) "setTimeout($0, $1)"
-        ()
+
+        let timer: obj =
+            match budgetMs with
+            | Some milliseconds -> emitJsExpr (callback, milliseconds) "setTimeout($0, $1)"
+            | None -> null
+
+        { new IDisposable with
+            member _.Dispose() =
+                emitJsExpr timer "clearTimeout($0)" |> ignore }
 
     let private runProgramCore
         (sessionId: string)
@@ -975,8 +982,8 @@ module JsToolWorkflow =
             // A present planB (including the empty string) always arms the
             // yield timer. Zero milliseconds still parks immediately as kind
             // yield; None means this entry did not buy time (legacy callers).
-            if planB.IsSome then
-                armProgramYieldTimer parkState budgetMs (fun () ->
+            use yieldTimer =
+                armProgramYieldTimer parkState (planB |> Option.map (fun _ -> budgetMs)) (fun () ->
                     createObj
                         [ "__jsYield" ==> true
                           "planB" ==> planBText
@@ -1204,7 +1211,10 @@ module JsToolWorkflow =
             let now = System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
 
             let resumedDeadline =
-                if deadlineEpochMs = 0L then 0L else now + int64 (max 1000 deadlineMs)
+                if deadlineEpochMs = 0L then
+                    0L
+                else
+                    now + int64 (max 1000 deadlineMs)
 
             Wanxiangshu.Process.JsSandbox.resetDeadline site.RunHandle resumedDeadline
 
@@ -1212,16 +1222,15 @@ module JsToolWorkflow =
             // it: the resumed program may park again (algorithm E5).
             let parkSignal = JsSandbox.installParkSignal site.RunHandle.ParkState
 
-            if planB.IsSome then
-                let planBText = planB.Value
-                let budgetMs = planBYieldBudgetMs planBText
-                let parkState = site.RunHandle.ParkState
+            let planBText = defaultArg planB ""
+            let budgetMs = planB |> Option.map planBYieldBudgetMs
 
-                armProgramYieldTimer parkState budgetMs (fun () ->
+            use yieldTimer =
+                armProgramYieldTimer site.RunHandle.ParkState budgetMs (fun () ->
                     createObj
                         [ "__jsYield" ==> true
                           "planB" ==> planBText
-                          "budgetMs" ==> budgetMs
+                          "budgetMs" ==> (defaultArg budgetMs 0)
                           "elapsedMs" ==> float (System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
                           "delta" ==> (JsToolsBindings.readStashedDelta site.RunHandle.Api) ])
 
@@ -1464,7 +1473,17 @@ module JsToolWorkflow =
                 return!
                     dispatchResolvedParkedSite (resolveParkedSite sessionId handle) (fun site ->
                         recordLifecycle lifecyclePersistence JsLifecycleEventType.Unparked handle sessionId
-                        unparkSite site fence settlement value baseClassSource deadlineMs deadlineEpochMs outputBoundBytes planB)
+
+                        unparkSite
+                            site
+                            fence
+                            settlement
+                            value
+                            baseClassSource
+                            deadlineMs
+                            deadlineEpochMs
+                            outputBoundBytes
+                            planB)
             | ToolWorkflowInvocation.Abandon handle ->
                 return!
                     dispatchResolvedParkedSite (resolveParkedSite sessionId handle) (fun site ->

@@ -142,6 +142,8 @@ Manager 的 `todowrite-for-manager` 程序入口始终按角色准入；仓库�
 
 沙箱启动与结果等待解耦：`runSurface` 返回一个持有 `ProgramPromise`（async IIFE 的未 settle promise）与可变 `DeadlineRef` 的句柄，调用方可跨调用持有该 promise 而不在启动处 await 到底；vm context 由 promise 未 settle 时的闭包链自然持有，不显式提升。异步 deadline 从生成代码内联常量改为 api 闭包捕获的可变引用，`resetDeadline` 可在不重包、不重跑程序的前提下改变后续 api 调用的超时窗口。哨兵识别、错误分类与结果反序列化保持不变。
 
+调用返回、抛错或挂起时，释放宿主为本次调用创建的自动 yield 定时器；挂起程序的 promise 和现场仍保留，恢复调用按自身预算创建新的定时器。旧调用的定时器不得在恢复后触发新的 park。
+
 ## [029] As-Is 逐笔落盘的失败与成功形态
 
 每次 `write`（含覆盖既有文件与创建新文件）调用即原子落盘，跨笔不回滚。程序后续失败、终止或挂起（throw、超时、输出超限、返回值非法）时，已落盘的改动保持为事实分界线并如实上报：
