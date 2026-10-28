@@ -173,7 +173,7 @@ Bookkeeper 是内部叶子角色（有独立 Role Law，不进 public Role DU）
 ```text
 src/           生产源码
 resources/     随包运行时资源
-requirements/  normative 语义树（48 个活跃包，另 1 个历史包 epistemic-reasoning）：每包必备 WHY.md、WHAT.md 与 tests/
+requirements/  normative 语义树（48 个活跃包，另 1 个历史包 epistemic-reasoning）：每包必备 WHY.md、指定规范正文与 tests/
 docs/          功能导览与人工巡检指南
 proposals/     现行施工计划、未来提案与 archive 历史记录（用户管理）
 万象体系/     投资人材料（DOC.html、PPT.html）
@@ -229,7 +229,7 @@ npm run verify:release      # 发布验证
 
 ### 测试分层
 
-语义命题按 Pure laws → Temporal → Adapter → Long Stroke 四层逐级证明（WHAT[verification-system-001]、[003]）。日常入口 format-build-test 调度编译与 unit/integration；Long Stroke 与真实 package 校验由发布入口 verify:release 额外调度。
+编写、构建与优化测试前读取[测试与验证规则](requirements/verification-system/AXIOMS.md)。按承诺与实际副作用选择 Pure laws、Temporal、Adapter 或 Long Stroke，不要求逐级通过（SPEC 001、003）。日常入口 format-build-test 调度编译与 unit/integration；Long Stroke 与真实 package 校验由发布入口 verify:release 额外调度。
 
 | 层 | 入口 | 范围 |
 |----|------|------|
@@ -243,9 +243,9 @@ npm run verify:release      # 发布验证
 
 规范是万象术的语义根：每条行为命题有稳定 ID、测试落点和 owner 包。规范不跟踪实现进度，只定义正确性。
 
-- **规范**：`requirements/<package>/`（48 个活跃包，另 1 个历史包 epistemic-reasoning；必备 WHY.md、WHAT.md 与 tests/；WHAT 命题 ID 稳定寻址，条款与测试文件一一映射，覆盖缺口见 [requirements/GAP.md](requirements/GAP.md)；Plan 角色的接力式规划归 `work` 包 work-020 起：review 晋级、deliver 接力、任期隔离、崩溃恢复）。
+- **规范**：`requirements/<package>/`（48 个活跃包，另 1 个历史包 epistemic-reasoning；必备 WHY.md、指定规范正文与 tests/；命题 ID 稳定寻址，测试用例通过锚点归属条款，覆盖缺口见 [requirements/GAP.md](requirements/GAP.md)；Plan 角色的接力式规划归 `work` 包 work-020 起：review 晋级、deliver 接力、任期隔离、崩溃恢复）。
 - **历史 Clause 与变更记录**：2026-08-14 cutover 已归档（含 Kolmogorov 工程纪律与 completed change 考古；git 历史可回溯）。
-- 测试全部包自有（`requirements/<package>/tests/`），直接引用 WHAT 命题 ID。规范不跟踪实现进度。
+- 测试全部包自有（`requirements/<package>/tests/`），直接引用规范命题 ID。规范不跟踪实现进度。
 
 导航：[requirements/README.md](requirements/README.md)。治理见 [AGENTS.md](AGENTS.md) 与归档文档。
 

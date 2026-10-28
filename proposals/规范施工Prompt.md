@@ -4,11 +4,11 @@
 
 用于逐站整理 requirements 中一个模块的 WHAT、WHY、tests。由 02 模块施工经验形成；先遵守本次用户给出的范围、决策方式和提交节奏，不把历史互动流程当成永久审批要求。
 
-测试与验收遵守 [verification-system/WHAT.md](../requirements/verification-system/WHAT.md)。需要补充已有测试 prompt 时，可直接追加[测试效率补充段落](高效测试Prompt.md)。
+编写、构建或优化测试前，必须阅读 [AXIOM → LEMMA → SPEC 测试规则](../requirements/verification-system/AXIOMS.md)，再阅读被测模块的业务合同。旧 `verification-system/WHAT.md` 仅作导航，不另作判断依据。需要补充已有测试 prompt 时，可直接追加[测试效率补充段落](高效测试Prompt.md)。
 
 ## 任务
 
-把本模块整理为简短、准确、可执行的规范。WHAT 是权威规则，WHY 解释目标与取舍，tests 提供可反驳的证据。开始时检查工作区差异、相邻模块和已有决定；保护其他人的未提交修改。
+把本模块整理为简短、准确、可执行的规范。规范正文由 requirement-system [007] 指定：`verification-system` 使用 `AXIOMS.md`，未迁移包使用 `WHAT.md`；WHY 解释目标与取舍，tests 提供可反驳的证据。下面整理 WHAT 的方法，在 AXIOM 格式中对应 SPEC 的验收条款。开始时检查工作区差异、相邻模块和已有决定；保护其他人的未提交修改。
 
 ## 判断顺序
 

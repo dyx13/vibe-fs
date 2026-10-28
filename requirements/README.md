@@ -1,7 +1,7 @@
 # Requirement Packages
 
 > 万象术的**正式 normative 语义树**。每个 `<package>/` 是一个语义 owner，持有不可替代的 WHY、
-> 唯一拥有的 WHAT 命题、显式 hard dependencies，以及 package-local 的可执行 proof。
+> 唯一拥有的规范命题、显式 hard dependencies，以及 package-local 的可执行 proof。
 > 全部 packages 同时为真；dependency 只表示 guarantee consumption，不表示优先级。
 
 本树由旧 docs/、旧 changes/、`src/` 综合迁移而来（2026-08-14 cutover，非机械改名）；
@@ -11,10 +11,12 @@ orchestrator、Long Stroke e2e）归 `verification-system/tests/`。每个包目
 
 ```text
 WHY.md      不可替代的存在理由（保姆级）
-WHAT.md     唯一 normative 合同（编号命题，对应同编号测试）
+WHAT.md     未迁移包的规范正文；verification-system 改用 AXIOMS.md
 tests/      本包拥有的可执行 proof（NNN.test.mjs）
 APPLIES-TO  可选的包外正向代码覆盖声明；仓库根相对、gitignore wildmatch 语法，普通行=纳入，!行=排除例外
 ```
+
+测试与验收统一读取 [verification-system/AXIOMS.md](verification-system/AXIOMS.md)，按 AXIOM → LEMMA → SPEC 组织。该包旧 WHAT 仅保留导航；规范检查直接读取 AXIOMS，缺失时失败，不回退。现有 `WHAT[pkg-NNN]` 测试锚点是编号索引，与规范文件名分开。
 
 `requirements/<package>/` 下的全部内容天然属于该 package 的覆盖范围，包括文档、tests 与
 `APPLIES-TO` 本身；包自身路径的覆盖规则由 `requirement-system` 定义。
@@ -32,7 +34,7 @@ grounding 由 `requirement-system` package 拥有。
 | Package | 一句话 WHY |
 |---|---|
 | [requirement-system](requirement-system/WHAT.md) | 当前接受的产品真理必须有唯一 package owner、显式依赖与唯一 proof ownership。 |
-| [verification-system](verification-system/WHAT.md) | requirement acceptance 必须由分层、可失败、可重放的证据体系定义。 |
+| [verification-system](verification-system/AXIOMS.md) | requirement acceptance 必须由分层、可失败、可重放的证据体系定义。 |
 | [feature-ablation](feature-ablation/WHAT.md) | 巡检与渐进验收需要节点注册表、三态语义、消融 DAG 与配置集，使下游未审机制可零影响关停而不改源码。 |
 | [js-semantic-surface](js-semantic-surface/WHAT.md) | 语义测试只能经正式、稳定、JS-native 的 semantic surface 进入；Fable runtime representation 不属于 semantic contract。 |
 
