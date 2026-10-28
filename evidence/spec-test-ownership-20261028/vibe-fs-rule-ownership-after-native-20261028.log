@@ -1,0 +1,41 @@
+✔ WHAT[delegation-019] en renderer keeps instructions separate from parsed background fields (4.890625ms)
+✔ WHAT[delegation-019] en TOML-like hostile data cannot create instruction or assignment fields (0.395125ms)
+✔ WHAT[delegation-019] en assignment shaped as TOML remains an instruction comment (0.242416ms)
+✔ WHAT[delegation-019] zh-CN renderer keeps instructions separate from parsed background fields (1.045167ms)
+✔ WHAT[delegation-019] zh-CN TOML-like hostile data cannot create instruction or assignment fields (0.236209ms)
+✔ WHAT[delegation-019] zh-CN assignment shaped as TOML remains an instruction comment (0.184ms)
+✔ WHAT[delegation-019] absent context does not manufacture content (0.738125ms)
+✔ WHAT[delegation-019] context preserves empty literals, order and whitespace alongside root fields (0.34925ms)
+✔ WHAT[delegation-019] parent->child: multiline prose at top as comments, carry as fields, task appears once (0.625625ms)
+✔ WHAT[delegation-019] child->parent: multiline report at top as comments, carry as fields, never data-field quoted (2.50075ms)
+✔ WHAT[repository-programming-006] JS011_sandbox_program_uses_bindings_end_to_end (20.63975ms)
+✔ WHAT[repository-programming-006] todowrite can continue after waiting longer than ten seconds (10635.699917ms)
+✔ WHAT[repository-programming-006] JS011_program_runs_and_returns_json (1.351458ms)
+✔ WHAT[repository-programming-006] JS011_api_is_the_only_authority_in_the_context (0.752667ms)
+✔ WHAT[repository-programming-006] JS054_1_sync_infinite_loop_is_killed_by_vm_timeout (202.143583ms)
+✔ WHAT[repository-programming-006] JS054_1_async_deadline_proxy_aborts_api_calls_after_deadline (0.891ms)
+✔ WHAT[repository-programming-006] JS054_2_output_bound_rejects_oversized_results (0.699167ms)
+✔ WHAT[repository-programming-006] output budget measures UTF-8 bytes and accepts the exact boundary (2.168667ms)
+✔ WHAT[repository-programming-006] JS054_3_steady_allocation_loop_is_contained_by_deadline_and_host_survives_for_subsequent_programs (50.164583ms)
+✔ WHAT[repository-programming-006] CUT25_escape_via_global_api_binding_is_denied (0.767333ms)
+✔ WHAT[repository-programming-006] CUT25_escape_via_deadline_ref_global_is_denied (0.566708ms)
+✔ WHAT[repository-programming-006] CUT25_escape_via_globalThis_constructor_is_denied (0.753708ms)
+✔ WHAT[repository-programming-006] CUT25_escape_via_returned_array_constructor_is_denied (0.673292ms)
+✔ WHAT[repository-programming-006] CUT25_escape_cannot_write_outside_workspace (1.306792ms)
+✔ WHAT[repository-programming-006] pending async work and post-await computation terminate within the execution budget (340.878042ms)
+✔ WHAT[repository-programming-006] CUT25_escape_via_patched_WeakMap_has_is_denied (1.122667ms)
+✔ WHAT[repository-programming-006] CUT25_escape_via_patched_WeakMap_set_is_denied (0.750958ms)
+✔ WHAT[repository-programming-053] prefixUntil and carry preserve literal order and exact text (26.264375ms)
+✔ WHAT[repository-programming-053] retired names are rejected even beside a valid declaration (5.34775ms)
+✔ WHAT[repository-programming-053] a call missing the required declaration is refused and leaves pending view untouched (4.350625ms)
+✔ WHAT[repository-programming-053] invalid declarations cannot run the program or overwrite a valid pending view (14.0695ms)
+✔ WHAT[repository-programming-053] a failed call cannot inherit a different message or call identity (9.670042ms)
+✔ WHAT[repository-programming-053] an asynchronous call commits the declaration accepted before execution (50.451959ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12088.079875

@@ -1,0 +1,27 @@
+✔ WHAT[requirement-system-001] declared clause IDs have one owner in the indexed packages (22.392417ms)
+✔ WHAT[requirement-system-001] repeated definitions are rejected while package-local numbers remain distinct (0.183583ms)
+✔ WHAT[requirement-system-004] ownership accepts multiline titles, modifiers and template suffixes (3.041792ms)
+✔ WHAT[requirement-system-004] ownership rejects missing and wrong primary clauses, but accepts cross-clause references (0.641125ms)
+✔ WHAT[requirement-system-005] formal clause definitions can only live in the package rule document (0.808583ms)
+✔ WHAT[requirement-system-005] clauseDefinitionHeadings surfaces ## [NNN] definitions from any file for detection (0.363625ms)
+✔ WHAT[requirement-system-005] migrated test rules accept AXIOMS and reject active clauses in the old file (0.587125ms)
+✔ WHAT[requirement-system-006] package completeness accepts the two documents and a tests directory (2.693792ms)
+✔ WHAT[requirement-system-006] migrated package requires AXIOMS even when the old WHAT file exists (1.210583ms)
+✔ WHAT[requirement-system-007] package explanatory documents may reference clauses but cannot define them (1.021209ms)
+✔ WHAT[requirement-system-008] spec gate rejects unknown, vacant, and suffixed clause references (0.982667ms)
+✔ WHAT[requirement-system-008] spec gate expands slash lists and checks range endpoints with lowercase clause IDs (0.379375ms)
+✔ WHAT[requirement-system-008] spec gate finds ## [NNN] Clause definition headings in WHAT.md (0.4815ms)
+✔ WHAT[requirement-system-011] spec gate ignores proposals directory by default (1.157125ms)
+✔ WHAT[requirement-system-017] the executable verifier scans the complete requirements tree (621.916541ms)
+✔ WHAT[requirement-system-017] real discovery reads migrated SPEC clauses and refuses old-document fallback (2.775875ms)
+✔ WHAT[requirement-system-017] a deleted clause reports its surviving test, including nested files (1.774792ms)
+✔ WHAT[requirement-system-018] files map to live clauses without requiring a file for every clause (0.666917ms)
+✔ WHAT[requirement-system-018] wrong names and retired clause numbers are rejected; split files are allowed (0.150458ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1092.715625

@@ -39,6 +39,36 @@ test('WHAT[repository-programming-006] JS011_sandbox_program_uses_bindings_end_t
     cleanup()
   }
 })
+
+test('WHAT[repository-programming-006] todowrite can continue after waiting longer than ten seconds', async () => {
+  const { z } = await import('zod')
+  const { createRegistered, execute } = await import('../../../dist/Repository/Programming/Js/OpenCode/ToolHostSurface.js')
+  const { clearAll } = await import('../../../dist/Repository/Programming/Js/Anchor/AnchorSurface.js')
+  const { dir, cleanup } = sandbox()
+  const tool = (definition) => definition
+  tool.schema = z
+  clearAll()
+  try {
+    const registered = createRegistered({ tool }, 'DevOps', 'en', dir, null)
+    const result = await execute(registered, {
+      name: 'carry-declaration-test',
+      program: `class Js extends JsProgram {
+        async run() {
+          await this.call("node -e 'setTimeout(() => {}, 10500)'", "wait for completion ".repeat(20));
+          return { continued: true };
+        }
+      }`,
+      planB: 'wait for the running operation '.repeat(20),
+      prefixUntil: 0,
+      carry: [],
+    }, { sessionID: 'ses-006-long-wait' })
+    assert.equal(result.startsWith('# ok'), true, result)
+    assert.match(result, /continued = true/)
+  } finally {
+    clearAll()
+    cleanup()
+  }
+})
 }
 
 {

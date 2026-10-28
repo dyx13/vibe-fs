@@ -38,24 +38,6 @@ const failureOf = (result) => {
   return document
 }
 
-test('WHAT[repository-programming-006] todowrite can continue after waiting longer than ten seconds', async () => {
-  await withTool(async (registered) => {
-    const result = await execute(registered, {
-      program: `class Js extends JsProgram {
-        async run() {
-          await this.call("node -e 'setTimeout(() => {}, 10500)'", "wait for completion ".repeat(20));
-          return { continued: true };
-        }
-      }`,
-      planB: 'wait for the running operation '.repeat(20),
-      prefixUntil: 0,
-      carry: [],
-    }, { sessionID: 'ses-006-long-wait' })
-    assert.equal(result.startsWith('# ok'), true, result)
-    assert.match(result, /continued = true/)
-  }, 'DevOps')
-})
-
 test('WHAT[repository-programming-053] prefixUntil and carry preserve literal order and exact text', async () => {
   await withTool(async (registered) => {
     const declaration = { prefixUntil: 0, carry: ['second', 'first\nlast', '', '  '] }
