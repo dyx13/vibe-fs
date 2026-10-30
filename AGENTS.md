@@ -1,5 +1,12 @@
 [Apply ASD-STE100 to source code, Mise-en-place to code design. Adapt Gall’s Law, Chesterton’s Fence, and Poka-yoke. Invoke Goodhart’s Law and Via Negativa when needed. Treat these principles as Wittgenstein’s Ladder. Build the real thing, not its imitation. Try to falsify it.] [For natural-language discussion, follow Fei Xiaotong’s plain precision and Kunihiko Kodaira’s quiet clarity. Avoid officialese, performative rhetoric, translationese, and textbook cadence. Let the subject shape the prose.]
 
+## 项目关系与演进
+
+- `wanxiangshu` 是主程序，`wanxiangli` 是从主程序抽取职责、专门服务于主程序的配套库。两仓作为同一产品协同演进；主程序只通过 npm 公开入口依赖库，库不反向依赖主程序。
+- 仓库是 Git 管理边界；npm 包是安装、版本与交付边界；模块是职责与实现边界；入口是公开导入路径；工作包是施工范围。`wanxiangli` 当前是一个 npm 包，内部模块通过 `wanxiangli/work` 等子路径消费。模块独立构建、测试和使用，不意味着必须独立发行或长期维护不同版本。
+- 库契约更新与主程序适配、必要的数据迁移及相关验证一起推进。固定版本用于复现、验收和控制切换，不作为长期保留旧实现的理由。升级包可以先于启用全部新增模块，但已使用入口必须完成适配验证。
+- 库侧实现和独立验收是阶段成果；完整抽取还须完成主程序真实调用切换、对应旧实现退出和主体行为验证。阶段性并存须记录范围与退出条件，不把文档更新当成实现完成。
+
 ## 工具调用纪律
 
 - 只要动作彼此独立，就尽量并行读取、调查与验证。并发是为了提高效率、理清因果，不是为了盲目追求工具数量。
@@ -12,8 +19,9 @@
 
 ### 源码与运行数据分离
 
-- `wanxiangli/` 是正式 Git submodule，跟踪 `main`。依赖升级以远端最新 `main` 为目标，只 fast-forward、不覆盖本地工作；提交宿主时记录确切 gitlink。开发更新与运行程序分开，运行时不得自行拉取或切换源码。
-- npm 通过 `file:wanxiangli` 消费公开入口，构建使用该源码版本。任何 `.tgz` 二进制包不得加入 Git，不因体积小、方便本地安装或发行验收而破例。临时产包只允许写到忽略或临时目录。
+- 2026-10-30 用户确定两仓采用并列目录：`vibe-fs/` 与 `wanxiangli/`，从主体定位库为 `../wanxiangli/`。现有主线仍实现 submodule／gitlink 与 `file:wanxiangli` 接线；改为并列目录的版本取得和构建接线尚待实施，本次只更新文档，不能把目标写成已完成。
+- 过渡期间按当前 manifest、锁文件、gitlink 和构建脚本取得确切依赖，不直接导入邻仓源码或私有 dist。切换时须一起调整这些文件及分发合同和验收，证明新 checkout 可复现；目录位置本身不固定版本，也不自动采用 `file:../wanxiangli`。开发更新与运行程序分开，不覆盖本地工作，运行时不得自行拉取或切换源码。
+- 主程序始终通过 npm 公开入口消费库。任何新的 `.tgz` 二进制依赖包不得加入 Git；固定历史取证归档沿用各自清单。临时产包只允许写到忽略或临时目录，不能代替源码或版本身份。
 - 全部项目运行数据统一放在主工作树的 `.Herdchestra/`，linked worktree 共用这份本机状态。Git 仅用于源码管理及只读拓扑查询；应用不得把日志、SQLite、快照、诊断、锁或 SSH 包装写进 `.git`，也不得安装数据同步 hooks/refspec。
 - 旧 `.git/wanxiang*` 数据与运行状态 refs 已退役，不读取、不迁移、不作为恢复候选。当前不需要跨机持久化。清理只针对已确认的应用专属目录、配置和 refs，不清空 Git 的 objects、代码分支、标签或其他人的 hooks；历史改写和物理 GC 不是默认清理动作。
 

@@ -46,7 +46,9 @@ import "wanxiangshu"
 → dist/OpenCode/Plugin/Plugin.js
 ```
 
-`package.json` 的 `main` / `exports["."]` 指向同一路径。本仓自身只把 `dist/` 与 `resources/` 列入 files；Lifecycle 依赖的独立 `wanxiangli` 以 bundled npm dependency 一并进入最终 tarball，不从源码树或本机路径解析。
+`package.json` 的 `main` / `exports["."]` 指向同一路径。本仓自身只把 `dist/` 与 `resources/` 列入 files；配套库 `wanxiangli` 以 bundled npm dependency 一并进入最终 tarball，不从源码树或本机路径解析。
+
+`wanxiangli` 专门承接从主程序抽取的职责，两仓作为同一产品协同演进。它是一个 npm 包，`wanxiangli/work`、`wanxiangli/resources` 等是包内模块的公开入口，共用包版本。模块可独立构建和验证；库契约更新后，主程序须安排适配、必要的数据迁移和相关验证。项目约定见 [AGENTS.md](AGENTS.md#项目关系与演进)。
 
 ### 系统要求
 
@@ -57,7 +59,9 @@ import "wanxiangshu"
 
 `packageManager` = `npm@11.12.1`。安装依赖使用 `npm ci`（已提交 `package-lock.json`）。
 
-`wanxiangli/` 是正式 Git submodule，跟踪其 `main`；npm 依赖为 `file:wanxiangli`。先执行 `git submodule update --init -- wanxiangli`，再 `npm ci`。开发更新执行 `npm run deps:update`，它只允许 fast-forward 到 `origin/main`，拒绝覆盖本地改动；之后一并审阅、提交 gitlink 与 lockfile。普通构建使用当前检出的源码，不在运行时联网换依赖。
+2026-10-30 用户确定两仓采用 `vibe-fs/` 与 `wanxiangli/` 并列目录。现有主线的安装和构建仍使用下述 submodule 接线；并列目录下的版本取得方式及接线调整尚待实施，不能只把依赖改成 `file:../wanxiangli` 就视为完成。
+
+当前实现中，`wanxiangli/` 是 Git submodule，跟踪其 `main`；npm 依赖为 `file:wanxiangli`。先执行 `git submodule update --init -- wanxiangli`，再 `npm ci`。开发更新执行 `npm run deps:update`，它只允许 fast-forward 到 `origin/main`，拒绝覆盖本地改动；之后一并审阅、提交 gitlink 与 lockfile。普通构建使用当前检出的源码，不在运行时联网换依赖。切换并列目录时须同步更新这些步骤、分发合同和验收。
 
 构建入口先安装并构建 wanxiangli，再编译宿主；仍只从公开 npm 入口导入。没有 vendor tarball 兜底；旧 `node_modules/wanxiangli` 若仍是归档副本，构建会要求先运行 `npm ci`。任何 `.tgz` 都只能是忽略或临时目录内的发行验收产物，永远不得进入 Git。
 
